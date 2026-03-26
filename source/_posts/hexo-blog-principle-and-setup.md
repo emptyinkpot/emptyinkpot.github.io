@@ -95,6 +95,199 @@ Hexo + GitHub Pages 很适合个人博客，主要因为这几个优点：
 - 不适合复杂后台系统
 - 评论、搜索、统计等能力通常要靠第三方服务或额外插件补充
 
+## GitHub 实际免费提供了哪些资源
+
+很多人第一次接触 GitHub Pages 时，都会有一个很直接的感受：
+
+“这不就是把代码传上去，然后借 GitHub 的机器把网站托管起来吗？”
+
+这个理解方向没错，只是更准确的说法应该是：
+
+**你是在使用 GitHub 官方提供的仓库托管、构建计算和静态网站发布能力。**
+
+对这个博客来说，GitHub 主要提供了下面这些资源。
+
+### 1. 仓库存储
+
+首先，你有一个 Git 仓库来存放博客源码。
+
+这个仓库里保存的是：
+
+- Hexo 配置
+- 主题配置
+- Markdown 文章
+- 自动部署工作流
+- 依赖声明文件
+
+也就是说，GitHub 先帮你保存了“网站的源代码和内容”。
+
+不过这个存储不是无限的。GitHub 官方对 GitHub Pages 源仓库给出的建议是：
+
+- Pages 源仓库推荐控制在 1 GB 以内
+- 普通 Git 仓库里，文件超过 50 MiB 会收到警告
+- 普通 Git 仓库里，文件超过 100 MiB 会被直接拒绝
+
+所以博客里适合放文章、图片、少量 PDF 和前端资源，不适合长期堆很多超大文件。
+
+### 2. GitHub Actions 构建算力
+
+当你把代码推送到仓库后，并不是 GitHub Pages 凭空“懂了”你的 Hexo 项目，而是 GitHub Actions 会先帮你跑构建。
+
+在我们现在这个项目里，工作流会做这些事：
+
+1. 拉取仓库代码
+2. 安装 Node.js
+3. 安装依赖
+4. 执行 `npm run build`
+5. 上传 `public/` 目录
+6. 部署到 GitHub Pages
+
+这一步使用的是 GitHub 提供的构建机器。
+
+对于**公共仓库**，GitHub 官方文档说明标准 GitHub-hosted runners 是**免费且不限量**的。像我们工作流里常用的 `ubuntu-latest`，标准规格是：
+
+- 4 个 CPU
+- 16 GB 内存
+- 14 GB SSD
+
+所以你推送代码以后，实际上是 GitHub 在替你跑一次构建，而不是你自己的电脑一直在线给别人服务。
+
+### 3. GitHub Pages 静态网站托管
+
+构建完成后，GitHub Pages 会把生成好的静态文件发布出去。
+
+也就是说，线上真正对外提供访问的是：
+
+- HTML
+- CSS
+- JavaScript
+- 图片
+- 字体
+- 其他静态附件
+
+这些文件会被 GitHub 的 Pages 服务托管，所以别人访问时，不需要你的电脑开机。
+
+GitHub 官方当前给出的主要限制是：
+
+- 已发布站点大小不能超过 1 GB
+- Pages 部署超过 10 分钟会超时
+- 站点带宽有 100 GB/月的软限制
+- Pages 有可能触发速率限制
+
+如果超出这些范围，GitHub 可能会限制服务，或者建议你把大文件放到其他地方，例如 Releases 或第三方 CDN。
+
+### 4. 默认域名
+
+GitHub Pages 会直接给你一个默认域名：
+
+```text
+https://用户名.github.io/
+```
+
+像这个博客现在使用的就是：
+
+```text
+https://emptyinkpot.github.io/
+```
+
+这意味着你不用先买服务器，也不用自己配 Web 服务，就已经有了一个公网可访问的网站入口。
+
+### 5. 自定义域名能力
+
+如果你以后想把博客换成自己的域名，例如：
+
+```text
+https://blog.example.com/
+```
+
+GitHub Pages 也支持。
+
+官方文档明确支持：
+
+- `www.example.com` 这样的 `www` 子域名
+- `blog.example.com` 这样的自定义子域名
+- `example.com` 这样的根域名
+
+所以 GitHub 给的不只是一个 `github.io` 地址，还给了你把它接到自己域名上的能力。
+
+### 6. HTTPS 证书与加密访问
+
+GitHub Pages 还提供 HTTPS 支持。
+
+这意味着访问者打开你的网站时，流量可以通过 HTTPS 加密传输，避免被中间人轻易篡改或偷窥。
+
+对于 `github.io` 域名，GitHub Pages 会自动提供 HTTPS。  
+如果你使用自定义域名，只要 DNS 配置正确，也可以启用并强制使用 HTTPS。
+
+这也是为什么一个个人博客即使没有自己买服务器证书，也能直接以 `https://` 的形式访问。
+
+### 7. 发布流程自动化
+
+GitHub 还提供了自动化发布链路。
+
+你不需要每次手动上传 HTML 文件，只要：
+
+1. 改文章
+2. 提交 Git
+3. 推送到 `main`
+
+GitHub 就会自动完成构建和部署。
+
+这背后依赖的其实是两部分资源协同工作：
+
+- GitHub Actions 负责算力
+- GitHub Pages 负责托管
+
+### 8. 版本历史与回滚能力
+
+因为博客本身就是一个 Git 仓库，所以 GitHub 还免费给了你版本历史管理能力。
+
+这意味着你可以：
+
+- 回看每次修改了什么
+- 找回误删的文章
+- 比较不同版本的改动
+- 在出问题时回滚到某个旧提交
+
+这对博客非常有价值，因为文章、配置和部署记录都留在同一个版本系统里。
+
+## 这些资源的边界是什么
+
+虽然 GitHub 给了很多免费能力，但它不是一台“什么都能跑”的通用服务器。
+
+这套方案的边界主要有这些：
+
+- 它适合静态网站，不适合自己跑后端程序
+- 它不提供你自己的数据库
+- 它不适合长期存放很多超大文件
+- 它不适合拿来做电商站、在线交易站或 SaaS 主业务站点
+- 它也不适合处理敏感交易，例如密码、信用卡信息之类的场景
+
+还有一个很容易踩坑的点：
+
+虽然 GitHub 支持 Git LFS 来存大文件，但**Git LFS 不能用于 GitHub Pages 站点**。  
+也就是说，你不能指望把超大资源扔进 Git LFS，再让 Pages 像普通静态文件一样对外提供。
+
+如果你的博客以后真的要挂很多大资源，更合适的做法通常是：
+
+- 大文件放 GitHub Releases
+- 图片放对象存储或 CDN
+- 博客正文和页面继续放在 GitHub Pages
+
+## 用一句话总结 GitHub 给了什么
+
+如果把这套博客拆开看，GitHub 实际上提供的是：
+
+- 一个保存源码的仓库
+- 一台替你自动构建的云端机器
+- 一个能把静态文件公开发布的网站托管服务
+- 一个默认域名
+- 一个可选的自定义域名接入能力
+- 一个 HTTPS 能力
+- 一套 Git 版本管理和自动部署链路
+
+所以这不是“网页镜像”，也不是“偷偷白嫖漏洞”，而是**在使用 GitHub 官方开放的静态站点基础设施**。
+
 ## 从零建立一个 Hexo 博客的步骤
 
 下面这套流程，就是这次搭这个博客时走过的核心步骤。
@@ -315,3 +508,13 @@ git push origin main
 写文章，提交代码，等待自动发布。
 
 这也是我喜欢 Hexo 的原因之一。它足够简单，也足够实用。
+
+## 参考链接
+
+- GitHub Pages 限制：<https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits>
+- GitHub Pages 自定义工作流：<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>
+- GitHub Actions 托管 Runner 规格：<https://docs.github.com/en/actions/reference/runners/github-hosted-runners>
+- GitHub Pages 自定义域名：<https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages>
+- GitHub Pages HTTPS：<https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https>
+- GitHub 大文件限制：<https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github>
+- Git LFS：<https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage>
