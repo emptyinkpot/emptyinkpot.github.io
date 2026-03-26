@@ -1,0 +1,20 @@
+menu:
+  首页: /
+  归档: /archives/
+  关于: /about/
+
+subtitle: 记录代码、想法与日常
+
+links:
+  github: https://github.com/emptyinkpot
+
+sidebar: right
+
+widgets:
+  - recent_posts
+  - category
+  - tag
+  - archive
+
+rss: /atom.xml
+favicon:
