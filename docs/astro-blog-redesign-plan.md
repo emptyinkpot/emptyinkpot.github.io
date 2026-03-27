@@ -924,10 +924,10 @@ npm run check:updates
 - 建立 `site-v2` 原型站
 - 完成首页、文章页、分类、标签、系列、项目、Notes、搜索等基础结构
 - 为 `site-v2` 接入 RSS、Sitemap 与 robots.txt
+- 建立 `site-v2` 的 Pages 子路径发布链路
 - 建立公开维护日志、内部执行日志、模板和校验脚本
 
 下一批优先动作：
 
-- 建立 Astro 的 GitHub Actions 工作流
 - 完成 giscus 实配与验证
 - 迁移剩余内容并校验旧链接兼容策略

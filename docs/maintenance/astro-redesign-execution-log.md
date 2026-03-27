@@ -55,6 +55,19 @@
   - 本地请求 `/rss.xml`、`/sitemap-index.xml`、`/robots.txt` 均返回 `200`
   - RSS 输出已包含真实文章条目
 
+### 2026-03-27 / `site-v2` 接入 Pages 子路径发布
+
+- 状态：已完成
+- 关联提交：`02d4055`
+- 结果：
+  - 现有 Pages workflow 已支持同时构建 Hexo 根站与 `site-v2`
+  - `site-v2` 会被嵌入最终产物的 `/site-v2/` 子路径
+  - `site-v2` 已完成内部链接、搜索资源、RSS 与 `robots.txt` 的子路径适配
+- 验证：
+  - 本地按 workflow 顺序完成 Hexo 构建、Astro 子路径构建和复制嵌入
+  - 本地访问 `/site-v2/`、`/site-v2/rss.xml`、`/site-v2/search/`、`/site-v2/robots.txt` 均返回 `200`
+  - 生成 HTML 中已正确输出 `/site-v2/` 前缀链接
+
 ### 2026-03-27 / 公开维护日志页建立
 
 - 状态：已完成
@@ -77,7 +90,6 @@
 
 ## 下一批优先任务
 
-- [ ] 建立 Astro 的 GitHub Actions 工作流
 - [ ] 完成 giscus 的真实配置与验证
 - [ ] 继续迁移剩余文章和 About / Pages 内容
 - [ ] 评估旧链接兼容与重定向策略

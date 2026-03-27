@@ -51,6 +51,48 @@ npm run check:updates
 
 <!-- UPDATE_LOG_ENTRIES -->
 
+## 2026-03-27 / 让 `site-v2` 随 Pages 一起发布到 `/site-v2/`
+
+### 更新内容
+
+- 改造现有 GitHub Pages workflow，在保留 Hexo 根站的同时，额外构建 `site-v2`
+- 将 `site-v2` 的构建产物自动嵌入最终发布目录的 `/site-v2/` 子路径
+- 为 `site-v2` 增加 `base` 感知能力，统一修正内部链接、RSS、搜索资源和 `robots.txt`
+
+### 涉及技术
+
+- GitHub Actions
+- GitHub Pages artifact 部署
+- Astro `base` 配置
+- 子路径静态站点发布
+- Pagefind 资源路径适配
+
+### 关联记录
+
+- 页面：`/site-v2/`、`/site-v2/rss.xml`、`/site-v2/search/`
+- 文件：`.github/workflows/pages.yml`、`site-v2/src/lib/site.ts`、`site-v2/astro.config.mjs`
+- 提交：`02d4055`
+
+### 验证记录
+
+- 构建验证：本地按 workflow 顺序执行 Hexo 构建、`site-v2` 子路径构建和嵌入复制，全部成功
+- 路由验证：本地请求 `/site-v2/`、`/site-v2/rss.xml`、`/site-v2/search/`、`/site-v2/robots.txt` 均返回 `200`
+- 内容验证：生成产物中的链接已统一带上 `/site-v2/` 前缀，RSS 链接也已正确指向子路径
+
+### 实现效果
+
+- `site-v2` 现在具备了和现有 Hexo 站并行发布的能力
+- 后续可以在真实 Pages 环境下持续验证 Astro 新站，而不用提前切换主站
+- 部署链路从“本地原型”升级为“可上线预览”
+
+### 下一步
+
+- 接入并验证 giscus 真实配置
+- 继续迁移剩余文章与独立页面
+- 检查旧链接兼容与重定向策略
+
+---
+
 ## 2026-03-27 / `site-v2` 接入 RSS、Sitemap 与 robots.txt
 
 ### 更新内容
