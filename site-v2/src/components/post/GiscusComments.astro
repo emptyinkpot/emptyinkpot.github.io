@@ -4,6 +4,8 @@ const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
 const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
 const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
 const isConfigured = Boolean(repo && repoId && category && categoryId);
+const repoSettingsUrl = 'https://github.com/emptyinkpot/emptyinkpot.github.io/settings';
+const giscusConfigUrl = 'https://giscus.app/zh-CN';
 ---
 
 <section class="glass-card rounded-[2rem] p-6">
@@ -35,8 +37,15 @@ const isConfigured = Boolean(repo && repoId && category && categoryId);
       </>
     ) : (
       <div class="space-y-3 text-sm leading-7 text-stone-600">
-        <p>giscus 组件骨架已经接好，但当前还没有填入仓库和分类参数，所以评论区暂时不会真正加载。</p>
-        <p>下一步只要在 `site-v2/.env` 中补齐 `PUBLIC_GISCUS_*` 变量，就可以直接启用。</p>
+        <p>giscus 组件骨架已经接好，但当前仓库侧配置还没完成，所以评论区暂时不会真正加载。</p>
+        <p>
+          要真正启用它，先去
+          <a class="underline decoration-[rgba(31,74,95,0.3)] underline-offset-4" href={repoSettingsUrl} target="_blank" rel="noreferrer">仓库设置</a>
+          开启 Discussions，再到
+          <a class="underline decoration-[rgba(31,74,95,0.3)] underline-offset-4" href={giscusConfigUrl} target="_blank" rel="noreferrer">giscus 配置页</a>
+          生成 `PUBLIC_GISCUS_*` 参数。
+        </p>
+        <p>变量模板已经放在 `site-v2/.env.example`，补齐后重新构建即可直接启用。</p>
       </div>
     )
   }

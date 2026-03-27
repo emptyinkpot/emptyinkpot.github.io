@@ -1,43 +1,70 @@
-# Astro Starter Kit: Minimal
+# emptyinkpot / site-v2
 
-```sh
-npm create astro@latest -- --template minimal
+Astro 版博客重构原型，当前与根目录 Hexo 站并行维护。
+
+## 当前定位
+
+- 根目录 Hexo 站：继续作为当前线上主站
+- `site-v2/`：新的 Astro 内容站原型
+- GitHub Pages 预览路径：`/site-v2/`
+
+当前已经完成：
+
+- Astro + Tailwind + MDX + Content Collections
+- 首页、文章页、分类、标签、系列、项目、Notes、搜索页
+- RSS、Sitemap、robots.txt
+- GitHub Pages 子路径预览部署
+
+## 常用命令
+
+在 `site-v2/` 目录运行：
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 本地构建
 
-## 🚀 Project Structure
+默认本地构建：
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm run build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+如果要模拟 GitHub Pages 上的 `/site-v2/` 子路径部署，使用：
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+SITE_BASE=/site-v2/ npm run build
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+在 Windows PowerShell 中可写为：
 
-## 🧞 Commands
+```powershell
+$env:SITE_BASE='/site-v2/'
+npm run build
+Remove-Item Env:SITE_BASE
+```
 
-All commands are run from the root of the project, from a terminal:
+## giscus 配置
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+`site-v2` 的评论组件已经接好，但真实启用还依赖 GitHub 仓库设置。
 
-## 👀 Want to learn more?
+当前需要先完成：
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. 在仓库设置中开启 Discussions
+2. 安装 giscus GitHub App
+3. 创建一个用于评论映射的 Discussions 分类
+4. 到 `https://giscus.app/zh-CN` 生成仓库与分类参数
+5. 在 `site-v2/.env` 中填入对应变量
+
+可直接复制 `site-v2/.env.example` 作为起点。
+
+## 相关文档
+
+- `docs/astro-blog-redesign-plan.md`
+- `docs/astro-blog-redesign-checklist.md`
+- `docs/maintenance/astro-redesign-execution-log.md`
+- `docs/maintenance/giscus-setup.md`
