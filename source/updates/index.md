@@ -51,6 +51,47 @@ npm run check:updates
 
 <!-- UPDATE_LOG_ENTRIES -->
 
+## 2026-03-27 / 补齐 `giscus` 启用说明并确认仓库侧阻塞
+
+### 更新内容
+
+- 整理 `site-v2` 的 giscus 启用步骤
+- 重写 `site-v2/README.md`，把评论启用路径、预览路径和常用命令写清楚
+- 在评论区 fallback 中补入直接可点击的仓库设置和 giscus 配置入口
+- 明确当前真实阻塞点是 GitHub 仓库尚未开启 Discussions
+
+### 涉及技术
+
+- giscus
+- GitHub Discussions
+- 环境变量模板
+- 仓库维护文档
+
+### 关联记录
+
+- 页面：`site-v2` 文章页评论区
+- 文件：`site-v2/src/components/post/GiscusComments.astro`、`site-v2/.env.example`、`docs/maintenance/giscus-setup.md`
+- 提交：`1a5a183`
+
+### 验证记录
+
+- 仓库验证：GitHub 仓库页面当前无 `Discussions` 标签
+- 构建验证：执行 `cd site-v2 && npm run build` 成功
+- 说明验证：README、`.env.example` 和 fallback 文案已对齐为同一套步骤
+
+### 实现效果
+
+- `giscus` 现在已经不是“模糊待办”，而是“代码已就绪、仓库设置待完成”的清晰状态
+- 后续真正启用时，只需要开启 Discussions、安装 app 并填写参数
+- 评论功能的剩余阻塞点被压缩到了最小范围
+
+### 下一步
+
+- 如仓库设置允许，开启 Discussions 并完成真实参数填充
+- 继续迁移剩余文章与独立页面
+
+---
+
 ## 2026-03-27 / 让 `site-v2` 随 Pages 一起发布到 `/site-v2/`
 
 ### 更新内容

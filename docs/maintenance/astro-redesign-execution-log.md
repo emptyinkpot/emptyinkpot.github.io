@@ -68,6 +68,21 @@
   - 本地访问 `/site-v2/`、`/site-v2/rss.xml`、`/site-v2/search/`、`/site-v2/robots.txt` 均返回 `200`
   - 生成 HTML 中已正确输出 `/site-v2/` 前缀链接
 
+### 2026-03-27 / `giscus` 启用准备完成，确认仓库侧阻塞
+
+- 状态：部分完成
+- 关联提交：`1a5a183`
+- 结果：
+  - `site-v2` 的 giscus 组件说明已补齐
+  - `site-v2/.env.example` 已增加真实启用步骤
+  - 新增 `docs/maintenance/giscus-setup.md`
+  - `site-v2/README.md` 已重写为项目说明文档
+- 验证：
+  - 执行 `cd site-v2 && npm run build` 成功
+  - GitHub 仓库页面当前没有 `Discussions` 标签
+- 当前阻塞：
+  - 仓库侧尚未开启 Discussions，无法生成可用的 repo/category id
+
 ### 2026-03-27 / 公开维护日志页建立
 
 - 状态：已完成
@@ -90,7 +105,7 @@
 
 ## 下一批优先任务
 
-- [ ] 完成 giscus 的真实配置与验证
+- [ ] 开启仓库 Discussions 并完成 giscus 真实配置
 - [ ] 继续迁移剩余文章和 About / Pages 内容
 - [ ] 评估旧链接兼容与重定向策略
 
