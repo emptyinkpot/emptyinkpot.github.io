@@ -1,0 +1,40 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', ({ data }) => !data.draft);
+
+  return notes.map((note) => ({
+    params: { slug: note.id },
+    props: { note }
+  }));
+}
+
+const { note } = Astro.props as {
+  note: CollectionEntry<'notes'>;
+};
+
+const { Content } = await render(note);
+---
+
+<BaseLayout title={`${note.data.title} / emptyinkpot`} description={note.data.description}>
+  <main class="space-y-8 pb-10 pt-8 md:space-y-10 md:pt-14" data-pagefind-body>
+    <section class="glass-card rounded-[2.25rem] p-6 md:p-8">
+      <p class="section-kicker mb-4">Note</p>
+      <h1 class="max-w-4xl text-3xl font-semibold leading-tight text-stone-950 md:text-5xl">
+        {note.data.title}
+      </h1>
+      <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-stone-600">
+        <span class="pill">{formatDate(note.data.date)}</span>
+        <a class="pill" href="/notes">返回 Notes</a>
+      </div>
+      {note.data.description && <p class="mt-6 max-w-3xl text-base leading-8 text-stone-600">{note.data.description}</p>}
+    </section>
+
+    <article class="prose-shell rounded-[2rem]">
+      <Content />
+    </article>
+  </main>
+</BaseLayout>

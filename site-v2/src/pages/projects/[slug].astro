@@ -1,0 +1,48 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props as {
+  project: CollectionEntry<'projects'>;
+};
+
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${project.data.title} / emptyinkpot`} description={project.data.description}>
+  <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
+    <section class="glass-card rounded-[2.25rem] p-6 md:p-8">
+      <p class="section-kicker mb-4">Project</p>
+      <h1 class="max-w-4xl text-3xl font-semibold leading-tight text-stone-950 md:text-5xl">
+        {project.data.title}
+      </h1>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-stone-600">
+        <span class="pill">{project.data.status}</span>
+        {project.data.date && <span class="pill">{formatDate(project.data.date)}</span>}
+        {project.data.stack.map((item) => <span class="pill">{item}</span>)}
+      </div>
+
+      <p class="mt-6 max-w-3xl text-base leading-8 text-stone-600">{project.data.description}</p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        {project.data.repo && <a class="pill" href={project.data.repo} target="_blank" rel="noreferrer">Repository</a>}
+        {project.data.demo && <a class="pill" href={project.data.demo} target="_blank" rel="noreferrer">Demo</a>}
+      </div>
+    </section>
+
+    <article class="prose-shell rounded-[2rem]">
+      <Content />
+    </article>
+  </main>
+</BaseLayout>

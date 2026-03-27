@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTagCounts, toSlug } from '../../lib/content';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const tags = getTagCounts(posts);
+---
+
+<BaseLayout title="Tags / emptyinkpot" description="按标签浏览 site-v2 中的文章内容。">
+  <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
+    <section class="space-y-4">
+      <p class="section-kicker">Tags</p>
+      <h1 class="section-title text-4xl md:text-5xl">标签入口</h1>
+      <p class="max-w-3xl text-base leading-8 text-stone-600">
+        标签页更适合从主题词切入内容，后续可以进一步承接搜索和系列导航。
+      </p>
+    </section>
+
+    <section class="flex flex-wrap gap-3">
+      {
+        tags.map(([tag, count]) => (
+          <a class="pill" href={`/tags/${toSlug(tag)}/`}>
+            {tag} · {count}
+          </a>
+        ))
+      }
+    </section>
+  </main>
+</BaseLayout>

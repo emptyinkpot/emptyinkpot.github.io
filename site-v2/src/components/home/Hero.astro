@@ -1,0 +1,66 @@
+---
+interface Props {
+  postCount: number;
+  categoryCount: number;
+}
+
+const { postCount, categoryCount } = Astro.props as Props;
+---
+
+<section class="grid gap-6 pt-8 md:pt-14 lg:grid-cols-[1.45fr_0.85fr] lg:items-end">
+  <div class="space-y-6">
+    <p class="section-kicker">Minimal Luxury / Magazine Grid / Productized Blog</p>
+    <div class="space-y-4">
+      <h1 class="max-w-5xl text-4xl font-semibold leading-tight text-stone-950 md:text-6xl">
+        把个人博客升级成一个更像内容产品的 Astro 站点。
+      </h1>
+      <p class="max-w-3xl text-base leading-8 text-stone-600 md:text-lg">
+        这个 v2 样板把极简高级、卡片杂志感和技术博客的结构化能力揉在一起。第一阶段先完成首页、文章页和样板内容，
+        再接搜索与评论。
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      <span class="pill pill--dark">Astro</span>
+      <span class="pill">Tailwind</span>
+      <span class="pill">MDX</span>
+      <span class="pill">Content Collections</span>
+      <span class="pill">GitHub Pages</span>
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      <a
+        class="inline-flex items-center justify-center rounded-full bg-stone-900 px-5 py-3 text-sm font-medium text-stone-50 transition hover:bg-stone-700"
+        href="/posts"
+      >
+        进入文章列表
+      </a>
+      <a
+        class="inline-flex items-center justify-center rounded-full border border-[rgba(87,74,60,0.14)] bg-white/65 px-5 py-3 text-sm font-medium text-stone-700 transition hover:bg-white/90 hover:text-stone-950"
+        href="/projects"
+      >
+        查看项目线
+      </a>
+    </div>
+  </div>
+
+  <div class="glass-card rounded-[2.25rem] p-6 md:p-7">
+    <p class="section-kicker mb-4">Build Snapshot</p>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="rounded-[1.6rem] border border-white/60 bg-white/70 p-4">
+        <p class="text-3xl font-semibold text-stone-950">{postCount}</p>
+        <p class="mt-2 text-sm text-stone-500">Migrated sample posts</p>
+      </div>
+      <div class="rounded-[1.6rem] border border-white/60 bg-white/70 p-4">
+        <p class="text-3xl font-semibold text-stone-950">{categoryCount}</p>
+        <p class="mt-2 text-sm text-stone-500">Active categories</p>
+      </div>
+    </div>
+
+    <div class="mt-6 space-y-3 text-sm leading-7 text-stone-600">
+      <p>1. 新站运行在 `site-v2/`，不影响当前 Hexo 线上站。</p>
+      <p>2. 第一阶段重点是首页、文章页和内容模型，不急着把复杂度一次拉满。</p>
+      <p>3. Pagefind 与 giscus 会在骨架稳定后接入。</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, toSlug } from '../../lib/content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props as Props;
+const excerpt = post.data.description ?? getExcerptFromBody(post.body, 196);
+---
+
+<article class="card-stack rounded-[2.25rem] p-6 md:p-8">
+  <div class="mb-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.24em] text-stone-500">
+    <span class="pill pill--dark">Featured</span>
+    <a class="relative z-10 transition hover:text-stone-900" href={`/categories/${toSlug(getPrimaryCategory(post))}/`}>
+      {getPrimaryCategory(post)}
+    </a>
+    <span>{formatDate(post.data.date)}</span>
+  </div>
+
+  <div class="space-y-5">
+    <h2 class="max-w-4xl text-3xl font-semibold leading-tight text-stone-950 md:text-5xl">
+      <a class="stretched-link" href={`/posts/${post.id}/`}>{post.data.title}</a>
+    </h2>
+    <p class="max-w-3xl text-base leading-8 text-stone-600 md:text-lg">{excerpt}</p>
+  </div>
+
+  <div class="mt-8 flex flex-wrap items-center gap-3 text-sm text-stone-600">
+    <span class="pill">{getReadingTime(post.body)} min read</span>
+    {
+      post.data.tags.slice(0, 3).map((tag) => (
+        <a class="pill relative z-10" href={`/tags/${toSlug(tag)}/`} key={tag}>
+          {tag}
+        </a>
+      ))
+    }
+  </div>
+</article>

@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/content';
+
+const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<BaseLayout title="Notes / emptyinkpot" description="站点重构过程中的短笔记与阶段更新。">
+  <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
+    <section class="space-y-4">
+      <p class="section-kicker">Notes</p>
+      <h1 class="section-title text-4xl md:text-5xl">短笔记与阶段更新</h1>
+      <p class="max-w-3xl text-base leading-8 text-stone-600">
+        Notes 承接正式文章之外的轻量内容，适合记录阶段里程碑、设计取舍和迁移中的碎片思考。
+      </p>
+    </section>
+
+    {
+      notes.length ? (
+        <section class="grid gap-5 md:grid-cols-2">
+          {notes.map((note) => (
+            <a class="card-stack rounded-[2rem] p-6" href={`/notes/${note.id}/`}>
+              <p class="section-kicker mb-3">{formatDate(note.data.date)}</p>
+              <h2 class="text-2xl font-semibold text-stone-950">{note.data.title}</h2>
+              {note.data.description && <p class="mt-4 text-sm leading-7 text-stone-600">{note.data.description}</p>}
+            </a>
+          ))}
+        </section>
+      ) : (
+        <section class="rounded-[2rem] border border-dashed border-[rgba(87,74,60,0.18)] bg-white/45 p-6 text-sm leading-7 text-stone-500">
+          当前还没有公开 notes。后续会把设计记录、迁移进度和短更新逐步补上。
+        </section>
+      )
+    }
+  </main>
+</BaseLayout>

@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleCard from '../../components/shared/ArticleCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTagCounts, sortPosts, toSlug } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
+  const tags = getTagCounts(posts);
+
+  return tags.map(([tag]) => ({
+    params: { slug: toSlug(tag) },
+    props: {
+      tag,
+      posts: posts.filter((post) => post.data.tags.includes(tag))
+    }
+  }));
+}
+
+const { tag, posts } = Astro.props as {
+  tag: string;
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+};
+---
+
+<BaseLayout title={`${tag} / emptyinkpot`} description={`浏览标签「${tag}」下的文章内容。`}>
+  <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
+    <section class="space-y-4">
+      <p class="section-kicker">Tag</p>
+      <h1 class="section-title text-4xl md:text-5xl">{tag}</h1>
+      <p class="max-w-3xl text-base leading-8 text-stone-600">
+        当前标签下共有 {posts.length} 篇文章。这里适合承接跨分类但同主题的内容。
+      </p>
+    </section>
+
+    <section class="grid gap-5 md:grid-cols-2">
+      {posts.map((post) => <ArticleCard post={post} />)}
+    </section>
+  </main>
+</BaseLayout>
