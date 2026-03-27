@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getSeriesCounts, toSlug } from '../../lib/content';
+import { withBase } from '../../lib/site';
 
 const posts = await getCollection('posts', ({ data }) => !data.draft);
 const seriesList = getSeriesCounts(posts);
@@ -20,7 +21,7 @@ const seriesList = getSeriesCounts(posts);
     <section class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
       {
         seriesList.map(([series, count]) => (
-          <a class="card-stack rounded-[2rem] p-6" href={`/series/${toSlug(series)}/`}>
+          <a class="card-stack rounded-[2rem] p-6" href={withBase(`/series/${toSlug(series)}/`)}>
             <p class="section-kicker mb-3">Series</p>
             <h2 class="text-2xl font-semibold text-stone-950">{series}</h2>
             <p class="mt-3 text-sm leading-7 text-stone-600">{count} 篇文章</p>

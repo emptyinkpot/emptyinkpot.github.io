@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/content';
+import { withBase } from '../../lib/site';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes', ({ data }) => !data.draft);
@@ -28,7 +29,7 @@ const { Content } = await render(note);
       </h1>
       <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-stone-600">
         <span class="pill">{formatDate(note.data.date)}</span>
-        <a class="pill" href="/notes">返回 Notes</a>
+        <a class="pill" href={withBase('/notes')}>返回 Notes</a>
       </div>
       {note.data.description && <p class="mt-6 max-w-3xl text-base leading-8 text-stone-600">{note.data.description}</p>}
     </section>

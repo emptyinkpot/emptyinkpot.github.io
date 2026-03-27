@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/content';
+import { withBase } from '../../lib/site';
 
 const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
@@ -22,7 +23,7 @@ const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sor
       notes.length ? (
         <section class="grid gap-5 md:grid-cols-2">
           {notes.map((note) => (
-            <a class="card-stack rounded-[2rem] p-6" href={`/notes/${note.id}/`}>
+            <a class="card-stack rounded-[2rem] p-6" href={withBase(`/notes/${note.id}/`)}>
               <p class="section-kicker mb-3">{formatDate(note.data.date)}</p>
               <h2 class="text-2xl font-semibold text-stone-950">{note.data.title}</h2>
               {note.data.description && <p class="mt-4 text-sm leading-7 text-stone-600">{note.data.description}</p>}

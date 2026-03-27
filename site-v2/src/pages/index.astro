@@ -5,6 +5,7 @@ import ArticleCard from '../components/shared/ArticleCard.astro';
 import FeaturedCard from '../components/shared/FeaturedCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatDate, getCategoryCounts, getSeriesCounts, sortPosts, toSlug } from '../lib/content';
+import { withBase } from '../lib/site';
 
 const allPosts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
 const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
@@ -43,7 +44,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
           <p class="section-kicker">Latest Posts</p>
           <h2 class="section-title">最新文章以卡片网格呈现，而不是直接铺全文。</h2>
         </div>
-        <a class="text-sm text-stone-600 transition hover:text-stone-950" href="/posts">
+        <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/posts')}>
           查看全部文章
         </a>
       </div>
@@ -60,7 +61,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
             <p class="section-kicker mb-4">Topics</p>
             <h2 class="section-title mb-5">内容入口不是归档页，而是可导航的主题结构。</h2>
           </div>
-          <a class="text-sm text-stone-600 transition hover:text-stone-950" href="/categories">
+          <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/categories')}>
             全部分区
           </a>
         </div>
@@ -70,7 +71,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
             categories.map(([category, count]) => (
               <a
                 class="card-stack rounded-[1.5rem] p-4"
-                href={`/categories/${toSlug(category)}/`}
+                href={withBase(`/categories/${toSlug(category)}/`)}
                 key={category}
               >
                 <p class="section-kicker mb-3">Category</p>
@@ -88,7 +89,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
             <p class="section-kicker mb-4">Series</p>
             <h2 class="section-title mb-5">系列承担“连续阅读”，把零散文章串成专题。</h2>
           </div>
-          <a class="text-sm text-stone-600 transition hover:text-stone-950" href="/series">
+          <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/series')}>
             查看系列
           </a>
         </div>
@@ -99,7 +100,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
               seriesList.map(([series, count]) => (
                 <a
                   class="card-stack flex items-center justify-between gap-4 rounded-[1.5rem] p-4"
-                  href={`/series/${toSlug(series)}/`}
+                  href={withBase(`/series/${toSlug(series)}/`)}
                   key={series}
                 >
                   <div>
@@ -126,7 +127,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
                 <p class="section-kicker">Project Snapshot</p>
                 <h2 class="section-title">让博客逐步具备“项目展示”的第二条内容线。</h2>
               </div>
-              <a class="pill" href={`/projects/${activeProject.id}/`}>
+              <a class="pill" href={withBase(`/projects/${activeProject.id}/`)}>
                 {activeProject.data.status}
               </a>
             </div>
@@ -135,7 +136,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
               <div class="space-y-4">
                 <h3 class="text-2xl font-semibold text-stone-950">{activeProject.data.title}</h3>
                 <p class="max-w-3xl text-base leading-8 text-stone-600">{activeProject.data.description}</p>
-                <a class="text-sm text-stone-600 transition hover:text-stone-950" href="/projects">
+                <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/projects')}>
                   查看全部项目
                 </a>
               </div>
@@ -154,7 +155,7 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
             <p class="section-kicker">Notes</p>
             <h2 class="section-title">用轻量笔记承接重构过程中的阶段反馈与碎片沉淀。</h2>
           </div>
-          <a class="text-sm text-stone-600 transition hover:text-stone-950" href="/notes">
+          <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/notes')}>
             查看 notes
           </a>
         </div>
@@ -162,8 +163,8 @@ const seriesList = getSeriesCounts(allPosts).slice(0, 3);
         <div class="mt-6 space-y-3">
           {
             latestNotes.length ? (
-              latestNotes.map((note) => (
-                <a class="card-stack block rounded-[1.5rem] p-4" href={`/notes/${note.id}/`} key={note.id}>
+            latestNotes.map((note) => (
+                <a class="card-stack block rounded-[1.5rem] p-4" href={withBase(`/notes/${note.id}/`)} key={note.id}>
                   <p class="section-kicker mb-2">{formatDate(note.data.date)}</p>
                   <h3 class="text-lg font-medium text-stone-950">{note.data.title}</h3>
                   {note.data.description && <p class="mt-2 text-sm leading-7 text-stone-600">{note.data.description}</p>}

@@ -1,4 +1,4 @@
-name: Deploy Hexo to Pages
+name: Deploy Blog and site-v2 Preview to Pages
 
 on:
   push:
@@ -30,12 +30,35 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            site-v2/package-lock.json
 
-      - name: Install dependencies
+      - name: Install Hexo dependencies
         run: npm ci
 
-      - name: Build site
+      - name: Install site-v2 dependencies
+        run: npm ci
+        working-directory: site-v2
+
+      - name: Clean Hexo output
+        run: npm run clean
+
+      - name: Build Hexo site
         run: npm run build
+
+      - name: Build site-v2 preview
+        run: npm run build
+        working-directory: site-v2
+        env:
+          SITE_BASE: /site-v2/
+          SITE_URL: https://emptyinkpot.github.io
+
+      - name: Embed site-v2 preview under /site-v2/
+        run: |
+          rm -rf public/site-v2
+          mkdir -p public/site-v2
+          cp -R site-v2/dist/. public/site-v2
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

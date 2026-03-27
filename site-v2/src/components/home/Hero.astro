@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../../lib/site';
+
 interface Props {
   postCount: number;
   categoryCount: number;
@@ -31,13 +33,13 @@ const { postCount, categoryCount } = Astro.props as Props;
     <div class="flex flex-wrap gap-3">
       <a
         class="inline-flex items-center justify-center rounded-full bg-stone-900 px-5 py-3 text-sm font-medium text-stone-50 transition hover:bg-stone-700"
-        href="/posts"
+        href={withBase('/posts')}
       >
         进入文章列表
       </a>
       <a
         class="inline-flex items-center justify-center rounded-full border border-[rgba(87,74,60,0.14)] bg-white/65 px-5 py-3 text-sm font-medium text-stone-700 transition hover:bg-white/90 hover:text-stone-950"
-        href="/projects"
+        href={withBase('/projects')}
       >
         查看项目线
       </a>

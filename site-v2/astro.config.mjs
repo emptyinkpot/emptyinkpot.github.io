@@ -5,9 +5,13 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
+const site = process.env.SITE_URL ?? 'https://emptyinkpot.github.io';
+const base = process.env.SITE_BASE ?? '/';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://emptyinkpot.github.io',
+  site,
+  base,
   vite: {
     plugins: [tailwindcss()]
   },

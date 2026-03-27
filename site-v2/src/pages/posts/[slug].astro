@@ -11,6 +11,7 @@ import {
   sortPosts,
   toSlug
 } from '../../lib/content';
+import { withBase } from '../../lib/site';
 
 export async function getStaticPaths() {
   const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
@@ -42,7 +43,7 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
 <BaseLayout title={`${post.data.title} / emptyinkpot`} description={description}>
   <main class="space-y-8 pb-10 pt-8 md:space-y-12 md:pt-14" data-pagefind-body>
     <section class="glass-card rounded-[2.25rem] p-6 md:p-8">
-      <a class="section-kicker mb-4 inline-flex transition hover:text-stone-950" href={`/categories/${toSlug(primaryCategory)}/`}>
+      <a class="section-kicker mb-4 inline-flex transition hover:text-stone-950" href={withBase(`/categories/${toSlug(primaryCategory)}/`)}>
         {primaryCategory}
       </a>
       <h1 class="max-w-4xl text-3xl font-semibold leading-tight text-stone-950 md:text-5xl">
@@ -54,14 +55,14 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
         <span class="pill">{getReadingTime(post.body)} min read</span>
         {
           post.data.series && (
-            <a class="pill" href={`/series/${toSlug(post.data.series)}/`}>
+            <a class="pill" href={withBase(`/series/${toSlug(post.data.series)}/`)}>
               系列 · {post.data.series}
             </a>
           )
         }
         {
           post.data.tags.map((tag) => (
-            <a class="pill" href={`/tags/${toSlug(tag)}/`} key={tag}>
+            <a class="pill" href={withBase(`/tags/${toSlug(tag)}/`)} key={tag}>
               {tag}
             </a>
           ))
@@ -104,7 +105,7 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
               <p class="section-kicker">Series Navigation</p>
               <h2 class="section-title">继续阅读「{post.data.series}」</h2>
             </div>
-            <a class="text-sm text-stone-600 transition hover:text-stone-950" href={`/series/${toSlug(post.data.series)}/`}>
+            <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase(`/series/${toSlug(post.data.series)}/`)}>
               系列总览
             </a>
           </div>
@@ -116,7 +117,7 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
                   'card-stack flex items-center justify-between gap-4 rounded-[1.5rem] p-4',
                   entry.id === post.id && 'border-stone-900/20 bg-white/90'
                 ]}
-                href={`/posts/${entry.id}/`}
+                href={withBase(`/posts/${entry.id}/`)}
               >
                 <div>
                   <p class="section-kicker mb-2">Chapter {index + 1}</p>
@@ -135,7 +136,7 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
         <p class="section-kicker mb-3">Newer</p>
         {
           newerPost ? (
-            <a class="text-lg font-medium text-stone-900 transition hover:text-stone-600" href={`/posts/${newerPost.id}/`}>
+            <a class="text-lg font-medium text-stone-900 transition hover:text-stone-600" href={withBase(`/posts/${newerPost.id}/`)}>
               {newerPost.data.title}
             </a>
           ) : (
@@ -147,7 +148,7 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
         <p class="section-kicker mb-3">Older</p>
         {
           olderPost ? (
-            <a class="text-lg font-medium text-stone-900 transition hover:text-stone-600" href={`/posts/${olderPost.id}/`}>
+            <a class="text-lg font-medium text-stone-900 transition hover:text-stone-600" href={withBase(`/posts/${olderPost.id}/`)}>
               {olderPost.data.title}
             </a>
           ) : (
@@ -166,7 +167,7 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
           </div>
           <div class="grid gap-5 md:grid-cols-3">
             {relatedPosts.map((relatedPost) => (
-              <a class="card-stack rounded-[1.75rem] p-5" href={`/posts/${relatedPost.id}/`}>
+              <a class="card-stack rounded-[1.75rem] p-5" href={withBase(`/posts/${relatedPost.id}/`)}>
                 <p class="text-xs uppercase tracking-[0.22em] text-stone-500">{getPrimaryCategory(relatedPost)}</p>
                 <h3 class="mt-3 text-lg font-medium leading-7 text-stone-900">{relatedPost.data.title}</h3>
               </a>

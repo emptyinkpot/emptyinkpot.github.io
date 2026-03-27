@@ -1,14 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/site';
 
 const isDev = import.meta.env.DEV;
+const pagefindBundlePath = withBase('/pagefind/');
 ---
 
 <BaseLayout title="Search / emptyinkpot" description="site-v2 的全文搜索页，基于 Pagefind。">
   {
     !isDev && (
       <Fragment slot="head">
-        <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+        <link rel="stylesheet" href={withBase('/pagefind/pagefind-ui.css')} />
       </Fragment>
     )
   }
@@ -32,13 +34,14 @@ const isDev = import.meta.env.DEV;
         ) : (
           <>
             <div id="search"></div>
-            <script is:inline src="/pagefind/pagefind-ui.js"></script>
-            <script is:inline>
+            <script is:inline src={withBase('/pagefind/pagefind-ui.js')}></script>
+            <script is:inline define:vars={{ pagefindBundlePath }}>
               window.addEventListener('DOMContentLoaded', () => {
                 new window.PagefindUI({
                   element: '#search',
                   showSubResults: true,
-                  resetStyles: false
+                  resetStyles: false,
+                  bundlePath: pagefindBundlePath
                 });
               });
             </script>

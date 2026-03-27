@@ -1,6 +1,7 @@
 ---
 import SiteFooter from '../components/shared/SiteFooter.astro';
 import SiteHeader from '../components/shared/SiteHeader.astro';
+import { withBase } from '../lib/site';
 import '../styles/global.css';
 
 interface Props {
@@ -20,7 +21,7 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <link rel="alternate" type="application/rss+xml" title="emptyinkpot / Site v2 RSS" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="emptyinkpot / Site v2 RSS" href={withBase('/rss.xml')} />
     <title>{title}</title>
     <slot name="head" />
   </head>

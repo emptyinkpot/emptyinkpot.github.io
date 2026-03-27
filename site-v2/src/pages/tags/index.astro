@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getTagCounts, toSlug } from '../../lib/content';
+import { withBase } from '../../lib/site';
 
 const posts = await getCollection('posts', ({ data }) => !data.draft);
 const tags = getTagCounts(posts);
@@ -20,7 +21,7 @@ const tags = getTagCounts(posts);
     <section class="flex flex-wrap gap-3">
       {
         tags.map(([tag, count]) => (
-          <a class="pill" href={`/tags/${toSlug(tag)}/`}>
+          <a class="pill" href={withBase(`/tags/${toSlug(tag)}/`)}>
             {tag} · {count}
           </a>
         ))

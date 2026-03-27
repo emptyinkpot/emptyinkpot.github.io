@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
+import { absoluteUrl } from '../lib/site';
 
 export const GET: APIRoute = ({ site }) => {
-  const sitemapUrl = new URL('/sitemap-index.xml', site ?? 'https://emptyinkpot.github.io').toString();
+  const sitemapUrl = absoluteUrl('/sitemap-index.xml', site);
 
   return new Response(`User-agent: *\nAllow: /\n\nSitemap: ${sitemapUrl}\n`, {
     headers: {

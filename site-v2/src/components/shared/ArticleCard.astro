@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, toSlug } from '../../lib/content';
+import { withBase } from '../../lib/site';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -12,7 +13,7 @@ const excerpt = post.data.description ?? getExcerptFromBody(post.body, 118);
 
 <article class="card-stack h-full rounded-[2rem] p-5 md:p-6">
   <div class="mb-6 flex items-center justify-between gap-4 text-xs uppercase tracking-[0.22em] text-stone-500">
-    <a class="relative z-10 transition hover:text-stone-900" href={`/categories/${toSlug(getPrimaryCategory(post))}/`}>
+    <a class="relative z-10 transition hover:text-stone-900" href={withBase(`/categories/${toSlug(getPrimaryCategory(post))}/`)}>
       {getPrimaryCategory(post)}
     </a>
     <span>{formatDate(post.data.date)}</span>
@@ -20,7 +21,7 @@ const excerpt = post.data.description ?? getExcerptFromBody(post.body, 118);
 
   <div class="space-y-4">
     <h3 class="text-xl font-semibold leading-tight text-stone-900 md:text-2xl">
-      <a class="stretched-link" href={`/posts/${post.id}/`}>{post.data.title}</a>
+      <a class="stretched-link" href={withBase(`/posts/${post.id}/`)}>{post.data.title}</a>
     </h3>
     <p class="text-sm leading-7 text-stone-600">{excerpt}</p>
   </div>
@@ -29,7 +30,7 @@ const excerpt = post.data.description ?? getExcerptFromBody(post.body, 118);
     <span class="pill">{getReadingTime(post.body)} min read</span>
     {
       post.data.tags.slice(0, 2).map((tag) => (
-        <a class="pill relative z-10" href={`/tags/${toSlug(tag)}/`} key={tag}>
+        <a class="pill relative z-10" href={withBase(`/tags/${toSlug(tag)}/`)} key={tag}>
           {tag}
         </a>
       ))
