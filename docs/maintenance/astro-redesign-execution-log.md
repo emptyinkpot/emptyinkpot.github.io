@@ -1,0 +1,77 @@
+# Astro 重构执行日志
+
+更新时间：2026-03-27
+
+关联文档：
+
+- `docs/astro-blog-redesign-plan.md`
+- `docs/astro-blog-redesign-checklist.md`
+- `docs/maintenance/update-log-spec.md`
+- `source/updates/index.md`
+
+## 当前状态
+
+- 当前策略：保留根目录 Hexo 线上站，同时在 `site-v2/` 并行推进 Astro 重构
+- 当前阶段：阶段 6 基本完成，阶段 7 部分启动
+- 当前重点：补齐 RSS / Sitemap / GitHub Actions / giscus / 内容迁移
+
+## 已完成记录
+
+### 2026-03-27 / 重构方案与执行清单入库
+
+- 状态：已完成
+- 关联提交：`38769ab`
+- 结果：
+  - 新增详细方案文档
+  - 新增执行清单版文档
+  - 技术路线、分阶段目标和 MVP 范围明确
+- 验证：
+  - 文档已纳入仓库
+  - 后续开发已经按该清单推进
+
+### 2026-03-27 / `site-v2` 原型站可运行
+
+- 状态：已完成
+- 关联提交：`9912824`
+- 结果：
+  - Astro、Tailwind、MDX、Content Collections 已接入
+  - 首页、文章页、分类、标签、系列、项目、Notes、搜索页已建立
+  - 两篇真实文章已迁移为样板内容
+- 验证：
+  - 执行 `cd site-v2 && npm run build` 成功
+  - 本地校验关键路由均返回 `200`
+
+### 2026-03-27 / 公开维护日志页建立
+
+- 状态：已完成
+- 关联提交：`b3fbf08`
+- 结果：
+  - 新增 `/updates/`
+  - 首页导航可直接进入
+  - 历史关键节点已回填
+- 验证：
+  - 执行 `npm run build` 成功
+  - 本地校验 `/updates/` 返回 `200`
+
+## 本轮补充的治理项
+
+- 新增 `docs/maintenance/` 维护目录
+- 新增公开日志模板与治理规范
+- 新增 `npm run new:update`
+- 新增 `npm run check:updates`
+- 将执行清单补充为“原始规划 + 实际执行记录 + 下一批待办”
+
+## 下一批优先任务
+
+- [ ] 为 `site-v2` 接入 Sitemap
+- [ ] 为 `site-v2` 接入 RSS
+- [ ] 建立 Astro 的 GitHub Actions 工作流
+- [ ] 完成 giscus 的真实配置与验证
+- [ ] 继续迁移剩余文章和 About / Pages 内容
+- [ ] 评估旧链接兼容与重定向策略
+
+## 使用约定
+
+- 公开可见变化：同步写入 `source/updates/index.md`
+- 阶段推进与验证：同步写入本文件
+- 范围与阶段状态：同步写入 `docs/astro-blog-redesign-checklist.md`

@@ -6,7 +6,9 @@
     "clean": "hexo clean",
     "build": "hexo generate",
     "new": "hexo new",
-    "server": "hexo server"
+    "server": "hexo server",
+    "new:update": "node tools/new-update-entry.mjs",
+    "check:updates": "node tools/validate-update-log.mjs"
   },
   "hexo": {
     "version": "8.1.1"

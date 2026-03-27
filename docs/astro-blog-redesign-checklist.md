@@ -4,6 +4,14 @@
 
 更新时间：2026-03-27
 
+说明：
+
+- 第 1 到 19 节保留原始规划视角，用于覆盖完整范围
+- 第 20 节记录已完成的关键动作
+- 第 21 节记录下一批优先动作
+- 第 22 节记录过程治理与更新日志机制
+- 内部执行记录以 `docs/maintenance/astro-redesign-execution-log.md` 为准
+
 ## 1. 项目目标
 
 - [ ] 将当前 Hexo 博客升级为更现代的内容站
@@ -315,3 +323,43 @@
 7. [ ] 接入搜索
 8. [ ] 接入 giscus
 9. [ ] 再批量迁移剩余内容
+
+## 20. 已完成关键动作
+
+- [x] 新建 `docs/astro-blog-redesign-plan.md`
+- [x] 新建 `docs/astro-blog-redesign-checklist.md`
+- [x] 在仓库中建立 `site-v2/`
+- [x] 初始化 Astro + Tailwind + MDX
+- [x] 建立 Astro Content Collections schema
+- [x] 迁移 2 篇真实文章作为样板内容
+- [x] 完成首页第一版，首页不再显示全文流
+- [x] 完成文章详情页第一版
+- [x] 完成分类页、标签页、系列页、项目页、Notes 页
+- [x] 接入 Pagefind 并通过构建验证
+- [x] 建立公开更新日志页面 `source/updates/index.md`
+- [x] 回填关键历史更新节点
+- [x] 新建 `docs/maintenance/` 维护目录
+- [x] 新建更新日志模板 `docs/templates/update-log-entry.md`
+- [x] 新增 `npm run new:update`
+- [x] 新增 `npm run check:updates`
+
+## 21. 下一批优先动作
+
+- [ ] 为 `site-v2` 接入 Sitemap
+- [ ] 为 `site-v2` 接入 RSS
+- [ ] 建立 Astro 的 GitHub Actions 工作流
+- [ ] 接入并验证 giscus 真实配置
+- [ ] 迁移剩余文章与独立页面
+- [ ] 检查旧链接兼容与重定向策略
+- [ ] 将 `check:updates` 接入 CI 或发布前检查流程
+
+## 22. 过程治理与更新日志机制
+
+- [x] 建立公开维护日志：`source/updates/index.md`
+- [x] 建立内部执行日志：`docs/maintenance/astro-redesign-execution-log.md`
+- [x] 建立治理规范：`docs/maintenance/update-log-spec.md`
+- [x] 建立日志模板：`docs/templates/update-log-entry.md`
+- [x] 建立新增脚本：`npm run new:update`
+- [x] 建立校验脚本：`npm run check:updates`
+- [ ] 将公开维护日志与 `site-v2` 上线后的线上站点同步策略写清楚
+- [ ] 将验证记录进一步标准化为固定命令集合

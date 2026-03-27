@@ -885,3 +885,50 @@ src/content/posts/
 - GitHub Actions 新工作流文档
 - 评论系统接入说明
 - 从 Hexo 到 Astro 的字段映射文档
+
+## 19. 过程治理与可追溯机制
+
+为了避免后续重构越做越散，建议同时维护 4 类记录：
+
+- 公开维护日志：`source/updates/index.md`
+- 内部执行日志：`docs/maintenance/astro-redesign-execution-log.md`
+- 治理规范：`docs/maintenance/update-log-spec.md`
+- 执行清单：`docs/astro-blog-redesign-checklist.md`
+
+它们的分工如下：
+
+- 公开维护日志：面向站点读者，说明更新内容、技术点和效果
+- 内部执行日志：面向仓库维护者，记录阶段推进、验证、下一步
+- 治理规范：约束日志字段、质量门槛和维护流程
+- 执行清单：记录阶段范围、已完成动作和下一批待办
+
+推荐配套自动化命令：
+
+```bash
+npm run new:update -- --title "更新标题" --dry-run
+npm run check:updates
+```
+
+这套机制的目标是：
+
+- 保证公开更新内容能追到提交和文件
+- 保证每次外显变化都有验证记录
+- 保证 GitHub 更新说明可以直接复用已有日志
+- 保证执行清单不只是一份“最初计划”，而是会跟着项目进展更新
+
+## 20. 当前已完成与下一步
+
+截至 2026-03-27，已经完成：
+
+- 建立 Astro 重构方案与执行清单
+- 建立 `site-v2` 原型站
+- 完成首页、文章页、分类、标签、系列、项目、Notes、搜索等基础结构
+- 建立公开维护日志、内部执行日志、模板和校验脚本
+
+下一批优先动作：
+
+- 为 `site-v2` 接入 Sitemap
+- 为 `site-v2` 接入 RSS
+- 建立 Astro 的 GitHub Actions 工作流
+- 完成 giscus 实配与验证
+- 迁移剩余内容并校验旧链接兼容策略
