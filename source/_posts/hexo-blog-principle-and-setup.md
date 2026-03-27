@@ -485,16 +485,26 @@ git commit -m "Initialize Hexo blog"
 git push origin main
 ```
 
+这里有一个很容易混淆的点，需要单独说清楚：
+
+- `git commit` 只是把改动提交到**本地 Git 仓库**
+- `git push origin main` 才是把本地提交推到 **GitHub 远端仓库**
+- 平时口头说“提交到 GitHub”，很多时候其实指的是这两步连在一起
+
+也就是说，只做了 `git commit` 还不够。  
+只有 `git push origin main` 成功之后，GitHub 上的仓库才会看到最新改动，`.github/workflows/pages.yml` 里的工作流也才会被触发。
+
 推送成功后，GitHub Actions 就会自动执行，完成构建和发布。
 
 ## 以后写博客时的日常流程
 
-如果这条链路已经跑通，后面日常写作其实就只剩四步：
+如果这条链路已经跑通，后面日常写作其实就只剩五步：
 
 1. 新建文章
 2. 写 Markdown
 3. 本地预览
-4. 提交并推送
+4. 本地提交
+5. 推送到 GitHub
 
 对应命令通常就是：
 
@@ -505,6 +515,9 @@ git add .
 git commit -m "Add new post"
 git push origin main
 ```
+
+如果你只是 `git commit` 了，但还没有 `git push`，那么线上博客不会更新。  
+真正让 GitHub Pages 开始重新部署的动作，是 `push` 到远端分支。
 
 ## 最后再浓缩成一句话
 
