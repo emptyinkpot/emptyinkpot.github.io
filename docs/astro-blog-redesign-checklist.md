@@ -336,6 +336,9 @@
 - [x] 完成文章详情页第一版
 - [x] 完成分类页、标签页、系列页、项目页、Notes 页
 - [x] 接入 Pagefind 并通过构建验证
+- [x] 为 `site-v2` 接入 Sitemap
+- [x] 为 `site-v2` 接入 RSS
+- [x] 为 `site-v2` 接入 `robots.txt`
 - [x] 建立公开更新日志页面 `source/updates/index.md`
 - [x] 回填关键历史更新节点
 - [x] 新建 `docs/maintenance/` 维护目录
@@ -345,8 +348,6 @@
 
 ## 21. 下一批优先动作
 
-- [ ] 为 `site-v2` 接入 Sitemap
-- [ ] 为 `site-v2` 接入 RSS
 - [ ] 建立 Astro 的 GitHub Actions 工作流
 - [ ] 接入并验证 giscus 真实配置
 - [ ] 迁移剩余文章与独立页面

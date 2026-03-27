@@ -41,6 +41,20 @@
   - 执行 `cd site-v2 && npm run build` 成功
   - 本地校验关键路由均返回 `200`
 
+### 2026-03-27 / `site-v2` 接入 RSS、Sitemap 与 robots.txt
+
+- 状态：已完成
+- 关联提交：`1d0e03c`
+- 结果：
+  - 接入 `@astrojs/sitemap`
+  - 新增 `rss.xml`
+  - 新增 `robots.txt`
+  - 页头与页脚已补入 RSS 入口
+- 验证：
+  - 执行 `cd site-v2 && npm run build` 成功
+  - 本地请求 `/rss.xml`、`/sitemap-index.xml`、`/robots.txt` 均返回 `200`
+  - RSS 输出已包含真实文章条目
+
 ### 2026-03-27 / 公开维护日志页建立
 
 - 状态：已完成
@@ -63,8 +77,6 @@
 
 ## 下一批优先任务
 
-- [ ] 为 `site-v2` 接入 Sitemap
-- [ ] 为 `site-v2` 接入 RSS
 - [ ] 建立 Astro 的 GitHub Actions 工作流
 - [ ] 完成 giscus 的真实配置与验证
 - [ ] 继续迁移剩余文章和 About / Pages 内容

@@ -51,6 +51,48 @@ npm run check:updates
 
 <!-- UPDATE_LOG_ENTRIES -->
 
+## 2026-03-27 / `site-v2` 接入 RSS、Sitemap 与 robots.txt
+
+### 更新内容
+
+- 为 `site-v2` 新增 `rss.xml` 输出
+- 接入 `@astrojs/sitemap`，生成站点地图
+- 新增 `robots.txt`，把搜索引擎抓取入口和 Sitemap 地址补齐
+- 在页面 `<head>` 和页脚中补入 RSS 入口
+
+### 涉及技术
+
+- Astro RSS
+- `@astrojs/sitemap`
+- Astro endpoint route
+- XML / robots 协议
+
+### 关联记录
+
+- 页面：`/rss.xml`、`/sitemap-index.xml`、`/robots.txt`
+- 文件：`site-v2/src/pages/rss.xml.ts`、`site-v2/src/pages/robots.txt.ts`、`site-v2/astro.config.mjs`
+- 提交：`1d0e03c`
+
+### 验证记录
+
+- 构建验证：执行 `cd site-v2 && npm run build` 成功
+- 路由验证：本地请求 `/rss.xml`、`/sitemap-index.xml`、`/robots.txt` 均返回 `200`
+- 内容验证：`rss.xml` 已包含文章条目，`robots.txt` 已指向 `sitemap-index.xml`
+
+### 实现效果
+
+- `site-v2` 已具备 RSS 订阅与 Sitemap 输出能力
+- 新站的基础 SEO / 订阅设施从“待补充”进入“已可运行”
+- 后续上线 Astro 版站点时，搜索引擎发现链路会更完整
+
+### 下一步
+
+- 建立 Astro 的 GitHub Actions 工作流
+- 接入并验证 giscus 真实配置
+- 继续迁移剩余文章与独立页面
+
+---
+
 ## 2026-03-27 / 建立维护更新日志页
 
 ### 更新内容
