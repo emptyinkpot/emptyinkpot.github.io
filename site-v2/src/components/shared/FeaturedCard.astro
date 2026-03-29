@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, toSlug } from '../../lib/content';
+import { getPostCover } from '../../lib/postCovers';
 import { withBase } from '../../lib/site';
 
 interface Props {
@@ -9,9 +10,17 @@ interface Props {
 
 const { post } = Astro.props as Props;
 const excerpt = post.data.description ?? getExcerptFromBody(post.body, 196);
+const cover = getPostCover(post);
 ---
 
 <article class="card-stack rounded-[2.25rem] p-6 md:p-8">
+  {
+    cover && (
+      <a class="relative z-10 mb-6 block overflow-hidden rounded-[1.8rem] border border-white/60 bg-[rgba(40,34,31,0.08)]" href={withBase(`/posts/${post.id}/`)}>
+        <img class="h-auto w-full object-cover" src={cover} alt="" loading="lazy" />
+      </a>
+    )
+  }
   <div class="mb-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.24em] text-stone-500">
     <span class="pill pill--dark">Featured</span>
     <a class="relative z-10 transition hover:text-stone-900" href={withBase(`/categories/${toSlug(getPrimaryCategory(post))}/`)}>

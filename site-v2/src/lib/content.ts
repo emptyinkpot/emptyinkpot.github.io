@@ -41,7 +41,7 @@ export function getRelatedPosts(
     ...(current.data.series ? [current.data.series] : [])
   ]);
 
-  return posts
+  const related = posts
     .filter((post) => post.id !== current.id)
     .map((post) => ({
       post,
@@ -53,6 +53,15 @@ export function getRelatedPosts(
     .sort((a, b) => b.score - a.score || b.post.data.date.getTime() - a.post.data.date.getTime())
     .slice(0, limit)
     .map(({ post }) => post);
+
+  if (related.length >= limit) {
+    return related;
+  }
+
+  const seen = new Set(related.map((post) => post.id));
+  const fallback = posts.filter((post) => post.id !== current.id && !seen.has(post.id)).slice(0, limit - related.length);
+
+  return [...related, ...fallback];
 }
 
 export function toSlug(input: string) {

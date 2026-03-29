@@ -1,6 +1,6 @@
 ---
 title: Roo Code 接管 VS Code：从 Cursor 迁移到 .roo 根目录，再到 MCP/Skill 实战调用
-date: 2026-03-29 17:10:00
+date: 2026-03-29T17:10:00+08:00
 slug: roo-code-vscode-migration-and-usage-guide
 description: 记录一次把 Cursor 侧能力收口到 .roo 根目录的完整实战，包括 MCP/Skill 对齐、Claude 权限联动、Roo 内实际调用方法、验证方式与常见排障。
 tags:
@@ -15,6 +15,7 @@ categories:
   - 开发环境
 series: VS Code AI 工具链
 featured: true
+cover: /images/posts/roo-vscode-guide/roo-cover.svg
 ---
 
 如果你手上已经有一套散落在 Cursor、VS Code、Claude、脚本目录里的 AI 工具链，真正难的往往不是“再装一个插件”，而是把它们收口成一套可以持续使用、可以验证、可以排障的运行结构。

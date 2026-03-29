@@ -11,6 +11,7 @@ import {
   sortPosts,
   toSlug
 } from '../../lib/content';
+import { getPostCover } from '../../lib/postCovers';
 import { withBase } from '../../lib/site';
 
 export async function getStaticPaths() {
@@ -38,6 +39,7 @@ const relatedPosts = getRelatedPosts(post, posts);
 const description = post.data.description ?? getExcerptFromBody(post.body, 160);
 const primaryCategory = getPrimaryCategory(post);
 const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series === post.data.series) : [];
+const cover = getPostCover(post);
 ---
 
 <BaseLayout title={`${post.data.title} / emptyinkpot`} description={description}>
@@ -69,6 +71,14 @@ const seriesPosts = post.data.series ? posts.filter((entry) => entry.data.series
         }
       </div>
     </section>
+
+    {
+      cover && (
+        <section class="glass-card overflow-hidden rounded-[2.25rem] p-2 md:p-3">
+          <img class="w-full rounded-[1.7rem]" src={cover} alt="" loading="eager" />
+        </section>
+      )
+    }
 
     <section class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
       <article class="prose-shell order-2 rounded-[2rem] lg:order-1">

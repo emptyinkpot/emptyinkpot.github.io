@@ -1,0 +1,99 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="144" y1="68" x2="1442" y2="808" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF7EF"/>
+      <stop offset="0.54" stop-color="#F2E7D4"/>
+      <stop offset="1" stop-color="#E1D1BD"/>
+    </linearGradient>
+    <linearGradient id="ink" x1="1120" y1="180" x2="420" y2="782" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#23211F"/>
+      <stop offset="1" stop-color="#49433D"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="913" y1="161" x2="1198" y2="739" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DF6E4C"/>
+      <stop offset="1" stop-color="#AA4335"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="1069" y1="218" x2="1403" y2="532" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5C8C84"/>
+      <stop offset="1" stop-color="#345B58"/>
+    </linearGradient>
+    <filter id="blur" x="0" y="0" width="1600" height="900" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="42"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <g opacity="0.34" filter="url(#blur)">
+    <circle cx="257" cy="164" r="138" fill="#F0C9A7"/>
+    <circle cx="1302" cy="145" r="130" fill="#D86A52"/>
+    <circle cx="1268" cy="716" r="168" fill="#6C9994"/>
+  </g>
+
+  <path d="M102 151H1498" stroke="#CBB39A" stroke-opacity="0.38"/>
+  <path d="M102 749H1498" stroke="#CBB39A" stroke-opacity="0.38"/>
+  <path d="M521 110V790" stroke="#CBB39A" stroke-opacity="0.26"/>
+  <path d="M1008 110V790" stroke="#CBB39A" stroke-opacity="0.26"/>
+  <path d="M101 267H1499" stroke="#CBB39A" stroke-opacity="0.22"/>
+  <path d="M101 633H1499" stroke="#CBB39A" stroke-opacity="0.22"/>
+
+  <rect x="86" y="86" width="1428" height="728" rx="34" fill="white" fill-opacity="0.32" stroke="white" stroke-opacity="0.54"/>
+  <rect x="126" y="124" width="590" height="652" rx="28" fill="url(#ink)"/>
+  <rect x="756" y="124" width="718" height="652" rx="28" fill="#FFF9F1" stroke="#E6D6C2"/>
+
+  <rect x="166" y="164" width="170" height="42" rx="21" fill="#F7E9D8" fill-opacity="0.16" stroke="#F6E9DA" stroke-opacity="0.3"/>
+  <text x="196" y="191" fill="#F8E7D4" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="0.18em">ROO CODE</text>
+
+  <text x="166" y="288" fill="#FFF7EB" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700">Cursor to .roo</text>
+  <text x="166" y="366" fill="#FFF7EB" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700">Migration Guide</text>
+  <text x="166" y="430" fill="#D8C5B4" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="500">One runtime root, aligned MCP servers, shared skills,</text>
+  <text x="166" y="468" fill="#D8C5B4" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="500">and practical Roo workflows inside VS Code.</text>
+
+  <rect x="166" y="548" width="164" height="46" rx="23" fill="#DF6E4C"/>
+  <text x="206" y="577" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">MCP</text>
+  <rect x="346" y="548" width="176" height="46" rx="23" fill="#355D59"/>
+  <text x="391" y="577" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Skills</text>
+  <rect x="166" y="614" width="212" height="46" rx="23" fill="#F7E9D8" fill-opacity="0.14" stroke="#F7E9D8" stroke-opacity="0.3"/>
+  <text x="204" y="643" fill="#FFF7EB" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Claude</text>
+  <rect x="396" y="614" width="240" height="46" rx="23" fill="#F7E9D8" fill-opacity="0.14" stroke="#F7E9D8" stroke-opacity="0.3"/>
+  <text x="436" y="643" fill="#FFF7EB" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">VS Code Roo</text>
+
+  <text x="792" y="186" fill="#6D635B" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="0.18em">RUNTIME MAP</text>
+
+  <rect x="792" y="236" width="276" height="150" rx="28" fill="#F8EFE3" stroke="#E2D2BE"/>
+  <text x="830" y="286" fill="#544B44" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Cursor Archive</text>
+  <text x="830" y="324" fill="#7B7066" font-family="Segoe UI, Arial, sans-serif" font-size="18">permissions.json</text>
+  <text x="830" y="352" fill="#7B7066" font-family="Segoe UI, Arial, sans-serif" font-size="18">sandbox.json</text>
+  <text x="830" y="380" fill="#7B7066" font-family="Segoe UI, Arial, sans-serif" font-size="18">extensions / history</text>
+
+  <path d="M1088 310H1161" stroke="#AA4335" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1145 289L1179 310L1145 331" stroke="#AA4335" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="1188" y="214" width="230" height="194" rx="30" fill="url(#accent)"/>
+  <text x="1230" y="276" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">.roo Runtime</text>
+  <rect x="1230" y="306" width="146" height="38" rx="19" fill="white" fill-opacity="0.16"/>
+  <text x="1262" y="331" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">server.mjs</text>
+  <rect x="1230" y="356" width="128" height="38" rx="19" fill="white" fill-opacity="0.16"/>
+  <text x="1264" y="381" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">MCPs</text>
+
+  <rect x="792" y="468" width="626" height="258" rx="30" fill="url(#mint)"/>
+  <text x="830" y="526" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">VS Code + Claude + Roo</text>
+
+  <rect x="832" y="560" width="162" height="120" rx="24" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.2"/>
+  <text x="869" y="612" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Claude</text>
+  <text x="870" y="644" fill="#D8F0EB" font-family="Segoe UI, Arial, sans-serif" font-size="16">shared tools</text>
+
+  <rect x="1024" y="560" width="170" height="120" rx="24" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.2"/>
+  <text x="1074" y="612" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">Roo</text>
+  <text x="1057" y="644" fill="#D8F0EB" font-family="Segoe UI, Arial, sans-serif" font-size="16">skills + modes</text>
+
+  <rect x="1224" y="560" width="154" height="120" rx="24" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.2"/>
+  <text x="1261" y="612" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">MCP</text>
+  <text x="1251" y="644" fill="#D8F0EB" font-family="Segoe UI, Arial, sans-serif" font-size="16">tool bridge</text>
+
+  <path d="M911 450V412" stroke="#355D59" stroke-width="6" stroke-linecap="round"/>
+  <path d="M1109 450V420" stroke="#355D59" stroke-width="6" stroke-linecap="round"/>
+  <path d="M1307 450V420" stroke="#355D59" stroke-width="6" stroke-linecap="round"/>
+
+  <rect x="830" y="702" width="348" height="1" fill="white" fill-opacity="0.22"/>
+  <text x="830" y="744" fill="#E4F4F0" font-family="Segoe UI, Arial, sans-serif" font-size="18">From scattered config to one discoverable, callable runtime root.</text>
+</svg>

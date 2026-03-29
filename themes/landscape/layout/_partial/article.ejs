@@ -10,7 +10,21 @@
     <%- partial('post/category') %>
   </div>
   <div class="article-inner">
+    <% if (post.featured) { %>
+      <div class="article-featured-badge">Featured</div>
+    <% } %>
     <%- partial('post/gallery') %>
+    <% if (post.cover) { %>
+      <% if (index) { %>
+        <a class="article-cover-link" href="<%- url_for(post.path) %>" aria-hidden="true">
+          <img class="article-cover-image" src="<%- url_for(post.cover) %>" alt="">
+        </a>
+      <% } else { %>
+        <div class="article-cover-link article-cover-link--static">
+          <img class="article-cover-image" src="<%- url_for(post.cover) %>" alt="">
+        </div>
+      <% } %>
+    <% } %>
     <% if (post.link || post.title){ %>
       <header class="article-header">
         <%- partial('post/title', {class_name: 'p-name article-title'}) %>
