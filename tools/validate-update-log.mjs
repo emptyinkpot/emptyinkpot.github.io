@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const targetPath = path.resolve('source/updates/index.md');
+const preferredPath = path.resolve('public-data/updates/index.md');
+const legacyPath = path.resolve('source/updates/index.md');
+const targetPath = fs.existsSync(preferredPath) ? preferredPath : legacyPath;
 const marker = '<!-- UPDATE_LOG_ENTRIES -->';
 const requiredSections = ['更新内容', '涉及技术', '关联记录', '验证记录', '实现效果', '下一步'];
 
@@ -43,6 +45,12 @@ entries.forEach((entry, index) => {
       issues.push(`${firstLine}: section "${section}" does not contain a list item`);
     }
   });
+
+  // Guard against reintroducing old subpath deployment wording without context.
+  // If an entry mentions "/site-v2/", it must be explicitly marked as a historical/stage record.
+  if (entry.includes('/site-v2/') && !/(历史|阶段)/.test(entry)) {
+    issues.push(`${firstLine}: contains "/site-v2/" but is missing historical/stage context`);
+  }
 });
 
 if (issues.length) {

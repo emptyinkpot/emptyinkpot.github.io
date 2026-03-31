@@ -17,9 +17,9 @@
 
 | 类型 | 位置 | 面向对象 | 用途 |
 | --- | --- | --- | --- |
-| 公开维护日志 | `source/updates/index.md` | 站点读者 | 说明博客更新了什么、效果是什么 |
+| 公开维护日志 | `public-data/updates/index.md` | 站点读者 | 说明博客更新了什么、效果是什么 |
 | 内部执行日志 | `docs/maintenance/astro-redesign-execution-log.md` | 仓库维护者 | 记录阶段推进、验证、下一步 |
-| 执行清单 | `docs/astro-blog-redesign-checklist.md` | 项目维护者 | 记录范围、阶段状态、待办 |
+| 执行清单 | `docs/architecture/astro-blog-redesign-checklist.md` | 项目维护者 | 记录范围、阶段状态、待办 |
 | Git 历史 | `git log` / `git show` | 仓库维护者 | 提供最细粒度的事实追踪 |
 
 原则：
@@ -96,16 +96,21 @@ npm run new:update -- --title "更新标题" --dry-run
 
 ```bash
 npm run check:updates
+npm run check:content
+npm run check
+npm run build
 ```
 
-建议流程：
+建议固定验证顺序：
 
 1. 完成功能或内容修改
-2. 执行构建与验证
-3. 先更新公开维护日志
-4. 再更新内部执行日志与执行清单
-5. 执行 `npm run check:updates`
-6. 提交并推送
+2. 如需新增公开维护记录，先执行 `npm run new:update -- --title "更新标题" --dry-run` 生成草稿参考
+3. 更新 `public-data/updates/index.md`
+4. 再更新 `docs/maintenance/astro-redesign-execution-log.md` 与执行清单
+5. 执行 `npm run check`，统一覆盖更新日志、内容治理与仓库治理校验
+6. 如需单独排查内容 front matter 或历史 slug 兼容问题，可补充执行 `npm run check:content`
+7. 执行 `npm run build`，确认 Astro 站点可构建
+8. 提交并推送
 
 ## 7. 与 GitHub 更新说明的关系
 
@@ -125,6 +130,7 @@ npm run check:updates
 
 ## 8. 当前仍待补强的点
 
-- 将 `npm run check:updates` 接入 CI
-- 为 `site-v2` 建立同样的公开更新页面或同步机制
+- 已将 Markdown 相对链接、RSS 与搜索页文案/资源接线校验纳入 `npm run check:content`，后续可继续补充更多内容质量规则
+- 当前公开维护日志以 `public-data/updates/index.md` 作为写入真源，现行站点由 `apps/web/src/pages/updates.astro` 同步展示
+- 迁移兼容期仍允许脚本回退读取 `source/updates/index.md`，但不再作为默认写入入口
 - 当重构切换上线后，重新整理历史条目分层

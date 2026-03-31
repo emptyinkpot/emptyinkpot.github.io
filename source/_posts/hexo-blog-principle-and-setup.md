@@ -1,7 +1,10 @@
 ---
 title: Hexo 博客是怎么工作的：从原理到 GitHub Pages 部署实践
+description: 从 Hexo 原理、GitHub Actions 构建到 GitHub Pages 发布，这篇文章把个人博客上线链路完整拆开。
 date: 2026-03-26 21:05:00
 slug: hexo-blog-principle-and-setup
+featured: true
+series: 博客搭建
 tags:
   - Hexo
   - GitHub Pages

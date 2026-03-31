@@ -1,0 +1,51 @@
+---
+import { stripBase, withBase } from '../../lib/site';
+
+const pathname = stripBase(Astro.url.pathname);
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/posts', label: 'Posts' },
+  { href: '/series', label: 'Series' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/updates', label: 'Updates' },
+  { href: '/search', label: 'Search' },
+  { href: '/about', label: 'About' }
+];
+---
+
+<header class="page-wrap pt-6 md:pt-8">
+  <div class="glass-card flex flex-col gap-4 rounded-[2rem] px-5 py-4 md:flex-row md:items-center md:justify-between md:px-6">
+    <a class="flex items-center gap-3" href={withBase('/')}>
+      <span class="flex h-11 w-11 items-center justify-center rounded-full border border-white/55 bg-white/80 text-xs font-semibold tracking-[0.28em] text-stone-700">
+        EP
+      </span>
+      <div>
+        <p class="text-xs uppercase tracking-[0.32em] text-stone-500">emptyinkpot</p>
+        <p class="text-sm text-stone-700">Structured writing, projects, and maintenance notes</p>
+      </div>
+    </a>
+
+    <nav class="flex flex-wrap items-center gap-2 text-sm text-stone-600">
+      {
+        navItems.map((item) => {
+          const active =
+            item.href === '/'
+              ? pathname === '/'
+              : pathname === item.href || pathname.startsWith(`${item.href}/`);
+
+          return (
+            <a
+              href={withBase(item.href)}
+              class:list={[
+                'rounded-full px-4 py-2 transition',
+                active ? 'bg-stone-900 text-stone-50 shadow-sm' : 'hover:bg-white/75 hover:text-stone-900'
+              ]}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+  </div>
+</header>

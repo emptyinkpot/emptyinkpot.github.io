@@ -1,4 +1,4 @@
-name: Deploy Blog and site-v2 Preview to Pages
+name: Deploy Astro Site to Pages
 
 on:
   push:
@@ -30,40 +30,29 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: |
-            package-lock.json
-            site-v2/package-lock.json
+          cache-dependency-path: apps/web/package-lock.json
 
-      - name: Install Hexo dependencies
+      - name: Install root dependencies
         run: npm ci
 
-      - name: Install site-v2 dependencies
+      - name: Install site dependencies
         run: npm ci
-        working-directory: site-v2
+        working-directory: apps/web
 
-      - name: Clean Hexo output
-        run: npm run clean
+      - name: Validate repository governance
+        run: npm run check
 
-      - name: Build Hexo site
+      - name: Build Astro site
         run: npm run build
-
-      - name: Build site-v2 preview
-        run: npm run build
-        working-directory: site-v2
+        working-directory: apps/web
         env:
-          SITE_BASE: /site-v2/
           SITE_URL: https://emptyinkpot.github.io
-
-      - name: Embed site-v2 preview under /site-v2/
-        run: |
-          rm -rf public/site-v2
-          mkdir -p public/site-v2
-          cp -R site-v2/dist/. public/site-v2
+          SITE_BASE: /
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./public
+          path: ./apps/web/dist
 
   deploy:
     environment:

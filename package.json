@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "clean": "hexo clean",
-    "build": "hexo generate",
-    "new": "hexo new",
-    "server": "hexo server",
+    "dev": "npm --prefix apps/web run dev",
+    "build": "npm --prefix apps/web run build",
+    "preview": "npm --prefix apps/web run preview",
+    "astro": "npm --prefix apps/web run astro",
     "new:update": "node tools/new-update-entry.mjs",
-    "check:updates": "node tools/validate-update-log.mjs"
+    "check:updates": "node tools/validate-update-log.mjs",
+    "check:content": "node tools/validate-content-governance.mjs",
+    "check:governance": "node tools/validate-repo-governance.mjs",
+    "check": "npm run check:updates && npm run check:content && npm run check:governance",
+    "legacy:clean": "hexo clean",
+    "legacy:build": "hexo generate",
+    "legacy:new": "hexo new",
+    "legacy:serve": "hexo server"
   },
   "hexo": {
     "version": "8.1.1"

@@ -1,7 +1,9 @@
 ---
 title: Hexo 的 source/_posts 会自动发布吗：从本地文章到线上博客的完整链路
+description: 解释 source/_posts、git push、GitHub Actions 与线上博客之间的真实关系，适合刚搭博客时建立心智模型。
 date: 2026-03-27 00:08:00
 slug: hexo-source-posts-publish-flow
+series: 博客搭建
 tags:
   - Hexo
   - GitHub Pages

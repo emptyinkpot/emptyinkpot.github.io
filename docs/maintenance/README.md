@@ -1,6 +1,6 @@
 # 维护目录
 
-更新时间：2026-03-27
+更新时间：2026-03-31
 
 这个目录用于承接博客维护过程中的“过程治理”信息，重点解决 4 件事：
 
@@ -17,6 +17,9 @@
 - `docs/maintenance/astro-redesign-execution-log.md`
   - Astro 重构过程中的内部执行记录
   - 用来承接阶段状态、完成项、验证结果与下一步
+- `docs/architecture/astro-blog-redesign-checklist.md`
+  - 当前重构执行清单
+  - 用来承接范围、阶段状态与待办
 - `docs/templates/update-log-entry.md`
   - 公开更新日志的标准模板
 
@@ -29,7 +32,8 @@ npm run check:updates
 
 ## 维护原则
 
-1. 公开变化进 `source/updates/index.md`
+1. 当前公开变化写入 `public-data/updates/index.md`，`apps/web/src/pages/updates.astro` 负责同步展示现有公开条目
 2. 过程推进进 `docs/maintenance/astro-redesign-execution-log.md`
-3. 范围和阶段状态进 `docs/astro-blog-redesign-checklist.md`
+3. 范围和阶段状态进 `docs/architecture/astro-blog-redesign-checklist.md`
 4. 任何外显更新都要有验证记录
+5. 迁移兼容期允许读取旧入口 `source/updates/index.md`，但默认写入入口以 `public-data/updates/index.md` 为准

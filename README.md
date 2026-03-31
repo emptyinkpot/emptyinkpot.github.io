@@ -1,62 +1,34 @@
 # emptyinkpot.github.io
 
-基于 Hexo 搭建的个人博客源码仓库，部署目标为 GitHub Pages：
-`https://emptyinkpot.github.io/`
+`emptyinkpot.github.io` 当前已经收拢为单站点仓库：对外站点由 `apps/web/` 生成，工程文档统一收纳在 `docs/`。
 
-## 本地开发
+## 中心入口（先看这里）
 
-安装依赖：
+- 网站中心：`apps/web/`
+- 规划中心：`docs/plans/update-plan.md`
+- 执行中心：`docs/architecture/astro-blog-redesign-checklist.md`
+- 记录中心：`docs/maintenance/astro-redesign-execution-log.md`
 
-```bash
-npm install
-```
+## 入口
 
-启动本地预览：
-
-```bash
-npm run server
-```
-
-默认访问地址：
-
-```text
-http://localhost:4000/
-```
+- 站点应用：`apps/web/`
+- 工程文档：`docs/`
+- 历史内容层：`source/`
+- 历史主题层：`themes/`
 
 ## 常用命令
 
-新建文章：
-
 ```bash
-npm run new "文章标题"
-```
-
-生成静态文件：
-
-```bash
+npm run dev
 npm run build
+npm run preview
+npm run check
 ```
 
-清理缓存：
+## 文档索引
 
-```bash
-npm run clean
-```
-
-## GitHub Pages 发布
-
-这个仓库已经包含 GitHub Actions 工作流。只要把更改推送到 `main` 分支，GitHub 就会自动构建并发布站点。
-
-首次使用时，请在仓库设置中确认：
-
-1. 打开 `Settings`
-2. 进入 `Pages`
-3. `Source` 选择 `GitHub Actions`
-
-## 目录说明
-
-- `source/_posts/`：博客文章
-- `source/about/`：关于页面
-- `_config.yml`：站点主配置
-- `_config.landscape.yml`：当前主题覆盖配置
-- `.github/workflows/pages.yml`：自动部署配置
+- 工程文档总入口：`docs/README.md`
+- 总规划：`docs/plans/update-plan.md`
+- 架构方案：`docs/architecture/astro-blog-redesign-plan.md`
+- 执行清单：`docs/architecture/astro-blog-redesign-checklist.md`
+- 维护记录：`docs/maintenance/README.md`

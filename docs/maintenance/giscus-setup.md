@@ -4,7 +4,7 @@
 
 ## 当前结论
 
-`site-v2` 的 giscus 组件代码已经接好，但真实启用还缺 GitHub 仓库侧设置。
+`apps/web` 的 giscus 组件代码已经接好，但真实启用还缺 GitHub 仓库侧设置。
 
 当前阻塞点：
 
@@ -27,7 +27,7 @@
    - `PUBLIC_GISCUS_REPO_ID`
    - `PUBLIC_GISCUS_CATEGORY`
    - `PUBLIC_GISCUS_CATEGORY_ID`
-8. 在 `site-v2/.env` 中填入：
+8. 在 `apps/web/.env` 中填入：
 
 ```env
 PUBLIC_GISCUS_REPO=emptyinkpot/emptyinkpot.github.io
@@ -39,14 +39,14 @@ PUBLIC_GISCUS_CATEGORY_ID=...
 9. 重新构建：
 
 ```bash
-cd site-v2
+cd apps/web
 npm run build
 ```
 
 ## 代码位置
 
-- 组件：`site-v2/src/components/post/GiscusComments.astro`
-- 环境变量模板：`site-v2/.env.example`
+- 组件：`apps/web/src/components/post/GiscusComments.astro`
+- 环境变量模板：`apps/web/.env.example`
 
 ## 验证标准
 

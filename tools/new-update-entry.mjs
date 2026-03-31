@@ -9,7 +9,9 @@ if (!title) {
   process.exit(1);
 }
 
-const targetPath = path.resolve('source/updates/index.md');
+const preferredPath = path.resolve('public-data/updates/index.md');
+const legacyPath = path.resolve('source/updates/index.md');
+const targetPath = fs.existsSync(preferredPath) ? preferredPath : legacyPath;
 const marker = '<!-- UPDATE_LOG_ENTRIES -->';
 const date = args.date ?? formatDate(new Date());
 const commit = args.commit ?? '待补充';
