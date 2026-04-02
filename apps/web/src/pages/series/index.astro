@@ -8,10 +8,10 @@ const posts = await getCollection('posts', ({ data }) => !data.draft);
 const seriesList = getSeriesCounts(posts);
 ---
 
-<BaseLayout title="Series / emptyinkpot" description="按系列浏览 emptyinkpot 中的文章内容。">
+<BaseLayout title="专题 / emptyinkpot" description="按系列浏览 emptyinkpot 中的文章内容。">
   <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
     <section class="space-y-4">
-      <p class="section-kicker">Series</p>
+      <p class="section-kicker">专题</p>
       <h1 class="section-title text-4xl md:text-5xl">专题系列</h1>
       <p class="max-w-3xl text-base leading-8 text-stone-600">
         系列页比标签更强调“连续阅读”。后续适合用于教程、迁移日志和长期专题。
@@ -22,7 +22,7 @@ const seriesList = getSeriesCounts(posts);
       {
         seriesList.map(([series, count]) => (
           <a class="card-stack rounded-[2rem] p-6" href={withBase(`/series/${toSlug(series)}/`)}>
-            <p class="section-kicker mb-3">Series</p>
+            <p class="section-kicker mb-3">专题</p>
             <h2 class="text-2xl font-semibold text-stone-950">{series}</h2>
             <p class="mt-3 text-sm leading-7 text-stone-600">{count} 篇文章</p>
           </a>

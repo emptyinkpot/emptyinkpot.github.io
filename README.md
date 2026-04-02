@@ -68,6 +68,36 @@ git push origin <branch-name>
 - 解决方式优先是重新打开一个新的终端窗口
 - 临时也可以直接执行：`"C:\Program Files\GitHub CLI\gh.exe"`
 
+## 腾讯云 CLI 约定
+
+- 当前这台电脑已安装全局 `tccli`
+- `tccli` 当前版本：`3.1.65.1`
+- 当前轻量服务器地域：`ap-shanghai`
+- 当前轻量服务器实例 ID：`lhins-jqpgc12e`
+- 当前轻量服务器公网 IP：`124.220.233.126`
+
+推荐用途：
+
+1. 用 `tccli` 查询轻量服务器实例、地域、防火墙规则等云资源状态
+2. 用 `ssh` 进入服务器修改 `Nginx`、系统服务、站点文件和日志
+3. 不把云资源查询和服务器内系统操作混成同一层
+
+推荐命令：
+
+```bash
+tccli --version
+tccli lighthouse DescribeInstances --region ap-shanghai
+tccli lighthouse DescribeFirewallRules --region ap-shanghai --InstanceId lhins-jqpgc12e
+tccli lighthouse DescribeRegions
+```
+
+说明：
+
+- 如果刚安装完 `tccli` 后当前终端提示“找不到命令”，通常也是因为当前终端还没刷新 `PATH`
+- 解决方式优先是重新打开一个新的终端窗口
+- 轻量服务器相关命令优先明确带上 `--region ap-shanghai`
+- 如果后续要轮换腾讯云密钥，建议先更新本机 `tccli` 认证，再继续跑自动化命令
+
 ## Pull Request 规则
 
 - PR 默认目标仓库：`https://github.com/emptyinkpot/emptyinkpot.github.io`
@@ -361,6 +391,8 @@ sudo systemctl reload nginx
 - 主机 IP：124.220.233.126
 - SSH 用户：ubuntu
 - SSH 命令：ssh ubuntu@124.220.233.126
+- 轻量服务器地域：ap-shanghai
+- 轻量服务器实例 ID：lhins-jqpgc12e
 - OpenClaw 项目目录：/srv/openclaw
 - MyBlog 项目目录：/srv/myblog
 - MyBlog 静态站点目录：/srv/myblog/site
@@ -378,6 +410,75 @@ sudo systemctl reload nginx
 - `MyBlog` 目前由 Nginx 托管在 `80/443` 端口
 - 这次采用的是“本机构建 + 上传 `apps/web/dist` 到服务器”的方式，而不是服务器本地 Git 构建
 - `http://blog.tengokukk.com/` 当前会自动跳转到 `https://blog.tengokukk.com/`
+
+### 当前轻量服务器防火墙规则
+
+当前已通过 `tccli lighthouse DescribeFirewallRules --region ap-shanghai --InstanceId lhins-jqpgc12e` 验证到以下规则：
+
+- `TCP 443`：允许，来源 `0.0.0.0/0`
+- `TCP 5000`：允许，来源 `0.0.0.0/0`
+- `TCP 22`：允许，来源 `0.0.0.0/0`
+- `TCP 80`：允许，来源 `0.0.0.0/0`
+- `ICMP ALL`：允许，来源 `0.0.0.0/0`
+- `TCP 3389`：允许，来源 `0.0.0.0/0`
+- `UDP 3389`：允许，来源 `0.0.0.0/0`
+
+当前判断：
+
+- 博客对外访问所需规则已经齐全，核心是 `80/443`
+- `5000` 目前仍对公网开放，因为现有 `OpenClaw` 还在直接使用该端口
+- `3389` 对这台 Ubuntu 轻量服务器不是当前必需规则，后续可以评估删除
+
+后续建议：
+
+1. 若不再需要公网直连 `5000`，应优先收口到域名或反向代理后再关闭
+2. 若没有远程桌面实际用途，可删除 `3389 TCP/UDP`
+3. 若不依赖公网 Ping，可评估关闭 `ICMP`
+
+### 云端日常维护命令清单
+
+下面这组命令是当前项目已经实测可用的最小维护清单。
+
+#### 腾讯云资源层
+
+```bash
+tccli lighthouse DescribeInstances --region ap-shanghai
+tccli lighthouse DescribeFirewallRules --region ap-shanghai --InstanceId lhins-jqpgc12e
+tccli lighthouse DescribeDisks --region ap-shanghai
+```
+
+#### 服务器连接层
+
+```bash
+ssh ubuntu@124.220.233.126
+```
+
+#### 服务器内部巡检
+
+```bash
+sudo systemctl status nginx
+sudo ss -ltnp
+curl -I http://127.0.0.1/
+curl -k -I https://127.0.0.1/
+```
+
+#### 博客站点更新
+
+```bash
+npm run lint
+npm run check
+npm run build
+scp -r apps/web/dist/. ubuntu@124.220.233.126:/tmp/myblog-dist-upload
+ssh ubuntu@124.220.233.126 "sudo rm -rf /srv/myblog/site/* && sudo cp -r /tmp/myblog-dist-upload/. /srv/myblog/site/ && sudo chown -R www-data:www-data /srv/myblog/site && rm -rf /tmp/myblog-dist-upload"
+```
+
+#### 上线后验证
+
+```bash
+curl -I http://blog.tengokukk.com/
+curl -I https://blog.tengokukk.com/
+curl -I http://124.220.233.126:5000/health
+```
 
 ### 给博客加正式域名怎么做
 
@@ -557,6 +658,13 @@ sudo systemctl reload nginx
 这一节用于统一“从开始改代码，到最终合并发布”的标准流程。
 
 建议以后每次更新都按这个顺序执行，不要跳步。
+
+新增协作要求：
+
+- 只要本次改动已经确认要保留，就不能只停留在本地，必须继续完成上传云端
+- 这里的“上传云端”默认指至少完成一次远端推送，并触发正式发布链路或同步到当前服务器
+- 如果当次无法上传，必须明确说明阻塞原因，不能默认把未发布状态当作完成
+- 对 Codex / 协作代理的默认要求也是一样：每次完成改动后，除非用户明确阻止，否则应继续执行上传与发布动作
 
 ### 1. 开始改动前
 

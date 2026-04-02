@@ -51,6 +51,49 @@ npm run check:updates
 
 <!-- UPDATE_LOG_ENTRIES -->
 
+## 2026-04-02 / 记录国内云上新子域名被备案链路拦下的真实排障过程
+
+### 更新内容
+
+- 新增文章《为什么网站都部署好了，新子域名在国内云上还是会被拦下》
+- 记录 `blog`、`www`、`openclaw` 三条链路在真实部署中的差异
+- 把“工程部署完成”与“备案/证书链路放通”明确拆开说明
+
+### 涉及技术
+
+- Nginx
+- DNS 解析
+- Let’s Encrypt / certbot
+- 备案访问链路
+- 国内云部署排障
+
+### 关联记录
+
+- 页面：`/posts/why-new-domains-get-blocked-after-deployment-on-mainland-cloud/`
+- 文件：`apps/web/src/content/posts/why-new-domains-get-blocked-after-deployment-on-mainland-cloud.md`
+- 域名：`blog.tengokukk.com`、`www.tengokukk.com`、`openclaw.tengokukk.com`
+
+### 验证记录
+
+- 门户验证：`http://www.tengokukk.com/` 返回 `200`
+- 博客验证：服务器侧 `https://blog.tengokukk.com/` 返回 `200`
+- OpenClaw 验证：`http://openclaw.tengokukk.com/health` 返回 `200`
+- 证书验证：`www` 与 `openclaw` 在 certbot 校验阶段拿到备案拦截页，证书申请失败
+
+### 实现效果
+
+- 将“部署问题”和“备案/证书问题”拆成了可理解、可复用的两条排障路径
+- 为后续继续推进 `www` 和 `openclaw` 的正式 HTTPS 提供了清晰背景
+- 后面再遇到类似问题时，可以直接引用这篇文章而不是重新从头解释
+
+### 下一步
+
+- 继续推进 `www.tengokukk.com` 的备案流程
+- 备案放通后重试 `www` 与 `openclaw` 的 HTTPS 证书申请
+- 将门户站和新域名状态继续回填到文档与更新日志
+
+---
+
 ## 2026-04-02 / MyBlog 云端部署落地：Nginx 接入、同级项目共存与域名 HTTPS 方案
 
 ### 更新内容

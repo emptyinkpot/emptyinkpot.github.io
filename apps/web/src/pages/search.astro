@@ -6,7 +6,7 @@ const isDev = import.meta.env.DEV;
 const pagefindBundlePath = withBase('/pagefind/');
 ---
 
-<BaseLayout title="Search / emptyinkpot" description="emptyinkpot 的站内全文搜索页，基于 Pagefind 构建索引。">
+<BaseLayout title="搜索 / emptyinkpot" description="emptyinkpot 的站内全文搜索页，基于 Pagefind 构建索引。">
   {
     !isDev && (
       <Fragment slot="head">
@@ -17,7 +17,7 @@ const pagefindBundlePath = withBase('/pagefind/');
 
   <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
     <section class="space-y-4">
-      <p class="section-kicker">Search</p>
+      <p class="section-kicker">搜索</p>
       <h1 class="section-title text-4xl md:text-5xl">站内搜索</h1>
       <p class="max-w-3xl text-base leading-8 text-stone-600">
         第一阶段搜索使用 Pagefind。它适合纯静态站点，构建完成后会为文章页面生成全文索引。

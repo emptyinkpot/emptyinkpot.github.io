@@ -3,25 +3,31 @@ import { stripBase, withBase } from '../../lib/site';
 
 const pathname = stripBase(Astro.url.pathname);
 const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/posts', label: 'Posts' },
-  { href: '/series', label: 'Series' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/updates', label: 'Updates' },
-  { href: '/search', label: 'Search' },
-  { href: '/about', label: 'About' }
+  { href: '/', label: '首页' },
+  { href: '/posts', label: '文章' },
+  { href: '/series', label: '专题' },
+  { href: '/projects', label: '项目' },
+  { href: '/updates', label: '更新' },
+  { href: '/search', label: '搜索' },
+  { href: '/about', label: '关于' }
 ];
 ---
 
 <header class="page-wrap pt-6 md:pt-8">
   <div class="glass-card flex flex-col gap-4 rounded-[2rem] px-5 py-4 md:flex-row md:items-center md:justify-between md:px-6">
-    <a class="flex items-center gap-3" href={withBase('/')}>
-      <span class="flex h-11 w-11 items-center justify-center rounded-full border border-white/55 bg-white/80 text-xs font-semibold tracking-[0.28em] text-stone-700">
-        EP
+    <a class="flex items-center gap-3 md:gap-4" href={withBase('/')}>
+      <span class="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-[#050505] p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.18)] ring-1 ring-black/10 md:h-16 md:w-16 md:p-1.5">
+        <img
+          src={withBase('/images/branding/vita-atramenti-logo.png')}
+          alt="Vita Atramenti logo"
+          class="h-full w-full scale-[1.38] object-contain"
+          loading="eager"
+          decoding="async"
+        />
       </span>
-      <div>
+      <div class="min-w-0">
         <p class="text-xs uppercase tracking-[0.32em] text-stone-500">emptyinkpot</p>
-        <p class="text-sm text-stone-700">Structured writing, projects, and maintenance notes</p>
+        <p class="text-sm text-stone-700">结构化写作、项目记录与维护笔记</p>
       </div>
     </a>
 
