@@ -11,13 +11,13 @@ import { withBase } from '../lib/site';
 
 const payload = await getHomePagePayload();
 const sideNavItems = [
-  { label: 'Home', href: withBase('/') },
-  { label: 'Posts', href: withBase('/posts') },
-  { label: 'Series', href: withBase('/series') },
-  { label: 'Projects', href: withBase('/projects') },
-  { label: 'Updates', href: withBase('/updates') },
-  { label: 'Search', href: withBase('/search') },
-  { label: 'About', href: withBase('/about') }
+  { label: '首页', href: withBase('/') },
+  { label: '文章', href: withBase('/posts') },
+  { label: '专题', href: withBase('/series') },
+  { label: '项目', href: withBase('/projects') },
+  { label: '更新', href: withBase('/updates') },
+  { label: '搜索', href: withBase('/search') },
+  { label: '关于', href: withBase('/about') }
 ];
 ---
 
@@ -25,11 +25,22 @@ const sideNavItems = [
   <div class="home-editorial-shell">
     <aside class="home-side-rail">
       <div class="home-side-rail__inner">
-        <p class="home-side-rail__mark">Homepage Poster</p>
+        <div class="home-side-rail__profile">
+          <div class="home-side-rail__avatar-shell">
+            <img
+              src={withBase('/images/branding/vita-atramenti-logo.png')}
+              alt="Vita Atramenti"
+              class="home-side-rail__avatar"
+            />
+          </div>
+          <p class="home-side-rail__name">emptyinkpot</p>
+          <p class="home-side-rail__desc">Structured writing / projects / maintenance notes</p>
+        </div>
+
         <nav class="home-side-rail__nav" aria-label="Homepage quick navigation">
           {
-            sideNavItems.map((item) => (
-              <a href={item.href} class="home-side-rail__link">
+            sideNavItems.map((item, index) => (
+              <a href={item.href} class:list={['home-side-rail__link', index === 0 && 'home-side-rail__link--active']}>
                 {item.label}
               </a>
             ))
