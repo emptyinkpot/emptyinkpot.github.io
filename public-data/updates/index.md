@@ -51,6 +51,129 @@ npm run check:updates
 
 <!-- UPDATE_LOG_ENTRIES -->
 
+## 2026-03-31 / Rainyun 13009 Day 6：建立 Safe Mode 行为矩阵与回归模板
+
+### 更新内容
+
+- 新增 `docs/architecture/rainyun-safe-mode-test-matrix.md`，将 Safe Mode 转为可执行测试矩阵
+- 新增 `docs/templates/rainyun-safe-mode-regression-template.md`，沉淀标准化回归记录模板
+- 更新索引文档：`docs/architecture/README.md`、`docs/templates/README.md`
+
+### 涉及技术
+
+- 状态机测试设计
+- API 行为分支覆盖
+- 前端降级行为验证
+- 回归模板标准化
+
+### 关联记录
+
+- 架构：`docs/architecture/rainyun-safe-mode-test-matrix.md`
+- 模板：`docs/templates/rainyun-safe-mode-regression-template.md`
+- 契约：`docs/architecture/rainyun-backend-api-contract.md`
+
+### 验证记录
+
+- 文档结构验证：行为矩阵覆盖状态迁移、接口分支、前端映射三层
+- 模板可用性验证：模板已包含接口用例、前端用例、审计追溯与发布结论字段
+- 治理验证：执行 `npm run check` 通过
+
+### 实现效果
+
+- Day 6 目标从“说明性文档”升级为“可直接执行的测试资产”
+- 后续联调与回归可以统一按编号用例（SM-T/SM-A/SM-UI）执行
+- Safe Mode 相关变更具备更稳定的质量门槛与复盘依据
+
+### 下一步
+
+- 按模板产出首份真实回归记录（至少覆盖 `SM-A03/A07/A09/A11`）
+- 评估将关键失败分支转为自动化契约测试
+- 进入 Day 7：执行一次完整回归并回填结果
+
+---
+
+## 2026-03-31 / Rainyun 13009 Day 5：补齐后台契约与回滚语义
+
+### 更新内容
+
+- 完善 `docs/architecture/rainyun-backend-api-contract.md` 的 Day 5 目标项
+- 新增 `safe-mode/rollback` 接口契约，明确误触恢复与回滚约束
+- 补充 Safe Mode 状态机、UI 映射、重复提交与网络超时处理规则
+
+### 涉及技术
+
+- REST API 契约设计
+- Idempotency-Key 幂等语义
+- Safe Mode 状态机
+- 审计日志与错误码规范
+
+### 关联记录
+
+- 文档：`docs/architecture/rainyun-backend-api-contract.md`
+- 计划：`docs/plans/rainyun-topic-13009-integration-plan.md`
+- 执行：`docs/maintenance/astro-redesign-execution-log.md`
+
+### 验证记录
+
+- 文档一致性：接口章节已覆盖“读/写/回滚/审计”
+- 规则一致性：错误码新增 `IDEMPOTENCY_KEY_REUSED`、`SAFE_MODE_TRANSITION_BLOCKED`、`SAFE_MODE_ROLLBACK_NOT_ALLOWED`
+- 治理验证：执行 `npm run check:updates` 通过
+
+### 实现效果
+
+- Day 5 的“接口契约 + 异常处理 + 状态机”已具备可实现输入
+- 后续后端实现可直接按文档落地，不再停留在概念描述
+- Safe Mode 从“开关说明”升级为“可审计、可回滚”的工程方案
+
+### 下一步
+
+- 输出最小联调清单（请求样例、回执字段、失败分支）
+- 评估是否将关键契约检查纳入治理脚本（文档校验优先）
+- 进入 Day 6：补齐可测试行为矩阵与回归模板
+
+---
+
+## 2026-03-31 / Rainyun 13009 整合案例首版落地（前台案例文）
+
+### 更新内容
+
+- 新增案例文章《Rainyun 话题 13009 整合案例：前台展示、后台契约与 Safe Mode 治理》
+- 将话题能力按“前台展示 / 后台契约 / 应急开关（Safe Mode）”三段结构落位到现有内容体系
+- 明确“应急能力”采用可审计、可回滚口径，不使用破坏性表述
+
+### 涉及技术
+
+- Astro Content Collections
+- Markdown front matter 规范
+- 内容治理约束（slug / description / toc 等）
+- 风险边界与运行策略文档化
+
+### 关联记录
+
+- 页面：`/posts/rainyun-topic-13009-integration-case/`
+- 文件：`apps/web/src/content/posts/rainyun-topic-13009-integration-case.md`
+- 规划：`docs/plans/rainyun-topic-13009-integration-plan.md`
+
+### 验证记录
+
+- 内容治理验证：执行 `npm run check:content` 通过
+- 规则验证：新文章 front matter 已满足 `apps/web/src/content.config.ts` 约束
+- 结构验证：文章已包含“功能说明 / 操作流程 / 风险声明”三段核心结构
+
+### 实现效果
+
+- Rainyun 13009 主题已从“仅规划”进入“前台可见”的可读状态
+- 专题落地沿用现有单站点架构，不引入并行站点或并行内容源
+- 后续接口契约与 Safe Mode 状态机设计有了统一对外说明入口
+
+### 下一步
+
+- 在 `docs/architecture/rainyun-backend-api-contract.md` 完善读写接口、鉴权与审计字段（Day 5）
+- 将 Safe Mode 的 Level 1/2/3 状态机补成可测试行为矩阵（Day 6）
+- 完成 `npm run check` 与 `npm run build` 的整体验证并回填执行日志（Day 7）
+
+---
+
 ## 2026-03-27 / 补齐 `site-v2` 剩余文章迁移并建立 OpenClaw 系列
 
 ### 更新内容
