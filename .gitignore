@@ -5,5 +5,7 @@ db.json
 .cache/
 node_modules/
 public/
+!apps/web/public/
+!apps/web/public/**
 .deploy*/
 _multiconfig.yml
