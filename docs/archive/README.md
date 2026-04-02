@@ -2,10 +2,10 @@
 
 `docs/archive/` 用于承接不再作为当前事实源、但仍需保留的历史备份文档。
 
-## 当前文档
+## 当前状态
 
-- `docs/archive/cursor-codex-api-integration.20260328-072120.bak.md`
-- `docs/archive/cursor-codex-api-integration.20260328-072733.bak.md`
+- 当前目录保留为归档预留位
+- 截至 2026-04-02，仓库内已无需要继续保留的历史备份文档
 
 ## 使用顺序
 
@@ -17,4 +17,4 @@
 
 - 归档文件只保留历史参考价值，不应继续作为现行真源
 - 新的现行说明应进入 `docs/guides/`、`docs/plans/`、`docs/governance/` 或 `docs/maintenance/`
-- 如归档文档已经失去保留价值，应在明确确认后再统一处理
+- 如归档文档已经失去保留价值，应优先清理，避免仓库长期保留失效备份
