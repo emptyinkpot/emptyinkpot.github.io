@@ -17,6 +17,8 @@ const {
   canonical,
   hideSiteChrome = false
 } = Astro.props;
+
+const buildVersion = new Date().toISOString();
 ---
 
 <html lang="zh-CN">
@@ -25,9 +27,32 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="site-build-version" content={buildVersion} />
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="alternate" type="application/rss+xml" title="emptyinkpot RSS" href={withBase('/rss.xml')} />
     <title>{title}</title>
+    <script is:inline define:vars={{ buildVersion }}>
+      (() => {
+        const versionKey = 'emptyinkpot-build-version';
+        const reloadKey = `emptyinkpot-build-reload:${buildVersion}`;
+
+        try {
+          const previousVersion = localStorage.getItem(versionKey);
+          const hasReloadedForVersion = sessionStorage.getItem(reloadKey) === '1';
+
+          if (previousVersion && previousVersion !== buildVersion && !hasReloadedForVersion) {
+            sessionStorage.setItem(reloadKey, '1');
+            localStorage.setItem(versionKey, buildVersion);
+            window.location.reload();
+            return;
+          }
+
+          localStorage.setItem(versionKey, buildVersion);
+        } catch {
+          // Ignore storage failures so page rendering stays unaffected.
+        }
+      })();
+    </script>
     <slot name="head" />
   </head>
   <body class:list={[hideSiteChrome && 'home-mode']}>
