@@ -30,7 +30,7 @@ const {
     <title>{title}</title>
     <slot name="head" />
   </head>
-  <body>
+  <body class:list={[hideSiteChrome && 'home-mode']}>
     <div class="site-shell">
       <div class="site-shell__glow site-shell__glow--one"></div>
       <div class="site-shell__glow site-shell__glow--two"></div>
