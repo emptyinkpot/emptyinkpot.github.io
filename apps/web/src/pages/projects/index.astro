@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/content';
+import { withBase } from '../../lib/site';
+
+const projects = await getCollection('projects');
+---
+
+<BaseLayout title="Projects / emptyinkpot" description="站点中的项目展示入口。">
+  <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
+    <section class="space-y-4">
+      <p class="section-kicker">Projects</p>
+      <h1 class="section-title text-4xl md:text-5xl">项目展示</h1>
+      <p class="max-w-3xl text-base leading-8 text-stone-600">
+        这一层是“产品化技术博客”的第二条内容主线。后续会接更多项目卡、仓库链接和相关文章映射。
+      </p>
+    </section>
+
+    <section class="grid gap-5 md:grid-cols-2">
+      {
+        projects.map((project) => (
+          <a class="card-stack rounded-[2rem] p-6" href={withBase(`/projects/${project.id}/`)}>
+            <div class="mb-5 flex items-center justify-between gap-4 text-xs uppercase tracking-[0.22em] text-stone-500">
+              <span>{project.data.status}</span>
+              {project.data.date && <span>{formatDate(project.data.date)}</span>}
+            </div>
+            <h2 class="text-2xl font-semibold text-stone-950">{project.data.title}</h2>
+            <p class="mt-4 text-sm leading-7 text-stone-600">{project.data.description}</p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              {project.data.stack.map((item) => <span class="pill">{item}</span>)}
+            </div>
+          </a>
+        ))
+      }
+    </section>
+  </main>
+</BaseLayout>

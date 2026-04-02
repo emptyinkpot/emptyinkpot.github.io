@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, toSlug } from '../../lib/content';
+import { getPostCover } from '../../lib/postCovers';
+import { withBase } from '../../lib/site';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props as Props;
+const excerpt = post.data.description ?? getExcerptFromBody(post.body, 118);
+const cover = getPostCover(post);
+---
+
+<article class="card-stack h-full rounded-[2rem] p-5 md:p-6">
+  {
+    cover && (
+      <a class="relative z-10 mb-5 block overflow-hidden rounded-[1.5rem] border border-white/60 bg-[rgba(40,34,31,0.08)]" href={withBase(`/posts/${post.id}/`)}>
+        <img class="h-auto w-full object-cover" src={cover} alt="" loading="lazy" />
+      </a>
+    )
+  }
+  <div class="mb-6 flex items-center justify-between gap-4 text-xs uppercase tracking-[0.22em] text-stone-500">
+    <a class="relative z-10 transition hover:text-stone-900" href={withBase(`/categories/${toSlug(getPrimaryCategory(post))}/`)}>
+      {getPrimaryCategory(post)}
+    </a>
+    <span>{formatDate(post.data.date)}</span>
+  </div>
+
+  <div class="space-y-4">
+    <h3 class="text-xl font-semibold leading-tight text-stone-900 md:text-2xl">
+      <a class="stretched-link" href={withBase(`/posts/${post.id}/`)}>{post.data.title}</a>
+    </h3>
+    <p class="text-sm leading-7 text-stone-600">{excerpt}</p>
+  </div>
+
+  <div class="mt-8 flex flex-wrap items-center gap-3">
+    <span class="pill">{getReadingTime(post.body)} min read</span>
+    {
+      post.data.tags.slice(0, 2).map((tag) => (
+        <a class="pill relative z-10" href={withBase(`/tags/${toSlug(tag)}/`)} key={tag}>
+          {tag}
+        </a>
+      ))
+    }
+  </div>
+</article>

@@ -1,0 +1,42 @@
+---
+import SiteFooter from '../components/shared/SiteFooter.astro';
+import SiteHeader from '../components/shared/SiteHeader.astro';
+import { withBase } from '../lib/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = 'emptyinkpot',
+  description = 'emptyinkpot 的个人内容站，基于 Astro 构建，强调结构化内容、专题组织与长期演进能力。',
+  canonical
+} = Astro.props;
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="alternate" type="application/rss+xml" title="emptyinkpot RSS" href={withBase('/rss.xml')} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <div class="site-shell__glow site-shell__glow--one"></div>
+      <div class="site-shell__glow site-shell__glow--two"></div>
+      <SiteHeader />
+      <div class="page-wrap">
+        <slot />
+      </div>
+      <SiteFooter />
+    </div>
+  </body>
+</html>
