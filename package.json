@@ -7,11 +7,18 @@
     "build": "npm --prefix apps/web run build",
     "preview": "npm --prefix apps/web run preview",
     "astro": "npm --prefix apps/web run astro",
+    "lint": "eslint \"apps/web/src/**/*.{ts,astro}\" \"tools/**/*.{js,mjs}\" \"*.{js,mjs}\"",
     "new:update": "node tools/new-update-entry.mjs",
     "check:updates": "node tools/validate-update-log.mjs",
     "check:content": "node tools/validate-content-governance.mjs",
     "check:governance": "node tools/validate-repo-governance.mjs",
     "check": "npm run check:updates && npm run check:content && npm run check:governance"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.1.0",
+    "eslint-plugin-astro": "^1.6.0",
+    "globals": "^17.4.0",
+    "typescript-eslint": "^8.58.0"
+  }
 }
