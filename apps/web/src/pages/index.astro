@@ -49,13 +49,15 @@ const sideNavItems = [
       </div>
     </aside>
 
-    <main class="home-editorial-page space-y-4 pb-10 md:space-y-5" data-pagefind-body>
-      <HomeHero hero={payload.hero} snapshot={payload.snapshot} />
-      <HomeFeatureSection featuredPost={payload.featuredPost} />
-      <HomeLatestPostsSection posts={payload.latestPosts} />
-      <HomeTopicsSeriesSection topics={payload.topics} series={payload.series} />
-      <HomeProjectNotesSection activeProject={payload.activeProject} latestNotes={payload.latestNotes} />
-      <HomeCheckInMapSection checkIn={payload.checkIn} />
+    <main class="home-editorial-page" data-pagefind-body>
+      <div class="home-editorial-page__inner space-y-4 pb-10 md:space-y-5">
+        <HomeHero hero={payload.hero} snapshot={payload.snapshot} />
+        <HomeFeatureSection featuredPost={payload.featuredPost} />
+        <HomeLatestPostsSection posts={payload.latestPosts} />
+        <HomeTopicsSeriesSection topics={payload.topics} series={payload.series} />
+        <HomeProjectNotesSection activeProject={payload.activeProject} latestNotes={payload.latestNotes} />
+        <HomeCheckInMapSection checkIn={payload.checkIn} />
+      </div>
     </main>
   </div>
 </BaseLayout>
