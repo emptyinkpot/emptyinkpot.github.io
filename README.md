@@ -145,6 +145,469 @@ npm run build
 npx eslint apps/web/src/lib/updateLog.ts
 ```
 
+## 云端部署说明
+
+这一节用于指导把当前 `MyBlog` 项目部署到云端服务器。
+
+当前项目和旧的启动壳工程不同，它是一个已经收口到 `Astro + GitHub Pages` 主链路的单站点仓库，所以云端部署建议优先分成两类：
+
+- 方案 A：继续使用 GitHub Pages 作为正式发布链路
+- 方案 B：将当前仓库部署到你自己的云服务器，作为自托管静态站点
+
+如果你后续准备自己上云，建议优先按方案 B 执行。
+
+### 当前项目的云端定位
+
+- 正式站点源码入口：`apps/web/`
+- 仓库根目录负责统一脚本、治理规则与部署前检查
+- 站点构建产物目录：`apps/web/dist/`
+- 发布前最小检查顺序：
+
+```bash
+npm run lint
+npm run check
+npm run build
+```
+
+### 建议的云端目录结构
+
+建议在云服务器上使用固定项目目录，例如：
+
+```text
+/srv/myblog/
+├─ repo/          # 仓库工作目录
+├─ scripts/       # 部署脚本
+├─ releases/      # 可选，历史构建产物
+└─ shared/        # 可选，共享配置
+```
+
+其中仓库实际可放在：
+
+```text
+/srv/myblog/repo
+```
+
+### 云端环境建议
+
+推荐最小环境：
+
+- 系统：Ubuntu 22.04 或更新版本
+- Node.js：22.x
+- npm：随 Node.js 安装
+- Nginx：用于托管静态站点
+- Git：用于拉取仓库
+
+推荐先检查：
+
+```bash
+node -v
+npm -v
+git --version
+nginx -v
+```
+
+### 首次上云部署步骤
+
+#### 1. 登录云服务器
+
+示例：
+
+```bash
+ssh <user>@<server-ip>
+```
+
+#### 2. 创建项目目录
+
+```bash
+sudo mkdir -p /srv/myblog/repo
+sudo chown -R $USER:$USER /srv/myblog
+cd /srv/myblog/repo
+```
+
+#### 3. 拉取仓库
+
+```bash
+git clone https://github.com/emptyinkpot/emptyinkpot.github.io.git .
+git checkout main
+```
+
+如果服务器已经存在仓库，则执行：
+
+```bash
+git pull --ff-only origin main
+```
+
+#### 4. 安装依赖
+
+当前仓库有根目录依赖，也有 `apps/web/` 子应用依赖，因此两层都要安装：
+
+```bash
+npm ci
+cd apps/web
+npm ci
+cd /srv/myblog/repo
+```
+
+#### 5. 执行发布前检查
+
+```bash
+npm run lint
+npm run check
+npm run build
+```
+
+如果这三步都通过，就说明当前代码已经具备可发布条件。
+
+#### 6. 配置 Nginx 托管构建产物
+
+Astro 构建完成后，正式静态产物在：
+
+```text
+/srv/myblog/repo/apps/web/dist
+```
+
+一个最小 Nginx 站点配置示例：
+
+```nginx
+server {
+    listen 80;
+    server_name <your-domain>;
+
+    root /srv/myblog/repo/apps/web/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+保存后执行：
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+### 日常更新步骤
+
+以后每次更新站点，建议固定按下面顺序执行：
+
+```bash
+cd /srv/myblog/repo
+git pull --ff-only origin main
+npm ci
+cd apps/web && npm ci && cd /srv/myblog/repo
+npm run lint
+npm run check
+npm run build
+sudo systemctl reload nginx
+```
+
+### 建议写入你自己的服务器信息
+
+后续你正式上云后，建议把下面这些信息补到本节，方便以后自己维护：
+
+- 云服务器 IP：
+- SSH 用户：
+- SSH 登录命令：
+- 项目部署目录：
+- Nginx 站点配置文件位置：
+- 正式访问域名：
+- HTTPS 证书方式：
+- 发布命令：
+
+建议写成这种格式：
+
+```text
+当前项目对应服务器
+
+- 主机 IP：<server-ip>
+- SSH 用户：<user>
+- SSH 命令：ssh <user>@<server-ip>
+- 项目目录：/srv/myblog/repo
+- 构建目录：/srv/myblog/repo/apps/web/dist
+- Nginx 配置：/etc/nginx/sites-available/myblog.conf
+- 站点域名：<your-domain>
+```
+
+### 回滚建议
+
+如果某次更新后站点异常，建议至少保留一种回滚方式：
+
+- 方式 1：回退 Git 提交后重新构建
+- 方式 2：保留上一版 `dist/` 产物并切回
+
+最简单的回滚方式：
+
+```bash
+cd /srv/myblog/repo
+git log --oneline -5
+git checkout <previous-commit>
+npm run build
+sudo systemctl reload nginx
+```
+
+### 当前部署口径
+
+当前项目的正式部署口径是：
+
+- 仓库主分支：`main`
+- 正式站点源码：`apps/web/`
+- 正式构建产物：`apps/web/dist/`
+- 发布前质量门：`npm run lint` -> `npm run check` -> `npm run build`
+
+如果后续你改为完全云端自托管，可以继续保留 GitHub 仓库作为代码真源，但把服务器作为正式访问入口。
+
+## 每次更新规范
+
+这一节用于统一“从开始改代码，到最终合并发布”的标准流程。
+
+建议以后每次更新都按这个顺序执行，不要跳步。
+
+### 1. 开始改动前
+
+- 先确认当前工作分支，不直接在长期脏分支上继续叠改
+- 默认从 `main` 拉最新代码，再切出功能分支
+- 分支命名建议使用：
+  - `feat/<topic>`
+  - `fix/<topic>`
+  - `docs/<topic>`
+  - `refactor/<topic>`
+  - `chore/<topic>`
+
+推荐命令：
+
+```bash
+git checkout main
+git pull --ff-only origin main
+git checkout -b feat/<topic>
+```
+
+### 2. 开发或修改内容
+
+- 代码改动优先落到正式目录
+- 站点代码统一放在 `apps/web/`
+- 工程文档统一放在 `docs/`
+- 公开发布内容统一放在 `apps/web/src/content/posts/`
+- 工具脚本统一放在 `tools/`
+
+禁止做法：
+
+- 不要新建 `temp`、`copy`、`final`、`backup` 之类的临时文件名长期保留
+- 不要把运行产物、调试文件、临时副本提交进仓库
+- 不要在没有真实脚本时，只为了“以后可能会用”就先建空目录占位
+
+### 3. 本地第一道检查：ESLint
+
+代码改完后，先执行：
+
+```bash
+npm run lint
+```
+
+如果只想临时检查某个文件，可以执行：
+
+```bash
+npx eslint apps/web/src/lib/updateLog.ts
+```
+
+要求：
+
+- 先修完 ESLint 报错，再进入下一步
+- 不要带着已知 lint 问题继续提 PR
+
+### 4. 第二道检查：仓库治理
+
+执行：
+
+```bash
+npm run check
+```
+
+这一层主要检查：
+
+- 更新日志结构
+- 内容治理规则
+- 仓库治理规则
+
+要求：
+
+- `npm run check` 必须通过
+- 如果是文档、文章、更新日志变更，这一步尤其不能省
+
+### 5. 第三道检查：构建验证
+
+执行：
+
+```bash
+npm run build
+```
+
+要求：
+
+- 构建通过后，才说明当前版本具备发布条件
+- 如果是站点页面、内容路由、Astro 配置相关改动，这一步必须执行
+
+### 6. 提交前自查
+
+提交前建议先看：
+
+```bash
+git status --short
+git diff --stat
+```
+
+确认点：
+
+- 只包含本次主题相关文件
+- 没有临时文件
+- 没有空文件
+- 没有无关目录改动
+- 没有误提交的副本文件
+
+### 7. 提交规范
+
+提交信息保持简洁明确，推荐使用：
+
+- `feat: ...`
+- `fix: ...`
+- `docs: ...`
+- `refactor: ...`
+- `chore: ...`
+
+示例：
+
+```bash
+git add .
+git commit -m "feat: add root ESLint workflow and publishing guide"
+```
+
+要求：
+
+- 一次提交只解决一组明确问题
+- 不要把 unrelated 改动混进同一个 commit
+
+### 8. 推送与 PR 规范
+
+默认协作方式是：
+
+- `feature branch + Pull Request`
+
+推送分支：
+
+```bash
+git push -u origin <branch-name>
+```
+
+PR 规则：
+
+- 目标仓库默认是 `https://github.com/emptyinkpot/emptyinkpot.github.io`
+- 目标分支默认是 `main`
+- PR 标题必须中英双语、简洁明确
+- PR 描述必须中英双语
+- PR 描述必须写明：
+  - 摘要 / Summary
+  - 变更内容 / Changes
+  - 验证结果 / Verification
+  - 风险与备注 / Risks & Notes
+
+### 9. PR 必填验证项
+
+正常情况下，PR 里至少应写清下面这些执行结果：
+
+- `npm run lint`
+- `npm run check`
+- `npm run build`
+
+如果某一步没执行，也必须明确写原因，不能省略不写。
+
+### 10. 合并后收尾
+
+PR 合并后建议立即做收尾清理：
+
+```bash
+git checkout main
+git pull --ff-only origin main
+git branch -D <branch-name>
+git fetch --prune origin
+```
+
+目标：
+
+- 删除本地功能分支
+- 清理远端已删除分支的跟踪引用
+- 保持本地和远端 `main` 同步
+
+### 11. 发布前最小质量门
+
+如果这次更新会影响正式站点或正式文档发布，最少必须保证：
+
+```bash
+npm run lint
+npm run check
+npm run build
+```
+
+然后再执行：
+
+- 推送分支
+- 发起 PR
+- 合并到 `main`
+- 按需同步到云端服务器
+
+### 12. 一条完整示例流程
+
+```bash
+git checkout main
+git pull --ff-only origin main
+git checkout -b feat/<topic>
+
+# 修改代码或文档
+
+npm run lint
+npm run check
+npm run build
+
+git status --short
+git diff --stat
+git add .
+git commit -m "feat: <summary>"
+git push -u origin feat/<topic>
+
+# 发起 PR，填写中英双语说明和验证结果
+
+git checkout main
+git pull --ff-only origin main
+git branch -D feat/<topic>
+git fetch --prune origin
+```
+
+## README 约束
+
+`README.md` 必须和当前工程保持真实映射关系，不能脱离仓库现状单独演化。
+
+执行约束如下：
+
+- README 中写到的目录，必须在仓库中真实存在
+- README 中写到的命令，必须在当前工程里真实可执行
+- README 中写到的部署链路，必须和当前项目实际发布方式一致
+- README 中写到的工具、脚本、校验项，必须能在仓库里找到对应入口
+- README 中写到的规范，必须和当前工程结构、PR 流程、发布流程一致
+
+禁止做法：
+
+- 不要把其他项目的说明直接复制进当前 README
+- 不要保留已经失效的旧路径、旧目录、旧命令
+- 不要写“未来可能会这样”的假定结构，除非明确标注为规划
+- 不要在 README 中维护和实际工程不一致的云端信息、构建信息或发布信息
+
+推荐做法：
+
+- 每次改动目录结构、命令入口、部署方式后，同步检查 README 是否需要更新
+- 每次提交 README 改动前，至少核对一次对应目录、脚本、命令是否真实存在
+- 如果内容属于规划而不是现状，应优先写入 `docs/plans/`，而不是伪装成 README 中的现行说明
+
 ## 文档索引
 
 - 工程文档总入口：`docs/README.md`
