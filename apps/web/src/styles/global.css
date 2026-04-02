@@ -320,7 +320,8 @@ body.home-mode .page-wrap--home {
 .home-section-card,
 .home-checkin {
   border: none;
-  background: var(--home-panel);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px);
 }
 
 .home-hero-panel,
@@ -336,13 +337,15 @@ body.home-mode .page-wrap--home {
 .home-list-card {
   border: none;
   border-radius: 1.25rem;
-  background: var(--home-panel);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px);
   padding: 1rem;
 }
 
 .home-notes-panel {
   border: none;
-  background: var(--home-panel-soft);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px);
 }
 
 .home-checkin__aside {
@@ -573,7 +576,8 @@ body.home-mode .page-wrap--home {
 
 .home-poster-hero__panel {
   border: none;
-  background: white;
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px);
   padding: 1rem 1rem 0.85rem;
 }
 
@@ -638,7 +642,7 @@ body.home-mode .page-wrap--home {
 }
 
 .home-snapshot-metric {
-  background: white;
+  background: rgba(255, 255, 255, 0.8);
   padding: 0.8rem;
 }
 
@@ -678,7 +682,8 @@ body.home-mode .page-wrap--home {
 .home-post-card {
   position: relative;
   border: none;
-  background: white;
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px);
   min-height: 6.2rem;
 }
 
@@ -727,12 +732,13 @@ body.home-mode .page-wrap--home {
 
 .home-notes-panel {
   border: none;
-  background: #e7d86e;
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px);
 }
 
 .home-checkin {
   border-radius: 0;
-  background: white;
+  background: rgba(255, 255, 255, 0.58);
 }
 
 @media (min-width: 768px) {
