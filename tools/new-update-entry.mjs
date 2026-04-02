@@ -9,13 +9,16 @@ if (!title) {
   process.exit(1);
 }
 
-const preferredPath = path.resolve('public-data/updates/index.md');
-const legacyPath = path.resolve('source/updates/index.md');
-const targetPath = fs.existsSync(preferredPath) ? preferredPath : legacyPath;
+const targetPath = path.resolve('public-data/updates/index.md');
 const marker = '<!-- UPDATE_LOG_ENTRIES -->';
 const date = args.date ?? formatDate(new Date());
 const commit = args.commit ?? '待补充';
 const dryRun = Boolean(args['dry-run']);
+
+if (!fs.existsSync(targetPath)) {
+  console.error(`Update log source not found: ${targetPath}`);
+  process.exit(1);
+}
 
 const source = fs.readFileSync(targetPath, 'utf8');
 const markerIndex = source.indexOf(marker);

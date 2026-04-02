@@ -1,11 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const preferredPath = path.resolve('public-data/updates/index.md');
-const legacyPath = path.resolve('source/updates/index.md');
-const targetPath = fs.existsSync(preferredPath) ? preferredPath : legacyPath;
+const targetPath = path.resolve('public-data/updates/index.md');
 const marker = '<!-- UPDATE_LOG_ENTRIES -->';
 const requiredSections = ['更新内容', '涉及技术', '关联记录', '验证记录', '实现效果', '下一步'];
+
+if (!fs.existsSync(targetPath)) {
+  fail(`Update log source not found: ${targetPath}`);
+}
 
 const source = fs.readFileSync(targetPath, 'utf8');
 const markerIndex = source.indexOf(marker);

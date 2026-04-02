@@ -5,7 +5,6 @@ const rootDir = process.cwd();
 const issues = [];
 
 validateMigrationStatus();
-validateHistoricalBoundaryReadmes();
 validatePackageScripts();
 validatePagesWorkflow();
 
@@ -22,10 +21,10 @@ function validateMigrationStatus() {
   const source = readText(filePath);
   const rows = source
     .split('\n')
-    .filter((line) => line.startsWith('| `source/_posts/'));
+    .filter((line) => line.startsWith('| `apps/web/src/content/posts/'));
 
   if (!rows.length) {
-    issues.push(`\`${migrationStatusPath}\` does not contain any tracked migration rows`);
+    issues.push(`\`${migrationStatusPath}\` does not contain any tracked Astro content rows`);
     return;
   }
 
@@ -40,36 +39,20 @@ function validateMigrationStatus() {
       return;
     }
 
-    const [hexoFile, astroFile, status] = columns.map(stripBackticks);
+    const [astroFile, status, scope, notes] = columns.map(stripBackticks);
 
-    if (!fileExists(hexoFile)) {
-      issues.push(`Historical file listed in migration table is missing: ${hexoFile}`);
+    if (!fileExists(astroFile)) {
+      issues.push(`Tracked Astro content file is missing: ${astroFile}`);
     }
 
     if (status === '现行') {
-      if (!astroFile || astroFile === '-') {
-        issues.push(`Current migration row is missing Astro target: ${hexoFile}`);
+      if (!scope || scope === '-') {
+        issues.push(`Current Astro content row is missing scope: ${astroFile}`);
         return;
       }
-
-      if (!fileExists(astroFile)) {
-        issues.push(`Current Astro target listed in migration table is missing: ${astroFile}`);
+      if (!notes || notes === '-') {
+        issues.push(`Current Astro content row is missing notes: ${astroFile}`);
       }
-    }
-  });
-}
-
-function validateHistoricalBoundaryReadmes() {
-  const requiredReadmes = [
-    'docs/historical/source-boundary.md',
-    'docs/historical/themes-boundary.md',
-    'docs/historical/scaffolds-boundary.md',
-    'docs/historical/scripts-boundary.md'
-  ];
-
-  requiredReadmes.forEach((relativePath) => {
-    if (!fileExists(relativePath)) {
-      issues.push(`Historical boundary README is missing: ${relativePath}`);
     }
   });
 }
@@ -81,8 +64,8 @@ function validatePackageScripts() {
 
   Object.entries(scripts).forEach(([name, command]) => {
     const normalizedCommand = String(command).toLowerCase();
-    if (normalizedCommand.includes('hexo') && !name.startsWith('legacy:')) {
-      issues.push(`Hexo command must use legacy-prefixed script name: ${name}`);
+    if (normalizedCommand.includes('hexo')) {
+      issues.push(`Hexo command is no longer allowed in package scripts: ${name}`);
     }
   });
 }

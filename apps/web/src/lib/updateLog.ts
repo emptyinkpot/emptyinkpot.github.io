@@ -1,10 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const UPDATE_LOG_PATHS = [
-  path.resolve(process.cwd(), '../../public-data/updates/index.md'),
-  path.resolve(process.cwd(), '../../source/updates/index.md')
-];
+const UPDATE_LOG_PATH = path.resolve(process.cwd(), '../../public-data/updates/index.md');
 const UPDATE_LOG_MARKER = '<!-- UPDATE_LOG_ENTRIES -->';
 
 export interface UpdateLogSection {
@@ -47,13 +44,11 @@ function parseSections(source: string) {
 }
 
 export function getUpdateLogEntries() {
-  const updateLogPath = UPDATE_LOG_PATHS.find((candidatePath) => fs.existsSync(candidatePath));
-
-  if (!updateLogPath) {
+  if (!fs.existsSync(UPDATE_LOG_PATH)) {
     return [];
   }
 
-  const source = fs.readFileSync(updateLogPath, 'utf8');
+  const source = fs.readFileSync(UPDATE_LOG_PATH, 'utf8');
   const sectionSource = source.split(UPDATE_LOG_MARKER)[1] ?? '';
   const rawEntries = sectionSource
     .split(/\n---\s*\n(?=##\s)/)
