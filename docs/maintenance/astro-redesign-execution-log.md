@@ -108,11 +108,11 @@
 - 状态：已完成
 - 结果：
   - 新增 `tools/validate-content-governance.mjs`
-  - 新增 `tools/content-validation/README.md` 与 `tools/content-migration/README.md`
+  - 历史阶段曾建立 `tools/content-validation/` 与 `tools/content-migration/` 作为预留目录，后续已回收
   - 将内容字段、链接兼容、RSS 与搜索相关检查并入 `npm run check:content`
 - 验证：
   - 内容治理检查已接入统一检查入口
-  - 迁移与内容校验的后续扩展位置已经明确
+  - 迁移与内容校验能力已统一收口到 `tools/` 根层
 
 ### 2026-03-30 / 为 `site-v2` 建立公开更新页同步入口
 

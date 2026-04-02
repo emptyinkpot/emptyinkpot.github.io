@@ -201,7 +201,7 @@
 ### 第三轮
 
 - 将链接兼容检查、字段校验与治理脚本统一接入 `npm run check`
-- 为 `tools/content-validation/` 与 `tools/content-migration/` 预留后续能力入口
+- 曾为内容治理与迁移预留独立工具目录，后续已收口回 `tools/` 根层，避免长期空目录占位
 
 ### 第四轮
 
@@ -255,7 +255,7 @@
 ### P2（持续演进）
 
 - 发布前回归快照：形成可复用的发布前检查与对照记录
-- 治理脚本扩展：为 `tools/content-validation/` 与 `tools/content-migration/` 增补可执行能力
+- 治理脚本扩展：如后续出现真实拆分需求，再从 `tools/` 根层演进出独立子模块
 
 完成标准：
 

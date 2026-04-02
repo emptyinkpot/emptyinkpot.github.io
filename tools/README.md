@@ -9,10 +9,11 @@
 - `tools/validate-content-governance.mjs`：校验现行内容层的字段、链接兼容、RSS 与搜索接线
 - `tools/validate-repo-governance.mjs`：校验工程文档路径、历史边界与仓库治理基线
 
-## 预留目录
+## 当前约定
 
-- `tools/content-migration/README.md`：内容迁移与映射工具入口说明
-- `tools/content-validation/README.md`：内容治理子模块拆分入口说明
+- 当前仓库不再保留仅含 `README.md` 的工具占位目录
+- 若后续确实需要拆分子模块，应在产生实际脚本或可执行能力时再建立对应目录
+- 在此之前，现行工具统一收口在 `tools/` 根层
 
 ## 使用约定
 
