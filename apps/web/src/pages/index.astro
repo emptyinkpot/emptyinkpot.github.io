@@ -59,5 +59,44 @@ const sideNavItems = [
         <HomeCheckInMapSection checkIn={payload.checkIn} />
       </div>
     </main>
+
+    <script is:inline>
+      (() => {
+        const setupPanelWheel = (selector) => {
+          const panel = document.querySelector(selector);
+          if (!panel) return;
+
+          panel.addEventListener(
+            'wheel',
+            (event) => {
+              if (window.innerWidth <= 900) return;
+              if (Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
+              if (panel.scrollHeight <= panel.clientHeight) return;
+
+              const nextTop = panel.scrollTop + event.deltaY;
+              const maxTop = panel.scrollHeight - panel.clientHeight;
+              const clampedTop = Math.max(0, Math.min(nextTop, maxTop));
+
+              if (clampedTop === panel.scrollTop) return;
+
+              event.preventDefault();
+              panel.scrollTop = clampedTop;
+            },
+            { passive: false }
+          );
+        };
+
+        const mount = () => {
+          setupPanelWheel('.home-editorial-page');
+          setupPanelWheel('.home-side-rail__inner');
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', mount, { once: true });
+        } else {
+          mount();
+        }
+      })();
+    </script>
   </div>
 </BaseLayout>
