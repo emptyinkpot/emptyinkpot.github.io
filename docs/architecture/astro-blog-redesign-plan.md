@@ -22,7 +22,9 @@
 
 ## 2. 当前项目现状
 
-当前仓库是一个基于 Hexo 的静态博客，已具备以下基础能力：
+当前仓库最初是一个基于 Hexo 的静态博客，目前已经完成 Astro 主链路切换。
+
+历史基线能力包括：
 
 - Markdown 写作
 - Hexo 构建
@@ -32,7 +34,7 @@
 当前限制主要有：
 
 - 首页表现偏传统博客模板，不适合做高级杂志式编排
-- 内容模型较单一，主要围绕 `source/_posts`
+- 早期内容模型较单一，主要围绕 `source/_posts`
 - 主题可定制，但继续深改 Hexo 主题的长期收益有限
 - 搜索、反馈、系列内容、项目展示等能力还未产品化
 
@@ -645,6 +647,8 @@ git checkout -b feature/astro-redesign
 
 ### 步骤 2：创建 Astro 子项目或替换式重构目录
 
+说明：以下内容属于历史实施路径记录。现行仓库已经完成从 `site-v2/` 到 `apps/web/` 的收口。
+
 建议两种方式二选一：
 
 - 方式 A：在当前仓库内新建 `site-v2/`
@@ -890,7 +894,7 @@ src/content/posts/
 
 为了避免后续重构越做越散，建议同时维护 4 类记录：
 
-- 公开维护日志：`source/updates/index.md`
+- 公开维护日志：`public-data/updates/index.md`
 - 内部执行日志：`docs/maintenance/astro-redesign-execution-log.md`
 - 治理规范：`docs/maintenance/update-log-spec.md`
 - 执行清单：`docs/architecture/astro-blog-redesign-checklist.md`
@@ -921,7 +925,7 @@ npm run check:updates
 截至 2026-03-27，已经完成：
 
 - 建立 Astro 重构方案与执行清单
-- 建立 `site-v2` 原型站
+- 建立 Astro 原型站并完成后续收口到 `apps/web/`
 - 完成首页、文章页、分类、标签、系列、项目、Notes、搜索等基础结构
 - 为 `site-v2` 接入 RSS、Sitemap 与 robots.txt
 - 建立 `site-v2` 的 Pages 子路径发布链路

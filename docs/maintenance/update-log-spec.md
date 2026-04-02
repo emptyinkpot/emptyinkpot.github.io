@@ -132,5 +132,5 @@ npm run build
 
 - 已将 Markdown 相对链接、RSS 与搜索页文案/资源接线校验纳入 `npm run check:content`，后续可继续补充更多内容质量规则
 - 当前公开维护日志以 `public-data/updates/index.md` 作为写入真源，现行站点由 `apps/web/src/pages/updates.astro` 同步展示
-- 迁移兼容期仍允许脚本回退读取 `source/updates/index.md`，但不再作为默认写入入口
+- 更新日志脚本与页面统一只读取 `public-data/updates/index.md`
 - 当重构切换上线后，重新整理历史条目分层

@@ -1,4 +1,5 @@
-﻿# 博客更新计划
+﻿
+# 博客更新计划
 
 更新时间：2026-03-31
 
@@ -8,8 +9,8 @@
 
 - `apps/web/` 作为唯一对外站点应用（`site-v2/` 为历史阶段命名）
 - 线上地址统一为 `https://emptyinkpot.github.io/`
-- 根目录只承担仓库治理、历史资产保留、工程文档与辅助脚本职责
-- 旧 Hexo 结构保留为历史参考与迁移档案，不再参与正式发布
+- 根目录只承担仓库治理、工程文档与辅助脚本职责
+- 旧 Hexo 结构已于 `2026-04-02` 从仓库移除，仅保留历史文档记录
 
 这次整理遵循《通用文件与模块开发规范》的核心原则：
 
@@ -29,8 +30,8 @@
 2. `apps/web/src/content/`：现行内容事实源
 3. `docs/`：规划、治理、维护记录、执行清单、历史边界与指南文档
 4. `tools/`：仓库级辅助脚本与后续校验工具入口
-5. `source/`：旧 Hexo 内容归档层，仅作迁移参考
-6. `themes/`、`_config.yml`、`_config.landscape.yml`：旧 Hexo 历史资产，仅保留，不再承担现行发布职责
+5. `public-data/`：公开数据真源
+6. `tests/`、`.runtime/`：规范化补建的测试与运行层占位
 
 ### 2.2 已完成的收敛动作
 
@@ -45,7 +46,7 @@
 
 - 已建立 `docs/governance/content-migration-status.md` 作为内容迁移状态表
 - 已建立 `docs/governance/historical-assets-boundary.md` 作为历史资产边界说明
-- 已将 `source/`、`themes/`、`scaffolds/`、`scripts/` 的目录说明统一收拢到 `docs/historical/`
+- 已完成 Hexo 历史目录与配置删除，保留边界说明文档作为过程记录
 - 已建立 `tools/validate-repo-governance.mjs` 用于校验迁移表、历史边界文档、脚本命名与 Pages workflow
 - 已建立 `tools/validate-content-governance.mjs` 用于校验内容字段、链接兼容与内容约束
 - 已将 `npm run check` 收敛为仓库统一检查入口
@@ -83,13 +84,11 @@
 - `docs/templates/`：文档模板
 - `tools/`：后续迁移、校验与生成脚本入口
 
-### 4.3 历史归档层
+### 4.3 补充正式层
 
-- `source/`：旧 Hexo 内容源归档
-- `themes/`：旧 Hexo 主题归档
-- `_config.yml`：旧 Hexo 站点配置归档
-- `_config.landscape.yml`：旧 Hexo 主题配置归档
-- `scaffolds/`、`scripts/`：旧 Hexo 辅助结构，保留为历史资料
+- `public-data/`：公开数据真源
+- `tests/`：后续自动化验证入口
+- `.runtime/`：运行层外置占位
 
 ## 5. 当前目标结构
 
@@ -110,8 +109,9 @@
 |- tools/
 |- apps/
 |  \- web/
-|- source/
-|- themes/
+|- public-data/
+|- tests/
+|- .runtime/
 |- README.md
 \- package.json
 ```
@@ -120,7 +120,7 @@
 
 - 只有 `apps/web/` 负责对外站点能力
 - `docs/` 是工程文档统一入口
-- `source/` 与 `themes/` 暂不删除，但定位严格降级为历史层
+- Hexo 历史目录与配置已删除，不再作为正式结构存在
 
 ## 6. 分阶段执行计划
 
@@ -162,14 +162,14 @@
 
 ## 阶段 D：历史层边界隔离
 
-目标：保留 Hexo 历史资产，但不再污染现行结构认知。
+目标：完成 Hexo 历史资产删除，并保留必要的边界文档记录。
 
-当前状态：已完成基础收口。
+当前状态：已完成。
 
 完成标准：
 
-- `docs/governance/historical-assets-boundary.md` 明确现行层与历史层边界
-- `docs/historical/` 为 `source/`、`themes/`、`scaffolds/`、`scripts/` 提供边界说明
+- `docs/governance/historical-assets-boundary.md` 记录现行层与已删除历史层边界
+- `docs/historical/` 保留历史目录边界说明文档
 - 新功能不再继续落到 Hexo 结构中
 
 ## 阶段 E：质量门禁与内容治理补齐
@@ -196,12 +196,11 @@
 
 - 清理历史 `/site-v2/` 子路径表述
 - 清理“预览站 / 新站 / 并行站”类文案
-- 为历史 Hexo 目录补齐边界说明
+- 清理“历史资产仍保留在仓库中”类旧表述
 
 ### 第三轮
 
 - 将链接兼容检查、字段校验与治理脚本统一接入 `npm run check`
-- 评估旧 Hexo 历史层是否整体迁入 `legacy/`，当前结论为暂不迁移
 - 为 `tools/content-validation/` 与 `tools/content-migration/` 预留后续能力入口
 
 ### 第四轮
@@ -277,7 +276,7 @@
 ### 合并优先级
 
 1. **入口合并**：所有 README 与索引文档优先指向上述 4 个中心文件，避免多入口并列叙述
-2. **口径合并**：现行描述统一使用 `apps/web/` 与 `public-data/updates/index.md`；`site-v2/`、`source/updates/index.md` 仅作为历史兼容说明
+2. **口径合并**：现行描述统一使用 `apps/web/` 与 `public-data/updates/index.md`；`site-v2/`、`source/updates/index.md` 仅作为历史阶段说明
 3. **职责合并**：计划写 `docs/plans/`，实现写 `docs/architecture/`，过程写 `docs/maintenance/`，边界写 `docs/governance/`
 4. **历史合并**：历史目录说明集中到 `docs/historical/`，不在现行文档中重复展开历史细节
 
@@ -302,26 +301,23 @@
 
 更新时间：2026-03-31
 
-评估基线：`source/_posts/通用文件与模块开发规范.md`
+评估基线：`apps/web/src/content/posts/通用文件与模块开发规范.md`
 
 ### 11.1 当前已符合项
 
 - **单一事实源方向**：对外站点已收敛到 `apps/web/`，发布入口已统一。
 - **文档集中方向**：工程文档已集中到 `docs/` 分层目录（architecture/governance/maintenance/plans 等）。
 - **治理可校验方向**：已建立 `npm run check` 统一检查入口，覆盖 updates/content/governance。
-- **历史边界方向**：`source/`、`themes/`、`scaffolds/`、`scripts/` 已明确为历史层并有边界文档。
+- **历史边界方向**：Hexo 历史层已删除，并有边界文档记录。
 
 ### 11.2 当前偏差项（需继续收敛）
 
-- **顶层目录仍偏混合**：仍保留 `_config.yml`、`_config.landscape.yml` 等历史配置在顶层，语义上属于历史层资产。
-- **应用壳层命名不统一**：现行应用目录仍为 `site-v2/`（带阶段语义），不符合长期稳定命名原则。
-- **文档与历史层并存可读性成本**：`source/` 同时承载历史文章与公开更新真源，需更明确标注现行/历史职责。
+- **文档历史表述仍需继续压缩**：部分执行日志与规划文档仍保留较多阶段性路径描述。
 - **工具目录语义可进一步分层**：`tools/` 已有校验脚本，但尚未按 generate/validate/migrate 的能力分组。
 
 ### 11.3 评估结论
 
-当前仓库已达到“可持续维护的基础合规”，但尚未达到“命名与结构完全中性化、长期化”的目标。
-下一步应优先做 **命名去阶段化**、**顶层语义收口**、**文档与工具目录再分层**。
+当前仓库已达到“主链路唯一化”的基础合规，但仍需继续完成 **文档历史表述收口** 与 **工具目录再分层**。
 
 ## 12. 文档集中与命名重构规划（新文件树）
 

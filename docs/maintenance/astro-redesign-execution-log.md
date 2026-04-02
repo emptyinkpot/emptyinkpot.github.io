@@ -12,18 +12,54 @@
 
 ## 当前状态
 
-- 当前策略：对外站点已经统一收敛到 `apps/web/`（由 `site-v2/` 过渡），根目录 Hexo 结构仅作为历史资产保留
+- 当前策略：对外站点已经统一收敛到 `apps/web/`，Hexo 历史目录已删除，Astro 为唯一正式主链路
 - 当前阶段：单站点发布、内容迁移状态、历史边界说明与工程文档分类收拢已经建立基础闭环
 - 当前重点：按 `docs/plans/update-plan.md` 的 P0/P1/P2 推进下一阶段治理，优先完成 P0 文档口径与导航一致性收口
+
+## 2026-03-31 / Rainyun 13009 Day 2-4 推进（案例文 + 公开更新）
+
+- 状态：已完成
+- 结果：
+  - 新增案例文章 `apps/web/src/content/posts/rainyun-topic-13009-integration-case.md`
+  - 文章已按“功能说明 / 操作流程 / 风险声明”三段结构落地
+  - 在 `public-data/updates/index.md` 新增公开更新条目并关联专题规划
+- 验证：
+  - 已执行 `npm run check:content`
+  - 内容治理校验通过（`Content governance validation passed`）
+  - 新文章 front matter 与 `apps/web/src/content.config.ts` schema 对齐
+
+## 2026-03-31 / Rainyun 13009 Day 5 推进（后台契约细化）
+
+- 状态：已完成
+- 结果：
+  - 完善 `docs/architecture/rainyun-backend-api-contract.md`，补齐 Idempotency 语义
+  - 新增 `POST /api/admin/v1/safe-mode/rollback` 契约，覆盖误触恢复场景
+  - 增补 Safe Mode 状态机迁移规则、UI 映射与异常处理（重复提交/超时重试）
+  - 扩展错误码：`IDEMPOTENCY_KEY_REUSED`、`SAFE_MODE_TRANSITION_BLOCKED`、`SAFE_MODE_ROLLBACK_NOT_ALLOWED`
+- 验证：
+  - 已执行 `npm run check:updates`
+  - 更新日志校验通过（Validated 14 update entries）
+
+## 2026-03-31 / Rainyun 13009 Day 6 推进（行为矩阵 + 回归模板）
+
+- 状态：已完成
+- 结果：
+  - 新增 `docs/architecture/rainyun-safe-mode-test-matrix.md`
+  - 新增 `docs/templates/rainyun-safe-mode-regression-template.md`
+  - 更新索引文档 `docs/architecture/README.md` 与 `docs/templates/README.md`
+  - 回填公开更新日志 Day 6 条目到 `public-data/updates/index.md`
+- 验证：
+  - 已执行 `npm run check`
+  - `check:updates`、`check:content`、`check:governance` 全部通过
 
 ## 2026-03-31 / 阶段 F-H 过渡兼容推进（`apps/web` 与公开更新真源切换）
 
 - 状态：已完成
 - 结果：
   - GitHub Pages workflow 已切换为构建并上传 `apps/web/dist`
-  - 更新日志写入与校验脚本已切换到 `public-data/updates/index.md`，并保留 `source/updates/index.md` 兼容兜底
-  - 站点侧更新日志读取已支持新旧路径候选，保障迁移期可读
-  - 内容治理脚本已支持优先检查 `apps/web/`，未迁移场景回退 `site-v2/`
+  - 更新日志写入与校验脚本已切换到 `public-data/updates/index.md`
+  - 站点侧更新日志读取已统一收口到正式真源
+  - 内容治理脚本已统一检查 `apps/web/`
   - 文档入口已补齐新口径：`README.md`、`docs/README.md`、`docs/templates/README.md`
 - 验证：
   - 已执行 `npm run check`
@@ -82,12 +118,12 @@
 
 - 状态：已完成
 - 结果：
-  - 新增 `site-v2/src/lib/updateLog.ts`，直接读取 `source/updates/index.md`
-  - 新增 `site-v2/src/pages/updates.astro`，在现行站点中展示公开更新日志
+  - 历史阶段曾新增更新日志同步入口，后续已统一迁入 `apps/web/`
+  - 现行站点在 `apps/web/` 中展示公开更新日志
   - 在站点导航与页脚中增加 `Updates` 入口
   - 将同步策略写入 `docs/maintenance/update-log-spec.md` 与 `docs/maintenance/README.md`
 - 验证：
-  - `source/updates/index.md` 仍作为公开更新日志真源
+  - 公开更新日志真源现已统一为 `public-data/updates/index.md`
   - 现行站点已可同步展示公开更新条目
 
 ### 2026-03-30 / 迁移 Astro 重构完整指南到现行内容层
@@ -155,7 +191,7 @@
 - 修正 `README.md`、`site-v2/README.md` 为最小入口文档
 - 修正治理脚本与工程文档引用路径
 - 修复多份工程文档的编码乱码问题
-- 更新日志真源已迁移到 `public-data/updates/index.md`，并保留旧路径兼容读取
+- 更新日志真源已迁移到 `public-data/updates/index.md`
 
 ## 下一批优先任务
 

@@ -12,12 +12,13 @@
 ## 快速入口
 
 - 总规划：`docs/plans/README.md`
+- 专题整合计划：`docs/plans/rainyun-topic-13009-integration-plan.md`
 - 架构方案：`docs/architecture/astro-blog-redesign-plan.md`
 - 执行清单：`docs/architecture/astro-blog-redesign-checklist.md`
+- 后台接口契约：`docs/architecture/rainyun-backend-api-contract.md`
 - 治理目录：`docs/governance/README.md`
 - 迁移状态：`docs/governance/content-migration-status.md`
-- 历史边界：`docs/governance/historical-assets-boundary.md`
-- 历史层索引：`docs/historical/README.md`
+- 历史清理记录：`docs/governance/historical-assets-boundary.md`
 - 工具目录：`tools/README.md`
 - 维护目录：`docs/maintenance/README.md`
 
@@ -29,6 +30,7 @@
 
 - `docs/plans/README.md`
 - `docs/plans/update-plan.md`
+- `docs/plans/rainyun-topic-13009-integration-plan.md`
 
 ### `docs/architecture/`
 
@@ -37,6 +39,7 @@
 - `docs/architecture/README.md`
 - `docs/architecture/astro-blog-redesign-plan.md`
 - `docs/architecture/astro-blog-redesign-checklist.md`
+- `docs/architecture/rainyun-backend-api-contract.md`
 
 ### `docs/governance/`
 
@@ -54,16 +57,6 @@
 - `docs/maintenance/astro-redesign-execution-log.md`
 - `docs/maintenance/update-log-spec.md`
 - `docs/maintenance/giscus-setup.md`
-
-### `docs/historical/`
-
-历史目录边界说明，专门解释旧 Hexo 资产的保留原因与使用限制。
-
-- `docs/historical/README.md`
-- `docs/historical/source-boundary.md`
-- `docs/historical/themes-boundary.md`
-- `docs/historical/scaffolds-boundary.md`
-- `docs/historical/scripts-boundary.md`
 
 ### `tools/`
 
@@ -98,5 +91,5 @@
 
 - 新的工程文档优先进入 `docs/` 的对应分类目录
 - 根目录与 `apps/web/` README 只保留入口信息，不再承载长篇工程说明
-- 涉及历史 Hexo 结构时，先查 `docs/governance/historical-assets-boundary.md` 与 `docs/historical/`
+- 涉及已删除的 Hexo 历史资产时，先查 `docs/governance/historical-assets-boundary.md`
 - 涉及站点现行实现时，优先查 `apps/web/` 与 `docs/architecture/`

@@ -4,7 +4,7 @@
 
 当前边界：
 
-- 现行内容创建统一进入 `site-v2/src/content/`
+- 现行内容创建统一进入 `apps/web/src/content/`
 - 不再使用 `hexo new` 作为正式写作入口
 - 此目录仅保留作历史追溯与结构参考
 

@@ -12,7 +12,7 @@
 - 第 22 节记录过程治理与更新日志机制
 - 内部执行记录以 `docs/maintenance/astro-redesign-execution-log.md` 为准
 - 当前阶段状态判断优先参考第 20 到 22 节；第 1 到 19 节主要作为规划基线与覆盖范围清单
-- 第 1 到 19 节中出现的 `site-v2/`、`source/updates/index.md` 属于历史阶段路径；现行口径分别为 `apps/web/`、`public-data/updates/index.md`
+- 第 1 到 19 节中出现的 `site-v2/`、`source/updates/index.md` 属于历史阶段路径；现行口径分别为 `apps/web/`、`public-data/updates/index.md`。自 2026-04-02 起，Hexo 历史目录已从仓库移除。
 
 ## 1. 项目目标
 
@@ -153,7 +153,7 @@
 
 ## 10. 旧内容迁移清单
 
-- [ ] 从 `source/_posts/` 迁移到 `src/content/posts/`
+- [x] 从历史 Hexo 内容层迁移到 `apps/web/src/content/posts/`
 - [ ] 检查 Markdown 编码
 - [ ] 清洗 front matter
 - [ ] 补齐 description
@@ -344,7 +344,7 @@
 - [x] 建立 Astro 的 GitHub Actions 工作流
 - [x] 完成 `site-v2` 从 `/site-v2/` 子路径预览到根路径单站点发布的切换
 - [x] 补齐 giscus 启用文档与 `.env` 模板
-- [x] 建立公开更新日志页面并完成真源迁移到 `public-data/updates/index.md`（保留 `source/updates/index.md` 兼容入口）
+- [x] 建立公开更新日志页面并完成真源迁移到 `public-data/updates/index.md`
 - [x] 回填关键历史更新节点
 - [x] 新建 `docs/maintenance/` 维护目录
 - [x] 新建更新日志模板 `docs/templates/update-log-entry.md`
@@ -363,7 +363,7 @@
 
 ## 22. 过程治理与更新日志机制
 
-- [x] 建立公开维护日志：`public-data/updates/index.md`（兼容读取 `source/updates/index.md`）
+- [x] 建立公开维护日志：`public-data/updates/index.md`
 - [x] 建立内部执行日志：`docs/maintenance/astro-redesign-execution-log.md`
 - [x] 建立治理规范：`docs/maintenance/update-log-spec.md`
 - [x] 建立日志模板：`docs/templates/update-log-entry.md`

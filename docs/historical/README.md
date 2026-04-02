@@ -1,6 +1,6 @@
 # 历史层索引
 
-`docs/historical/` 用于解释仓库中保留的 Hexo 历史目录边界，帮助后续整理时明确哪些内容只能参考、哪些内容不能继续扩展。
+`docs/historical/` 用于保留早期 Hexo 历史目录的边界说明。相关目录本体已删除，这里只保留历史文档记录。
 
 ## 当前覆盖范围
 
@@ -13,11 +13,11 @@
 
 1. 先读 `docs/governance/historical-assets-boundary.md`，确认现行层与历史层的总边界
 2. 再按具体目录进入对应边界说明
-3. 如果要新增正式能力，优先落到 `site-v2/`、`tools/` 或 `docs/`，不要回流到历史 Hexo 目录
+3. 如果要新增正式能力，优先落到 `apps/web/`、`tools/` 或 `docs/`，不要回流到历史 Hexo 目录
 
 ## 目录对应关系
 
-- `source/` -> `docs/historical/source-boundary.md`
-- `themes/` -> `docs/historical/themes-boundary.md`
+- `source/` -> 已删除，保留边界说明文档
+- `themes/` -> 已删除，保留边界说明文档
 - `scaffolds/` -> `docs/historical/scaffolds-boundary.md`
 - `scripts/` -> `docs/historical/scripts-boundary.md`

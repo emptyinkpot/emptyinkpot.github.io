@@ -17,6 +17,9 @@
 - `docs/maintenance/astro-redesign-execution-log.md`
   - Astro 重构过程中的内部执行记录
   - 用来承接阶段状态、完成项、验证结果与下一步
+- `docs/maintenance/pages-deploy-troubleshooting-2026-03-31.md`
+  - GitHub Pages 发布排查记录（案例沉淀）
+  - 用来承接“已推送但用户感知未更新”类问题的模块化排查流程（含决策树与复盘模板）
 - `docs/architecture/astro-blog-redesign-checklist.md`
   - 当前重构执行清单
   - 用来承接范围、阶段状态与待办
@@ -36,4 +39,4 @@ npm run check:updates
 2. 过程推进进 `docs/maintenance/astro-redesign-execution-log.md`
 3. 范围和阶段状态进 `docs/architecture/astro-blog-redesign-checklist.md`
 4. 任何外显更新都要有验证记录
-5. 迁移兼容期允许读取旧入口 `source/updates/index.md`，但默认写入入口以 `public-data/updates/index.md` 为准
+5. 更新日志脚本与页面只认 `public-data/updates/index.md`，不再保留旧入口回退

@@ -5,7 +5,7 @@
 ## 当前文档
 
 - `docs/guides/vscode-claude-code-external-plugins-guide.md`
-- `source/_posts/roo-code-vscode-migration-and-usage-guide.md`
+- `apps/web/src/content/posts/roo-code-vscode-migration-and-usage-guide.md`
 
 ## 合并说明
 

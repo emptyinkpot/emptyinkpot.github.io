@@ -5,12 +5,14 @@
 ## 当前文档
 
 - `docs/templates/update-log-entry.md`：公开更新日志条目模板
+- `docs/templates/rainyun-safe-mode-regression-template.md`：Safe Mode 联调与回归记录模板
 
 ## 使用顺序
 
 1. 需要编写公开更新日志时，先参考 `docs/templates/update-log-entry.md`
-2. 再结合 `docs/maintenance/update-log-spec.md` 确认字段和质量要求
-3. 生成草稿时可配合 `tools/new-update-entry.mjs`
+2. 需要执行 Safe Mode 联调/回归时，先复制 `docs/templates/rainyun-safe-mode-regression-template.md`
+3. 再结合 `docs/maintenance/update-log-spec.md` 确认字段和质量要求
+4. 生成草稿时可配合 `tools/new-update-entry.mjs`
 
 ## 使用约定
 
