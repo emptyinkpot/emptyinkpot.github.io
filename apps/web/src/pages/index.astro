@@ -1,183 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
-import Hero from '../components/home/Hero.astro';
-import ArticleCard from '../components/shared/ArticleCard.astro';
-import FeaturedCard from '../components/shared/FeaturedCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { formatDate, getCategoryCounts, getSeriesCounts, sortPosts, toSlug } from '../lib/content';
-import { withBase } from '../lib/site';
+import HomeCheckInMapSection from '../components/home/HomeCheckInMapSection.astro';
+import HomeFeatureSection from '../components/home/HomeFeatureSection.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import HomeLatestPostsSection from '../components/home/HomeLatestPostsSection.astro';
+import HomeProjectNotesSection from '../components/home/HomeProjectNotesSection.astro';
+import HomeTopicsSeriesSection from '../components/home/HomeTopicsSeriesSection.astro';
+import { getHomePagePayload } from '../lib/home';
 
-const allPosts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
-const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
-const projects = await getCollection('projects');
-const featuredPost = allPosts.find((post) => post.data.featured) ?? allPosts[0];
-const latestPosts = allPosts.filter((post) => post.id !== featuredPost?.id);
-const latestNotes = notes.slice(0, 3);
-const activeProject = projects[0];
-const categories = getCategoryCounts(allPosts).slice(0, 6);
-const seriesList = getSeriesCounts(allPosts).slice(0, 3);
+const payload = await getHomePagePayload();
 ---
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、专题、项目与阶段笔记。">
   <main class="space-y-10 pb-10 md:space-y-16" data-pagefind-body>
-    <Hero postCount={allPosts.length} categoryCount={categories.length} />
-
-    {
-      featuredPost && (
-        <section class="space-y-5">
-          <div class="section-heading">
-            <div>
-              <p class="section-kicker">Feature Story</p>
-              <h2 class="section-title">先让首页具备“主推内容”的重心。</h2>
-            </div>
-          </div>
-          <FeaturedCard post={featuredPost} />
-        </section>
-      )
-    }
-
-    <section class="space-y-5">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">Latest Posts</p>
-          <h2 class="section-title">最新文章以卡片网格呈现，而不是直接铺全文。</h2>
-        </div>
-        <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/posts')}>
-          查看全部文章
-        </a>
-      </div>
-
-      <div class="grid gap-5 md:grid-cols-2">
-        {latestPosts.map((post) => <ArticleCard post={post} />)}
-      </div>
-    </section>
-
-    <section class="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-      <div class="glass-card rounded-[2rem] p-6">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker mb-4">Topics</p>
-            <h2 class="section-title mb-5">内容入口不是归档页，而是可导航的主题结构。</h2>
-          </div>
-          <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/categories')}>
-            全部分区
-          </a>
-        </div>
-
-        <div class="grid gap-3 sm:grid-cols-2">
-          {
-            categories.map(([category, count]) => (
-              <a
-                class="card-stack rounded-[1.5rem] p-4"
-                href={withBase(`/categories/${toSlug(category)}/`)}
-                key={category}
-              >
-                <p class="section-kicker mb-3">Category</p>
-                <h3 class="text-lg font-medium text-stone-950">{category}</h3>
-                <p class="mt-2 text-sm text-stone-500">{count} 篇文章</p>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="glass-card rounded-[2rem] p-6">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker mb-4">Series</p>
-            <h2 class="section-title mb-5">系列承担“连续阅读”，把零散文章串成专题。</h2>
-          </div>
-          <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/series')}>
-            查看系列
-          </a>
-        </div>
-
-        <div class="space-y-3">
-          {
-            seriesList.length ? (
-              seriesList.map(([series, count]) => (
-                <a
-                  class="card-stack flex items-center justify-between gap-4 rounded-[1.5rem] p-4"
-                  href={withBase(`/series/${toSlug(series)}/`)}
-                  key={series}
-                >
-                  <div>
-                    <p class="section-kicker mb-2">Series</p>
-                    <h3 class="text-lg font-medium text-stone-950">{series}</h3>
-                  </div>
-                  <span class="pill">{count} 篇</span>
-                </a>
-              ))
-            ) : (
-              <p class="text-sm leading-7 text-stone-500">当前还没有公开系列，后续会随着内容迁移逐步补齐。</p>
-            )
-          }
-        </div>
-      </div>
-    </section>
-
-    <section class="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-      {
-        activeProject && (
-          <section class="glass-card rounded-[2rem] p-6 md:p-7">
-            <div class="section-heading">
-              <div>
-                <p class="section-kicker">Project Snapshot</p>
-                <h2 class="section-title">让博客逐步具备“项目展示”的第二条内容线。</h2>
-              </div>
-              <a class="pill" href={withBase(`/projects/${activeProject.id}/`)}>
-                {activeProject.data.status}
-              </a>
-            </div>
-
-            <div class="mt-6 grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
-              <div class="space-y-4">
-                <h3 class="text-2xl font-semibold text-stone-950">{activeProject.data.title}</h3>
-                <p class="max-w-3xl text-base leading-8 text-stone-600">{activeProject.data.description}</p>
-                <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/projects')}>
-                  查看全部项目
-                </a>
-              </div>
-
-              <div class="flex flex-wrap gap-3">
-                {activeProject.data.stack.map((item) => <span class="pill">{item}</span>)}
-              </div>
-            </div>
-          </section>
-        )
-      }
-
-      <section class="glass-card rounded-[2rem] p-6">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker">Notes</p>
-            <h2 class="section-title">用轻量笔记承接重构过程中的阶段反馈与碎片沉淀。</h2>
-          </div>
-          <a class="text-sm text-stone-600 transition hover:text-stone-950" href={withBase('/notes')}>
-            查看 notes
-          </a>
-        </div>
-
-        <div class="mt-6 space-y-3">
-          {
-            latestNotes.length ? (
-            latestNotes.map((note) => (
-                <a class="card-stack block rounded-[1.5rem] p-4" href={withBase(`/notes/${note.id}/`)} key={note.id}>
-                  <p class="section-kicker mb-2">{formatDate(note.data.date)}</p>
-                  <h3 class="text-lg font-medium text-stone-950">{note.data.title}</h3>
-                  {note.data.description && <p class="mt-2 text-sm leading-7 text-stone-600">{note.data.description}</p>}
-                </a>
-              ))
-            ) : (
-              <div class="rounded-[1.5rem] border border-dashed border-[rgba(87,74,60,0.18)] bg-white/45 p-4 text-sm leading-7 text-stone-500">
-                当前公开 notes 还在整理中，后续会把设计取舍、迁移记录和阶段日志持续放进来。
-              </div>
-            )
-          }
-        </div>
-      </section>
-    </section>
+    <HomeHero hero={payload.hero} snapshot={payload.snapshot} />
+    <HomeFeatureSection featuredPost={payload.featuredPost} />
+    <HomeLatestPostsSection posts={payload.latestPosts} />
+    <HomeTopicsSeriesSection topics={payload.topics} series={payload.series} />
+    <HomeProjectNotesSection activeProject={payload.activeProject} latestNotes={payload.latestNotes} />
+    <HomeCheckInMapSection checkIn={payload.checkIn} />
   </main>
 </BaseLayout>

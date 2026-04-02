@@ -1,0 +1,62 @@
+---
+import type { HomeHeroData, HomeSnapshotData } from '../../lib/home';
+
+interface Props {
+  hero: HomeHeroData;
+  snapshot: HomeSnapshotData;
+}
+
+const { hero, snapshot } = Astro.props as Props;
+---
+
+<section class="grid gap-6 pt-8 md:pt-14 lg:grid-cols-[1.45fr_0.85fr] lg:items-start">
+  <div class="home-hero-panel space-y-6">
+    <p class="section-kicker text-[color:var(--home-accent)]">{hero.kicker}</p>
+    <div class="space-y-4">
+      <h1 class="max-w-5xl text-4xl font-semibold leading-[0.96] text-stone-950 md:text-6xl">
+        {hero.title}
+      </h1>
+      <p class="max-w-3xl text-base leading-8 text-stone-600 md:text-lg">{hero.summary}</p>
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      {
+        hero.actions.map((action) => (
+          <a
+            class:list={[
+              'inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition',
+              action.variant === 'primary'
+                ? 'bg-stone-950 text-stone-50 hover:bg-stone-800'
+                : 'border border-[color:var(--home-line)] bg-white text-stone-700 hover:bg-stone-50 hover:text-stone-950'
+            ]}
+            href={action.href}
+          >
+            {action.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      {hero.tags.map((tag) => <span class="pill">{tag}</span>)}
+    </div>
+  </div>
+
+  <div class="home-snapshot-panel rounded-[2rem] p-6 md:p-7">
+    <p class="section-kicker mb-4 text-white/80">{snapshot.kicker}</p>
+    <div class="grid grid-cols-2 gap-4">
+      {
+        snapshot.metrics.map((metric) => (
+          <div class="rounded-[1.4rem] bg-white p-4">
+            <p class="text-3xl font-semibold text-stone-950">{metric.value}</p>
+            <p class="mt-2 text-sm text-stone-500">{metric.label}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-6 space-y-3 text-sm leading-7 text-white/86">
+      {snapshot.lines.map((line) => <p>{line}</p>)}
+    </div>
+  </div>
+</section>

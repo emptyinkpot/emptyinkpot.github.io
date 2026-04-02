@@ -1,0 +1,60 @@
+---
+import type { HomeCheckInData } from '../../lib/home';
+
+interface Props {
+  checkIn: HomeCheckInData;
+}
+
+const { checkIn } = Astro.props as Props;
+const levelClassMap = {
+  0: 'home-checkin__cell--0',
+  1: 'home-checkin__cell--1',
+  2: 'home-checkin__cell--2',
+  3: 'home-checkin__cell--3',
+  4: 'home-checkin__cell--4'
+} as const;
+---
+
+<section class="home-checkin rounded-[2rem] p-6 md:p-8">
+  <div class="grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-start">
+    <div class="space-y-5">
+      <div class="space-y-3">
+        <p class="section-kicker text-[color:var(--home-accent)]">{checkIn.kicker}</p>
+        <h2 class="section-title max-w-4xl">{checkIn.title}</h2>
+        <p class="max-w-3xl text-base leading-8 text-stone-600">{checkIn.summary}</p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <div class="min-w-[38rem] space-y-4">
+          <div class="flex gap-6 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-stone-400">
+            {checkIn.months.map((month) => <span>{month}</span>)}
+          </div>
+
+          <div class="flex gap-4">
+            {
+              checkIn.weeks.map((week) => (
+                <div class="space-y-2">
+                  {week.days.map((day) => <span class:list={['home-checkin__cell', levelClassMap[day.level]]}></span>)}
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-stone-400">{checkIn.legend}</p>
+        <p class="text-sm font-semibold text-[color:var(--home-accent)]">{checkIn.statLine}</p>
+      </div>
+    </div>
+
+    <aside class="home-checkin__aside">
+      <div class="home-checkin__avatar-shell">
+        <img class="home-checkin__avatar" src={checkIn.avatar.imageSrc} alt={checkIn.avatar.alt} loading="lazy" />
+      </div>
+      <p class="text-sm font-semibold tracking-[0.12em] text-[color:var(--home-accent)] uppercase">
+        {checkIn.avatar.caption}
+      </p>
+    </aside>
+  </div>
+</section>

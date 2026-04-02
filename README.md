@@ -8,6 +8,7 @@
 - 规划中心：`docs/plans/update-plan.md`
 - 执行中心：`docs/architecture/astro-blog-redesign-checklist.md`
 - 记录中心：`docs/maintenance/astro-redesign-execution-log.md`
+- 首页抽象设计说明：`docs/architecture/homepage-editorial-ui-readme.md`
 
 ## 入口
 
