@@ -4,7 +4,6 @@ import path from 'node:path';
 const rootDir = process.cwd();
 const appDir = 'apps/web';
 const postsDir = resolvePath(`${appDir}/src/content/posts`);
-const contentRootDir = resolvePath(`${appDir}/src/content`);
 const rssPagePath = resolvePath(`${appDir}/src/pages/rss.xml.ts`);
 const searchPagePath = resolvePath(`${appDir}/src/pages/search.astro`);
 const issues = [];

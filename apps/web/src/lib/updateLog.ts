@@ -25,7 +25,7 @@ function toSlug(input: string) {
 }
 
 function parseSections(source: string) {
-  const matches = [...source.matchAll(/^###\s+(.+)\n([\s\S]*?)(?=^###\s+|\Z)/gm)];
+  const matches = [...source.matchAll(/^###\s+(.+)\n([\s\S]*?)(?=^###\s+|$)/gm)];
 
   return matches.map((match) => {
     const [, heading, content] = match;

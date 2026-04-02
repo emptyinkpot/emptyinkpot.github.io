@@ -104,9 +104,45 @@ MyBlog/
 
 ```bash
 npm run dev
+npm run lint
+npm run check
 npm run build
 npm run preview
+```
+
+## ESLint 使用步骤
+
+为了让代码更可靠，建议把 ESLint 作为每次改动后的第一道检查。
+
+推荐执行顺序：
+
+1. 开发或修改代码
+2. 在仓库根目录执行 `npm run lint`
+3. 修复 ESLint 报出的代码问题
+4. 再执行 `npm run check`
+5. 最后执行 `npm run build`
+
+作用说明：
+
+- `npm run lint`
+  - 优先发现未使用变量、可疑写法、无效转义、Astro/TypeScript 规则问题
+- `npm run check`
+  - 检查更新日志、内容治理、仓库治理规则
+- `npm run build`
+  - 确认站点最终可以正常构建与发布
+
+日常最小质量门：
+
+```bash
+npm run lint
 npm run check
+npm run build
+```
+
+如果只是临时检查单个文件，也可以使用：
+
+```bash
+npx eslint apps/web/src/lib/updateLog.ts
 ```
 
 ## 文档索引
