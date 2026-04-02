@@ -1,4 +1,4 @@
-name: Deploy Hexo to Pages
+name: Deploy Astro Site to Pages
 
 on:
   push:
@@ -20,29 +20,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          static_site_generator: hexo
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: apps/web/package-lock.json
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm ci
 
-      - name: Build site
+      - name: Install site dependencies
+        run: npm ci
+        working-directory: apps/web
+
+      - name: Validate repository governance
+        run: npm run check
+
+      - name: Build Astro site
         run: npm run build
+        working-directory: apps/web
+        env:
+          SITE_URL: https://emptyinkpot.github.io
+          SITE_BASE: /
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: ./public
+          path: ./apps/web/dist
 
   deploy:
     environment:

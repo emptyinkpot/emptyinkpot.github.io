@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const keyEntries = [
+  {
+    id: 'primary',
+    label: 'Primary key',
+    value: import.meta.env.ROO_OPENAI_API_KEY
+  },
+  {
+    id: 'alternate',
+    label: 'Alternate key',
+    value: import.meta.env.ROO_OPENAI_API_KEY_ALT
+  }
+]
+  .filter((entry) => Boolean(entry.value))
+  .map((entry) => ({
+    ...entry,
+    maskedValue: maskKey(entry.value),
+    length: entry.value.length
+  }));
+
+const baseUrl = import.meta.env.ROO_OPENAI_BASE_URL ?? 'Not configured';
+const model = import.meta.env.ROO_OPENAI_MODEL ?? 'Not configured';
+const configuredCount = keyEntries.length;
+
+function maskKey(value: string) {
+  if (!value) {
+    return 'Not configured';
+  }
+
+  if (value.length <= 12) {
+    return `${value.slice(0, 4)}...${value.slice(-2)}`;
+  }
+
+  return `${value.slice(0, 8)}...${value.slice(-8)}`;
+}
+---
+
+<BaseLayout title="API Keys / emptyinkpot" description="查看当前本地环境中已配置的 API key 概览。">
+  <main class="pb-10 pt-8 md:pt-14" data-pagefind-body>
+    <section class="glass-card mx-auto max-w-5xl rounded-[2.25rem] p-6 md:p-8">
+      <p class="section-kicker mb-4">Local Status</p>
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div class="max-w-2xl">
+          <h1 class="section-title mb-4 text-4xl md:text-5xl">API key 配置面板</h1>
+          <p class="text-sm leading-7 text-stone-600 md:text-base">
+            这里展示当前站点构建环境里检测到的 API key 概览。为了避免把敏感信息直接渲染到前端页面，页面只显示脱敏后的片段、长度和当前请求配置。
+          </p>
+        </div>
+        <div class="grid min-w-[220px] grid-cols-2 gap-3 text-sm text-stone-600">
+          <div class="rounded-[1.5rem] border border-white/60 bg-white/70 px-4 py-3">
+            <p class="text-[0.7rem] uppercase tracking-[0.26em] text-stone-400">Detected</p>
+            <p class="mt-2 text-2xl font-semibold text-stone-900">{configuredCount}</p>
+          </div>
+          <div class="rounded-[1.5rem] border border-white/60 bg-white/70 px-4 py-3">
+            <p class="text-[0.7rem] uppercase tracking-[0.26em] text-stone-400">Model</p>
+            <p class="mt-2 break-all text-sm font-semibold text-stone-900">{model}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 grid gap-4 md:grid-cols-2">
+      {
+        keyEntries.length > 0 ? (
+          keyEntries.map((entry) => (
+            <article class="glass-card rounded-[2rem] p-6">
+              <p class="text-[0.72rem] uppercase tracking-[0.28em] text-stone-400">{entry.id}</p>
+              <h2 class="mt-3 text-2xl font-semibold text-stone-900">{entry.label}</h2>
+              <div class="mt-5 space-y-4 text-sm text-stone-600">
+                <div>
+                  <p class="text-[0.7rem] uppercase tracking-[0.24em] text-stone-400">Masked value</p>
+                  <p class="mt-2 break-all rounded-[1.2rem] bg-stone-950 px-4 py-3 font-mono text-sm text-stone-100">{entry.maskedValue}</p>
+                </div>
+                <div class="flex items-center justify-between rounded-[1.2rem] border border-stone-200/80 bg-white/65 px-4 py-3">
+                  <span>Character length</span>
+                  <strong class="text-stone-900">{entry.length}</strong>
+                </div>
+              </div>
+            </article>
+          ))
+        ) : (
+          <article class="glass-card rounded-[2rem] p-6 md:col-span-2">
+            <p class="text-[0.72rem] uppercase tracking-[0.28em] text-stone-400">No keys</p>
+            <h2 class="mt-3 text-2xl font-semibold text-stone-900">当前没有检测到 API key</h2>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-stone-600 md:text-base">
+              你可以把 key 写入本地环境文件后重新启动开发服务器，再回到这个页面查看状态。
+            </p>
+          </article>
+        )
+      }
+    </section>
+
+    <section class="glass-card mt-6 rounded-[2rem] p-6">
+      <p class="text-[0.72rem] uppercase tracking-[0.28em] text-stone-400">Request route</p>
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <div class="rounded-[1.4rem] border border-stone-200/80 bg-white/70 px-4 py-4">
+          <p class="text-[0.7rem] uppercase tracking-[0.24em] text-stone-400">Base URL</p>
+          <p class="mt-2 break-all text-sm font-semibold text-stone-900">{baseUrl}</p>
+        </div>
+        <div class="rounded-[1.4rem] border border-stone-200/80 bg-white/70 px-4 py-4">
+          <p class="text-[0.7rem] uppercase tracking-[0.24em] text-stone-400">Model name</p>
+          <p class="mt-2 break-all text-sm font-semibold text-stone-900">{model}</p>
+        </div>
+      </div>
+      <p class="mt-4 text-sm leading-7 text-stone-600">
+        当前页面只输出脱敏结果；原始 key 仍保留在本地环境文件中，不直接注入浏览器端 HTML。
+      </p>
+    </section>
+  </main>
+</BaseLayout>
