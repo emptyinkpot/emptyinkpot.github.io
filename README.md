@@ -32,6 +32,42 @@
 - 非紧急情况不直接推送到 `main`，优先从功能分支发起 PR 合并
 - 后续如需更换提交目标，应优先先更新本节说明，再执行提交或推送
 
+## GitHub 工具链约定
+
+- 当前这台电脑已安装全局 `GitHub CLI`
+- `gh` 当前版本：`2.89.0`
+- `gh` 安装位置：`C:\Program Files\GitHub CLI\gh.exe`
+- 当前 `gh` 已登录账号：`emptyinkpot`
+- 当前仓库默认仍以 `git + feature branch + PR` 为主流程，`gh` 作为辅助入口
+
+推荐使用顺序：
+
+1. 用 `git` 处理分支、提交、rebase、push
+2. 用 `gh` 处理认证检查、仓库查看、PR 创建、PR 查看、Issue 查看
+3. 如果 `git push` 走 `https` 出现 Windows `schannel` 或 TLS 握手异常，优先切换远端到 SSH 再推送
+
+推荐命令：
+
+```bash
+gh auth status
+gh repo view emptyinkpot/emptyinkpot.github.io
+gh pr create
+gh pr view
+```
+
+推送异常时的推荐处理：
+
+```bash
+git remote set-url origin git@github.com:emptyinkpot/emptyinkpot.github.io.git
+git push origin <branch-name>
+```
+
+说明：
+
+- 如果刚安装完 `gh` 后当前终端提示“找不到命令”，通常不是没装成功，而是当前终端还没刷新 `PATH`
+- 解决方式优先是重新打开一个新的终端窗口
+- 临时也可以直接执行：`"C:\Program Files\GitHub CLI\gh.exe"`
+
 ## Pull Request 规则
 
 - PR 默认目标仓库：`https://github.com/emptyinkpot/emptyinkpot.github.io`
@@ -329,17 +365,19 @@ sudo systemctl reload nginx
 - MyBlog 项目目录：/srv/myblog
 - MyBlog 静态站点目录：/srv/myblog/site
 - Nginx 配置：/etc/nginx/sites-available/myblog.conf
-- 当前访问地址：http://124.220.233.126/
+- 当前访问地址：https://blog.tengokukk.com/
+- HTTP 入口：http://blog.tengokukk.com/
 - OpenClaw 健康检查：http://124.220.233.126:5000/health
-- HTTPS：尚未配置
+- HTTPS：已配置，证书由 certbot + Let's Encrypt 签发
 ```
 
 说明：
 
 - 当前 `MyBlog` 与 `OpenClaw` 已按同级关系部署
 - `OpenClaw` 继续占用 `5000` 端口
-- `MyBlog` 目前由 Nginx 托管在 `80` 端口
+- `MyBlog` 目前由 Nginx 托管在 `80/443` 端口
 - 这次采用的是“本机构建 + 上传 `apps/web/dist` 到服务器”的方式，而不是服务器本地 Git 构建
+- `http://blog.tengokukk.com/` 当前会自动跳转到 `https://blog.tengokukk.com/`
 
 ### 给博客加正式域名怎么做
 
@@ -510,6 +548,7 @@ sudo systemctl reload nginx
 - 正式站点源码：`apps/web/`
 - 正式构建产物：`apps/web/dist/`
 - 发布前质量门：`npm run lint` -> `npm run check` -> `npm run build`
+- 当前正式访问入口：`https://blog.tengokukk.com/`
 
 如果后续你改为完全云端自托管，可以继续保留 GitHub 仓库作为代码真源，但把服务器作为正式访问入口。
 
@@ -654,6 +693,13 @@ git commit -m "feat: add root ESLint workflow and publishing guide"
 git push -u origin <branch-name>
 ```
 
+如果当前环境已经安装 `gh`，推荐在推送前先确认：
+
+```bash
+gh auth status
+gh repo view emptyinkpot/emptyinkpot.github.io
+```
+
 PR 规则：
 
 - 目标仓库默认是 `https://github.com/emptyinkpot/emptyinkpot.github.io`
@@ -730,6 +776,9 @@ git commit -m "feat: <summary>"
 git push -u origin feat/<topic>
 
 # 发起 PR，填写中英双语说明和验证结果
+
+gh auth status
+gh pr create
 
 git checkout main
 git pull --ff-only origin main
