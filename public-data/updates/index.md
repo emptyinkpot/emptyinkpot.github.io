@@ -51,6 +51,50 @@ npm run check:updates
 
 <!-- UPDATE_LOG_ENTRIES -->
 
+## 2026-04-02 / MyBlog 云端部署落地：Nginx 接入、同级项目共存与域名 HTTPS 方案
+
+### 更新内容
+
+- 完成 `MyBlog` 在云服务器上的首次真实部署
+- 安装 `Nginx`，并将博客静态站点托管到 `80` 端口
+- 保持现有 `OpenClaw` 项目继续运行在 `5000` 端口，不做覆盖
+- 新增站内文章《MyBlog 云端部署实录：Nginx、同级项目共存、外网访问判断与正式域名 HTTPS》
+
+### 涉及技术
+
+- Astro 静态构建
+- Nginx 静态站点托管
+- 云服务器公网访问
+- 域名解析与 HTTPS 规划
+
+### 关联记录
+
+- 页面：`/posts/myblog-cloud-deployment-nginx-domain-and-https-guide/`
+- 文件：`apps/web/src/content/posts/myblog-cloud-deployment-nginx-domain-and-https-guide.md`
+- 部署：`/srv/myblog/site`
+
+### 验证记录
+
+- 本地构建验证：执行 `npm run build` 通过
+- 服务器访问验证：`http://124.220.233.126/` 返回 `200`
+- 共存验证：`http://124.220.233.126:5000/health` 返回 `200`
+- 域名验证：`http://blog.tengokukk.com/` 返回 `301` 并跳转到 `https://blog.tengokukk.com/`
+- HTTPS 验证：`https://blog.tengokukk.com/` 返回 `200`
+
+### 实现效果
+
+- `MyBlog` 已从本地工程进入公网可访问状态
+- 博客与 `OpenClaw` 已形成同级部署关系，互不覆盖
+- 博客已具备正式域名与 HTTPS 入口，可作为长期对外地址使用
+
+### 下一步
+
+- 将站内部署文章与 README 中的线上状态持续保持同步
+- 继续收口自动化发布流程，减少手工同步步骤
+- 评估是否为博客和其他项目进一步按域名拆分入口
+
+---
+
 ## 2026-03-31 / Rainyun 13009 Day 6：建立 Safe Mode 行为矩阵与回归模板
 
 ### 更新内容
