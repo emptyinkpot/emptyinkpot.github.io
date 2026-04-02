@@ -317,19 +317,173 @@ sudo systemctl reload nginx
 - HTTPS 证书方式：
 - 发布命令：
 
-建议写成这种格式：
+当前已经落地的服务器信息如下：
 
 ```text
 当前项目对应服务器
 
-- 主机 IP：<server-ip>
-- SSH 用户：<user>
-- SSH 命令：ssh <user>@<server-ip>
-- 项目目录：/srv/myblog/repo
-- 构建目录：/srv/myblog/repo/apps/web/dist
+- 主机 IP：124.220.233.126
+- SSH 用户：ubuntu
+- SSH 命令：ssh ubuntu@124.220.233.126
+- OpenClaw 项目目录：/srv/openclaw
+- MyBlog 项目目录：/srv/myblog
+- MyBlog 静态站点目录：/srv/myblog/site
 - Nginx 配置：/etc/nginx/sites-available/myblog.conf
-- 站点域名：<your-domain>
+- 当前访问地址：http://124.220.233.126/
+- OpenClaw 健康检查：http://124.220.233.126:5000/health
+- HTTPS：尚未配置
 ```
+
+说明：
+
+- 当前 `MyBlog` 与 `OpenClaw` 已按同级关系部署
+- `OpenClaw` 继续占用 `5000` 端口
+- `MyBlog` 目前由 Nginx 托管在 `80` 端口
+- 这次采用的是“本机构建 + 上传 `apps/web/dist` 到服务器”的方式，而不是服务器本地 Git 构建
+
+### 给博客加正式域名怎么做
+
+如果你要给博客加正式域名，推荐按下面顺序操作。
+
+#### 1. 先准备一个域名
+
+例如：
+
+- `blog.example.com`
+- `www.example.com`
+
+推荐优先用独立子域名，不要先和现有项目抢同一个根域。
+
+#### 2. 在域名服务商处添加 DNS 解析
+
+最常见做法是加一条 `A` 记录：
+
+```text
+主机记录：blog
+记录类型：A
+记录值：124.220.233.126
+```
+
+如果你想让根域直接访问，也可以把根域 `@` 指向这台服务器，但这通常要结合你整体站点规划再决定。
+
+#### 3. 修改 Nginx 配置中的 `server_name`
+
+当前配置文件位置：
+
+```text
+/etc/nginx/sites-available/myblog.conf
+```
+
+将：
+
+```nginx
+server_name _;
+```
+
+改成：
+
+```nginx
+server_name blog.example.com;
+```
+
+如果你要同时支持多个域名，也可以写成：
+
+```nginx
+server_name blog.example.com www.example.com;
+```
+
+改完后执行：
+
+```bash
+sudo /usr/sbin/nginx -t
+sudo systemctl reload nginx
+```
+
+### 给博客加 HTTPS 怎么做
+
+当前服务器已经装好了 Nginx，所以下一步最常见、也最推荐的方案是：
+
+- 使用 `certbot`
+- 让 Let’s Encrypt 自动签发证书
+- 由 Nginx 托管 HTTPS
+
+#### 1. 安装 certbot
+
+Ubuntu 常用命令：
+
+```bash
+sudo apt-get update
+sudo apt-get install -y certbot python3-certbot-nginx
+```
+
+#### 2. 确保域名已经解析到服务器
+
+在申请证书前，必须先保证：
+
+- `blog.example.com` 已经指向 `124.220.233.126`
+
+可以本地检查：
+
+```bash
+nslookup blog.example.com
+```
+
+或：
+
+```bash
+ping blog.example.com
+```
+
+#### 3. 申请并自动写入 HTTPS 配置
+
+```bash
+sudo certbot --nginx -d blog.example.com
+```
+
+如果你还有 `www` 域名：
+
+```bash
+sudo certbot --nginx -d blog.example.com -d www.example.com
+```
+
+执行后，通常会自动完成：
+
+- 证书申请
+- Nginx HTTPS 配置写入
+- HTTP 跳转 HTTPS
+
+#### 4. 验证 HTTPS
+
+证书成功后，可检查：
+
+```bash
+curl -I https://blog.example.com
+```
+
+也可以浏览器直接访问：
+
+```text
+https://blog.example.com
+```
+
+### HTTPS 配置后的推荐状态
+
+理想状态建议变成：
+
+```text
+MyBlog
+- http://124.220.233.126/         # 可选，作为临时入口
+- https://blog.example.com        # 正式入口
+
+OpenClaw
+- http://124.220.233.126:5000     # 当前服务入口
+```
+
+### 后续建议
+
+- 博客正式对外入口尽量使用域名 + HTTPS
+- 服务器 IP 只作为运维调试入口，不建议长期作为正式访问地址
+- 等博客域名稳定后，再决定是否要给 `OpenClaw` 也加单独域名或反向代理入口
 
 ### 回滚建议
 
