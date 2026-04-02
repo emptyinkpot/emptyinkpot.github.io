@@ -390,10 +390,60 @@ pre {
 }
 
 .home-editorial-page {
-  width: min(1120px, calc(100% - 2rem));
-  margin: 2.25rem auto 3rem;
+  width: min(1120px, calc(100% - 1rem));
+  margin: 2.25rem 0 3rem;
   padding: 1rem;
-  background: linear-gradient(rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.84));
+}
+
+.home-editorial-shell {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1120px);
+  gap: 1.5rem;
+  align-items: start;
+  justify-content: center;
+  width: min(1360px, calc(100% - 1rem));
+  margin: 0 auto;
+}
+
+.home-side-rail {
+  position: relative;
+  min-height: 100vh;
+}
+
+.home-side-rail__inner {
+  position: sticky;
+  top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-top: 2.5rem;
+}
+
+.home-side-rail__mark {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(47, 38, 43, 0.25);
+}
+
+.home-side-rail__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.home-side-rail__link {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(45, 30, 56, 0.68);
+  transition: color 150ms ease, transform 150ms ease;
+}
+
+.home-side-rail__link:hover {
+  color: var(--home-accent);
+  transform: rotate(180deg) translateY(-2px);
 }
 
 .home-poster-topbar {
@@ -609,8 +659,43 @@ pre {
 }
 
 @media (max-width: 900px) {
+  .home-editorial-shell {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    width: calc(100% - 0.5rem);
+  }
+
+  .home-side-rail {
+    min-height: auto;
+  }
+
+  .home-side-rail__inner {
+    position: static;
+    padding: 0.5rem 0 0;
+  }
+
+  .home-side-rail__mark {
+    display: none;
+  }
+
+  .home-side-rail__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .home-side-rail__link {
+    writing-mode: horizontal-tb;
+    transform: none;
+    letter-spacing: 0.14em;
+  }
+
+  .home-side-rail__link:hover {
+    transform: translateY(-2px);
+  }
+
   .home-editorial-page {
-    width: calc(100% - 1rem);
+    width: 100%;
     padding: 0.75rem;
   }
 

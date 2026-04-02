@@ -7,17 +7,44 @@ import HomeLatestPostsSection from '../components/home/HomeLatestPostsSection.as
 import HomeProjectNotesSection from '../components/home/HomeProjectNotesSection.astro';
 import HomeTopicsSeriesSection from '../components/home/HomeTopicsSeriesSection.astro';
 import { getHomePagePayload } from '../lib/home';
+import { withBase } from '../lib/site';
 
 const payload = await getHomePagePayload();
+const sideNavItems = [
+  { label: 'Home', href: withBase('/') },
+  { label: 'Posts', href: withBase('/posts') },
+  { label: 'Series', href: withBase('/series') },
+  { label: 'Projects', href: withBase('/projects') },
+  { label: 'Updates', href: withBase('/updates') },
+  { label: 'Search', href: withBase('/search') },
+  { label: 'About', href: withBase('/about') }
+];
 ---
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、专题、项目与阶段笔记。" hideSiteChrome={true}>
-  <main class="home-editorial-page space-y-4 pb-10 md:space-y-5" data-pagefind-body>
-    <HomeHero hero={payload.hero} snapshot={payload.snapshot} />
-    <HomeFeatureSection featuredPost={payload.featuredPost} />
-    <HomeLatestPostsSection posts={payload.latestPosts} />
-    <HomeTopicsSeriesSection topics={payload.topics} series={payload.series} />
-    <HomeProjectNotesSection activeProject={payload.activeProject} latestNotes={payload.latestNotes} />
-    <HomeCheckInMapSection checkIn={payload.checkIn} />
-  </main>
+  <div class="home-editorial-shell">
+    <aside class="home-side-rail">
+      <div class="home-side-rail__inner">
+        <p class="home-side-rail__mark">Homepage Poster</p>
+        <nav class="home-side-rail__nav" aria-label="Homepage quick navigation">
+          {
+            sideNavItems.map((item) => (
+              <a href={item.href} class="home-side-rail__link">
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </aside>
+
+    <main class="home-editorial-page space-y-4 pb-10 md:space-y-5" data-pagefind-body>
+      <HomeHero hero={payload.hero} snapshot={payload.snapshot} />
+      <HomeFeatureSection featuredPost={payload.featuredPost} />
+      <HomeLatestPostsSection posts={payload.latestPosts} />
+      <HomeTopicsSeriesSection topics={payload.topics} series={payload.series} />
+      <HomeProjectNotesSection activeProject={payload.activeProject} latestNotes={payload.latestNotes} />
+      <HomeCheckInMapSection checkIn={payload.checkIn} />
+    </main>
+  </div>
 </BaseLayout>
