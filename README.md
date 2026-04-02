@@ -27,8 +27,27 @@
 ## 默认提交目标
 
 - 默认 Git 远端仓库：`https://github.com/emptyinkpot/emptyinkpot.github.io`
-- 默认推送目标：`origin/main`
+- 默认集成分支：`origin/main`
+- 默认协作方式：`feature branch + Pull Request`
+- 非紧急情况不直接推送到 `main`，优先从功能分支发起 PR 合并
 - 后续如需更换提交目标，应优先先更新本节说明，再执行提交或推送
+
+## Pull Request 规则
+
+- PR 默认目标仓库：`https://github.com/emptyinkpot/emptyinkpot.github.io`
+- PR 默认目标分支：`main`
+- 分支命名建议使用 `feat/`、`fix/`、`docs/`、`refactor/` 等前缀加简短英文主题
+- PR 标题必须简洁明确，推荐中英双语，并直接描述本次变更结果
+- PR 描述必须中英双语，且内容保持简洁，只写必要背景、变更范围、验证结果与风险说明
+- PR 提交前必须完成本地验证；至少写明已执行的命令与结果，例如 `npm run check`、`npm run build`
+- PR 不混入临时文件、空文件、调试产物或与主题无关的改动
+
+推荐 PR 描述结构：
+
+1. 摘要 / Summary
+2. 变更内容 / Changes
+3. 验证结果 / Verification
+4. 风险与备注 / Risks & Notes
 
 ## 根目录精简建议
 
