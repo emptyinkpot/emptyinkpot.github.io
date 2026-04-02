@@ -1,5 +1,6 @@
 ---
 import type { HomeHeroData, HomeSnapshotData } from '../../lib/home';
+import { withBase } from '../../lib/site';
 
 interface Props {
   hero: HomeHeroData;
@@ -9,54 +10,67 @@ interface Props {
 const { hero, snapshot } = Astro.props as Props;
 ---
 
-<section class="grid gap-6 pt-8 md:pt-14 lg:grid-cols-[1.45fr_0.85fr] lg:items-start">
-  <div class="home-hero-panel space-y-6">
-    <p class="section-kicker text-[color:var(--home-accent)]">{hero.kicker}</p>
-    <div class="space-y-4">
-      <h1 class="max-w-5xl text-4xl font-semibold leading-[0.96] text-stone-950 md:text-6xl">
-        {hero.title}
-      </h1>
-      <p class="max-w-3xl text-base leading-8 text-stone-600 md:text-lg">{hero.summary}</p>
-    </div>
-
-    <div class="flex flex-wrap gap-3">
-      {
-        hero.actions.map((action) => (
-          <a
-            class:list={[
-              'inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition',
-              action.variant === 'primary'
-                ? 'bg-stone-950 text-stone-50 hover:bg-stone-800'
-                : 'border border-[color:var(--home-line)] bg-white text-stone-700 hover:bg-stone-50 hover:text-stone-950'
-            ]}
-            href={action.href}
-          >
-            {action.label}
-          </a>
-        ))
-      }
-    </div>
-
-    <div class="flex flex-wrap gap-3">
-      {hero.tags.map((tag) => <span class="pill">{tag}</span>)}
-    </div>
+<section class="home-poster-hero space-y-4">
+  <div class="home-poster-topbar">
+    <a class="home-poster-brand" href={withBase('/')}>
+      <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="Vita Atramenti logo" class="home-poster-brand__logo" />
+      <div>
+        <p class="home-poster-brand__title">emptyinkpot</p>
+        <p class="home-poster-brand__subtitle">structured writing / projects / maintenance notes</p>
+      </div>
+    </a>
+    <div class="home-poster-issue">ISSUE 01&nbsp;&nbsp;首页改版与内容聚合设计</div>
   </div>
 
-  <div class="home-snapshot-panel rounded-[2rem] p-6 md:p-7">
-    <p class="section-kicker mb-4 text-white/80">{snapshot.kicker}</p>
-    <div class="grid grid-cols-2 gap-4">
-      {
-        snapshot.metrics.map((metric) => (
-          <div class="rounded-[1.4rem] bg-white p-4">
-            <p class="text-3xl font-semibold text-stone-950">{metric.value}</p>
-            <p class="mt-2 text-sm text-stone-500">{metric.label}</p>
-          </div>
-        ))
-      }
+  <div class="grid gap-4 lg:grid-cols-[1.55fr_0.8fr]">
+    <div class="home-poster-hero__panel">
+      <p class="section-kicker text-[color:var(--home-accent)]">{hero.kicker}</p>
+      <div class="space-y-4">
+        <h1 class="home-poster-hero__title">{hero.title}</h1>
+        <p class="max-w-3xl text-sm leading-7 text-stone-600 md:text-base">{hero.summary}</p>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        {
+          hero.actions.map((action) => (
+            <a
+              class:list={[
+                'home-poster-action',
+                action.variant === 'primary' ? 'home-poster-action--primary' : 'home-poster-action--secondary'
+              ]}
+              href={action.href}
+            >
+              {action.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="mt-4 flex flex-wrap gap-2">
+        {hero.tags.map((tag) => <span class="home-poster-tag">{tag}</span>)}
+      </div>
+
+      <div class="home-poster-leadline">
+        <h2 class="home-poster-leadline__title">先让首页具备主推内容的重心。</h2>
+      </div>
     </div>
 
-    <div class="mt-6 space-y-3 text-sm leading-7 text-white/86">
-      {snapshot.lines.map((line) => <p>{line}</p>)}
+    <div class="home-snapshot-panel">
+      <p class="section-kicker mb-4 text-white/80">{snapshot.kicker}</p>
+      <div class="grid grid-cols-2 gap-3">
+        {
+          snapshot.metrics.map((metric) => (
+            <div class="home-snapshot-metric">
+              <p class="text-3xl font-semibold text-stone-950">{metric.value}</p>
+              <p class="mt-2 text-[11px] text-stone-500">{metric.label}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-5 space-y-2 text-[12px] leading-6 text-white/88">
+        {snapshot.lines.map((line, index) => <p>{index + 1}. {line}</p>)}
+      </div>
     </div>
   </div>
 </section>

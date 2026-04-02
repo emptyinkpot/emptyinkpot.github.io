@@ -11,8 +11,8 @@ import { getHomePagePayload } from '../lib/home';
 const payload = await getHomePagePayload();
 ---
 
-<BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、专题、项目与阶段笔记。">
-  <main class="space-y-10 pb-10 md:space-y-16" data-pagefind-body>
+<BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、专题、项目与阶段笔记。" hideSiteChrome={true}>
+  <main class="home-editorial-page space-y-4 pb-10 md:space-y-5" data-pagefind-body>
     <HomeHero hero={payload.hero} snapshot={payload.snapshot} />
     <HomeFeatureSection featuredPost={payload.featuredPost} />
     <HomeLatestPostsSection posts={payload.latestPosts} />

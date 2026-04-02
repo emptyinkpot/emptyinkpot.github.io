@@ -8,12 +8,14 @@ interface Props {
   title?: string;
   description?: string;
   canonical?: string;
+  hideSiteChrome?: boolean;
 }
 
 const {
   title = 'emptyinkpot',
   description = 'emptyinkpot 的个人内容站，基于 Astro 构建，强调结构化内容、专题组织与长期演进能力。',
-  canonical
+  canonical,
+  hideSiteChrome = false
 } = Astro.props;
 ---
 
@@ -32,11 +34,11 @@ const {
     <div class="site-shell">
       <div class="site-shell__glow site-shell__glow--one"></div>
       <div class="site-shell__glow site-shell__glow--two"></div>
-      <SiteHeader />
-      <div class="page-wrap">
+      {!hideSiteChrome && <SiteHeader />}
+      <div class:list={['page-wrap', hideSiteChrome && 'page-wrap--home']}>
         <slot />
       </div>
-      <SiteFooter />
+      {!hideSiteChrome && <SiteFooter />}
     </div>
   </body>
 </html>

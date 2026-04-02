@@ -15,10 +15,10 @@ const { activeProject, latestNotes } = Astro.props as Props;
   {
     activeProject && (
       <section class="home-section-card md:p-7">
-        <div class="section-heading">
+        <div class="home-editorial-sectionhead">
           <div>
             <p class="section-kicker">Project Snapshot</p>
-            <h2 class="section-title">让博客逐步具备“项目展示”的第二条内容线。</h2>
+            <h2 class="home-editorial-sectiontitle home-editorial-sectiontitle--compact">让博客逐步具备项目展示的第二条内容线。</h2>
           </div>
           <a class="pill" href={withBase(`/projects/${activeProject.id}/`)}>
             {activeProject.data.status}
@@ -42,13 +42,13 @@ const { activeProject, latestNotes } = Astro.props as Props;
     )
   }
 
-  <section class="home-notes-panel rounded-[2rem] p-6">
-    <div class="section-heading">
+  <section class="home-notes-panel rounded-[0.2rem] p-6">
+    <div class="home-editorial-sectionhead">
       <div>
         <p class="section-kicker mb-4 text-[color:var(--home-accent-strong)]">Notes</p>
-        <h2 class="section-title">用轻量笔记承接重构过程中的阶段反馈与碎片沉淀。</h2>
+        <h2 class="home-editorial-sectiontitle home-editorial-sectiontitle--compact">用轻量笔记承接阶段反馈与碎片沉淀。</h2>
       </div>
-      <a class="text-sm text-[color:var(--home-accent-strong)] transition hover:text-stone-950" href={withBase('/notes')}>
+      <a class="home-editorial-link text-[color:var(--home-accent)]" href={withBase('/notes')}>
         查看 notes
       </a>
     </div>

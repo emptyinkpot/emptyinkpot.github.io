@@ -11,13 +11,7 @@ const { featuredPost } = Astro.props as Props;
 
 {
   featuredPost && (
-    <section class="space-y-5">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">Feature Story</p>
-          <h2 class="section-title">先让首页具备“主推内容”的重心。</h2>
-        </div>
-      </div>
+    <section class="space-y-0">
       <FeaturedCard post={featuredPost} />
     </section>
   )
