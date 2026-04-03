@@ -19,12 +19,12 @@ const { topics, series } = Astro.props as Props;
 
 <section class="home-workbench__double">
   <article class="home-workbench__card home-workbench__card--panel">
-    <HomeWorkbenchSectionLine leading="SECTION / TOPICS" trailing="主题入口" tight={true} />
+    <HomeWorkbenchSectionLine leading="TOPICS / 主题入口" trailing="主题入口" tight={true} />
     <HomeWorkbenchDeck items={topics} columns={3} compact={true} />
   </article>
 
   <article class="home-workbench__card home-workbench__card--panel">
-    <HomeWorkbenchSectionLine leading="SECTION / SERIES" trailing="连续阅读" tight={true} />
+    <HomeWorkbenchSectionLine leading="SERIES / 专题系列" trailing="连续阅读" tight={true} />
     <HomeWorkbenchDeck items={series} columns={3} compact={true} />
   </article>
 </section>

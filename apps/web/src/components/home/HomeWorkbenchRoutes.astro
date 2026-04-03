@@ -12,7 +12,7 @@ const { topCards, bottomCards } = Astro.props as Props;
 ---
 
 <section class="home-workbench__routes">
-  <HomeWorkbenchSectionLine leading="SECTION / SITE ROUTES" trailing="关于、搜索、更新与工具入口分层落位" />
+  <HomeWorkbenchSectionLine leading="SITE ROUTES / 站点入口" trailing="关于、搜索、更新与工具入口分层落位" />
   <HomeWorkbenchDeck items={topCards.map((card) => ({ ...card, summary: card.summary, variant: card.variant === 'accent' ? 'accent' : 'default' }))} columns={3} />
   <HomeWorkbenchDeck items={bottomCards.map((card) => ({ ...card, summary: card.summary, variant: card.variant === 'accent' ? 'accent' : 'default' }))} columns={2} />
 </section>

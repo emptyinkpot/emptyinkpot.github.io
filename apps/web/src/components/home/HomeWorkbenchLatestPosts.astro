@@ -19,11 +19,11 @@ const { posts } = Astro.props as Props;
 ---
 
 <section class="home-workbench__feed">
-  <HomeWorkbenchSectionLine leading="SECTION / LATEST POSTS" trailing="严格两栏基线结构" />
+  <HomeWorkbenchSectionLine leading="LATEST POSTS / 最新文章" trailing="严格两栏基线结构" />
 
   <div class="home-workbench__feedcard home-workbench__card home-workbench__card--panel">
     <header>
-      <strong>LATEST POSTS / 博客内容</strong>
+      <strong>最新文章 / 博客内容</strong>
       <a href={withBase('/posts')}>进入文章</a>
     </header>
 
@@ -41,7 +41,7 @@ const { posts } = Astro.props as Props;
               ) : (
                 <>
                   <i></i>
-                  <span>ARTICLE COVER</span>
+                  <span>文章封面</span>
                   <small>{post.category}</small>
                 </>
               )}

@@ -11,7 +11,7 @@ const { filters } = Astro.props as Props;
 ---
 
 <section class="home-workbench__searchbar">
-  <p class="home-workbench__search-label">SEARCH</p>
+  <p class="home-workbench__search-label">搜索</p>
   <a href={withBase('/search')} class="home-workbench__searchbox">
     <span>搜索文章 / 标签 / 系列 / 项目 / 更新</span>
     <span class="home-workbench__searchhint">ENTER / CTRL K</span>
@@ -19,7 +19,7 @@ const { filters } = Astro.props as Props;
 </section>
 
 <section class="home-workbench__filters">
-  <HomeWorkbenchSectionLine leading="SECTION / QUICK FILTERS" trailing="高频内容入口" />
+  <HomeWorkbenchSectionLine leading="QUICK FILTERS / 快速筛选" trailing="高频内容入口" />
 
   <div class="home-workbench__filterlist">
     {

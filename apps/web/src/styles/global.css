@@ -970,6 +970,18 @@ body.home-mode .page-wrap--home {
   color: rgba(255, 255, 255, 0.86);
 }
 
+.home-workbench__card--accent .home-workbench__sectionline span:first-child,
+.home-workbench__snapshot .home-workbench__sectionline span:first-child,
+.home-side-rail__profile-panel .home-workbench__sectionline span:first-child {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.home-workbench__card--accent .home-workbench__sectionline div,
+.home-workbench__snapshot .home-workbench__sectionline div,
+.home-side-rail__profile-panel .home-workbench__sectionline div {
+  background: rgba(255, 255, 255, 0.18);
+}
+
 .home-workbench__filters {
   display: flex;
   flex-direction: column;

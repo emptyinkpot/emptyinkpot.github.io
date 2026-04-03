@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  featuredPost?: CollectionEntry<'posts'>;
+}
+
+const { featuredPost } = Astro.props as Props;
+---
+
+{
+  featuredPost && (
+    <section class="home-workbench__featureband">
+      <div class="home-workbench__featureband-copy">
+        <strong>{featuredPost.data.title}</strong>
+        <p>{featuredPost.data.summary ?? featuredPost.data.description ?? '用主推内容带住首页重心，下面再承接列表与分区。'}</p>
+      </div>
+      <span class="home-workbench__featureband-meta">主推文章入口 / Featured Story</span>
+    </section>
+  )
+}

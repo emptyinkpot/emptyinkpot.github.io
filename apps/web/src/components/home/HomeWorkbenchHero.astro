@@ -8,10 +8,9 @@ interface Props {
   snapshot: HomeSnapshotData;
   checkIn: HomeCheckInData;
   github?: HomeGitHubData;
-  featuredPost?: CollectionEntry<'posts'>;
 }
 
-const { hero, snapshot, checkIn, github, featuredPost } = Astro.props as Props;
+const { hero, snapshot, checkIn, github } = Astro.props as Props;
 const heatmapWeekCount = checkIn.weeks.length;
 const donutStops =
   github?.languages
@@ -83,7 +82,7 @@ const linePoints = (() => {
                 week.days.map((day) => (
                   <span
                     class:list={['home-workbench__cell', `home-workbench__cell--${day.level}`]}
-                    title={day.date ? `${day.date} / ${day.count ?? 0} contributions` : undefined}
+                    title={day.date ? `${day.date} / ${day.count ?? 0} 次活动` : undefined}
                   ></span>
                 ))
               }
@@ -99,14 +98,14 @@ const linePoints = (() => {
         <div class="home-workbench__analytics">
           <article class="home-workbench__analytics-card">
             <div class="home-workbench__analytics-head">
-              <strong>Language share</strong>
+              <strong>语言占比</strong>
               <span>公开仓库语言结构</span>
             </div>
             <div class="home-workbench__donut-wrap">
               <div class="home-workbench__donut" style={`background:${donutStyle};`}>
                 <div class="home-workbench__donut-core">
                   <strong>{github.totalContributions}</strong>
-                  <span>yearly acts</span>
+                  <span>年度活动</span>
                 </div>
               </div>
 
@@ -124,7 +123,7 @@ const linePoints = (() => {
 
           <article class="home-workbench__analytics-card">
             <div class="home-workbench__analytics-head">
-              <strong>Last 6 months</strong>
+              <strong>近 6 个月</strong>
               <span>真实月度活跃折线</span>
             </div>
             <div class="home-workbench__linechart">
@@ -148,7 +147,7 @@ const linePoints = (() => {
   </HomeWorkbenchPanel>
 
   <aside class="home-workbench__hero-side">
-    <HomeWorkbenchPanel leading="EDITORIAL SNAPSHOT" trailing="当前站点信号" tone="snap" accent={true} className="home-workbench__snapshot">
+    <HomeWorkbenchPanel leading="EDITORIAL SNAPSHOT / 站点快照" trailing="当前站点信号" tone="snap" accent={true} className="home-workbench__snapshot">
       <h2>{snapshot.kicker}</h2>
       <div class="home-workbench__snapshot-metrics">
         {snapshot.metrics.map((metric) => (
@@ -163,26 +162,27 @@ const linePoints = (() => {
       </ul>
       {
         github && (
-          <a class="home-workbench__snapshot-profile" href={github.profile.profileUrl} target="_blank" rel="noreferrer">
-            <img src={github.profile.avatarUrl} alt={github.profile.name} loading="lazy" />
-            <span>
-              <strong>{github.profile.name}</strong>
-              <small>@{github.profile.login} / {github.profile.followers} follower</small>
-            </span>
-          </a>
+          <>
+            <div class="home-workbench__snapshot-notes">
+              <div>
+                <span>内容</span>
+                <strong>23 篇已发布内容作为当前首页主入口的稳定供给。</strong>
+              </div>
+              <div>
+                <span>结构</span>
+                <strong>6 个主题分类 / 3 条内容线 / 持续维护中的索引首页。</strong>
+              </div>
+            </div>
+            <a class="home-workbench__snapshot-profile" href={github.profile.profileUrl} target="_blank" rel="noreferrer">
+              <img src={github.profile.avatarUrl} alt={github.profile.name} loading="lazy" />
+              <span>
+                <strong>{github.profile.name}</strong>
+                <small>@{github.profile.login} / {github.profile.followers} 位关注者</small>
+              </span>
+            </a>
+          </>
         )
       }
     </HomeWorkbenchPanel>
-
-    {
-      featuredPost && (
-        <HomeWorkbenchPanel leading="FEATURED STORY" trailing="主推文章入口" tone="snap" accent={true} className="home-workbench__hero-feature">
-          <strong class="home-workbench__blocktitle">{featuredPost.data.title}</strong>
-          <p class="home-workbench__blockmeta home-workbench__blockmeta--light">
-            {featuredPost.data.summary ?? featuredPost.data.description ?? '主推文章入口'}
-          </p>
-        </HomeWorkbenchPanel>
-      )
-    }
   </aside>
 </section>

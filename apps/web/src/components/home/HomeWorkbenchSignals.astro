@@ -10,14 +10,14 @@ const { teams } = Astro.props as Props;
 ---
 
 <section class="home-github-signals">
-  <HomeWorkbenchSectionLine leading="SECTION / CURRENT TEAM GITHUB SIGNALS" trailing="当前团队的公开仓库、自动化链路与资料目录" />
+  <HomeWorkbenchSectionLine leading="GITHUB SIGNALS / 团队信号" trailing="当前团队的公开仓库、自动化链路与资料目录" />
 
   {
     teams.map((team, index) => (
       <div class:list={['home-github-signals__panel', index === 0 && 'is-active']} data-team-panel={team.id}>
         <div class="home-workbench__double">
           <article class="home-workbench__card home-workbench__card--panel">
-            <HomeWorkbenchSectionLine leading="PROJECT MATRIX" trailing={team.label} tight={true} />
+            <HomeWorkbenchSectionLine leading="PROJECT MATRIX / 仓库矩阵" trailing={team.label} tight={true} />
             <strong class="home-workbench__blocktitle">当前团队仓库矩阵</strong>
             <p class="home-workbench__blockmeta">团队切换后，这组仓库卡随之替换</p>
             <div class="home-workbench__repo-grid">
@@ -33,9 +33,9 @@ const { teams } = Astro.props as Props;
           </article>
 
           <article class="home-workbench__card home-workbench__card--accent">
-            <HomeWorkbenchSectionLine leading="AUTOMATION / DEPLOY" trailing="真实控制台语义" tone="snap" />
+            <HomeWorkbenchSectionLine leading="AUTOMATION / DEPLOY / 自动化状态" trailing="真实控制台语义" tone="snap" />
             <strong class="home-workbench__blocktitle">当前团队状态面板</strong>
-            <p class="home-workbench__blockmeta home-workbench__blockmeta--light">RUNNING / QUEUED / CHECKING</p>
+            <p class="home-workbench__blockmeta home-workbench__blockmeta--light">运行中 / 排队中 / 检查中</p>
             <div class="home-workbench__status-grid">
               {team.automation.map((item) => (
                 <article class:list={['home-workbench__status-card', `state-${item.state}`]}>
@@ -50,7 +50,7 @@ const { teams } = Astro.props as Props;
 
         <div class="home-workbench__double">
           <article class="home-workbench__card home-workbench__card--panel">
-            <HomeWorkbenchSectionLine leading="TOOLKIT LAB" trailing={team.subtitle} tight={true} />
+            <HomeWorkbenchSectionLine leading="TOOLKIT LAB / 工具目录" trailing={team.subtitle} tight={true} />
             <strong class="home-workbench__blocktitle">当前团队工具目录</strong>
             <p class="home-workbench__blockmeta">{team.toolkit.subtitle}</p>
             <div class="home-workbench__tree">
@@ -62,7 +62,7 @@ const { teams } = Astro.props as Props;
           </article>
 
           <article class="home-workbench__card home-workbench__card--panel">
-            <HomeWorkbenchSectionLine leading="WORLD / DESIGN ARCHIVE" trailing={team.label} tight={true} />
+            <HomeWorkbenchSectionLine leading="WORLD / DESIGN ARCHIVE / 资料档案" trailing={team.label} tight={true} />
             <strong class="home-workbench__blocktitle">当前团队世界观档案</strong>
             <p class="home-workbench__blockmeta">{team.archive.subtitle}</p>
             <div class="home-workbench__tree">

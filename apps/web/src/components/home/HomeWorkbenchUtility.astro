@@ -11,7 +11,7 @@ const { friendlySites, teams } = Astro.props as Props;
 ---
 
 <section class="home-workbench__utility">
-  <HomeWorkbenchPanel leading="SECTION / VERIFIED LINKS" trailing="真实外链矩阵" tight={true} panel={true}>
+  <HomeWorkbenchPanel leading="VERIFIED LINKS / 外链矩阵" trailing="真实外链矩阵" tight={true} panel={true}>
     <div class="home-workbench__linksgrid" id="friendly-sites">
       {
         friendlySites.map((site) => (
@@ -33,7 +33,7 @@ const { friendlySites, teams } = Astro.props as Props;
     </div>
   </HomeWorkbenchPanel>
 
-  <HomeWorkbenchPanel leading="SECTION / TEAM SWITCHER" trailing="切换团队后联动成员与项目" tight={true} panel={true}>
+  <HomeWorkbenchPanel leading="TEAM SWITCHER / 团队切换" trailing="切换团队后联动成员与项目" tight={true} panel={true}>
     <div class="home-team-switcher" data-team-switcher>
       <div class="home-team-switcher__tabs" role="tablist" aria-label="团队切换">
         {
@@ -63,7 +63,7 @@ const { friendlySites, teams } = Astro.props as Props;
           <div class:list={['home-team-panel', index === 0 && 'is-active']} data-team-panel={team.id}>
             <div class="home-team-panel__group">
               <div class="home-team-panel__splithead">
-                <span>CURRENT TEAM</span>
+                <span>当前团队</span>
                 <strong>{team.subtitle}</strong>
               </div>
               <div class="home-team-panel__members">
@@ -89,7 +89,7 @@ const { friendlySites, teams } = Astro.props as Props;
 
             <div class="home-team-panel__group">
               <div class="home-team-panel__splithead">
-                <span>ACTIVE PROJECTS</span>
+                <span>进行中项目</span>
                 <strong>随团队切换</strong>
               </div>
               <div class="home-team-panel__projects">

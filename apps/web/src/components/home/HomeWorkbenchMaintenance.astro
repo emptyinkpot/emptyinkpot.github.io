@@ -10,10 +10,10 @@ const { items } = Astro.props as Props;
 ---
 
 <section class="home-workbench__maintenance">
-  <HomeWorkbenchSectionLine leading="SECTION / MAINTENANCE" trailing="近期维护、清理与状态记录" />
+  <HomeWorkbenchSectionLine leading="MAINTENANCE / 维护记录" trailing="近期维护、清理与状态记录" />
 
   <article class="home-workbench__card home-workbench__card--panel">
-    <strong class="home-workbench__blocktitle">RECENT MAINTENANCE</strong>
+    <strong class="home-workbench__blocktitle">近期维护</strong>
     <p class="home-workbench__blocklead">把原来的打卡区改成近期维护与内容备注入口。</p>
     <div class="home-workbench__maintenance-list">
       {items.map((item) => (
