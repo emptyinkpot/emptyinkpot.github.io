@@ -1,0 +1,34 @@
+---
+import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+
+interface Props {
+  leading?: string;
+  trailing?: string;
+  tone?: 'default' | 'snap';
+  tight?: boolean;
+  accent?: boolean;
+  panel?: boolean;
+  className?: string;
+}
+
+const {
+  leading,
+  trailing,
+  tone = 'default',
+  tight = false,
+  accent = false,
+  panel = false,
+  className = ''
+} = Astro.props as Props;
+---
+
+<article class:list={['home-workbench__card', panel && 'home-workbench__card--panel', accent && 'home-workbench__card--accent', className]}>
+  {
+    leading && trailing && (
+      <div class="home-workbench__cardhead">
+        <HomeWorkbenchSectionLine leading={leading} trailing={trailing} tone={tone} tight={tight} />
+      </div>
+    )
+  }
+  <slot />
+</article>

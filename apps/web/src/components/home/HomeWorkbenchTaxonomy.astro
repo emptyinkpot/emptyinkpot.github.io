@@ -1,5 +1,6 @@
 ---
 import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+import HomeWorkbenchDeck from './HomeWorkbenchDeck.astro';
 
 interface ItemCard {
   kicker: string;
@@ -19,27 +20,11 @@ const { topics, series } = Astro.props as Props;
 <section class="home-workbench__double">
   <article class="home-workbench__card home-workbench__card--panel">
     <HomeWorkbenchSectionLine leading="SECTION / TOPICS" trailing="主题入口" tight={true} />
-    <div class="home-workbench__mini-grid">
-      {topics.map((item) => (
-        <a href={item.href} class="home-workbench__mini-card">
-          <span>{item.kicker}</span>
-          <strong>{item.title}</strong>
-          <small>{item.meta}</small>
-        </a>
-      ))}
-    </div>
+    <HomeWorkbenchDeck items={topics} columns={3} compact={true} />
   </article>
 
   <article class="home-workbench__card home-workbench__card--panel">
     <HomeWorkbenchSectionLine leading="SECTION / SERIES" trailing="连续阅读" tight={true} />
-    <div class="home-workbench__mini-grid">
-      {series.map((item) => (
-        <a href={item.href} class="home-workbench__mini-card">
-          <span>{item.kicker}</span>
-          <strong>{item.title}</strong>
-          <small>{item.meta}</small>
-        </a>
-      ))}
-    </div>
+    <HomeWorkbenchDeck items={series} columns={3} compact={true} />
   </article>
 </section>

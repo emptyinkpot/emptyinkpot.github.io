@@ -1,6 +1,6 @@
 ---
 import type { HomeFriendlySite, HomeTeamSignal } from '../../lib/home';
-import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+import HomeWorkbenchPanel from './HomeWorkbenchPanel.astro';
 
 interface Props {
   friendlySites: HomeFriendlySite[];
@@ -11,10 +11,7 @@ const { friendlySites, teams } = Astro.props as Props;
 ---
 
 <section class="home-workbench__utility">
-  <article class="home-workbench__card home-workbench__card--panel">
-    <div class="home-workbench__cardhead">
-      <HomeWorkbenchSectionLine leading="SECTION / VERIFIED LINKS" trailing="真实外链矩阵" tight={true} />
-    </div>
+  <HomeWorkbenchPanel leading="SECTION / VERIFIED LINKS" trailing="真实外链矩阵" tight={true} panel={true}>
     <div class="home-workbench__linksgrid" id="friendly-sites">
       {
         friendlySites.map((site) => (
@@ -28,13 +25,9 @@ const { friendlySites, teams } = Astro.props as Props;
         ))
       }
     </div>
-  </article>
+  </HomeWorkbenchPanel>
 
-  <article class="home-workbench__card home-workbench__card--panel">
-    <div class="home-workbench__cardhead">
-      <HomeWorkbenchSectionLine leading="SECTION / TEAM SWITCHER" trailing="切换团队后联动成员与项目" tight={true} />
-    </div>
-
+  <HomeWorkbenchPanel leading="SECTION / TEAM SWITCHER" trailing="切换团队后联动成员与项目" tight={true} panel={true}>
     <div class="home-team-switcher" data-team-switcher>
       <div class="home-team-switcher__tabs" role="tablist" aria-label="团队切换">
         {
@@ -57,7 +50,10 @@ const { friendlySites, teams } = Astro.props as Props;
         teams.map((team, index) => (
           <div class:list={['home-team-panel', index === 0 && 'is-active']} data-team-panel={team.id}>
             <div class="home-team-panel__group">
-              <HomeWorkbenchSectionLine leading="SECTION / CURRENT TEAM" trailing={team.subtitle} tight={true} />
+              <div class="home-team-panel__splithead">
+                <span>CURRENT TEAM</span>
+                <strong>{team.subtitle}</strong>
+              </div>
               <div class="home-team-panel__members">
                 {
                   team.members.map((member) => (
@@ -74,7 +70,10 @@ const { friendlySites, teams } = Astro.props as Props;
             </div>
 
             <div class="home-team-panel__group">
-              <HomeWorkbenchSectionLine leading="SECTION / ACTIVE TEAM PROJECTS" trailing="随团队切换" tight={true} />
+              <div class="home-team-panel__splithead">
+                <span>ACTIVE PROJECTS</span>
+                <strong>随团队切换</strong>
+              </div>
               <div class="home-team-panel__projects">
                 {
                   team.projects.map((project) => (
@@ -96,5 +95,5 @@ const { friendlySites, teams } = Astro.props as Props;
         ))
       }
     </div>
-  </article>
+  </HomeWorkbenchPanel>
 </section>

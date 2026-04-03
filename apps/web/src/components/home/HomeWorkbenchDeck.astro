@@ -1,0 +1,36 @@
+---
+interface DeckItem {
+  kicker: string;
+  title: string;
+  summary?: string;
+  meta?: string;
+  href?: string;
+  variant?: 'default' | 'accent';
+}
+
+interface Props {
+  items: DeckItem[];
+  columns?: 2 | 3;
+  compact?: boolean;
+}
+
+const { items, columns = 3, compact = false } = Astro.props as Props;
+const gridClass = columns === 3 ? 'home-workbench__triple' : 'home-workbench__double';
+const cardClass = compact ? 'home-workbench__mini-card' : 'home-workbench__route-card';
+---
+
+<div class={gridClass}>
+  {
+    items.map((item) => {
+      const Tag = item.href ? 'a' : 'article';
+      return (
+        <Tag href={item.href} class:list={[cardClass, item.variant === 'accent' && 'is-accent']}>
+          <span>{item.kicker}</span>
+          <strong>{item.title}</strong>
+          {item.meta && <small>{item.meta}</small>}
+          {item.summary && !item.meta && <small>{item.summary}</small>}
+        </Tag>
+      );
+    })
+  }
+</div>

@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import type { HomeCheckInData, HomeHeroData, HomeSnapshotData } from '../../lib/home';
-import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+import HomeWorkbenchPanel from './HomeWorkbenchPanel.astro';
 
 interface Props {
   hero: HomeHeroData;
@@ -14,11 +14,11 @@ const { hero, snapshot, checkIn, featuredPost } = Astro.props as Props;
 ---
 
 <section class="home-workbench__hero">
-  <article class="home-workbench__hero-main home-workbench__card home-workbench__card--panel">
-    <HomeWorkbenchSectionLine leading={hero.kicker} trailing="唯一入口 / 编辑部首页" tight={true} />
-
-    <h1>{hero.title}</h1>
-    <p class="home-workbench__hero-summary">{hero.summary}</p>
+  <HomeWorkbenchPanel leading={hero.kicker} trailing="唯一入口 / 编辑部首页" tight={true} panel={true} className="home-workbench__hero-main">
+    <div class="home-workbench__hero-copy">
+      <h1>{hero.title}</h1>
+      <p class="home-workbench__hero-summary">{hero.summary}</p>
+    </div>
 
     <div class="home-workbench__hero-actions">
       {hero.actions.map((action) => <a href={action.href}>{action.label}</a>)}
@@ -47,11 +47,10 @@ const { hero, snapshot, checkIn, featuredPost } = Astro.props as Props;
       </div>
       <div class="home-workbench__legend">{checkIn.legend}</div>
     </div>
-  </article>
+  </HomeWorkbenchPanel>
 
   <aside class="home-workbench__hero-side">
-    <article class="home-workbench__snapshot">
-      <HomeWorkbenchSectionLine leading="EDITORIAL SNAPSHOT" trailing="当前站点信号" tone="snap" />
+    <HomeWorkbenchPanel leading="EDITORIAL SNAPSHOT" trailing="当前站点信号" tone="snap" accent={true} className="home-workbench__snapshot">
       <h2>{snapshot.kicker}</h2>
       <div class="home-workbench__snapshot-metrics">
         {snapshot.metrics.map((metric) => (
@@ -64,17 +63,16 @@ const { hero, snapshot, checkIn, featuredPost } = Astro.props as Props;
       <ul>
         {snapshot.lines.map((line) => <li>{line}</li>)}
       </ul>
-    </article>
+    </HomeWorkbenchPanel>
 
     {
       featuredPost && (
-        <article class="home-workbench__card home-workbench__card--accent home-workbench__hero-feature">
-          <HomeWorkbenchSectionLine leading="FEATURED STORY" trailing="主推文章入口" tone="snap" />
+        <HomeWorkbenchPanel leading="FEATURED STORY" trailing="主推文章入口" tone="snap" accent={true} className="home-workbench__hero-feature">
           <strong class="home-workbench__blocktitle">{featuredPost.data.title}</strong>
           <p class="home-workbench__blockmeta home-workbench__blockmeta--light">
             {featuredPost.data.summary ?? featuredPost.data.description ?? '主推文章入口'}
           </p>
-        </article>
+        </HomeWorkbenchPanel>
       )
     }
   </aside>

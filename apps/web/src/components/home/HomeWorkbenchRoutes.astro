@@ -1,6 +1,7 @@
 ---
 import type { HomeRouteCard } from '../../lib/home';
 import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+import HomeWorkbenchDeck from './HomeWorkbenchDeck.astro';
 
 interface Props {
   topCards: HomeRouteCard[];
@@ -12,24 +13,6 @@ const { topCards, bottomCards } = Astro.props as Props;
 
 <section class="home-workbench__routes">
   <HomeWorkbenchSectionLine leading="SECTION / SITE ROUTES" trailing="关于、搜索、更新与工具入口分层落位" />
-
-  <div class="home-workbench__triple">
-    {topCards.map((card) => (
-      <a href={card.href} class:list={['home-workbench__route-card', card.variant === 'accent' && 'is-accent']}>
-        <span>{card.kicker}</span>
-        <strong>{card.title}</strong>
-        <small>{card.summary}</small>
-      </a>
-    ))}
-  </div>
-
-  <div class="home-workbench__double">
-    {bottomCards.map((card) => (
-      <a href={card.href} class:list={['home-workbench__route-card', card.variant === 'accent' && 'is-accent']}>
-        <span>{card.kicker}</span>
-        <strong>{card.title}</strong>
-        <small>{card.summary}</small>
-      </a>
-    ))}
-  </div>
+  <HomeWorkbenchDeck items={topCards.map((card) => ({ ...card, summary: card.summary, variant: card.variant === 'accent' ? 'accent' : 'default' }))} columns={3} />
+  <HomeWorkbenchDeck items={bottomCards.map((card) => ({ ...card, summary: card.summary, variant: card.variant === 'accent' ? 'accent' : 'default' }))} columns={2} />
 </section>
