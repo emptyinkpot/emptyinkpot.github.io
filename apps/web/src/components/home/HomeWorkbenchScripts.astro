@@ -49,10 +49,38 @@
       });
     };
 
+    const setupLatestPostPreview = () => {
+      const groups = document.querySelectorAll('[data-latest-preview]');
+
+      groups.forEach((group) => {
+        const triggers = group.querySelectorAll('[data-post-trigger]');
+        const panels = group.querySelectorAll('[data-post-panel]');
+
+        if (!triggers.length || !panels.length) return;
+
+        const activate = (postId) => {
+          triggers.forEach((trigger) => {
+            const isActive = trigger.getAttribute('data-post-trigger') === postId;
+            trigger.classList.toggle('is-active', isActive);
+            trigger.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+
+          panels.forEach((panel) => {
+            panel.classList.toggle('is-active', panel.getAttribute('data-post-panel') === postId);
+          });
+        };
+
+        triggers.forEach((trigger) => {
+          trigger.addEventListener('click', () => activate(trigger.getAttribute('data-post-trigger')));
+        });
+      });
+    };
+
     const mount = () => {
       setupPanelWheel('.home-editorial-page');
       setupPanelWheel('.home-side-rail__inner');
       setupTeamSwitcher();
+      setupLatestPostPreview();
     };
 
     if (document.readyState === 'loading') {

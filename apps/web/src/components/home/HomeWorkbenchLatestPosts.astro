@@ -3,11 +3,14 @@ import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
 import { withBase } from '../../lib/site';
 
 interface LatestPostCard {
+  id: string;
   href: string;
   title: string;
   date: string;
   category: string;
   summary: string;
+  preview: string;
+  tags: string[];
   coverSrc?: string;
 }
 
@@ -27,32 +30,84 @@ const { posts } = Astro.props as Props;
       <a href={withBase('/posts')}>进入文章</a>
     </header>
 
-    <div class="home-workbench__postlist">
-      {
-        posts.map((post) => (
-          <a href={post.href} class="home-workbench__postitem">
-            <div class="home-workbench__postmeta">
-              <span>{post.date}</span>
-              <span>{post.category}</span>
-            </div>
-            <div class="home-workbench__postcover">
-              {post.coverSrc ? (
-                <img src={post.coverSrc} alt={post.title} loading="lazy" />
-              ) : (
-                <>
-                  <i></i>
-                  <span>文章封面</span>
-                  <small>{post.category}</small>
-                </>
-              )}
-            </div>
-            <div class="home-workbench__postbody">
-              <strong>{post.title}</strong>
-              <p>{post.summary}</p>
-            </div>
-          </a>
-        ))
-      }
+    <div class="home-workbench__feedsplit" data-latest-preview>
+      <div class="home-workbench__postlist" role="tablist" aria-label="首页最新文章预览列表">
+        {
+          posts.map((post, index) => (
+            <button
+              type="button"
+              class:list={['home-workbench__postitem', index === 0 && 'is-active']}
+              data-post-trigger={post.id}
+              aria-selected={index === 0 ? 'true' : 'false'}
+            >
+              <div class="home-workbench__postmeta">
+                <span>{post.date}</span>
+                <span>{post.category}</span>
+              </div>
+              <div class="home-workbench__postcover">
+                {post.coverSrc ? (
+                  <img src={post.coverSrc} alt={post.title} loading="lazy" />
+                ) : (
+                  <>
+                    <i></i>
+                    <span>文章封面</span>
+                    <small>{post.category}</small>
+                  </>
+                )}
+              </div>
+              <div class="home-workbench__postbody">
+                <strong>{post.title}</strong>
+                <p>{post.summary}</p>
+              </div>
+            </button>
+          ))
+        }
+      </div>
+
+      <aside class="home-workbench__postpreview" aria-live="polite">
+        {
+          posts.map((post, index) => (
+            <article
+              class:list={['home-workbench__postpreview-panel', index === 0 && 'is-active']}
+              data-post-panel={post.id}
+            >
+              <div class="home-workbench__postpreview-meta">
+                <span>{post.date}</span>
+                <span>{post.category}</span>
+              </div>
+
+              <div class="home-workbench__postpreview-cover">
+                {post.coverSrc ? (
+                  <img src={post.coverSrc} alt={post.title} loading="lazy" />
+                ) : (
+                  <>
+                    <i></i>
+                    <span>内容预览</span>
+                    <small>{post.category}</small>
+                  </>
+                )}
+              </div>
+
+              <div class="home-workbench__postpreview-copy">
+                <strong>{post.title}</strong>
+                <p>{post.preview}</p>
+              </div>
+
+              <div class="home-workbench__postpreview-tags">
+                {post.tags.length > 0 ? (
+                  post.tags.map((tag) => <span>{tag}</span>)
+                ) : (
+                  <span>{post.category}</span>
+                )}
+              </div>
+
+              <div class="home-workbench__postpreview-actions">
+                <a href={post.href}>阅读全文</a>
+              </div>
+            </article>
+          ))
+        }
+      </aside>
     </div>
   </div>
 </section>

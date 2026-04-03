@@ -50,11 +50,17 @@ const routeBottomCards = payload.routeCards.slice(3);
 const activeProject = payload.activeProject;
 const latestNote = payload.latestNotes[0];
 const latestPostCards = payload.latestPosts.map((post) => ({
+  id: post.id,
   href: withBase(`/posts/${post.id}/`),
   title: post.data.title,
   date: formatDate(post.data.date),
   category: getPrimaryCategory(post),
   summary: post.data.summary ?? post.data.description ?? getExcerptFromBody(post.body, 92),
+  preview:
+    post.data.description ??
+    post.data.summary ??
+    getExcerptFromBody(post.body, 320),
+  tags: post.data.tags?.slice(0, 3) ?? [],
   coverSrc: getPostCover(post)
 }));
 ---
