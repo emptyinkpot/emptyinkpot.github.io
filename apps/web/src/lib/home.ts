@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { formatDate, getCategoryCounts, getSeriesCounts, sortPosts, toSlug } from './content';
+import { getGitHubOverview, type GitHubOverview } from './github';
 import { withBase } from './site';
 
 export interface HomeAction {
@@ -25,6 +26,43 @@ export interface HomeSnapshotData {
   kicker: string;
   metrics: HomeSnapshotMetric[];
   lines: string[];
+}
+
+export interface HomeGitHubLanguageSlice {
+  label: string;
+  percent: number;
+  color: string;
+}
+
+export interface HomeGitHubMonthlyPoint {
+  label: string;
+  value: number;
+}
+
+export interface HomeGitHubRepoCard {
+  name: string;
+  language: string;
+  updatedAt: string;
+  stars: number;
+  issues: number;
+  htmlUrl: string;
+}
+
+export interface HomeGitHubData {
+  profile: {
+    login: string;
+    name: string;
+    avatarUrl: string;
+    publicRepos: number;
+    followers: number;
+    following: number;
+    updatedAt: string;
+    profileUrl: string;
+  };
+  totalContributions: number;
+  languages: HomeGitHubLanguageSlice[];
+  monthly: HomeGitHubMonthlyPoint[];
+  repos: HomeGitHubRepoCard[];
 }
 
 export interface HomeTaxonomyItem {
@@ -108,6 +146,8 @@ export interface HomeMaintenanceItem {
 
 export interface HomeCheckInCell {
   level: 0 | 1 | 2 | 3 | 4;
+  count?: number;
+  date?: string;
 }
 
 export interface HomeCheckInWeek {
@@ -123,6 +163,7 @@ export interface HomeCheckInData {
   legend: string;
   months: string[];
   weeks: HomeCheckInWeek[];
+  total: number;
   avatar: {
     imageSrc: string;
     alt: string;
@@ -140,6 +181,7 @@ export interface HomePagePayload {
   activeProject?: CollectionEntry<'projects'>;
   latestNotes: CollectionEntry<'notes'>[];
   checkIn: HomeCheckInData;
+  github?: HomeGitHubData;
   quickFilters: HomeQuickFilter[];
   friendlySites: HomeFriendlySite[];
   teams: HomeTeamSignal[];
@@ -159,6 +201,10 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
   const latestPosts = allPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 4);
   const latestNotes = notes.slice(0, 3);
   const activeProject = projects[0];
+  const githubOverview = await getGitHubOverview('emptyinkpot').catch((error) => {
+    console.warn('Failed to fetch GitHub overview for homepage:', error);
+    return null;
+  });
   const topics = getCategoryCounts(allPosts)
     .slice(0, 3)
     .map(([label, count]) => ({
@@ -189,13 +235,13 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
     snapshot: {
       kicker: 'Site Snapshot',
       metrics: [
-        { value: String(allPosts.length), label: 'Published posts' },
-        { value: String(topics.length), label: 'Active categories' }
+        { value: String(githubOverview?.totalContributions ?? allPosts.length), label: 'Yearly GitHub activity' },
+        { value: String(githubOverview?.profile.publicRepos ?? topics.length), label: 'Public repositories' }
       ],
       lines: [
         `最近一次文章时间：${featuredPost ? formatDate(featuredPost.data.date) : '暂无'}`,
-        '内容源、页面装配与发布链路已经收拢到同一站点。',
-        '搜索、评论与持续录入能力后续会继续在这套唯一站点内迭代。'
+        `GitHub 公开资料最近更新时间：${formatDate(githubOverview ? new Date(githubOverview.profile.updatedAt) : new Date())}`,
+        '内容源、页面装配与发布链路已经收拢到同一站点。'
       ]
     },
     featuredPost,
@@ -204,7 +250,8 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
     series,
     activeProject,
     latestNotes,
-    checkIn: buildCheckInData({ posts: allPosts, notes, projects }),
+    checkIn: buildCheckInData({ posts: allPosts, notes, projects, githubOverview }),
+    github: githubOverview ? buildGitHubData(githubOverview) : undefined,
     quickFilters: [
       { label: '#文章', href: withBase('/posts') },
       { label: '#专题', href: withBase('/series') },
@@ -246,7 +293,7 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
         description: '云端部署与专题来源'
       }
     ],
-    teams: buildTeamSignals(),
+    teams: buildTeamSignals(githubOverview),
     routeCards: [
       {
         kicker: 'ABOUT',
@@ -305,7 +352,40 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
   };
 }
 
-function buildTeamSignals(): HomeTeamSignal[] {
+function buildTeamSignals(githubOverview: GitHubOverview | null): HomeTeamSignal[] {
+  const personalRepoSignals =
+    githubOverview?.repos.map((repo, index) => ({
+      name: repo.name,
+      summary: `${repo.language ?? 'Unknown'} / ${repo.stars} stars / ${repo.issues} issues`,
+      status: `UPDATED / ${formatDate(new Date(repo.updatedAt))}`,
+      tone: (['violet', 'primary', 'green', 'gold'][index] ?? 'primary') as HomeRepoSignal['tone']
+    })) ?? [
+      {
+        name: 'Atramenti-Console',
+        summary: '控制台实验 / 交互界面',
+        status: 'ACTIVE / 个人主线',
+        tone: 'primary'
+      },
+      {
+        name: 'Lex-Universalis',
+        summary: '世界观 / Godot',
+        status: 'WORLD / ARCHIVE',
+        tone: 'gold'
+      },
+      {
+        name: 'emptyinkpot.github.io',
+        summary: '内容主站 / Astro',
+        status: 'RUNNING / 线上主站',
+        tone: 'violet'
+      },
+      {
+        name: 'Roo-Kit',
+        summary: 'MCP / skills / AI',
+        status: 'LAB / TOOLCHAIN',
+        tone: 'green'
+      }
+    ];
+
   return [
     {
       id: 'personal',
@@ -329,32 +409,7 @@ function buildTeamSignals(): HomeTeamSignal[] {
           badges: ['视觉系统']
         }
       ],
-      repos: [
-        {
-          name: 'Atramenti-Console',
-          summary: '控制台实验 / 交互界面',
-          status: 'ACTIVE / 个人主线',
-          tone: 'primary'
-        },
-        {
-          name: 'Lex-Universalis',
-          summary: '世界观 / Godot',
-          status: 'WORLD / ARCHIVE',
-          tone: 'gold'
-        },
-        {
-          name: 'emptyinkpot.github.io',
-          summary: '内容主站 / Astro',
-          status: 'RUNNING / 线上主站',
-          tone: 'violet'
-        },
-        {
-          name: 'Roo-Kit',
-          summary: 'MCP / skills / AI',
-          status: 'LAB / TOOLCHAIN',
-          tone: 'green'
-        }
-      ],
+      repos: personalRepoSignals,
       automation: [
         { label: 'Pages', state: 'running', detail: '线上发布' },
         { label: 'Actions', state: 'running', detail: '构建 / 部署' },
@@ -509,12 +564,41 @@ function buildTeamSignals(): HomeTeamSignal[] {
 function buildCheckInData({
   posts,
   notes,
-  projects
+  projects,
+  githubOverview
 }: {
   posts: CollectionEntry<'posts'>[];
   notes: CollectionEntry<'notes'>[];
   projects: CollectionEntry<'projects'>[];
+  githubOverview: GitHubOverview | null;
 }): HomeCheckInData {
+  if (githubOverview) {
+    const activeDays = githubOverview.weeks.flatMap((week) => week.days).filter((day) => day.count > 0).length;
+
+    return {
+      kicker: 'GitHub Heatmap',
+      title: 'GitHub contributions / emptyinkpot',
+      summary: '直接读取公开 GitHub 贡献记录，把首页热力图、节奏线与语言分布统一到真实账号活动上。',
+      statLine: `${githubOverview.totalContributions} contributions / ${activeDays} active days`,
+      legend: 'Less  ·  ·  ·  ·  More',
+      months: githubOverview.months,
+      weeks: githubOverview.weeks.map((week) => ({
+        label: week.label,
+        days: week.days.map((day) => ({
+          level: day.level,
+          count: day.count,
+          date: day.date
+        }))
+      })),
+      total: githubOverview.totalContributions,
+      avatar: {
+        imageSrc: githubOverview.profile.avatarUrl,
+        alt: githubOverview.profile.name,
+        caption: `@${githubOverview.profile.login} / public activity`
+      }
+    };
+  }
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -585,10 +669,44 @@ function buildCheckInData({
     legend: 'Less  ·  ·  ·  ·  More',
     months: monthLabels,
     weeks,
+    total: activeDays,
     avatar: {
       imageSrc: withBase('/images/branding/vita-atramenti-logo.png'),
       alt: 'Vita Atramenti',
       caption: 'Daily writing / build / fix'
     }
+  };
+}
+
+function buildGitHubData(githubOverview: GitHubOverview): HomeGitHubData {
+  return {
+    profile: {
+      login: githubOverview.profile.login,
+      name: githubOverview.profile.name,
+      avatarUrl: githubOverview.profile.avatarUrl,
+      publicRepos: githubOverview.profile.publicRepos,
+      followers: githubOverview.profile.followers,
+      following: githubOverview.profile.following,
+      updatedAt: githubOverview.profile.updatedAt,
+      profileUrl: `https://github.com/${githubOverview.profile.login}`
+    },
+    totalContributions: githubOverview.totalContributions,
+    languages: githubOverview.languages.map((language) => ({
+      label: language.label,
+      percent: language.percent,
+      color: language.color
+    })),
+    monthly: githubOverview.monthly.map((point) => ({
+      label: point.label,
+      value: point.value
+    })),
+    repos: githubOverview.repos.map((repo) => ({
+      name: repo.name,
+      language: repo.language,
+      updatedAt: repo.updatedAt,
+      stars: repo.stars,
+      issues: repo.issues,
+      htmlUrl: repo.htmlUrl
+    }))
   };
 }

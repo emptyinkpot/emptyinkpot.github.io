@@ -1,16 +1,54 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import type { HomeCheckInData, HomeHeroData, HomeSnapshotData } from '../../lib/home';
+import type { HomeCheckInData, HomeGitHubData, HomeHeroData, HomeSnapshotData } from '../../lib/home';
 import HomeWorkbenchPanel from './HomeWorkbenchPanel.astro';
 
 interface Props {
   hero: HomeHeroData;
   snapshot: HomeSnapshotData;
   checkIn: HomeCheckInData;
+  github?: HomeGitHubData;
   featuredPost?: CollectionEntry<'posts'>;
 }
 
-const { hero, snapshot, checkIn, featuredPost } = Astro.props as Props;
+const { hero, snapshot, checkIn, github, featuredPost } = Astro.props as Props;
+const donutStops =
+  github?.languages
+    .reduce(
+      (accumulator, language) => {
+        const start = accumulator.offset;
+        const end = start + language.percent;
+        accumulator.parts.push(`${language.color} ${start}% ${end}%`);
+        accumulator.offset = end;
+        return accumulator;
+      },
+      { offset: 0, parts: [] as string[] }
+    )
+    .parts.join(', ') ?? '';
+const donutStyle = donutStops
+  ? `conic-gradient(${donutStops}, rgba(112, 95, 120, 0.12) 0 100%)`
+  : 'conic-gradient(var(--home-accent) 0 100%)';
+
+const linePoints = (() => {
+  if (!github?.monthly.length) return '';
+
+  const width = 320;
+  const height = 110;
+  const paddingX = 12;
+  const paddingY = 12;
+  const maxValue = Math.max(...github.monthly.map((item) => item.value), 1);
+
+  return github.monthly
+    .map((item, index) => {
+      const x =
+        github.monthly.length === 1
+          ? width / 2
+          : paddingX + ((width - paddingX * 2) / (github.monthly.length - 1)) * index;
+      const y = height - paddingY - ((height - paddingY * 2) * item.value) / maxValue;
+      return `${x},${y}`;
+    })
+    .join(' ');
+})();
 ---
 
 <section class="home-workbench__hero">
@@ -40,13 +78,72 @@ const { hero, snapshot, checkIn, featuredPost } = Astro.props as Props;
         {
           checkIn.weeks.map((week) => (
             <div class="home-workbench__week">
-              {week.days.map((day) => <span class:list={['home-workbench__cell', `home-workbench__cell--${day.level}`]}></span>)}
+              {
+                week.days.map((day) => (
+                  <span
+                    class:list={['home-workbench__cell', `home-workbench__cell--${day.level}`]}
+                    title={day.date ? `${day.date} / ${day.count ?? 0} contributions` : undefined}
+                  ></span>
+                ))
+              }
             </div>
           ))
         }
       </div>
       <div class="home-workbench__legend">{checkIn.legend}</div>
     </div>
+
+    {
+      github && (
+        <div class="home-workbench__analytics">
+          <article class="home-workbench__analytics-card">
+            <div class="home-workbench__analytics-head">
+              <strong>Language share</strong>
+              <span>公开仓库语言结构</span>
+            </div>
+            <div class="home-workbench__donut-wrap">
+              <div class="home-workbench__donut" style={`background:${donutStyle};`}>
+                <div class="home-workbench__donut-core">
+                  <strong>{github.totalContributions}</strong>
+                  <span>yearly acts</span>
+                </div>
+              </div>
+
+              <div class="home-workbench__donut-legend">
+                {github.languages.map((language) => (
+                  <div class="home-workbench__donut-item">
+                    <i style={`background:${language.color};`}></i>
+                    <span>{language.label}</span>
+                    <strong>{language.percent}%</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          <article class="home-workbench__analytics-card">
+            <div class="home-workbench__analytics-head">
+              <strong>Last 6 months</strong>
+              <span>真实月度活跃折线</span>
+            </div>
+            <div class="home-workbench__linechart">
+              <svg viewBox="0 0 320 110" aria-hidden="true">
+                <path d="M12 98.5 H308"></path>
+                <polyline points={linePoints}></polyline>
+              </svg>
+              <div class="home-workbench__linechart-labels">
+                {github.monthly.map((point) => (
+                  <div>
+                    <strong>{point.value}</strong>
+                    <span>{point.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </article>
+        </div>
+      )
+    }
   </HomeWorkbenchPanel>
 
   <aside class="home-workbench__hero-side">
@@ -63,6 +160,17 @@ const { hero, snapshot, checkIn, featuredPost } = Astro.props as Props;
       <ul>
         {snapshot.lines.map((line) => <li>{line}</li>)}
       </ul>
+      {
+        github && (
+          <a class="home-workbench__snapshot-profile" href={github.profile.profileUrl} target="_blank" rel="noreferrer">
+            <img src={github.profile.avatarUrl} alt={github.profile.name} loading="lazy" />
+            <span>
+              <strong>{github.profile.name}</strong>
+              <small>@{github.profile.login} / {github.profile.followers} follower</small>
+            </span>
+          </a>
+        )
+      }
     </HomeWorkbenchPanel>
 
     {
