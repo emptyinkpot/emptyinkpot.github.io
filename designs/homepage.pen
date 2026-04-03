@@ -1,0 +1,198 @@
+{
+  "version": "2.10",
+  "children": [
+    {
+      "id": "homepage-root",
+      "type": "frame",
+      "name": "Homepage",
+      "x": 120,
+      "y": 120,
+      "width": 1440,
+      "height": 960,
+      "layout": "vertical",
+      "gap": 24,
+      "padding": [40, 40, 40, 40],
+      "fill": "#F3EFE7",
+      "children": [
+        {
+          "id": "header",
+          "type": "frame",
+          "name": "Header",
+          "width": "fill_container",
+          "height": 88,
+          "layout": "horizontal",
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "padding": [20, 28, 20, 28],
+          "cornerRadius": 28,
+          "fill": "#FFFFFFCC",
+          "stroke": {
+            "fill": "#D8D0C6",
+            "align": "inside",
+            "thickness": 1
+          },
+          "children": [
+            {
+              "id": "brand",
+              "type": "frame",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "gap": 16,
+              "children": [
+                {
+                  "id": "brand-mark",
+                  "type": "frame",
+                  "width": 56,
+                  "height": 56,
+                  "fill": {
+                    "type": "image",
+                    "url": "../apps/web/public/images/branding/vita-atramenti-logo.png",
+                    "mode": "fit"
+                  }
+                },
+                {
+                  "id": "brand-text",
+                  "type": "frame",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "id": "brand-title",
+                      "type": "text",
+                      "content": "EMPTYINKPOT",
+                      "fontSize": 14,
+                      "fontWeight": "600",
+                      "letterSpacing": 4,
+                      "fill": "#7B6D60"
+                    },
+                    {
+                      "id": "brand-subtitle",
+                      "type": "text",
+                      "content": "结构化写作、项目记录与维护笔记",
+                      "fontSize": 16,
+                      "fontWeight": "500",
+                      "fill": "#3D342C"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "nav-text",
+              "type": "text",
+              "content": "首页   文章   专题   项目   更新   搜索   关于",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "fill": "#4B4036"
+            }
+          ]
+        },
+        {
+          "id": "hero",
+          "type": "frame",
+          "name": "Hero",
+          "width": "fill_container",
+          "height": 360,
+          "layout": "horizontal",
+          "gap": 24,
+          "children": [
+            {
+              "id": "hero-left",
+              "type": "frame",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "id": "hero-kicker",
+                  "type": "text",
+                  "content": "ASTRO / CONTENT COLLECTIONS / PRODUCTIZED BLOG",
+                  "fontSize": 13,
+                  "fontWeight": "600",
+                  "letterSpacing": 3,
+                  "fill": "#7B6D60"
+                },
+                {
+                  "id": "hero-title",
+                  "type": "text",
+                  "content": "把写作、项目与长期记录收敛成一个唯一的内容站点。",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "fontSize": 56,
+                  "fontWeight": "700",
+                  "lineHeight": 1.04,
+                  "fill": "#17120D"
+                },
+                {
+                  "id": "hero-body",
+                  "type": "text",
+                  "content": "这里以 Astro 作为唯一对外入口，把文章、专题、项目与碎片记录统一到同一套内容模型、页面体系和发布链路里。",
+                  "textGrowth": "fixed-width",
+                  "width": 760,
+                  "fontSize": 22,
+                  "lineHeight": 1.45,
+                  "fill": "#6F6257"
+                }
+              ]
+            },
+            {
+              "id": "hero-right",
+              "type": "frame",
+              "width": 360,
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [24, 24, 24, 24],
+              "cornerRadius": 28,
+              "fill": "#FFFFFFCC",
+              "stroke": {
+                "fill": "#D8D0C6",
+                "align": "inside",
+                "thickness": 1
+              },
+              "children": [
+                {
+                  "id": "snapshot-title",
+                  "type": "text",
+                  "content": "SITE SNAPSHOT",
+                  "fontSize": 13,
+                  "fontWeight": "600",
+                  "letterSpacing": 3,
+                  "fill": "#7B6D60"
+                },
+                {
+                  "id": "snapshot-stat1",
+                  "type": "text",
+                  "content": "23 篇公开文章",
+                  "fontSize": 28,
+                  "fontWeight": "700",
+                  "fill": "#17120D"
+                },
+                {
+                  "id": "snapshot-stat2",
+                  "type": "text",
+                  "content": "6 个活跃分类",
+                  "fontSize": 28,
+                  "fontWeight": "700",
+                  "fill": "#17120D"
+                },
+                {
+                  "id": "snapshot-copy",
+                  "type": "text",
+                  "content": "当前这是一个最小可打开的首页设计稿，用来确保 Pencil 可以正常显示画布。",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "fontSize": 18,
+                  "lineHeight": 1.5,
+                  "fill": "#6F6257"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

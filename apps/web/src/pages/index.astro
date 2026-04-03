@@ -1,15 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HomeCheckInMapSection from '../components/home/HomeCheckInMapSection.astro';
-import HomeFeatureSection from '../components/home/HomeFeatureSection.astro';
-import HomeHero from '../components/home/HomeHero.astro';
-import HomeLatestPostsSection from '../components/home/HomeLatestPostsSection.astro';
-import HomeProjectNotesSection from '../components/home/HomeProjectNotesSection.astro';
-import HomeTopicsSeriesSection from '../components/home/HomeTopicsSeriesSection.astro';
+import { formatDate, getExcerptFromBody, getPrimaryCategory } from '../lib/content';
 import { getHomePagePayload } from '../lib/home';
+import { getPostCover } from '../lib/postCovers';
 import { withBase } from '../lib/site';
 
 const payload = await getHomePagePayload();
+
 const sideNavItems = [
   { label: '首页', href: withBase('/') },
   { label: '文章', href: withBase('/posts') },
@@ -19,6 +16,34 @@ const sideNavItems = [
   { label: '搜索', href: withBase('/search') },
   { label: '关于', href: withBase('/about') }
 ];
+
+const topicCards = payload.topics.map((topic) => ({
+  kicker: 'TOPICS',
+  title: topic.label,
+  meta: `${topic.count} 篇内容`,
+  href: topic.href
+}));
+
+const seriesCards = payload.series.map((series) => ({
+  kicker: 'SERIES',
+  title: series.label,
+  meta: `${series.count} 篇连续内容`,
+  href: series.href
+}));
+
+const routeTopCards = payload.routeCards.slice(0, 3);
+const routeBottomCards = payload.routeCards.slice(3);
+
+const activeProject = payload.activeProject;
+const latestNote = payload.latestNotes[0];
+const latestPostCards = payload.latestPosts.map((post) => ({
+  href: withBase(`/posts/${post.id}/`),
+  title: post.data.title,
+  date: formatDate(post.data.date),
+  category: getPrimaryCategory(post),
+  summary: post.data.summary ?? post.data.description ?? getExcerptFromBody(post.body, 92),
+  coverSrc: getPostCover(post)
+}));
 ---
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、专题、项目与阶段笔记。" hideSiteChrome={true}>
@@ -50,13 +75,476 @@ const sideNavItems = [
     </aside>
 
     <main class="home-editorial-page" data-pagefind-body>
-      <div class="home-editorial-page__inner space-y-4 pb-10 md:space-y-5">
-        <HomeHero hero={payload.hero} snapshot={payload.snapshot} />
-        <HomeFeatureSection featuredPost={payload.featuredPost} />
-        <HomeLatestPostsSection posts={payload.latestPosts} />
-        <HomeTopicsSeriesSection topics={payload.topics} series={payload.series} />
-        <HomeProjectNotesSection activeProject={payload.activeProject} latestNotes={payload.latestNotes} />
-        <HomeCheckInMapSection checkIn={payload.checkIn} />
+      <div class="home-editorial-page__inner home-workbench">
+        <section class="home-workbench__searchbar">
+          <p class="home-workbench__search-label">SEARCH</p>
+          <a href={withBase('/search')} class="home-workbench__searchbox">
+            <span>搜索文章 / 标签 / 系列 / 项目 / 更新</span>
+            <span class="home-workbench__searchhint">ENTER / CTRL K</span>
+          </a>
+        </section>
+
+        <section class="home-workbench__filters">
+          <div class="home-workbench__sectionline">
+            <span>SECTION / QUICK FILTERS</span>
+            <div aria-hidden="true"></div>
+            <span>高频内容入口</span>
+          </div>
+
+          <div class="home-workbench__filterlist">
+            {
+              payload.quickFilters.map((filter, index) => (
+                <a
+                  href={filter.href}
+                  class:list={['home-workbench__filterchip', index === 0 && 'home-workbench__filterchip--active']}
+                >
+                  {filter.label}
+                </a>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="home-workbench__utility">
+          <article class="home-workbench__card">
+            <div class="home-workbench__cardhead">
+              <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+                <span>SECTION / VERIFIED LINKS</span>
+                <div aria-hidden="true"></div>
+                <span>真实外链矩阵</span>
+              </div>
+            </div>
+            <div class="home-workbench__linksgrid" id="friendly-sites">
+              {
+                payload.friendlySites.map((site) => (
+                  <a href={site.href} class="home-workbench__linkitem" target="_blank" rel="noreferrer">
+                    <span class="home-workbench__linkdot"></span>
+                    <span>
+                      <strong>{site.label}</strong>
+                      <small>{site.description}</small>
+                    </span>
+                  </a>
+                ))
+              }
+            </div>
+          </article>
+
+          <article class="home-workbench__card">
+            <div class="home-workbench__cardhead">
+              <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+                <span>SECTION / TEAM SWITCHER</span>
+                <div aria-hidden="true"></div>
+                <span>切换团队后联动成员与项目</span>
+              </div>
+            </div>
+
+            <div class="home-team-switcher" data-team-switcher>
+              <div class="home-team-switcher__tabs" role="tablist" aria-label="团队切换">
+                {
+                  payload.teams.map((team, index) => (
+                    <button
+                      type="button"
+                      class:list={['home-team-switcher__tab', index === 0 && 'is-active']}
+                      data-team-trigger={team.id}
+                      role="tab"
+                      aria-selected={index === 0 ? 'true' : 'false'}
+                    >
+                      <span class:list={['home-team-switcher__icon', team.id !== 'personal' && 'home-team-switcher__icon--square']}></span>
+                      <span>{team.label}</span>
+                    </button>
+                  ))
+                }
+              </div>
+
+              {
+                payload.teams.map((team, index) => (
+                  <div class:list={['home-team-panel', index === 0 && 'is-active']} data-team-panel={team.id}>
+                    <div class="home-team-panel__group">
+                      <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+                        <span>SECTION / CURRENT TEAM</span>
+                        <div aria-hidden="true"></div>
+                        <span>{team.subtitle}</span>
+                      </div>
+                      <div class="home-team-panel__members">
+                        {
+                          team.members.map((member) => (
+                            <div class="home-team-panel__member">
+                              <span class="home-team-panel__memberdot"></span>
+                              <span>
+                                <strong>{member.name}</strong>
+                                <small>{member.role}</small>
+                              </span>
+                            </div>
+                          ))
+                        }
+                      </div>
+                    </div>
+
+                    <div class="home-team-panel__group">
+                      <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+                        <span>SECTION / ACTIVE TEAM PROJECTS</span>
+                        <div aria-hidden="true"></div>
+                        <span>随团队切换</span>
+                      </div>
+                      <div class="home-team-panel__projects">
+                        {
+                          team.projects.map((project) => (
+                            <article class="home-team-panel__project">
+                              <div class="home-team-panel__projecthead">
+                                <strong>{project.name}</strong>
+                                <span>{project.status}</span>
+                              </div>
+                              <p>{project.summary}</p>
+                              <div class="home-team-panel__badges">
+                                {project.badges.map((badge) => <span>{badge}</span>)}
+                              </div>
+                            </article>
+                          ))
+                        }
+                      </div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </article>
+        </section>
+
+        <section class="home-workbench__hero">
+          <article class="home-workbench__hero-main home-workbench__card">
+            <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+              <span>{payload.hero.kicker}</span>
+              <div aria-hidden="true"></div>
+              <span>唯一入口 / 编辑部首页</span>
+            </div>
+
+            <h1>{payload.hero.title}</h1>
+            <p class="home-workbench__hero-summary">{payload.hero.summary}</p>
+
+            <div class="home-workbench__hero-actions">
+              {payload.hero.actions.map((action) => <a href={action.href}>{action.label}</a>)}
+            </div>
+
+            <div class="home-workbench__hero-tags">
+              {payload.hero.tags.map((tag) => <span>{tag}</span>)}
+            </div>
+
+            <div class="home-workbench__heatmap">
+              <div class="home-workbench__heatmap-head">
+                <strong>{payload.checkIn.title}</strong>
+                <span>{payload.checkIn.statLine}</span>
+              </div>
+              <div class="home-workbench__months">
+                {payload.checkIn.months.map((month) => <span>{month}</span>)}
+              </div>
+              <div class="home-workbench__weeks">
+                {
+                  payload.checkIn.weeks.map((week) => (
+                    <div class="home-workbench__week">
+                      {week.days.map((day) => <span class:list={['home-workbench__cell', `home-workbench__cell--${day.level}`]}></span>)}
+                    </div>
+                  ))
+                }
+              </div>
+              <div class="home-workbench__legend">{payload.checkIn.legend}</div>
+            </div>
+          </article>
+
+          <aside class="home-workbench__hero-side">
+            <article class="home-workbench__snapshot">
+              <div class="home-workbench__sectionline home-workbench__sectionline--snap">
+                <span>EDITORIAL SNAPSHOT</span>
+                <div aria-hidden="true"></div>
+                <span>当前站点信号</span>
+              </div>
+              <h2>{payload.snapshot.kicker}</h2>
+              <div class="home-workbench__snapshot-metrics">
+                {payload.snapshot.metrics.map((metric) => (
+                  <div>
+                    <strong>{metric.value}</strong>
+                    <span>{metric.label}</span>
+                  </div>
+                ))}
+              </div>
+              <ul>
+                {payload.snapshot.lines.map((line) => <li>{line}</li>)}
+              </ul>
+            </article>
+          </aside>
+        </section>
+
+        {payload.featuredPost && (
+          <section class="home-workbench__featureband">
+            <strong>{payload.featuredPost.data.title}</strong>
+            <p>{payload.featuredPost.data.summary ?? payload.featuredPost.data.description ?? '主推文章入口'}</p>
+          </section>
+        )}
+
+        <section class="home-workbench__feed">
+          <div class="home-workbench__sectionline">
+            <span>SECTION / LATEST POSTS</span>
+            <div aria-hidden="true"></div>
+            <span>严格两栏基线结构</span>
+          </div>
+
+          <div class="home-workbench__feedcard home-workbench__card">
+            <header>
+              <strong>LATEST POSTS / 博客内容</strong>
+              <a href={withBase('/posts')}>进入文章</a>
+            </header>
+
+            <div class="home-workbench__postlist">
+              {
+                latestPostCards.map((post) => (
+                  <a href={post.href} class="home-workbench__postitem">
+                    <div class="home-workbench__postmeta">
+                      <span>{post.date}</span>
+                      <span>{post.category}</span>
+                    </div>
+                    <div class="home-workbench__postcover">
+                      {post.coverSrc ? (
+                        <img src={post.coverSrc} alt={post.title} loading="lazy" />
+                      ) : (
+                        <>
+                          <i></i>
+                          <span>ARTICLE COVER</span>
+                          <small>{post.category}</small>
+                        </>
+                      )}
+                    </div>
+                    <div class="home-workbench__postbody">
+                      <strong>{post.title}</strong>
+                      <p>{post.summary}</p>
+                    </div>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </section>
+
+        <section class="home-workbench__double">
+          <article class="home-workbench__card">
+            <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+              <span>SECTION / TOPICS</span>
+              <div aria-hidden="true"></div>
+              <span>主题入口</span>
+            </div>
+            <div class="home-workbench__mini-grid">
+              {topicCards.map((item) => (
+                <a href={item.href} class="home-workbench__mini-card">
+                  <span>{item.kicker}</span>
+                  <strong>{item.title}</strong>
+                  <small>{item.meta}</small>
+                </a>
+              ))}
+            </div>
+          </article>
+
+          <article class="home-workbench__card">
+            <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+              <span>SECTION / SERIES</span>
+              <div aria-hidden="true"></div>
+              <span>连续阅读</span>
+            </div>
+            <div class="home-workbench__mini-grid">
+              {seriesCards.map((item) => (
+                <a href={item.href} class="home-workbench__mini-card">
+                  <span>{item.kicker}</span>
+                  <strong>{item.title}</strong>
+                  <small>{item.meta}</small>
+                </a>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section class="home-workbench__double home-workbench__double--project">
+          <article class="home-workbench__card">
+            <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+              <span>SECTION / PROJECT</span>
+              <div aria-hidden="true"></div>
+              <span>项目主线</span>
+            </div>
+            <div class="home-workbench__projectblock">
+              <strong>{activeProject?.data.title ?? '项目占位'}</strong>
+              <p>{activeProject?.data.description ?? '当前项目摘要'}</p>
+              <div class="home-workbench__badges">
+                {(activeProject?.data.stack ?? []).slice(0, 4).map((stack) => <span>{stack}</span>)}
+              </div>
+            </div>
+          </article>
+
+          <article class="home-workbench__card home-workbench__card--accent">
+            <div class="home-workbench__sectionline home-workbench__sectionline--snap">
+              <span>SECTION / NOTES</span>
+              <div aria-hidden="true"></div>
+              <span>阶段笔记</span>
+            </div>
+            <div class="home-workbench__projectblock">
+              <strong>{latestNote?.data.title ?? 'notes 正在整理中'}</strong>
+              <p>{latestNote?.data.description ?? '后续会持续放入设计取舍、迁移记录与阶段日志。'}</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="home-workbench__maintenance">
+          <div class="home-workbench__sectionline">
+            <span>SECTION / MAINTENANCE</span>
+            <div aria-hidden="true"></div>
+            <span>近期维护、清理与状态记录</span>
+          </div>
+
+          <article class="home-workbench__card">
+            <strong class="home-workbench__blocktitle">RECENT MAINTENANCE</strong>
+            <p class="home-workbench__blocklead">把原来的打卡区改成近期维护与内容备注入口。</p>
+            <div class="home-workbench__maintenance-list">
+              {payload.maintenanceItems.map((item) => (
+                <div class="home-workbench__maintenance-item">
+                  <strong>{item.label}</strong>
+                  <span>{item.meta}</span>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section class="home-github-signals">
+          <div class="home-workbench__sectionline">
+            <span>SECTION / CURRENT TEAM GITHUB SIGNALS</span>
+            <div aria-hidden="true"></div>
+            <span>当前团队的公开仓库、自动化链路与资料目录</span>
+          </div>
+
+          {
+            payload.teams.map((team, index) => (
+              <div class:list={['home-github-signals__panel', index === 0 && 'is-active']} data-team-panel={team.id}>
+                <div class="home-workbench__double">
+                  <article class="home-workbench__card">
+                    <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+                      <span>PROJECT MATRIX</span>
+                      <div aria-hidden="true"></div>
+                      <span>{team.label}</span>
+                    </div>
+                    <strong class="home-workbench__blocktitle">当前团队仓库矩阵</strong>
+                    <p class="home-workbench__blockmeta">团队切换后，这组仓库卡随之替换</p>
+                    <div class="home-workbench__repo-grid">
+                      {team.repos.map((repo) => (
+                        <article class="home-workbench__repo-card">
+                          <i class:list={['home-workbench__repo-stripe', `home-workbench__repo-stripe--${repo.tone}`]}></i>
+                          <strong>{repo.name}</strong>
+                          <span>{repo.summary}</span>
+                          <small>{repo.status}</small>
+                        </article>
+                      ))}
+                    </div>
+                  </article>
+
+                  <article class="home-workbench__card home-workbench__card--accent">
+                    <div class="home-workbench__sectionline home-workbench__sectionline--snap">
+                      <span>AUTOMATION / DEPLOY</span>
+                      <div aria-hidden="true"></div>
+                      <span>真实控制台语义</span>
+                    </div>
+                    <strong class="home-workbench__blocktitle">当前团队状态面板</strong>
+                    <p class="home-workbench__blockmeta home-workbench__blockmeta--light">
+                      RUNNING / QUEUED / CHECKING
+                    </p>
+                    <div class="home-workbench__status-grid">
+                      {team.automation.map((item) => (
+                        <article class:list={['home-workbench__status-card', `state-${item.state}`]}>
+                          <strong>{item.label}</strong>
+                          <span>{item.state.toUpperCase()}</span>
+                          <small>{item.detail}</small>
+                        </article>
+                      ))}
+                    </div>
+                  </article>
+                </div>
+
+                <div class="home-workbench__double">
+                  <article class="home-workbench__card">
+                    <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+                      <span>TOOLKIT LAB</span>
+                      <div aria-hidden="true"></div>
+                      <span>{team.subtitle}</span>
+                    </div>
+                    <strong class="home-workbench__blocktitle">当前团队工具目录</strong>
+                    <p class="home-workbench__blockmeta">{team.toolkit.subtitle}</p>
+                    <div class="home-workbench__tree">
+                      <strong>{team.toolkit.root}</strong>
+                      {team.toolkit.items.map((item, itemIndex) => (
+                        <span>{itemIndex === team.toolkit.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+                      ))}
+                    </div>
+                  </article>
+
+                  <article class="home-workbench__card">
+                    <div class="home-workbench__sectionline home-workbench__sectionline--tight">
+                      <span>WORLD / DESIGN ARCHIVE</span>
+                      <div aria-hidden="true"></div>
+                      <span>{team.label}</span>
+                    </div>
+                    <strong class="home-workbench__blocktitle">当前团队世界观档案</strong>
+                    <p class="home-workbench__blockmeta">{team.archive.subtitle}</p>
+                    <div class="home-workbench__tree">
+                      <strong>{team.archive.root}</strong>
+                      {team.archive.items.map((item, itemIndex) => (
+                        <span>{itemIndex === team.archive.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+                      ))}
+                    </div>
+                  </article>
+                </div>
+              </div>
+            ))
+          }
+        </section>
+
+        <section class="home-workbench__routes">
+          <div class="home-workbench__sectionline">
+            <span>SECTION / SITE ROUTES</span>
+            <div aria-hidden="true"></div>
+            <span>关于、搜索、更新与工具入口分层落位</span>
+          </div>
+
+          <div class="home-workbench__triple">
+            {routeTopCards.map((card) => (
+              <a href={card.href} class:list={['home-workbench__route-card', card.variant === 'accent' && 'is-accent']}>
+                <span>{card.kicker}</span>
+                <strong>{card.title}</strong>
+                <small>{card.summary}</small>
+              </a>
+            ))}
+          </div>
+
+          <div class="home-workbench__double">
+            {routeBottomCards.map((card) => (
+              <a href={card.href} class:list={['home-workbench__route-card', card.variant === 'accent' && 'is-accent']}>
+                <span>{card.kicker}</span>
+                <strong>{card.title}</strong>
+                <small>{card.summary}</small>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="home-workbench__planned">
+          <div class="home-workbench__sectionline">
+            <span>SECTION / PLANNED EXPANSION</span>
+            <div aria-hidden="true"></div>
+            <span>为后续归档、阅读路径与实验区预留位置</span>
+          </div>
+
+          <div class="home-workbench__triple">
+            {payload.plannedCards.map((card, index) => (
+              <article class:list={['home-workbench__route-card', index === 2 && 'is-accent']}>
+                <span>{card.kicker}</span>
+                <strong>{card.title}</strong>
+                <small>{card.summary}</small>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
     </main>
 
@@ -86,9 +574,35 @@ const sideNavItems = [
           );
         };
 
+        const setupTeamSwitcher = () => {
+          const switchers = document.querySelectorAll('[data-team-switcher]');
+          const panelGroups = document.querySelectorAll('[data-team-panel]');
+
+          const activate = (teamId) => {
+            switchers.forEach((switcher) => {
+              switcher.querySelectorAll('[data-team-trigger]').forEach((button) => {
+                const isActive = button.getAttribute('data-team-trigger') === teamId;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+              });
+            });
+
+            panelGroups.forEach((panel) => {
+              panel.classList.toggle('is-active', panel.getAttribute('data-team-panel') === teamId);
+            });
+          };
+
+          switchers.forEach((switcher) => {
+            switcher.querySelectorAll('[data-team-trigger]').forEach((button) => {
+              button.addEventListener('click', () => activate(button.getAttribute('data-team-trigger')));
+            });
+          });
+        };
+
         const mount = () => {
           setupPanelWheel('.home-editorial-page');
           setupPanelWheel('.home-side-rail__inner');
+          setupTeamSwitcher();
         };
 
         if (document.readyState === 'loading') {
