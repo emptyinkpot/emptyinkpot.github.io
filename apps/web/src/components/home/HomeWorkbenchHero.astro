@@ -12,6 +12,7 @@ interface Props {
 }
 
 const { hero, snapshot, checkIn, github, featuredPost } = Astro.props as Props;
+const heatmapWeekCount = checkIn.weeks.length;
 const donutStops =
   github?.languages
     .reduce(
@@ -71,10 +72,10 @@ const linePoints = (() => {
         <strong>{checkIn.title}</strong>
         <span>{checkIn.statLine}</span>
       </div>
-      <div class="home-workbench__months">
+      <div class="home-workbench__months" style={`--heatmap-weeks:${heatmapWeekCount};`}>
         {checkIn.months.map((month) => <span>{month}</span>)}
       </div>
-      <div class="home-workbench__weeks">
+      <div class="home-workbench__weeks" style={`--heatmap-weeks:${heatmapWeekCount};`}>
         {
           checkIn.weeks.map((week) => (
             <div class="home-workbench__week">
