@@ -1083,7 +1083,7 @@ body.home-mode .page-wrap--home {
 
 .home-workbench__linkmedia.is-square,
 .home-team-switcher__media.is-square {
-  border-radius: 0.5rem;
+  border-radius: 999px;
 }
 
 .home-workbench__linkmedia img,
