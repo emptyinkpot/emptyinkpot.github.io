@@ -926,7 +926,7 @@ body.home-mode .page-wrap--home {
   align-items: center;
   gap: 0.42rem;
   white-space: nowrap;
-  font-size: 0.66rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   color: var(--home-accent);
@@ -943,9 +943,10 @@ body.home-mode .page-wrap--home {
 
 .home-workbench__sectionline span:last-child {
   white-space: nowrap;
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-weight: 700;
   color: #8e7d94;
+  letter-spacing: 0.08em;
 }
 
 .home-workbench__sectionline div {
@@ -961,7 +962,7 @@ body.home-mode .page-wrap--home {
 
 .home-workbench__sectionline--tight span:last-child,
 .home-workbench__sectionline--snap span:last-child {
-  font-size: 0.66rem;
+  font-size: 0.58rem;
 }
 
 .home-workbench__sectionline--snap span,

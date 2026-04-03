@@ -10,7 +10,7 @@ const { leading, trailing, tone = 'default', tight = false } = Astro.props as Pr
 ---
 
 <div class:list={['home-workbench__sectionline', tight && 'home-workbench__sectionline--tight', tone === 'snap' && 'home-workbench__sectionline--snap']}>
-  <span>{leading}</span>
-  <div aria-hidden="true"></div>
   <span>{trailing}</span>
+  <div aria-hidden="true"></div>
+  <span>{leading}</span>
 </div>
