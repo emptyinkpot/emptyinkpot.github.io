@@ -5,6 +5,7 @@
 ## 中心入口（先看这里）
 
 - 网站中心：`apps/web/`
+- 前端现状说明：`apps/web/README.md`
 - 规划中心：`docs/plans/update-plan.md`
 - 执行中心：`docs/architecture/astro-blog-redesign-checklist.md`
 - 记录中心：`docs/maintenance/astro-redesign-execution-log.md`
@@ -693,6 +694,17 @@ git checkout -b feat/<topic>
 - 工程文档统一放在 `docs/`
 - 公开发布内容统一放在 `apps/web/src/content/posts/`
 - 工具脚本统一放在 `tools/`
+
+静态资源约定：
+
+- 站点运行时图片统一放在 `apps/web/public/images/`
+- 品牌资源统一放在 `apps/web/public/images/branding/`
+- 首页或全局背景资源统一放在 `apps/web/public/images/home/`
+- 文章配图或文章专属公开图片统一放在 `apps/web/public/images/posts/<slug>/`
+- 仅供文章源码引用的局部素材，优先放在 `apps/web/src/content/posts/assets/<slug>/`
+- 不再直接使用、但需要保留的备份图片，统一放在 `apps/web/public/images/branding/archive/` 或对应资源目录下的 `archive/`
+- 代码、内容和设计文件中的图片引用，应优先指向上述正式目录，不要继续引用仓库根目录散落文件
+- 仓库根目录不应长期存放图片；下载图、导出图、临时截图在整理后要移动到正式目录或删除
 
 禁止做法：
 
