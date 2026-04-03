@@ -1,0 +1,33 @@
+---
+import type { HomeQuickFilter } from '../../lib/home';
+import { withBase } from '../../lib/site';
+import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+
+interface Props {
+  filters: HomeQuickFilter[];
+}
+
+const { filters } = Astro.props as Props;
+---
+
+<section class="home-workbench__searchbar">
+  <p class="home-workbench__search-label">SEARCH</p>
+  <a href={withBase('/search')} class="home-workbench__searchbox">
+    <span>搜索文章 / 标签 / 系列 / 项目 / 更新</span>
+    <span class="home-workbench__searchhint">ENTER / CTRL K</span>
+  </a>
+</section>
+
+<section class="home-workbench__filters">
+  <HomeWorkbenchSectionLine leading="SECTION / QUICK FILTERS" trailing="高频内容入口" />
+
+  <div class="home-workbench__filterlist">
+    {
+      filters.map((filter, index) => (
+        <a href={filter.href} class:list={['home-workbench__filterchip', index === 0 && 'home-workbench__filterchip--active']}>
+          {filter.label}
+        </a>
+      ))
+    }
+  </div>
+</section>

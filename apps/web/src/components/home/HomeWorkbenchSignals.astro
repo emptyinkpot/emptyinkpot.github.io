@@ -1,0 +1,79 @@
+---
+import type { HomeTeamSignal } from '../../lib/home';
+import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+
+interface Props {
+  teams: HomeTeamSignal[];
+}
+
+const { teams } = Astro.props as Props;
+---
+
+<section class="home-github-signals">
+  <HomeWorkbenchSectionLine leading="SECTION / CURRENT TEAM GITHUB SIGNALS" trailing="当前团队的公开仓库、自动化链路与资料目录" />
+
+  {
+    teams.map((team, index) => (
+      <div class:list={['home-github-signals__panel', index === 0 && 'is-active']} data-team-panel={team.id}>
+        <div class="home-workbench__double">
+          <article class="home-workbench__card home-workbench__card--panel">
+            <HomeWorkbenchSectionLine leading="PROJECT MATRIX" trailing={team.label} tight={true} />
+            <strong class="home-workbench__blocktitle">当前团队仓库矩阵</strong>
+            <p class="home-workbench__blockmeta">团队切换后，这组仓库卡随之替换</p>
+            <div class="home-workbench__repo-grid">
+              {team.repos.map((repo) => (
+                <article class="home-workbench__repo-card">
+                  <i class:list={['home-workbench__repo-stripe', `home-workbench__repo-stripe--${repo.tone}`]}></i>
+                  <strong>{repo.name}</strong>
+                  <span>{repo.summary}</span>
+                  <small>{repo.status}</small>
+                </article>
+              ))}
+            </div>
+          </article>
+
+          <article class="home-workbench__card home-workbench__card--accent">
+            <HomeWorkbenchSectionLine leading="AUTOMATION / DEPLOY" trailing="真实控制台语义" tone="snap" />
+            <strong class="home-workbench__blocktitle">当前团队状态面板</strong>
+            <p class="home-workbench__blockmeta home-workbench__blockmeta--light">RUNNING / QUEUED / CHECKING</p>
+            <div class="home-workbench__status-grid">
+              {team.automation.map((item) => (
+                <article class:list={['home-workbench__status-card', `state-${item.state}`]}>
+                  <strong>{item.label}</strong>
+                  <span>{item.state.toUpperCase()}</span>
+                  <small>{item.detail}</small>
+                </article>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        <div class="home-workbench__double">
+          <article class="home-workbench__card home-workbench__card--panel">
+            <HomeWorkbenchSectionLine leading="TOOLKIT LAB" trailing={team.subtitle} tight={true} />
+            <strong class="home-workbench__blocktitle">当前团队工具目录</strong>
+            <p class="home-workbench__blockmeta">{team.toolkit.subtitle}</p>
+            <div class="home-workbench__tree">
+              <strong>{team.toolkit.root}</strong>
+              {team.toolkit.items.map((item, itemIndex) => (
+                <span>{itemIndex === team.toolkit.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+              ))}
+            </div>
+          </article>
+
+          <article class="home-workbench__card home-workbench__card--panel">
+            <HomeWorkbenchSectionLine leading="WORLD / DESIGN ARCHIVE" trailing={team.label} tight={true} />
+            <strong class="home-workbench__blocktitle">当前团队世界观档案</strong>
+            <p class="home-workbench__blockmeta">{team.archive.subtitle}</p>
+            <div class="home-workbench__tree">
+              <strong>{team.archive.root}</strong>
+              {team.archive.items.map((item, itemIndex) => (
+                <span>{itemIndex === team.archive.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+              ))}
+            </div>
+          </article>
+        </div>
+      </div>
+    ))
+  }
+</section>

@@ -1,0 +1,100 @@
+---
+import type { HomeFriendlySite, HomeTeamSignal } from '../../lib/home';
+import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+
+interface Props {
+  friendlySites: HomeFriendlySite[];
+  teams: HomeTeamSignal[];
+}
+
+const { friendlySites, teams } = Astro.props as Props;
+---
+
+<section class="home-workbench__utility">
+  <article class="home-workbench__card home-workbench__card--panel">
+    <div class="home-workbench__cardhead">
+      <HomeWorkbenchSectionLine leading="SECTION / VERIFIED LINKS" trailing="真实外链矩阵" tight={true} />
+    </div>
+    <div class="home-workbench__linksgrid" id="friendly-sites">
+      {
+        friendlySites.map((site) => (
+          <a href={site.href} class="home-workbench__linkitem" target="_blank" rel="noreferrer">
+            <span class="home-workbench__linkdot"></span>
+            <span>
+              <strong>{site.label}</strong>
+              <small>{site.description}</small>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </article>
+
+  <article class="home-workbench__card home-workbench__card--panel">
+    <div class="home-workbench__cardhead">
+      <HomeWorkbenchSectionLine leading="SECTION / TEAM SWITCHER" trailing="切换团队后联动成员与项目" tight={true} />
+    </div>
+
+    <div class="home-team-switcher" data-team-switcher>
+      <div class="home-team-switcher__tabs" role="tablist" aria-label="团队切换">
+        {
+          teams.map((team, index) => (
+            <button
+              type="button"
+              class:list={['home-team-switcher__tab', index === 0 && 'is-active']}
+              data-team-trigger={team.id}
+              role="tab"
+              aria-selected={index === 0 ? 'true' : 'false'}
+            >
+              <span class:list={['home-team-switcher__icon', team.id !== 'personal' && 'home-team-switcher__icon--square']}></span>
+              <span>{team.label}</span>
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        teams.map((team, index) => (
+          <div class:list={['home-team-panel', index === 0 && 'is-active']} data-team-panel={team.id}>
+            <div class="home-team-panel__group">
+              <HomeWorkbenchSectionLine leading="SECTION / CURRENT TEAM" trailing={team.subtitle} tight={true} />
+              <div class="home-team-panel__members">
+                {
+                  team.members.map((member) => (
+                    <div class="home-team-panel__member">
+                      <span class="home-team-panel__memberdot"></span>
+                      <span>
+                        <strong>{member.name}</strong>
+                        <small>{member.role}</small>
+                      </span>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="home-team-panel__group">
+              <HomeWorkbenchSectionLine leading="SECTION / ACTIVE TEAM PROJECTS" trailing="随团队切换" tight={true} />
+              <div class="home-team-panel__projects">
+                {
+                  team.projects.map((project) => (
+                    <article class="home-team-panel__project">
+                      <div class="home-team-panel__projecthead">
+                        <strong>{project.name}</strong>
+                        <span>{project.status}</span>
+                      </div>
+                      <p>{project.summary}</p>
+                      <div class="home-team-panel__badges">
+                        {project.badges.map((badge) => <span>{badge}</span>)}
+                      </div>
+                    </article>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </article>
+</section>

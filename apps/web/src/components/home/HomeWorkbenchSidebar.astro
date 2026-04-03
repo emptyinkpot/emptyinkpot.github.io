@@ -1,0 +1,36 @@
+---
+import { withBase } from '../../lib/site';
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: NavItem[];
+}
+
+const { items } = Astro.props as Props;
+---
+
+<aside class="home-side-rail">
+  <div class="home-side-rail__inner">
+    <div class="home-side-rail__profile">
+      <div class="home-side-rail__avatar-shell">
+        <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="Vita Atramenti" class="home-side-rail__avatar" />
+      </div>
+      <p class="home-side-rail__name">emptyinkpot</p>
+      <p class="home-side-rail__desc">Structured writing / projects / maintenance notes</p>
+    </div>
+
+    <nav class="home-side-rail__nav" aria-label="Homepage quick navigation">
+      {
+        items.map((item, index) => (
+          <a href={item.href} class:list={['home-side-rail__link', index === 0 && 'home-side-rail__link--active']}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</aside>

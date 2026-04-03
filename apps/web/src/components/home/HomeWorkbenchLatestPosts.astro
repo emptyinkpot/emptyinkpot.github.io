@@ -1,0 +1,58 @@
+---
+import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+import { withBase } from '../../lib/site';
+
+interface LatestPostCard {
+  href: string;
+  title: string;
+  date: string;
+  category: string;
+  summary: string;
+  coverSrc?: string;
+}
+
+interface Props {
+  posts: LatestPostCard[];
+}
+
+const { posts } = Astro.props as Props;
+---
+
+<section class="home-workbench__feed">
+  <HomeWorkbenchSectionLine leading="SECTION / LATEST POSTS" trailing="严格两栏基线结构" />
+
+  <div class="home-workbench__feedcard home-workbench__card home-workbench__card--panel">
+    <header>
+      <strong>LATEST POSTS / 博客内容</strong>
+      <a href={withBase('/posts')}>进入文章</a>
+    </header>
+
+    <div class="home-workbench__postlist">
+      {
+        posts.map((post) => (
+          <a href={post.href} class="home-workbench__postitem">
+            <div class="home-workbench__postmeta">
+              <span>{post.date}</span>
+              <span>{post.category}</span>
+            </div>
+            <div class="home-workbench__postcover">
+              {post.coverSrc ? (
+                <img src={post.coverSrc} alt={post.title} loading="lazy" />
+              ) : (
+                <>
+                  <i></i>
+                  <span>ARTICLE COVER</span>
+                  <small>{post.category}</small>
+                </>
+              )}
+            </div>
+            <div class="home-workbench__postbody">
+              <strong>{post.title}</strong>
+              <p>{post.summary}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

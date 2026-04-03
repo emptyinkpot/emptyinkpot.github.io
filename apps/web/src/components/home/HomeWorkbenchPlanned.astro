@@ -1,0 +1,24 @@
+---
+import type { HomePlannedCard } from '../../lib/home';
+import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+
+interface Props {
+  cards: HomePlannedCard[];
+}
+
+const { cards } = Astro.props as Props;
+---
+
+<section class="home-workbench__planned">
+  <HomeWorkbenchSectionLine leading="SECTION / PLANNED EXPANSION" trailing="为后续归档、阅读路径与实验区预留位置" />
+
+  <div class="home-workbench__triple">
+    {cards.map((card, index) => (
+      <article class:list={['home-workbench__route-card', index === 2 && 'is-accent']}>
+        <span>{card.kicker}</span>
+        <strong>{card.title}</strong>
+        <small>{card.summary}</small>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import HomeWorkbenchSectionLine from './HomeWorkbenchSectionLine.astro';
+
+interface Props {
+  activeProject?: CollectionEntry<'projects'>;
+  latestNote?: CollectionEntry<'notes'>;
+}
+
+const { activeProject, latestNote } = Astro.props as Props;
+---
+
+<section class="home-workbench__double home-workbench__double--project">
+  <article class="home-workbench__card home-workbench__card--panel">
+    <HomeWorkbenchSectionLine leading="SECTION / PROJECT" trailing="项目主线" tight={true} />
+    <div class="home-workbench__projectblock">
+      <strong>{activeProject?.data.title ?? '项目占位'}</strong>
+      <p>{activeProject?.data.description ?? '当前项目摘要'}</p>
+      <div class="home-workbench__badges">
+        {(activeProject?.data.stack ?? []).slice(0, 4).map((stack) => <span>{stack}</span>)}
+      </div>
+    </div>
+  </article>
+
+  <article class="home-workbench__card home-workbench__card--accent">
+    <HomeWorkbenchSectionLine leading="SECTION / NOTES" trailing="阶段笔记" tone="snap" />
+    <div class="home-workbench__projectblock">
+      <strong>{latestNote?.data.title ?? 'notes 正在整理中'}</strong>
+      <p>{latestNote?.data.description ?? '后续会持续放入设计取舍、迁移记录与阶段日志。'}</p>
+    </div>
+  </article>
+</section>
