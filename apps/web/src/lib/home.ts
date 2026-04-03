@@ -75,6 +75,10 @@ export interface HomeFriendlySite {
   label: string;
   href: string;
   description: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  monogram?: string;
+  shape?: 'circle' | 'square';
 }
 
 export interface HomeQuickFilter {
@@ -85,6 +89,9 @@ export interface HomeQuickFilter {
 export interface HomeTeamMember {
   name: string;
   role: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  monogram?: string;
 }
 
 export interface HomeTeamProject {
@@ -117,6 +124,10 @@ export interface HomeTeamSignal {
   id: string;
   label: string;
   subtitle: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  monogram?: string;
+  imageShape?: 'circle' | 'square';
   members: HomeTeamMember[];
   projects: HomeTeamProject[];
   repos: HomeRepoSignal[];
@@ -265,32 +276,48 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
       {
         label: 'emptyinkpot',
         href: 'https://emptyinkpot.github.io/',
-        description: '统一站点与公开内容入口'
+        description: '统一站点与公开内容入口',
+        imageSrc: withBase('/images/branding/vita-atramenti-logo.png'),
+        imageAlt: 'emptyinkpot logo',
+        shape: 'square'
       },
       {
         label: 'GitHub Repo',
         href: 'https://github.com/emptyinkpot/emptyinkpot.github.io',
-        description: '站点源码与发布链路'
+        description: '站点源码与发布链路',
+        imageSrc: withBase('/images/branding/vita-atramenti-logo.png'),
+        imageAlt: 'repository logo',
+        shape: 'square'
       },
       {
         label: 'GitHub Profile',
         href: 'https://github.com/emptyinkpot',
-        description: '公开仓库与项目矩阵'
+        description: '公开仓库与项目矩阵',
+        imageSrc: githubOverview?.profile.avatarUrl,
+        imageAlt: githubOverview?.profile.name ?? 'GitHub profile',
+        monogram: 'GH',
+        shape: 'circle'
       },
       {
         label: 'Astro Docs',
         href: 'https://docs.astro.build/',
-        description: '当前站点主框架参考'
+        description: '当前站点主框架参考',
+        monogram: 'A',
+        shape: 'square'
       },
       {
         label: 'giscus',
         href: 'https://giscus.app/zh-CN',
-        description: '评论系统与讨论接入'
+        description: '评论系统与讨论接入',
+        monogram: 'G',
+        shape: 'circle'
       },
       {
         label: '雨云论坛',
         href: 'https://forum.rainyun.com/t/topic/13009?u=azzzw',
-        description: '云端部署与专题来源'
+        description: '云端部署与专题来源',
+        monogram: '雨',
+        shape: 'circle'
       }
     ],
     teams: buildTeamSignals(githubOverview),
@@ -391,9 +418,25 @@ function buildTeamSignals(githubOverview: GitHubOverview | null): HomeTeamSignal
       id: 'personal',
       label: 'emptyinkpot',
       subtitle: '个人主线',
+      imageSrc: githubOverview?.profile.avatarUrl,
+      imageAlt: githubOverview?.profile.name ?? 'emptyinkpot',
+      monogram: 'E',
+      imageShape: 'circle',
       members: [
-        { name: 'emptyinkpot', role: '写作、架构、发布主线' },
-        { name: 'Atramenti', role: '品牌署名 / 视觉识别' }
+        {
+          name: 'emptyinkpot',
+          role: '写作、架构、发布主线',
+          imageSrc: githubOverview?.profile.avatarUrl,
+          imageAlt: githubOverview?.profile.name ?? 'emptyinkpot',
+          monogram: 'E'
+        },
+        {
+          name: 'Atramenti',
+          role: '品牌署名 / 视觉识别',
+          imageSrc: withBase('/images/branding/vita-atramenti-logo.png'),
+          imageAlt: 'Atramenti logo',
+          monogram: 'A'
+        }
       ],
       projects: [
         {
@@ -431,10 +474,26 @@ function buildTeamSignals(githubOverview: GitHubOverview | null): HomeTeamSignal
       id: 'heaven',
       label: '天堂工作室',
       subtitle: '站点团队',
+      imageSrc: withBase('/images/branding/vita-atramenti-logo.png'),
+      imageAlt: '天堂工作室',
+      monogram: '天',
+      imageShape: 'square',
       members: [
-        { name: 'emptyinkpot', role: '主理 / 信息架构' },
-        { name: 'Atramenti', role: '视觉识别 / 品牌稿' },
-        { name: 'GitHub Actions', role: '构建发布 / Pages 守卫' }
+        {
+          name: 'emptyinkpot',
+          role: '主理 / 信息架构',
+          imageSrc: githubOverview?.profile.avatarUrl,
+          imageAlt: githubOverview?.profile.name ?? 'emptyinkpot',
+          monogram: 'E'
+        },
+        {
+          name: 'Atramenti',
+          role: '视觉识别 / 品牌稿',
+          imageSrc: withBase('/images/branding/vita-atramenti-logo.png'),
+          imageAlt: 'Atramenti logo',
+          monogram: 'A'
+        },
+        { name: 'GitHub Actions', role: '构建发布 / Pages 守卫', monogram: 'CI' }
       ],
       projects: [
         {
@@ -497,9 +556,11 @@ function buildTeamSignals(githubOverview: GitHubOverview | null): HomeTeamSignal
       id: 'temp',
       label: '某某工作室',
       subtitle: '临时团队',
+      monogram: '某',
+      imageShape: 'square',
       members: [
-        { name: 'temporary lead', role: '阶段任务负责人' },
-        { name: 'guest design', role: '视觉支援 / UI 调整' }
+        { name: 'temporary lead', role: '阶段任务负责人', monogram: 'TL' },
+        { name: 'guest design', role: '视觉支援 / UI 调整', monogram: 'GD' }
       ],
       projects: [
         {

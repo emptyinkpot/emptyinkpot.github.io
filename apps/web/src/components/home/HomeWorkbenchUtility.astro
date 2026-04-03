@@ -16,7 +16,13 @@ const { friendlySites, teams } = Astro.props as Props;
       {
         friendlySites.map((site) => (
           <a href={site.href} class="home-workbench__linkitem" target="_blank" rel="noreferrer">
-            <span class="home-workbench__linkdot"></span>
+            <span class:list={['home-workbench__linkmedia', site.shape === 'square' && 'is-square']}>
+              {site.imageSrc ? (
+                <img src={site.imageSrc} alt={site.imageAlt ?? site.label} loading="lazy" />
+              ) : (
+                <b>{site.monogram ?? site.label.slice(0, 1)}</b>
+              )}
+            </span>
             <span>
               <strong>{site.label}</strong>
               <small>{site.description}</small>
@@ -39,7 +45,13 @@ const { friendlySites, teams } = Astro.props as Props;
               role="tab"
               aria-selected={index === 0 ? 'true' : 'false'}
             >
-              <span class:list={['home-team-switcher__icon', team.id !== 'personal' && 'home-team-switcher__icon--square']}></span>
+              <span class:list={['home-team-switcher__media', team.imageShape === 'square' && 'is-square']}>
+                {team.imageSrc ? (
+                  <img src={team.imageSrc} alt={team.imageAlt ?? team.label} loading="lazy" />
+                ) : (
+                  <b>{team.monogram ?? team.label.slice(0, 1)}</b>
+                )}
+              </span>
               <span>{team.label}</span>
             </button>
           ))
@@ -58,7 +70,13 @@ const { friendlySites, teams } = Astro.props as Props;
                 {
                   team.members.map((member) => (
                     <div class="home-team-panel__member">
-                      <span class="home-team-panel__memberdot"></span>
+                      <span class="home-team-panel__membermedia">
+                        {member.imageSrc ? (
+                          <img src={member.imageSrc} alt={member.imageAlt ?? member.name} loading="lazy" />
+                        ) : (
+                          <b>{member.monogram ?? member.name.slice(0, 1)}</b>
+                        )}
+                      </span>
                       <span>
                         <strong>{member.name}</strong>
                         <small>{member.role}</small>
