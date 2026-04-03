@@ -18,25 +18,26 @@ const { items } = Astro.props as Props;
   <div class="home-side-rail__inner">
     <HomeWorkbenchPanel leading="IDENTITY / BRAND" trailing="侧边导航" panel={true} className="home-side-rail__panel home-side-rail__profile-panel">
       <div class="home-side-rail__profile">
+        <div class="home-side-rail__brandbar">
+          <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="Vita Atramenti logo" class="home-side-rail__brandlogo" />
+          <span>天国独立女性社</span>
+        </div>
         <div class="home-side-rail__avatar-shell">
-          <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="Vita Atramenti" class="home-side-rail__avatar" />
+          <span class="home-side-rail__avatar-orb" aria-hidden="true"></span>
         </div>
         <p class="home-side-rail__name">emptyinkpot</p>
         <p class="home-side-rail__desc">Structured writing / projects / maintenance notes</p>
-      </div>
-    </HomeWorkbenchPanel>
 
-    <HomeWorkbenchPanel leading="SECTION / NAVIGATION" trailing="站内主入口" panel={true} className="home-side-rail__panel">
-      <nav class="home-side-rail__nav" aria-label="Homepage quick navigation">
-        {
-          items.map((item, index) => (
-            <a href={item.href} class:list={['home-side-rail__link', index === 0 && 'home-side-rail__link--active']}>
-              <span class="home-side-rail__link-index">{String(index + 1).padStart(2, '0')}</span>
-              <span>{item.label}</span>
-            </a>
-          ))
-        }
-      </nav>
+        <nav class="home-side-rail__nav" aria-label="Homepage quick navigation">
+          {
+            items.map((item, index) => (
+              <a href={item.href} class:list={['home-side-rail__link', index === 0 && 'home-side-rail__link--active']}>
+                <span>{item.label}</span>
+              </a>
+            ))
+          }
+        </nav>
+      </div>
     </HomeWorkbenchPanel>
   </div>
 </aside>
