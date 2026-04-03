@@ -492,19 +492,19 @@ body.home-mode .page-wrap--home {
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  width: 8.1rem;
-  min-height: 1.9rem;
-  padding: 0.24rem 0.55rem;
+  width: 10.6rem;
+  min-height: 2.35rem;
+  padding: 0.34rem 0.8rem;
   background: var(--home-accent);
   color: #f6eef7;
-  font-size: 0.42rem;
+  font-size: 0.56rem;
   font-weight: 700;
   letter-spacing: 0.08em;
 }
 
 .home-side-rail__brandlogo {
-  width: 0.82rem;
-  height: 0.82rem;
+  width: 1.05rem;
+  height: 1.05rem;
   object-fit: contain;
 }
 
