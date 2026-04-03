@@ -1,0 +1,37 @@
+---
+import HomeWorkbenchSectionLine from '../home/HomeWorkbenchSectionLine.astro';
+
+interface StatItem {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  kicker: string;
+  title: string;
+  summary: string;
+  stats?: StatItem[];
+}
+
+const { kicker, title, summary, stats = [] } = Astro.props as Props;
+---
+
+<section class="workbench-page__intro home-workbench__card home-workbench__card--panel">
+  <HomeWorkbenchSectionLine leading={kicker} trailing="Workbench Page" tight={true} />
+  <div class="workbench-page__intro-copy">
+    <h1>{title}</h1>
+    <p>{summary}</p>
+  </div>
+  {
+    stats.length > 0 && (
+      <div class="workbench-page__stats">
+        {stats.map((stat) => (
+          <div class="workbench-page__stat">
+            <strong>{stat.value}</strong>
+            <span>{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+</section>

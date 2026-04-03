@@ -1,24 +1,62 @@
 ---
 import { getCollection } from 'astro:content';
-import ArticleCard from '../../components/shared/ArticleCard.astro';
+import WorkbenchPageIntro from '../../components/shared/WorkbenchPageIntro.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { sortPosts } from '../../lib/content';
+import { formatDate, getExcerptFromBody, getPrimaryCategory, sortPosts, toSlug } from '../../lib/content';
+import { getPostCover } from '../../lib/postCovers';
+import { withBase } from '../../lib/site';
 
 const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
+const postCards = posts.map((post) => ({
+  href: withBase(`/posts/${post.id}/`),
+  category: getPrimaryCategory(post),
+  categoryHref: withBase(`/categories/${toSlug(getPrimaryCategory(post))}/`),
+  date: formatDate(post.data.date),
+  title: post.data.title,
+  summary: post.data.summary ?? post.data.description ?? getExcerptFromBody(post.body, 116),
+  coverSrc: getPostCover(post)
+}));
 ---
 
 <BaseLayout title="文章 / emptyinkpot" description="emptyinkpot 的文章列表页，集中展示站内公开文章。">
-  <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
-    <section class="space-y-4">
-      <p class="section-kicker">文章</p>
-      <h1 class="section-title text-4xl md:text-5xl">文章列表</h1>
-      <p class="max-w-3xl text-base leading-8 text-stone-600">
-        这里集中展示站内公开文章，保持从首页卡片浏览到正文阅读的稳定路径，并继续承接标签、系列与专题入口。
-      </p>
-    </section>
+  <main class="workbench-page" data-pagefind-body>
+    <WorkbenchPageIntro
+      kicker="SECTION / POSTS"
+      title="文章列表"
+      summary="这里集中展示站内公开文章，保持从首页卡片浏览到正文阅读的稳定路径，并继续承接标签、系列与专题入口。"
+      stats={[
+        { label: 'Published posts', value: String(posts.length) },
+        { label: 'Latest category', value: postCards[0]?.category ?? '文章' }
+      ]}
+    />
 
-    <section class="grid gap-5 md:grid-cols-2">
-      {posts.map((post) => <ArticleCard post={post} />)}
+    <section class="workbench-page__grid workbench-page__grid--posts">
+      {
+        postCards.map((post) => (
+          <article class="workbench-page__post-card home-workbench__card home-workbench__card--panel">
+            <div class="workbench-page__post-cover">
+              {post.coverSrc ? (
+                <img src={post.coverSrc} alt={post.title} loading="lazy" />
+              ) : (
+                <>
+                  <i></i>
+                  <span>ARTICLE COVER</span>
+                </>
+              )}
+            </div>
+            <div class="workbench-page__post-body">
+              <div class="workbench-page__meta">
+                <a href={post.categoryHref}>{post.category}</a>
+                <span>{post.date}</span>
+              </div>
+              <h2>
+                <a href={post.href}>{post.title}</a>
+              </h2>
+              <p>{post.summary}</p>
+            </div>
+          </article>
+        ))
+      }
     </section>
   </main>
 </BaseLayout>

@@ -1,4 +1,5 @@
 ---
+import WorkbenchPageIntro from '../components/shared/WorkbenchPageIntro.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getUpdateLogEntries } from '../lib/updateLog';
 
@@ -7,49 +8,43 @@ const latestEntry = entries[0];
 ---
 
 <BaseLayout title="更新 / emptyinkpot" description="公开维护日志，集中记录站点的持续整理、迁移与治理动作。">
-  <main class="space-y-8 pb-10 pt-8 md:space-y-10 md:pt-14" data-pagefind-body>
-    <section class="glass-card space-y-5 rounded-[2.25rem] p-6 md:p-8">
-      <p class="section-kicker">更新</p>
-      <h1 class="section-title text-4xl md:text-5xl">公开维护日志</h1>
-      <p class="max-w-3xl text-base leading-8 text-stone-600">
-        这里同步展示当前维护日志真源中的公开更新。日志写入统一以 `public-data/updates/index.md` 为准。
-      </p>
-      {
-        latestEntry && (
-          <div class="flex flex-wrap items-center gap-3 text-sm text-stone-600">
-            <span class="pill">最新记录 {latestEntry.date}</span>
-            <span class="pill">共 {entries.length} 条公开更新</span>
-          </div>
-        )
-      }
-    </section>
+  <main class="workbench-page workbench-page--updates" data-pagefind-body>
+    <WorkbenchPageIntro
+      kicker="SECTION / UPDATES"
+      title="公开维护日志"
+      summary="这里同步展示当前维护日志真源中的公开更新。日志写入统一以 `public-data/updates/index.md` 为准。"
+      stats={[
+        { label: 'Latest record', value: latestEntry?.date ?? '暂无' },
+        { label: 'Public entries', value: String(entries.length) }
+      ]}
+    />
 
     {
       entries.length ? (
-        <section class="space-y-6">
+        <section class="workbench-page__timeline">
           {entries.map((entry) => (
-            <article class="glass-card rounded-[2rem] p-6 md:p-8" id={entry.slug}>
-              <div class="space-y-4 border-b border-[rgba(87,74,60,0.12)] pb-5">
-                <p class="section-kicker">{entry.date}</p>
-                <h2 class="text-2xl font-semibold leading-tight text-stone-950 md:text-3xl">{entry.title}</h2>
+            <article class="workbench-page__update-entry home-workbench__card home-workbench__card--panel" id={entry.slug}>
+              <div class="workbench-page__update-head">
+                <p>{entry.date}</p>
+                <h2>{entry.title}</h2>
               </div>
 
-              <div class="mt-6 grid gap-5 md:grid-cols-2">
+              <div class="workbench-page__update-grid">
                 {entry.sections.map((section) => (
-                  <section class="rounded-[1.5rem] border border-[rgba(87,74,60,0.12)] bg-white/55 p-5">
-                    <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-stone-700">{section.heading}</h3>
+                  <section class="workbench-page__update-section">
+                    <h3>{section.heading}</h3>
                     {
                       section.items.length ? (
-                        <ul class="mt-4 space-y-3 text-sm leading-7 text-stone-600">
+                        <ul>
                           {section.items.map((item) => (
-                            <li class="flex gap-3">
-                              <span class="mt-[0.72rem] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"></span>
+                            <li>
+                              <span></span>
                               <span>{item}</span>
                             </li>
                           ))}
                         </ul>
                       ) : (
-                        <p class="mt-4 text-sm leading-7 text-stone-500">该分节当前没有可展示的列表项。</p>
+                        <p class="workbench-page__update-empty">该分节当前没有可展示的列表项。</p>
                       )
                     }
                   </section>
@@ -59,7 +54,7 @@ const latestEntry = entries[0];
           ))}
         </section>
       ) : (
-        <section class="rounded-[2rem] border border-dashed border-[rgba(87,74,60,0.18)] bg-white/45 p-6 text-sm leading-7 text-stone-500">
+        <section class="workbench-page__empty home-workbench__card home-workbench__card--panel">
           还没有可同步到当前站点的公开更新记录。
         </section>
       )
