@@ -108,7 +108,7 @@
     "typescript": "^6.0.2",
     "uri-js": "^4.4.1",
     "util-deprecate": "^1.0.2",
-    "which": "^2.0.2",
+    "which": "^6.0.1",
     "word-wrap": "^1.2.5",
     "yocto-queue": "^0.1.0"
   },
