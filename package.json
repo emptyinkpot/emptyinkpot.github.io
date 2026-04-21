@@ -60,7 +60,7 @@
     "file-entry-cache": "^8.0.0",
     "fill-range": "^7.1.1",
     "find-up": "^5.0.0",
-    "flat-cache": "^4.0.1",
+    "flat-cache": "^6.1.22",
     "flatted": "^3.4.2",
     "glob-parent": "^6.0.2",
     "ignore": "^5.3.2",
