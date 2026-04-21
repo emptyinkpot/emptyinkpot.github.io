@@ -8,11 +8,13 @@
     "preview": "npm --prefix apps/web run preview",
     "astro": "npm --prefix apps/web run astro",
     "lint": "eslint \"apps/web/src/**/*.{ts,astro}\" \"tools/**/*.{js,mjs}\" \"*.{js,mjs}\"",
+    "refresh:github-overview": "node tools/refresh-github-overview.mjs",
     "new:update": "node tools/new-update-entry.mjs",
+    "check:github-overview": "node tools/validate-github-overview-snapshot.mjs",
     "check:updates": "node tools/validate-update-log.mjs",
     "check:content": "node tools/validate-content-governance.mjs",
     "check:governance": "node tools/validate-repo-governance.mjs",
-    "check": "npm run check:updates && npm run check:content && npm run check:governance"
+    "check": "npm run check:updates && npm run check:content && npm run check:governance && npm run check:github-overview"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

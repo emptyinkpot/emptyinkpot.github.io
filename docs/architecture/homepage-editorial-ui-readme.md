@@ -136,6 +136,15 @@
 - GitHub 公开资料与仓库概览（通过 `getGitHubOverview('emptyinkpot')`）
 - 站内分类、系列、最新内容与维护信息
 
+其中 GitHub 链路自 `2026-04-21` 起已经收口为“受控快照单真源”：
+
+- 构建读取：`apps/web/src/data/github-overview.emptyinkpot.json`
+- 运行时读取入口：`apps/web/src/lib/github.ts`
+- 快照刷新脚本：`npm run refresh:github-overview`
+- 快照校验脚本：`npm run check:github-overview`
+
+也就是说，首页热力图、语言占比和近 6 个月折线不再依赖构建时即时打 GitHub API；构建只消费仓内已提交的快照文件。需要更新数据时，应显式刷新快照并把该 JSON 一并提交，而不是重新引入“构建时抓取失败就缺图”的路径。
+
 `HomePagePayload` 仍使用 `hero`、`snapshot`、`checkIn`、`github` 等字段名，但这些字段现在服务的是 workbench 首页，而不是旧组件体系。
 
 字段名本身不是并行前端口径；真正的页面真源以 `index.astro` 的组件装配和 `HomeWorkbench*` 组件树为准。

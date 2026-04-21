@@ -192,7 +192,7 @@ export interface HomePagePayload {
   activeProject?: CollectionEntry<'projects'>;
   latestNotes: CollectionEntry<'notes'>[];
   checkIn: HomeCheckInData;
-  github?: HomeGitHubData;
+  github: HomeGitHubData;
   quickFilters: HomeQuickFilter[];
   friendlySites: HomeFriendlySite[];
   teams: HomeTeamSignal[];
@@ -212,10 +212,7 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
   const latestPosts = allPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 4);
   const latestNotes = notes.slice(0, 3);
   const activeProject = projects[0];
-  const githubOverview = await getGitHubOverview('emptyinkpot').catch((error) => {
-    console.warn('Failed to fetch GitHub overview for homepage:', error);
-    return null;
-  });
+  const githubOverview = await getGitHubOverview('emptyinkpot');
   const topics = getCategoryCounts(allPosts)
     .slice(0, 3)
     .map(([label, count]) => ({
@@ -246,12 +243,12 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
     snapshot: {
       kicker: '站点快照',
       metrics: [
-        { value: String(githubOverview?.totalContributions ?? allPosts.length), label: '年度 GitHub 活动' },
-        { value: String(githubOverview?.profile.publicRepos ?? topics.length), label: '公开仓库数量' }
+        { value: String(githubOverview.totalContributions), label: '年度 GitHub 活动' },
+        { value: String(githubOverview.profile.publicRepos), label: '公开仓库数量' }
       ],
       lines: [
         `最近一次文章时间：${featuredPost ? formatDate(featuredPost.data.date) : '暂无'}`,
-        `GitHub 公开资料最近更新时间：${formatDate(githubOverview ? new Date(githubOverview.profile.updatedAt) : new Date())}`,
+        `GitHub 公开资料最近更新时间：${formatDate(new Date(githubOverview.profile.updatedAt))}`,
         '内容源、页面装配与发布链路已经收拢到同一站点。'
       ]
     },
@@ -261,8 +258,8 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
     series,
     activeProject,
     latestNotes,
-    checkIn: buildCheckInData({ posts: allPosts, notes, projects, githubOverview }),
-    github: githubOverview ? buildGitHubData(githubOverview) : undefined,
+    checkIn: buildCheckInData(githubOverview),
+    github: buildGitHubData(githubOverview),
     quickFilters: [
       { label: '#文章', href: withBase('/posts') },
       { label: '#专题', href: withBase('/series') },
@@ -293,8 +290,8 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
         label: 'GitHub 主页',
         href: 'https://github.com/emptyinkpot',
         description: '公开仓库与项目矩阵',
-        imageSrc: githubOverview?.profile.avatarUrl,
-        imageAlt: githubOverview?.profile.name ?? 'GitHub profile',
+        imageSrc: githubOverview.profile.avatarUrl,
+        imageAlt: githubOverview.profile.name,
         monogram: 'GH',
         shape: 'circle'
       },
@@ -379,55 +376,29 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
   };
 }
 
-function buildTeamSignals(githubOverview: GitHubOverview | null): HomeTeamSignal[] {
-  const personalRepoSignals =
-    githubOverview?.repos.map((repo, index) => ({
-      name: repo.name,
-      summary: `${repo.language ?? '未知语言'} / ${repo.stars} stars / ${repo.issues} issues`,
-      status: `最近更新 / ${formatDate(new Date(repo.updatedAt))}`,
-      tone: (['violet', 'primary', 'green', 'gold'][index] ?? 'primary') as HomeRepoSignal['tone']
-    })) ?? [
-      {
-        name: 'Atramenti-Console',
-        summary: '控制台实验 / 交互界面',
-        status: '进行中 / 个人主线',
-        tone: 'primary'
-      },
-      {
-        name: 'Lex-Universalis',
-        summary: '世界观 / Godot',
-        status: '世界观 / 档案',
-        tone: 'gold'
-      },
-      {
-        name: 'emptyinkpot.github.io',
-        summary: '内容主站 / Astro',
-        status: '运行中 / 线上主站',
-        tone: 'violet'
-      },
-      {
-        name: 'Roo-Kit',
-        summary: 'MCP / skills / AI',
-        status: '实验中 / 工具链',
-        tone: 'green'
-      }
-    ];
+function buildTeamSignals(githubOverview: GitHubOverview): HomeTeamSignal[] {
+  const personalRepoSignals = githubOverview.repos.map((repo, index) => ({
+    name: repo.name,
+    summary: `${repo.language} / ${repo.stars} stars / ${repo.issues} issues`,
+    status: `最近更新 / ${formatDate(new Date(repo.updatedAt))}`,
+    tone: (['violet', 'primary', 'green', 'gold'][index] ?? 'primary') as HomeRepoSignal['tone']
+  }));
 
   return [
     {
       id: 'personal',
       label: 'emptyinkpot',
       subtitle: '个人主线',
-      imageSrc: githubOverview?.profile.avatarUrl,
-      imageAlt: githubOverview?.profile.name ?? 'emptyinkpot',
+      imageSrc: githubOverview.profile.avatarUrl,
+      imageAlt: githubOverview.profile.name,
       monogram: 'E',
       imageShape: 'circle',
       members: [
         {
           name: 'emptyinkpot',
           role: '写作、架构、发布主线',
-          imageSrc: githubOverview?.profile.avatarUrl,
-          imageAlt: githubOverview?.profile.name ?? 'emptyinkpot',
+          imageSrc: githubOverview.profile.avatarUrl,
+          imageAlt: githubOverview.profile.name,
           monogram: 'E'
         },
         {
@@ -482,8 +453,8 @@ function buildTeamSignals(githubOverview: GitHubOverview | null): HomeTeamSignal
         {
           name: 'emptyinkpot',
           role: '主理 / 信息架构',
-          imageSrc: githubOverview?.profile.avatarUrl,
-          imageAlt: githubOverview?.profile.name ?? 'emptyinkpot',
+          imageSrc: githubOverview.profile.avatarUrl,
+          imageAlt: githubOverview.profile.name,
           monogram: 'E'
         },
         {
@@ -622,119 +593,29 @@ function buildTeamSignals(githubOverview: GitHubOverview | null): HomeTeamSignal
   ];
 }
 
-function buildCheckInData({
-  posts,
-  notes,
-  projects,
-  githubOverview
-}: {
-  posts: CollectionEntry<'posts'>[];
-  notes: CollectionEntry<'notes'>[];
-  projects: CollectionEntry<'projects'>[];
-  githubOverview: GitHubOverview | null;
-}): HomeCheckInData {
-  if (githubOverview) {
-    const activeDays = githubOverview.weeks.flatMap((week) => week.days).filter((day) => day.count > 0).length;
-
-    return {
-      kicker: 'GitHub 热力图',
-      title: 'GitHub 活动热力图 / emptyinkpot',
-      summary: '直接读取公开 GitHub 贡献记录，把首页热力图、节奏线与语言分布统一到真实账号活动上。',
-      statLine: `${githubOverview.totalContributions} 次活动 / ${activeDays} 个活跃日`,
-      legend: '少  ·  ·  ·  ·  多',
-      months: githubOverview.months,
-      weeks: githubOverview.weeks.map((week) => ({
-        label: week.label,
-        days: week.days.map((day) => ({
-          level: day.level,
-          count: day.count,
-          date: day.date
-        }))
-      })),
-      total: githubOverview.totalContributions,
-      avatar: {
-        imageSrc: githubOverview.profile.avatarUrl,
-        alt: githubOverview.profile.name,
-        caption: `@${githubOverview.profile.login} / 公开活动`
-      }
-    };
-  }
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const start = new Date(today);
-  start.setDate(start.getDate() - 48);
-
-  const activityByDate = new Map<string, number>();
-
-  const mark = (date: Date | undefined, weight: number) => {
-    if (!date) return;
-    const normalized = new Date(date);
-    normalized.setHours(0, 0, 0, 0);
-    if (normalized < start || normalized > today) return;
-    const key = normalized.toISOString().slice(0, 10);
-    activityByDate.set(key, (activityByDate.get(key) ?? 0) + weight);
-  };
-
-  for (const post of posts) {
-    mark(post.data.date, 2);
-    mark(post.data.updated, 1);
-  }
-
-  for (const note of notes) {
-    mark(note.data.date, 1);
-  }
-
-  for (const project of projects) {
-    mark(project.data.date, 1);
-  }
-
-  const totalDays = 49;
-  const days = Array.from({ length: totalDays }, (_, index) => {
-    const date = new Date(start);
-    date.setDate(start.getDate() + index);
-    const key = date.toISOString().slice(0, 10);
-    const count = activityByDate.get(key) ?? 0;
-
-    let level: 0 | 1 | 2 | 3 | 4 = 0;
-    if (count >= 5) level = 4;
-    else if (count >= 3) level = 3;
-    else if (count >= 2) level = 2;
-    else if (count >= 1) level = 1;
-
-    return { date, level };
-  });
-
-  const weeks: HomeCheckInWeek[] = [];
-  for (let weekIndex = 0; weekIndex < days.length; weekIndex += 7) {
-    const slice = days.slice(weekIndex, weekIndex + 7);
-    const first = slice[0]?.date;
-    weeks.push({
-      label: first
-        ? `${first.getMonth() + 1}月`
-        : '',
-      days: slice.map((item) => ({ level: item.level }))
-    });
-  }
-
-  const monthLabels = [...new Set(weeks.map((week) => week.label).filter(Boolean))];
-  const activeDays = days.filter((day) => day.level > 0).length;
-  const updatedPosts = posts.filter((post) => post.data.updated).length;
+function buildCheckInData(githubOverview: GitHubOverview): HomeCheckInData {
+  const activeDays = githubOverview.weeks.flatMap((week) => week.days).filter((day) => day.count > 0).length;
 
   return {
-    kicker: '活跃地图',
-    title: '像 GitHub 贡献图一样展示持续写作与维护节奏。',
-    summary: '把写作发布、项目维护、页面更新和阶段笔记统一折算成持续活跃信号，而不是只看最后生成了多少页面。',
-    statLine: `${activeDays} 个活跃日 / ${updatedPosts} 篇已更新文章`,
+    kicker: 'GitHub 热力图',
+    title: 'GitHub 活动热力图 / emptyinkpot',
+    summary: '直接读取受控 GitHub 快照，把首页热力图、节奏线与语言分布统一到同一份可重复构建的数据上。',
+    statLine: `${githubOverview.totalContributions} 次活动 / ${activeDays} 个活跃日`,
     legend: '少  ·  ·  ·  ·  多',
-    months: monthLabels,
-    weeks,
-    total: activeDays,
+    months: githubOverview.months,
+    weeks: githubOverview.weeks.map((week) => ({
+      label: week.label,
+      days: week.days.map((day) => ({
+        level: day.level,
+        count: day.count,
+        date: day.date
+      }))
+    })),
+    total: githubOverview.totalContributions,
     avatar: {
-      imageSrc: withBase('/images/branding/vita-atramenti-logo.png'),
-      alt: 'Vita Atramenti',
-      caption: '日常写作 / 构建 / 修订'
+      imageSrc: githubOverview.profile.avatarUrl,
+      alt: githubOverview.profile.name,
+      caption: `@${githubOverview.profile.login} / 公开活动`
     }
   };
 }

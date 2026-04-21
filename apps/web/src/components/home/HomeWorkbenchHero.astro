@@ -6,13 +6,13 @@ interface Props {
   hero: HomeHeroData;
   snapshot: HomeSnapshotData;
   checkIn: HomeCheckInData;
-  github?: HomeGitHubData;
+  github: HomeGitHubData;
 }
 
 const { hero, snapshot, checkIn, github } = Astro.props as Props;
 const heatmapWeekCount = checkIn.weeks.length;
 const donutStops =
-  github?.languages
+  github.languages
     .reduce(
       (accumulator, language) => {
         const start = accumulator.offset;
@@ -23,14 +23,10 @@ const donutStops =
       },
       { offset: 0, parts: [] as string[] }
     )
-    .parts.join(', ') ?? '';
-const donutStyle = donutStops
-  ? `conic-gradient(${donutStops}, rgba(112, 95, 120, 0.12) 0 100%)`
-  : 'conic-gradient(var(--home-accent) 0 100%)';
+    .parts.join(', ');
+const donutStyle = `conic-gradient(${donutStops}, rgba(112, 95, 120, 0.12) 0 100%)`;
 
 const linePoints = (() => {
-  if (!github?.monthly.length) return '';
-
   const width = 320;
   const height = 110;
   const paddingX = 12;
@@ -92,57 +88,53 @@ const linePoints = (() => {
       <div class="home-workbench__legend">{checkIn.legend}</div>
     </div>
 
-    {
-      github && (
-        <div class="home-workbench__analytics">
-          <article class="home-workbench__analytics-card">
-            <div class="home-workbench__analytics-head">
-              <strong>语言占比</strong>
-              <span>公开仓库语言结构</span>
-            </div>
-            <div class="home-workbench__donut-wrap">
-              <div class="home-workbench__donut" style={`background:${donutStyle};`}>
-                <div class="home-workbench__donut-core">
-                  <strong>{github.totalContributions}</strong>
-                  <span>年度活动</span>
-                </div>
-              </div>
-
-              <div class="home-workbench__donut-legend">
-                {github.languages.map((language) => (
-                  <div class="home-workbench__donut-item">
-                    <i style={`background:${language.color};`}></i>
-                    <span>{language.label}</span>
-                    <strong>{language.percent}%</strong>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </article>
-
-          <article class="home-workbench__analytics-card">
-            <div class="home-workbench__analytics-head">
-              <strong>近 6 个月</strong>
-              <span>真实月度活跃折线</span>
-            </div>
-            <div class="home-workbench__linechart">
-              <svg viewBox="0 0 320 110" aria-hidden="true">
-                <path d="M12 98.5 H308"></path>
-                <polyline points={linePoints}></polyline>
-              </svg>
-              <div class="home-workbench__linechart-labels">
-                {github.monthly.map((point) => (
-                  <div>
-                    <strong>{point.value}</strong>
-                    <span>{point.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </article>
+    <div class="home-workbench__analytics">
+      <article class="home-workbench__analytics-card">
+        <div class="home-workbench__analytics-head">
+          <strong>语言占比</strong>
+          <span>公开仓库语言结构</span>
         </div>
-      )
-    }
+        <div class="home-workbench__donut-wrap">
+          <div class="home-workbench__donut" style={`background:${donutStyle};`}>
+            <div class="home-workbench__donut-core">
+              <strong>{github.totalContributions}</strong>
+              <span>年度活动</span>
+            </div>
+          </div>
+
+          <div class="home-workbench__donut-legend">
+            {github.languages.map((language) => (
+              <div class="home-workbench__donut-item">
+                <i style={`background:${language.color};`}></i>
+                <span>{language.label}</span>
+                <strong>{language.percent}%</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+
+      <article class="home-workbench__analytics-card">
+        <div class="home-workbench__analytics-head">
+          <strong>近 6 个月</strong>
+          <span>真实月度活跃折线</span>
+        </div>
+        <div class="home-workbench__linechart">
+          <svg viewBox="0 0 320 110" aria-hidden="true">
+            <path d="M12 98.5 H308"></path>
+            <polyline points={linePoints}></polyline>
+          </svg>
+          <div class="home-workbench__linechart-labels">
+            {github.monthly.map((point) => (
+              <div>
+                <strong>{point.value}</strong>
+                <span>{point.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+    </div>
   </HomeWorkbenchPanel>
 
   <aside class="home-workbench__hero-side">
@@ -159,29 +151,23 @@ const linePoints = (() => {
       <ul>
         {snapshot.lines.map((line) => <li>{line}</li>)}
       </ul>
-      {
-        github && (
-          <>
-            <div class="home-workbench__snapshot-notes">
-              <div>
-                <span>内容</span>
-                <strong>23 篇已发布内容作为当前首页主入口的稳定供给。</strong>
-              </div>
-              <div>
-                <span>结构</span>
-                <strong>6 个主题分类 / 3 条内容线 / 持续维护中的索引首页。</strong>
-              </div>
-            </div>
-            <a class="home-workbench__snapshot-profile" href={github.profile.profileUrl} target="_blank" rel="noreferrer">
-              <img src={github.profile.avatarUrl} alt={github.profile.name} loading="lazy" />
-              <span>
-                <strong>{github.profile.name}</strong>
-                <small>@{github.profile.login} / {github.profile.followers} 位关注者</small>
-              </span>
-            </a>
-          </>
-        )
-      }
+      <div class="home-workbench__snapshot-notes">
+        <div>
+          <span>内容</span>
+          <strong>23 篇已发布内容作为当前首页主入口的稳定供给。</strong>
+        </div>
+        <div>
+          <span>结构</span>
+          <strong>6 个主题分类 / 3 条内容线 / 持续维护中的索引首页。</strong>
+        </div>
+      </div>
+      <a class="home-workbench__snapshot-profile" href={github.profile.profileUrl} target="_blank" rel="noreferrer">
+        <img src={github.profile.avatarUrl} alt={github.profile.name} loading="lazy" />
+        <span>
+          <strong>{github.profile.name}</strong>
+          <small>@{github.profile.login} / {github.profile.followers} 位关注者</small>
+        </span>
+      </a>
     </HomeWorkbenchPanel>
   </aside>
 </section>
