@@ -8,9 +8,10 @@ interface LatestPostCard {
   title: string;
   date: string;
   category: string;
+  categoryHref: string;
   summary: string;
   preview: string;
-  tags: string[];
+  tags: { label: string; href: string }[];
   coverSrc?: string;
 }
 
@@ -26,7 +27,10 @@ const { posts } = Astro.props as Props;
 
   <div class="home-workbench__feedcard home-workbench__card home-workbench__card--panel">
     <header>
-      <strong>最新文章 / 博客内容</strong>
+      <div class="home-workbench__feedhead">
+        <strong>最新文章 / 博客内容</strong>
+        <small>悬停、点击或键盘上下键都能切换；右侧会放大显示摘要、标签和正文入口</small>
+      </div>
       <a href={withBase('/posts')}>进入文章</a>
     </header>
 
@@ -38,12 +42,13 @@ const { posts } = Astro.props as Props;
               type="button"
               class:list={['home-workbench__postitem', index === 0 && 'is-active']}
               data-post-trigger={post.id}
+              data-post-index={index}
+              id={`latest-post-tab-${post.id}`}
+              role="tab"
               aria-selected={index === 0 ? 'true' : 'false'}
+              aria-controls={`latest-post-panel-${post.id}`}
+              tabindex={index === 0 ? '0' : '-1'}
             >
-              <div class="home-workbench__postmeta">
-                <span>{post.date}</span>
-                <span>{post.category}</span>
-              </div>
               <div class="home-workbench__postcover">
                 {post.coverSrc ? (
                   <img src={post.coverSrc} alt={post.title} loading="lazy" />
@@ -56,6 +61,13 @@ const { posts } = Astro.props as Props;
                 )}
               </div>
               <div class="home-workbench__postbody">
+                <div class="home-workbench__postrow">
+                  <div class="home-workbench__postmeta">
+                    <span>{post.date}</span>
+                    <span>{post.category}</span>
+                  </div>
+                  <span class="home-workbench__postcue" aria-hidden="true">切换预览</span>
+                </div>
                 <strong>{post.title}</strong>
                 <p>{post.summary}</p>
               </div>
@@ -70,13 +82,17 @@ const { posts } = Astro.props as Props;
             <article
               class:list={['home-workbench__postpreview-panel', index === 0 && 'is-active']}
               data-post-panel={post.id}
+              id={`latest-post-panel-${post.id}`}
+              role="tabpanel"
+              aria-labelledby={`latest-post-tab-${post.id}`}
+              aria-hidden={index === 0 ? 'false' : 'true'}
             >
               <div class="home-workbench__postpreview-meta">
                 <span>{post.date}</span>
-                <span>{post.category}</span>
+                <a href={post.categoryHref}>{post.category}</a>
               </div>
 
-              <div class="home-workbench__postpreview-cover">
+              <a class="home-workbench__postpreview-cover" href={post.href}>
                 {post.coverSrc ? (
                   <img src={post.coverSrc} alt={post.title} loading="lazy" />
                 ) : (
@@ -86,18 +102,18 @@ const { posts } = Astro.props as Props;
                     <small>{post.category}</small>
                   </>
                 )}
-              </div>
+              </a>
 
               <div class="home-workbench__postpreview-copy">
-                <strong>{post.title}</strong>
+                <strong><a href={post.href}>{post.title}</a></strong>
                 <p>{post.preview}</p>
               </div>
 
               <div class="home-workbench__postpreview-tags">
                 {post.tags.length > 0 ? (
-                  post.tags.map((tag) => <span>{tag}</span>)
+                  post.tags.map((tag) => <a href={tag.href}>{tag.label}</a>)
                 ) : (
-                  <span>{post.category}</span>
+                  <a href={post.categoryHref}>{post.category}</a>
                 )}
               </div>
 

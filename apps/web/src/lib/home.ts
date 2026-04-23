@@ -99,6 +99,7 @@ export interface HomeTeamProject {
   summary: string;
   status: string;
   badges: string[];
+  href?: string;
 }
 
 export interface HomeRepoSignal {
@@ -106,18 +107,21 @@ export interface HomeRepoSignal {
   summary: string;
   status: string;
   tone: 'primary' | 'gold' | 'violet' | 'green';
+  href?: string;
 }
 
 export interface HomeAutomationSignal {
   label: string;
   state: 'running' | 'queued' | 'checking';
   detail: string;
+  href?: string;
 }
 
 export interface HomeDirectorySignal {
   root: string;
   subtitle: string;
   items: string[];
+  href?: string;
 }
 
 export interface HomeTeamSignal {
@@ -148,11 +152,13 @@ export interface HomePlannedCard {
   kicker: string;
   title: string;
   summary: string;
+  href?: string;
 }
 
 export interface HomeMaintenanceItem {
   label: string;
   meta: string;
+  href?: string;
 }
 
 export interface HomeCheckInCell {
@@ -355,23 +361,26 @@ export async function getHomePagePayload(): Promise<HomePagePayload> {
       {
         kicker: '规划 / Archive Map',
         title: '年度归档、专题索引与标签地图',
-        summary: '年度归档 / 系列索引 / 标签地图'
+        summary: '年度归档 / 系列索引 / 标签地图',
+        href: withBase('/posts')
       },
       {
         kicker: '规划 / Reading Path',
         title: '主题路径、推荐阅读链与新读者入口',
-        summary: '主题导读 / 新读者入口 / 推荐阅读路径'
+        summary: '主题导读 / 新读者入口 / 推荐阅读路径',
+        href: withBase('/series')
       },
       {
         kicker: '规划 / Lab & Tools',
         title: '实验日志、工具清单与部署状态板',
-        summary: '工具笔记 / 部署状态板 / 实验归档'
+        summary: '工具笔记 / 部署状态板 / 实验归档',
+        href: withBase('/projects')
       }
     ],
     maintenanceItems: [
-      { label: '重构记录', meta: '2026-03-31' },
-      { label: '发布链路清理', meta: '已更新' },
-      { label: '首页设计迭代', meta: '样式刷新' }
+      { label: '重构记录', meta: '2026-03-31', href: withBase('/updates') },
+      { label: '发布链路清理', meta: '已更新', href: withBase('/posts/myblog-cloud-deployment-nginx-domain-and-https-guide/') },
+      { label: '首页设计迭代', meta: '样式刷新', href: withBase('/notes/rebuild-notes/') }
     ]
   };
 }
@@ -381,7 +390,8 @@ function buildTeamSignals(githubOverview: GitHubOverview): HomeTeamSignal[] {
     name: repo.name,
     summary: `${repo.language} / ${repo.stars} stars / ${repo.issues} issues`,
     status: `最近更新 / ${formatDate(new Date(repo.updatedAt))}`,
-    tone: (['violet', 'primary', 'green', 'gold'][index] ?? 'primary') as HomeRepoSignal['tone']
+    tone: (['violet', 'primary', 'green', 'gold'][index] ?? 'primary') as HomeRepoSignal['tone'],
+    href: repo.htmlUrl
   }));
 
   return [
@@ -414,31 +424,35 @@ function buildTeamSignals(githubOverview: GitHubOverview): HomeTeamSignal[] {
           name: 'emptyinkpot / unified site',
           summary: '统一站点、内容模型、搜索与发布链路都收口到这里。',
           status: '进行中',
-          badges: ['个人主线', '当前团队']
+          badges: ['个人主线', '当前团队'],
+          href: withBase('/projects/site-v2/')
         },
         {
           name: 'Vita Atramenti / brand system',
           summary: '个人品牌与视觉识别支线，可切到其他团队时替换为团队项目。',
           status: '排队中',
-          badges: ['视觉系统']
+          badges: ['视觉系统'],
+          href: withBase('/about')
         }
       ],
       repos: personalRepoSignals,
       automation: [
-        { label: 'Pages', state: 'running', detail: '线上发布' },
-        { label: 'Actions', state: 'running', detail: '构建 / 部署' },
-        { label: 'Dependabot', state: 'checking', detail: '依赖巡检' },
-        { label: 'Status', state: 'queued', detail: '待验证项' }
+        { label: 'Pages', state: 'running', detail: '线上发布', href: 'https://blog.tengokukk.com/' },
+        { label: 'Actions', state: 'running', detail: '构建 / 部署', href: 'https://github.com/emptyinkpot/emptyinkpot.github.io/actions' },
+        { label: 'Dependabot', state: 'checking', detail: '依赖巡检', href: 'https://github.com/emptyinkpot/emptyinkpot.github.io/security/dependabot' },
+        { label: 'Status', state: 'queued', detail: '待验证项', href: withBase('/updates') }
       ],
       toolkit: {
         root: 'root/',
         subtitle: 'Roo-Kit / 本地 AI 工具链目录结构',
-        items: ['extensions', 'mcps', 'skills', 'ai-tracking']
+        items: ['extensions', 'mcps', 'skills', 'ai-tracking'],
+        href: withBase('/projects')
       },
       archive: {
         root: 'lex-universalis/',
         subtitle: 'Lex-Universalis / 资料与原型目录',
-        items: ['docs', 'config', 'godot', 'archive / lore']
+        items: ['docs', 'config', 'godot', 'archive / lore'],
+        href: withBase('/notes')
       }
     },
     {
