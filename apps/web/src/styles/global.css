@@ -892,7 +892,7 @@ body.home-mode .page-wrap--home {
 }
 
 .home-workbench__lead-grid {
-  grid-template-columns: minmax(0, 1.32fr) minmax(20rem, 0.9fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.82fr);
 }
 
 .home-workbench__content-grid {
@@ -1392,10 +1392,13 @@ body.home-mode .page-wrap--home {
 }
 
 .home-workbench__hero-main h1 {
-  max-width: 39rem;
-  font-size: clamp(2.45rem, 4vw, 4.4rem);
-  line-height: 0.9;
+  max-width: 12ch;
+  font-size: clamp(1.9rem, 2.55vw, 3rem);
+  line-height: 1.02;
   letter-spacing: -0.03em;
+  text-wrap: balance;
+  word-break: normal;
+  overflow-wrap: anywhere;
   color: #17120d;
 }
 
