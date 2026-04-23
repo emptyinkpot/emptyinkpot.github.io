@@ -68,17 +68,26 @@
 
 1. `HomeWorkbenchSidebar`
 2. `HomeWorkbenchSearch`
-3. `HomeWorkbenchUtility`
-4. `HomeWorkbenchHero`
-5. `HomeWorkbenchFeatureBand`
-6. `HomeWorkbenchLatestPosts`
-7. `HomeWorkbenchTaxonomy`
-8. `HomeWorkbenchProjectNotes`
-9. `HomeWorkbenchMaintenance`
-10. `HomeWorkbenchSignals`
-11. `HomeWorkbenchRoutes`
-12. `HomeWorkbenchPlanned`
-13. `HomeWorkbenchScripts`
+3. `home-workbench__lead-grid`
+   - `HomeWorkbenchHero`
+   - `HomeWorkbenchUtility`
+4. `home-workbench__content-grid`
+   - `HomeWorkbenchLatestPosts`
+   - `HomeWorkbenchFeatureBand`
+   - `HomeWorkbenchTaxonomy`
+   - `HomeWorkbenchMaintenance`
+5. `HomeWorkbenchProjectNotes`
+6. `HomeWorkbenchRoutes`
+7. `HomeWorkbenchPlanned`
+8. `HomeWorkbenchSignals`
+9. `HomeWorkbenchScripts`
+
+当前桌面首页不再把这些模块线性一段段往下堆，而是采用：
+
+- 顶部搜索入口
+- `Hero + Utility` 的 lead workbench
+- `Latest Posts + Feature/Taxonomy/Maintenance` 的内容主栏 + 侧栏
+- 下方项目、站点入口、规划扩展与 GitHub signals 的连续信息带
 
 这就是当前 live 首页的真实编排顺序；文档、设计说明和后续实现都应以这里为准。
 

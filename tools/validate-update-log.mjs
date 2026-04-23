@@ -9,7 +9,7 @@ if (!fs.existsSync(targetPath)) {
   fail(`Update log source not found: ${targetPath}`);
 }
 
-const source = fs.readFileSync(targetPath, 'utf8');
+const source = fs.readFileSync(targetPath, 'utf8').replace(/\r\n/g, '\n');
 const markerIndex = source.indexOf(marker);
 
 if (markerIndex === -1) {

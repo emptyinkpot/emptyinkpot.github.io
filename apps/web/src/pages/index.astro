@@ -72,22 +72,30 @@ const latestPostCards = payload.latestPosts.map((post) => ({
     <main class="home-editorial-page" data-pagefind-body>
       <div class="home-editorial-page__inner home-workbench">
         <HomeWorkbenchSearch filters={payload.quickFilters} />
-        <HomeWorkbenchUtility friendlySites={payload.friendlySites} teams={payload.teams} />
-        <HomeWorkbenchHero
-          hero={payload.hero}
-          snapshot={payload.snapshot}
-          checkIn={payload.checkIn}
-          github={payload.github}
-          featuredPost={payload.featuredPost}
-        />
-        <HomeWorkbenchFeatureBand featuredPost={payload.featuredPost} />
-        <HomeWorkbenchLatestPosts posts={latestPostCards} />
-        <HomeWorkbenchTaxonomy topics={topicCards} series={seriesCards} />
+        <div class="home-workbench__lead-grid">
+          <HomeWorkbenchHero
+            hero={payload.hero}
+            snapshot={payload.snapshot}
+            checkIn={payload.checkIn}
+            github={payload.github}
+            featuredPost={payload.featuredPost}
+          />
+          <div class="home-workbench__lead-side">
+            <HomeWorkbenchUtility friendlySites={payload.friendlySites} teams={payload.teams} />
+          </div>
+        </div>
+        <div class="home-workbench__content-grid">
+          <HomeWorkbenchLatestPosts posts={latestPostCards} />
+          <div class="home-workbench__content-side">
+            <HomeWorkbenchFeatureBand featuredPost={payload.featuredPost} />
+            <HomeWorkbenchTaxonomy topics={topicCards} series={seriesCards} />
+            <HomeWorkbenchMaintenance items={payload.maintenanceItems} />
+          </div>
+        </div>
         <HomeWorkbenchProjectNotes activeProject={activeProject} latestNote={latestNote} />
-        <HomeWorkbenchMaintenance items={payload.maintenanceItems} />
-        <HomeWorkbenchSignals teams={payload.teams} />
         <HomeWorkbenchRoutes topCards={routeTopCards} bottomCards={routeBottomCards} />
         <HomeWorkbenchPlanned cards={payload.plannedCards} />
+        <HomeWorkbenchSignals teams={payload.teams} />
       </div>
     </main>
   </div>
