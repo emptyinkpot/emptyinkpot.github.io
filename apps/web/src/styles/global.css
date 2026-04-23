@@ -416,7 +416,7 @@ body.home-mode .page-wrap--home {
 }
 
 .home-editorial-page__inner {
-  width: min(100%, 1060px);
+  width: min(100%, 1240px);
 }
 
 .home-editorial-page::-webkit-scrollbar {
@@ -427,14 +427,14 @@ body.home-mode .page-wrap--home {
 .home-editorial-shell {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: stretch;
   justify-content: center;
-  width: min(1380px, calc(100% - 3rem));
+  width: min(1560px, calc(100% - 2rem));
   height: 100%;
   min-height: 0;
   margin: 0 auto;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   box-sizing: border-box;
 }
 
@@ -787,6 +787,13 @@ body.home-mode .page-wrap--home {
   }
 }
 
+@media (max-width: 1200px) {
+  .home-workbench__lead-grid,
+  .home-workbench__content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 900px) {
   body.home-mode {
     overflow: auto;
@@ -816,6 +823,11 @@ body.home-mode .page-wrap--home {
     padding: 0.5rem 0 0;
   }
 
+  .home-side-rail__profile-panel,
+  .home-side-rail__profile {
+    min-height: 0;
+  }
+
   .home-side-rail__nav {
     flex-direction: row;
     flex-wrap: wrap;
@@ -842,6 +854,11 @@ body.home-mode .page-wrap--home {
     width: 100%;
   }
 
+  .home-workbench__lead-grid,
+  .home-workbench__content-grid {
+    grid-template-columns: 1fr;
+  }
+
   .home-poster-topbar {
     flex-direction: column;
     align-items: flex-start;
@@ -863,8 +880,41 @@ body.home-mode .page-wrap--home {
 .home-workbench {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  padding-bottom: 2.4rem;
+  gap: 1rem;
+  padding-bottom: 1.8rem;
+}
+
+.home-workbench__lead-grid,
+.home-workbench__content-grid {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.home-workbench__lead-grid {
+  grid-template-columns: minmax(0, 1.32fr) minmax(20rem, 0.9fr);
+}
+
+.home-workbench__content-grid {
+  grid-template-columns: minmax(0, 1.38fr) minmax(18rem, 0.9fr);
+}
+
+.home-workbench__lead-side,
+.home-workbench__content-side {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.home-workbench__lead-side .home-workbench__utility,
+.home-workbench__content-side .home-workbench__double,
+.home-workbench__content-side .home-workbench__double--project {
+  grid-template-columns: 1fr;
+}
+
+.home-workbench__lead-side .home-workbench__linksgrid {
+  grid-template-columns: 1fr;
 }
 
 .home-workbench__searchbar,
@@ -1008,6 +1058,41 @@ body.home-mode .page-wrap--home {
   color: #f4efe6;
 }
 
+.home-workbench__featureband {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(102, 8, 116, 0.9);
+  padding: 0.95rem 1rem;
+  color: #f4efe6;
+}
+
+.home-workbench__featureband-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.home-workbench__featureband-copy strong {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.home-workbench__featureband-copy p {
+  font-size: 0.8rem;
+  line-height: 1.58;
+  color: rgba(244, 239, 230, 0.84);
+}
+
+.home-workbench__featureband-meta {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.78);
+}
+
 .home-workbench__utility,
 .home-workbench__hero,
 .home-workbench__double,
@@ -1034,8 +1119,8 @@ body.home-mode .page-wrap--home {
 .home-workbench__card {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
-  padding: 1.05rem;
+  gap: 0.78rem;
+  padding: 0.95rem;
 }
 
 .home-workbench__card--accent,
@@ -1111,8 +1196,8 @@ body.home-mode .page-wrap--home {
 .home-workbench__status-card strong,
 .home-workbench__route-card strong {
   display: block;
-  font-size: 1.02rem;
-  line-height: 1.15;
+  font-size: 0.96rem;
+  line-height: 1.18;
 }
 
 .home-workbench__linkitem small,
@@ -1293,17 +1378,17 @@ body.home-mode .page-wrap--home {
 }
 
 .home-workbench__hero-main h1 {
-  max-width: 46rem;
-  font-size: clamp(2.9rem, 4.8vw, 5.15rem);
-  line-height: 0.88;
+  max-width: 39rem;
+  font-size: clamp(2.45rem, 4vw, 4.4rem);
+  line-height: 0.9;
   letter-spacing: -0.03em;
   color: #17120d;
 }
 
 .home-workbench__hero-summary {
-  max-width: 44rem;
-  font-size: 0.92rem;
-  line-height: 1.74;
+  max-width: 36rem;
+  font-size: 0.88rem;
+  line-height: 1.64;
 }
 
 .home-workbench__hero-actions {
@@ -1350,7 +1435,7 @@ body.home-mode .page-wrap--home {
 .home-workbench__heatmap-head strong,
 .home-workbench__snapshot h2,
 .home-workbench__blocktitle {
-  font-size: 1.55rem;
+  font-size: 1.35rem;
   line-height: 1.05;
 }
 
@@ -1421,8 +1506,8 @@ body.home-mode .page-wrap--home {
   flex-direction: column;
   gap: 0.95rem;
   background: rgba(248, 245, 241, 0.92);
-  min-height: 16.5rem;
-  padding: 1rem;
+  min-height: 14.25rem;
+  padding: 0.9rem;
 }
 
 .home-workbench__analytics-head {
@@ -1650,8 +1735,8 @@ body.home-mode .page-wrap--home {
 
 .home-workbench__postitem {
   display: grid;
-  grid-template-columns: 7.6rem 8.1rem minmax(0, 1fr);
-  gap: 1rem;
+  grid-template-columns: 6.1rem 7rem minmax(0, 1fr);
+  gap: 0.85rem;
   align-items: stretch;
   width: 100%;
   border: 0;
@@ -1659,8 +1744,8 @@ body.home-mode .page-wrap--home {
   text-align: left;
   cursor: pointer;
   border-top: 1px solid #e3dbe0;
-  padding-top: 0.75rem;
-  min-height: 7rem;
+  padding-top: 0.65rem;
+  min-height: 0;
   min-width: 0;
   transition: transform 160ms ease, border-color 160ms ease, opacity 160ms ease;
 }
@@ -1695,8 +1780,8 @@ body.home-mode .page-wrap--home {
   flex-direction: column;
   justify-content: flex-end;
   gap: 0.28rem;
-  min-height: 6.6rem;
-  padding: 0.75rem;
+  min-height: 5.85rem;
+  padding: 0.68rem;
   background: rgba(255, 255, 255, 0.74);
   overflow: hidden;
   position: relative;
@@ -1755,13 +1840,13 @@ body.home-mode .page-wrap--home {
 }
 
 .home-workbench__postbody strong {
-  font-size: 1.02rem;
-  line-height: 1.18;
+  font-size: 0.95rem;
+  line-height: 1.2;
 }
 
 .home-workbench__postbody p {
-  font-size: 0.8rem;
-  line-height: 1.58;
+  font-size: 0.76rem;
+  line-height: 1.5;
   color: #5b5148;
 }
 
@@ -1854,7 +1939,7 @@ body.home-mode .page-wrap--home {
 }
 
 .home-workbench__postpreview-copy strong {
-  font-size: 1.14rem;
+  font-size: 1.02rem;
   line-height: 1.18;
   color: #17120d;
 }
@@ -2001,13 +2086,13 @@ body.home-mode .page-wrap--home {
 .home-workbench__route-card {
   justify-content: space-between;
   gap: 0.55rem;
-  min-height: 11.4rem;
+  min-height: 9.5rem;
 }
 
 .home-workbench__repo-card,
 .home-workbench__status-card,
 .home-team-panel__project {
-  min-height: 9.2rem;
+  min-height: 8rem;
 }
 
 .home-workbench__feedcard,
