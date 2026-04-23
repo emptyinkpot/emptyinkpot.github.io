@@ -917,6 +917,20 @@ body.home-mode .page-wrap--home {
   grid-template-columns: 1fr;
 }
 
+@media (max-width: 1200px) {
+  .home-workbench__lead-grid,
+  .home-workbench__content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-workbench__lead-grid,
+  .home-workbench__content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .home-workbench__searchbar,
 .home-workbench__card,
 .home-workbench__route-card {
