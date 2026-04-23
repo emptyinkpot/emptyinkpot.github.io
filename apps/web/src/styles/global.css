@@ -787,13 +787,6 @@ body.home-mode .page-wrap--home {
   }
 }
 
-@media (max-width: 1200px) {
-  .home-workbench__lead-grid,
-  .home-workbench__content-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 900px) {
   body.home-mode {
     overflow: auto;
@@ -852,11 +845,6 @@ body.home-mode .page-wrap--home {
 
   .home-editorial-page__inner {
     width: 100%;
-  }
-
-  .home-workbench__lead-grid,
-  .home-workbench__content-grid {
-    grid-template-columns: 1fr;
   }
 
   .home-poster-topbar {
@@ -918,13 +906,6 @@ body.home-mode .page-wrap--home {
 }
 
 @media (max-width: 1200px) {
-  .home-workbench__lead-grid,
-  .home-workbench__content-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 900px) {
   .home-workbench__lead-grid,
   .home-workbench__content-grid {
     grid-template-columns: 1fr;
