@@ -7,12 +7,38 @@
   "localSourceRoot": "E:\\My Project\\MyBlog",
   "siteAppRoot": "apps/web",
   "sourcePostsRoot": "apps/web/src/content/posts",
+  "contentRoots": [
+    "apps/web/src/content/posts",
+    "apps/web/src/content/notes",
+    "apps/web/src/content/projects",
+    "apps/web/src/content/pages"
+  ],
   "buildOutputRoot": "apps/web/dist",
+  "docsEntrypoints": {
+    "frontendReadme": "apps/web/README.md",
+    "planDoc": "docs/plans/update-plan.md",
+    "architectureChecklist": "docs/architecture/astro-blog-redesign-checklist.md",
+    "maintenanceLog": "docs/maintenance/astro-redesign-execution-log.md"
+  },
   "publicBaseUrl": "https://blog.tengokukk.com/",
+  "siteEntrypoints": {
+    "home": "https://blog.tengokukk.com/",
+    "posts": "https://blog.tengokukk.com/posts/",
+    "tags": "https://blog.tengokukk.com/tags/",
+    "search": "https://blog.tengokukk.com/search/"
+  },
   "serverHost": "124.220.233.126",
   "serverRuntimeRoot": "/srv/myblog/site",
   "nginxSiteConfig": "/etc/nginx/sites-available/myblog.conf",
   "publishMode": "local-build-then-upload-dist",
+  "publishArtifactRoots": [
+    "apps/web/dist"
+  ],
+  "verificationCommands": [
+    "npm run lint",
+    "npm run check",
+    "npm run build"
+  ],
   "qualityGate": [
     "npm run lint",
     "npm run check",

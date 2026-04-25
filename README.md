@@ -19,14 +19,28 @@ machineReadableEntry: project.json
 localSourceRoot: E:\My Project\MyBlog
 siteAppRoot: E:\My Project\MyBlog\apps\web
 sourcePostsRoot: E:\My Project\MyBlog\apps\web\src\content\posts
+contentRoots:
+  - E:\My Project\MyBlog\apps\web\src\content\posts
+  - E:\My Project\MyBlog\apps\web\src\content\notes
+  - E:\My Project\MyBlog\apps\web\src\content\projects
+  - E:\My Project\MyBlog\apps\web\src\content\pages
 buildOutputRoot: E:\My Project\MyBlog\apps\web\dist
 publicBaseUrl: https://blog.tengokukk.com/
+siteEntrypoints:
+  home: https://blog.tengokukk.com/
+  posts: https://blog.tengokukk.com/posts/
+  tags: https://blog.tengokukk.com/tags/
+  search: https://blog.tengokukk.com/search/
 githubRepo: https://github.com/emptyinkpot/emptyinkpot.github.io
 defaultBranch: main
 serverHost: 124.220.233.126
 serverRuntimeRoot: /srv/myblog/site
 nginxSiteConfig: /etc/nginx/sites-available/myblog.conf
 publishMode: local-build-then-upload-dist
+verificationCommands:
+  - npm run lint
+  - npm run check
+  - npm run build
 ```
 
 - 这是本仓唯一的项目说明入口，供人和机器快速定位项目名、源码、GitHub、部署位置和对外入口。
