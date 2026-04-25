@@ -884,7 +884,7 @@ body.home-mode .page-wrap--home {
 }
 
 .home-workbench__content-grid {
-  grid-template-columns: minmax(0, 1.46fr) minmax(21rem, 0.84fr);
+  grid-template-columns: minmax(0, 1.3fr) minmax(22rem, 0.98fr);
 }
 
 .home-workbench__lead-side,
