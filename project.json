@@ -20,12 +20,32 @@
     "architectureChecklist": "docs/architecture/astro-blog-redesign-checklist.md",
     "maintenanceLog": "docs/maintenance/astro-redesign-execution-log.md"
   },
+  "sourceOfTruthMap": {
+    "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
+    "localActiveSourceRoot": "E:\\My Project\\MyBlog",
+    "publicPostsRoot": "apps/web/src/content/posts",
+    "buildOutputRoot": "apps/web/dist",
+    "serverRuntimeRoot": "/srv/myblog/site"
+  },
   "publicBaseUrl": "https://blog.tengokukk.com/",
   "siteEntrypoints": {
     "home": "https://blog.tengokukk.com/",
     "posts": "https://blog.tengokukk.com/posts/",
     "tags": "https://blog.tengokukk.com/tags/",
     "search": "https://blog.tengokukk.com/search/"
+  },
+  "observability": {
+    "nginxAccessLog": "/var/log/nginx/access.log",
+    "nginxErrorLog": "/var/log/nginx/error.log",
+    "buildLogs": "local-cli-or-ci",
+    "analytics": "not-configured",
+    "errorTracking": "not-configured"
+  },
+  "contentModel": {
+    "posts": ["title", "date", "tags", "categories", "summary", "slug"],
+    "notes": ["title", "date", "summary", "slug"],
+    "projects": ["title", "summary", "slug"],
+    "pages": ["title", "slug"]
   },
   "serverHost": "124.220.233.126",
   "serverRuntimeRoot": "/srv/myblog/site",
@@ -34,10 +54,32 @@
   "publishArtifactRoots": [
     "apps/web/dist"
   ],
+  "publishChecklist": [
+    "confirm source-of-truth boundary",
+    "npm run lint",
+    "npm run check",
+    "npm run build",
+    "visible verification when user-facing behavior changed",
+    "push branch and update PR before deploy"
+  ],
   "verificationCommands": [
     "npm run lint",
     "npm run check",
     "npm run build"
+  ],
+  "forbiddenActions": [
+    "treat old working copies or static snapshots as active source",
+    "treat server runtime directories as long-term source of truth",
+    "publish without lint-check-build quality gate",
+    "declare analytics or tracing as active without verification",
+    "write local preview URLs as canonical public entry"
+  ],
+  "platformRoadmap": [
+    "observability layer",
+    "content model expansion",
+    "admin surface",
+    "api surface",
+    "ai-assisted writing pipeline"
   ],
   "qualityGate": [
     "npm run lint",

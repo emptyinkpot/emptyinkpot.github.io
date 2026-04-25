@@ -6,8 +6,8 @@ status: canonical
 # MyBlog
 ## 总体设计与实施手册
 
-> 版本定位：本文件是 MyBlog 的唯一真源、项目说明入口与工程手册主文档。  
-> 文档策略：正文先给出项目说明、结构与边界，再展开运行、开发、发布与维护规则。  
+> 版本定位：本文件是 MyBlog 的唯一真源、项目说明入口与工程手册主文档。
+> 文档策略：正文先给出项目说明、结构与边界，再展开运行、开发、发布与维护规则。
 > 冲突处理：若本文件与任何派生文档冲突，以本文件为准；派生文档只允许补充，不允许重定义项目边界。
 
 ## 0. 项目说明入口
@@ -133,6 +133,22 @@ https://blog.tengokukk.com/
 - 当前 Nginx 配置：`/etc/nginx/sites-available/myblog.conf`
 - 当前 README 不把未验证的额外公开 health/debug 路径写成既成事实。
 
+### 0.5.4 Runtime Observability Truth
+
+- 当前访问日志入口：`/var/log/nginx/access.log`
+- 当前错误日志入口：`/var/log/nginx/error.log`
+- 当前构建观测入口：本地 `npm run build` 输出与 CI / PR 检查日志
+- 当前已确认质量门：`npm run lint`、`npm run check`、`npm run build`
+- 当前 README 不把未接入的 Sentry、analytics、trace pipeline 写成已存在能力。
+
+### 0.5.5 Content System Truth
+
+- 当前内容系统是文件型 content collections，而不是数据库型 CMS。
+- 正式集合边界是 `posts`、`notes`、`projects`、`pages`。
+- `posts` 是结构最严格的公开内容类型，默认需要标题、日期、标签、分类、摘要与 slug。
+- `notes` 承担轻量记录；`projects` 承担项目索引；`pages` 承担独立页面内容。
+- 当前标签页、分类页、系列页都建立在文件内容元数据之上，而不是独立索引服务。
+
 ## 0.6 Constraint Layer
 
 本层只写硬约束、禁止行为和系统不变量。
@@ -153,6 +169,15 @@ https://blog.tengokukk.com/
 - `/srv/myblog/site` 是当前正式云端运行目录。
 - 同一时刻只允许一个活跃本地源码仓边界。
 
+### 0.6.3 Source-Of-Truth Map
+
+- 长期源码真源：GitHub 仓库 `emptyinkpot/emptyinkpot.github.io`
+- 当前本机活源码仓：`E:\My Project\MyBlog`
+- 当前公开文章真源：`apps/web/src/content/posts/`
+- 当前构建产物真源：`apps/web/dist/`
+- 当前服务器运行真源：`/srv/myblog/site`
+- 历史快照、旧 working copy、服务器临时文件、根目录零散文档都不得与上述真源并列。
+
 ## 0.7 Strategy Layer
 
 本层只写开发、验证、发布与排障顺序；不得冒充当前事实。
@@ -172,12 +197,30 @@ https://blog.tengokukk.com/
 3. 再把构建产物发布到 `/srv/myblog/site`。
 4. 不要先改服务器再回补本地源码仓。
 
-### 0.7.3 AI Execution Protocol
+### 0.7.3 Publish Checklist
+
+1. 确认改动落在正确真源边界。
+2. 执行 `npm run lint`。
+3. 执行 `npm run check`。
+4. 执行 `npm run build`。
+5. 若改动涉及公开内容路由或首页交互，补一轮本地可见结果验证。
+6. 完成提交、推送与 PR 更新后，再判断是否需要发布到 `/srv/myblog/site`。
+
+### 0.7.4 AI Execution Protocol
 
 1. 先读取 `0. 项目说明入口`，确认源码仓、公开入口与运行目录。
 2. 再读取 `Truth Layer`，确认真实入口、内容真源与构建产物边界。
 3. 再读取 `Constraint Layer`，确认禁止动作与系统不变量。
 4. 最后按 `Strategy Layer` 顺序执行验证、提交与发布。
+
+### 0.7.5 Platform Evolution Notes
+
+以下内容是已识别的升级方向，不属于当前已落地事实：
+
+- 未来可加 `Observability Layer` 的增强能力，例如 Sentry、访问分析、构建耗时统计与请求追踪。
+- 未来可把内容系统继续升级为更强的 `Content Model Layer`，包括 schema、关系、引用图与统一索引。
+- 未来可增加 `admin` 或 `api` 边界，把 MyBlog 从单前台站点推进到内容平台。
+- 未来可增加 AI 写作、摘要、标签建议与发布流水线，但这些当前都不是既成运行事实。
 
 ## 本地源码仓定位
 
