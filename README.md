@@ -537,6 +537,305 @@ nginx reload
   - 落地 `logs viewer`
   - 落地自动发布 agent
 
+#### 0.7.5.10 Target Frontend Interaction Model
+
+当前前台已经不是“简单博客页面集合”，而更接近“工作台型首页 + 内容系统”。后续前端升级的重点不应只是“更好看”，而应优先补齐：
+
+- 交互分层
+- 信息节奏
+- 操作反馈
+- 状态可见性
+
+目标前台方向应从 `Blog UI` 升级为 `Content OS UI`，默认按以下三层理解页面：
+
+- `L1 Content Layer`
+  - 文章、笔记、项目、系列与详情正文
+- `L2 Action Layer`
+  - 搜索、筛选、分类、标签、快速跳转、复制/分享等操作
+- `L3 System Layer`
+  - 状态、统计、入口、系统信号、最近更新、运行健康度
+
+现有问题不是“组件不够多”，而是这些层混在一起，导致页面更像“信息堆叠”，而不是“可操作系统”。
+
+#### 0.7.5.11 Target Homepage Console Pattern
+
+后续首页 Workbench 不建议继续按“组件一块块向下堆”；应按功能分层，重组为控制台式首页：
+
+```text
+Hero / System Entry
+-> Quick Actions
+-> Content Feed
+-> Signals
+-> System Panels
+```
+
+推荐把首页主结构默认理解为：
+
+- `Hero`
+  - 说明当前站点是谁、在做什么、最近发生了什么
+- `Quick Actions`
+  - 搜索
+  - 标签或分类入口
+  - 项目入口
+  - 快速跳转
+- `Content Feed`
+  - 最新文章
+  - 推荐内容
+  - 按类型混排的内容流
+- `Signals`
+  - 更新频率
+  - 活跃度
+  - 近期变更
+- `System Panels`
+  - 分类统计
+  - 项目状态
+  - 运行状态
+
+首页改造的重点是“功能分块”，不是“展示分块”。现有 `HomeWorkbench*` 组件默认视为可重组资产，而不是待删除资产。
+
+#### 0.7.5.12 Target Frontend State And Feedback Contract
+
+后续前台页面需要明确“行为反馈体系”，避免停留在纯浏览页。建议至少补齐以下交互状态：
+
+- `loading`
+  - 用 skeleton、占位块或延迟反馈表示加载中
+- `empty`
+  - 明确显示“当前没有结果/没有内容”，而不是空白页
+- `error`
+  - 对搜索失败、内容缺失、客户端异常给出可见反馈
+- `success / action feedback`
+  - 复制、筛选、切换、加载完成等行为应有反馈，可用 toast、状态文本或内联提示
+
+后续状态标签建议逐步进入前台内容体系，例如：
+
+- `draft`
+- `published`
+- `archived`
+- `ai-generated`
+
+如果当前真实内容尚未全面具备这些字段，README 里将其视为目标前端 contract，而不是当前事实。
+
+#### 0.7.5.13 Target Content Surface Upgrade
+
+后续内容页不应只呈现“静态正文”，而应升级为“数据 + 状态 + 关系”的内容面板。建议目标内容页至少包含：
+
+- 元信息栏
+  - 发布时间
+  - 标签
+  - 阅读时间
+  - 状态
+  - 来源（如人工 / AI-assisted）
+- 关系系统
+  - 上一篇
+  - 下一篇
+  - 系列入口
+  - 相关文章
+- 操作入口
+  - 复制链接
+  - 分享
+  - 返回列表
+  - 查看源码或原始内容入口（若有）
+
+内容页目标不是加更多装饰，而是把“状态、上下文、关系、操作”从隐含信息变成显式信息。
+
+#### 0.7.5.14 Target Search And Taxonomy Interaction
+
+当前搜索、标签、分类、系列页面都已存在，但后续应从“列表页”升级为“交互入口”：
+
+- 搜索目标
+  - 输入即过滤
+  - 显示标题、类型、标签摘要
+  - 至少支持 `all / posts / notes / projects` 的类型过滤
+- 标签 / 分类 / 系列目标
+  - 不只显示名称
+  - 尽量显示数量、最近更新、入口说明
+  - 应更像筛选视图入口，而不是静态字典页
+
+这一层的目标是把 taxonomy 从“归档结构”提升为“导航与发现系统”。
+
+#### 0.7.5.15 Target Frontend Design Language
+
+后续前台与 `admin-next` 建议共用一套基础设计语言，使控制面与展示面属于同一系统，而不是两套割裂 UI。
+
+默认可复用的基础规则：
+
+- 卡片基线
+  - `border + rounded-xl + padding + hover state`
+- 状态颜色
+  - `draft -> yellow`
+  - `published -> green`
+  - `error -> red`
+  - `ai -> accent`
+- 字体层级
+  - `title`
+  - `section`
+  - `body`
+  - `meta`
+- 间距规则
+  - 页面级 `space-y-8`
+  - 组件级 `space-y-4`
+- 动效规则
+  - hover / fade / slide 等只服务结构反馈，不做无意义装饰
+
+如果后续进入真正的可复用设计系统阶段，应把这些规则继续下沉到 tokens / contracts / patterns，而不是只留在 prose 文档里。
+
+#### 0.7.5.16 Frontend Refactor Priority
+
+前台升级建议默认按以下顺序推进，而不是同时大改所有页面：
+
+1. 先重排首页 Workbench 的结构，把首页改成控制台式信息节奏。
+2. 再给内容体系补状态标签与状态语义。
+3. 再把搜索页升级为更强交互式搜索入口。
+4. 再升级内容页模板，补元信息、关系与操作入口。
+5. 最后补 `System Bar`、统计面板与 dashboard 感。
+
+这条顺序的核心是：先建立系统感，再补细节视觉。
+
+#### 0.7.5.17 Target Admin Console Information Architecture
+
+`admin-next` 的目标不应只是“有几个后台页面”，而应是清晰的控制台结构。推荐第一版信息架构直接固定为：
+
+```text
+apps/admin-next/app/
+├─ admin/
+│  ├─ layout.tsx
+│  ├─ dashboard/page.tsx
+│  ├─ ai/page.tsx
+│  ├─ publish/page.tsx
+│  ├─ token-pool/page.tsx
+│  ├─ content/page.tsx
+│  └─ logs/page.tsx
+│
+├─ api/
+│  ├─ ai/generate/route.ts
+│  ├─ publish/build/route.ts
+│  ├─ publish/release/route.ts
+│  ├─ publish/rollback/route.ts
+│  └─ token-pool/status/route.ts
+│
+└─ components/
+   ├─ admin/
+   ├─ ai/
+   ├─ publish/
+   └─ token-pool/
+```
+
+这一层属于目标结构，不代表当前仓已经存在这些文件。
+
+#### 0.7.5.18 Target Admin Surface Contracts
+
+第一版 `admin-next` 推荐先稳定以下页面职责，而不是一开始就扩成完整 CMS：
+
+- `Dashboard`
+  - 一眼看清 release、发布健康度、文章/草稿数量、AI 任务数、provider 可用数
+- `Content`
+  - 管理内容列表、状态、后续的草稿入口
+- `AI Writer`
+  - 承载 topic / outline / draft / rewrite / seo / review 的可视 pipeline
+- `Publish`
+  - 承载 build、release、rollback、health check 与日志
+- `Token Pool`
+  - 展示 provider scoring、fallback、cooldown、失败次数、延迟、成功率
+- `Logs`
+  - 展示发布、AI、provider 与运行错误日志
+
+如果按执行优先级排序，第一批默认应该优先把 `Dashboard`、`Publish`、`Token Pool` 做成控制台骨架，再接真实 API。
+
+#### 0.7.5.19 Target Admin UI Language
+
+`admin-next` 与前台 Astro 建议共用同一套“系统 UI”语言，避免形成两套割裂风格。第一版建议固定如下基线：
+
+- 背景
+  - `neutral-950`
+- 卡片
+  - `neutral-900 + border-neutral-800 + rounded-2xl`
+- 主按钮
+  - `blue / green`
+- 危险按钮
+  - `red`
+- 状态颜色
+  - `healthy / success -> green`
+  - `draft / cooldown / pending -> yellow`
+  - `error / failed -> red`
+  - `ai-generated -> purple or accent`
+
+推荐复用的基础组件命名：
+
+- `StatusBadge`
+- `MetricCard`
+- `ActionButton`
+- `LogPanel`
+- `StateTimeline`
+- `ProviderTable`
+- `ChatPanel`
+
+如果真正进入实现阶段，这些名字应优先沉淀为共享组件，而不是页面内联重复。
+
+#### 0.7.5.20 Target Publish And AI Interaction Surfaces
+
+`Publish` 页面推荐默认围绕状态机而不是按钮堆叠来设计。第一版发布状态机应显式表现：
+
+```text
+idle
+-> checking
+-> building
+-> uploading
+-> switching
+-> health_checking
+-> success
+
+failure path:
+failed
+-> rollbacking
+-> rollbacked
+```
+
+`AI Writer` 页面推荐默认采用三栏结构，而不是单栏表单：
+
+```text
+left: pipeline
+center: conversation / generation panel
+right: metadata / seo / status / save actions
+```
+
+`Token Pool` 页面推荐默认按 provider 表格展示，而不是只显示 key 或 provider 名称；至少应显式展示：
+
+- provider name
+- status
+- success rate
+- latency
+- cost level
+- fail count
+
+这三块页面的共同目标是：让后台先成为“控制台”，再逐步接入真实 token pool、publish、AI pipeline。
+
+#### 0.7.5.21 Target Admin Delivery Order
+
+`admin-next` 的实现顺序建议固定为：
+
+1. `P0`
+   - `Admin layout`
+   - `Dashboard`
+   - `Publish Center` 静态 UI
+   - `Token Pool` 静态表格
+2. `P1`
+   - `/api/token-pool/status`
+   - `/api/publish/release`
+   - `/api/publish/rollback`
+   - 发布状态机接真实 API
+3. `P2`
+   - `AI Writer` chat UI
+   - `/api/ai/generate`
+   - token-pool 接入
+   - `save draft`
+4. `P3`
+   - `Content` 管理页
+   - `Logs`
+   - `Analytics`
+   - 自动发布 agent
+
+默认原则不是“一次把后台做全”，而是先把控制台骨架稳定，再逐个接真实系统边界。
+
 ## 当前前台实现清单
 
 本节只记录当前已经真实存在的前台页面、组件与支撑模块，供下一轮拆分到 `web-astro` 或对接 `admin-next` 时作为现状索引。
@@ -623,6 +922,31 @@ nginx reload
 - 当前首页工作台组件优先留在展示层；不要为了接后台而把业务写回 Astro 组件。
 - 内容 schema、AI pipeline、发布逻辑、token-pool 调度应进入 `modules/` 或 `kernel/`，不要塞回 `apps/web/src/lib/`。
 - `admin-next` 先做控制面，不要反向侵入当前 Astro 展示层的只读边界。
+
+### 当前前台改造映射
+
+后续细化时，可先按以下映射理解现有资产，而不是从零开始重写：
+
+- 首页控制台入口
+  - `HomeWorkbenchHero`
+  - `HomeWorkbenchDeck`
+  - `HomeWorkbenchSidebar`
+- Quick Actions / 操作层
+  - `HomeWorkbenchSearch`
+  - `HomeWorkbenchRoutes`
+  - `HomeWorkbenchUtility`
+- Content Feed / 内容流
+  - `HomeWorkbenchLatestPosts`
+  - `ArticleCard`
+  - `FeaturedCard`
+- Signals / System Panels
+  - `HomeWorkbenchSignals`
+  - `HomeWorkbenchTaxonomy`
+  - `HomeWorkbenchMaintenance`
+  - `HomeWorkbenchProjectNotes`
+  - `HomeWorkbenchPlanned`
+
+这层映射的意义是：优先做重组、抽象和 contract 收敛，而不是简单推倒重写。
 
 ## 本地源码仓定位
 

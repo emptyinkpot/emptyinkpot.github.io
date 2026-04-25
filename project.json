@@ -106,6 +106,124 @@
       "auto publish agent"
     ]
   },
+  "frontendInteractionModel": {
+    "uiDirection": "content-os-ui",
+    "layers": [
+      "content-layer",
+      "action-layer",
+      "system-layer"
+    ],
+    "homepagePattern": [
+      "hero-system-entry",
+      "quick-actions",
+      "content-feed",
+      "signals",
+      "system-panels"
+    ],
+    "requiredFeedbackStates": [
+      "loading",
+      "empty",
+      "error",
+      "action-feedback"
+    ],
+    "searchTarget": [
+      "instant-filtering",
+      "type-filter-all-posts-notes-projects",
+      "title-type-tag-surface"
+    ],
+    "contentSurfaceTarget": [
+      "metadata-bar",
+      "status-badges",
+      "content-relations",
+      "action-entrypoints"
+    ]
+  },
+  "frontendRefactorPriority": [
+    "restructure-homepage-as-console",
+    "add-content-status-visibility",
+    "upgrade-search-interaction",
+    "upgrade-content-page-metadata-and-relations",
+    "add-system-bar-and-dashboard-signals"
+  ],
+  "adminPrototype": {
+    "appRoot": "apps/admin-next",
+    "routeGroup": "app/admin",
+    "pages": [
+      "dashboard",
+      "content",
+      "ai",
+      "publish",
+      "token-pool",
+      "logs"
+    ],
+    "apiRoutes": [
+      "app/api/ai/generate/route.ts",
+      "app/api/publish/build/route.ts",
+      "app/api/publish/release/route.ts",
+      "app/api/publish/rollback/route.ts",
+      "app/api/token-pool/status/route.ts"
+    ],
+    "componentGroups": [
+      "components/admin",
+      "components/ai",
+      "components/publish",
+      "components/token-pool"
+    ]
+  },
+  "adminUiLanguage": {
+    "background": "neutral-950",
+    "card": "neutral-900 border-neutral-800 rounded-2xl",
+    "primaryActions": [
+      "blue",
+      "green"
+    ],
+    "dangerAction": "red",
+    "statusColors": {
+      "healthy": "green",
+      "success": "green",
+      "draft": "yellow",
+      "cooldown": "yellow",
+      "pending": "yellow",
+      "error": "red",
+      "failed": "red",
+      "ai-generated": "purple"
+    },
+    "sharedComponentNames": [
+      "StatusBadge",
+      "MetricCard",
+      "ActionButton",
+      "LogPanel",
+      "StateTimeline",
+      "ProviderTable",
+      "ChatPanel"
+    ]
+  },
+  "adminDeliveryOrder": {
+    "P0": [
+      "admin layout",
+      "dashboard",
+      "publish center static ui",
+      "token-pool static table"
+    ],
+    "P1": [
+      "token-pool status api",
+      "publish release api",
+      "publish rollback api",
+      "publish state machine wired to real api"
+    ],
+    "P2": [
+      "ai writer chat ui",
+      "ai generate api",
+      "token-pool integration",
+      "save draft"
+    ],
+    "P3": [
+      "content management page",
+      "logs page",
+      "analytics",
+      "auto publish agent"
+    ]
+  },
   "qualityGate": [
     "npm run lint",
     "npm run check",
