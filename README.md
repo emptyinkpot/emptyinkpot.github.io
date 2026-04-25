@@ -222,6 +222,228 @@ https://blog.tengokukk.com/
 - 未来可增加 `admin` 或 `api` 边界，把 MyBlog 从单前台站点推进到内容平台。
 - 未来可增加 AI 写作、摘要、标签建议与发布流水线，但这些当前都不是既成运行事实。
 
+#### 0.7.5.1 Target Platform Positioning
+
+目标形态不再是“单纯博客站点优化”，而是：
+
+`MyBlog Content Platform`
+
+它是一个以前台内容站为展示面、以后台内容生产系统为控制面、以 AI 写作和发布系统为能力层的个人内容平台。
+
+#### 0.7.5.2 Target High-Level Architecture
+
+```text
+MyBlog/
+├── apps/
+│   ├── web-astro/        # Astro 前台（只读展示）
+│   ├── admin-next/       # Next.js 后台 + API（核心控制）
+│   └── gateway/          # 网关（后期可选）
+│
+├── modules/
+│   ├── content/          # 内容模型与 schema
+│   ├── ai-writer/        # AI 写作系统
+│   ├── publish/          # 构建、发布、回滚
+│   ├── token-pool/       # 模型调度
+│   ├── analytics/        # 数据分析
+│   └── media/            # 素材与封面管理
+│
+├── kernel/
+│   ├── config/
+│   ├── logger/
+│   ├── http/
+│   ├── queue/
+│   └── runtime/
+│
+├── .runtime/
+│   ├── logs/
+│   ├── cache/
+│   └── builds/
+│
+└── docs/
+```
+
+架构原则保持为：
+
+- `Astro` 只负责展示，不承担写入、AI 调度或发布控制。
+- `Next.js` 负责 admin、API、AI 控制与发布控制。
+- `modules/` 只承载业务能力，不直接承担 UI。
+- `kernel/` 只承载底座能力，如 config、logger、queue、runtime。
+
+#### 0.7.5.3 Target Admin Surface
+
+后台优先做成“内容生产驾驶舱”，而不是一开始就做成完整 CMS。
+
+```text
+/admin
+├── dashboard
+├── content
+│   ├── list
+│   ├── editor
+│   └── review
+├── ai
+│   ├── topic
+│   ├── generate
+│   ├── rewrite
+│   └── seo
+├── publish
+│   ├── build
+│   ├── release
+│   └── rollback
+├── analytics
+└── settings
+```
+
+目标 API 面建议为：
+
+```text
+/api
+├── content/
+│   ├── create
+│   ├── update
+│   ├── list
+│   └── publish
+├── ai/
+│   ├── topic
+│   ├── generate
+│   ├── rewrite
+│   └── seo
+├── publish/
+│   ├── build
+│   ├── release
+│   ├── rollback
+│   └── logs
+```
+
+#### 0.7.5.4 Target AI Writing Pipeline
+
+AI 写作目标链路不是“AI 直接写入 posts”，而是显式 pipeline：
+
+```text
+topic
+ ↓
+outline
+ ↓
+draft
+ ↓
+rewrite
+ ↓
+seo
+ ↓
+human check
+ ↓
+publish
+```
+
+建议的模块边界：
+
+```text
+modules/ai-writer/
+├── topic.ts
+├── outline.ts
+├── draft.ts
+├── rewrite.ts
+├── seo.ts
+└── pipeline.ts
+```
+
+内容状态机建议为：
+
+```text
+idea
+ → draft
+ → ai_generated
+ → human_reviewed
+ → ready_to_publish
+ → published
+ → archived
+```
+
+#### 0.7.5.5 Target Token Pool Boundary
+
+`token-pool` 应作为统一模型调度边界，不能让各模块直连模型。
+
+目标调用关系应为：
+
+```text
+ai-writer
+  ↓
+kernel/token-pool
+  ↓
+provider-router
+  ↓
+OpenAI / Claude / Gemini / local / web-to-api
+```
+
+调度策略建议按任务分层：
+
+- `topic`：便宜模型
+- `outline`：便宜或中等模型
+- `draft`：中等模型
+- `rewrite`：强模型
+- `seo`：便宜模型
+- `fact-check`：强模型 + 搜索
+
+#### 0.7.5.6 Target Publish System
+
+当前事实仍是“本地 build -> 上传 dist -> Nginx 托管”；未来目标是可回滚发布。
+
+建议的目标目录：
+
+```text
+/srv/myblog/
+├── releases/
+│   ├── 2026-04-25-001/
+│   ├── 2026-04-25-002/
+├── current -> releases/2026-04-25-002
+├── logs/
+└── scripts/
+```
+
+建议的目标链路：
+
+```text
+git push / admin 点击发布
+  ↓
+CI 检查
+  ↓
+npm run lint
+  ↓
+npm run check
+  ↓
+npm run build
+  ↓
+上传到 releases/<timestamp>
+  ↓
+切换 current 软链接
+  ↓
+nginx reload
+  ↓
+健康检查
+  ↓
+失败自动回滚
+```
+
+#### 0.7.5.7 Hard Rules For Future AI Work
+
+以下规则属于未来平台化阶段也必须持续成立的硬约束：
+
+- AI 不允许直接写入 `posts/` 作为最终发布结果。
+- 所有内容必须先经过 pipeline，再进入人工审核或发布判断。
+- publish 必须经过 `build + check`，不能跳过质量门。
+- 禁止直接覆盖 `current` 运行目录；应优先新增 `release` 再切换指针。
+- token pool 必须作为统一模型调度层，禁止模块直连单一模型提供方。
+
+#### 0.7.5.8 Recommended Upgrade Order
+
+建议按以下顺序推进，而不是同时开太多面：
+
+1. 先补 `content schema` 与校验层。
+2. 再做最小 `admin`，优先管理 Markdown 与发布状态。
+3. 然后加 `AI Studio`，但先只生成草稿，不直接发布。
+4. 再加 `releases + rollback` 的发布中心。
+5. 然后接 `token-pool` 做模型调度与成本控制。
+6. 最后再加 `analytics / search / recommendation`。
+
 ## 本地源码仓定位
 
 - 当前这台机器上的正式本地源码仓路径：`E:\My Project\MyBlog`
