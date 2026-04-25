@@ -115,6 +115,7 @@ https://blog.tengokukk.com/
 
 - `E:\My Project\MyBlog` 是当前机器上的 canonical 本地源码仓。
 - `apps/web/` 是唯一正式站点入口。
+- `apps/admin-next/` 是当前本地已落地的 admin 控制台原型根目录，但还不是公开站点入口，也未接入真实发布链。
 - `apps/web/dist/` 是当前正式静态构建产物目录。
 - `/srv/myblog/site` 是当前云端静态运行目录。
 - `https://blog.tengokukk.com/` 是当前唯一公开站点入口。
@@ -125,6 +126,7 @@ https://blog.tengokukk.com/
 - 架构规范类公开文章真源是 `apps/web/src/content/posts/`。
 - `docs/` 承担工程文档、规划、架构与维护记录，不作为公开文章真源的并列写作面。
 - 当前发布模式是“本地构建 -> 上传 `apps/web/dist/` -> Nginx 托管”，不是服务器内 Git 构建。
+- 当前 `apps/admin-next/` 只承载本地控制台原型；现阶段验证命令是 `npm run admin:build`，不参与当前公开站点发布链。
 
 ### 0.5.3 Observability Truth
 
@@ -164,6 +166,7 @@ https://blog.tengokukk.com/
 ### 0.6.2 System Invariants
 
 - `apps/web/` 是唯一正式站点应用入口。
+- `apps/admin-next/` 不是当前公开站点入口，也不是当前生产发布物来源。
 - `apps/web/src/content/` 是内容真源。
 - `https://blog.tengokukk.com/` 是唯一公开站点入口。
 - `/srv/myblog/site` 是当前正式云端运行目录。
