@@ -1,0 +1,238 @@
+{
+  "projectName": "MyBlog",
+  "canonicalDoc": "README.md",
+  "machineReadableEntry": "project.json",
+  "githubRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
+  "defaultBranch": "main",
+  "localSourceRoot": "E:\\My Project\\MyBlog",
+  "siteAppRoot": "apps/web",
+  "adminAppRoot": "apps/admin-next",
+  "sourcePostsRoot": "apps/web/src/content/posts",
+  "contentRoots": [
+    "apps/web/src/content/posts",
+    "apps/web/src/content/notes",
+    "apps/web/src/content/projects",
+    "apps/web/src/content/pages"
+  ],
+  "buildOutputRoot": "apps/web/dist",
+  "docsEntrypoints": {
+    "frontendReadme": "apps/web/README.md",
+    "planDoc": "docs/plans/update-plan.md",
+    "adminP0Checklist": "docs/plans/admin-next-p0-checklist.md",
+    "architectureChecklist": "docs/architecture/astro-blog-redesign-checklist.md",
+    "maintenanceLog": "docs/maintenance/astro-redesign-execution-log.md"
+  },
+  "sourceOfTruthMap": {
+    "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
+    "localActiveSourceRoot": "E:\\My Project\\MyBlog",
+    "publicPostsRoot": "apps/web/src/content/posts",
+    "buildOutputRoot": "apps/web/dist",
+    "serverRuntimeRoot": "/srv/myblog/site"
+  },
+  "publicBaseUrl": "https://blog.tengokukk.com/",
+  "siteEntrypoints": {
+    "home": "https://blog.tengokukk.com/",
+    "posts": "https://blog.tengokukk.com/posts/",
+    "tags": "https://blog.tengokukk.com/tags/",
+    "search": "https://blog.tengokukk.com/search/"
+  },
+  "observability": {
+    "nginxAccessLog": "/var/log/nginx/access.log",
+    "nginxErrorLog": "/var/log/nginx/error.log",
+    "buildLogs": "local-cli-or-ci",
+    "analytics": "not-configured",
+    "errorTracking": "not-configured"
+  },
+  "contentModel": {
+    "posts": ["title", "date", "tags", "categories", "summary", "slug"],
+    "notes": ["title", "date", "summary", "slug"],
+    "projects": ["title", "summary", "slug"],
+    "pages": ["title", "slug"]
+  },
+  "serverHost": "124.220.233.126",
+  "serverRuntimeRoot": "/srv/myblog/site",
+  "nginxSiteConfig": "/etc/nginx/sites-available/myblog.conf",
+  "publishMode": "local-build-then-upload-dist",
+  "publishArtifactRoots": [
+    "apps/web/dist"
+  ],
+  "publishChecklist": [
+    "confirm source-of-truth boundary",
+    "npm run lint",
+    "npm run check",
+    "npm run build",
+    "visible verification when user-facing behavior changed",
+    "push branch and update PR before deploy"
+  ],
+  "verificationCommands": [
+    "npm run lint",
+    "npm run check",
+    "npm run build"
+  ],
+  "adminPrototypeVerificationCommands": [
+    "npm run admin:build"
+  ],
+  "forbiddenActions": [
+    "treat old working copies or static snapshots as active source",
+    "treat server runtime directories as long-term source of truth",
+    "publish without lint-check-build quality gate",
+    "declare analytics or tracing as active without verification",
+    "write local preview URLs as canonical public entry"
+  ],
+  "platformRoadmap": [
+    "observability layer",
+    "content model expansion",
+    "admin-next app-router control surface",
+    "api route-handlers under app/api",
+    "ai-assisted writing pipeline",
+    "releases-current-rollback publish system",
+    "token-pool provider scoring"
+  ],
+  "platformExecutionOrder": {
+    "P0": [
+      "admin-next bootstrap",
+      "dashboard page",
+      "publish build/release/rollback api",
+      "releases-current rollback publish flow"
+    ],
+    "P1": [
+      "token-pool provider scoring",
+      "token-pool status api",
+      "ai generate via token-pool"
+    ],
+    "P2": [
+      "content editor",
+      "ai pipeline",
+      "save draft"
+    ],
+    "P3": [
+      "analytics",
+      "logs viewer",
+      "auto publish agent"
+    ]
+  },
+  "frontendInteractionModel": {
+    "uiDirection": "content-os-ui",
+    "layers": [
+      "content-layer",
+      "action-layer",
+      "system-layer"
+    ],
+    "homepagePattern": [
+      "hero-system-entry",
+      "quick-actions",
+      "content-feed",
+      "signals",
+      "system-panels"
+    ],
+    "requiredFeedbackStates": [
+      "loading",
+      "empty",
+      "error",
+      "action-feedback"
+    ],
+    "searchTarget": [
+      "instant-filtering",
+      "type-filter-all-posts-notes-projects",
+      "title-type-tag-surface"
+    ],
+    "contentSurfaceTarget": [
+      "metadata-bar",
+      "status-badges",
+      "content-relations",
+      "action-entrypoints"
+    ]
+  },
+  "frontendRefactorPriority": [
+    "restructure-homepage-as-console",
+    "add-content-status-visibility",
+    "upgrade-search-interaction",
+    "upgrade-content-page-metadata-and-relations",
+    "add-system-bar-and-dashboard-signals"
+  ],
+  "adminPrototype": {
+    "appRoot": "apps/admin-next",
+    "routeGroup": "app/admin",
+    "pages": [
+      "dashboard",
+      "content",
+      "ai",
+      "publish",
+      "token-pool",
+      "logs"
+    ],
+    "apiRoutes": [
+      "app/api/ai/generate/route.ts",
+      "app/api/publish/build/route.ts",
+      "app/api/publish/release/route.ts",
+      "app/api/publish/rollback/route.ts",
+      "app/api/token-pool/status/route.ts"
+    ],
+    "componentGroups": [
+      "components/admin",
+      "components/ai",
+      "components/publish",
+      "components/token-pool"
+    ]
+  },
+  "adminUiLanguage": {
+    "background": "neutral-950",
+    "card": "neutral-900 border-neutral-800 rounded-2xl",
+    "primaryActions": [
+      "blue",
+      "green"
+    ],
+    "dangerAction": "red",
+    "statusColors": {
+      "healthy": "green",
+      "success": "green",
+      "draft": "yellow",
+      "cooldown": "yellow",
+      "pending": "yellow",
+      "error": "red",
+      "failed": "red",
+      "ai-generated": "purple"
+    },
+    "sharedComponentNames": [
+      "StatusBadge",
+      "MetricCard",
+      "ActionButton",
+      "LogPanel",
+      "StateTimeline",
+      "ProviderTable",
+      "ChatPanel"
+    ]
+  },
+  "adminDeliveryOrder": {
+    "P0": [
+      "admin layout",
+      "dashboard",
+      "publish center static ui",
+      "token-pool static table"
+    ],
+    "P1": [
+      "token-pool status api",
+      "publish release api",
+      "publish rollback api",
+      "publish state machine wired to real api"
+    ],
+    "P2": [
+      "ai writer chat ui",
+      "ai generate api",
+      "token-pool integration",
+      "save draft"
+    ],
+    "P3": [
+      "content management page",
+      "logs page",
+      "analytics",
+      "auto publish agent"
+    ]
+  },
+  "qualityGate": [
+    "npm run lint",
+    "npm run check",
+    "npm run build"
+  ],
+  "status": "active"
+}

@@ -1774,12 +1774,25 @@ body.home-mode .page-wrap--home {
   font-weight: 700;
   letter-spacing: 0.14em;
   color: var(--home-accent);
+  text-decoration: none;
+}
+
+.home-workbench__feedhead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.home-workbench__feedhead small {
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: #857872;
 }
 
 .home-workbench__feedsplit {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(19rem, 0.92fr);
-  gap: 1rem;
+  grid-template-columns: minmax(21rem, 0.82fr) minmax(28rem, 1.18fr);
+  gap: 1.4rem;
   align-items: start;
 }
 
@@ -1791,24 +1804,26 @@ body.home-mode .page-wrap--home {
 
 .home-workbench__postitem {
   display: grid;
-  grid-template-columns: 6.1rem 7rem minmax(0, 1fr);
-  gap: 0.85rem;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  gap: 0.9rem;
   align-items: stretch;
   width: 100%;
   border: 0;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.42);
   text-align: left;
   cursor: pointer;
-  border-top: 1px solid #e3dbe0;
-  padding-top: 0.65rem;
+  padding: 0.8rem;
   min-height: 0;
   min-width: 0;
-  transition: transform 160ms ease, border-color 160ms ease, opacity 160ms ease;
+  transition: transform 160ms ease, border-color 160ms ease, opacity 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
 .home-workbench__postitem:hover,
+.home-workbench__postitem:focus-visible,
 .home-workbench__postitem.is-active {
-  border-color: #bcaec2;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: inset 0 0 0 1px rgba(102, 8, 116, 0.14);
+  outline: none;
 }
 
 .home-workbench__postitem:hover {
@@ -1825,10 +1840,16 @@ body.home-mode .page-wrap--home {
 
 .home-workbench__postmeta {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.24rem;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.55rem;
   min-width: 0;
+}
+
+.home-workbench__postrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
 }
 
 .home-workbench__postcover {
@@ -1836,8 +1857,8 @@ body.home-mode .page-wrap--home {
   flex-direction: column;
   justify-content: flex-end;
   gap: 0.28rem;
-  min-height: 5.85rem;
-  padding: 0.68rem;
+  min-height: 5.7rem;
+  padding: 0.58rem;
   background: rgba(255, 255, 255, 0.74);
   overflow: hidden;
   position: relative;
@@ -1891,19 +1912,37 @@ body.home-mode .page-wrap--home {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.38rem;
+  gap: 0.45rem;
   min-width: 0;
 }
 
 .home-workbench__postbody strong {
-  font-size: 0.95rem;
-  line-height: 1.2;
+  font-size: 1.05rem;
+  line-height: 1.26;
 }
 
 .home-workbench__postbody p {
   font-size: 0.76rem;
-  line-height: 1.5;
+  line-height: 1.54;
   color: #5b5148;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home-workbench__postcue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.7rem;
+  padding: 0 0.62rem;
+  background: rgba(236, 232, 225, 0.9);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--home-accent);
+  white-space: nowrap;
 }
 
 .home-workbench__postpreview {
@@ -1915,11 +1954,11 @@ body.home-mode .page-wrap--home {
 .home-workbench__postpreview-panel {
   display: none;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 1rem;
   min-height: 100%;
   border-top: 1px solid #ddd5d0;
   background: rgba(255, 255, 255, 0.54);
-  padding: 0.95rem 0 0;
+  padding: 1rem 0 0;
 }
 
 .home-workbench__postpreview-panel.is-active {
@@ -1936,12 +1975,20 @@ body.home-mode .page-wrap--home {
   color: var(--home-accent);
 }
 
+.home-workbench__postpreview-meta a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .home-workbench__postpreview-cover {
   position: relative;
-  min-height: 12rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 14rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.72);
   overflow: hidden;
+  text-decoration: none;
 }
 
 .home-workbench__postpreview-cover img {
@@ -1995,14 +2042,19 @@ body.home-mode .page-wrap--home {
 }
 
 .home-workbench__postpreview-copy strong {
-  font-size: 1.02rem;
-  line-height: 1.18;
+  font-size: 1.1rem;
+  line-height: 1.2;
   color: #17120d;
 }
 
+.home-workbench__postpreview-copy strong a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .home-workbench__postpreview-copy p {
-  font-size: 0.84rem;
-  line-height: 1.72;
+  font-size: 0.86rem;
+  line-height: 1.78;
   color: #51473f;
 }
 
@@ -2012,7 +2064,7 @@ body.home-mode .page-wrap--home {
   gap: 0.5rem;
 }
 
-.home-workbench__postpreview-tags span {
+.home-workbench__postpreview-tags a {
   display: inline-flex;
   align-items: center;
   min-height: 1.7rem;
@@ -2021,6 +2073,7 @@ body.home-mode .page-wrap--home {
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--home-accent);
+  text-decoration: none;
 }
 
 .home-workbench__postpreview-actions {
@@ -2041,6 +2094,58 @@ body.home-mode .page-wrap--home {
   font-size: 0.76rem;
   font-weight: 700;
   color: #f8f5f2;
+  text-decoration: none;
+}
+
+.home-workbench__featureband {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: end;
+}
+
+.home-workbench__featureband-link,
+.home-workbench__maintenance-link,
+.home-workbench__projectlink,
+.home-workbench__repo-card,
+.home-workbench__status-card,
+.home-workbench__tree,
+.home-workbench__route-card {
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  text-decoration: none;
+}
+
+.home-workbench__featureband-link:hover,
+.home-workbench__maintenance-link:hover,
+.home-workbench__projectlink:hover,
+.home-workbench__repo-card:hover,
+.home-workbench__status-card:hover,
+.home-workbench__tree:hover,
+.home-workbench__route-card:hover {
+  transform: translateY(-2px);
+}
+
+.home-workbench__featureband-link:focus-visible,
+.home-workbench__maintenance-link:focus-visible,
+.home-workbench__projectlink:focus-visible,
+.home-workbench__repo-card:focus-visible,
+.home-workbench__status-card:focus-visible,
+.home-workbench__tree:focus-visible,
+.home-workbench__route-card:focus-visible,
+.home-workbench__postpreview-cover:focus-visible,
+.home-workbench__postpreview-copy strong a:focus-visible,
+.home-workbench__postpreview-tags a:focus-visible,
+.home-workbench__postpreview-actions a:focus-visible,
+.home-workbench__feedcard header a:focus-visible {
+  outline: 2px solid rgba(102, 8, 116, 0.45);
+  outline-offset: 3px;
+}
+
+.home-workbench__featureband-link {
+  display: block;
+  border-top: 1px solid #ddd5d0;
+  padding-top: 0.95rem;
+  color: inherit;
 }
 
 .home-workbench__mini-grid {

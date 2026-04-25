@@ -21,14 +21,23 @@ const { teams } = Astro.props as Props;
             <strong class="home-workbench__blocktitle">当前团队仓库矩阵</strong>
             <p class="home-workbench__blockmeta">团队切换后，这组仓库卡随之替换</p>
             <div class="home-workbench__repo-grid">
-              {team.repos.map((repo) => (
-                <article class="home-workbench__repo-card">
-                  <i class:list={['home-workbench__repo-stripe', `home-workbench__repo-stripe--${repo.tone}`]}></i>
-                  <strong>{repo.name}</strong>
-                  <span>{repo.summary}</span>
-                  <small>{repo.status}</small>
-                </article>
-              ))}
+              {team.repos.map((repo) => {
+                const Tag = repo.href ? 'a' : 'article';
+
+                return (
+                  <Tag
+                    class="home-workbench__repo-card"
+                    href={repo.href}
+                    target={repo.href?.startsWith('http') ? '_blank' : undefined}
+                    rel={repo.href?.startsWith('http') ? 'noreferrer' : undefined}
+                  >
+                    <i class:list={['home-workbench__repo-stripe', `home-workbench__repo-stripe--${repo.tone}`]}></i>
+                    <strong>{repo.name}</strong>
+                    <span>{repo.summary}</span>
+                    <small>{repo.status}</small>
+                  </Tag>
+                );
+              })}
             </div>
           </article>
 
@@ -37,13 +46,22 @@ const { teams } = Astro.props as Props;
             <strong class="home-workbench__blocktitle">当前团队状态面板</strong>
             <p class="home-workbench__blockmeta home-workbench__blockmeta--light">运行中 / 排队中 / 检查中</p>
             <div class="home-workbench__status-grid">
-              {team.automation.map((item) => (
-                <article class:list={['home-workbench__status-card', `state-${item.state}`]}>
-                  <strong>{item.label}</strong>
-                  <span>{item.state.toUpperCase()}</span>
-                  <small>{item.detail}</small>
-                </article>
-              ))}
+              {team.automation.map((item) => {
+                const Tag = item.href ? 'a' : 'article';
+
+                return (
+                  <Tag
+                    class:list={['home-workbench__status-card', `state-${item.state}`]}
+                    href={item.href}
+                    target={item.href?.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href?.startsWith('http') ? 'noreferrer' : undefined}
+                  >
+                    <strong>{item.label}</strong>
+                    <span>{item.state.toUpperCase()}</span>
+                    <small>{item.detail}</small>
+                  </Tag>
+                );
+              })}
             </div>
           </article>
         </div>
@@ -53,24 +71,42 @@ const { teams } = Astro.props as Props;
             <HomeWorkbenchSectionLine leading="TOOLKIT LAB / 工具目录" trailing={team.subtitle} tight={true} />
             <strong class="home-workbench__blocktitle">当前团队工具目录</strong>
             <p class="home-workbench__blockmeta">{team.toolkit.subtitle}</p>
-            <div class="home-workbench__tree">
-              <strong>{team.toolkit.root}</strong>
-              {team.toolkit.items.map((item, itemIndex) => (
-                <span>{itemIndex === team.toolkit.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
-              ))}
-            </div>
+            {team.toolkit.href ? (
+              <a class="home-workbench__tree" href={team.toolkit.href}>
+                <strong>{team.toolkit.root}</strong>
+                {team.toolkit.items.map((item, itemIndex) => (
+                  <span>{itemIndex === team.toolkit.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+                ))}
+              </a>
+            ) : (
+              <div class="home-workbench__tree">
+                <strong>{team.toolkit.root}</strong>
+                {team.toolkit.items.map((item, itemIndex) => (
+                  <span>{itemIndex === team.toolkit.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+                ))}
+              </div>
+            )}
           </article>
 
           <article class="home-workbench__card home-workbench__card--panel">
             <HomeWorkbenchSectionLine leading="WORLD / DESIGN ARCHIVE / 资料档案" trailing={team.label} tight={true} />
             <strong class="home-workbench__blocktitle">当前团队世界观档案</strong>
             <p class="home-workbench__blockmeta">{team.archive.subtitle}</p>
-            <div class="home-workbench__tree">
-              <strong>{team.archive.root}</strong>
-              {team.archive.items.map((item, itemIndex) => (
-                <span>{itemIndex === team.archive.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
-              ))}
-            </div>
+            {team.archive.href ? (
+              <a class="home-workbench__tree" href={team.archive.href}>
+                <strong>{team.archive.root}</strong>
+                {team.archive.items.map((item, itemIndex) => (
+                  <span>{itemIndex === team.archive.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+                ))}
+              </a>
+            ) : (
+              <div class="home-workbench__tree">
+                <strong>{team.archive.root}</strong>
+                {team.archive.items.map((item, itemIndex) => (
+                  <span>{itemIndex === team.archive.items.length - 1 ? '└─ ' : '├─ '}{item}</span>
+                ))}
+              </div>
+            )}
           </article>
         </div>
       </div>

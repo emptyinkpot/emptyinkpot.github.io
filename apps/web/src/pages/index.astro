@@ -13,7 +13,7 @@ import HomeWorkbenchSidebar from '../components/home/HomeWorkbenchSidebar.astro'
 import HomeWorkbenchSignals from '../components/home/HomeWorkbenchSignals.astro';
 import HomeWorkbenchTaxonomy from '../components/home/HomeWorkbenchTaxonomy.astro';
 import HomeWorkbenchUtility from '../components/home/HomeWorkbenchUtility.astro';
-import { formatDate, getExcerptFromBody, getPrimaryCategory } from '../lib/content';
+import { formatDate, getExcerptFromBody, getPrimaryCategory, toSlug } from '../lib/content';
 import { getHomePagePayload } from '../lib/home';
 import { getPostCover } from '../lib/postCovers';
 import { withBase } from '../lib/site';
@@ -55,12 +55,17 @@ const latestPostCards = payload.latestPosts.map((post) => ({
   title: post.data.title,
   date: formatDate(post.data.date),
   category: getPrimaryCategory(post),
+  categoryHref: withBase(`/categories/${toSlug(getPrimaryCategory(post))}/`),
   summary: post.data.summary ?? post.data.description ?? getExcerptFromBody(post.body, 92),
   preview:
     post.data.description ??
     post.data.summary ??
     getExcerptFromBody(post.body, 320),
-  tags: post.data.tags?.slice(0, 3) ?? [],
+  tags:
+    post.data.tags?.slice(0, 3).map((tag) => ({
+      label: tag,
+      href: withBase(`/tags/${toSlug(tag)}/`)
+    })) ?? [],
   coverSrc: getPostCover(post)
 }));
 ---

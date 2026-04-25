@@ -8,7 +8,7 @@ tags:
   - 云端部署
   - 备案
   - HTTPS
-  - nginx
+  - Nginx
   - 排障
 categories:
   - 工程实践

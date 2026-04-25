@@ -17,10 +17,17 @@ const { items } = Astro.props as Props;
     <p class="home-workbench__blocklead">把原来的打卡区改成近期维护与内容备注入口。</p>
     <div class="home-workbench__maintenance-list">
       {items.map((item) => (
-        <div class="home-workbench__maintenance-item">
-          <strong>{item.label}</strong>
-          <span>{item.meta}</span>
-        </div>
+        item.href ? (
+          <a class="home-workbench__maintenance-item home-workbench__maintenance-link" href={item.href}>
+            <strong>{item.label}</strong>
+            <span>{item.meta}</span>
+          </a>
+        ) : (
+          <div class="home-workbench__maintenance-item">
+            <strong>{item.label}</strong>
+            <span>{item.meta}</span>
+          </div>
+        )
       ))}
     </div>
   </article>

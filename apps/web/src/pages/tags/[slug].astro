@@ -12,7 +12,7 @@ export async function getStaticPaths() {
     params: { slug: toSlug(tag) },
     props: {
       tag,
-      posts: posts.filter((post) => post.data.tags.includes(tag))
+      posts: posts.filter((post) => post.data.tags.some((postTag) => toSlug(postTag) === toSlug(tag)))
     }
   }));
 }

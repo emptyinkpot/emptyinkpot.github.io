@@ -1,6 +1,963 @@
-# emptyinkpot.github.io
+---
+title: MyBlog
+status: canonical
+---
+
+# MyBlog
+## 总体设计与实施手册
+
+> 版本定位：本文件是 MyBlog 的唯一真源、项目说明入口与工程手册主文档。
+> 文档策略：正文先给出项目说明、结构与边界，再展开运行、开发、发布与维护规则。
+> 冲突处理：若本文件与任何派生文档冲突，以本文件为准；派生文档只允许补充，不允许重定义项目边界。
+
+## 0. 项目说明入口
+
+```yaml
+projectName: MyBlog
+canonicalDoc: README.md
+machineReadableEntry: project.json
+localSourceRoot: E:\My Project\MyBlog
+siteAppRoot: E:\My Project\MyBlog\apps\web
+sourcePostsRoot: E:\My Project\MyBlog\apps\web\src\content\posts
+contentRoots:
+  - E:\My Project\MyBlog\apps\web\src\content\posts
+  - E:\My Project\MyBlog\apps\web\src\content\notes
+  - E:\My Project\MyBlog\apps\web\src\content\projects
+  - E:\My Project\MyBlog\apps\web\src\content\pages
+buildOutputRoot: E:\My Project\MyBlog\apps\web\dist
+publicBaseUrl: https://blog.tengokukk.com/
+siteEntrypoints:
+  home: https://blog.tengokukk.com/
+  posts: https://blog.tengokukk.com/posts/
+  tags: https://blog.tengokukk.com/tags/
+  search: https://blog.tengokukk.com/search/
+githubRepo: https://github.com/emptyinkpot/emptyinkpot.github.io
+defaultBranch: main
+serverHost: 124.220.233.126
+serverRuntimeRoot: /srv/myblog/site
+nginxSiteConfig: /etc/nginx/sites-available/myblog.conf
+publishMode: local-build-then-upload-dist
+verificationCommands:
+  - npm run lint
+  - npm run check
+  - npm run build
+```
+
+- 这是本仓唯一的项目说明入口，供人和机器快速定位项目名、源码、GitHub、部署位置和对外入口。
+- 机器优先读取 `project.json`；人类优先读取本节和后续正文。
+- 如果需要完整结构、约束与操作流程，继续阅读后续章节。
+
+### 0.1 对外简介
+
+MyBlog 是 `emptyinkpot.github.io` 对应的单站点 Astro 博客仓。它当前承担公开文章、专题、笔记、项目索引与首页工作台的统一前台职责。对外读者最关心的是：项目是什么、怎么构建、源码在哪、部署到哪里，这些信息都集中在本节与 `project.json`。
+
+### 0.2 快速开始
+
+- 项目名：`MyBlog`
+- GitHub：`https://github.com/emptyinkpot/emptyinkpot.github.io`
+- 本机源码：`E:\My Project\MyBlog`
+- 站点应用：`E:\My Project\MyBlog\apps\web`
+- 内容真源：`E:\My Project\MyBlog\apps\web\src\content\posts`
+- 本地构建产物：`E:\My Project\MyBlog\apps\web\dist`
+- 对外入口：`https://blog.tengokukk.com/`
+- 云端站点目录：`/srv/myblog/site`
+- Nginx 配置：`/etc/nginx/sites-available/myblog.conf`
+- 机器优先读取：`project.json`
+- 人类优先读取：`README.md`
+
+### 0.3 仓库信息卡
+
+| 项目 | 值 |
+| --- | --- |
+| GitHub 仓库 | `https://github.com/emptyinkpot/emptyinkpot.github.io` |
+| 默认分支 | `main` |
+| 当前工作分支 | `fix/homepage-desktop-overlap` |
+| 长期源码真源 | GitHub 仓库 |
+| 本机目录 | `E:\My Project\MyBlog` |
+| 服务器目录 | `/srv/myblog/site` |
+| 分支策略 | 默认 `feature branch + Pull Request`；非紧急情况不直接改 `main` |
+| 版本控制职责 | GitHub 负责历史与协作；本机负责开发与构建；服务器负责静态运行 |
+
+### 0.4 仓库卫生与运行入口
+
+- Canonical 人类入口：`README.md`
+- Canonical 机器入口：`project.json`
+- 前端主入口：`apps/web/`
+- 内容真源：`apps/web/src/content/`
+- 构建产物目录：`apps/web/dist/`
+- 质量门：`npm run lint` -> `npm run check` -> `npm run build`
+- 发布边界：本地构建后上传 `apps/web/dist/` 到 `/srv/myblog/site`
+- 运行边界：`project.json` 负责机器入口，`README.md` 负责人类入口
 
 `emptyinkpot.github.io` 当前已经收拢为单站点仓库：对外站点由 `apps/web/` 生成，工程文档统一收纳在 `docs/`。
+
+## 0.5 Truth Layer
+
+本层只写当前真实运行状态；不写理想态，不把策略写成事实。
+
+### 0.5.1 Real Runtime Topology
+
+```text
+内容作者 / 开发者
+  ↓
+E:\My Project\MyBlog
+  ↓
+apps/web
+  ↓
+Astro build
+  ↓
+apps/web/dist
+  ↓
+/srv/myblog/site
+  ↓
+https://blog.tengokukk.com/
+```
+
+- `E:\My Project\MyBlog` 是当前机器上的 canonical 本地源码仓。
+- `apps/web/` 是唯一正式站点入口。
+- `apps/admin-next/` 是当前本地已落地的 admin 控制台原型根目录，但还不是公开站点入口，也未接入真实发布链。
+- `apps/web/dist/` 是当前正式静态构建产物目录。
+- `/srv/myblog/site` 是当前云端静态运行目录。
+- `https://blog.tengokukk.com/` 是当前唯一公开站点入口。
+
+### 0.5.2 Content And Build Truth
+
+- 正式内容真源是 `apps/web/src/content/`。
+- 架构规范类公开文章真源是 `apps/web/src/content/posts/`。
+- `docs/` 承担工程文档、规划、架构与维护记录，不作为公开文章真源的并列写作面。
+- 当前发布模式是“本地构建 -> 上传 `apps/web/dist/` -> Nginx 托管”，不是服务器内 Git 构建。
+- 当前 `apps/admin-next/` 只承载本地控制台原型；现阶段验证命令是 `npm run admin:build`，不参与当前公开站点发布链。
+
+### 0.5.3 Observability Truth
+
+- 当前公开站点入口：`https://blog.tengokukk.com/`
+- 当前云端站点目录：`/srv/myblog/site`
+- 当前 Nginx 配置：`/etc/nginx/sites-available/myblog.conf`
+- 当前 README 不把未验证的额外公开 health/debug 路径写成既成事实。
+
+### 0.5.4 Runtime Observability Truth
+
+- 当前访问日志入口：`/var/log/nginx/access.log`
+- 当前错误日志入口：`/var/log/nginx/error.log`
+- 当前构建观测入口：本地 `npm run build` 输出与 CI / PR 检查日志
+- 当前已确认质量门：`npm run lint`、`npm run check`、`npm run build`
+- 当前 README 不把未接入的 Sentry、analytics、trace pipeline 写成已存在能力。
+
+### 0.5.5 Content System Truth
+
+- 当前内容系统是文件型 content collections，而不是数据库型 CMS。
+- 正式集合边界是 `posts`、`notes`、`projects`、`pages`。
+- `posts` 是结构最严格的公开内容类型，默认需要标题、日期、标签、分类、摘要与 slug。
+- `notes` 承担轻量记录；`projects` 承担项目索引；`pages` 承担独立页面内容。
+- 当前标签页、分类页、系列页都建立在文件内容元数据之上，而不是独立索引服务。
+
+## 0.6 Constraint Layer
+
+本层只写硬约束、禁止行为和系统不变量。
+
+### 0.6.1 Forbidden Actions
+
+- 不要把旧临时 working copy、静态快照目录或归档目录重新当作活跃源码仓。
+- 不要把 `docs/`、根目录零散 Markdown、或服务器运行目录写成公开文章真源。
+- 不要把本地预览地址、临时端口或未验证子域名写成当前正式公开入口。
+- 不要在未完成 `npm run lint`、`npm run check`、`npm run build` 前把改动当作可发布版本。
+- 不要把服务器运行目录当作长期 source of truth，GitHub 仓库仍是长期真源。
+
+### 0.6.2 System Invariants
+
+- `apps/web/` 是唯一正式站点应用入口。
+- `apps/admin-next/` 不是当前公开站点入口，也不是当前生产发布物来源。
+- `apps/web/src/content/` 是内容真源。
+- `https://blog.tengokukk.com/` 是唯一公开站点入口。
+- `/srv/myblog/site` 是当前正式云端运行目录。
+- 同一时刻只允许一个活跃本地源码仓边界。
+
+### 0.6.3 Source-Of-Truth Map
+
+- 长期源码真源：GitHub 仓库 `emptyinkpot/emptyinkpot.github.io`
+- 当前本机活源码仓：`E:\My Project\MyBlog`
+- 当前公开文章真源：`apps/web/src/content/posts/`
+- 当前构建产物真源：`apps/web/dist/`
+- 当前服务器运行真源：`/srv/myblog/site`
+- 历史快照、旧 working copy、服务器临时文件、根目录零散文档都不得与上述真源并列。
+
+## 0.7 Strategy Layer
+
+本层只写开发、验证、发布与排障顺序；不得冒充当前事实。
+
+### 0.7.1 Local Verification Order
+
+1. 先确认改动是否落在正确真源边界。
+2. 再执行 `npm run lint`。
+3. 然后执行 `npm run check`。
+4. 最后执行 `npm run build`。
+5. 只有三道质量门都通过后，才进入提交、推送或发布判断。
+
+### 0.7.2 Deployment Strategy
+
+1. 在本地源码仓 `E:\My Project\MyBlog` 完成编辑与构建。
+2. 确认 `apps/web/dist/` 是本轮有效构建产物。
+3. 再把构建产物发布到 `/srv/myblog/site`。
+4. 不要先改服务器再回补本地源码仓。
+
+### 0.7.3 Publish Checklist
+
+1. 确认改动落在正确真源边界。
+2. 执行 `npm run lint`。
+3. 执行 `npm run check`。
+4. 执行 `npm run build`。
+5. 若改动涉及公开内容路由或首页交互，补一轮本地可见结果验证。
+6. 完成提交、推送与 PR 更新后，再判断是否需要发布到 `/srv/myblog/site`。
+
+### 0.7.4 AI Execution Protocol
+
+1. 先读取 `0. 项目说明入口`，确认源码仓、公开入口与运行目录。
+2. 再读取 `Truth Layer`，确认真实入口、内容真源与构建产物边界。
+3. 再读取 `Constraint Layer`，确认禁止动作与系统不变量。
+4. 最后按 `Strategy Layer` 顺序执行验证、提交与发布。
+
+### 0.7.5 Platform Evolution Notes
+
+以下内容是已识别的升级方向，不属于当前已落地事实：
+
+- 未来可加 `Observability Layer` 的增强能力，例如 Sentry、访问分析、构建耗时统计与请求追踪。
+- 未来可把内容系统继续升级为更强的 `Content Model Layer`，包括 schema、关系、引用图与统一索引。
+- 未来可增加 `admin` 或 `api` 边界，把 MyBlog 从单前台站点推进到内容平台。
+- 未来可增加 AI 写作、摘要、标签建议与发布流水线，但这些当前都不是既成运行事实。
+
+#### 0.7.5.1 Target Platform Positioning
+
+目标形态不再是“单纯博客站点优化”，而是：
+
+`MyBlog Content Platform`
+
+它是一个以前台内容站为展示面、以后台内容生产系统为控制面、以 AI 写作和发布系统为能力层的个人内容平台。
+
+#### 0.7.5.2 Target High-Level Architecture
+
+```text
+MyBlog/
+├── apps/
+│   ├── web-astro/        # Astro 前台（只读展示）
+│   ├── admin-next/       # Next.js 后台 + API（核心控制）
+│   └── gateway/          # 网关（后期可选）
+│
+├── modules/
+│   ├── content/          # 内容模型与 schema
+│   ├── ai-writer/        # AI 写作系统
+│   ├── publish/          # 构建、发布、回滚
+│   ├── token-pool/       # 模型调度
+│   ├── analytics/        # 数据分析
+│   └── media/            # 素材与封面管理
+│
+├── kernel/
+│   ├── config/
+│   ├── logger/
+│   ├── http/
+│   ├── queue/
+│   └── runtime/
+│
+├── .runtime/
+│   ├── logs/
+│   ├── cache/
+│   └── builds/
+│
+└── docs/
+```
+
+架构原则保持为：
+
+- `Astro` 只负责展示，不承担写入、AI 调度或发布控制。
+- `Next.js` 负责 admin、API、AI 控制与发布控制。
+- `modules/` 只承载业务能力，不直接承担 UI。
+- `kernel/` 只承载底座能力，如 config、logger、queue、runtime。
+- 目标后台建议采用 `App Router + Route Handlers`；接口路径优先放在 `app/api/**/route.ts`。
+
+#### 0.7.5.2.1 First Executable Target
+
+第一批建议直接落地为：
+
+```text
+apps/
+  web-astro/                 # 现有博客前台（目标名称；当前真实路径仍为 apps/web）
+  admin-next/                # 新增后台 + API + Dashboard
+
+modules/
+  content/
+  ai-writer/
+  token-pool/
+  publish/
+  analytics/
+
+kernel/
+  config/
+  logger/
+  runtime/
+```
+
+执行红线保持为：
+
+- `Astro` 前台只读 content。
+- `Astro` 不允许写文件、不允许调 AI、不允许执行发布。
+- `API` 不允许绕过 `modules/token-pool` 直连 provider。
+- `publish` 不允许直接覆盖 `current`；必须走 `releases + current + rollback`。
+
+#### 0.7.5.3 Target Admin Surface
+
+后台优先做成“内容生产驾驶舱”，而不是一开始就做成完整 CMS。
+
+```text
+/admin
+├── dashboard
+├── content
+│   ├── list
+│   ├── editor
+│   └── review
+├── ai
+│   ├── topic
+│   ├── generate
+│   ├── rewrite
+│   └── seo
+├── publish
+│   ├── build
+│   ├── release
+│   └── rollback
+├── analytics
+└── settings
+```
+
+目标 API 面建议为：
+
+```text
+/api
+├── content/
+│   ├── create
+│   ├── update
+│   ├── list
+│   └── publish
+├── ai/
+│   ├── topic
+│   ├── generate
+│   ├── rewrite
+│   └── seo
+├── publish/
+│   ├── build
+│   ├── release
+│   ├── rollback
+│   └── logs
+```
+
+最小布局壳可按：
+
+```tsx
+// apps/admin-next/app/admin/layout.tsx
+export default function AdminLayout({ children }) {
+  return (
+    <div className="min-h-screen grid grid-cols-[240px_1fr]">
+      <aside className="border-r p-4 space-y-3">
+        <div className="font-bold text-xl">Content OS</div>
+        <nav className="space-y-2">
+          <a href="/admin/dashboard">Dashboard</a>
+          <a href="/admin/content">Content</a>
+          <a href="/admin/ai">AI Writer</a>
+          <a href="/admin/publish">Publish</a>
+          <a href="/admin/token-pool">Token Pool</a>
+          <a href="/admin/logs">Logs</a>
+        </nav>
+      </aside>
+      <main className="p-6">{children}</main>
+    </div>
+  );
+}
+```
+
+#### 0.7.5.4 Target AI Writing Pipeline
+
+AI 写作目标链路不是“AI 直接写入 posts”，而是显式 pipeline：
+
+```text
+topic
+ ↓
+outline
+ ↓
+draft
+ ↓
+rewrite
+ ↓
+seo
+ ↓
+human check
+ ↓
+publish
+```
+
+建议的模块边界：
+
+```text
+modules/ai-writer/
+├── topic.ts
+├── outline.ts
+├── draft.ts
+├── rewrite.ts
+├── seo.ts
+└── pipeline.ts
+```
+
+内容状态机建议为：
+
+```text
+idea
+ → draft
+ → ai_generated
+ → human_reviewed
+ → ready_to_publish
+ → published
+ → archived
+```
+
+#### 0.7.5.5 Target Token Pool Boundary
+
+`token-pool` 应作为统一模型调度边界，不能让各模块直连模型。
+
+目标调用关系应为：
+
+```text
+ai-writer
+  ↓
+kernel/token-pool
+  ↓
+provider-router
+  ↓
+OpenAI / Claude / Gemini / local / web-to-api
+```
+
+调度策略建议按任务分层：
+
+- `topic`：便宜模型
+- `outline`：便宜或中等模型
+- `draft`：中等模型
+- `rewrite`：强模型
+- `seo`：便宜模型
+- `fact-check`：强模型 + 搜索
+
+评分调度目标不应是随机选模型，而应走 provider scoring + fallback：
+
+```text
+task -> route -> provider -> fallback
+```
+
+连续失败、延迟惩罚、cooldown、successRate 都应进入调度得分，而不是只看静态优先级。
+
+#### 0.7.5.6 Target Publish System
+
+当前事实仍是“本地 build -> 上传 dist -> Nginx 托管”；未来目标是可回滚发布。
+
+建议的目标目录：
+
+```text
+/srv/myblog/
+├── releases/
+│   ├── 2026-04-25-001/
+│   ├── 2026-04-25-002/
+├── current -> releases/2026-04-25-002
+├── logs/
+└── scripts/
+```
+
+建议的目标链路：
+
+```text
+git push / admin 点击发布
+  ↓
+CI 检查
+  ↓
+npm run lint
+  ↓
+npm run check
+  ↓
+npm run build
+  ↓
+上传到 releases/<timestamp>
+  ↓
+切换 current 软链接
+  ↓
+nginx reload
+  ↓
+健康检查
+  ↓
+失败自动回滚
+```
+
+目标发布接口建议至少包括：
+
+```text
+/api/publish/build
+/api/publish/release
+/api/publish/rollback
+/api/publish/logs
+```
+
+#### 0.7.5.7 Hard Rules For Future AI Work
+
+以下规则属于未来平台化阶段也必须持续成立的硬约束：
+
+- AI 不允许直接写入 `posts/` 作为最终发布结果。
+- 所有内容必须先经过 pipeline，再进入人工审核或发布判断。
+- publish 必须经过 `build + check`，不能跳过质量门。
+- 禁止直接覆盖 `current` 运行目录；应优先新增 `release` 再切换指针。
+- token pool 必须作为统一模型调度层，禁止模块直连单一模型提供方。
+
+#### 0.7.5.8 Recommended Upgrade Order
+
+建议按以下顺序推进，而不是同时开太多面：
+
+1. 先补 `content schema` 与校验层。
+2. 再做最小 `admin`，优先管理 Markdown 与发布状态。
+3. 然后加 `AI Studio`，但先只生成草稿，不直接发布。
+4. 再加 `releases + rollback` 的发布中心。
+5. 然后接 `token-pool` 做模型调度与成本控制。
+6. 最后再加 `analytics / search / recommendation`。
+
+#### 0.7.5.9 P0 To P3 Delivery Order
+
+推荐把后续执行切成以下阶段：
+
+- `P0`
+  - 跑起 `admin-next`
+  - 落地 `dashboard`
+  - 落地 `build / release / rollback` API
+  - 落地 `releases + current` 回滚发布
+- `P1`
+  - 落地 `token-pool` provider scoring
+  - 落地 `/api/token-pool/status`
+  - 让 AI generate 接入 token-pool
+- `P2`
+  - 落地 `content editor`
+  - 落地 `AI pipeline`
+  - 落地 `save draft`
+- `P3`
+  - 落地 `analytics`
+  - 落地 `logs viewer`
+  - 落地自动发布 agent
+
+#### 0.7.5.10 Target Frontend Interaction Model
+
+当前前台已经不是“简单博客页面集合”，而更接近“工作台型首页 + 内容系统”。后续前端升级的重点不应只是“更好看”，而应优先补齐：
+
+- 交互分层
+- 信息节奏
+- 操作反馈
+- 状态可见性
+
+目标前台方向应从 `Blog UI` 升级为 `Content OS UI`，默认按以下三层理解页面：
+
+- `L1 Content Layer`
+  - 文章、笔记、项目、系列与详情正文
+- `L2 Action Layer`
+  - 搜索、筛选、分类、标签、快速跳转、复制/分享等操作
+- `L3 System Layer`
+  - 状态、统计、入口、系统信号、最近更新、运行健康度
+
+现有问题不是“组件不够多”，而是这些层混在一起，导致页面更像“信息堆叠”，而不是“可操作系统”。
+
+#### 0.7.5.11 Target Homepage Console Pattern
+
+后续首页 Workbench 不建议继续按“组件一块块向下堆”；应按功能分层，重组为控制台式首页：
+
+```text
+Hero / System Entry
+-> Quick Actions
+-> Content Feed
+-> Signals
+-> System Panels
+```
+
+推荐把首页主结构默认理解为：
+
+- `Hero`
+  - 说明当前站点是谁、在做什么、最近发生了什么
+- `Quick Actions`
+  - 搜索
+  - 标签或分类入口
+  - 项目入口
+  - 快速跳转
+- `Content Feed`
+  - 最新文章
+  - 推荐内容
+  - 按类型混排的内容流
+- `Signals`
+  - 更新频率
+  - 活跃度
+  - 近期变更
+- `System Panels`
+  - 分类统计
+  - 项目状态
+  - 运行状态
+
+首页改造的重点是“功能分块”，不是“展示分块”。现有 `HomeWorkbench*` 组件默认视为可重组资产，而不是待删除资产。
+
+#### 0.7.5.12 Target Frontend State And Feedback Contract
+
+后续前台页面需要明确“行为反馈体系”，避免停留在纯浏览页。建议至少补齐以下交互状态：
+
+- `loading`
+  - 用 skeleton、占位块或延迟反馈表示加载中
+- `empty`
+  - 明确显示“当前没有结果/没有内容”，而不是空白页
+- `error`
+  - 对搜索失败、内容缺失、客户端异常给出可见反馈
+- `success / action feedback`
+  - 复制、筛选、切换、加载完成等行为应有反馈，可用 toast、状态文本或内联提示
+
+后续状态标签建议逐步进入前台内容体系，例如：
+
+- `draft`
+- `published`
+- `archived`
+- `ai-generated`
+
+如果当前真实内容尚未全面具备这些字段，README 里将其视为目标前端 contract，而不是当前事实。
+
+#### 0.7.5.13 Target Content Surface Upgrade
+
+后续内容页不应只呈现“静态正文”，而应升级为“数据 + 状态 + 关系”的内容面板。建议目标内容页至少包含：
+
+- 元信息栏
+  - 发布时间
+  - 标签
+  - 阅读时间
+  - 状态
+  - 来源（如人工 / AI-assisted）
+- 关系系统
+  - 上一篇
+  - 下一篇
+  - 系列入口
+  - 相关文章
+- 操作入口
+  - 复制链接
+  - 分享
+  - 返回列表
+  - 查看源码或原始内容入口（若有）
+
+内容页目标不是加更多装饰，而是把“状态、上下文、关系、操作”从隐含信息变成显式信息。
+
+#### 0.7.5.14 Target Search And Taxonomy Interaction
+
+当前搜索、标签、分类、系列页面都已存在，但后续应从“列表页”升级为“交互入口”：
+
+- 搜索目标
+  - 输入即过滤
+  - 显示标题、类型、标签摘要
+  - 至少支持 `all / posts / notes / projects` 的类型过滤
+- 标签 / 分类 / 系列目标
+  - 不只显示名称
+  - 尽量显示数量、最近更新、入口说明
+  - 应更像筛选视图入口，而不是静态字典页
+
+这一层的目标是把 taxonomy 从“归档结构”提升为“导航与发现系统”。
+
+#### 0.7.5.15 Target Frontend Design Language
+
+后续前台与 `admin-next` 建议共用一套基础设计语言，使控制面与展示面属于同一系统，而不是两套割裂 UI。
+
+默认可复用的基础规则：
+
+- 卡片基线
+  - `border + rounded-xl + padding + hover state`
+- 状态颜色
+  - `draft -> yellow`
+  - `published -> green`
+  - `error -> red`
+  - `ai -> accent`
+- 字体层级
+  - `title`
+  - `section`
+  - `body`
+  - `meta`
+- 间距规则
+  - 页面级 `space-y-8`
+  - 组件级 `space-y-4`
+- 动效规则
+  - hover / fade / slide 等只服务结构反馈，不做无意义装饰
+
+如果后续进入真正的可复用设计系统阶段，应把这些规则继续下沉到 tokens / contracts / patterns，而不是只留在 prose 文档里。
+
+#### 0.7.5.16 Frontend Refactor Priority
+
+前台升级建议默认按以下顺序推进，而不是同时大改所有页面：
+
+1. 先重排首页 Workbench 的结构，把首页改成控制台式信息节奏。
+2. 再给内容体系补状态标签与状态语义。
+3. 再把搜索页升级为更强交互式搜索入口。
+4. 再升级内容页模板，补元信息、关系与操作入口。
+5. 最后补 `System Bar`、统计面板与 dashboard 感。
+
+这条顺序的核心是：先建立系统感，再补细节视觉。
+
+#### 0.7.5.17 Target Admin Console Information Architecture
+
+`admin-next` 的目标不应只是“有几个后台页面”，而应是清晰的控制台结构。推荐第一版信息架构直接固定为：
+
+```text
+apps/admin-next/app/
+├─ admin/
+│  ├─ layout.tsx
+│  ├─ dashboard/page.tsx
+│  ├─ ai/page.tsx
+│  ├─ publish/page.tsx
+│  ├─ token-pool/page.tsx
+│  ├─ content/page.tsx
+│  └─ logs/page.tsx
+│
+├─ api/
+│  ├─ ai/generate/route.ts
+│  ├─ publish/build/route.ts
+│  ├─ publish/release/route.ts
+│  ├─ publish/rollback/route.ts
+│  └─ token-pool/status/route.ts
+│
+└─ components/
+   ├─ admin/
+   ├─ ai/
+   ├─ publish/
+   └─ token-pool/
+```
+
+这一层属于目标结构，不代表当前仓已经存在这些文件。
+
+#### 0.7.5.18 Target Admin Surface Contracts
+
+第一版 `admin-next` 推荐先稳定以下页面职责，而不是一开始就扩成完整 CMS：
+
+- `Dashboard`
+  - 一眼看清 release、发布健康度、文章/草稿数量、AI 任务数、provider 可用数
+- `Content`
+  - 管理内容列表、状态、后续的草稿入口
+- `AI Writer`
+  - 承载 topic / outline / draft / rewrite / seo / review 的可视 pipeline
+- `Publish`
+  - 承载 build、release、rollback、health check 与日志
+- `Token Pool`
+  - 展示 provider scoring、fallback、cooldown、失败次数、延迟、成功率
+- `Logs`
+  - 展示发布、AI、provider 与运行错误日志
+
+如果按执行优先级排序，第一批默认应该优先把 `Dashboard`、`Publish`、`Token Pool` 做成控制台骨架，再接真实 API。
+
+#### 0.7.5.19 Target Admin UI Language
+
+`admin-next` 与前台 Astro 建议共用同一套“系统 UI”语言，避免形成两套割裂风格。第一版建议固定如下基线：
+
+- 背景
+  - `neutral-950`
+- 卡片
+  - `neutral-900 + border-neutral-800 + rounded-2xl`
+- 主按钮
+  - `blue / green`
+- 危险按钮
+  - `red`
+- 状态颜色
+  - `healthy / success -> green`
+  - `draft / cooldown / pending -> yellow`
+  - `error / failed -> red`
+  - `ai-generated -> purple or accent`
+
+推荐复用的基础组件命名：
+
+- `StatusBadge`
+- `MetricCard`
+- `ActionButton`
+- `LogPanel`
+- `StateTimeline`
+- `ProviderTable`
+- `ChatPanel`
+
+如果真正进入实现阶段，这些名字应优先沉淀为共享组件，而不是页面内联重复。
+
+#### 0.7.5.20 Target Publish And AI Interaction Surfaces
+
+`Publish` 页面推荐默认围绕状态机而不是按钮堆叠来设计。第一版发布状态机应显式表现：
+
+```text
+idle
+-> checking
+-> building
+-> uploading
+-> switching
+-> health_checking
+-> success
+
+failure path:
+failed
+-> rollbacking
+-> rollbacked
+```
+
+`AI Writer` 页面推荐默认采用三栏结构，而不是单栏表单：
+
+```text
+left: pipeline
+center: conversation / generation panel
+right: metadata / seo / status / save actions
+```
+
+`Token Pool` 页面推荐默认按 provider 表格展示，而不是只显示 key 或 provider 名称；至少应显式展示：
+
+- provider name
+- status
+- success rate
+- latency
+- cost level
+- fail count
+
+这三块页面的共同目标是：让后台先成为“控制台”，再逐步接入真实 token pool、publish、AI pipeline。
+
+#### 0.7.5.21 Target Admin Delivery Order
+
+`admin-next` 的实现顺序建议固定为：
+
+1. `P0`
+   - `Admin layout`
+   - `Dashboard`
+   - `Publish Center` 静态 UI
+   - `Token Pool` 静态表格
+2. `P1`
+   - `/api/token-pool/status`
+   - `/api/publish/release`
+   - `/api/publish/rollback`
+   - 发布状态机接真实 API
+3. `P2`
+   - `AI Writer` chat UI
+   - `/api/ai/generate`
+   - token-pool 接入
+   - `save draft`
+4. `P3`
+   - `Content` 管理页
+   - `Logs`
+   - `Analytics`
+   - 自动发布 agent
+
+默认原则不是“一次把后台做全”，而是先把控制台骨架稳定，再逐个接真实系统边界。
+
+## 当前前台实现清单
+
+本节只记录当前已经真实存在的前台页面、组件与支撑模块，供下一轮拆分到 `web-astro` 或对接 `admin-next` 时作为现状索引。
+
+### 当前页面路由
+
+- 顶层页面：
+  - `apps/web/src/pages/index.astro`
+  - `apps/web/src/pages/about.astro`
+  - `apps/web/src/pages/api-keys.astro`
+  - `apps/web/src/pages/search.astro`
+  - `apps/web/src/pages/updates.astro`
+- 列表/详情页：
+  - `apps/web/src/pages/posts/index.astro`
+  - `apps/web/src/pages/posts/[slug].astro`
+  - `apps/web/src/pages/notes/index.astro`
+  - `apps/web/src/pages/notes/[slug].astro`
+  - `apps/web/src/pages/projects/index.astro`
+  - `apps/web/src/pages/projects/[slug].astro`
+  - `apps/web/src/pages/tags/index.astro`
+  - `apps/web/src/pages/tags/[slug].astro`
+  - `apps/web/src/pages/categories/index.astro`
+  - `apps/web/src/pages/categories/[slug].astro`
+  - `apps/web/src/pages/series/index.astro`
+  - `apps/web/src/pages/series/[slug].astro`
+- 站点输出页：
+  - `apps/web/src/pages/robots.txt.ts`
+  - `apps/web/src/pages/rss.xml.ts`
+
+### 当前首页工作台组件
+
+以下组件已经落地，后续如果拆到平台化前台，应优先复用而不是重写：
+
+- `apps/web/src/components/home/HomeWorkbenchDeck.astro`
+- `apps/web/src/components/home/HomeWorkbenchFeatureBand.astro`
+- `apps/web/src/components/home/HomeWorkbenchHero.astro`
+- `apps/web/src/components/home/HomeWorkbenchLatestPosts.astro`
+- `apps/web/src/components/home/HomeWorkbenchMaintenance.astro`
+- `apps/web/src/components/home/HomeWorkbenchPanel.astro`
+- `apps/web/src/components/home/HomeWorkbenchPlanned.astro`
+- `apps/web/src/components/home/HomeWorkbenchProjectNotes.astro`
+- `apps/web/src/components/home/HomeWorkbenchRoutes.astro`
+- `apps/web/src/components/home/HomeWorkbenchScripts.astro`
+- `apps/web/src/components/home/HomeWorkbenchSearch.astro`
+- `apps/web/src/components/home/HomeWorkbenchSectionLine.astro`
+- `apps/web/src/components/home/HomeWorkbenchSidebar.astro`
+- `apps/web/src/components/home/HomeWorkbenchSignals.astro`
+- `apps/web/src/components/home/HomeWorkbenchTaxonomy.astro`
+- `apps/web/src/components/home/HomeWorkbenchUtility.astro`
+
+### 当前共享组件与内容页组件
+
+- 共享组件：
+  - `apps/web/src/components/shared/ArticleCard.astro`
+  - `apps/web/src/components/shared/FeaturedCard.astro`
+  - `apps/web/src/components/shared/SiteHeader.astro`
+  - `apps/web/src/components/shared/SiteFooter.astro`
+  - `apps/web/src/components/shared/WorkbenchPageIntro.astro`
+- 内容页组件：
+  - `apps/web/src/components/post/GiscusComments.astro`
+
+### 当前布局、lib 与内容层
+
+- 布局：
+  - `apps/web/src/layouts/BaseLayout.astro`
+- 前台支撑模块：
+  - `apps/web/src/lib/content.ts`
+  - `apps/web/src/lib/github.ts`
+  - `apps/web/src/lib/home.ts`
+  - `apps/web/src/lib/postCovers.ts`
+  - `apps/web/src/lib/site.ts`
+  - `apps/web/src/lib/updateLog.ts`
+- 当前内容集合：
+  - `apps/web/src/content/posts/`
+  - `apps/web/src/content/notes/`
+  - `apps/web/src/content/projects/`
+  - `apps/web/src/content/pages/`
+
+### 当前平台化拆分原则
+
+后续从当前实现过渡到目标结构时，默认遵守以下拆分策略：
+
+- 当前 `apps/web` 先视为未来 `apps/web-astro` 的真实前身，不做平行双写。
+- 当前首页工作台组件优先留在展示层；不要为了接后台而把业务写回 Astro 组件。
+- 内容 schema、AI pipeline、发布逻辑、token-pool 调度应进入 `modules/` 或 `kernel/`，不要塞回 `apps/web/src/lib/`。
+- `admin-next` 先做控制面，不要反向侵入当前 Astro 展示层的只读边界。
+
+### 当前前台改造映射
+
+后续细化时，可先按以下映射理解现有资产，而不是从零开始重写：
+
+- 首页控制台入口
+  - `HomeWorkbenchHero`
+  - `HomeWorkbenchDeck`
+  - `HomeWorkbenchSidebar`
+- Quick Actions / 操作层
+  - `HomeWorkbenchSearch`
+  - `HomeWorkbenchRoutes`
+  - `HomeWorkbenchUtility`
+- Content Feed / 内容流
+  - `HomeWorkbenchLatestPosts`
+  - `ArticleCard`
+  - `FeaturedCard`
+- Signals / System Panels
+  - `HomeWorkbenchSignals`
+  - `HomeWorkbenchTaxonomy`
+  - `HomeWorkbenchMaintenance`
+  - `HomeWorkbenchProjectNotes`
+  - `HomeWorkbenchPlanned`
+
+这层映射的意义是：优先做重组、抽象和 contract 收敛，而不是简单推倒重写。
+
+## 本地源码仓定位
+
+- 当前这台机器上的正式本地源码仓路径：`E:\My Project\MyBlog`
+- 当前工作副本就是 `emptyinkpot.github.io / MyBlog` 的可编辑源码边界
+- Git 长期真源仍是 `https://github.com/emptyinkpot/emptyinkpot.github.io`
+- 本地路径可以迁移，但任何时候都应只保留一个活跃写作面，避免再并行维护旧临时 working copy 或静态快照目录
+- 如果后续再次移动本地仓，应先更新控制层说明，再继续编辑、构建或发布
 
 ## 中心入口（先看这里）
 

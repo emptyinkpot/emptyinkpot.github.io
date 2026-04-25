@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "npm --prefix apps/web run dev",
+    "admin:dev": "npm --prefix apps/admin-next run dev",
     "build": "npm --prefix apps/web run build",
+    "admin:build": "npm --prefix apps/admin-next run build",
+    "admin:start": "npm --prefix apps/admin-next run start",
     "preview": "npm --prefix apps/web run preview",
     "astro": "npm --prefix apps/web run astro",
     "lint": "eslint \"apps/web/src/**/*.{ts,astro}\" \"tools/**/*.{js,mjs}\" \"*.{js,mjs}\"",

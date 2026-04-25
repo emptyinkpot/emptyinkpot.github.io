@@ -1,6 +1,6 @@
 ﻿# Astro 重构执行日志
 
-更新时间：2026-03-31
+更新时间：2026-04-23
 
 关联文档：
 
@@ -13,8 +13,23 @@
 ## 当前状态
 
 - 当前策略：对外站点已经统一收敛到 `apps/web/`，Hexo 历史目录已删除，Astro 为唯一正式主链路
-- 当前阶段：单站点发布、内容迁移状态、历史边界说明与工程文档分类收拢已经建立基础闭环
-- 当前重点：按 `docs/plans/update-plan.md` 的 P0/P1/P2 推进下一阶段治理，优先完成 P0 文档口径与导航一致性收口
+- 当前阶段：首页桌面骨架、内容预览区与模块导流入口已继续收口到可验证的单站点工作台形态
+- 当前重点：继续维持首页桌面可读性、可点击性与发布链路一致性，避免模块退化为纯展示占位
+
+## 2026-04-23 / 首页最新文章预览与模块交互收口
+
+- 状态：已完成
+- 结果：
+  - `apps/web/src/components/home/HomeWorkbenchLatestPosts.astro` 改为更明确的双栏预览结构，默认直接展示正文摘要区
+  - `apps/web/src/components/home/HomeWorkbenchScripts.astro` 补齐 `hover / click / focus / ArrowUp / ArrowDown` 切换逻辑
+  - `apps/web/src/components/home/HomeWorkbenchFeatureBand.astro`、`apps/web/src/components/home/HomeWorkbenchMaintenance.astro`、`apps/web/src/components/home/HomeWorkbenchProjectNotes.astro`、`apps/web/src/components/home/HomeWorkbenchSignals.astro` 完成首页主要模块链接化，避免纯摆设卡片
+  - `apps/web/src/lib/home.ts` 与 `apps/web/src/pages/index.astro` 为最新文章、维护项、规划项和团队信号补齐可跳转 href
+  - `apps/web/src/styles/global.css` 调整桌面内容区比例、最新文章列表体积、焦点态与链接样式，减少卡片畸形压缩
+- 验证：
+  - 已执行 `npm run lint`
+  - 已执行 `npm run check`
+  - 已执行 `npm run build`
+  - 已在本地浏览器桌面宽度下确认：默认预览存在、点击与键盘切换可用、控制台无报错
 
 ## 2026-03-31 / Rainyun 13009 Day 2-4 推进（案例文 + 公开更新）
 
