@@ -268,6 +268,36 @@ MyBlog/
 - `Next.js` 负责 admin、API、AI 控制与发布控制。
 - `modules/` 只承载业务能力，不直接承担 UI。
 - `kernel/` 只承载底座能力，如 config、logger、queue、runtime。
+- 目标后台建议采用 `App Router + Route Handlers`；接口路径优先放在 `app/api/**/route.ts`。
+
+#### 0.7.5.2.1 First Executable Target
+
+第一批建议直接落地为：
+
+```text
+apps/
+  web-astro/                 # 现有博客前台（目标名称；当前真实路径仍为 apps/web）
+  admin-next/                # 新增后台 + API + Dashboard
+
+modules/
+  content/
+  ai-writer/
+  token-pool/
+  publish/
+  analytics/
+
+kernel/
+  config/
+  logger/
+  runtime/
+```
+
+执行红线保持为：
+
+- `Astro` 前台只读 content。
+- `Astro` 不允许写文件、不允许调 AI、不允许执行发布。
+- `API` 不允许绕过 `modules/token-pool` 直连 provider。
+- `publish` 不允许直接覆盖 `current`；必须走 `releases + current + rollback`。
 
 #### 0.7.5.3 Target Admin Surface
 
@@ -312,6 +342,30 @@ MyBlog/
 │   ├── release
 │   ├── rollback
 │   └── logs
+```
+
+最小布局壳可按：
+
+```tsx
+// apps/admin-next/app/admin/layout.tsx
+export default function AdminLayout({ children }) {
+  return (
+    <div className="min-h-screen grid grid-cols-[240px_1fr]">
+      <aside className="border-r p-4 space-y-3">
+        <div className="font-bold text-xl">Content OS</div>
+        <nav className="space-y-2">
+          <a href="/admin/dashboard">Dashboard</a>
+          <a href="/admin/content">Content</a>
+          <a href="/admin/ai">AI Writer</a>
+          <a href="/admin/publish">Publish</a>
+          <a href="/admin/token-pool">Token Pool</a>
+          <a href="/admin/logs">Logs</a>
+        </nav>
+      </aside>
+      <main className="p-6">{children}</main>
+    </div>
+  );
+}
 ```
 
 #### 0.7.5.4 Target AI Writing Pipeline
@@ -383,6 +437,14 @@ OpenAI / Claude / Gemini / local / web-to-api
 - `seo`：便宜模型
 - `fact-check`：强模型 + 搜索
 
+评分调度目标不应是随机选模型，而应走 provider scoring + fallback：
+
+```text
+task -> route -> provider -> fallback
+```
+
+连续失败、延迟惩罚、cooldown、successRate 都应进入调度得分，而不是只看静态优先级。
+
 #### 0.7.5.6 Target Publish System
 
 当前事实仍是“本地 build -> 上传 dist -> Nginx 托管”；未来目标是可回滚发布。
@@ -423,6 +485,15 @@ nginx reload
 失败自动回滚
 ```
 
+目标发布接口建议至少包括：
+
+```text
+/api/publish/build
+/api/publish/release
+/api/publish/rollback
+/api/publish/logs
+```
+
 #### 0.7.5.7 Hard Rules For Future AI Work
 
 以下规则属于未来平台化阶段也必须持续成立的硬约束：
@@ -443,6 +514,115 @@ nginx reload
 4. 再加 `releases + rollback` 的发布中心。
 5. 然后接 `token-pool` 做模型调度与成本控制。
 6. 最后再加 `analytics / search / recommendation`。
+
+#### 0.7.5.9 P0 To P3 Delivery Order
+
+推荐把后续执行切成以下阶段：
+
+- `P0`
+  - 跑起 `admin-next`
+  - 落地 `dashboard`
+  - 落地 `build / release / rollback` API
+  - 落地 `releases + current` 回滚发布
+- `P1`
+  - 落地 `token-pool` provider scoring
+  - 落地 `/api/token-pool/status`
+  - 让 AI generate 接入 token-pool
+- `P2`
+  - 落地 `content editor`
+  - 落地 `AI pipeline`
+  - 落地 `save draft`
+- `P3`
+  - 落地 `analytics`
+  - 落地 `logs viewer`
+  - 落地自动发布 agent
+
+## 当前前台实现清单
+
+本节只记录当前已经真实存在的前台页面、组件与支撑模块，供下一轮拆分到 `web-astro` 或对接 `admin-next` 时作为现状索引。
+
+### 当前页面路由
+
+- 顶层页面：
+  - `apps/web/src/pages/index.astro`
+  - `apps/web/src/pages/about.astro`
+  - `apps/web/src/pages/api-keys.astro`
+  - `apps/web/src/pages/search.astro`
+  - `apps/web/src/pages/updates.astro`
+- 列表/详情页：
+  - `apps/web/src/pages/posts/index.astro`
+  - `apps/web/src/pages/posts/[slug].astro`
+  - `apps/web/src/pages/notes/index.astro`
+  - `apps/web/src/pages/notes/[slug].astro`
+  - `apps/web/src/pages/projects/index.astro`
+  - `apps/web/src/pages/projects/[slug].astro`
+  - `apps/web/src/pages/tags/index.astro`
+  - `apps/web/src/pages/tags/[slug].astro`
+  - `apps/web/src/pages/categories/index.astro`
+  - `apps/web/src/pages/categories/[slug].astro`
+  - `apps/web/src/pages/series/index.astro`
+  - `apps/web/src/pages/series/[slug].astro`
+- 站点输出页：
+  - `apps/web/src/pages/robots.txt.ts`
+  - `apps/web/src/pages/rss.xml.ts`
+
+### 当前首页工作台组件
+
+以下组件已经落地，后续如果拆到平台化前台，应优先复用而不是重写：
+
+- `apps/web/src/components/home/HomeWorkbenchDeck.astro`
+- `apps/web/src/components/home/HomeWorkbenchFeatureBand.astro`
+- `apps/web/src/components/home/HomeWorkbenchHero.astro`
+- `apps/web/src/components/home/HomeWorkbenchLatestPosts.astro`
+- `apps/web/src/components/home/HomeWorkbenchMaintenance.astro`
+- `apps/web/src/components/home/HomeWorkbenchPanel.astro`
+- `apps/web/src/components/home/HomeWorkbenchPlanned.astro`
+- `apps/web/src/components/home/HomeWorkbenchProjectNotes.astro`
+- `apps/web/src/components/home/HomeWorkbenchRoutes.astro`
+- `apps/web/src/components/home/HomeWorkbenchScripts.astro`
+- `apps/web/src/components/home/HomeWorkbenchSearch.astro`
+- `apps/web/src/components/home/HomeWorkbenchSectionLine.astro`
+- `apps/web/src/components/home/HomeWorkbenchSidebar.astro`
+- `apps/web/src/components/home/HomeWorkbenchSignals.astro`
+- `apps/web/src/components/home/HomeWorkbenchTaxonomy.astro`
+- `apps/web/src/components/home/HomeWorkbenchUtility.astro`
+
+### 当前共享组件与内容页组件
+
+- 共享组件：
+  - `apps/web/src/components/shared/ArticleCard.astro`
+  - `apps/web/src/components/shared/FeaturedCard.astro`
+  - `apps/web/src/components/shared/SiteHeader.astro`
+  - `apps/web/src/components/shared/SiteFooter.astro`
+  - `apps/web/src/components/shared/WorkbenchPageIntro.astro`
+- 内容页组件：
+  - `apps/web/src/components/post/GiscusComments.astro`
+
+### 当前布局、lib 与内容层
+
+- 布局：
+  - `apps/web/src/layouts/BaseLayout.astro`
+- 前台支撑模块：
+  - `apps/web/src/lib/content.ts`
+  - `apps/web/src/lib/github.ts`
+  - `apps/web/src/lib/home.ts`
+  - `apps/web/src/lib/postCovers.ts`
+  - `apps/web/src/lib/site.ts`
+  - `apps/web/src/lib/updateLog.ts`
+- 当前内容集合：
+  - `apps/web/src/content/posts/`
+  - `apps/web/src/content/notes/`
+  - `apps/web/src/content/projects/`
+  - `apps/web/src/content/pages/`
+
+### 当前平台化拆分原则
+
+后续从当前实现过渡到目标结构时，默认遵守以下拆分策略：
+
+- 当前 `apps/web` 先视为未来 `apps/web-astro` 的真实前身，不做平行双写。
+- 当前首页工作台组件优先留在展示层；不要为了接后台而把业务写回 Astro 组件。
+- 内容 schema、AI pipeline、发布逻辑、token-pool 调度应进入 `modules/` 或 `kernel/`，不要塞回 `apps/web/src/lib/`。
+- `admin-next` 先做控制面，不要反向侵入当前 Astro 展示层的只读边界。
 
 ## 本地源码仓定位
 

@@ -77,10 +77,35 @@
   "platformRoadmap": [
     "observability layer",
     "content model expansion",
-    "admin surface",
-    "api surface",
-    "ai-assisted writing pipeline"
+    "admin-next app-router control surface",
+    "api route-handlers under app/api",
+    "ai-assisted writing pipeline",
+    "releases-current-rollback publish system",
+    "token-pool provider scoring"
   ],
+  "platformExecutionOrder": {
+    "P0": [
+      "admin-next bootstrap",
+      "dashboard page",
+      "publish build/release/rollback api",
+      "releases-current rollback publish flow"
+    ],
+    "P1": [
+      "token-pool provider scoring",
+      "token-pool status api",
+      "ai generate via token-pool"
+    ],
+    "P2": [
+      "content editor",
+      "ai pipeline",
+      "save draft"
+    ],
+    "P3": [
+      "analytics",
+      "logs viewer",
+      "auto publish agent"
+    ]
+  },
   "qualityGate": [
     "npm run lint",
     "npm run check",
