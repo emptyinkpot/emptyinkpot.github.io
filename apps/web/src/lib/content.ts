@@ -89,7 +89,22 @@ export function getCategoryCounts(posts: CollectionEntry<'posts'>[]) {
 }
 
 export function getTagCounts(posts: CollectionEntry<'posts'>[]) {
-  return getGroupedCounts(posts.flatMap((post) => post.data.tags));
+  const slugged = new Map<string, { count: number; labels: Map<string, number> }>();
+
+  for (const tag of posts.flatMap((post) => post.data.tags)) {
+    const slug = toSlug(tag);
+    const current = slugged.get(slug) ?? { count: 0, labels: new Map<string, number>() };
+    current.count += 1;
+    current.labels.set(tag, (current.labels.get(tag) ?? 0) + 1);
+    slugged.set(slug, current);
+  }
+
+  return [...slugged.values()]
+    .map(({ count, labels }) => {
+      const label = [...labels.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-CN'))[0]?.[0] ?? '';
+      return [label, count] as const;
+    })
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-CN'));
 }
 
 export function getSeriesCounts(posts: CollectionEntry<'posts'>[]) {

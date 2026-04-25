@@ -1,6 +1,91 @@
-# emptyinkpot.github.io
+---
+title: MyBlog
+status: canonical
+---
+
+# MyBlog
+## 总体设计与实施手册
+
+> 版本定位：本文件是 MyBlog 的唯一真源、项目说明入口与工程手册主文档。  
+> 文档策略：正文先给出项目说明、结构与边界，再展开运行、开发、发布与维护规则。  
+> 冲突处理：若本文件与任何派生文档冲突，以本文件为准；派生文档只允许补充，不允许重定义项目边界。
+
+## 0. 项目说明入口
+
+```yaml
+projectName: MyBlog
+canonicalDoc: README.md
+machineReadableEntry: project.json
+localSourceRoot: E:\My Project\MyBlog
+siteAppRoot: E:\My Project\MyBlog\apps\web
+sourcePostsRoot: E:\My Project\MyBlog\apps\web\src\content\posts
+buildOutputRoot: E:\My Project\MyBlog\apps\web\dist
+publicBaseUrl: https://blog.tengokukk.com/
+githubRepo: https://github.com/emptyinkpot/emptyinkpot.github.io
+defaultBranch: main
+serverHost: 124.220.233.126
+serverRuntimeRoot: /srv/myblog/site
+nginxSiteConfig: /etc/nginx/sites-available/myblog.conf
+publishMode: local-build-then-upload-dist
+```
+
+- 这是本仓唯一的项目说明入口，供人和机器快速定位项目名、源码、GitHub、部署位置和对外入口。
+- 机器优先读取 `project.json`；人类优先读取本节和后续正文。
+- 如果需要完整结构、约束与操作流程，继续阅读后续章节。
+
+### 0.1 对外简介
+
+MyBlog 是 `emptyinkpot.github.io` 对应的单站点 Astro 博客仓。它当前承担公开文章、专题、笔记、项目索引与首页工作台的统一前台职责。对外读者最关心的是：项目是什么、怎么构建、源码在哪、部署到哪里，这些信息都集中在本节与 `project.json`。
+
+### 0.2 快速开始
+
+- 项目名：`MyBlog`
+- GitHub：`https://github.com/emptyinkpot/emptyinkpot.github.io`
+- 本机源码：`E:\My Project\MyBlog`
+- 站点应用：`E:\My Project\MyBlog\apps\web`
+- 内容真源：`E:\My Project\MyBlog\apps\web\src\content\posts`
+- 本地构建产物：`E:\My Project\MyBlog\apps\web\dist`
+- 对外入口：`https://blog.tengokukk.com/`
+- 云端站点目录：`/srv/myblog/site`
+- Nginx 配置：`/etc/nginx/sites-available/myblog.conf`
+- 机器优先读取：`project.json`
+- 人类优先读取：`README.md`
+
+### 0.3 仓库信息卡
+
+| 项目 | 值 |
+| --- | --- |
+| GitHub 仓库 | `https://github.com/emptyinkpot/emptyinkpot.github.io` |
+| 默认分支 | `main` |
+| 当前工作分支 | `fix/homepage-desktop-overlap` |
+| 长期源码真源 | GitHub 仓库 |
+| 本机目录 | `E:\My Project\MyBlog` |
+| 服务器目录 | `/srv/myblog/site` |
+| 分支策略 | 默认 `feature branch + Pull Request`；非紧急情况不直接改 `main` |
+| 版本控制职责 | GitHub 负责历史与协作；本机负责开发与构建；服务器负责静态运行 |
+
+### 0.4 仓库卫生与运行入口
+
+- Canonical 人类入口：`README.md`
+- Canonical 机器入口：`project.json`
+- 前端主入口：`apps/web/`
+- 内容真源：`apps/web/src/content/`
+- 构建产物目录：`apps/web/dist/`
+- 质量门：`npm run lint` -> `npm run check` -> `npm run build`
+- 发布边界：本地构建后上传 `apps/web/dist/` 到 `/srv/myblog/site`
+- 运行边界：`project.json` 负责机器入口，`README.md` 负责人类入口
 
 `emptyinkpot.github.io` 当前已经收拢为单站点仓库：对外站点由 `apps/web/` 生成，工程文档统一收纳在 `docs/`。
+
+`emptyinkpot.github.io` 当前已经收拢为单站点仓库：对外站点由 `apps/web/` 生成，工程文档统一收纳在 `docs/`。
+
+## 本地源码仓定位
+
+- 当前这台机器上的正式本地源码仓路径：`E:\My Project\MyBlog`
+- 当前工作副本就是 `emptyinkpot.github.io / MyBlog` 的可编辑源码边界
+- Git 长期真源仍是 `https://github.com/emptyinkpot/emptyinkpot.github.io`
+- 本地路径可以迁移，但任何时候都应只保留一个活跃写作面，避免再并行维护旧临时 working copy 或静态快照目录
+- 如果后续再次移动本地仓，应先更新控制层说明，再继续编辑、构建或发布
 
 ## 中心入口（先看这里）
 

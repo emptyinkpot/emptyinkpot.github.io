@@ -1,0 +1,22 @@
+{
+  "projectName": "MyBlog",
+  "canonicalDoc": "README.md",
+  "machineReadableEntry": "project.json",
+  "githubRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
+  "defaultBranch": "main",
+  "localSourceRoot": "E:\\My Project\\MyBlog",
+  "siteAppRoot": "apps/web",
+  "sourcePostsRoot": "apps/web/src/content/posts",
+  "buildOutputRoot": "apps/web/dist",
+  "publicBaseUrl": "https://blog.tengokukk.com/",
+  "serverHost": "124.220.233.126",
+  "serverRuntimeRoot": "/srv/myblog/site",
+  "nginxSiteConfig": "/etc/nginx/sites-available/myblog.conf",
+  "publishMode": "local-build-then-upload-dist",
+  "qualityGate": [
+    "npm run lint",
+    "npm run check",
+    "npm run build"
+  ],
+  "status": "active"
+}
