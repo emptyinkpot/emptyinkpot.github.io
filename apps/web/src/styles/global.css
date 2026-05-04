@@ -2749,7 +2749,6 @@ body.home-mode .page-wrap--home {
 }
 
 .home-feed-profile,
-.home-feed-nav,
 .home-feed-rail-card {
   border: 1px solid rgba(255, 255, 255, 0.68);
   background-color: rgba(255, 255, 255, 0.82);
@@ -2810,24 +2809,6 @@ body.home-mode .page-wrap--home {
   line-height: 1.62;
 }
 
-.home-feed-nav {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.home-feed-nav a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  background: rgba(255, 255, 255, 0.72);
-  padding: 8px 10px;
-  color: rgba(45, 30, 56, 0.82);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.home-feed-nav a:hover,
 .home-feed-rail-card a:hover,
 .home-feed-rail-card button:hover {
   color: var(--home-accent);
@@ -2835,7 +2816,7 @@ body.home-mode .page-wrap--home {
 
 .home-feed-rail-card {
   display: grid;
-  gap: 7px;
+  gap: 10px;
 }
 
 .home-feed-rail-card span,
@@ -2867,6 +2848,100 @@ body.home-mode .page-wrap--home {
   font-weight: 800;
   cursor: pointer;
   text-align: left;
+}
+
+.home-feed-signals .github-heatmap {
+  max-width: 100%;
+}
+
+.home-feed-signal-grid,
+.home-feed-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.home-feed-stat-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.home-feed-signal-grid div,
+.home-feed-stat-grid div {
+  border: 1px solid rgba(45, 30, 56, 0.12);
+  background: rgba(255, 255, 255, 0.48);
+  padding: 8px;
+}
+
+.home-feed-signal-grid small,
+.home-feed-stat-grid small {
+  display: block;
+  color: #7b6a73;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.home-feed-signal-grid b,
+.home-feed-stat-grid b {
+  display: block;
+  margin-top: 3px;
+  color: #17120d;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.home-feed-trend {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: 4px;
+  height: 42px;
+  border-top: 1px solid rgba(45, 30, 56, 0.12);
+  padding-top: 8px;
+}
+
+.home-feed-trend i {
+  display: block;
+  height: var(--signal-height, 10%);
+  min-height: 4px;
+  background: var(--home-accent);
+}
+
+.home-feed-memory ul,
+.home-feed-stats ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-feed-memory li,
+.home-feed-stats li {
+  min-width: 0;
+  color: #64584f;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.home-feed-memory li button,
+.home-feed-stats li button {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-feed-quick {
+  gap: 6px;
+}
+
+.home-feed-quick a,
+.home-feed-quick button {
+  width: 100%;
+  border: 1px solid rgba(45, 30, 56, 0.16);
+  padding: 7px 8px;
 }
 
 .home-feed-main {
@@ -3003,29 +3078,38 @@ body.home-mode .page-wrap--home {
   line-height: 1;
 }
 
-.home-feed-filters {
+.home-feed-tabs {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
-.home-feed-filter {
+.home-feed-tab {
   border: 0;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  min-height: 34px;
-  padding: 8px 13px;
-  color: #6c5571;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  min-height: 31px;
+  padding: 6px 10px;
+  color: #6b645c;
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--motion-fast, 120ms) var(--ease-standard, ease), color var(--motion-fast, 120ms) var(--ease-standard, ease), background var(--motion-fast, 120ms) var(--ease-standard, ease);
 }
 
-.home-feed-filter.is-active {
-  background: var(--home-accent);
-  color: #f8eff9;
+.home-feed-tab:hover,
+.home-feed-tab:focus-visible {
+  background: rgba(255, 255, 255, 0.48);
+  color: #17120d;
+  outline: none;
+}
+
+.home-feed-tab.is-active {
+  border-bottom-color: var(--home-accent);
+  color: #17120d;
 }
 
 .home-feed-grid {
@@ -4106,20 +4190,23 @@ body.has-home-article-drawer .home-feed-main {
 
 @media (max-width: 900px) {
   .home-feed-shell {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: calc(100% - 24px);
     height: auto;
     padding: 12px 0 24px;
   }
 
   .home-feed-rail {
+    order: 2;
     position: static;
     max-height: none;
     overflow: visible;
-    margin-bottom: 16px;
+    margin-top: 16px;
   }
 
   .home-feed-main {
+    order: 1;
     overflow: visible;
   }
 
@@ -4128,7 +4215,7 @@ body.has-home-article-drawer .home-feed-main {
     display: grid;
   }
 
-  .home-feed-filters {
+  .home-feed-tabs {
     justify-content: flex-start;
   }
 
@@ -4298,7 +4385,6 @@ body.has-home-article-drawer .home-feed-main {
 }
 
 :root[data-theme='heritage'] .home-feed-profile,
-:root[data-theme='heritage'] .home-feed-nav,
 :root[data-theme='heritage'] .home-feed-rail-card,
 :root[data-theme='heritage'] .settings-page__hero,
 :root[data-theme='heritage'] .settings-page__panel,
@@ -4326,7 +4412,7 @@ body.has-home-article-drawer .home-feed-main {
 }
 
 :root[data-theme='heritage'] .home-feed-brand,
-:root[data-theme='heritage'] .home-feed-filter.is-active {
+:root[data-theme='heritage'] .home-feed-tab.is-active {
   background: var(--heritage-purple);
   color: #fff;
 }
@@ -4382,8 +4468,7 @@ body.has-home-article-drawer .home-feed-main {
   text-transform: uppercase;
 }
 
-:root[data-theme='heritage'] .home-feed-nav a,
-:root[data-theme='heritage'] .home-feed-filter,
+:root[data-theme='heritage'] .home-feed-tab,
 :root[data-theme='heritage'] .home-feed-rail-card button,
 :root[data-theme='heritage'] .home-feed-rail-card a,
 :root[data-theme='heritage'] .chart-card__link,
@@ -4398,7 +4483,21 @@ body.has-home-article-drawer .home-feed-main {
   box-shadow: none;
 }
 
-:root[data-theme='heritage'] .home-feed-nav a:hover,
+:root[data-theme='heritage'] .home-feed-tab {
+  border-width: 0 0 2px;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+}
+
+:root[data-theme='heritage'] .home-feed-tab.is-active {
+  border-bottom-color: var(--heritage-purple);
+  background: transparent;
+  color: var(--heritage-ink);
+}
+
+:root[data-theme='heritage'] .home-feed-tab:hover,
+:root[data-theme='heritage'] .home-feed-tab:focus-visible,
 :root[data-theme='heritage'] .home-feed-rail-card button:hover,
 :root[data-theme='heritage'] .home-feed-rail-card a:hover,
 :root[data-theme='heritage'] .chart-card__link:hover {

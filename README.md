@@ -730,12 +730,11 @@ Hero / System Entry
 
 | class | 当前值 |
 | --- | --- |
-| `.home-feed-profile` / `.home-feed-nav` / `.home-feed-rail-card` | padding `16px`；边框 `1px rgba(255,255,255,0.68)`；背景 `linear-gradient(180deg, rgb(255 255 255 / var(--home-rail-glass-top-alpha)), rgb(255 255 255 / var(--home-rail-glass-bottom-alpha)))`；默认 alpha `0.9 -> 0.76`；毛玻璃 `blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate))` |
+| `.home-feed-profile` / `.home-feed-rail-card` | padding `16px`；边框 `1px rgba(255,255,255,0.68)`；背景 `linear-gradient(180deg, rgb(255 255 255 / var(--home-rail-glass-top-alpha)), rgb(255 255 255 / var(--home-rail-glass-bottom-alpha)))`；默认 alpha `0.9 -> 0.76`；毛玻璃 `blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate))` |
 | `.home-feed-brand` | min-height `34px`；padding `6px 12px`；gap `8px`；logo `18px × 18px` |
 | `.home-feed-avatar` | `82px × 82px`；圆形 |
-| `.home-feed-nav` | 两列 `repeat(2,minmax(0,1fr))`；gap `8px` |
-| `.home-feed-nav a` | min-height `34px`；padding `8px 10px`；字号 `13px` |
-| `.home-feed-filter` | min-height `34px`；padding `8px 13px`；圆角 `999px`；字号 `13px` |
+| `.home-feed-tabs` | 顶部唯一导航；`display:flex`；gap `6px`；允许 wrap |
+| `.home-feed-tab` | min-height `31px`；padding `6px 10px`；字号 `13px`；底边 `2px solid transparent`；active 只改底边和文字色 |
 | `.home-feed-toolbar` | 背景 `linear-gradient(180deg, rgb(244 238 231 / var(--home-toolbar-glass-top-alpha)), rgb(244 238 231 / var(--home-toolbar-glass-bottom-alpha)))`；默认 alpha `0.94 -> 0.84`；毛玻璃变量同卡片 |
 | `.home-feed-card` | `display:inline-block`；宽 `100%`；底部 margin `16px`；`break-inside: avoid`；边框 `1px rgba(255,255,255,0.7)`；背景 `linear-gradient(180deg, rgb(255 255 255 / var(--home-card-glass-top-alpha)), rgb(255 255 255 / var(--home-card-glass-bottom-alpha)))`；默认 alpha `0.92 -> 0.78`；hover `translateY(-2px)` |
 | `.home-feed-card__cover` | 标准 min-height `160px`；tall `238px`；compact `118px` |
@@ -794,9 +793,9 @@ Heritage 实际覆盖值（当前默认画面）：
 | `--heritage-paper-deep` | `#e0d6c3` | 封面占位、正文 mark 背景、hover 面 |
 | `--heritage-line-strong` | `#cbbda9` | 卡片边框、toolbar 底线、drawer 左线、搜索面板边界 |
 | `.home-feed-shell` | `width:min(1520px,100% - 40px)`；gap `20px`；padding `20px 0 32px` | 比 legacy 宽 40px，给书签露出和三列 Feed 留空间 |
-| `.home-feed-profile` / `.home-feed-nav` / `.home-feed-rail-card` | border `1px solid #cbbda9`；radius `4px`；background `#efe8da`；shadow `0 1px 0 rgba(0,0,0,.04)` | 左栏是米色控制面，不承载主内容 |
+| `.home-feed-profile` / `.home-feed-rail-card` | border `1px solid #cbbda9`；radius `4px`；background `#efe8da`；shadow `0 1px 0 rgba(0,0,0,.04)` | 左栏是米色状态面，不承载主导航 |
 | `.home-feed-card` / `.chart-card` / `.showcase-card` | border `1px solid #cbbda9`；radius `4px`；background `#ffffff`；shadow `0 1px 0 rgba(0,0,0,.04)` | 当前主内容卡片必须白，不允许恢复 `linear-gradient`、blur 和厚阴影 |
-| `.home-feed-profile` | 顶边 `4px solid #6b2d5c` | 左栏只做摘要和导航，不承载完整内容 |
+| `.home-feed-profile` | 顶边 `4px solid #6b2d5c` | 左栏只做身份、状态和记忆，不承载完整内容 |
 | `.home-feed-toolbar` | background `#f5f1e8`；底边 `2px solid #d8cfc2`；sticky | 筛选时只隐藏已有卡片，不重建 DOM |
 | `.home-feed-card` | `position:relative`；`overflow:visible`；`border-left-width:4px`；transition `transform var(--motion-base) var(--ease-standard)` | 允许书签露出；正文、图片、图表不得溢出卡片内容区 |
 | `.home-feed-card:hover` | `translateY(-1px)`；无阴影增强 | hover 只给结构反馈，不制造漂浮感 |
@@ -1171,6 +1170,46 @@ Bookmark Object 视觉合同：
 - 卡片必须 `overflow: visible`，允许书签露出。
 - hover 只能轻微拉直书签，不允许卡片大幅漂浮。
 
+#### 0.7.5.15e Home IA Refactor Contract
+
+首页信息架构固定为：
+
+```text
+左侧 = 你是谁 / 状态 / 记忆
+顶部 = 你在看什么
+中间 = 内容流
+```
+
+核心原则：
+
+- 主导航只能有一个，且只能在 `.home-feed-toolbar` 的 `.home-feed-tabs` 内。
+- `.home-feed-rail` 不再承载站点导航，不得恢复文章 / 札记 / 项目 / GitHub / 书架 / 音乐的左侧按钮矩阵。
+- 左侧只放 Profile、Signals、Reading Memory、Knowledge Stats、Quick Actions。
+- Quick Actions 最多 3 个：搜索、Graph、设置；不得扩成第二套导航。
+- 顶部 tabs 使用轻量标签式视觉，不做厚边框、重阴影、胶囊按钮组。
+- 导航 = 横向；状态 = 纵向。
+
+当前源码落点：
+
+```text
+apps/web/src/pages/index.astro
+├── .home-feed-rail
+│   ├── .home-feed-profile
+│   ├── .home-feed-signals
+│   ├── .home-feed-memory
+│   ├── .home-feed-stats
+│   └── .home-feed-quick
+└── .home-feed-toolbar
+    └── .home-feed-tabs
+```
+
+左侧状态数据规则：
+
+- Signals 只展示 GitHub 活动、仓库、文章与短趋势，不提供重复导航。
+- Reading Memory 从 `emptyinkpot-reading-history` 读取最近阅读。
+- Knowledge Stats 从 `emptyinkpot-reader-highlights`、`emptyinkpot-reader-annotations`、`emptyinkpot-reader-bookmarks` 和 `emptyinkpot-reading-history` 读取计数。
+- 左侧本地状态只读 localStorage，不改变内容源、不写后端。
+
 下一步优先级：
 
 ```text
@@ -1198,7 +1237,7 @@ P2 remaining:
 - Graph 默认限量节点继续维持当前 slice 策略；后续如内容量扩大，再把限量策略抽到 `lib/knowledge/graph.ts`
 ```
 
-#### 0.7.5.15e Frontend Reproduction Checklist
+#### 0.7.5.15f Frontend Reproduction Checklist
 
 如果把本仓交给另一个开发者复刻当前前台，不应只看截图，应按以下顺序验收：
 
@@ -1206,11 +1245,11 @@ P2 remaining:
 2. 安装依赖：在仓库根执行 `npm install`。
 3. 本地质量门：依次执行 `npm run lint`、`npm run check`、`npm run build`。
 4. 本地预览：使用 Astro preview 或现有 npm script 预览 `apps/web/dist`。
-5. 首页结构验证：`/` 必须是 `Profile Rail + Masonry-like Feed + Right Article Drawer`，不是旧 HomeWorkbench 多模块堆叠。
+5. 首页结构验证：`/` 必须是 `Profile/Signals/Memory/Stats Rail + Top Tabs + Masonry-like Feed + Right Article Drawer`，不是旧 HomeWorkbench 多模块堆叠，也不是左侧导航矩阵。
 6. 默认主题验证：首屏 `<html data-theme="heritage">`；不设置 localStorage 时默认 Heritage。
 7. 书签验证：首页 Feed 卡应出现 `.bookmark`，其数量应与可见 Feed 卡主视觉匹配；书签从卡片顶部露出。
 8. Banner 验证：首页主 Feed 顶部必须有 `.home-hero-banner`；默认不得存在粒子 canvas 或半透明小形状装饰；鼠标移动会改变至少一层 `transform`；动效不得影响 Feed 滚动。
-9. 抽屉验证：点击 Feed 卡和左栏主入口都打开 `.home-article-drawer`；关闭后回到原滚动位置；完整页链接只在 drawer action 中出现。
+9. 抽屉验证：点击 Feed 卡和左栏 Reading Memory 记录可打开 `.home-article-drawer`；关闭后回到原滚动位置；完整页链接只在 drawer action 中出现。
 10. 搜索验证：`Cmd/Ctrl + K` 打开 Knowledge Search；搜索 GitHub、书籍、音乐和文章标题都应返回结果。
 11. Reader 验证：drawer 内 light / sepia / dark 可切换；收藏写入 `emptyinkpot-reader-bookmarks`；阅读历史写入 `emptyinkpot-reading-history`。
 12. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
@@ -1225,6 +1264,8 @@ document.documentElement.dataset.theme === "heritage"
 document.querySelectorAll(".home-hero-banner").length === 1
 document.querySelectorAll(".home-feed-card").length > 0
 document.querySelectorAll(".bookmark").length > 0
+document.querySelectorAll(".home-feed-nav").length === 0
+document.querySelectorAll(".home-feed-tabs [data-feed-filter]").length >= 9
 document.querySelectorAll(".home-feed-card a[href^='/posts/'], .home-feed-card a[href^='/notes/'], .home-feed-card a[href^='/projects/']").length === 0
 ```
 
@@ -1237,7 +1278,7 @@ document.querySelectorAll(".home-feed-card a[href^='/posts/'], .home-feed-card a
 - Knowledge Graph：`https://blog.tengokukk.com/knowledge/`
 - Knowledge Index：`https://blog.tengokukk.com/data/knowledge-index.json`
 
-#### 0.7.5.15f MyBlog Final UI Contract v1
+#### 0.7.5.15g MyBlog Final UI Contract v1
 
 本节是当前首页、Drawer、阅读系统、Search、Graph 的最终收口合同。它不新建一套并行命名，而是约束当前真实代码：
 
@@ -1315,7 +1356,7 @@ Surface rules：
 
 - `body.home-mode` 使用 `#f5f1e8` 和 44px 低透明网格，表示纸面。
 - `.home-feed-card`、`.chart-card`、`.showcase-card` 使用 `#ffffff`，让内容容器干净，不再和背景一起发脏。
-- `.home-feed-profile`、`.home-feed-rail-card`、`.home-feed-nav`、`.home-article-drawer__header`、Search panel 使用米色面板或纸面，承担控制/导航属性。
+- `.home-feed-profile`、`.home-feed-rail-card`、`.home-article-drawer__header`、Search panel 使用米色面板或纸面；左栏承担状态属性，顶部 tabs 承担导航属性。
 - 结构边界默认 `#cbbda9`；弱分隔可用 `#d8cfc2`；页面大分区可用 `#b8aa95`。
 
 FeedCard rules：

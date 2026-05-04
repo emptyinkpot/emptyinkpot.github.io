@@ -62,6 +62,8 @@ const projects = [...(await getCollection('projects'))].sort(
 const github = await getGitHubOverview('emptyinkpot');
 const githubAnalytics = buildGitHubAnalytics(github);
 const recentHeatmapWeeks = getRecentHeatmapWeeks(githubAnalytics, 12);
+const recentSignalDays = githubAnalytics.heatmapWeeks.flatMap((week) => week.days).slice(-7);
+const maxRecentSignal = Math.max(...recentSignalDays.map((day) => day.count), 1);
 
 const drawerSources = [
   ...posts.map((entry) => ({ entry, kind: 'post' as const })),
@@ -409,7 +411,7 @@ function feedCardClass(item: FeedItem) {
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
   <div class="home-feed-shell">
-    <aside class="home-feed-rail" aria-label="个人展示与站点入口">
+    <aside class="home-feed-rail" aria-label="个人状态与知识记忆">
       <section class="home-feed-profile">
         <a class="home-feed-brand" href={withBase('/')}>
           <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="emptyinkpot" />
@@ -417,49 +419,62 @@ function feedCardClass(item: FeedItem) {
         </a>
         <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} />
         <h1>{github.profile.name}</h1>
-        <p>个人内容工作台。文章、项目、书架、GitHub 与视频入口混排在一条可连续浏览的信息流里。</p>
+        <p>Content OS · Knowledge System</p>
       </section>
 
-      <nav class="home-feed-nav" aria-label="站点导航">
-        <a href={withBase('/posts/')}>文章</a>
-        <a href={withBase('/notes/')}>札记</a>
-        <a href={withBase('/projects/')}>项目</a>
-        <a href={withBase('/github/')}>GitHub</a>
-        <a href={withBase('/books/')}>书架</a>
-        <a href={withBase('/music/')}>音乐</a>
-        <a href={withBase('/knowledge/')}>知识图谱</a>
-        <a href={withBase('/evidence-library/')}>史料素材库</a>
-        <a href={withBase('/settings/')}>显示设置</a>
-        <a href={withBase('/search/')}>搜索</a>
-        <a href={withBase('/about/')}>关于</a>
-      </nav>
-
-      <section class="home-feed-rail-card">
-        <span>GitHub</span>
+      <section class="home-feed-rail-card home-feed-signals">
+        <span>Signals</span>
         <strong>@{github.profile.login}</strong>
         <p>{github.totalContributions} 次年度活动 / {github.profile.publicRepos} 个公开仓库</p>
-        <button type="button" data-drawer-id="github:heatmap">查看仪表盘</button>
+        <div class="home-feed-signal-grid" aria-label="GitHub signal summary">
+          <div>
+            <small>Posts</small>
+            <b>{posts.length}</b>
+          </div>
+          <div>
+            <small>Repos</small>
+            <b>{github.profile.publicRepos}</b>
+          </div>
+          <div>
+            <small>Active</small>
+            <b>{githubAnalytics.activeDays}</b>
+          </div>
+        </div>
+        <GitHubHeatmap weeks={recentHeatmapWeeks} compact />
+        <div class="home-feed-trend" aria-label="最近 7 天活动趋势">
+          {recentSignalDays.map((day) => (
+            <i style={`--signal-height:${Math.max(10, Math.round((day.count / maxRecentSignal) * 100))}%`} title={`${day.date}: ${day.count}`} />
+          ))}
+        </div>
       </section>
 
-      <section class="home-feed-rail-card">
-        <span>书架</span>
-        <strong>{books[0]?.title ?? 'Reading shelf'}</strong>
-        <p>{books[0]?.note ?? '正在整理阅读记录。'}</p>
-        <button type="button" data-drawer-id={books[0] ? `book:${toSlug(books[0].title)}` : undefined}>打开书架</button>
+      <section class="home-feed-rail-card home-feed-memory">
+        <span>Reading Memory</span>
+        <strong>最近阅读</strong>
+        <ul data-sidebar-history>
+          <li>暂无记录</li>
+        </ul>
       </section>
 
-      <section class="home-feed-rail-card">
-        <span>音乐</span>
-        <strong>{musicItems[0]?.title ?? 'Music shelf'}</strong>
-        <p>{musicItems[0]?.note ?? '正在整理音乐记录。'}</p>
-        <button type="button" data-drawer-id={musicItems[0] ? `music:${musicItems[0].id}` : undefined}>打开音乐</button>
+      <section class="home-feed-rail-card home-feed-stats">
+        <span>Knowledge Stats</span>
+        <strong>知识状态</strong>
+        <div class="home-feed-stat-grid">
+          <div><small>高亮</small><b data-sidebar-stat="highlights">0</b></div>
+          <div><small>批注</small><b data-sidebar-stat="annotations">0</b></div>
+          <div><small>收藏</small><b data-sidebar-stat="bookmarks">0</b></div>
+          <div><small>阅读</small><b data-sidebar-stat="history">0</b></div>
+        </div>
+        <ul data-sidebar-bookmarks>
+          <li>暂无收藏</li>
+        </ul>
       </section>
 
-      <section class="home-feed-rail-card">
-        <span>Bilibili</span>
-        <strong>{profileLinks.bilibiliLabel}</strong>
-        <p>{profileLinks.bilibiliDescription}</p>
-        <button type="button" data-drawer-id="bilibili:profile">{profileLinks.bilibiliConfigured ? '打开主页' : '稍后配置'}</button>
+      <section class="home-feed-rail-card home-feed-quick">
+        <span>Quick Actions</span>
+        <button type="button" data-search-open>搜索</button>
+        <a href={withBase('/knowledge/')}>Graph</a>
+        <a href={withBase('/settings/')}>设置</a>
       </section>
     </aside>
 
@@ -481,17 +496,19 @@ function feedCardClass(item: FeedItem) {
           <span>Feed</span>
           <strong>连续浏览</strong>
         </div>
-        <div class="home-feed-filters" role="list" aria-label="内容类型">
-          <button type="button" class="home-feed-filter home-feed-filter--search" data-search-open>搜索</button>
-          <button type="button" class="home-feed-filter is-active" data-feed-filter="all">全部</button>
-          <button type="button" class="home-feed-filter" data-feed-filter="post">文章</button>
-          <button type="button" class="home-feed-filter" data-feed-filter="note">札记</button>
-          <button type="button" class="home-feed-filter" data-feed-filter="project">项目</button>
-          <button type="button" class="home-feed-filter" data-feed-filter="book">书架</button>
-          <button type="button" class="home-feed-filter" data-feed-filter="music">音乐</button>
-          <button type="button" class="home-feed-filter" data-feed-filter="github">GitHub</button>
-          <button type="button" class="home-feed-filter" data-feed-filter="bilibili">Bilibili</button>
-        </div>
+        <nav class="home-feed-tabs" aria-label="首页唯一导航">
+          <button type="button" class="home-feed-tab home-feed-tab--search" data-search-open>搜索</button>
+          <button type="button" class="home-feed-tab is-active" data-feed-filter="all">全部</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="post">文章</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="note">笔记</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="project">项目</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="book">书架</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="music">音乐</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="github">GitHub</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="bilibili">Bilibili</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="update">史料素材库</button>
+          <a class="home-feed-tab" href={withBase('/settings/')}>设置</a>
+        </nav>
       </div>
 
       <section class="home-feed-grid" aria-label="内容流">
@@ -781,6 +798,9 @@ function feedCardClass(item: FeedItem) {
       const searchResults = document.querySelector('[data-search-results]');
       const searchKinds = [...document.querySelectorAll('[data-search-kind]')];
       const selectionToolbar = document.querySelector('[data-selection-toolbar]');
+      const sidebarHistory = document.querySelector('[data-sidebar-history]');
+      const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
+      const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
       const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
       const storageKeys = {
         history: 'emptyinkpot-reading-history',
@@ -891,11 +911,49 @@ function feedCardClass(item: FeedItem) {
         card.scrollIntoView({ block: 'center', behavior: 'smooth' });
       };
 
+      const renderSidebarList = (target, items, emptyText, type) => {
+        if (!target) return;
+        if (!items.length) {
+          const empty = document.createElement('li');
+          empty.textContent = emptyText;
+          target.replaceChildren(empty);
+          return;
+        }
+        target.replaceChildren(
+          ...items.slice(0, 3).map((item) => {
+            const row = document.createElement('li');
+            const button = document.createElement('button');
+            const drawerId = type === 'highlight' ? item.articleId : item.id;
+            button.type = 'button';
+            button.dataset.sidebarDrawer = drawerId || '';
+            if (type === 'highlight' && item.id) button.dataset.sidebarHighlight = item.id;
+            button.textContent = type === 'highlight' ? item.text || 'Untitled highlight' : item.title || 'Untitled';
+            row.append(button);
+            return row;
+          })
+        );
+      };
+
+      const renderSidebarState = () => {
+        const history = readJson(storageKeys.history, []);
+        const bookmarks = readJson(storageKeys.bookmarks, []);
+        const highlights = readJson(storageKeys.highlights, []);
+        const annotations = readJson(storageKeys.annotations, []);
+        sidebarStats.forEach((node) => {
+          const map = { history, bookmarks, highlights, annotations };
+          const key = node.dataset.sidebarStat;
+          node.textContent = String(map[key]?.length ?? 0);
+        });
+        renderSidebarList(sidebarHistory, history, '暂无记录', 'history');
+        renderSidebarList(sidebarBookmarks, bookmarks.length ? bookmarks : highlights, bookmarks.length ? '暂无收藏' : '暂无标记', bookmarks.length ? 'bookmark' : 'highlight');
+      };
+
       const saveHistory = (article) => {
         if (!article?.id) return;
         const list = readJson(storageKeys.history, []);
         const next = [{ id: article.id, title: article.title, href: article.href, timestamp: Date.now() }, ...list.filter((item) => item.id !== article.id)].slice(0, 50);
         writeJson(storageKeys.history, next);
+        renderSidebarState();
       };
 
       const getBookmarks = () => readJson(storageKeys.bookmarks, []);
@@ -918,6 +976,7 @@ function feedCardClass(item: FeedItem) {
           : [{ id: currentArticle.id, title: currentArticle.title, href: currentArticle.href, createdAt: Date.now() }, ...list];
         writeJson(storageKeys.bookmarks, next);
         updateBookmarkButton();
+        renderSidebarState();
       };
 
       const updateReadingProgress = () => {
@@ -1242,6 +1301,7 @@ function feedCardClass(item: FeedItem) {
           };
           writeJson(storageKeys.annotations, [annotation, ...readJson(storageKeys.annotations, [])]);
         }
+        renderSidebarState();
         hideSelectionToolbar();
       };
 
@@ -1432,6 +1492,14 @@ function feedCardClass(item: FeedItem) {
         openDrawer(drawerId, target, { highlightId: target.dataset.memoryHighlight });
       });
 
+      document.querySelector('.home-feed-rail')?.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-sidebar-drawer]') : null;
+        if (!target) return;
+        const drawerId = target.dataset.sidebarDrawer;
+        if (!drawerId) return;
+        openDrawer(drawerId, target, { highlightId: target.dataset.sidebarHighlight });
+      });
+
       selectionToolbar?.querySelectorAll('[data-highlight-color]').forEach((button) => {
         button.addEventListener('click', () => saveSelectionHighlight(button.dataset.highlightColor || 'gold'));
       });
@@ -1494,6 +1562,7 @@ function feedCardClass(item: FeedItem) {
       });
 
       applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
+      renderSidebarState();
       initHeroBanner();
     })();
   </script>
