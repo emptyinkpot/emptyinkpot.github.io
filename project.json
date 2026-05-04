@@ -50,7 +50,17 @@
     "notes": ["title", "date", "summary", "slug"],
     "projects": ["title", "summary", "slug"],
     "pages": ["title", "slug"],
-    "evidenceLibrary": ["asset", "clip", "openlistPath", "entities", "visualKinds", "license", "visibility"]
+    "evidenceLibrary": [
+      "asset",
+      "clip",
+      "unlabeledQueue",
+      "openlistPath",
+      "entities",
+      "visualKinds",
+      "license",
+      "visibility",
+      "remotionExport"
+    ]
   },
   "serverHost": "124.220.233.126",
   "serverRuntimeRoot": "/srv/myblog/site",
@@ -169,7 +179,9 @@
       "app/api/ai/generate/route.ts",
       "app/api/evidence-library/plan/route.js",
       "app/api/evidence-library/assets/route.js",
+      "app/api/evidence-library/queue/route.js",
       "app/api/evidence-library/openlist/scan/route.js",
+      "app/api/evidence-library/export/remotion/route.js",
       "app/api/publish/build/route.ts",
       "app/api/publish/release/route.ts",
       "app/api/publish/rollback/route.ts",

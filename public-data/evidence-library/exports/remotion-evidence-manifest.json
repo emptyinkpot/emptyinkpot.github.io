@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-05-04T07:50:16.321Z",
+  "source": {
+    "system": "myblog-evidence-library",
+    "manifestPath": "public-data/evidence-library/manifests/assets.json"
+  },
+  "assets": [],
+  "clips": []
+}

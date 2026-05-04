@@ -68,11 +68,13 @@ asset-source/evidence-manifest.json
 
 ## 3. 最小可用版本
 
-第一阶段只做三件事：
+当前最小可用版本做五件事：
 
 1. 在 MyBlog 建立 `evidence-library` 公开板块。
 2. 在 `public-data/evidence-library/` 保存计划和机器 JSON。
 3. 约定素材元数据格式，后续 admin 和 Remotion 都按它对接。
+4. 在 `apps/admin-next` 提供 OpenList 扫描入队控制面。
+5. 导出 `public-data/evidence-library/exports/remotion-evidence-manifest.json`，作为 Remotion 侧 `asset-source/evidence-manifest.json` 的来源。
 
 ## 4. 素材数据模型
 
@@ -185,6 +187,8 @@ segment.semanticCard
 - 从 OpenList 扫描指定目录
 - 生成待标注素材清单
 - 支持手动补 `entities / visualKinds / sourceUrl / license`
+- 当前已落地扫描入队 API：`POST /api/evidence-library/openlist/scan`
+- 当前已落地队列读取 API：`GET /api/evidence-library/queue`
 
 ### Phase 3: Clip Labeling
 
@@ -197,6 +201,7 @@ segment.semanticCard
 - 导出 `asset-source/evidence-manifest.json`
 - Remotion Evidence Resolver 优先读本地 manifest
 - OpenList 只作为大文件访问层
+- 当前已落地导出 API：`POST /api/evidence-library/export/remotion`
 
 ### Phase 5: Public Showcase
 
@@ -217,9 +222,10 @@ apps/web/src/pages/evidence-library/
   index.astro
 
 apps/admin-next/app/admin/evidence-library/
+  EvidenceLibraryControls.jsx
   page.jsx
 ```
 
 ## 9. 当前边界
 
-当前只落地公开计划、JSON 和站点分区。后台标注 UI、OpenList 扫描器、Remotion manifest 自动导出属于后续阶段。
+当前已落地公开计划、JSON、站点分区、OpenList 扫描入队、待标注队列和 Remotion manifest 导出。后台人工标注表单、clip 切分 UI、公开素材详情页仍属于后续阶段。

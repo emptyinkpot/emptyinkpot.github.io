@@ -43,6 +43,11 @@ input {
   font: inherit;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
 .console-shell {
   min-height: 100vh;
   display: grid;
@@ -203,9 +208,31 @@ input {
 }
 
 .button-row,
-.chat-input-row {
+.chat-input-row,
+.evidence-control-row {
   display: flex;
   gap: 12px;
+}
+
+.evidence-control-row {
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.field-stack {
+  display: grid;
+  flex: 1 1 320px;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.admin-error-box {
+  border: 1px solid rgba(248, 113, 113, 0.42);
+  border-radius: 16px;
+  background: var(--red-bg);
+  color: var(--red-text);
+  padding: 12px 14px;
 }
 
 .action-button {

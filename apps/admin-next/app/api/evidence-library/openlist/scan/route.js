@@ -1,9 +1,9 @@
-import { scanOpenListDirectory } from "@/lib/evidence-library";
+import { scanOpenListAndQueue, scanOpenListDirectory } from "@/lib/evidence-library";
 
 export async function POST(request) {
   try {
     const body = await request.json().catch(() => ({}));
-    const result = await scanOpenListDirectory(body);
+    const result = body.enqueue === false ? await scanOpenListDirectory(body) : await scanOpenListAndQueue(body);
     return Response.json({
       ok: true,
       result,

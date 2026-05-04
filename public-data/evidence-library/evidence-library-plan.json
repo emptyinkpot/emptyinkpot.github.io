@@ -2,7 +2,7 @@
   "id": "evidence-library-system",
   "version": "1.0.0",
   "title": "Evidence Library / 史料素材库体系",
-  "status": "planned",
+  "status": "implementation_in_progress",
   "updatedAt": "2026-05-04",
   "goal": "Build a MyBlog section and data layer for evidence-first historical video generation.",
   "principle": "text -> evidence -> visual",
@@ -107,7 +107,7 @@
     },
     {
       "id": "phase-2-local-index",
-      "status": "planned",
+      "status": "in_progress",
       "deliverables": ["OpenList scanner", "unlabeled asset queue"]
     },
     {
@@ -117,7 +117,7 @@
     },
     {
       "id": "phase-4-remotion-integration",
-      "status": "planned",
+      "status": "in_progress",
       "deliverables": ["Remotion evidence manifest export", "resolver integration"]
     },
     {

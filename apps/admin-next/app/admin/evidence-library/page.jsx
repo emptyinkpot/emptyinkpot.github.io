@@ -1,9 +1,11 @@
 import StatusBadge from "@/components/admin/StatusBadge";
-import { evidencePaths, readEvidenceManifest, readEvidencePlan } from "@/lib/evidence-library";
+import { evidencePaths, readEvidenceManifest, readEvidencePlan, readUnlabeledQueue } from "@/lib/evidence-library";
+import EvidenceLibraryControls from "./EvidenceLibraryControls";
 
 export default function EvidenceLibraryPage() {
   const plan = readEvidencePlan();
   const manifest = readEvidenceManifest();
+  const queue = readUnlabeledQueue();
   const paths = evidencePaths();
   const assets = manifest.assets || [];
   const clips = manifest.clips || [];
@@ -62,6 +64,12 @@ export default function EvidenceLibraryPage() {
         </article>
       </section>
 
+      <EvidenceLibraryControls
+        initialPath={plan.actors?.openlist?.activeMounts?.[0] || "/"}
+        initialQueue={queue}
+        initialManifest={manifest}
+      />
+
       <section className="card section-stack">
         <div>
           <h2 className="panel-title">Workflow</h2>
@@ -91,6 +99,10 @@ export default function EvidenceLibraryPage() {
           <code>{paths.dataRoot}</code>
           <span>Manifest</span>
           <code>{paths.manifestPath}</code>
+          <span>Queue</span>
+          <code>{paths.queuePath}</code>
+          <span>Remotion export</span>
+          <code>{paths.remotionExportPath}</code>
           <span>Version</span>
           <code>{manifest.version}</code>
         </div>
