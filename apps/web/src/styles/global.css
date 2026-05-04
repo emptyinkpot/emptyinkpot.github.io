@@ -3508,6 +3508,84 @@ body.home-mode .page-wrap--home {
   padding-top: 18px;
 }
 
+.reader-mini-graph {
+  display: grid;
+  gap: 12px;
+  max-width: 68ch;
+  margin: 34px auto 0;
+  border-top: 2px solid var(--heritage-line, #d8cfc2);
+  padding-top: 16px;
+}
+
+.reader-mini-graph header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.reader-mini-graph header span {
+  color: var(--heritage-purple, #6b2d5c);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.reader-mini-graph header a {
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-radius: 3px;
+  padding: 6px 8px;
+  color: var(--heritage-ink, #1e1b18);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.reader-mini-graph__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.reader-mini-graph__grid section,
+.reader-mini-graph__grid [data-mini-highlights] {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.reader-mini-graph__grid strong {
+  color: var(--heritage-muted, #6b645c);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.reader-mini-graph button {
+  min-width: 0;
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-radius: 4px;
+  background: var(--heritage-card, #fff);
+  padding: 8px;
+  color: var(--heritage-ink, #1e1b18);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.32;
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.reader-mini-graph p {
+  margin: 0;
+  color: var(--heritage-muted, #6b645c);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .home-article-related > span {
   color: var(--heritage-purple, #6b2d5c);
   font-family: var(--font-ui);
@@ -4358,6 +4436,10 @@ body.has-home-article-drawer .home-feed-main {
   }
 
   .home-article-related div {
+    grid-template-columns: 1fr;
+  }
+
+  .reader-mini-graph__grid {
     grid-template-columns: 1fr;
   }
 
@@ -5572,6 +5654,15 @@ body.has-home-article-drawer .home-feed-main {
 
 .knowledge-link--tagged {
   stroke: rgba(47, 93, 80, 0.24);
+}
+
+.knowledge-link--linked {
+  stroke: rgba(158, 42, 43, 0.28);
+}
+
+.knowledge-link--highlighted {
+  stroke: rgba(201, 162, 39, 0.34);
+  stroke-dasharray: 4 4;
 }
 
 .knowledge-link.is-active {

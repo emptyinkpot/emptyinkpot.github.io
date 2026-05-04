@@ -130,6 +130,12 @@ export type KnowledgeGraphNode = {
 export type KnowledgeGraphLink = {
   source: string;
   target: string;
-  type: 'contains' | 'tagged' | 'references' | 'highlighted' | 'related';
+  type: 'contains' | 'tagged' | 'references' | 'highlighted' | 'linked' | 'related';
   weight: number;
 };
+
+export type ReaderCommand =
+  | { type: 'openArticle'; articleId: string }
+  | { type: 'openHighlight'; articleId: string; highlightId: string }
+  | { type: 'searchTag'; tag: string }
+  | { type: 'focusGraphNode'; nodeId: string };

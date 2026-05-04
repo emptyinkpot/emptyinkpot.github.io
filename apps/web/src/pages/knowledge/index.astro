@@ -6,6 +6,7 @@ import githubOverview from '../../data/github-overview.emptyinkpot.json';
 import { musicItems } from '../../data/music';
 import { getPrimaryCategory, sortPosts } from '../../lib/content';
 import { buildClusteredRadialGraph } from '../../lib/knowledge/graph';
+import { buildKnowledgeRelations, type KnowledgeRelationSource } from '../../lib/knowledge/relations';
 import type { KnowledgeGraphLink, KnowledgeGraphNode } from '../../lib/knowledge/types';
 import { withBase } from '../../lib/site';
 
@@ -134,6 +135,39 @@ const tagNodes: KnowledgeGraphNode[] = tagLabels.map((tag) => ({
   meta: 'tag'
 }));
 
+const relationSources = [
+  ...posts.map((post) => ({
+    id: `post:${post.id}`,
+    kind: 'post',
+    title: post.data.title,
+    summary: post.data.summary ?? post.data.description ?? '',
+    tags: [getPrimaryCategory(post), ...post.data.tags, ...(post.data.series ? [post.data.series] : [])],
+    series: post.data.series,
+    href: withBase(`/posts/${post.id}/`),
+    body: post.body
+  })),
+  ...notes.map((note) => ({
+    id: `note:${note.id}`,
+    kind: 'note',
+    title: note.data.title,
+    summary: note.data.description ?? '',
+    tags: ['note'],
+    href: withBase(`/notes/${note.id}/`),
+    body: note.body
+  })),
+  ...projects.map((project) => ({
+    id: `project:${project.id}`,
+    kind: 'project',
+    title: project.data.title,
+    summary: project.data.description ?? '',
+    tags: project.data.stack,
+    href: withBase(`/projects/${project.id}/`),
+    body: project.body
+  }))
+] satisfies KnowledgeRelationSource[];
+
+const relationLinks = buildKnowledgeRelations(relationSources, { minScore: 4, limitPerSource: 8 });
+
 const sealNodes: KnowledgeGraphNode[] = [
   { id: 'seal:selected', label: '精选', type: 'seal', level: 3, weight: 3, cluster: 'archive', summary: '人工判断：内容价值高，值得优先回访。', meta: 'seal / selected' },
   { id: 'seal:important', label: '重要', type: 'seal', level: 3, weight: 3, cluster: 'archive', summary: '人工判断：对系统或长期主题有关键意义。', meta: 'seal / important' },
@@ -171,6 +205,12 @@ const links: KnowledgeGraphLink[] = [
     target: `tag:${repo.language || 'code'}`,
     type: 'tagged' as const,
     weight: 1
+  })),
+  ...relationLinks.map((link) => ({
+    source: link.source,
+    target: link.target,
+    type: link.type,
+    weight: Math.max(1, Math.min(4, Math.round(link.score / 3)))
   })),
   ...sealNodes.map((node) => ({ source: 'self:emptyinkpot', target: node.id, type: 'related' as const, weight: 1 }))
 ];
@@ -275,6 +315,8 @@ const viewBox = '-620 -620 1240 1240';
                 data-node-summary={node.summary ?? ''}
                 data-node-meta={node.meta ?? ''}
                 data-node-href={node.href ?? ''}
+                data-node-article-id={node.type === 'highlight' ? node.id : ''}
+                data-node-highlight-id=""
               >
                 <circle r={node.level === 0 ? 16 : node.level === 1 ? 11 : node.level === 2 ? 7 : 4} fill={colorFor(node.type)} />
                 <text x={node.level <= 1 ? 18 : 9} y="4">{node.label}</text>
@@ -317,6 +359,7 @@ const viewBox = '-620 -620 1240 1240';
       const metaLabel = document.querySelector('[data-node-meta-label]');
       const openLink = document.querySelector('[data-node-open]');
       const searchLink = document.querySelector('[data-node-search]');
+      const graphSvg = document.querySelector('[data-knowledge-graph]');
       let activeFilter = 'all';
 
       const visibleNodeIds = () => new Set(nodes.filter((node) => !node.classList.contains('is-hidden')).map((node) => node.dataset.nodeId));
@@ -386,14 +429,103 @@ const viewBox = '-620 -620 1240 1240';
         if (metaLabel) metaLabel.textContent = node.dataset.nodeMeta || 'none';
 
         const href = node.dataset.nodeHref;
+        const nodeType = node.dataset.nodeType;
+        const nodeId = node.dataset.nodeId || '';
+        const articleId = node.dataset.nodeArticleId || nodeId;
+        const highlightId = node.dataset.nodeHighlightId || '';
         if (openLink instanceof HTMLAnchorElement) {
-          openLink.hidden = !href;
-          if (href) openLink.href = href;
-          openLink.textContent = node.dataset.nodeType === 'tag' ? '查看搜索结果' : '打开节点';
+          openLink.hidden = !href && !['post', 'note', 'project', 'tag', 'highlight'].includes(nodeType || '');
+          if (nodeType === 'tag') {
+            openLink.href = `/?searchTag=${encodeURIComponent(node.dataset.nodeLabel || '')}`;
+            openLink.textContent = '在首页搜索标签';
+          } else if (nodeType === 'highlight') {
+            openLink.href = `/?reader=${encodeURIComponent(articleId)}&highlight=${encodeURIComponent(highlightId)}`;
+            openLink.textContent = '打开高亮';
+          } else if (['post', 'note', 'project'].includes(nodeType || '')) {
+            openLink.href = `/?reader=${encodeURIComponent(nodeId)}`;
+            openLink.textContent = '在 Reader 打开';
+          } else if (href) {
+            openLink.href = href;
+            openLink.textContent = '打开节点';
+          }
         }
         if (searchLink instanceof HTMLAnchorElement) {
-          searchLink.href = `/search/?q=${encodeURIComponent(node.dataset.nodeLabel || '')}`;
+          searchLink.href = `/?searchTag=${encodeURIComponent(node.dataset.nodeLabel || '')}`;
         }
+      };
+
+      const openReaderCommand = (node) => {
+        const nodeType = node.dataset.nodeType;
+        const nodeId = node.dataset.nodeId || '';
+        if (['post', 'note', 'project'].includes(nodeType || '')) {
+          window.location.href = `/?reader=${encodeURIComponent(nodeId)}`;
+        }
+        if (nodeType === 'highlight') {
+          window.location.href = `/?reader=${encodeURIComponent(node.dataset.nodeArticleId || '')}&highlight=${encodeURIComponent(node.dataset.nodeHighlightId || '')}`;
+        }
+        if (nodeType === 'tag') {
+          window.location.href = `/?searchTag=${encodeURIComponent(node.dataset.nodeLabel || '')}`;
+        }
+      };
+
+      const getTranslate = (node) => {
+        const match = node.getAttribute('transform')?.match(/translate\\(([-0-9.]+)\\s+([-0-9.]+)\\)/);
+        return match ? { x: Number(match[1]), y: Number(match[2]) } : { x: 0, y: 0 };
+      };
+
+      const escapeCssIdentifier = (value) => {
+        if (window.CSS?.escape) return window.CSS.escape(value);
+        return String(value).replace(/["\\]/g, '\\$&');
+      };
+
+      const injectLocalHighlightNodes = () => {
+        if (!graphSvg) return;
+        const highlights = (() => {
+          try {
+            return JSON.parse(localStorage.getItem('emptyinkpot-reader-highlights') || '[]');
+          } catch {
+            return [];
+          }
+        })();
+        highlights.slice(0, 12).forEach((highlight, index) => {
+          const source = graphSvg.querySelector(`[data-node-id="${escapeCssIdentifier(highlight.articleId || '')}"]`);
+          if (!source) return;
+          const base = getTranslate(source);
+          const angle = (Math.PI * 2 * (index % 6)) / 6;
+          const x = Number((base.x + Math.cos(angle) * 74).toFixed(2));
+          const y = Number((base.y + Math.sin(angle) * 74).toFixed(2));
+          const id = `highlight:${highlight.id}`;
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', String(base.x));
+          line.setAttribute('y1', String(base.y));
+          line.setAttribute('x2', String(x));
+          line.setAttribute('y2', String(y));
+          line.classList.add('knowledge-link', 'knowledge-link--highlighted');
+          line.dataset.graphLink = 'true';
+          line.dataset.source = highlight.articleId;
+          line.dataset.target = id;
+          graphSvg.insertBefore(line, graphSvg.querySelector('[data-graph-node]'));
+
+          const node = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          node.classList.add('knowledge-node', 'knowledge-node--highlight');
+          node.setAttribute('transform', `translate(${x} ${y})`);
+          node.setAttribute('tabindex', '0');
+          node.setAttribute('role', 'button');
+          node.dataset.graphNode = 'true';
+          node.dataset.nodeId = id;
+          node.dataset.nodeLabel = highlight.text || 'Highlight';
+          node.dataset.nodeType = 'highlight';
+          node.dataset.nodeCluster = 'archive';
+          node.dataset.nodeSummary = highlight.text || '';
+          node.dataset.nodeMeta = `highlight / ${highlight.color || 'gold'}`;
+          node.dataset.nodeArticleId = highlight.articleId || '';
+          node.dataset.nodeHighlightId = highlight.id || '';
+          node.innerHTML = '<circle r="4" fill="#c9a227"></circle><text x="9" y="4">Highlight</text>';
+          graphSvg.append(node);
+          nodes.push(node);
+          links.push(line);
+        });
       };
 
       filterButtons.forEach((button) => {
@@ -405,16 +537,48 @@ const viewBox = '-620 -620 1240 1240';
         node.addEventListener('mouseleave', clearHover);
         node.addEventListener('focus', () => focusNode(node));
         node.addEventListener('blur', clearHover);
-        node.addEventListener('click', () => selectNode(node));
+        node.addEventListener('click', () => {
+          selectNode(node);
+          openReaderCommand(node);
+        });
         node.addEventListener('keydown', (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             selectNode(node);
+            openReaderCommand(node);
           }
         });
       });
 
+      const firstInjectedIndex = nodes.length;
+      injectLocalHighlightNodes();
+      nodes.slice(firstInjectedIndex).forEach((node) => {
+        node.addEventListener('mouseenter', () => focusNode(node));
+        node.addEventListener('mouseleave', clearHover);
+        node.addEventListener('focus', () => focusNode(node));
+        node.addEventListener('blur', clearHover);
+        node.addEventListener('click', () => {
+          selectNode(node);
+          openReaderCommand(node);
+        });
+        node.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            selectNode(node);
+            openReaderCommand(node);
+          }
+        });
+      });
       applyFilter(activeFilter);
+      const focus = new URLSearchParams(window.location.search).get('focus');
+      if (focus) {
+        const target = nodes.find((node) => node.dataset.nodeId === focus);
+        if (target) {
+          selectNode(target);
+          focusNode(target);
+          target.scrollIntoView?.({ block: 'center', inline: 'center' });
+        }
+      }
     })();
   </script>
 </BaseLayout>

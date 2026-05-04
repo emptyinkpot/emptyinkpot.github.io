@@ -14,6 +14,7 @@ import { musicItems, type MusicItem } from '../data/music';
 import { getGitHubOverview } from '../lib/github';
 import { profileLinks } from '../lib/profile';
 import { getPostCover } from '../lib/postCovers';
+import { getRelatedKnowledgeEntries, type KnowledgeRelationSource } from '../lib/knowledge/relations';
 import { withBase } from '../lib/site';
 
 type DrawerKind = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'bilibili' | 'update';
@@ -31,6 +32,8 @@ type DrawerEntry = {
   coverSrc?: string;
   accent?: string;
   tags?: string[];
+  series?: string;
+  body?: string;
   details?: Array<{ label: string; value: string }>;
   chartVariant?: 'heatmap' | 'line' | 'language';
 };
@@ -88,6 +91,16 @@ const articleDrawerEntries: DrawerEntry[] = await Promise.all(
       'summary' in entry.data && entry.data.summary
         ? entry.data.summary
         : entry.data.description ?? getExcerptFromBody(entry.body, 180);
+    const tags =
+      kind === 'post'
+        ? [
+            getPrimaryCategory(entry as CollectionEntry<'posts'>),
+            ...(entry as CollectionEntry<'posts'>).data.tags,
+            ...((entry as CollectionEntry<'posts'>).data.series ? [(entry as CollectionEntry<'posts'>).data.series] : [])
+          ]
+        : kind === 'project'
+          ? (entry as CollectionEntry<'projects'>).data.stack
+          : ['note'];
 
     return {
       id: `${kind}:${entry.id}`,
@@ -97,12 +110,9 @@ const articleDrawerEntries: DrawerEntry[] = await Promise.all(
       date: 'date' in entry.data && entry.data.date ? formatDate(entry.data.date) : undefined,
       href: withBase(`/${basePath}/${entry.id}/`),
       summary,
-      tags:
-        kind === 'post'
-          ? (entry as CollectionEntry<'posts'>).data.tags
-          : kind === 'project'
-            ? (entry as CollectionEntry<'projects'>).data.stack
-            : ['note'],
+      tags,
+      series: kind === 'post' ? (entry as CollectionEntry<'posts'>).data.series : undefined,
+      body: entry.body,
       Content: rendered.Content,
       toc: rendered.headings
         .filter((heading) => heading.depth <= 3)
@@ -409,6 +419,16 @@ const drawerEntries = [
   ...utilityDrawerEntries
 ];
 const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
+const relationSources = drawerEntries.map((entry) => ({
+  id: entry.id,
+  kind: entry.kind,
+  title: entry.title,
+  summary: entry.summary,
+  tags: entry.tags ?? [],
+  series: entry.series,
+  href: entry.href,
+  body: entry.body
+})) satisfies KnowledgeRelationSource[];
 const knowledgeDocs = drawerEntries.map((entry) => ({
   id: entry.id,
   type: entry.kind,
@@ -420,19 +440,11 @@ const knowledgeDocs = drawerEntries.map((entry) => ({
 }));
 
 function getRelatedEntries(entry: DrawerEntry) {
-  const tagSet = new Set(entry.tags ?? []);
-  return drawerEntries
-    .filter((item) => item.id !== entry.id)
-    .map((item) => {
-      const score =
-        (item.kind === entry.kind ? 2 : 0) +
-        (item.tags ?? []).filter((tag) => tagSet.has(tag)).length;
-      return { item, score };
-    })
-    .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3)
-    .map(({ item }) => item);
+  const source = relationSources.find((item) => item.id === entry.id);
+  if (!source) return [];
+  return getRelatedKnowledgeEntries(source, relationSources, 3)
+    .map(({ entry: item }) => drawerById.get(item.id))
+    .filter(Boolean) as DrawerEntry[];
 }
 
 function feedCardClass(item: FeedItem) {
@@ -710,6 +722,7 @@ function feedCardClass(item: FeedItem) {
           </div>
           <button type="button" data-reader-bookmark>收藏</button>
           <button type="button" data-reader-seal>盖章</button>
+          <a href={withBase('/knowledge/')} data-reader-graph>知识图谱</a>
           <a href={withBase('/posts/')} data-article-full>完整页面</a>
           <button type="button" data-article-close>关闭</button>
         </div>
@@ -811,6 +824,44 @@ function feedCardClass(item: FeedItem) {
                   <Content />
                 </div>
               </div>
+              <section class="reader-mini-graph" data-reader-mini-graph data-reader-mini-article={entry.id} aria-label="文章知识网络">
+                <header>
+                  <span>Mini Graph</span>
+                  <a href={withBase(`/knowledge/?focus=${encodeURIComponent(entry.id)}`)} data-mini-graph-open>查看知识图谱</a>
+                </header>
+                <div class="reader-mini-graph__grid">
+                  <section>
+                    <strong>当前</strong>
+                    <button type="button" data-memory-drawer={entry.id}>{entry.title}</button>
+                  </section>
+                  <section>
+                    <strong>关联</strong>
+                    {related.length ? (
+                      related.slice(0, 3).map((item) => (
+                        <button type="button" data-memory-drawer={item.id}>{item.title}</button>
+                      ))
+                    ) : (
+                      <p>暂无强关联</p>
+                    )}
+                  </section>
+                  <section>
+                    <strong>标签</strong>
+                    {(entry.tags ?? []).slice(0, 3).length ? (
+                      (entry.tags ?? []).slice(0, 3).map((tag) => (
+                        <button type="button" data-mini-tag={tag}>{tag}</button>
+                      ))
+                    ) : (
+                      <p>暂无标签</p>
+                    )}
+                  </section>
+                  <section>
+                    <strong>高亮</strong>
+                    <div data-mini-highlights>
+                      <p>暂无本地高亮</p>
+                    </div>
+                  </section>
+                </div>
+              </section>
               {related.length ? (
                 <section class="home-article-related" aria-label="继续阅读">
                   <span>继续阅读</span>
@@ -901,6 +952,7 @@ function feedCardClass(item: FeedItem) {
       const sealPalette = document.querySelector('[data-seal-palette]');
       const sealTargetTitle = document.querySelector('[data-seal-target-title]');
       const readerSealButton = document.querySelector('[data-reader-seal]');
+      const readerGraphLink = document.querySelector('[data-reader-graph]');
       const sidebarHistory = document.querySelector('[data-sidebar-history]');
       const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
       const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
@@ -1013,6 +1065,11 @@ function feedCardClass(item: FeedItem) {
       };
 
       const getVisibleCards = () => cards.filter((card) => !card.hidden);
+
+      const setSearchKind = (kind) => {
+        searchKind = kind || 'all';
+        searchKinds.forEach((item) => item.classList.toggle('is-active', item.dataset.searchKind === searchKind));
+      };
 
       const setActiveCard = (index) => {
         const visibleCards = getVisibleCards();
@@ -1184,6 +1241,11 @@ function feedCardClass(item: FeedItem) {
         const max = drawerBody.scrollHeight - drawerBody.clientHeight;
         const ratio = max > 0 ? drawerBody.scrollTop / max : 0;
         progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
+      };
+
+      const updateReaderGraphLink = () => {
+        if (!(readerGraphLink instanceof HTMLAnchorElement) || !currentArticle) return;
+        readerGraphLink.href = `/knowledge/?focus=${encodeURIComponent(currentArticle.id)}`;
       };
 
       const escapeCssIdentifier = (value) => {
@@ -1394,6 +1456,37 @@ function feedCardClass(item: FeedItem) {
         return panel;
       };
 
+      const renderReaderMiniGraph = () => {
+        if (!drawerBody || !currentArticle) return;
+        const mini = drawerBody.querySelector('[data-reader-mini-graph]');
+        if (!mini) return;
+        const highlightsTarget = mini.querySelector('[data-mini-highlights]');
+        const graphOpen = mini.querySelector('[data-mini-graph-open]');
+        if (graphOpen instanceof HTMLAnchorElement) {
+          graphOpen.href = `/knowledge/?focus=${encodeURIComponent(currentArticle.id)}`;
+        }
+        if (!highlightsTarget) return;
+        const highlights = readJson(storageKeys.highlights, [])
+          .filter((item) => item.articleId === currentArticle.id)
+          .slice(0, 3);
+        if (!highlights.length) {
+          const empty = document.createElement('p');
+          empty.textContent = '暂无本地高亮';
+          highlightsTarget.replaceChildren(empty);
+          return;
+        }
+        highlightsTarget.replaceChildren(
+          ...highlights.map((item) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.dataset.memoryDrawer = item.articleId;
+            button.dataset.memoryHighlight = item.id;
+            button.textContent = item.text || 'Untitled highlight';
+            return button;
+          })
+        );
+      };
+
       const applyStoredHighlights = () => {
         if (!drawerBody || !currentArticle) return;
         const root = drawerBody.querySelector('.home-article-content');
@@ -1436,6 +1529,7 @@ function feedCardClass(item: FeedItem) {
             pendingHighlightId = null;
           });
         }
+        renderReaderMiniGraph();
       };
 
       const hideSelectionToolbar = () => {
@@ -1510,6 +1604,7 @@ function feedCardClass(item: FeedItem) {
           writeJson(storageKeys.annotations, [annotation, ...readJson(storageKeys.annotations, [])]);
         }
         renderSidebarState();
+        renderReaderMiniGraph();
         hideSelectionToolbar();
       };
 
@@ -1586,6 +1681,15 @@ function feedCardClass(item: FeedItem) {
         renderSearch();
       };
 
+      const openSearchWithQuery = (query, kind = 'all') => {
+        setSearchKind(kind);
+        if (searchInput instanceof HTMLInputElement) {
+          searchInput.value = query || '';
+        }
+        openSearch();
+        renderSearch();
+      };
+
       const closeSearch = () => {
         if (!searchLayer) return;
         searchLayer.classList.remove('is-open');
@@ -1650,6 +1754,7 @@ function feedCardClass(item: FeedItem) {
         if (titleTarget) titleTarget.textContent = title;
         if (kickerTarget) kickerTarget.textContent = kicker;
         if (fullLink) fullLink.setAttribute('href', href);
+        updateReaderGraphLink();
         window.clearTimeout(drawerCloseTimer);
         layer.hidden = false;
         document.body.classList.add('has-home-article-drawer');
@@ -1660,6 +1765,7 @@ function feedCardClass(item: FeedItem) {
         updateBookmarkButton();
         updateReadingProgress();
         requestAnimationFrame(applyStoredHighlights);
+        requestAnimationFrame(renderReaderMiniGraph);
         requestAnimationFrame(renderSeals);
         layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
       };
@@ -1689,8 +1795,7 @@ function feedCardClass(item: FeedItem) {
 
       searchKinds.forEach((button) => {
         button.addEventListener('click', () => {
-          searchKind = button.dataset.searchKind || 'all';
-          searchKinds.forEach((item) => item.classList.toggle('is-active', item === button));
+          setSearchKind(button.dataset.searchKind || 'all');
           renderSearch();
         });
       });
@@ -1708,6 +1813,12 @@ function feedCardClass(item: FeedItem) {
         const drawerId = target.dataset.memoryDrawer;
         if (!drawerId) return;
         openDrawer(drawerId, target, { highlightId: target.dataset.memoryHighlight });
+      });
+
+      drawerBody?.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-mini-tag]') : null;
+        if (!target) return;
+        openSearchWithQuery(target.dataset.miniTag || '', 'all');
       });
 
       drawerBody?.addEventListener('click', (event) => {
@@ -1798,6 +1909,26 @@ function feedCardClass(item: FeedItem) {
         button.addEventListener('click', closeDrawer);
       });
 
+      const runReaderCommand = (command, trigger = document.body) => {
+        if (!command?.type) return;
+        if (command.type === 'openArticle' && command.articleId) {
+          openDrawer(command.articleId, trigger);
+        }
+        if (command.type === 'openHighlight' && command.articleId) {
+          openDrawer(command.articleId, trigger, { highlightId: command.highlightId });
+        }
+        if (command.type === 'searchTag' && command.tag) {
+          openSearchWithQuery(command.tag, 'all');
+        }
+        if (command.type === 'focusGraphNode' && command.nodeId) {
+          window.location.href = `/knowledge/?focus=${encodeURIComponent(command.nodeId)}`;
+        }
+      };
+
+      window.addEventListener('reader-command', (event) => {
+        runReaderCommand(event.detail, event.target);
+      });
+
       document.addEventListener('keydown', (event) => {
         const target = event.target;
         const isTyping = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
@@ -1839,6 +1970,19 @@ function feedCardClass(item: FeedItem) {
       renderSidebarState();
       renderSeals();
       initHeroBanner();
+      const params = new URLSearchParams(window.location.search);
+      const readerId = params.get('reader');
+      const highlightId = params.get('highlight');
+      const searchTag = params.get('searchTag');
+      if (readerId) {
+        const trigger = document.querySelector(`[data-drawer-id="${escapeCssIdentifier(readerId)}"]`) || document.body;
+        runReaderCommand(
+          highlightId ? { type: 'openHighlight', articleId: readerId, highlightId } : { type: 'openArticle', articleId: readerId },
+          trigger
+        );
+      } else if (searchTag) {
+        runReaderCommand({ type: 'searchTag', tag: searchTag }, document.body);
+      }
     })();
   </script>
 </BaseLayout>
