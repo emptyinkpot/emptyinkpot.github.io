@@ -156,6 +156,154 @@
       "action-entrypoints"
     ]
   },
+  "frontendPixelContract": {
+    "sources": [
+      "apps/web/src/styles/global.css",
+      "apps/admin-next/app/globals.css"
+    ],
+    "source": "apps/web/src/styles/global.css",
+    "rootPx": 16,
+    "coverage": {
+      "homepage": "px-level",
+      "postsNotesProjectsLists": "px-level shared workbench-page contract",
+      "proseDetailPages": "shared page-wrap/prose-shell contract",
+      "searchAndTaxonomy": "shared page-wrap/pagefind/workbench list contract",
+      "publicEvidenceLibrary": "px-level",
+      "adminPrototype": "px-level global admin shell contract"
+    },
+    "homepage": {
+      "shell": {
+        "className": "home-editorial-shell",
+        "maxWidthPx": 1560,
+        "viewportGutterPx": 32,
+        "columns": ["260px", "minmax(0, 1fr)"],
+        "gapPx": 24,
+        "paddingBlockPx": 16
+      },
+      "desktopScrollContainers": [
+        "home-side-rail__inner",
+        "home-editorial-page"
+      ],
+      "contentInnerMaxWidthPx": 1240,
+      "workbenchGapPx": 16,
+      "primaryGrids": {
+        "leadGrid": ["minmax(0, 1.42fr)", "minmax(352px, 0.92fr)"],
+        "contentGrid": ["minmax(0, 1.3fr)", "minmax(352px, 0.98fr)"],
+        "hero": ["minmax(0, 1.34fr)", "minmax(352px, 0.96fr)"],
+        "feedSplit": ["minmax(336px, 0.82fr)", "minmax(448px, 1.18fr)"]
+      },
+      "keyComponentSizesPx": {
+        "homeWorkbenchCardPadding": 15.2,
+        "homeSearchBoxMinWidth": 416,
+        "sideRailProfileMinHeight": 552,
+        "sideRailAvatar": 88,
+        "postPreviewCoverMinHeight": 224,
+        "routeCardMinHeight": 152,
+        "repoCardMinHeight": 128,
+        "donut": 137.6,
+        "donutCore": 76.8
+      },
+      "breakpoints": {
+        "max1200": "lead/content grids collapse to one column",
+        "max1100": "home inner grids and analytics/feed split collapse to one column",
+        "max900": "home shell becomes one column and page-level scrolling returns",
+        "max860": "evidence-library grids collapse",
+        "max720": "workbench page stats collapse"
+      }
+    },
+    "pageFamilies": {
+      "home": {
+        "files": [
+          "apps/web/src/pages/index.astro",
+          "apps/web/src/components/home/HomeWorkbench*.astro"
+        ],
+        "mustKeep": [
+          "260px side rail",
+          "1240px main inner max width",
+          "two desktop vertical scroll containers only"
+        ]
+      },
+      "collectionPages": {
+        "files": [
+          "apps/web/src/pages/posts/index.astro",
+          "apps/web/src/pages/notes/index.astro",
+          "apps/web/src/pages/projects/index.astro"
+        ],
+        "wrapperMaxWidthPx": 1180,
+        "viewportGutterPx": 24,
+        "gridColumns": ["repeat(2, minmax(0, 1fr))"],
+        "postCardColumns": ["176px", "minmax(0, 1fr)"],
+        "postCoverMinHeightPx": 176,
+        "collapseBreakpointPx": 1100
+      },
+      "detailPages": {
+        "files": [
+          "apps/web/src/pages/posts/[slug].astro",
+          "apps/web/src/pages/notes/[slug].astro",
+          "apps/web/src/pages/projects/[slug].astro",
+          "apps/web/src/pages/about.astro"
+        ],
+        "wrapperMaxWidthPx": 1180,
+        "codeBlockRule": "pre may scroll horizontally; it must not widen page-wrap"
+      },
+      "searchAndTaxonomy": {
+        "files": [
+          "apps/web/src/pages/search.astro",
+          "apps/web/src/pages/tags/**",
+          "apps/web/src/pages/categories/**",
+          "apps/web/src/pages/series/**"
+        ],
+        "rule": "use page-wrap width; do not add fixed-width sidebars"
+      }
+    },
+    "publicEvidenceLibrary": {
+      "heroColumns": ["minmax(0, 1.5fr)", "minmax(256px, 0.75fr)"],
+      "heroGapPx": 24,
+      "heroPaddingPx": 24,
+      "heroPreMinHeightPx": 144,
+      "gridColumns": ["repeat(3, minmax(0, 1fr))"],
+      "gridGapPx": 16,
+      "cardPaddingPx": 21.6,
+      "sourceGridColumns": ["160px", "minmax(0, 1fr)"],
+      "collapseBreakpointPx": 860,
+      "longTextRule": "evidence-library__mono and source code must use overflow-wrap:anywhere"
+    },
+    "adminPrototype": {
+      "source": "apps/admin-next/app/globals.css",
+      "shellColumns": ["240px", "1fr"],
+      "sidebarPaddingPx": 24,
+      "mainPaddingPx": 24,
+      "mainScrollContainer": "console-main",
+      "cardPaddingPx": 20,
+      "cardRadiusPx": 24,
+      "pageStackGapPx": 24,
+      "metricGridColumns": ["repeat(3, minmax(0, 1fr))"],
+      "twoColumnGridColumns": ["repeat(2, minmax(0, 1fr))"],
+      "metricCardMinHeightPx": 128,
+      "metaGridColumns": ["120px", "minmax(0, 1fr)"],
+      "timelineGridColumns": ["repeat(6, minmax(0, 1fr))"],
+      "aiLayoutColumns": ["220px", "minmax(0, 1fr)", "280px"],
+      "aiLayoutMinHeight": "calc(100vh - 48px)",
+      "chatBubbleMaxWidth": "80%",
+      "tableCellPaddingPx": [14, 16],
+      "collapseBreakpointPx": 1100,
+      "overlapRules": [
+        "console-main is the only admin main scroll container",
+        "chat-shell must keep min-height:0 so chat-thread can scroll",
+        "long paths use meta-grid code overflow-wrap:anywhere",
+        "wide tables stay inside table-shell"
+      ]
+    },
+    "overlapRules": [
+      "do not add a third desktop vertical scroll container",
+      "do not reset scrollTop on tab/list item selection",
+      "all grid children that contain text must keep min-width: 0",
+      "long text/path/code surfaces must use overflow-wrap:anywhere or line-clamp",
+      "sticky post preview must stay inside home-workbench__feedsplit",
+      "admin wide tables/logs must not create console-main horizontal overflow",
+      "fix overlap through grid constraints and wrapping, not z-index layering"
+    ]
+  },
   "frontendRefactorPriority": [
     "restructure-homepage-as-console",
     "add-content-status-visibility",

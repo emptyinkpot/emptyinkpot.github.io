@@ -686,6 +686,170 @@ Hero / System Entry
 
 如果后续进入真正的可复用设计系统阶段，应把这些规则继续下沉到 tokens / contracts / patterns，而不是只留在 prose 文档里。
 
+#### 0.7.5.15a Current Frontend Pixel Contract
+
+本节记录当前 `apps/web` 前台真实 UI contract，按 `apps/web/src/styles/global.css` 的现行实现换算为 px。默认换算基线为 `1rem = 16px`。本节用于复刻和排查重叠，不是理想稿。
+
+当前首页真源：
+
+- 页面：`apps/web/src/pages/index.astro`
+- 组件：`apps/web/src/components/home/HomeWorkbench*.astro`
+- 样式：`apps/web/src/styles/global.css`
+- 数据：`apps/web/src/lib/home.ts`
+
+桌面首页外壳：
+
+| 层级 / class | 当前值 |
+| --- | --- |
+| `body.home-mode` | 桌面锁定视口滚动，首页内部自己滚动 |
+| `.page-wrap--home` | `width: 100%` |
+| `.home-editorial-shell` | `display: grid`；列宽 `260px minmax(0, 1fr)`；列间距 `24px`；最大宽度 `min(1560px, 100% - 32px)`；上下 padding `16px`；高度 `100%` |
+| `.home-side-rail` | 左栏固定网格列 `260px`；高度 `100%`；`overflow: hidden` |
+| `.home-side-rail__inner` | 左栏内部唯一滚动容器；上下 padding `16px`；gap `16px`；隐藏滚动条 |
+| `.home-editorial-page` | 主内容唯一桌面滚动容器；上下 padding `16px`；`overflow-y: auto`；`overflow-x: hidden`；隐藏滚动条 |
+| `.home-editorial-page__inner` | 主内容最大宽度 `1240px` |
+| `.home-workbench` | 纵向 flex；模块间距 `16px`；底部 padding `28.8px` |
+
+桌面首页网格：
+
+| class | 当前值 |
+| --- | --- |
+| `.home-workbench__lead-grid` | 两列：`minmax(0, 1.42fr) minmax(352px, 0.92fr)`；gap `16px` |
+| `.home-workbench__content-grid` | 两列：`minmax(0, 1.3fr) minmax(352px, 0.98fr)`；gap `16px` |
+| `.home-workbench__hero` | 两列：`minmax(0, 1.34fr) minmax(352px, 0.96fr)`；gap `16px` |
+| `.home-workbench__utility` / `.home-workbench__double` | 两列：`minmax(0, 1.06fr) minmax(0, 0.94fr)`；gap `16px` |
+| `.home-workbench__triple` | 三列等分；gap `16px` |
+| `.home-workbench__feedsplit` | 两列：`minmax(336px, 0.82fr) minmax(448px, 1.18fr)`；gap `22.4px` |
+| `.home-workbench__mini-grid` | 三列等分；gap `12.8px` |
+| `.home-workbench__repo-grid` / `.home-workbench__status-grid` | 两列等分；gap `10.4px` |
+| `.home-workbench__analytics` | 两列：`1.02fr 0.98fr`；gap `16px`；顶部边线后 padding `18.4px` |
+
+卡片与控件尺寸：
+
+| class | 当前值 |
+| --- | --- |
+| `.home-workbench__card` | padding `15.2px`；内部 gap `12.48px`；背景 `rgba(255,255,255,0.58)`；边框 `1px rgba(255,255,255,0.45)`；无圆角 |
+| `.home-workbench__card--panel` | 背景 `rgba(255,255,255,0.62)` |
+| `.home-workbench__card--accent` / `.home-workbench__snapshot` | 背景 `#660874`；文字白色 |
+| `.home-workbench__searchbar` | padding `11.52px 15.2px`；水平 gap `16px` |
+| `.home-workbench__searchbox` | 最小宽度 `min(100%, 416px)`；padding `9.92px 14.72px`；gap `16px` |
+| `.home-workbench__filterchip` | padding `8px 14.4px`；圆角 `999px`；字号 `13.12px` |
+| `.home-workbench__hero-actions a` | 最小高 `37.6px`；padding `7.2px 16px` |
+| `.home-workbench__hero-main h1` | 最大宽度 `12ch`；字号 `clamp(30.4px, 2.55vw, 48px)`；行高 `1.02`；允许 `overflow-wrap: anywhere` |
+| `.home-workbench__hero-summary` | 最大宽度 `576px`；字号 `14.08px`；行高 `1.64` |
+| `.home-workbench__analytics-card` | 最小高 `228px`；padding `14.4px`；gap `15.2px` |
+| `.home-workbench__donut` | `137.6px × 137.6px` |
+| `.home-workbench__donut-core` | `76.8px × 76.8px` |
+| `.home-workbench__postitem` | 两列：`76px minmax(0,1fr)`；padding `12.8px`；gap `14.4px` |
+| `.home-workbench__postcover` | 最小高 `91.2px`；padding `9.28px` |
+| `.home-workbench__postpreview-cover` | 最小高 `224px`；padding `16px` |
+| `.home-workbench__mini-card` | 最小高 `134.4px`；顶部 padding `10.88px` |
+| `.home-workbench__route-card` | 最小高 `152px`；padding `13.12px 14.08px`；gap `8.8px` |
+| `.home-workbench__repo-card` / `.home-workbench__status-card` | 最小高 `128px`；padding `13.12px 14.08px` |
+| `.home-side-rail__profile-panel` | 最小高 `552px` |
+| `.home-side-rail__brandbar` | 宽 `169.6px`；最小高 `37.6px`；padding `5.44px 12.8px` |
+| `.home-side-rail__avatar-shell` | `88px × 88px` |
+| `.home-side-rail__avatar-orb` | `68.8px × 68.8px` |
+| `.home-side-rail__link` | 最小高 `29.6px`；padding `6.08px 11.52px`；字号 `10.88px` |
+
+非首页 workbench 页：
+
+| class | 当前值 |
+| --- | --- |
+| `.page-wrap` | 最大宽度 `min(1180px, 100% - 24px)` |
+| `.workbench-page` | 纵向 gap `20px`；padding `32px 0 44.8px` |
+| `.workbench-page__intro h1` | 字号 `clamp(33.6px, 4vw, 64px)`；行高 `0.94` |
+| `.workbench-page__grid--posts` / `.workbench-page__grid--projects` | 两列等分；gap `16px` |
+| `.workbench-page__post-card` | 两列：`176px minmax(0,1fr)`；gap `16px` |
+| `.workbench-page__post-cover` | 最小高 `176px` |
+| `.evidence-library__hero` | 两列：`minmax(0,1.5fr) minmax(256px,0.75fr)`；gap `24px`；margin-top `24px`；padding `24px` |
+| `.evidence-library__grid` | 三列等分；gap `16px`；margin-top `16px` |
+| `.evidence-library__card` / `.evidence-library__section` | padding `21.6px` |
+
+复刻覆盖矩阵：
+
+| 页面族 | 源文件 | 复用布局 | 复刻要求 |
+| --- | --- | --- | --- |
+| 首页 | `apps/web/src/pages/index.astro` + `HomeWorkbench*.astro` | `.home-editorial-shell` + `.home-workbench` | 必须保留左栏 `260px`、主内容 `1240px` 内宽、两个桌面滚动容器 |
+| 文章 / 笔记 / 项目列表 | `posts/index.astro`、`notes/index.astro`、`projects/index.astro` | `.page-wrap` + `.workbench-page__grid--posts/projects` | 两列卡片在 `1100px` 以下变单列；卡片内容列必须 `minmax(0,1fr)` |
+| 文章详情 / 页面详情 | `[slug].astro`、`about.astro` | `.page-wrap` + `.prose-shell` | 正文容器最大宽度由 `.page-wrap` 控制；代码块只能横向滚动，不得撑宽正文 |
+| 搜索 / taxonomy | `search.astro`、`tags/*`、`categories/*`、`series/*` | `.page-wrap` + `pagefind-ui` / workbench 列表 | Pagefind 输入框和结果抽屉宽度 `100%`，不得新增固定宽侧栏 |
+| 史料素材库公开页 | `evidence-library/index.astro` | `.evidence-library__hero/grid/source-grid` | hero 右列最小 `256px`；source key 列 `160px`；`860px` 以下全部单列 |
+| 后台原型 | `apps/admin-next/app/admin/**` | `.console-shell` + `.console-main` | 左栏 `240px`、主内容滚动；`1100px` 以下单列 |
+
+公开史料素材库精确尺寸：
+
+| class | 当前值 |
+| --- | --- |
+| `.evidence-library__hero` | grid；列 `minmax(0,1.5fr) minmax(256px,0.75fr)`；gap `24px`；margin-top `24px`；padding `24px` |
+| `.evidence-library__hero h2` / section h2 | margin-top `7.2px`；字号 `clamp(21.6px,2.2vw,32px)`；行高 `1.16` |
+| `.evidence-library__hero p` / section p | margin-top `12.8px`；行高 `1.8` |
+| `.evidence-library__hero pre` | min-height `144px`；圆角 `19.2px`；padding 由内容居中控制；字号 `16px`；`white-space: pre-wrap` |
+| `.evidence-library__grid` | 三列 `repeat(3,minmax(0,1fr))`；gap `16px`；margin-top `16px` |
+| `.evidence-library__card` / `.evidence-library__section` | padding `21.6px` |
+| `.evidence-library__steps` / `__phases` / `__source-grid` | grid；gap `12.8px`；margin-top `19.2px` |
+| `.evidence-library__steps article` / `__phases article` / `__source-grid p` | grid；列 `auto minmax(0,1fr)`；gap `16px`；padding `16px`；圆角 `16px` |
+| `.evidence-library__steps article > span` | min-width `51.2px`；padding `7.2px 11.2px`；字号 `12.48px` |
+| `.evidence-library__source-grid p` | 列 `160px minmax(0,1fr)`；`860px` 以下改 `1fr` |
+| `.evidence-library__mono` / source code | 必须 `overflow-wrap:anywhere`，用于长路径、OpenList 路径、URL |
+
+后台 admin 原型精确尺寸：
+
+| class | 当前值 |
+| --- | --- |
+| `.console-shell` | min-height `100vh`；grid 列 `240px 1fr` |
+| `.console-sidebar` | padding `24px`；右边框 `1px` |
+| `.brand-block` | margin-bottom `32px` |
+| `.brand-title` | 字号 `21.6px`；字重 `700` |
+| `.nav-list` | grid；gap `8px` |
+| `.nav-link` | padding `12px 14px`；圆角 `16px` |
+| `.console-main` | padding `24px`；唯一后台主滚动容器 `overflow-y:auto` |
+| `.page-stack` / `.section-stack` | grid；gap `24px` |
+| `.page-header h1` / `.chat-shell-header h1` | 字号 `32px` |
+| `.card` | padding `20px`；圆角 `24px`；边框 `1px` |
+| `.metric-grid` | 三列 `repeat(3,minmax(0,1fr))`；gap `16px` |
+| `.two-column-grid` | 两列 `repeat(2,minmax(0,1fr))`；gap `16px` |
+| `.metric-card` | min-height `128px` |
+| `.metric-value` | margin-top `12px`；字号 `32px` |
+| `.button-row` / `.chat-input-row` / `.evidence-control-row` | flex；gap `12px` |
+| `.field-stack` | flex basis `320px`；gap `8px` |
+| `.action-button` | padding `12px 18px`；圆角 `16px`；hover 只允许 `translateY(-1px)` |
+| `.timeline-grid` | 六列 `repeat(6,minmax(0,1fr))`；gap `12px` |
+| `.timeline-step` | padding `14px 10px`；圆角 `16px`；字号 `13.12px` |
+| `.meta-grid` | 列 `120px minmax(0,1fr)`；gap `10px 14px`；字号 `14.4px` |
+| `.badge-grid` | flex-wrap；gap `8px` |
+| `.evidence-admin-steps article` | 列 `auto minmax(0,1fr)`；gap `14px`；padding `14px`；圆角 `18px` |
+| `.provider-table th/td` | padding `14px 16px` |
+| `.ai-layout` | min-height `calc(100vh - 48px)`；列 `220px minmax(0,1fr) 280px`；gap `16px` |
+| `.chat-shell` | grid rows `auto 1fr auto`；`min-height:0` |
+| `.chat-thread` | gap `12px`；padding `20px 0`；内部滚动 `overflow-y:auto` |
+| `.chat-bubble` | max-width `80%`；padding `14px`；圆角 `20px` |
+| `.text-input` | width `100%`；padding `12px 14px`；圆角 `16px` |
+
+断点规则：
+
+| 断点 | 当前行为 |
+| --- | --- |
+| `max-width: 1200px` | `.home-workbench__lead-grid` 和 `.home-workbench__content-grid` 变单列 |
+| `max-width: 1100px` | `.home-workbench__utility`、`.home-workbench__hero`、`.home-workbench__double`、`.home-workbench__triple`、`.home-workbench__analytics`、`.home-workbench__feedsplit`、repo/status/link/snapshot 等网格全部变单列 |
+| `max-width: 900px` | `body.home-mode` 恢复页面级滚动；`.home-editorial-shell` 单列；宽度 `calc(100% - 8px)`；gap `8px`；padding `8px 0 16px`；左栏不再固定高度；主内容 `overflow: visible`；主内容 padding `12px`；侧栏 nav 变横向 wrap；侧栏 link 最小高 `40px`、字号 `14.4px` |
+| `max-width: 860px` | `evidence-library` hero/grid 变单列，source grid 变单列 |
+| `max-width: 720px` | `.workbench-page` 顶部 padding 改 `18.4px`；stats 单列 |
+| admin `max-width: 1100px` | `.console-shell` 从 `240px 1fr` 改单列；sidebar 改底边框；`.metric-grid`、`.two-column-grid`、`.ai-layout`、`.timeline-grid` 全部单列 |
+
+重叠与卡顿禁止规则：
+
+- 桌面首页只允许两个纵向滚动容器：`.home-side-rail__inner` 和 `.home-editorial-page`。点击、tab 切换、文章预览切换不得重置这两个容器的 `scrollTop`。
+- 任意两列 / 三列网格子项必须保留 `min-width: 0`；会显示标题、摘要、标签、路径、代码的元素必须设置 `overflow-wrap: anywhere` 或明确的 `line-clamp`。
+- 不要在桌面断点下把 `.home-workbench__feedsplit` 的右列最小宽度降到 `448px` 以下；低于这个宽度必须走 `max-width: 1100px` 单列。
+- `.home-workbench__postpreview` 当前使用 `position: sticky; top: 0`，只能在自己的列内吸附，不得脱离 `.home-workbench__feedsplit` 或覆盖左侧 post list。
+- `.home-workbench__sectionline` 默认两端文字 `white-space: nowrap`；放进窄侧栏时必须使用现有 `.home-workbench__lead-side` / `.home-workbench__hero-side` 的单列 sectionline 规则。
+- 首页卡片不允许新增绝对定位浮层作为主要信息容器；已有封面图渐变层只能在封面容器内 `inset: 0`，不得跨出父级。
+- hover 动效只允许 `translateY(-2px)` 或 `translateX(2px)` 级别，不得改变布局尺寸。
+- 任何新增首页模块必须先放入现有结构之一：`searchbar`、`lead-grid`、`content-grid`、`project-notes`、`routes`、`planned`、`signals`。不要再新增第三个桌面主滚动容器。
+- admin 页长表格、长日志、长路径只允许在 `.table-shell` / `.log-lines pre` / `.meta-grid code` 内换行或滚动；不得让 `.console-main` 横向溢出。
+- 如果页面出现重叠，优先检查：网格最小列宽、`min-width: 0`、长文本换行、sticky 父容器、移动断点是否生效，而不是靠增大 z-index 盖过去。
+
 #### 0.7.5.16 Frontend Refactor Priority
 
 前台升级建议默认按以下顺序推进，而不是同时大改所有页面：
