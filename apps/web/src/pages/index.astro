@@ -650,6 +650,14 @@ function feedCardClass(item: FeedItem) {
     </section>
   </div>
 
+  <div class="selection-toolbar" data-selection-toolbar hidden>
+    <button type="button" data-highlight-color="gold">金</button>
+    <button type="button" data-highlight-color="purple">紫</button>
+    <button type="button" data-highlight-color="green">绿</button>
+    <button type="button" data-open-annotation>批注</button>
+    <button type="button" data-copy-selection>复制</button>
+  </div>
+
   <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
 
   <div class="home-article-templates" hidden>
@@ -760,18 +768,25 @@ function feedCardClass(item: FeedItem) {
       const searchInput = document.querySelector('[data-search-input]');
       const searchResults = document.querySelector('[data-search-results]');
       const searchKinds = [...document.querySelectorAll('[data-search-kind]')];
+      const selectionToolbar = document.querySelector('[data-selection-toolbar]');
       const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
       const storageKeys = {
         history: 'emptyinkpot-reading-history',
         bookmarks: 'emptyinkpot-reader-bookmarks',
         highlights: 'emptyinkpot-reader-highlights',
+        annotations: 'emptyinkpot-reader-annotations',
         readerTheme: 'emptyinkpot-reader-theme'
       };
+      const drawerTransitionMs = 180;
+      const searchTransitionMs = 120;
       let lastFocused = null;
       let savedScrollTop = 0;
       let currentArticle = null;
       let activeIndex = 0;
       let searchKind = 'all';
+      let selectedRange = null;
+      let drawerCloseTimer = 0;
+      let searchCloseTimer = 0;
 
       const readJson = (key, fallback) => {
         try {
@@ -884,19 +899,46 @@ function feedCardClass(item: FeedItem) {
         });
       };
 
-      const saveSelectionHighlight = () => {
-        if (!currentArticle || !drawerBody) return;
+      const hideSelectionToolbar = () => {
+        if (selectionToolbar) selectionToolbar.hidden = true;
+        selectedRange = null;
+      };
+
+      const showSelectionToolbar = () => {
+        if (!currentArticle || !drawerBody || !selectionToolbar) return;
         const selection = window.getSelection();
         const text = selection?.toString().trim() || '';
-        if (text.length < 10 || text.length > 240) return;
+        if (text.length < 10 || text.length > 240 || !selection.rangeCount) {
+          hideSelectionToolbar();
+          return;
+        }
         const range = selection.getRangeAt(0);
+        if (!drawerBody.contains(range.commonAncestorContainer)) {
+          hideSelectionToolbar();
+          return;
+        }
+        selectedRange = range.cloneRange();
+        const rect = range.getBoundingClientRect();
+        selectionToolbar.hidden = false;
+        const left = Math.min(window.innerWidth - selectionToolbar.offsetWidth - 12, Math.max(12, rect.left));
+        const top = Math.max(12, rect.top - selectionToolbar.offsetHeight - 10);
+        selectionToolbar.style.left = `${left}px`;
+        selectionToolbar.style.top = `${top}px`;
+      };
+
+      const saveSelectionHighlight = (color = 'gold', note = '') => {
+        if (!currentArticle || !drawerBody) return;
+        const selection = window.getSelection();
+        const range = selectedRange || (selection?.rangeCount ? selection.getRangeAt(0) : null);
+        const text = range?.toString().trim() || '';
+        if (!range || text.length < 10 || text.length > 240) return;
         if (!drawerBody.contains(range.commonAncestorContainer)) return;
         const record = {
           id: `${currentArticle.id}:${Date.now()}`,
           articleId: currentArticle.id,
           title: currentArticle.title,
           text,
-          color: 'gold',
+          color,
           anchor: {
             quote: { type: 'TextQuoteSelector', exact: text, prefix: '', suffix: '' },
             position: { type: 'TextPositionSelector', start: 0, end: text.length },
@@ -907,16 +949,30 @@ function feedCardClass(item: FeedItem) {
           updatedAt: Date.now()
         };
         const mark = document.createElement('mark');
-        mark.className = 'reader-highlight reader-highlight--gold';
+        mark.className = `reader-highlight reader-highlight--${color}`;
         mark.dataset.highlightId = record.id;
         try {
           mark.append(range.extractContents());
           range.insertNode(mark);
-          selection.removeAllRanges();
+          selection?.removeAllRanges();
         } catch {
           return;
         }
         writeJson(storageKeys.highlights, [record, ...readJson(storageKeys.highlights, [])]);
+        if (note.trim()) {
+          const annotation = {
+            id: `annotation:${record.id}`,
+            articleId: currentArticle.id,
+            highlightId: record.id,
+            body: note.trim(),
+            color,
+            tags: [],
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          };
+          writeJson(storageKeys.annotations, [annotation, ...readJson(storageKeys.annotations, [])]);
+        }
+        hideSelectionToolbar();
       };
 
       const search = (query) => {
@@ -973,14 +1029,22 @@ function feedCardClass(item: FeedItem) {
 
       const openSearch = () => {
         if (!searchLayer || !searchInput) return;
+        window.clearTimeout(searchCloseTimer);
         searchLayer.hidden = false;
-        searchInput.focus({ preventScroll: true });
+        requestAnimationFrame(() => {
+          searchLayer.classList.add('is-open');
+          searchInput.focus({ preventScroll: true });
+        });
         renderSearch();
       };
 
       const closeSearch = () => {
         if (!searchLayer) return;
-        searchLayer.hidden = true;
+        searchLayer.classList.remove('is-open');
+        window.clearTimeout(searchCloseTimer);
+        searchCloseTimer = window.setTimeout(() => {
+          searchLayer.hidden = true;
+        }, searchTransitionMs);
       };
 
       const setFilter = (kind) => {
@@ -994,21 +1058,26 @@ function feedCardClass(item: FeedItem) {
 
       const closeDrawer = () => {
         if (!layer) return;
-        layer.hidden = true;
-        document.body.classList.remove('has-home-article-drawer');
-        drawerBody?.replaceChildren();
-        currentArticle = null;
-        if (mainScroller) {
-          mainScroller.scrollTop = savedScrollTop;
-        }
-        if (lastFocused instanceof HTMLElement) {
-          lastFocused.focus({ preventScroll: true });
-        }
-        if (mainScroller) {
-          requestAnimationFrame(() => {
+        hideSelectionToolbar();
+        layer.classList.remove('is-open');
+        window.clearTimeout(drawerCloseTimer);
+        drawerCloseTimer = window.setTimeout(() => {
+          layer.hidden = true;
+          document.body.classList.remove('has-home-article-drawer');
+          drawerBody?.replaceChildren();
+          currentArticle = null;
+          if (mainScroller) {
             mainScroller.scrollTop = savedScrollTop;
-          });
-        }
+          }
+          if (lastFocused instanceof HTMLElement) {
+            lastFocused.focus({ preventScroll: true });
+          }
+          if (mainScroller) {
+            requestAnimationFrame(() => {
+              mainScroller.scrollTop = savedScrollTop;
+            });
+          }
+        }, drawerTransitionMs);
       };
 
       const openDrawer = (id, trigger) => {
@@ -1032,8 +1101,12 @@ function feedCardClass(item: FeedItem) {
         if (titleTarget) titleTarget.textContent = title;
         if (kickerTarget) kickerTarget.textContent = kicker;
         if (fullLink) fullLink.setAttribute('href', href);
+        window.clearTimeout(drawerCloseTimer);
         layer.hidden = false;
         document.body.classList.add('has-home-article-drawer');
+        requestAnimationFrame(() => {
+          layer.classList.add('is-open');
+        });
         saveHistory(currentArticle);
         updateBookmarkButton();
         updateReadingProgress();
@@ -1078,7 +1151,27 @@ function feedCardClass(item: FeedItem) {
 
       bookmarkButton?.addEventListener('click', toggleBookmark);
       drawerBody?.addEventListener('scroll', updateReadingProgress);
-      drawerBody?.addEventListener('mouseup', () => setTimeout(saveSelectionHighlight, 0));
+      drawerBody?.addEventListener('mouseup', () => setTimeout(showSelectionToolbar, 0));
+
+      selectionToolbar?.querySelectorAll('[data-highlight-color]').forEach((button) => {
+        button.addEventListener('click', () => saveSelectionHighlight(button.dataset.highlightColor || 'gold'));
+      });
+
+      selectionToolbar?.querySelector('[data-open-annotation]')?.addEventListener('click', () => {
+        const note = window.prompt('写下这条标记的批注');
+        if (note !== null) saveSelectionHighlight('gold', note);
+      });
+
+      selectionToolbar?.querySelector('[data-copy-selection]')?.addEventListener('click', async () => {
+        const text = selectedRange?.toString().trim();
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          // Clipboard can be unavailable in some preview contexts.
+        }
+        hideSelectionToolbar();
+      });
 
       document.querySelectorAll('[data-article-close]').forEach((button) => {
         button.addEventListener('click', closeDrawer);

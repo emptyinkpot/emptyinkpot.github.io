@@ -97,20 +97,42 @@ const viewBox = '-620 -620 1240 1240';
         <span>Radial Graph</span>
         <strong>{graph.nodes.length} nodes / {graph.links.length} links</strong>
       </div>
-      <svg class="knowledge-graph-svg" viewBox={viewBox} role="img" aria-label="Knowledge graph">
-        {graph.links.map((link) => {
-          const source = graph.nodes.find((node) => node.id === link.source);
-          const target = graph.nodes.find((node) => node.id === link.target);
-          if (!source || !target) return null;
-          return <line x1={source.x} y1={source.y} x2={target.x} y2={target.y} class={`knowledge-link knowledge-link--${link.type}`} />;
-        })}
-        {graph.nodes.map((node) => (
-          <g class={`knowledge-node knowledge-node--${node.type}`} transform={`translate(${node.x ?? 0} ${node.y ?? 0})`}>
-            <circle r={node.level === 0 ? 16 : node.level === 1 ? 11 : node.level === 2 ? 7 : 4} fill={colorFor(node.type)} />
-            <text x={node.level <= 1 ? 18 : 9} y="4">{node.label}</text>
-          </g>
-        ))}
-      </svg>
+      <div class="knowledge-page__graph-layout">
+        <aside class="knowledge-sidebar" aria-label="Graph clusters">
+          <p>Clusters</p>
+          <button type="button" class="is-active">All</button>
+          <button type="button">Writing</button>
+          <button type="button">Engineering</button>
+          <button type="button">Reading</button>
+          <button type="button">Media</button>
+          <button type="button">GitHub</button>
+        </aside>
+
+        <div class="knowledge-canvas">
+          <svg class="knowledge-graph-svg" viewBox={viewBox} role="img" aria-label="Knowledge graph">
+            {graph.links.map((link) => {
+              const source = graph.nodes.find((node) => node.id === link.source);
+              const target = graph.nodes.find((node) => node.id === link.target);
+              if (!source || !target) return null;
+              return <line x1={source.x} y1={source.y} x2={target.x} y2={target.y} class={`knowledge-link knowledge-link--${link.type}`} />;
+            })}
+            {graph.nodes.map((node) => (
+              <g class={`knowledge-node knowledge-node--${node.type}`} transform={`translate(${node.x ?? 0} ${node.y ?? 0})`}>
+                <circle r={node.level === 0 ? 16 : node.level === 1 ? 11 : node.level === 2 ? 7 : 4} fill={colorFor(node.type)} />
+                <text x={node.level <= 1 ? 18 : 9} y="4">{node.label}</text>
+              </g>
+            ))}
+          </svg>
+        </div>
+
+        <aside class="knowledge-inspector" aria-label="Node inspector">
+          <p>Inspector</p>
+          <h2>Knowledge</h2>
+          <p>选择一个节点后，后续版本在这里展示标题、类型、标签、印章、相关高亮和打开入口。</p>
+          <a href={withBase('/')}>打开首页 Drawer</a>
+          <a href={withBase('/search/')}>打开搜索页</a>
+        </aside>
+      </div>
     </section>
   </main>
 </BaseLayout>

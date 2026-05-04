@@ -30,6 +30,11 @@ siteEntrypoints:
   home: https://blog.tengokukk.com/
   posts: https://blog.tengokukk.com/posts/
   tags: https://blog.tengokukk.com/tags/
+  github: https://blog.tengokukk.com/github/
+  books: https://blog.tengokukk.com/books/
+  music: https://blog.tengokukk.com/music/
+  knowledge: https://blog.tengokukk.com/knowledge/
+  knowledgeIndex: https://blog.tengokukk.com/data/knowledge-index.json
   evidenceLibrary: https://blog.tengokukk.com/evidence-library/
   search: https://blog.tengokukk.com/search/
   settings: https://blog.tengokukk.com/settings/
@@ -699,6 +704,13 @@ Hero / System Entry
 - 样式：`apps/web/src/styles/global.css`
 - 数据：`apps/web/src/content/*`、`apps/web/src/data/books.ts`、`apps/web/src/lib/profile.ts`、`apps/web/src/data/github-overview.emptyinkpot.json`
 
+复刻阅读顺序：
+
+1. 先按“桌面首页外壳”复刻结构和滚动模型。
+2. 再按“Heritage 默认视觉语言”和“Heritage 实际覆盖值”复刻当前默认画面。
+3. 只在需要兼容 `/settings/` 的 `theme: "glass"` 时参考“Glass legacy 基础值”。
+4. 最后按“Motion Contract”“Color Hygiene Contract”“重叠与卡顿禁止规则”验收。
+
 桌面首页外壳：
 
 | 层级 / class | 当前值 |
@@ -712,7 +724,9 @@ Hero / System Entry
 | `.home-feed-grid` | CSS columns 瀑布流；桌面 `column-count:3`；column gap `16px` |
 | `.home-article-drawer` | 右侧阅读抽屉；fixed；宽 `min(760px,100vw)`；高 `100vh`；z-index `90` |
 
-首页 Feed / Drawer 精确尺寸：
+首页 Feed / Drawer 精确尺寸（Glass legacy 基础值）：
+
+以下表格记录的是 `global.css` 中仍然保留的 Glass / Workbench 基础 class 值。由于 `<html data-theme="heritage">` 是当前默认输出，这些值会被后面的 Heritage override 覆盖。复刻当前默认画面时，不得只按本表还原渐变、毛玻璃和大阴影。
 
 | class | 当前值 |
 | --- | --- |
@@ -754,7 +768,9 @@ Heritage 默认视觉语言：
 | 语义 | Token / 色值 | 用途 |
 | --- | --- | --- |
 | 宣纸底色 | `--heritage-bg: #f5f1e8` | 首页背景、drawer 背景 |
-| 和纸面板 | `--heritage-paper: #efe8da` | 卡片、左栏、设置页面板 |
+| 白色卡片 | `--heritage-card: #ffffff` | Feed 卡片、ChartCard、ShowcaseCard、Graph panel |
+| 和纸面板 | `--heritage-paper: #efe8da` | 左栏、设置页面板、控制面板 |
+| 强边界 | `--heritage-line-strong: #cbbda9` | 卡片边框、drawer 边界、搜索面板 |
 | 清华紫 | `--heritage-purple: #6b2d5c` | 主色、文章边条、active filter |
 | 朱红 | `--heritage-red: #9e2a2b` | 札记 / 书架边条 |
 | 松绿 | `--heritage-green: #2f5d50` | 项目 / GitHub / 热力图高强度 |
@@ -766,6 +782,77 @@ Heritage 硬规则：
 - 默认不使用大面积渐变、发光、半透明玻璃和 blur；`body.home-mode` 下 Heritage 会强制取消 `backdrop-filter`。
 - 卡片层级靠纯色面板、左侧语义边条和清晰分隔线表达，不靠阴影堆叠。
 - 后续首页视觉改动默认修改 Heritage 主题；Glass 只作为兼容项，不再作为主设计方向。
+
+Heritage 实际覆盖值（当前默认画面）：
+
+| selector / token | 当前值 | 复刻要求 |
+| --- | --- | --- |
+| `html[data-theme="heritage"]` | `BaseLayout.astro` 默认输出；localStorage 只允许切换到 `glass` 或 `heritage` | 首屏不得闪回 Glass |
+| `body.home-mode` | 宣纸底 `#f5f1e8` + 44px 网格；网格线为紫色低透明度 | 只能作为纸面肌理，不能变成明显装饰图案 |
+| `--heritage-card` | `#ffffff` | Feed 卡片、ChartCard、ShowcaseCard、Knowledge panel 的默认面 |
+| `--heritage-paper` | `#efe8da` | 左栏、设置面板、控制面板的默认面 |
+| `--heritage-paper-deep` | `#e0d6c3` | 封面占位、正文 mark 背景、hover 面 |
+| `--heritage-line-strong` | `#cbbda9` | 卡片边框、toolbar 底线、drawer 左线、搜索面板边界 |
+| `.home-feed-shell` | `width:min(1520px,100% - 40px)`；gap `20px`；padding `20px 0 32px` | 比 legacy 宽 40px，给书签露出和三列 Feed 留空间 |
+| `.home-feed-profile` / `.home-feed-nav` / `.home-feed-rail-card` | border `1px solid #cbbda9`；radius `4px`；background `#efe8da`；shadow `0 1px 0 rgba(0,0,0,.04)` | 左栏是米色控制面，不承载主内容 |
+| `.home-feed-card` / `.chart-card` / `.showcase-card` | border `1px solid #cbbda9`；radius `4px`；background `#ffffff`；shadow `0 1px 0 rgba(0,0,0,.04)` | 当前主内容卡片必须白，不允许恢复 `linear-gradient`、blur 和厚阴影 |
+| `.home-feed-profile` | 顶边 `4px solid #6b2d5c` | 左栏只做摘要和导航，不承载完整内容 |
+| `.home-feed-toolbar` | background `#f5f1e8`；底边 `2px solid #d8cfc2`；sticky | 筛选时只隐藏已有卡片，不重建 DOM |
+| `.home-feed-card` | `position:relative`；`overflow:visible`；`border-left-width:4px`；transition `transform var(--motion-base) var(--ease-standard)` | 允许书签露出；正文、图片、图表不得溢出卡片内容区 |
+| `.home-feed-card:hover` | `translateY(-1px)`；无阴影增强 | hover 只给结构反馈，不制造漂浮感 |
+| `.home-feed-card h2` | `color: var(--bookmark-color, #1e1b18)` | 标题颜色跟随书签语义色 |
+| `.home-feed-card__tags span` | border `1px solid #cbbda9`；radius `3px`；background transparent | 不使用 pill 胶囊，不做 SaaS 标签风 |
+| `.home-article-backdrop` | `rgba(30,27,24,.28)` | 背景弱化，不加 blur |
+| `.home-article-drawer` | width `min(860px,100vw)`；background `var(--reader-bg,#f5f1e8)`；border-left `2px solid #cbbda9`；shadow none；`180ms` transform slide | 抽屉是“临时展开的书页”，不是玻璃侧栏 |
+| `.home-article-drawer__body` | padding `24px`；内部纵向滚动 | 关闭后必须回到原 Feed 滚动位置 |
+| `.reading-progress` | height `3px`；background `#6b2d5c`；`transform:scaleX(...)` | 只反映阅读进度，不改变布局 |
+| `.knowledge-search-layer` | fixed；z-index `120` | 高于 drawer layer |
+| `.knowledge-search-panel` | width `min(720px,calc(100vw - 28px))`；max-height `82vh`；border `2px solid #cbbda9`；radius `6px`；`120ms` fade/drop | 搜索是 command palette，不是新页面跳转 |
+| `.knowledge-canvas` / `.knowledge-graph-svg` | canvas min-height `680px`；白色周边 panel；44px 纸面网格背景 | 图谱必须分层/扇区，不做随机毛线团 |
+
+Bookmark Object 精确合同：
+
+| selector | 当前值 | 复刻要求 |
+| --- | --- | --- |
+| `.bookmark` | `position:absolute; top:-8px; left:16px; z-index:3` | 书签必须从卡片顶部露出，模拟插进纸页 |
+| `.bookmark` | padding `6px 11px 9px`；font-size `10px`；letter-spacing `0.12em` | 书签是物件，不是信息 tag |
+| `.bookmark` | `clip-path: polygon(0 0,100% 0,100% 100%,50% 86%,0 100%)` | 底部缺口必须保留 |
+| `.bookmark` | `rotate(-1.4deg)`；shadow `0 2px 4px rgba(30,27,24,.12)` | 轻微手工感，不允许随机到影响对齐 |
+| `.bookmark::before` | 顶部 2px 暗线 | 表达纸张压痕 |
+| `.home-feed-card:hover .bookmark` | `rotate(-0.2deg) translateY(-1px)` | hover 拉直书签，不大幅移动卡片 |
+| `post` | `#6b2d5c` | 文章 / 思想 / 学术 |
+| `note` / `book` | `#9e2a2b` | 札记 / 书架 / 创作表达 |
+| `project` / `github` | `#2f5d50` | 技术 / 项目 / 工程信号 |
+| `music` | `#c9a227`，文字 `#1e1b18` | 音乐 / 点缀 / 收藏感 |
+
+Motion Contract：
+
+| 交互 | 当前实现 | 目标边界 |
+| --- | --- | --- |
+| Feed card hover | card `translateY(-1px)`，`180ms` standard ease | 不改变尺寸，不加厚阴影，不造成瀑布流重排 |
+| Bookmark hover | `rotate(-1.4deg)` -> `rotate(-0.2deg) translateY(-1px)` | 只让书签像被轻轻扶正 |
+| Active feed card | `.feed-card--active` outline `2px #6b2d5c`，offset `3px` | 键盘 J/K 浏览必须可见，不能靠发光 |
+| Drawer open/close | `is-open` class + `180ms` slide/fade，关闭后延迟 hidden，保留 scrollTop | 不得回退成瞬间跳变 |
+| Search overlay | `is-open` class + `120ms` fade/drop；panel fixed z-index `120` | 不能拦截 drawer 内 Esc 关闭逻辑 |
+| Reader progress | scroll 时更新 `scaleX` | 不参与 transition，避免进度滞后 |
+| Filter | 隐藏 / 显示已有卡片 | 不重建 DOM，不触发 scroll reset |
+
+Color Hygiene Contract：
+
+- Heritage 不是“米色主题”。每个面必须靠明度差、边框权重或语义色形成层级。
+- `#f5f1e8` 背景、`#efe8da` 面板和 `#e4dac7` 深面如果同时大面积出现，必须用 `#d8cfc2` 或更明确的结构线分隔；否则画面会显脏。
+- 紫、红、绿、金只能表达内容语义，不作为随机装饰色。
+- 禁止把大面积渐变、neon、高饱和蓝紫、玻璃 blur、发光 hover 重新带回默认主题。
+- 边界不清时，优先调整 surface ladder 和 border contrast；不要先加阴影。
+- 文字颜色默认 `#1e1b18`，次级 `#6b645c`；不得用浅灰在宣纸背景上承载正文。
+
+当前视觉债 / 判断：
+
+- 当前方向是对的：默认已经从 AI SaaS / Dribbble 风切到 Heritage / Cultural OS，书签隐喻也成立。
+- 之前画面“脏”和“边界不清”的主要原因是 `#f5f1e8`、`#efe8da`、`#e4dac7` 三个纸色太接近，且边线太轻。
+- 当前 Final UI Contract v1 已把主 Feed 卡片改为白色 `#ffffff`，并把关键边界提升到 `#cbbda9`；后续不得回退到全米色卡片。
+- 动效已经收敛到 `--motion-fast / --motion-base / --motion-slow` 和 `--ease-standard`，drawer/search 不再使用瞬间跳变作为目标状态。
+- 下一轮视觉修正应继续检查截图基线和真实对比度，而不是继续增加功能。
 
 非首页 workbench 页：
 
@@ -861,8 +948,9 @@ Heritage 硬规则：
 - 首页文章阅读必须通过 `.home-article-drawer` 克隆隐藏的 `.home-article-reader` 内容；完整文章页继续保留给 SEO、分享和深度阅读。
 - `.home-article-toc` 只能 sticky 在 drawer 内部，不能脱离 drawer 覆盖 Feed。
 - 首页卡片不允许新增绝对定位浮层作为主要信息容器；封面图层只能留在 `.home-feed-card__cover` 内，不能跨出父级。
+- `.bookmark` 是唯一允许跨出 `.home-feed-card` 外边界的常驻视觉物件；卡片本体因此允许 `overflow: visible`，但封面、正文、标签、图表和媒体仍不得溢出内容区。
 - hover 动效只允许 `translateY(-2px)` 或 `translateX(2px)` 级别，不得改变布局尺寸。
-- 任何新增首页内容必须先抽象成 FeedItem 类型之一：`post`、`note`、`project`、`book`、`github`、`bilibili`、`update`。不要再恢复多模块堆叠首页。
+- 任何新增首页内容必须先抽象成 FeedItem 类型之一：`post`、`note`、`project`、`book`、`music`、`github`、`bilibili`、`update`。不要再恢复多模块堆叠首页。
 - 图表、书架、音乐也必须作为 FeedItem 或详情页进入系统；不要另起首页模块堆叠。
 - admin 页长表格、长日志、长路径只允许在 `.table-shell` / `.log-lines pre` / `.meta-grid code` 内换行或滚动；不得让 `.console-main` 横向溢出。
 - 如果页面出现重叠，优先检查：网格最小列宽、`min-width: 0`、长文本换行、sticky 父容器、移动断点是否生效，而不是靠增大 z-index 盖过去。
@@ -1103,6 +1191,199 @@ P2:
 - Graph 默认限量节点和内容类型过滤
 ```
 
+#### 0.7.5.15e Frontend Reproduction Checklist
+
+如果把本仓交给另一个开发者复刻当前前台，不应只看截图，应按以下顺序验收：
+
+1. 获取源码：`git clone https://github.com/emptyinkpot/emptyinkpot.github.io`，进入 `apps/web`。
+2. 安装依赖：在仓库根执行 `npm install`。
+3. 本地质量门：依次执行 `npm run lint`、`npm run check`、`npm run build`。
+4. 本地预览：使用 Astro preview 或现有 npm script 预览 `apps/web/dist`。
+5. 首页结构验证：`/` 必须是 `Profile Rail + Masonry-like Feed + Right Article Drawer`，不是旧 HomeWorkbench 多模块堆叠。
+6. 默认主题验证：首屏 `<html data-theme="heritage">`；不设置 localStorage 时默认 Heritage。
+7. 书签验证：首页 Feed 卡应出现 `.bookmark`，其数量应与可见 Feed 卡主视觉匹配；书签从卡片顶部露出。
+8. 抽屉验证：点击 Feed 卡和左栏主入口都打开 `.home-article-drawer`；关闭后回到原滚动位置；完整页链接只在 drawer action 中出现。
+9. 搜索验证：`Cmd/Ctrl + K` 打开 Knowledge Search；搜索 GitHub、书籍、音乐和文章标题都应返回结果。
+10. Reader 验证：drawer 内 light / sepia / dark 可切换；收藏写入 `emptyinkpot-reader-bookmarks`；阅读历史写入 `emptyinkpot-reading-history`。
+11. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
+12. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
+13. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
+
+可用浏览器断言：
+
+```js
+document.documentElement.dataset.theme === "heritage"
+document.querySelectorAll(".home-feed-card").length > 0
+document.querySelectorAll(".bookmark").length > 0
+document.querySelectorAll(".home-feed-card a[href^='/posts/'], .home-feed-card a[href^='/notes/'], .home-feed-card a[href^='/projects/']").length === 0
+```
+
+当前在线参考入口：
+
+- 首页：`https://blog.tengokukk.com/`
+- GitHub Showcase：`https://blog.tengokukk.com/github/`
+- Bookshelf：`https://blog.tengokukk.com/books/`
+- Music：`https://blog.tengokukk.com/music/`
+- Knowledge Graph：`https://blog.tengokukk.com/knowledge/`
+- Knowledge Index：`https://blog.tengokukk.com/data/knowledge-index.json`
+
+#### 0.7.5.15f MyBlog Final UI Contract v1
+
+本节是当前首页、Drawer、阅读系统、Search、Graph 的最终收口合同。它不新建一套并行命名，而是约束当前真实代码：
+
+```text
+/                         Profile Rail + Feed + Drawer Reader + Search Overlay
+/knowledge/                Knowledge Graph
+/github/ /books/ /music/   Showcase detail pages
+/data/knowledge-index.json Search / Graph 的构建期索引
+```
+
+最终信息架构：
+
+```text
+首页负责发现
+Drawer 负责快速阅读
+Search 负责进入
+Graph 负责回访
+详情页负责深度展示
+```
+
+最终视觉原则：
+
+```text
+背景 = 纸
+卡片 = 白
+面板 = 米色
+颜色 = 只由书签 / 高亮 / 图谱节点表达
+阴影 = 少用
+边线 = 清楚
+```
+
+当前代码映射：
+
+| 合同概念 | 当前真实 selector / 文件 | 说明 |
+| --- | --- | --- |
+| Content OS shell | `.home-feed-shell` in `index.astro` / `global.css` | 首页两列骨架 |
+| Profile Rail | `.home-feed-rail`、`.home-feed-profile`、`.home-feed-rail-card` | 左栏只放摘要、记忆入口和快速链接 |
+| Feed | `.home-feed-main`、`.home-feed-toolbar`、`.home-feed-grid` | 主滚动与瀑布流 |
+| FeedCard | `.home-feed-card` | 统一白色内容容器 |
+| Bookmark Object | `.bookmark` | 内容分类的唯一强颜色来源 |
+| Drawer Reader | `.home-article-layer`、`.home-article-drawer` | 右侧临时书页 |
+| Search Overlay | `.knowledge-search-layer`、`.knowledge-search-panel` | Cmd/Ctrl + K command palette |
+| Graph View | `/knowledge/`、`.knowledge-page`、`.knowledge-graph-svg` | 静态 radial / clustered graph |
+
+最终 token：
+
+```css
+:root[data-theme="heritage"] {
+  --heritage-bg: #f5f1e8;
+  --heritage-card: #ffffff;
+  --heritage-paper: #efe8da;
+  --heritage-paper-deep: #e0d6c3;
+
+  --heritage-line: #d8cfc2;
+  --heritage-line-strong: #cbbda9;
+  --heritage-line-heavy: #b8aa95;
+
+  --heritage-ink: #1e1b18;
+  --heritage-muted: #6b645c;
+
+  --heritage-purple: #6b2d5c;
+  --heritage-red: #9e2a2b;
+  --heritage-green: #2f5d50;
+  --heritage-gold: #c9a227;
+
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --motion-slow: 260ms;
+  --ease-standard: cubic-bezier(.2, 0, .2, 1);
+}
+```
+
+Surface rules：
+
+- `body.home-mode` 使用 `#f5f1e8` 和 44px 低透明网格，表示纸面。
+- `.home-feed-card`、`.chart-card`、`.showcase-card` 使用 `#ffffff`，让内容容器干净，不再和背景一起发脏。
+- `.home-feed-profile`、`.home-feed-rail-card`、`.home-feed-nav`、`.home-article-drawer__header`、Search panel 使用米色面板或纸面，承担控制/导航属性。
+- 结构边界默认 `#cbbda9`；弱分隔可用 `#d8cfc2`；页面大分区可用 `#b8aa95`。
+
+FeedCard rules：
+
+- `.home-feed-card` 必须 `position: relative; overflow: visible; border-radius: 4px; border: 1px solid var(--heritage-line-strong); background: var(--heritage-card)`。
+- `.home-feed-card` hover 只允许 `translateY(-1px)`，不得增加厚阴影，不得改变瀑布流 item 尺寸。
+- `.home-feed-card h2` 字号约 `20px`、行高 `1.32`、字重 `600-650`，颜色跟随 `--bookmark-color`。
+- `.home-feed-card p` 字号约 `14px`、行高约 `1.72`，只用 `#6b645c` 作为次级文本。
+- 颜色只来自 `.bookmark`、highlight、graph node；普通卡片面不得再使用大色块或玻璃渐变。
+
+Bookmark rules：
+
+- `.bookmark` 是物件，不是 tag；必须从卡片顶部露出。
+- `.bookmark` 固定 `top:-8px; left:14px/16px`，使用底部缺口 `clip-path`。
+- hover 时书签从 `rotate(-1.4deg)` 到 `rotate(-0.2deg) translateY(-1px)`。
+- post=紫，note/book=红，project/github=绿，music=金；标题颜色跟随同一语义色。
+
+Drawer Reader rules：
+
+- `.home-article-layer` 负责 backdrop + drawer layer，不得直接 display none 后瞬移。
+- `.home-article-backdrop` 使用 `opacity` 过渡，背景 `rgba(30,27,24,.28)`。
+- `.home-article-drawer` 宽度 `min(860px,100vw)`，右侧滑入，`transform` 过渡 `180ms cubic-bezier(.2,0,.2,1)`。
+- 关闭 drawer 必须等过渡结束后再 hidden；关闭后恢复 `.home-feed-main.scrollTop` 并 focus 回原触发卡片。
+- reader themes 使用 `emptyinkpot-reader-theme`，仍只允许 `light / sepia / dark`。
+
+Search rules：
+
+- `.knowledge-search-layer` 是 command palette，不是新页面。
+- 打开方式固定为 `Cmd/Ctrl + K` 或首页搜索按钮。
+- Search panel 宽 `min(720px, calc(100vw - 28px))`，边框 `2px solid var(--heritage-line-strong)`。
+- Search 可以补 fade 动效，但不得破坏 Esc 优先关闭搜索、再关闭 drawer 的顺序。
+
+Graph rules：
+
+- Graph 不做随机星云；必须保留中心、collection、content、tag/highlight 的层级。
+- `/knowledge/` 的视觉容器使用白色 panel + 纸面 graph canvas。
+- Graph 后续升级方向是 cluster sectors：writing、engineering、reading、media、github，而不是把所有节点丢进随机力导向。
+
+Tangible Knowledge UI 扩展规则：
+
+```text
+Bookmark = 分类
+Highlight = 记忆
+Annotation = 思考
+Seal = 人工判断
+Graph = 回访结构
+```
+
+- Seal System 可以作为 P1/P2 扩展，但不能替代 bookmark。印章表达“精选 / 重要 / 洞见 / 未完 / 重读 / 归档”等人工判断。
+- Annotation 必须绑定 Highlight；高亮只保存原文片段，批注保存个人思考。
+- Seal、Annotation、Highlight 最终都应进入 Search 和 Graph，形成统一 Knowledge Artifact System。
+- 第一版仍保持 localStorage；引入后端前不得改变 `HighlightRecord`、`KnowledgeSearchDoc`、`KnowledgeGraphNode`、`KnowledgeGraphLink` 合同。
+
+最终验收标准：
+
+```text
+首页：
+- 默认 heritage
+- 卡片白色，背景纸色
+- 颜色只来自书签 / highlight / graph node
+- 三列瀑布流稳定，900px 以下单列
+
+Drawer：
+- 180ms 滑入 / 退出
+- Esc 关闭
+- 关闭后回到原滚动位置
+- 阅读进度、收藏、reader theme 可用
+
+Search：
+- Cmd/Ctrl + K 打开
+- Esc 关闭
+- 可搜文章、书、音乐、GitHub、高亮
+
+Graph：
+- 不随机
+- 中心 / 分区 / 层级清晰
+- 节点语义色和 Heritage 色板一致
+```
+
 #### 0.7.5.16 Frontend Refactor Priority
 
 前台升级建议默认按以下顺序推进，而不是同时大改所有页面：
@@ -1271,7 +1552,9 @@ right: metadata / seo / status / save actions
   - `apps/web/src/pages/about.astro`
   - `apps/web/src/pages/api-keys.astro`
   - `apps/web/src/pages/books/index.astro`
+  - `apps/web/src/pages/evidence-library/index.astro`
   - `apps/web/src/pages/github/index.astro`
+  - `apps/web/src/pages/knowledge/index.astro`
   - `apps/web/src/pages/music/index.astro`
   - `apps/web/src/pages/settings.astro`
   - `apps/web/src/pages/search.astro`
@@ -1290,12 +1573,13 @@ right: metadata / seo / status / save actions
   - `apps/web/src/pages/series/index.astro`
   - `apps/web/src/pages/series/[slug].astro`
 - 站点输出页：
+  - `apps/web/src/pages/data/knowledge-index.json.ts`
   - `apps/web/src/pages/robots.txt.ts`
   - `apps/web/src/pages/rss.xml.ts`
 
-### 当前首页工作台组件
+### 当前 legacy HomeWorkbench 组件
 
-以下组件已经落地，后续如果拆到平台化前台，应优先复用而不是重写：
+以下组件仍存在于代码库，属于旧 HomeWorkbench 体系资产，不是当前首页默认结构。后续如果复用，应先抽取有价值的数据展示或小组件，不能把旧多模块堆叠首页整体恢复回来：
 
 - `apps/web/src/components/home/HomeWorkbenchDeck.astro`
 - `apps/web/src/components/home/HomeWorkbenchFeatureBand.astro`
@@ -1328,6 +1612,22 @@ right: metadata / seo / status / save actions
   - `apps/web/src/components/showcase/BookshelfCard.astro`
   - `apps/web/src/components/showcase/AlbumCover.astro`
   - `apps/web/src/components/showcase/MusicCard.astro`
+
+### 当前 Knowledge Layer 模块
+
+- 页面与数据端点：
+  - `apps/web/src/pages/knowledge/index.astro`
+  - `apps/web/src/pages/data/knowledge-index.json.ts`
+- 类型与纯函数：
+  - `apps/web/src/lib/knowledge/types.ts`
+  - `apps/web/src/lib/knowledge/anchors.ts`
+  - `apps/web/src/lib/knowledge/storage.ts`
+  - `apps/web/src/lib/knowledge/search.ts`
+  - `apps/web/src/lib/knowledge/graph.ts`
+- 首页内联交互：
+  - `apps/web/src/pages/index.astro` 内的 drawer、reader、search、keyboard navigation、bookmark、history、highlight 脚本
+
+Knowledge Layer 的复刻边界是数据合同优先：`KnowledgeSearchDoc`、`KnowledgeGraphNode`、`KnowledgeGraphLink` 和 `HighlightRecord` 不能因换 UI 库而改变。后续可以把首页内联脚本拆成 island 或共享模块，但不得拆散 Search、Reader Memory、Graph 的统一数据来源。
 
 ### GitHub 可视化资产与旧首页配置
 
