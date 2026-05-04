@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blog.tengokukk.com/evidence-library/schemas/asset.schema.json",
+  "title": "EvidenceAsset",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "assetType",
+    "openlistPath",
+    "license",
+    "entities",
+    "visualKinds",
+    "bestFor",
+    "avoidFor",
+    "visibility"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "assetType": {
+      "type": "string",
+      "enum": ["document", "image", "video", "audio", "map", "newspaper"]
+    },
+    "openlistPath": { "type": "string" },
+    "publicUrl": { "type": "string" },
+    "localMirrorPath": { "type": "string" },
+    "sourceUrl": { "type": "string" },
+    "license": {
+      "type": "string",
+      "enum": ["public_domain", "cc", "fair_use", "private_research", "unknown"]
+    },
+    "era": { "type": "string" },
+    "entities": { "type": "array", "items": { "type": "string" } },
+    "locations": { "type": "array", "items": { "type": "string" } },
+    "organizations": { "type": "array", "items": { "type": "string" } },
+    "events": { "type": "array", "items": { "type": "string" } },
+    "visualKinds": { "type": "array", "items": { "type": "string" } },
+    "bestFor": { "type": "array", "items": { "type": "string" } },
+    "avoidFor": { "type": "array", "items": { "type": "string" } },
+    "mustNotShow": { "type": "array", "items": { "type": "string" } },
+    "notes": { "type": "string" },
+    "visibility": {
+      "type": "string",
+      "enum": ["private", "listed", "public"]
+    }
+  },
+  "additionalProperties": true
+}

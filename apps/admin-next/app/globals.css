@@ -73,7 +73,10 @@ input {
 .log-lines,
 .provider-table,
 .pipeline-step,
-.nav-link {
+.nav-link,
+.meta-grid,
+.badge-grid,
+.evidence-admin-steps {
   color: var(--muted);
 }
 
@@ -257,6 +260,71 @@ input {
   font-size: 0.82rem;
   color: var(--muted);
   background: var(--panel);
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.meta-grid code {
+  overflow-wrap: anywhere;
+  color: var(--text);
+}
+
+.badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.evidence-rule-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-strong);
+  padding: 6px 10px 6px 6px;
+  color: var(--text);
+}
+
+.evidence-admin-steps {
+  display: grid;
+  gap: 12px;
+}
+
+.evidence-admin-steps article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel-strong);
+  padding: 14px;
+}
+
+.evidence-admin-steps article > span {
+  border-radius: 999px;
+  background: var(--blue);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 9px;
+}
+
+.evidence-admin-steps h3,
+.evidence-admin-steps p {
+  margin: 0;
+}
+
+.evidence-admin-steps p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 
 .timeline-step-active {

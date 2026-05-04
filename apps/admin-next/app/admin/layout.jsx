@@ -1,6 +1,7 @@
 const nav = [
   ["Dashboard", "/admin/dashboard"],
   ["Content", "/admin/content"],
+  ["Evidence Library", "/admin/evidence-library"],
   ["AI Writer", "/admin/ai"],
   ["Publish", "/admin/publish"],
   ["Token Pool", "/admin/token-pool"],

@@ -159,6 +159,7 @@
     "pages": [
       "dashboard",
       "content",
+      "evidence-library",
       "ai",
       "publish",
       "token-pool",
@@ -166,6 +167,9 @@
     ],
     "apiRoutes": [
       "app/api/ai/generate/route.ts",
+      "app/api/evidence-library/plan/route.js",
+      "app/api/evidence-library/assets/route.js",
+      "app/api/evidence-library/openlist/scan/route.js",
       "app/api/publish/build/route.ts",
       "app/api/publish/release/route.ts",
       "app/api/publish/rollback/route.ts",
