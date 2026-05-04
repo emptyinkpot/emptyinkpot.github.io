@@ -2738,9 +2738,12 @@ body.home-mode .page-wrap--home {
 .home-feed-profile,
 .home-feed-nav,
 .home-feed-rail-card {
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.66);
-  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  background-color: rgba(255, 255, 255, 0.82);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.76));
+  box-shadow: 0 18px 46px rgba(47, 33, 54, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(24px) saturate(1.18);
+  backdrop-filter: blur(24px) saturate(1.18);
   padding: 16px;
 }
 
@@ -2859,8 +2862,10 @@ body.home-mode .page-wrap--home {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 16px;
-  background: rgba(244, 238, 231, 0.82);
-  backdrop-filter: blur(18px);
+  background-color: rgba(244, 238, 231, 0.86);
+  background: linear-gradient(180deg, rgba(244, 238, 231, 0.94), rgba(244, 238, 231, 0.84));
+  -webkit-backdrop-filter: blur(24px) saturate(1.16);
+  backdrop-filter: blur(24px) saturate(1.16);
   padding: 12px 0;
 }
 
@@ -2907,8 +2912,12 @@ body.home-mode .page-wrap--home {
   min-width: 0;
   margin: 0 0 16px;
   break-inside: avoid;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.84);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+  box-shadow: 0 20px 54px rgba(47, 33, 54, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(26px) saturate(1.18);
+  backdrop-filter: blur(26px) saturate(1.18);
   color: inherit;
   cursor: pointer;
   overflow: hidden;
@@ -2920,8 +2929,8 @@ body.home-mode .page-wrap--home {
 
 .home-feed-card:hover,
 .home-feed-card:focus-visible {
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: inset 0 0 0 1px rgba(102, 8, 116, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.84));
+  box-shadow: 0 22px 58px rgba(47, 33, 54, 0.14), inset 0 0 0 1px rgba(102, 8, 116, 0.14);
   outline: none;
   transform: translateY(-2px);
 }
@@ -2960,7 +2969,7 @@ body.home-mode .page-wrap--home {
   min-height: 122px;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--feed-accent, var(--home-accent)) 18%, transparent), transparent 70%),
-    rgba(255, 255, 255, 0.5);
+    rgba(255, 255, 255, 0.72);
   padding: 14px;
   color: var(--feed-accent, var(--home-accent));
   font-size: 12px;
