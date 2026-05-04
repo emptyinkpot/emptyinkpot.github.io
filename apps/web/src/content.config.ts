@@ -37,11 +37,30 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    type: z.enum(['game', 'tool', 'open', 'site', 'archive']).default('open'),
     status: z.enum(['planned', 'active', 'paused', 'archived']).default('planned'),
+    progress: z.number().min(0).max(100).default(0),
     date: z.coerce.date().optional(),
     stack: z.array(z.string()).default([]),
     repo: z.string().url().optional(),
-    demo: z.string().url().optional()
+    demo: z.string().url().optional(),
+    modules: z.array(z.object({
+      id: z.string().optional(),
+      name: z.string(),
+      status: z.enum(['planned', 'draft', 'in-progress', 'done', 'paused']).default('planned'),
+      progress: z.number().min(0).max(100).default(0)
+    })).default([]),
+    wiki: z.array(z.object({
+      title: z.string(),
+      path: z.string(),
+      summary: z.string().optional(),
+      type: z.enum(['overview', 'world', 'faction', 'character', 'card', 'system', 'doc']).default('doc')
+    })).default([]),
+    milestones: z.array(z.object({
+      title: z.string(),
+      date: z.coerce.date().optional(),
+      summary: z.string().optional()
+    })).default([])
   })
 });
 

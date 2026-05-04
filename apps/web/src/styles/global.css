@@ -2608,6 +2608,484 @@ body.home-mode .page-wrap--home {
   color: #5b5148;
 }
 
+.project-studio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.project-studio-card,
+.project-space__hero,
+.project-space__section,
+.project-space__nav,
+.project-studio-timeline {
+  border: 1px solid #cbbda9;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.project-studio-card {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.35rem 1.1rem 1.1rem;
+  overflow: visible;
+  transition:
+    transform var(--motion-base, 180ms) var(--ease-standard, ease),
+    border-color var(--motion-base, 180ms) var(--ease-standard, ease);
+}
+
+.project-studio-card:hover {
+  transform: translateY(-1px);
+  border-color: #2f5d50;
+}
+
+.project-studio-card__bookmark {
+  position: absolute;
+  top: -0.45rem;
+  left: 1rem;
+  min-width: 3.4rem;
+  padding: 0.52rem 0.42rem 0.8rem;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 86%, 0 100%);
+  background: #2f5d50;
+  color: #f4efe6;
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-align: center;
+  transform: rotate(-1.2deg);
+}
+
+.project-studio-card__meta,
+.project-space__kicker,
+.project-space__section-head p,
+.project-studio-section-head p,
+.project-module-card span,
+.project-wiki-list span,
+.project-timeline-list span {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2f5d50;
+}
+
+.project-studio-card__meta {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  padding-left: 4.1rem;
+}
+
+.project-studio-card__title {
+  color: #2f5d50;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 750;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.project-studio-card p,
+.project-studio-timeline p,
+.project-space__hero-main > p,
+.project-wiki-list p,
+.project-timeline-list p {
+  color: #6b645c;
+  font-size: 0.86rem;
+  line-height: 1.72;
+}
+
+.project-progress {
+  height: 0.5rem;
+  border: 1px solid #cbbda9;
+  background: #f5f1e8;
+  overflow: hidden;
+}
+
+.project-progress span {
+  display: block;
+  width: var(--progress);
+  height: 100%;
+  background: #2f5d50;
+}
+
+.project-progress--large {
+  height: 0.65rem;
+}
+
+.project-studio-metrics,
+.project-space__status dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.project-studio-metrics div,
+.project-space__status dl div {
+  min-width: 0;
+  border: 1px solid #d8cfc2;
+  padding: 0.65rem;
+  background: #f8f5ee;
+}
+
+.project-studio-metrics dt,
+.project-space__status dt {
+  color: #6b645c;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.project-studio-metrics dd,
+.project-space__status dd {
+  margin: 0.22rem 0 0;
+  color: #1e1b18;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 760;
+}
+
+.project-studio-card__actions,
+.project-space__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.project-studio-card__actions a,
+.project-space__actions a,
+.project-wiki-list a,
+.project-timeline-list a {
+  min-height: 2rem;
+  border: 1px solid #cbbda9;
+  border-radius: 3px;
+  padding: 0.42rem 0.7rem;
+  color: #2f5d50;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.project-studio-card__actions a:hover,
+.project-space__actions a:hover,
+.project-wiki-list a:hover,
+.project-timeline-list a:hover {
+  border-color: #2f5d50;
+  background: #f5f1e8;
+}
+
+.project-studio-empty {
+  border: 1px solid #cbbda9;
+  border-radius: 4px;
+  background: #fff;
+  padding: 1rem;
+}
+
+.project-studio-timeline {
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.project-studio-section-head,
+.project-space__section-head {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.project-studio-section-head h2,
+.project-space__section-head h2 {
+  color: #1e1b18;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.project-studio-timeline__list,
+.project-timeline-list,
+.project-wiki-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.project-studio-timeline__list a,
+.project-timeline-list article,
+.project-wiki-list article,
+.project-module-card {
+  min-width: 0;
+  border: 1px solid #d8cfc2;
+  border-radius: 4px;
+  background: #f8f5ee;
+  padding: 0.9rem;
+}
+
+.project-studio-timeline__list strong,
+.project-timeline-list h3,
+.project-wiki-list h3,
+.project-module-card h3 {
+  display: block;
+  margin-top: 0.25rem;
+  color: #1e1b18;
+  font-size: 1rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.project-studio-timeline__list small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #2f5d50;
+  font-family: var(--font-ui);
+  font-size: 0.74rem;
+  font-weight: 750;
+}
+
+.project-space {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem 0 3rem;
+}
+
+.project-space__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.55fr);
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.project-space__hero-main {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.project-space__hero h1 {
+  max-width: 18ch;
+  color: #2f5d50;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.project-space__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-space__tags span {
+  border: 1px solid #cbbda9;
+  border-radius: 3px;
+  padding: 0.3rem 0.55rem;
+  color: #2f5d50;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.project-space__status {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+  border-left: 1px solid #d8cfc2;
+  padding-left: 1.2rem;
+}
+
+.project-space__status > span {
+  color: #2f5d50;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.project-space__status > p {
+  color: #6b645c;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-space__nav {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0.75rem;
+}
+
+.project-space__nav a {
+  border: 1px solid #d8cfc2;
+  border-radius: 3px;
+  padding: 0.42rem 0.7rem;
+  color: #6b645c;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.project-space__nav a:hover {
+  border-color: #2f5d50;
+  color: #2f5d50;
+}
+
+.project-space__layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.project-space__section {
+  display: grid;
+  gap: 1rem;
+  padding: 1.2rem;
+  scroll-margin-top: 5.2rem;
+}
+
+.project-space__prose {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 0;
+}
+
+.project-module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.project-module-card {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.project-module-card > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.project-module-card strong {
+  color: #2f5d50;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.project-wiki-list article {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.project-wiki-list article > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.project-wiki-list code {
+  color: #6b645c;
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.project-contributors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.project-contributors a {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  border: 1px solid #d8cfc2;
+  border-radius: 4px;
+  background: #f8f5ee;
+  padding: 0.75rem;
+}
+
+.project-contributors img {
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid #cbbda9;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.project-contributors span,
+.project-contributors small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-contributors span {
+  color: #1e1b18;
+  font-weight: 750;
+}
+
+.project-contributors small {
+  color: #6b645c;
+  font-size: 0.78rem;
+}
+
+.project-mini-graph {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid #d8cfc2;
+  border-radius: 4px;
+  background: #f8f5ee;
+  padding: 1rem;
+}
+
+.project-mini-graph__node {
+  border: 2px solid #2f5d50;
+  border-radius: 4px;
+  background: #fff;
+  padding: 1rem;
+  color: #2f5d50;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.project-mini-graph__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-mini-graph__links span {
+  border: 1px solid #cbbda9;
+  border-radius: 999px;
+  background: #fff;
+  padding: 0.38rem 0.65rem;
+  color: #6b645c;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 720;
+}
+
 .workbench-page__timeline {
   grid-template-columns: 1fr;
 }
@@ -2684,6 +3162,10 @@ body.home-mode .page-wrap--home {
   .home-workbench__analytics,
   .workbench-page__grid--posts,
   .workbench-page__grid--projects,
+  .project-studio-grid,
+  .project-module-grid,
+  .project-contributors,
+  .project-mini-graph,
   .workbench-page__update-grid {
     grid-template-columns: 1fr;
   }
@@ -2707,6 +3189,17 @@ body.home-mode .page-wrap--home {
   .workbench-page__post-card {
     grid-template-columns: 1fr;
   }
+
+  .project-space__hero {
+    grid-template-columns: 1fr;
+  }
+
+  .project-space__status {
+    border-left: 0;
+    border-top: 1px solid #d8cfc2;
+    padding-left: 0;
+    padding-top: 1rem;
+  }
 }
 
 @media (max-width: 720px) {
@@ -2715,6 +3208,26 @@ body.home-mode .page-wrap--home {
   }
 
   .workbench-page__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .project-space {
+    padding-top: 1.15rem;
+  }
+
+  .project-space__hero,
+  .project-space__section,
+  .project-studio-timeline {
+    padding: 1rem;
+  }
+
+  .project-space__hero h1 {
+    max-width: none;
+    font-size: 2rem;
+  }
+
+  .project-studio-metrics,
+  .project-space__status dl {
     grid-template-columns: 1fr;
   }
 }

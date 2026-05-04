@@ -106,7 +106,7 @@ const articleDrawerEntries: DrawerEntry[] = await Promise.all(
       id: `${kind}:${entry.id}`,
       kind,
       title: entry.data.title,
-      kicker: kind === 'post' ? getPrimaryCategory(entry as CollectionEntry<'posts'>) : kind === 'note' ? '札记' : '项目',
+      kicker: kind === 'post' ? getPrimaryCategory(entry as CollectionEntry<'posts'>) : kind === 'note' ? '札记' : '项目工坊',
       date: 'date' in entry.data && entry.data.date ? formatDate(entry.data.date) : undefined,
       href: withBase(`/${basePath}/${entry.id}/`),
       summary,
@@ -157,7 +157,7 @@ const projectItems: FeedItem[] = projects.map((project) => ({
   type: 'project',
   title: project.data.title,
   summary: project.data.description ?? getExcerptFromBody(project.body, 130),
-  kicker: `项目 / ${project.data.status}`,
+  kicker: `项目工坊 / ${project.data.status}`,
   meta: project.data.stack.slice(0, 3).join(' / '),
   href: withBase(`/projects/${project.id}/`),
   drawerId: `project:${project.id}`,
@@ -544,7 +544,7 @@ function feedCardClass(item: FeedItem) {
           <button type="button" class="home-feed-tab is-active" data-feed-filter="all" data-copy-key="home.feed.all">全部</button>
           <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
           <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="project" data-copy-key="home.feed.project">项目</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="project" data-copy-key="home.feed.project">项目工坊</button>
           <button type="button" class="home-feed-tab" data-feed-filter="book" data-copy-key="home.feed.book">书架</button>
           <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
           <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>

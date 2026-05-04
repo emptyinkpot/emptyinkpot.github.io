@@ -3,39 +3,125 @@ import { getCollection } from 'astro:content';
 import WorkbenchPageIntro from '../../components/shared/WorkbenchPageIntro.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/content';
+import { getGitHubOverview } from '../../lib/github';
+import { buildProjectStudioView, getProjectTypeLabel } from '../../lib/projects';
 import { withBase } from '../../lib/site';
 
-const projects = await getCollection('projects');
+const projects = [...(await getCollection('projects'))].sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0)
+);
+const github = await getGitHubOverview('emptyinkpot');
+const projectViews = projects.map((project) => buildProjectStudioView(project, github));
+const recentTimeline = projectViews
+  .flatMap((view) =>
+    view.timeline.slice(0, 2).map((item) => ({
+      ...item,
+      projectTitle: view.entry.data.title,
+      projectHref: withBase(`/projects/${view.entry.id}/`)
+    }))
+  )
+  .sort((a, b) => {
+    const left = a.date ? a.date.getTime() : 0;
+    const right = b.date ? b.date.getTime() : 0;
+    return right - left;
+  })
+  .slice(0, 6);
 ---
 
-<BaseLayout title="项目 / emptyinkpot" description="站点中的项目展示入口。">
+<BaseLayout title="Project Studio / emptyinkpot" description="项目工坊：把项目、仓库、模块、Wiki 与协作记录收敛成一个入口。">
   <main class="workbench-page" data-pagefind-body>
     <WorkbenchPageIntro
-      kicker="SECTION / PROJECTS"
-      title="项目展示"
-      summary="这一层是“产品化技术博客”的第二条内容主线。后续会接更多项目卡、仓库链接和相关文章映射。"
+      kicker="SECTION / PROJECT STUDIO"
+      title="项目工坊"
+      summary="这里把项目、仓库、模块、Wiki 与协作记录收敛成项目空间。GitHub 继续承担协作后端，站点负责展示、阅读路径和长期索引。"
       stats={[
         { label: 'Project count', value: String(projects.length) },
-        { label: 'Active focus', value: projects[0]?.data.status ?? 'planned' }
+        { label: 'Active focus', value: projectViews[0]?.status ?? 'planned' }
       ]}
     />
 
-    <section class="workbench-page__grid workbench-page__grid--projects">
+    <section class="project-studio-grid" aria-label="Project Studio entries">
       {
-        projects.map((project) => (
-          <a class="workbench-page__project-card home-workbench__card home-workbench__card--panel" href={withBase(`/projects/${project.id}/`)}>
-            <div class="workbench-page__meta">
-              <span>{project.data.status}</span>
-              {project.data.date && <span>{formatDate(project.data.date)}</span>}
+        projectViews.map((view) => (
+          <article class="project-studio-card">
+            <div class="project-studio-card__bookmark">{getProjectTypeLabel(view.type)}</div>
+
+            <div class="project-studio-card__meta">
+              <span>{view.status}</span>
+              {view.entry.data.date && <span>{formatDate(view.entry.data.date)}</span>}
             </div>
-            <h2>{project.data.title}</h2>
-            <p>{project.data.description}</p>
+
+            <a class="project-studio-card__title" href={withBase(`/projects/${view.entry.id}/`)}>
+              {view.entry.data.title}
+            </a>
+            <p>{view.entry.data.description}</p>
+
+            <div class="project-progress" aria-label={`Project progress ${view.progress}%`}>
+              <span style={`--progress:${view.progress}%`}></span>
+            </div>
+
+            <dl class="project-studio-metrics">
+              <div>
+                <dt>Modules</dt>
+                <dd>{view.modules.length}</dd>
+              </div>
+              <div>
+                <dt>Issues</dt>
+                <dd>{view.repo?.issues ?? 0}</dd>
+              </div>
+              <div>
+                <dt>Contributors</dt>
+                <dd>{view.contributors.length}</dd>
+              </div>
+            </dl>
+
             <div class="home-workbench__badges">
-              {project.data.stack.map((item) => <span>{item}</span>)}
+              {view.entry.data.stack.slice(0, 5).map((item) => <span>{item}</span>)}
             </div>
-          </a>
+
+            <div class="project-studio-card__actions">
+              <a href={withBase(`/projects/${view.entry.id}/`)}>进入项目空间</a>
+              {view.entry.data.repo && (
+                <a href={view.entry.data.repo} target="_blank" rel="noreferrer">
+                  GitHub
+                </a>
+              )}
+            </div>
+          </article>
         ))
       }
+    </section>
+
+    {
+      projectViews.length === 0 && (
+        <section class="workbench-page__empty project-studio-empty">
+          还没有项目内容。请在 <code>apps/web/src/content/projects/</code> 添加 Markdown 项目条目。
+        </section>
+      )
+    }
+
+    <section class="project-studio-timeline" aria-labelledby="project-studio-timeline-title">
+      <div class="project-studio-section-head">
+        <p>RECENT / PROJECT SIGNALS</p>
+        <h2 id="project-studio-timeline-title">最近项目动态</h2>
+      </div>
+
+      <div class="project-studio-timeline__list">
+        {
+          recentTimeline.length > 0 ? (
+            recentTimeline.map((item) => (
+              <a href={item.href ?? item.projectHref} target={item.href ? '_blank' : undefined} rel={item.href ? 'noreferrer' : undefined}>
+                <span>{item.date ? formatDate(item.date) : 'No date'}</span>
+                <strong>{item.title}</strong>
+                <small>{item.projectTitle}</small>
+                <p>{item.summary}</p>
+              </a>
+            ))
+          ) : (
+            <p class="workbench-page__empty">项目动态等待内容或 GitHub snapshot 补充。</p>
+          )
+        }
+      </div>
     </section>
   </main>
 </BaseLayout>
