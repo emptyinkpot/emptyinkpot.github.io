@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/site';
+
+const controls = [
+  { key: 'cardTopAlpha', label: '卡片顶部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'cardBottomAlpha', label: '卡片底部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'railTopAlpha', label: '左栏顶部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'railBottomAlpha', label: '左栏底部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'toolbarTopAlpha', label: '筛选条顶部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'toolbarBottomAlpha', label: '筛选条底部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'backgroundOverlayAlpha', label: '背景遮罩不透明度', min: 0.35, max: 0.95, step: 0.01 },
+  { key: 'glassBlurPx', label: '毛玻璃模糊 px', min: 0, max: 40, step: 1 },
+  { key: 'glassSaturate', label: '毛玻璃饱和度', min: 0.8, max: 1.6, step: 0.01 }
+];
+---
+
+<BaseLayout title="显示设置 / emptyinkpot" description="调整 emptyinkpot 首页毛玻璃、卡片透明度和背景图。">
+  <main class="settings-page" data-visual-settings-page>
+    <section class="settings-page__hero glass-card">
+      <div>
+        <p class="section-kicker">Display Settings</p>
+        <h1>首页显示设置</h1>
+        <p>这里调整的是浏览器本地显示参数，会立即写入 localStorage 并作用到首页卡片、左栏、筛选条和背景图。</p>
+      </div>
+      <a class="settings-page__home-link" href={withBase('/')}>返回首页预览</a>
+    </section>
+
+    <section class="settings-page__grid">
+      <form class="settings-page__panel glass-card" data-visual-settings-form>
+        <div class="settings-page__panel-head">
+          <span>Glass</span>
+          <strong>毛玻璃与透明度</strong>
+        </div>
+
+        {controls.map((control) => (
+          <label class="settings-control">
+            <span>{control.label}</span>
+            <div class="settings-control__row">
+              <input
+                type="range"
+                min={control.min}
+                max={control.max}
+                step={control.step}
+                data-setting={control.key}
+                aria-label={control.label}
+              />
+              <output data-setting-output={control.key}></output>
+            </div>
+          </label>
+        ))}
+
+        <label class="settings-control settings-control--wide">
+          <span>首页背景图 URL</span>
+          <input
+            class="settings-control__text"
+            type="text"
+            data-setting="backgroundImage"
+            placeholder="/images/home/homepage-floral-bg.png"
+            aria-label="首页背景图 URL"
+          />
+        </label>
+
+        <div class="settings-page__actions">
+          <button type="button" data-settings-reset>恢复默认</button>
+          <a href={withBase('/')}>打开首页</a>
+        </div>
+      </form>
+
+      <aside class="settings-page__preview" aria-label="视觉预览">
+        <div class="settings-preview-card">
+          <span>Feed Card</span>
+          <strong>卡片玻璃预览</strong>
+          <p>透明度、模糊和背景图会实时变化。真正首页仍保持 Feed 与右侧阅读抽屉结构。</p>
+        </div>
+        <div class="settings-preview-rail">
+          <span>Rail Card</span>
+          <strong>左栏玻璃预览</strong>
+          <p>左栏、导航和侧栏信息卡共用这一组透明度。</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const api = window.emptyinkpotVisualSettings;
+      if (!api) return;
+
+      const form = document.querySelector('[data-visual-settings-form]');
+      const resetButton = document.querySelector('[data-settings-reset]');
+      const inputs = [...document.querySelectorAll('[data-setting]')];
+
+      const unwrapUrl = (value) => {
+        const raw = String(value || '');
+        const match = raw.match(/^url\(["']?(.*?)["']?\)$/);
+        return match ? match[1] : raw;
+      };
+
+      const readForm = () => {
+        const values = {};
+        inputs.forEach((input) => {
+          const key = input.dataset.setting;
+          if (!key) return;
+          values[key] = input.type === 'range' ? Number(input.value) : input.value;
+        });
+        return values;
+      };
+
+      const paint = (settings) => {
+        inputs.forEach((input) => {
+          const key = input.dataset.setting;
+          if (!key) return;
+          const value = key === 'backgroundImage' ? unwrapUrl(settings[key]) : settings[key];
+          input.value = String(value);
+          const output = document.querySelector(`[data-setting-output="${key}"]`);
+          if (output) output.textContent = Number(value).toFixed(key === 'glassBlurPx' ? 0 : 2);
+        });
+      };
+
+      const saveFromForm = () => {
+        const settings = api.save(readForm());
+        paint(settings);
+      };
+
+      paint(api.load());
+      form?.addEventListener('input', saveFromForm);
+      resetButton?.addEventListener('click', () => paint(api.reset()));
+    })();
+  </script>
+</BaseLayout>

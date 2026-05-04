@@ -36,7 +36,8 @@
     "posts": "https://blog.tengokukk.com/posts/",
     "tags": "https://blog.tengokukk.com/tags/",
     "evidenceLibrary": "https://blog.tengokukk.com/evidence-library/",
-    "search": "https://blog.tengokukk.com/search/"
+    "search": "https://blog.tengokukk.com/search/",
+    "settings": "https://blog.tengokukk.com/settings/"
   },
   "observability": {
     "nginxAccessLog": "/var/log/nginx/access.log",
@@ -217,6 +218,66 @@
         "max720": "workbench page stats collapse"
       }
     },
+    "visualSettings": {
+      "route": "apps/web/src/pages/settings.astro",
+      "runtimeStorageKey": "emptyinkpot-visual-settings",
+      "appliedBy": "apps/web/src/layouts/BaseLayout.astro",
+      "styleSource": "apps/web/src/styles/global.css",
+      "scope": "browser-local homepage display preferences",
+      "exposedTokens": [
+        "--home-card-glass-top-alpha",
+        "--home-card-glass-bottom-alpha",
+        "--home-rail-glass-top-alpha",
+        "--home-rail-glass-bottom-alpha",
+        "--home-toolbar-glass-top-alpha",
+        "--home-toolbar-glass-bottom-alpha",
+        "--home-background-overlay-alpha",
+        "--home-glass-blur",
+        "--home-glass-saturate",
+        "--home-background-image"
+      ],
+      "persistence": "localStorage only; not a server-side CMS setting"
+    },
+    "githubVisualizationAssets": {
+      "status": "data-and-legacy-components-exist; new feed homepage currently surfaces a compact GitHub card list",
+      "dataSource": "apps/web/src/data/github-overview.emptyinkpot.json",
+      "loader": "apps/web/src/lib/github.ts",
+      "legacyPayloadBuilder": "apps/web/src/lib/home.ts",
+      "visualSurfaces": [
+        {
+          "name": "GitHub contribution heatmap",
+          "data": ["overview.months", "overview.weeks", "overview.totalContributions"],
+          "legacyTypes": ["HomeCheckInData", "HomeCheckInWeek", "HomeCheckInCell"]
+        },
+        {
+          "name": "GitHub monthly contribution line chart",
+          "data": ["overview.monthly"],
+          "legacyTypes": ["HomeGitHubMonthlyPoint"]
+        },
+        {
+          "name": "GitHub language donut chart",
+          "data": ["overview.languages"],
+          "legacyTypes": ["HomeGitHubLanguageSlice"]
+        },
+        {
+          "name": "Team and repository signal panels",
+          "data": ["overview.profile", "overview.repos"],
+          "legacyTypes": ["HomeTeamSignal", "HomeRepoSignal", "HomeAutomationSignal"]
+        }
+      ],
+      "legacyCssClasses": [
+        "home-workbench__cell--0..4",
+        "home-workbench__analytics",
+        "home-workbench__donut",
+        "home-workbench__linechart",
+        "home-team-switcher",
+        "home-github-signals"
+      ],
+      "currentHomepageMapping": [
+        "GitHub feed cards use overview.repos",
+        "left rail GitHub card uses overview.profile and overview.totalContributions"
+      ]
+    },
     "pageFamilies": {
       "home": {
         "files": [
@@ -249,7 +310,8 @@
           "apps/web/src/pages/posts/[slug].astro",
           "apps/web/src/pages/notes/[slug].astro",
           "apps/web/src/pages/projects/[slug].astro",
-          "apps/web/src/pages/about.astro"
+          "apps/web/src/pages/about.astro",
+          "apps/web/src/pages/settings.astro"
         ],
         "wrapperMaxWidthPx": 1180,
         "codeBlockRule": "pre may scroll horizontally; it must not widen page-wrap"

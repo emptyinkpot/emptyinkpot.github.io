@@ -17,6 +17,16 @@
   --home-line: #d8d0dd;
   --home-panel: #ffffff;
   --home-panel-soft: #f4f1f6;
+  --home-background-image: url('/images/home/homepage-floral-bg.png');
+  --home-background-overlay-alpha: 0.72;
+  --home-card-glass-top-alpha: 0.92;
+  --home-card-glass-bottom-alpha: 0.78;
+  --home-rail-glass-top-alpha: 0.9;
+  --home-rail-glass-bottom-alpha: 0.76;
+  --home-toolbar-glass-top-alpha: 0.94;
+  --home-toolbar-glass-bottom-alpha: 0.84;
+  --home-glass-blur: 26px;
+  --home-glass-saturate: 1.18;
 }
 
 html {
@@ -44,8 +54,11 @@ body {
 body.home-mode {
   overflow: hidden;
   background:
-    linear-gradient(rgba(247, 244, 238, 0.72), rgba(243, 239, 231, 0.72)),
-    url('/images/home/homepage-floral-bg.png') center top / cover no-repeat fixed;
+    linear-gradient(
+      rgb(247 244 238 / var(--home-background-overlay-alpha)),
+      rgb(243 239 231 / var(--home-background-overlay-alpha))
+    ),
+    var(--home-background-image) center top / cover no-repeat fixed;
 }
 
 a {
@@ -2740,10 +2753,14 @@ body.home-mode .page-wrap--home {
 .home-feed-rail-card {
   border: 1px solid rgba(255, 255, 255, 0.68);
   background-color: rgba(255, 255, 255, 0.82);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.76));
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / var(--home-rail-glass-top-alpha)),
+    rgb(255 255 255 / var(--home-rail-glass-bottom-alpha))
+  );
   box-shadow: 0 18px 46px rgba(47, 33, 54, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(24px) saturate(1.18);
-  backdrop-filter: blur(24px) saturate(1.18);
+  -webkit-backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
+  backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
   padding: 16px;
 }
 
@@ -2863,9 +2880,13 @@ body.home-mode .page-wrap--home {
   gap: 16px;
   margin-bottom: 16px;
   background-color: rgba(244, 238, 231, 0.86);
-  background: linear-gradient(180deg, rgba(244, 238, 231, 0.94), rgba(244, 238, 231, 0.84));
-  -webkit-backdrop-filter: blur(24px) saturate(1.16);
-  backdrop-filter: blur(24px) saturate(1.16);
+  background: linear-gradient(
+    180deg,
+    rgb(244 238 231 / var(--home-toolbar-glass-top-alpha)),
+    rgb(244 238 231 / var(--home-toolbar-glass-bottom-alpha))
+  );
+  -webkit-backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
+  backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
   padding: 12px 0;
 }
 
@@ -2914,10 +2935,14 @@ body.home-mode .page-wrap--home {
   break-inside: avoid;
   border: 1px solid rgba(255, 255, 255, 0.7);
   background-color: rgba(255, 255, 255, 0.84);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / var(--home-card-glass-top-alpha)),
+    rgb(255 255 255 / var(--home-card-glass-bottom-alpha))
+  );
   box-shadow: 0 20px 54px rgba(47, 33, 54, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(26px) saturate(1.18);
-  backdrop-filter: blur(26px) saturate(1.18);
+  -webkit-backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
+  backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
   color: inherit;
   cursor: pointer;
   overflow: hidden;
@@ -2929,7 +2954,7 @@ body.home-mode .page-wrap--home {
 
 .home-feed-card:hover,
 .home-feed-card:focus-visible {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.84));
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.96), rgb(255 255 255 / 0.84));
   box-shadow: 0 22px 58px rgba(47, 33, 54, 0.14), inset 0 0 0 1px rgba(102, 8, 116, 0.14);
   outline: none;
   transform: translateY(-2px);
@@ -3198,6 +3223,208 @@ body.has-home-article-drawer .home-feed-main {
   overscroll-behavior: contain;
 }
 
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px 0 48px;
+}
+
+.settings-page__hero,
+.settings-page__panel,
+.settings-page__preview {
+  border-radius: 24px;
+}
+
+.settings-page__hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+}
+
+.settings-page__hero h1 {
+  color: #17120d;
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 0.96;
+}
+
+.settings-page__hero p:not(.section-kicker) {
+  max-width: 680px;
+  margin-top: 12px;
+  color: #5b5148;
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.settings-page__home-link,
+.settings-page__actions a,
+.settings-page__actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  border: 1px solid #1f1b18;
+  border-radius: 999px;
+  background: #1f1b18;
+  padding: 8px 14px;
+  color: #f8f5f2;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.settings-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 20px;
+  align-items: start;
+}
+
+.settings-page__panel {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.settings-page__panel-head {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 6px;
+}
+
+.settings-page__panel-head span,
+.settings-preview-card span,
+.settings-preview-rail span {
+  color: var(--home-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.settings-page__panel-head strong {
+  color: #17120d;
+  font-size: 24px;
+  line-height: 1.08;
+}
+
+.settings-control {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.settings-control span {
+  color: #3a2a42;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.settings-control__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px;
+  gap: 12px;
+  align-items: center;
+}
+
+.settings-control input[type='range'] {
+  width: 100%;
+  accent-color: var(--home-accent);
+}
+
+.settings-control output {
+  color: #6e625b;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.settings-control__text {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid rgba(87, 74, 60, 0.16);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.74);
+  padding: 9px 12px;
+  color: #201b16;
+  font-size: 13px;
+}
+
+.settings-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.settings-page__actions button {
+  cursor: pointer;
+  background: #ffffff;
+  color: #1f1b18;
+}
+
+.settings-page__preview {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 14px;
+  min-height: 520px;
+  padding: 22px;
+  background:
+    linear-gradient(
+      rgb(247 244 238 / var(--home-background-overlay-alpha)),
+      rgb(243 239 231 / var(--home-background-overlay-alpha))
+    ),
+    var(--home-background-image) center top / cover no-repeat;
+  overflow: hidden;
+}
+
+.settings-preview-card,
+.settings-preview-rail {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 54px rgba(47, 33, 54, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
+  backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
+  padding: 18px;
+}
+
+.settings-preview-card {
+  align-self: end;
+  min-height: 210px;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / var(--home-card-glass-top-alpha)),
+    rgb(255 255 255 / var(--home-card-glass-bottom-alpha))
+  );
+}
+
+.settings-preview-rail {
+  min-height: 150px;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / var(--home-rail-glass-top-alpha)),
+    rgb(255 255 255 / var(--home-rail-glass-bottom-alpha))
+  );
+}
+
+.settings-preview-card strong,
+.settings-preview-rail strong {
+  color: #17120d;
+  font-size: 24px;
+  line-height: 1.08;
+}
+
+.settings-preview-card p,
+.settings-preview-rail p {
+  color: #5b5148;
+  font-size: 13px;
+  line-height: 1.68;
+}
+
 @media (max-width: 1240px) {
   .home-feed-grid {
     column-count: 2;
@@ -3234,6 +3461,29 @@ body.has-home-article-drawer .home-feed-main {
 
   .home-feed-grid {
     column-count: 1;
+  }
+
+  .settings-page {
+    padding-top: 20px;
+  }
+
+  .settings-page__hero,
+  .settings-page__grid {
+    display: block;
+  }
+
+  .settings-page__home-link {
+    margin-top: 16px;
+  }
+
+  .settings-page__panel,
+  .settings-page__preview {
+    margin-top: 16px;
+  }
+
+  .settings-page__preview {
+    position: static;
+    min-height: 420px;
   }
 }
 
