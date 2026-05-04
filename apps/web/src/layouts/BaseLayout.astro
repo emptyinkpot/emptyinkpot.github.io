@@ -68,7 +68,22 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           backgroundOverlayAlpha: 0.72,
           glassBlurPx: 26,
           glassSaturate: 1.18,
-          backgroundImage: defaultHomeBackground
+          backgroundImage: defaultHomeBackground,
+          typography: {
+            bodySize: 18,
+            lineHeight: 1.9,
+            columnWidth: 680,
+            titleScale: 1,
+            paragraphGap: 16,
+            fontMode: 'serif'
+          },
+          knowledge: {
+            graphDensity: 'medium',
+            graphLabels: 'important',
+            graphMotion: true,
+            highlightVisibility: 'normal',
+            readerMemoryPanel: 'collapsed'
+          }
         };
 
         const numericRanges = {
@@ -80,10 +95,36 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           toolbarBottomAlpha: [0.45, 1],
           backgroundOverlayAlpha: [0.35, 0.95],
           glassBlurPx: [0, 40],
-          glassSaturate: [0.8, 1.6]
+          glassSaturate: [0.8, 1.6],
+          'typography.bodySize': [16, 20],
+          'typography.lineHeight': [1.65, 2.05],
+          'typography.columnWidth': [600, 760],
+          'typography.titleScale': [0.9, 1.2],
+          'typography.paragraphGap': [12, 24]
         };
 
         const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+        const getPath = (source, path) =>
+          path.split('.').reduce((value, key) => (value && value[key] !== undefined ? value[key] : undefined), source);
+
+        const setPath = (target, path, value) => {
+          const keys = path.split('.');
+          const last = keys.pop();
+          const parent = keys.reduce((node, key) => {
+            node[key] = node[key] || {};
+            return node[key];
+          }, target);
+          parent[last] = value;
+        };
+
+        const normalizeChoice = (value, allowed, fallback) => (allowed.includes(value) ? value : fallback);
+
+        const normalizeBoolean = (value, fallback) => {
+          if (value === true || value === 'true') return true;
+          if (value === false || value === 'false') return false;
+          return fallback;
+        };
 
         const normalizeUrl = (value) => {
           const raw = String(value ?? '').trim();
@@ -96,15 +137,48 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
         };
 
         const normalize = (input = {}) => {
-          const next = { ...defaults };
+          const next = {
+            ...defaults,
+            typography: { ...defaults.typography },
+            knowledge: { ...defaults.knowledge }
+          };
           next.theme = input.theme === 'glass' ? 'glass' : 'heritage';
           for (const [key, range] of Object.entries(numericRanges)) {
-            const value = Number(input[key]);
+            const value = Number(getPath(input, key) ?? input[key]);
             if (Number.isFinite(value)) {
-              next[key] = clamp(value, range[0], range[1]);
+              setPath(next, key, clamp(value, range[0], range[1]));
             }
           }
           next.backgroundImage = normalizeUrl(input.backgroundImage);
+          next.typography.fontMode = normalizeChoice(
+            input.typography?.fontMode ?? input.fontMode,
+            ['serif', 'sans', 'mixed', 'system'],
+            defaults.typography.fontMode
+          );
+          next.knowledge.graphDensity = normalizeChoice(
+            input.knowledge?.graphDensity ?? input.graphDensity,
+            ['low', 'medium', 'high'],
+            defaults.knowledge.graphDensity
+          );
+          next.knowledge.graphLabels = normalizeChoice(
+            input.knowledge?.graphLabels ?? input.graphLabels,
+            ['important', 'all', 'none'],
+            defaults.knowledge.graphLabels
+          );
+          next.knowledge.graphMotion = normalizeBoolean(
+            input.knowledge?.graphMotion ?? input.graphMotion,
+            defaults.knowledge.graphMotion
+          );
+          next.knowledge.highlightVisibility = normalizeChoice(
+            input.knowledge?.highlightVisibility ?? input.highlightVisibility,
+            ['subtle', 'normal', 'strong'],
+            defaults.knowledge.highlightVisibility
+          );
+          next.knowledge.readerMemoryPanel = normalizeChoice(
+            input.knowledge?.readerMemoryPanel ?? input.readerMemoryPanel,
+            ['collapsed', 'expanded', 'hidden'],
+            defaults.knowledge.readerMemoryPanel
+          );
           return next;
         };
 
@@ -122,6 +196,18 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           root.style.setProperty('--home-glass-blur', `${settings.glassBlurPx}px`);
           root.style.setProperty('--home-glass-saturate', String(settings.glassSaturate));
           root.style.setProperty('--home-background-image', settings.backgroundImage);
+          root.style.setProperty('--type-body-size', `${settings.typography.bodySize}px`);
+          root.style.setProperty('--type-body-line', String(settings.typography.lineHeight));
+          root.style.setProperty('--reader-column-width', `${settings.typography.columnWidth}px`);
+          root.style.setProperty('--type-title-scale', String(settings.typography.titleScale));
+          root.style.setProperty('--reader-paragraph-gap', `${settings.typography.paragraphGap}px`);
+          root.style.setProperty('--reader-section-gap', `${Math.round(settings.typography.paragraphGap * 3)}px`);
+          root.dataset.fontMode = settings.typography.fontMode;
+          root.dataset.graphDensity = settings.knowledge.graphDensity;
+          root.dataset.graphLabels = settings.knowledge.graphLabels;
+          root.dataset.graphMotion = settings.knowledge.graphMotion ? 'on' : 'off';
+          root.dataset.highlightVisibility = settings.knowledge.highlightVisibility;
+          root.dataset.readerMemoryPanel = settings.knowledge.readerMemoryPanel;
           return settings;
         };
 

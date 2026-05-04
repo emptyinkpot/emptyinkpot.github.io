@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/site';
 
-const controls = [
+const glassControls = [
   { key: 'cardTopAlpha', label: '卡片顶部不透明度', min: 0.45, max: 1, step: 0.01 },
   { key: 'cardBottomAlpha', label: '卡片底部不透明度', min: 0.45, max: 1, step: 0.01 },
   { key: 'railTopAlpha', label: '左栏顶部不透明度', min: 0.45, max: 1, step: 0.01 },
@@ -13,65 +13,189 @@ const controls = [
   { key: 'glassBlurPx', label: '毛玻璃模糊 px', min: 0, max: 40, step: 1 },
   { key: 'glassSaturate', label: '毛玻璃饱和度', min: 0.8, max: 1.6, step: 0.01 }
 ];
+
+const typographyControls = [
+  { key: 'typography.bodySize', label: '正文字号', min: 16, max: 20, step: 1, suffix: 'px' },
+  { key: 'typography.lineHeight', label: '正文行高', min: 1.65, max: 2.05, step: 0.1 },
+  { key: 'typography.columnWidth', label: '阅读版心', min: 600, max: 760, step: 40, suffix: 'px' },
+  { key: 'typography.titleScale', label: '标题比例', min: 0.9, max: 1.2, step: 0.1 },
+  { key: 'typography.paragraphGap', label: '段落间距', min: 12, max: 24, step: 4, suffix: 'px' }
+];
+
+const selectControls = [
+  {
+    key: 'typography.fontMode',
+    label: '字体模式',
+    options: [
+      ['serif', '宋体 / 书籍'],
+      ['sans', '黑体 / 屏幕'],
+      ['mixed', '混合 / UI 分离'],
+      ['system', '系统默认']
+    ]
+  },
+  {
+    key: 'knowledge.graphDensity',
+    label: 'Graph 密度',
+    options: [
+      ['low', '低：隐藏边缘节点'],
+      ['medium', '中：默认'],
+      ['high', '高：全部显示']
+    ]
+  },
+  {
+    key: 'knowledge.graphLabels',
+    label: 'Graph 标签',
+    options: [
+      ['important', '只显示重要'],
+      ['all', '全部显示'],
+      ['none', '不显示']
+    ]
+  },
+  {
+    key: 'knowledge.graphMotion',
+    label: 'Graph 动效',
+    options: [
+      ['true', '开启'],
+      ['false', '关闭']
+    ]
+  },
+  {
+    key: 'knowledge.highlightVisibility',
+    label: '高亮强度',
+    options: [
+      ['subtle', '轻'],
+      ['normal', '标准'],
+      ['strong', '强']
+    ]
+  },
+  {
+    key: 'knowledge.readerMemoryPanel',
+    label: '阅读记忆面板',
+    options: [
+      ['collapsed', '默认折叠'],
+      ['expanded', '默认展开'],
+      ['hidden', '隐藏']
+    ]
+  }
+];
 ---
 
-<BaseLayout title="显示设置 / emptyinkpot" description="调整 emptyinkpot 首页主题、卡片透明度和背景图。">
+<BaseLayout title="显示设置 / emptyinkpot" description="调整 emptyinkpot 首页主题、阅读排版和知识系统显示偏好。">
   <main class="settings-page" data-visual-settings-page>
     <section class="settings-page__hero glass-card">
       <div>
         <p class="section-kicker">Display Settings</p>
-        <h1>首页显示设置</h1>
-        <p>这里调整的是浏览器本地显示参数。默认风格是 Heritage，强调宣纸底色、清华紫、朱红、松绿和金色点缀。</p>
+        <h1>显示与阅读系统</h1>
+        <p>这里调整的是浏览器本地显示参数。默认风格仍是 Heritage；阅读排版和知识图谱设置会即时写入 CSS token，不改仓库默认值。</p>
       </div>
       <a class="settings-page__home-link" href={withBase('/')}>返回首页预览</a>
     </section>
 
     <section class="settings-page__grid">
       <form class="settings-page__panel glass-card" data-visual-settings-form>
-        <div class="settings-page__panel-head">
-          <span>Theme</span>
-          <strong>风格与显示参数</strong>
-        </div>
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Theme</span>
+            <strong>外观主题</strong>
+          </div>
 
-        <label class="settings-control settings-control--wide">
-          <span>首页风格</span>
-          <select class="settings-control__text" data-setting="theme" aria-label="首页风格">
-            <option value="heritage">Heritage / Cultural OS（默认）</option>
-            <option value="glass">Glass / Workbench（旧版）</option>
-          </select>
-        </label>
-
-        {controls.map((control) => (
-          <label class="settings-control">
-            <span>{control.label}</span>
-            <div class="settings-control__row">
-              <input
-                type="range"
-                min={control.min}
-                max={control.max}
-                step={control.step}
-                data-setting={control.key}
-                aria-label={control.label}
-              />
-              <output data-setting-output={control.key}></output>
-            </div>
+          <label class="settings-control settings-control--wide">
+            <span>首页风格</span>
+            <select class="settings-control__text" name="theme" data-setting="theme" aria-label="首页风格">
+              <option value="heritage">Heritage / Cultural OS（默认）</option>
+              <option value="glass">Glass / Workbench（旧版）</option>
+            </select>
           </label>
-        ))}
 
-        <label class="settings-control settings-control--wide">
-          <span>首页背景图 URL</span>
-          <input
-            class="settings-control__text"
-            type="text"
-            data-setting="backgroundImage"
-            placeholder="/images/home/homepage-floral-bg.png"
-            aria-label="首页背景图 URL"
-          />
-        </label>
+          <label class="settings-control settings-control--wide">
+            <span>首页背景图 URL</span>
+            <input
+              class="settings-control__text"
+              type="text"
+              name="backgroundImage"
+              data-setting="backgroundImage"
+              placeholder="/images/home/homepage-floral-bg.png"
+              aria-label="首页背景图 URL"
+            />
+          </label>
+
+          <details class="settings-details">
+            <summary>Glass legacy 参数</summary>
+            <div class="settings-details__grid">
+              {glassControls.map((control) => (
+                <label class="settings-control">
+                  <span>{control.label}</span>
+                  <div class="settings-control__row">
+                    <input
+                      type="range"
+                      min={control.min}
+                      max={control.max}
+                      step={control.step}
+                      name={control.key}
+                      data-setting={control.key}
+                      aria-label={control.label}
+                    />
+                    <output data-setting-output={control.key}></output>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </details>
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Typography</span>
+            <strong>阅读排版</strong>
+          </div>
+
+          {typographyControls.map((control) => (
+            <label class="settings-control">
+              <span>{control.label}</span>
+              <div class="settings-control__row">
+                <input
+                  type="range"
+                  min={control.min}
+                  max={control.max}
+                  step={control.step}
+                  name={control.key}
+                  data-setting={control.key}
+                  data-setting-suffix={control.suffix ?? ''}
+                  aria-label={control.label}
+                />
+                <output data-setting-output={control.key}></output>
+              </div>
+            </label>
+          ))}
+
+          <label class="settings-control settings-control--wide">
+            <span>字体模式</span>
+            <select class="settings-control__text" name="typography.fontMode" data-setting="typography.fontMode" aria-label="字体模式">
+              {selectControls[0].options.map(([value, label]) => <option value={value}>{label}</option>)}
+            </select>
+          </label>
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Knowledge UI</span>
+            <strong>知识系统</strong>
+          </div>
+
+          {selectControls.slice(1).map((control) => (
+            <label class="settings-control settings-control--wide">
+              <span>{control.label}</span>
+              <select class="settings-control__text" name={control.key} data-setting={control.key} aria-label={control.label}>
+                {control.options.map(([value, label]) => <option value={value}>{label}</option>)}
+              </select>
+            </label>
+          ))}
+        </section>
 
         <div class="settings-page__actions">
           <button type="button" data-settings-reset>恢复默认</button>
           <a href={withBase('/')}>打开首页</a>
+          <a href={withBase('/knowledge/')}>打开 Graph</a>
         </div>
       </form>
 
@@ -81,10 +205,20 @@ const controls = [
           <strong>内容卡片预览</strong>
           <p>Heritage 默认不依赖毛玻璃；Glass 模式下透明度、模糊和背景图会实时变化。</p>
         </div>
-        <div class="settings-preview-rail">
-          <span>Rail Card</span>
-          <strong>左栏面板预览</strong>
-          <p>默认视觉语言是大面积纯色、强边界和低阴影。</p>
+        <div class="settings-preview-reader">
+          <span>Reader Preview</span>
+          <h2>标题、导语与正文共享同一个版心</h2>
+          <p>这是一段正文预览，用来测试字号、行高、版心宽度和段落节奏。所有文字都应该服从同一条内容轴。</p>
+          <mark>这是当前高亮强度。</mark>
+        </div>
+        <div class="settings-preview-graph">
+          <span>Knowledge UI</span>
+          <div>
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+          <p>Graph 密度、标签和动效只改变知识界面的显示偏好，不改变内容索引。</p>
         </div>
       </aside>
     </section>
@@ -99,10 +233,38 @@ const controls = [
       const resetButton = document.querySelector('[data-settings-reset]');
       const inputs = [...document.querySelectorAll('[data-setting]')];
 
+      const getPath = (source, path) =>
+        path.split('.').reduce((value, key) => (value && value[key] !== undefined ? value[key] : undefined), source);
+
+      const setPath = (target, path, value) => {
+        const keys = path.split('.');
+        const last = keys.pop();
+        const parent = keys.reduce((node, key) => {
+          node[key] = node[key] || {};
+          return node[key];
+        }, target);
+        parent[last] = value;
+      };
+
       const unwrapUrl = (value) => {
         const raw = String(value || '');
         const match = raw.match(/^url\(["']?(.*?)["']?\)$/);
         return match ? match[1] : raw;
+      };
+
+      const formatValue = (input, value) => {
+        const suffix = input.dataset.settingSuffix || '';
+        if (!(input instanceof HTMLInputElement) || input.type !== 'range') return String(value);
+        const number = Number(value);
+        const step = Number(input.step);
+        const digits = step > 0 && step < 1 ? 2 : 0;
+        return `${number.toFixed(digits)}${suffix}`;
+      };
+
+      const readInputValue = (input) => {
+        if (input instanceof HTMLInputElement && input.type === 'range') return Number(input.value);
+        if (input.dataset.setting === 'knowledge.graphMotion') return input.value === 'true';
+        return input.value;
       };
 
       const readForm = () => {
@@ -110,7 +272,7 @@ const controls = [
         inputs.forEach((input) => {
           const key = input.dataset.setting;
           if (!key) return;
-          values[key] = input.type === 'range' ? Number(input.value) : input.value;
+          setPath(values, key, readInputValue(input));
         });
         return values;
       };
@@ -119,10 +281,12 @@ const controls = [
         inputs.forEach((input) => {
           const key = input.dataset.setting;
           if (!key) return;
-          const value = key === 'backgroundImage' ? unwrapUrl(settings[key]) : settings[key];
+          let value = getPath(settings, key);
+          if (key === 'backgroundImage') value = unwrapUrl(settings[key]);
+          if (key === 'knowledge.graphMotion') value = settings.knowledge?.graphMotion ? 'true' : 'false';
           input.value = String(value);
           const output = document.querySelector(`[data-setting-output="${key}"]`);
-          if (output) output.textContent = Number(value).toFixed(key === 'glassBlurPx' ? 0 : 2);
+          if (output) output.textContent = formatValue(input, value);
         });
       };
 

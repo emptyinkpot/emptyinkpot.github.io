@@ -759,8 +759,63 @@ Hero / System Entry
 | 存储键 | `emptyinkpot-visual-settings` |
 | 作用范围 | 浏览器本地显示偏好；不是服务端 CMS 设置，不会改仓库默认值 |
 | 默认主题 | `theme: "heritage"`；`BaseLayout.astro` 初始输出 `<html data-theme="heritage">`，避免首屏闪回旧玻璃风格 |
-| 可调变量 | `theme`、`--home-card-glass-top-alpha`、`--home-card-glass-bottom-alpha`、`--home-rail-glass-top-alpha`、`--home-rail-glass-bottom-alpha`、`--home-toolbar-glass-top-alpha`、`--home-toolbar-glass-bottom-alpha`、`--home-background-overlay-alpha`、`--home-glass-blur`、`--home-glass-saturate`、`--home-background-image` |
+| 可调变量 | 首页主题 / glass legacy、阅读排版 token、Knowledge UI 显示偏好；全部由 `BaseLayout.astro` 的 `window.emptyinkpotVisualSettings` 统一 normalize/apply/save |
 | 背景图规则 | 设置页允许根路径 `/...` 或 `http(s)://...`；空值恢复 `/images/home/homepage-floral-bg.png` |
+
+Typography Token System：
+
+| Token | 默认值 | 用途 |
+| --- | --- | --- |
+| `--grid-max-width` | `1320px` | 全站最大网格参考宽度 |
+| `--baseline` | `8px` | 阅读页间距节奏的最小单位 |
+| `--type-body-size` | `18px` | Reader 正文字号 |
+| `--type-body-line` | `1.9` | Reader 正文行高 |
+| `--type-title-scale` | `1` | Reader 标题层级倍率 |
+| `--reader-column-width` | `680px` | Reader 唯一内容版心 |
+| `--reader-paragraph-gap` | `16px` | 正文段落与块元素之间的默认距离 |
+| `--reader-section-gap` | `48px` | 正文 h2 / section 的上方节奏 |
+
+`emptyinkpot-visual-settings` 当前 schema：
+
+```ts
+type VisualSettings = {
+  theme: "heritage" | "glass";
+  cardTopAlpha: number;
+  cardBottomAlpha: number;
+  railTopAlpha: number;
+  railBottomAlpha: number;
+  toolbarTopAlpha: number;
+  toolbarBottomAlpha: number;
+  backgroundOverlayAlpha: number;
+  glassBlurPx: number;
+  glassSaturate: number;
+  backgroundImage: string;
+  typography: {
+    bodySize: number;       // 16-20
+    lineHeight: number;     // 1.65-2.05
+    columnWidth: number;    // 600-760
+    titleScale: number;     // 0.9-1.2
+    paragraphGap: number;   // 12-24
+    fontMode: "serif" | "sans" | "mixed" | "system";
+  };
+  knowledge: {
+    graphDensity: "low" | "medium" | "high";
+    graphLabels: "important" | "all" | "none";
+    graphMotion: boolean;
+    highlightVisibility: "subtle" | "normal" | "strong";
+    readerMemoryPanel: "collapsed" | "expanded" | "hidden";
+  };
+};
+```
+
+设置页 contract：
+
+- `/settings/` 是“个人阅读与知识系统控制台”，不是只换颜色的主题页。
+- 分组固定为：外观主题、阅读排版、知识系统。
+- 阅读排版设置必须即时更新 `--type-body-size`、`--type-body-line`、`--reader-column-width`、`--type-title-scale`、`--reader-paragraph-gap`。
+- 字体模式通过 `data-font-mode` 切换 `--font-body / --font-display / --font-ui`。
+- Knowledge UI 设置通过 `data-graph-density`、`data-graph-labels`、`data-graph-motion`、`data-highlight-visibility`、`data-reader-memory-panel` 控制显示偏好。
+- 设置页 preview 必须包含至少一个 Feed 预览、一个 Reader 预览和一个 Knowledge UI 预览。
 
 Heritage 默认视觉语言：
 
@@ -1436,14 +1491,24 @@ Reader Page 排版规则：
 
 - 阅读页不得按后台面板思路堆模块；正文是流动阅读路径，辅助状态必须进入折叠浮层、侧边目录或底部延伸区。
 - 顶部信息只保留 `meta -> h1 -> lead` 三层：meta 轻、标题强、lead 负责一句话概括；不得在标题下再放大块信息框。
-- 标题不是海报；`.home-article-intro h1` 必须降到阅读级字号，当前约 `clamp(28px, 2.5vw, 34px)`，并用 `max-width:18ch` 控制成稳定标题块。
-- 正文和标题共享稳定阅读矩形：`.home-article-intro`、`.home-article-content`、`.reader-mini-graph`、`.home-article-related` 的主列宽度都围绕 `68ch`。
-- 正文行高约 `1.9`；`h2 / h3 / blockquote / mark / ul / ol / code` 负责制造阅读节奏，不允许所有段落等权堆叠。
+- 标题不是海报；`.home-article-intro h1` 必须降到阅读级字号，字号由 `--type-title-scale` 控制，标题不得再用独立 `18ch` 版心破坏正文轴线。需要特殊换行时用内容层手动换行，而不是给 h1 单独设窄宽度。
+- Reader 必须只有一个内容版心：`.home-article-intro`、`.home-article-content`、`.reader-mini-graph`、`.home-article-related` 都使用 `--reader-column-width`。标题、lead、正文、related 左右边界必须对齐同一条 content column。
+- `.home-article-reader__grid` 是 Obsidian 式结构：TOC 列 + `minmax(0,var(--reader-column-width))` 主列，并通过 `justify-content:center` 稳定主轴。
+- 正文字号、行高、段距分别由 `--type-body-size`、`--type-body-line`、`--reader-paragraph-gap` 控制；`h2 / h3 / blockquote / mark / ul / ol / code` 负责制造阅读节奏，不允许所有段落等权堆叠。
 - TOC 是轻侧栏，不是内容卡片；它只辅助定位，不抢正文视觉权重。
 - TOC 不得显示浏览器默认粗滚动条；当前 `.home-article-toc` 使用 `scrollbar-width:none` 和 `::-webkit-scrollbar{display:none}`。
 - 阅读结束不能是死路；`.home-article-related` 必须给出继续阅读入口，优先使用同类型和共享 tags 的内容。
 - 色彩只服务注意力：标题、书签、高亮、印章、Graph 节点可以使用语义色；正文容器和辅助面板保持安静。
-- Highlight 不得过亮；gold 约 `rgba(201,162,39,.28)`，purple/green/red 约 `.18` 透明度。
+- Highlight 不得过亮；默认 gold 约 `rgba(201,162,39,.28)`，purple/green/red 约 `.18` 透明度。`/settings/` 可以在 `subtle / normal / strong` 之间切换，但不得让高亮遮住正文阅读。
+- Reader Memory 默认仍是折叠浮层；`readerMemoryPanel:"expanded"` 只作为本地偏好展开，不得把最近阅读 / 收藏 / 标记塞回正文流。
+
+Knowledge UI System：
+
+- Graph、Reader、Search 共用同一套 Knowledge Index；Highlight 是记忆，Graph 是关系，Search 是入口。
+- `graphDensity:"low"` 必须隐藏边缘记忆节点和对应边，避免 Graph 变成毛线团；`medium` 是默认；`high` 保留更多节点和标签。
+- `graphLabels:"important"` 默认只保留主要节点标签，隐藏 tag / highlight / annotation / seal 等边缘标签；`all` 显示全部；`none` 隐藏全部标签。
+- `graphMotion:false` 必须关闭 Graph node/link transition，尊重低动效偏好。
+- Graph 点击 article / highlight / tag 的行为继续通过 Reader/Search command 打通：article 打开 Reader，highlight 打开 Reader 并定位 mark，tag 打开搜索筛选。
 
 Search rules：
 
