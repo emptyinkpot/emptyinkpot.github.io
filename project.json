@@ -12,7 +12,8 @@
     "apps/web/src/content/posts",
     "apps/web/src/content/notes",
     "apps/web/src/content/projects",
-    "apps/web/src/content/pages"
+    "apps/web/src/content/pages",
+    "public-data/evidence-library"
   ],
   "buildOutputRoot": "apps/web/dist",
   "docsEntrypoints": {
@@ -34,6 +35,7 @@
     "home": "https://blog.tengokukk.com/",
     "posts": "https://blog.tengokukk.com/posts/",
     "tags": "https://blog.tengokukk.com/tags/",
+    "evidenceLibrary": "https://blog.tengokukk.com/evidence-library/",
     "search": "https://blog.tengokukk.com/search/"
   },
   "observability": {
@@ -47,7 +49,8 @@
     "posts": ["title", "date", "tags", "categories", "summary", "slug"],
     "notes": ["title", "date", "summary", "slug"],
     "projects": ["title", "summary", "slug"],
-    "pages": ["title", "slug"]
+    "pages": ["title", "slug"],
+    "evidenceLibrary": ["asset", "clip", "openlistPath", "entities", "visualKinds", "license", "visibility"]
   },
   "serverHost": "124.220.233.126",
   "serverRuntimeRoot": "/srv/myblog/site",

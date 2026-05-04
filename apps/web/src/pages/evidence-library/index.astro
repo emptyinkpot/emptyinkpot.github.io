@@ -1,0 +1,132 @@
+---
+import WorkbenchPageIntro from '../../components/shared/WorkbenchPageIntro.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEvidenceLibraryPlan } from '../../lib/evidenceLibrary';
+
+const plan = getEvidenceLibraryPlan();
+const actorEntries = Object.entries(plan.actors);
+const hardRules = Object.entries(plan.hardRules).filter(([, enabled]) => enabled);
+---
+
+<BaseLayout
+  title="史料素材库 / emptyinkpot"
+  description="Evidence Library 是 MyBlog 面向历史影像生成系统的史料素材管理、标注与展示板块。"
+>
+  <main class="workbench-page workbench-page--evidence-library" data-pagefind-body>
+    <WorkbenchPageIntro
+      kicker="SECTION / EVIDENCE LIBRARY"
+      title="史料素材库"
+      summary="这个板块用于沉淀历史视频生成所需的真实素材、来源、标注、OpenList 文件引用和 Remotion manifest。核心链路是 text -> evidence -> visual。"
+      stats={[
+        { label: 'Status', value: plan.status },
+        { label: 'Version', value: plan.version },
+        { label: 'Updated', value: plan.updatedAt }
+      ]}
+    />
+
+    <section class="evidence-library__hero home-workbench__card home-workbench__card--panel">
+      <div>
+        <p class="section-kicker">Canonical chain</p>
+        <h2>文本先找证据，证据再驱动画面。</h2>
+        <p>
+          MyBlog 承担素材语义和公开展示；OpenList 承担大文件存储；Remotion 只读取导出的
+          evidence manifest，不再直接猜测网盘文件语义。
+        </p>
+      </div>
+      <pre>{plan.principle}</pre>
+    </section>
+
+    <section class="evidence-library__grid">
+      {
+        actorEntries.map(([key, actor]) => (
+          <article class="home-workbench__card home-workbench__card--panel evidence-library__card">
+            <p class="section-kicker">{key}</p>
+            <h2>{actor.role}</h2>
+            {'baseUrl' in actor && <p class="evidence-library__mono">{actor.baseUrl}</p>}
+            {'dataRoot' in actor && <p class="evidence-library__mono">{actor.dataRoot}</p>}
+            {'manifestInput' in actor && <p class="evidence-library__mono">{actor.manifestInput}</p>}
+          </article>
+        ))
+      }
+    </section>
+
+    <section class="home-workbench__card home-workbench__card--panel evidence-library__section">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Workflow</p>
+          <h2 class="section-title">从网盘文件到可调用镜头</h2>
+        </div>
+      </div>
+
+      <div class="evidence-library__steps">
+        {
+          plan.workflow.map((step, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>Input: {step.input}</p>
+                <p>Output: {step.output}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="evidence-library__grid">
+      <article class="home-workbench__card home-workbench__card--panel evidence-library__section">
+        <p class="section-kicker">Hard rules</p>
+        <h2>生成系统必须遵守的边界</h2>
+        <ul class="evidence-library__list">
+          {hardRules.map(([rule]) => <li>{rule}</li>)}
+        </ul>
+      </article>
+
+      <article class="home-workbench__card home-workbench__card--panel evidence-library__section">
+        <p class="section-kicker">OpenList</p>
+        <h2>只做文件层，不做语义层</h2>
+        <ul class="evidence-library__list">
+          {plan.actors.openlist.activeMounts.map((mount) => <li>Active mount: {mount}</li>)}
+          {Object.entries(plan.actors.openlist.apis).map(([name, route]) => <li>{name}: {route}</li>)}
+        </ul>
+      </article>
+    </section>
+
+    <section class="home-workbench__card home-workbench__card--panel evidence-library__section">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Roadmap</p>
+          <h2 class="section-title">板块落地阶段</h2>
+        </div>
+      </div>
+
+      <div class="evidence-library__phases">
+        {
+          plan.phases.map((phase) => (
+            <article>
+              <div>
+                <h3>{phase.id}</h3>
+                <p>{phase.deliverables.join(' / ')}</p>
+              </div>
+              <span>{phase.status}</span>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="home-workbench__card home-workbench__card--panel evidence-library__section">
+      <p class="section-kicker">Source files</p>
+      <h2>当前真源文件</h2>
+      <div class="evidence-library__source-grid">
+        {Object.entries(plan.recommendedDirectories).map(([label, value]) => (
+          <p>
+            <span>{label}</span>
+            <code>{value}</code>
+          </p>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
