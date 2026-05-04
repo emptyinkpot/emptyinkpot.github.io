@@ -57,8 +57,8 @@ export function findRangeTextOffset(root: Node, target: Node, offset: number) {
 }
 
 export function createHighlightAnchor(root: HTMLElement, range: Range): HighlightAnchor {
-  const exact = normalizeAnchorText(range.toString());
-  const fullText = normalizeAnchorText(root.textContent || '');
+  const exact = range.toString();
+  const fullText = root.textContent || '';
   const start = findRangeTextOffset(root, range.startContainer, range.startOffset);
   const end = start + exact.length;
 
@@ -81,7 +81,7 @@ export function createHighlightAnchor(root: HTMLElement, range: Range): Highligh
       endPath: getNodePath(root, range.endContainer),
       endOffset: range.endOffset
     },
-    contentHash: hashText(fullText)
+    contentHash: hashText(normalizeAnchorText(fullText))
   };
 }
 
@@ -127,10 +127,25 @@ export function resolveByDomPath(root: HTMLElement, selector: DomPathSelector) {
 }
 
 export function resolveByQuote(root: HTMLElement, quote: TextQuoteSelector) {
+  if (!quote.exact) return null;
   const text = root.textContent || '';
-  const index = text.indexOf(quote.exact);
-  if (index < 0) return null;
-  return createRangeFromTextOffsets(root, { type: 'TextPositionSelector', start: index, end: index + quote.exact.length });
+  const candidates: Array<{ start: number; end: number; score: number }> = [];
+  let index = text.indexOf(quote.exact);
+
+  while (index >= 0) {
+    const end = index + quote.exact.length;
+    const prefix = text.slice(Math.max(0, index - quote.prefix.length), index);
+    const suffix = text.slice(end, end + quote.suffix.length);
+    candidates.push({
+      start: index,
+      end,
+      score: contextScore(prefix, quote.prefix) + contextScore(suffix, quote.suffix)
+    });
+    index = text.indexOf(quote.exact, index + 1);
+  }
+
+  const best = candidates.sort((a, b) => b.score - a.score)[0];
+  return best ? createRangeFromTextOffsets(root, { type: 'TextPositionSelector', start: best.start, end: best.end }) : null;
 }
 
 export function resolveHighlight(root: HTMLElement, anchor: HighlightAnchor) {
@@ -141,4 +156,11 @@ export function resolveHighlight(root: HTMLElement, anchor: HighlightAnchor) {
   }
 
   return resolveByQuote(root, anchor.quote) || resolveByDomPath(root, anchor.dom);
+}
+
+function contextScore(actual: string, expected: string) {
+  if (!expected) return 0.5;
+  if (actual === expected) return 1;
+  if (actual.endsWith(expected) || expected.endsWith(actual)) return 0.72;
+  return 0;
 }

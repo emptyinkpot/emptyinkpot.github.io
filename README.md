@@ -1091,7 +1091,7 @@ apps/web/src/lib/knowledge/
 ├── anchors.ts       三锚点 Highlight 基础：quote / position / dom path
 ├── graph.ts         radial graph 布局
 ├── search.ts        无依赖搜索 fallback
-├── storage.ts       reader history / bookmarks / highlights key 与纯函数
+├── storage.ts       reader history / bookmarks / highlights / annotations key 与纯函数
 └── types.ts         KnowledgeSearchDoc / HighlightRecord / GraphNode 等类型
 
 apps/web/src/pages/
@@ -1110,7 +1110,10 @@ apps/web/src/pages/
 - Reader Drawer 保存阅读历史到 `emptyinkpot-reading-history`。
 - Reader Drawer 支持收藏到 `emptyinkpot-reader-bookmarks`。
 - Reader Drawer 支持 `light / sepia / dark` 三种阅读主题，存储键为 `emptyinkpot-reader-theme`。
-- Reader Drawer 支持选中文本后保存本地 highlight 到 `emptyinkpot-reader-highlights`；当前 v1 用 exact 文本做恢复，P1 再增强容错。
+- Reader Drawer 支持选中文本后保存本地 highlight 到 `emptyinkpot-reader-highlights`；当前恢复已经使用 `quote / position / dom path` 三锚点，旧的 exact-only 记录仍可用 quote fallback 恢复。
+- Reader Drawer 打开时会显示 Reader Memory Panel：最近阅读、收藏、标记，点击可直接回访对应 drawer 或标记位置。
+- Search 的本地 highlight 结果会携带 `highlightId`，点击后打开对应 drawer 并滚动聚焦到具体标记。
+- 如果内容变更导致三锚点都无法定位，drawer 顶部显示 orphan highlight 提示，不静默丢失本地记录。
 - Drawer 顶部有阅读进度条，关闭后继续遵守 scrollTop 恢复规则。
 
 Highlight 工程合同：
@@ -1134,7 +1137,7 @@ fuzzy quote fallback
 orphan highlight
 ```
 
-当前 v1 已有 `anchors.ts` 基础实现；首页内联脚本为了稳发布，先使用 exact 文本恢复。后续 P1 必须把首页高亮恢复逻辑切到 `anchors.ts` 的三锚点实现，不能退回只存纯文本。
+当前 v1 已有 `anchors.ts` 基础实现；首页内联脚本已按同一三锚点顺序执行恢复。后续如果把首页脚本拆成 island，应直接复用 `anchors.ts`，不能退回只存纯文本。
 
 Search 工程合同：
 
@@ -1178,13 +1181,13 @@ P0 done:
 - Knowledge index endpoint
 - Static Knowledge Graph page
 
-P1:
+P1 done:
 - 首页 highlight 恢复切到 anchors.ts 三锚点
 - orphan highlight UI
 - Reader Memory Panel：最近阅读 / 收藏 / 标记
 - Search 结果支持跳转到具体 highlight
 
-P2:
+P2 remaining:
 - FlexSearch 或等价搜索引擎
 - Graph hover/click 交互
 - 高亮精准重定位和重绑 UI
@@ -1202,7 +1205,7 @@ P2:
 5. 首页结构验证：`/` 必须是 `Profile Rail + Masonry-like Feed + Right Article Drawer`，不是旧 HomeWorkbench 多模块堆叠。
 6. 默认主题验证：首屏 `<html data-theme="heritage">`；不设置 localStorage 时默认 Heritage。
 7. 书签验证：首页 Feed 卡应出现 `.bookmark`，其数量应与可见 Feed 卡主视觉匹配；书签从卡片顶部露出。
-8. Banner 验证：首页主 Feed 顶部必须有 `.home-hero-banner`；canvas 存在；鼠标移动会改变至少一层 `transform`；动效不得影响 Feed 滚动。
+8. Banner 验证：首页主 Feed 顶部必须有 `.home-hero-banner`；默认不得存在粒子 canvas 或半透明小形状装饰；鼠标移动会改变至少一层 `transform`；动效不得影响 Feed 滚动。
 9. 抽屉验证：点击 Feed 卡和左栏主入口都打开 `.home-article-drawer`；关闭后回到原滚动位置；完整页链接只在 drawer action 中出现。
 10. 搜索验证：`Cmd/Ctrl + K` 打开 Knowledge Search；搜索 GitHub、书籍、音乐和文章标题都应返回结果。
 11. Reader 验证：drawer 内 light / sepia / dark 可切换；收藏写入 `emptyinkpot-reader-bookmarks`；阅读历史写入 `emptyinkpot-reading-history`。
@@ -1344,10 +1347,10 @@ Hero Banner rules：
 
 - `.home-hero-banner` 位于 `.home-feed-main` 顶部、`.home-feed-toolbar` 之前；它是情绪层，不是内容卡片，也不能进入 FeedItem 计数。
 - Banner 必须是横向长图容器，高度约 `150px-210px`，边框使用 `var(--heritage-line-strong)`，圆角 `4px`。
-- 层级固定为：`bg` 远景、`mid` 中景、`front` 前景、`canvas particles` 氛围粒子、`overlay` 遮罩、`content` 品牌文字。
+- 层级固定为：`bg` 远景、`mid` 中景、`front` 前景、`overlay` 遮罩、`content` 品牌文字。
 - 鼠标移动只驱动轻微 parallax：远景约 `10px`，中景约 `20px`，前景约 `34px`；不得做大幅晃动。
-- 粒子必须轻量 canvas，数量桌面约 `42`、窄屏约 `24`；`prefers-reduced-motion: reduce` 下只绘制静态粒子，不持续动画。
-- 四季自动切换由客户端按月份写入 `data-season`：spring、summer、autumn、winter；不同季节只改变色彩和粒子气质，不改变布局。
+- 默认不得启用粒子 canvas、半透明圆点、斜纹、漂浮色块等装饰层；Banner 的气氛由真实横向图片、轻微 parallax 和必要的文字可读性遮罩承担。
+- 四季自动切换由客户端按月份写入 `data-season`：spring、summer、autumn、winter；当前只切换季节 label 和本地 fallback 图片入口，不改变布局，也不叠加装饰粒子。
 - 当前默认图片先使用 `apps/web/public/images/home/homepage-floral-bg.png` 横向裁切。后续替换真实多层素材时使用：
 
 ```text

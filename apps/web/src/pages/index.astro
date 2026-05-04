@@ -468,7 +468,6 @@ function feedCardClass(item: FeedItem) {
         <div class="home-hero-banner__layer home-hero-banner__layer--bg" data-hero-layer="bg"></div>
         <div class="home-hero-banner__layer home-hero-banner__layer--mid" data-hero-layer="mid"></div>
         <div class="home-hero-banner__layer home-hero-banner__layer--front" data-hero-layer="front"></div>
-        <canvas class="home-hero-banner__particles" data-hero-particles aria-hidden="true"></canvas>
         <div class="home-hero-banner__overlay"></div>
         <div class="home-hero-banner__content">
           <span data-hero-season-label>Seasonal Field</span>
@@ -798,6 +797,7 @@ function feedCardClass(item: FeedItem) {
       let activeIndex = 0;
       let searchKind = 'all';
       let selectedRange = null;
+      let pendingHighlightId = null;
       let drawerCloseTimer = 0;
       let searchCloseTimer = 0;
 
@@ -809,7 +809,6 @@ function feedCardClass(item: FeedItem) {
           mid: hero.querySelector('[data-hero-layer="mid"]'),
           front: hero.querySelector('[data-hero-layer="front"]')
         };
-        const canvas = hero.querySelector('[data-hero-particles]');
         const label = hero.querySelector('[data-hero-season-label]');
         const month = new Date().getMonth();
         const season = month < 2 || month === 11 ? 'winter' : month < 5 ? 'spring' : month < 8 ? 'summer' : 'autumn';
@@ -847,84 +846,6 @@ function feedCardClass(item: FeedItem) {
           });
           hero.addEventListener('mouseleave', resetLayers);
         }
-
-        if (!(canvas instanceof HTMLCanvasElement)) return;
-        const context = canvas.getContext('2d');
-        if (!context) return;
-        const palette = {
-          spring: ['rgba(255, 222, 226, 0.72)', 'rgba(158, 42, 43, 0.32)'],
-          summer: ['rgba(232, 244, 228, 0.6)', 'rgba(47, 93, 80, 0.34)'],
-          autumn: ['rgba(201, 162, 39, 0.54)', 'rgba(158, 42, 43, 0.28)'],
-          winter: ['rgba(255, 255, 255, 0.74)', 'rgba(232, 228, 221, 0.44)']
-        }[season];
-        let width = 0;
-        let height = 0;
-        let particles = [];
-        let animationFrame = 0;
-
-        const resize = () => {
-          const rect = hero.getBoundingClientRect();
-          const ratio = Math.min(window.devicePixelRatio || 1, 2);
-          width = Math.max(1, Math.round(rect.width));
-          height = Math.max(1, Math.round(rect.height));
-          canvas.width = Math.round(width * ratio);
-          canvas.height = Math.round(height * ratio);
-          canvas.style.width = `${width}px`;
-          canvas.style.height = `${height}px`;
-          context.setTransform(ratio, 0, 0, ratio, 0, 0);
-          particles = Array.from({ length: width < 720 ? 24 : 42 }, () => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            r: Math.random() * 2 + 0.8,
-            speed: Math.random() * 0.42 + 0.18,
-            drift: Math.random() * 0.35 - 0.16,
-            spin: Math.random() * Math.PI,
-            color: palette[Math.floor(Math.random() * palette.length)]
-          }));
-        };
-
-        const drawParticle = (particle) => {
-          context.save();
-          context.translate(particle.x, particle.y);
-          if (season === 'autumn') {
-            context.rotate(particle.spin);
-            context.fillStyle = particle.color;
-            context.fillRect(-particle.r * 1.6, -particle.r * 0.7, particle.r * 3.2, particle.r * 1.4);
-          } else {
-            context.beginPath();
-            context.arc(0, 0, particle.r, 0, Math.PI * 2);
-            context.fillStyle = particle.color;
-            context.fill();
-          }
-          context.restore();
-        };
-
-        const render = () => {
-          context.clearRect(0, 0, width, height);
-          particles.forEach((particle) => {
-            drawParticle(particle);
-            if (!reducedMotion) {
-              particle.y += particle.speed;
-              particle.x += particle.drift;
-              particle.spin += 0.01;
-              if (particle.y > height + 10) {
-                particle.y = -10;
-                particle.x = Math.random() * width;
-              }
-              if (particle.x < -10) particle.x = width + 10;
-              if (particle.x > width + 10) particle.x = -10;
-            }
-          });
-          if (!reducedMotion) animationFrame = window.requestAnimationFrame(render);
-        };
-
-        resize();
-        render();
-        window.addEventListener('resize', () => {
-          window.cancelAnimationFrame(animationFrame);
-          resize();
-          render();
-        });
       };
 
       const readJson = (key, fallback) => {
@@ -1006,26 +927,218 @@ function feedCardClass(item: FeedItem) {
         progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
       };
 
+      const escapeCssIdentifier = (value) => {
+        if (window.CSS?.escape) return window.CSS.escape(value);
+        return value.replace(/["\\]/g, '\\$&');
+      };
+
+      const normalizeAnchorText = (input) => input.replace(/\s+/g, ' ').trim();
+
+      const hashText = (input) => {
+        let hash = 0;
+        for (let index = 0; index < input.length; index += 1) {
+          hash = (hash << 5) - hash + input.charCodeAt(index);
+          hash |= 0;
+        }
+        return String(hash);
+      };
+
+      const collectTextNodes = (root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        let current = walker.nextNode();
+        while (current) {
+          nodes.push(current);
+          current = walker.nextNode();
+        }
+        return nodes;
+      };
+
+      const getNodePath = (root, target) => {
+        const path = [];
+        let node = target;
+        while (node && node !== root && node.parentNode) {
+          path.unshift([...node.parentNode.childNodes].indexOf(node));
+          node = node.parentNode;
+        }
+        return path;
+      };
+
+      const resolveNodePath = (root, path) => {
+        let node = root;
+        for (const index of path || []) {
+          node = node?.childNodes?.[index];
+          if (!node) return null;
+        }
+        return node;
+      };
+
+      const findRangeTextOffset = (root, target, offset) => {
+        let cursor = 0;
+        for (const node of collectTextNodes(root)) {
+          if (node === target) return cursor + offset;
+          cursor += node.nodeValue?.length || 0;
+        }
+        return cursor;
+      };
+
+      const createRangeFromOffsets = (root, start, end) => {
+        const nodes = collectTextNodes(root);
+        const range = document.createRange();
+        let cursor = 0;
+        let started = false;
+        for (const node of nodes) {
+          const length = node.nodeValue?.length || 0;
+          const next = cursor + length;
+          if (!started && start <= next) {
+            range.setStart(node, Math.max(0, start - cursor));
+            started = true;
+          }
+          if (started && end <= next) {
+            range.setEnd(node, Math.max(0, end - cursor));
+            return range;
+          }
+          cursor = next;
+        }
+        return null;
+      };
+
+      const createHighlightAnchor = (root, range) => {
+        const exact = range.toString();
+        const fullText = root.textContent || '';
+        const start = findRangeTextOffset(root, range.startContainer, range.startOffset);
+        const end = start + exact.length;
+        return {
+          quote: {
+            type: 'TextQuoteSelector',
+            exact,
+            prefix: fullText.slice(Math.max(0, start - 48), start),
+            suffix: fullText.slice(end, Math.min(fullText.length, end + 48))
+          },
+          position: { type: 'TextPositionSelector', start, end },
+          dom: {
+            type: 'DomPathSelector',
+            startPath: getNodePath(root, range.startContainer),
+            startOffset: range.startOffset,
+            endPath: getNodePath(root, range.endContainer),
+            endOffset: range.endOffset
+          },
+          contentHash: hashText(normalizeAnchorText(fullText))
+        };
+      };
+
+      const resolveByDomPath = (root, selector) => {
+        if (!selector?.startPath || !selector?.endPath) return null;
+        const startNode = resolveNodePath(root, selector.startPath);
+        const endNode = resolveNodePath(root, selector.endPath);
+        if (!startNode || !endNode) return null;
+        try {
+          const range = document.createRange();
+          range.setStart(startNode, selector.startOffset);
+          range.setEnd(endNode, selector.endOffset);
+          return range;
+        } catch {
+          return null;
+        }
+      };
+
+      const contextScore = (actual, expected) => {
+        if (!expected) return 0.5;
+        if (actual === expected) return 1;
+        if (actual.endsWith(expected) || expected.endsWith(actual)) return 0.72;
+        return 0;
+      };
+
+      const resolveByQuote = (root, quote, fallbackText) => {
+        const exact = quote?.exact || fallbackText || '';
+        if (!exact) return null;
+        const fullText = root.textContent || '';
+        const candidates = [];
+        let index = fullText.indexOf(exact);
+        while (index >= 0) {
+          const end = index + exact.length;
+          const prefix = fullText.slice(Math.max(0, index - (quote?.prefix?.length || 0)), index);
+          const suffix = fullText.slice(end, end + (quote?.suffix?.length || 0));
+          candidates.push({
+            start: index,
+            end,
+            score: contextScore(prefix, quote?.prefix || '') + contextScore(suffix, quote?.suffix || '')
+          });
+          index = fullText.indexOf(exact, index + 1);
+        }
+        const best = candidates.sort((a, b) => b.score - a.score)[0];
+        return best ? createRangeFromOffsets(root, best.start, best.end) : null;
+      };
+
+      const resolveHighlightRange = (root, record) => {
+        const anchor = record.anchor;
+        if (anchor?.contentHash === hashText(normalizeAnchorText(root.textContent || ''))) {
+          const byPosition = createRangeFromOffsets(root, anchor.position?.start || 0, anchor.position?.end || 0);
+          if (byPosition) return byPosition;
+        }
+        return resolveByQuote(root, anchor?.quote, record.text) || resolveByDomPath(root, anchor?.dom);
+      };
+
+      const scrollToHighlight = (highlightId) => {
+        if (!highlightId || !drawerBody) return;
+        const mark = drawerBody.querySelector(`[data-highlight-id="${escapeCssIdentifier(highlightId)}"]`);
+        if (!mark) return;
+        mark.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        mark.classList.add('reader-highlight--focus');
+        window.setTimeout(() => mark.classList.remove('reader-highlight--focus'), 1200);
+      };
+
+      const createReaderMemoryPanel = () => {
+        const panel = document.createElement('aside');
+        panel.className = 'reader-memory-panel';
+        const history = readJson(storageKeys.history, []).slice(0, 4);
+        const bookmarks = readJson(storageKeys.bookmarks, []).slice(0, 4);
+        const highlights = readJson(storageKeys.highlights, []).slice(0, 4);
+        const appendSection = (title, items, type) => {
+          const section = document.createElement('section');
+          const heading = document.createElement('span');
+          heading.textContent = title;
+          section.append(heading);
+
+          if (!items.length) {
+            const empty = document.createElement('p');
+            empty.textContent = '暂无记录';
+            section.append(empty);
+            panel.append(section);
+            return;
+          }
+
+          items.forEach((item) => {
+            const target = type === 'highlight' ? item.articleId : item.id;
+            const label = type === 'highlight' ? item.text : item.title;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.dataset.memoryDrawer = target || '';
+            if (type === 'highlight' && item.id) button.dataset.memoryHighlight = item.id;
+            button.textContent = label || 'Untitled';
+            section.append(button);
+          });
+
+          panel.append(section);
+        };
+        appendSection('最近阅读', history, 'history');
+        appendSection('收藏', bookmarks, 'bookmark');
+        appendSection('标记', highlights, 'highlight');
+        return panel;
+      };
+
       const applyStoredHighlights = () => {
         if (!drawerBody || !currentArticle) return;
         const root = drawerBody.querySelector('.home-article-content');
         if (!root) return;
         const highlights = readJson(storageKeys.highlights, []).filter((item) => item.articleId === currentArticle.id);
-        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-        const textNodes = [];
-        let node = walker.nextNode();
-        while (node) {
-          textNodes.push(node);
-          node = walker.nextNode();
-        }
+        const orphaned = [];
         highlights.forEach((item) => {
-          const target = textNodes.find((textNode) => textNode.nodeValue?.includes(item.text));
-          if (!target || target.parentElement?.closest('mark')) return;
-          const start = target.nodeValue.indexOf(item.text);
-          if (start < 0) return;
-          const range = document.createRange();
-          range.setStart(target, start);
-          range.setEnd(target, start + item.text.length);
+          const range = resolveHighlightRange(root, item);
+          if (!range) {
+            orphaned.push(item);
+            return;
+          }
           const mark = document.createElement('mark');
           mark.className = `reader-highlight reader-highlight--${item.color || 'gold'}`;
           mark.dataset.highlightId = item.id;
@@ -1033,9 +1146,29 @@ function feedCardClass(item: FeedItem) {
             mark.append(range.extractContents());
             range.insertNode(mark);
           } catch {
-            // If a text node changed, keep the stored highlight but skip rendering.
+            orphaned.push(item);
           }
         });
+        drawerBody.querySelectorAll('.reader-orphan-highlights').forEach((node) => node.remove());
+        if (orphaned.length) {
+          const notice = document.createElement('aside');
+          notice.className = 'reader-orphan-highlights';
+          const title = document.createElement('strong');
+          const details = document.createElement('p');
+          title.textContent = `${orphaned.length} 条标记暂时无法定位`;
+          details.textContent = orphaned
+            .map((item) => item.text)
+            .slice(0, 3)
+            .join(' / ');
+          notice.append(title, details);
+          drawerBody.prepend(notice);
+        }
+        if (pendingHighlightId) {
+          requestAnimationFrame(() => {
+            scrollToHighlight(pendingHighlightId);
+            pendingHighlightId = null;
+          });
+        }
       };
 
       const hideSelectionToolbar = () => {
@@ -1072,18 +1205,16 @@ function feedCardClass(item: FeedItem) {
         const text = range?.toString().trim() || '';
         if (!range || text.length < 10 || text.length > 240) return;
         if (!drawerBody.contains(range.commonAncestorContainer)) return;
+        const root = drawerBody.querySelector('.home-article-content');
+        if (!root || !root.contains(range.commonAncestorContainer)) return;
+        const anchor = createHighlightAnchor(root, range);
         const record = {
           id: `${currentArticle.id}:${Date.now()}`,
           articleId: currentArticle.id,
           title: currentArticle.title,
           text,
           color,
-          anchor: {
-            quote: { type: 'TextQuoteSelector', exact: text, prefix: '', suffix: '' },
-            position: { type: 'TextPositionSelector', start: 0, end: text.length },
-            dom: { type: 'DomPathSelector', startPath: [], startOffset: 0, endPath: [], endOffset: 0 },
-            contentHash: ''
-          },
+          anchor,
           createdAt: Date.now(),
           updatedAt: Date.now()
         };
@@ -1123,7 +1254,8 @@ function feedCardClass(item: FeedItem) {
           title: item.title,
           content: item.text,
           tags: ['highlight'],
-          drawerId: item.articleId
+          drawerId: item.articleId,
+          highlightId: item.id
         }));
         return [...searchDocs, ...storedHighlights]
           .filter((doc) => searchKind === 'all' || doc.type === searchKind)
@@ -1155,7 +1287,7 @@ function feedCardClass(item: FeedItem) {
             button.querySelector('small').textContent = String(doc.content || '').slice(0, 150);
             button.addEventListener('click', () => {
               if (doc.drawerId) {
-                openDrawer(doc.drawerId, button);
+                openDrawer(doc.drawerId, button, { highlightId: doc.highlightId });
                 closeSearch();
               } else if (doc.href) {
                 window.location.href = doc.href;
@@ -1219,7 +1351,7 @@ function feedCardClass(item: FeedItem) {
         }, drawerTransitionMs);
       };
 
-      const openDrawer = (id, trigger) => {
+      const openDrawer = (id, trigger, options = {}) => {
         const template = [...document.querySelectorAll('[data-drawer-template]')].find(
           (node) => node.dataset.drawerTemplate === id
         );
@@ -1235,8 +1367,9 @@ function feedCardClass(item: FeedItem) {
         lastFocused = trigger;
         savedScrollTop = mainScroller?.scrollTop ?? 0;
         currentArticle = { id: articleId, title, href };
+        pendingHighlightId = options.highlightId || null;
 
-        drawerBody.replaceChildren(content);
+        drawerBody.replaceChildren(createReaderMemoryPanel(), content);
         if (titleTarget) titleTarget.textContent = title;
         if (kickerTarget) kickerTarget.textContent = kicker;
         if (fullLink) fullLink.setAttribute('href', href);
@@ -1291,6 +1424,13 @@ function feedCardClass(item: FeedItem) {
       bookmarkButton?.addEventListener('click', toggleBookmark);
       drawerBody?.addEventListener('scroll', updateReadingProgress);
       drawerBody?.addEventListener('mouseup', () => setTimeout(showSelectionToolbar, 0));
+      drawerBody?.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-memory-drawer]') : null;
+        if (!target) return;
+        const drawerId = target.dataset.memoryDrawer;
+        if (!drawerId) return;
+        openDrawer(drawerId, target, { highlightId: target.dataset.memoryHighlight });
+      });
 
       selectionToolbar?.querySelectorAll('[data-highlight-color]').forEach((button) => {
         button.addEventListener('click', () => saveSelectionHighlight(button.dataset.highlightColor || 'gold'));

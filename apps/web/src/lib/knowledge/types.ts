@@ -8,6 +8,7 @@ export type KnowledgeSearchDoc = {
   tags: string[];
   href?: string;
   drawerId?: string;
+  highlightId?: string;
   sourceId?: string;
   updatedAt?: string;
 };
@@ -46,9 +47,21 @@ export type HighlightRecord = {
   id: string;
   articleId: string;
   title: string;
+  text: string;
   color: HighlightColor;
   note?: string;
   anchor: HighlightAnchor;
+  createdAt: number;
+  updatedAt: number;
+};
+
+export type AnnotationRecord = {
+  id: string;
+  articleId: string;
+  highlightId: string;
+  body: string;
+  color: HighlightColor;
+  tags: string[];
   createdAt: number;
   updatedAt: number;
 };
