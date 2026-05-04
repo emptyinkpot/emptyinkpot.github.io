@@ -22,7 +22,7 @@ const buildVersion = new Date().toISOString();
 const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.png')}")`;
 ---
 
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="heritage">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -58,6 +58,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
       (() => {
         const storageKey = 'emptyinkpot-visual-settings';
         const defaults = {
+          theme: 'heritage',
           cardTopAlpha: 0.92,
           cardBottomAlpha: 0.78,
           railTopAlpha: 0.9,
@@ -96,6 +97,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
 
         const normalize = (input = {}) => {
           const next = { ...defaults };
+          next.theme = input.theme === 'glass' ? 'glass' : 'heritage';
           for (const [key, range] of Object.entries(numericRanges)) {
             const value = Number(input[key]);
             if (Number.isFinite(value)) {
@@ -109,6 +111,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
         const apply = (input = {}) => {
           const settings = normalize(input);
           const root = document.documentElement;
+          root.dataset.theme = settings.theme;
           root.style.setProperty('--home-card-glass-top-alpha', String(settings.cardTopAlpha));
           root.style.setProperty('--home-card-glass-bottom-alpha', String(settings.cardBottomAlpha));
           root.style.setProperty('--home-rail-glass-top-alpha', String(settings.railTopAlpha));

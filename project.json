@@ -227,7 +227,32 @@
       "appliedBy": "apps/web/src/layouts/BaseLayout.astro",
       "styleSource": "apps/web/src/styles/global.css",
       "scope": "browser-local homepage display preferences",
+      "defaultTheme": "heritage",
+      "themeOptions": ["heritage", "glass"],
+      "heritageTheme": {
+        "status": "default",
+        "intent": "Cultural OS visual language: paper background, pure color panels, semantic color strips, low shadow, no glass blur",
+        "tokens": {
+          "--heritage-bg": "#f5f1e8",
+          "--heritage-paper": "#efe8da",
+          "--heritage-paper-deep": "#e4dac7",
+          "--heritage-purple": "#6b2d5c",
+          "--heritage-red": "#9e2a2b",
+          "--heritage-green": "#2f5d50",
+          "--heritage-gold": "#c9a227",
+          "--heritage-line": "#d8cfc2",
+          "--heritage-ink": "#1e1b18",
+          "--heritage-muted": "#6b645c"
+        },
+        "rules": [
+          "future homepage visual changes target heritage by default",
+          "avoid large gradients, glow, glass blur, neon colors and large SaaS rounded cards",
+          "use semantic left borders for feed card type identity",
+          "full page links remain in drawer actions; main homepage click behavior remains drawer"
+        ]
+      },
       "exposedTokens": [
+        "theme",
         "--home-card-glass-top-alpha",
         "--home-card-glass-bottom-alpha",
         "--home-rail-glass-top-alpha",

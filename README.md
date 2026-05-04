@@ -690,7 +690,7 @@ Hero / System Entry
 
 #### 0.7.5.15a Current Frontend Pixel Contract
 
-本节记录当前 `apps/web` 前台真实 UI contract，按 `apps/web/src/styles/global.css` 的现行实现换算为 px。默认换算基线为 `1rem = 16px`。本节用于复刻和排查重叠，不是理想稿。
+本节记录当前 `apps/web` 前台真实 UI contract，按 `apps/web/src/styles/global.css` 的现行实现换算为 px。默认换算基线为 `1rem = 16px`。默认视觉风格已经从 Glass / Workbench 切到 `Heritage / Cultural OS`；旧 Glass 只作为 `/settings/` 可切换的兼容风格保留。
 
 当前首页真源：
 
@@ -745,8 +745,27 @@ Hero / System Entry
 | 应用入口 | `apps/web/src/layouts/BaseLayout.astro` 内联脚本，页面加载时先读 `localStorage` 再写 CSS 变量 |
 | 存储键 | `emptyinkpot-visual-settings` |
 | 作用范围 | 浏览器本地显示偏好；不是服务端 CMS 设置，不会改仓库默认值 |
-| 可调变量 | `--home-card-glass-top-alpha`、`--home-card-glass-bottom-alpha`、`--home-rail-glass-top-alpha`、`--home-rail-glass-bottom-alpha`、`--home-toolbar-glass-top-alpha`、`--home-toolbar-glass-bottom-alpha`、`--home-background-overlay-alpha`、`--home-glass-blur`、`--home-glass-saturate`、`--home-background-image` |
+| 默认主题 | `theme: "heritage"`；`BaseLayout.astro` 初始输出 `<html data-theme="heritage">`，避免首屏闪回旧玻璃风格 |
+| 可调变量 | `theme`、`--home-card-glass-top-alpha`、`--home-card-glass-bottom-alpha`、`--home-rail-glass-top-alpha`、`--home-rail-glass-bottom-alpha`、`--home-toolbar-glass-top-alpha`、`--home-toolbar-glass-bottom-alpha`、`--home-background-overlay-alpha`、`--home-glass-blur`、`--home-glass-saturate`、`--home-background-image` |
 | 背景图规则 | 设置页允许根路径 `/...` 或 `http(s)://...`；空值恢复 `/images/home/homepage-floral-bg.png` |
+
+Heritage 默认视觉语言：
+
+| 语义 | Token / 色值 | 用途 |
+| --- | --- | --- |
+| 宣纸底色 | `--heritage-bg: #f5f1e8` | 首页背景、drawer 背景 |
+| 和纸面板 | `--heritage-paper: #efe8da` | 卡片、左栏、设置页面板 |
+| 清华紫 | `--heritage-purple: #6b2d5c` | 主色、文章边条、active filter |
+| 朱红 | `--heritage-red: #9e2a2b` | 札记 / 书架边条 |
+| 松绿 | `--heritage-green: #2f5d50` | 项目 / GitHub / 热力图高强度 |
+| 王室黄 | `--heritage-gold: #c9a227` | 音乐边条、选中文本和点缀 |
+| 书页线 | `--heritage-line: #d8cfc2` | 分隔线、按钮边框、drawer 边界 |
+
+Heritage 硬规则：
+
+- 默认不使用大面积渐变、发光、半透明玻璃和 blur；`body.home-mode` 下 Heritage 会强制取消 `backdrop-filter`。
+- 卡片层级靠纯色面板、左侧语义边条和清晰分隔线表达，不靠阴影堆叠。
+- 后续首页视觉改动默认修改 Heritage 主题；Glass 只作为兼容项，不再作为主设计方向。
 
 非首页 workbench 页：
 

@@ -15,13 +15,13 @@ const controls = [
 ];
 ---
 
-<BaseLayout title="显示设置 / emptyinkpot" description="调整 emptyinkpot 首页毛玻璃、卡片透明度和背景图。">
+<BaseLayout title="显示设置 / emptyinkpot" description="调整 emptyinkpot 首页主题、卡片透明度和背景图。">
   <main class="settings-page" data-visual-settings-page>
     <section class="settings-page__hero glass-card">
       <div>
         <p class="section-kicker">Display Settings</p>
         <h1>首页显示设置</h1>
-        <p>这里调整的是浏览器本地显示参数，会立即写入 localStorage 并作用到首页卡片、左栏、筛选条和背景图。</p>
+        <p>这里调整的是浏览器本地显示参数。默认风格是 Heritage，强调宣纸底色、清华紫、朱红、松绿和金色点缀。</p>
       </div>
       <a class="settings-page__home-link" href={withBase('/')}>返回首页预览</a>
     </section>
@@ -29,9 +29,17 @@ const controls = [
     <section class="settings-page__grid">
       <form class="settings-page__panel glass-card" data-visual-settings-form>
         <div class="settings-page__panel-head">
-          <span>Glass</span>
-          <strong>毛玻璃与透明度</strong>
+          <span>Theme</span>
+          <strong>风格与显示参数</strong>
         </div>
+
+        <label class="settings-control settings-control--wide">
+          <span>首页风格</span>
+          <select class="settings-control__text" data-setting="theme" aria-label="首页风格">
+            <option value="heritage">Heritage / Cultural OS（默认）</option>
+            <option value="glass">Glass / Workbench（旧版）</option>
+          </select>
+        </label>
 
         {controls.map((control) => (
           <label class="settings-control">
@@ -70,13 +78,13 @@ const controls = [
       <aside class="settings-page__preview" aria-label="视觉预览">
         <div class="settings-preview-card">
           <span>Feed Card</span>
-          <strong>卡片玻璃预览</strong>
-          <p>透明度、模糊和背景图会实时变化。真正首页仍保持 Feed 与右侧阅读抽屉结构。</p>
+          <strong>内容卡片预览</strong>
+          <p>Heritage 默认不依赖毛玻璃；Glass 模式下透明度、模糊和背景图会实时变化。</p>
         </div>
         <div class="settings-preview-rail">
           <span>Rail Card</span>
-          <strong>左栏玻璃预览</strong>
-          <p>左栏、导航和侧栏信息卡共用这一组透明度。</p>
+          <strong>左栏面板预览</strong>
+          <p>默认视觉语言是大面积纯色、强边界和低阴影。</p>
         </div>
       </aside>
     </section>
