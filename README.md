@@ -836,6 +836,45 @@ type VisualSettings = {
 - `window.emptyinkpotVisualSettings.exportContentPorts()` 必须能导出当前页面已声明的 `data-copy-key` / `data-image-key` 端口，便于在 `/settings/` 里生成可编辑 JSON。
 - 设置页 preview 必须包含至少一个 Feed 预览、一个 Reader 预览和一个 Knowledge UI 预览。
 
+内容端口示例：
+
+```json
+{
+  "content": {
+    "banner": {
+      "kicker": "Seasonal Field",
+      "title": "EMPTYINKPOT",
+      "subtitle": "Content OS · Tangible Knowledge UI",
+      "springLabel": "Spring Field",
+      "summerLabel": "Summer Field",
+      "autumnLabel": "Autumn Field",
+      "winterLabel": "Winter Field",
+      "bgImage": "/images/home/homepage-floral-bg.png",
+      "midImage": "",
+      "frontImage": ""
+    },
+    "copy": {
+      "home.feed.title": "连续浏览",
+      "home.banner.title": "EMPTYINKPOT",
+      "selector:.home-feed-tab[data-feed-filter=\"post\"]": "文章"
+    },
+    "images": {
+      "home.brand.logo": "/images/branding/vita-atramenti-logo.png",
+      "selector:.home-hero-banner__layer--bg": "/images/home/homepage-floral-bg.png"
+    }
+  }
+}
+```
+
+复刻步骤：
+
+1. 在 `BaseLayout.astro` 初始化 `window.emptyinkpotVisualSettings`，并保证 `load / save / reset / apply / exportContentPorts` 都存在。
+2. 在需要开放的文字元素上标 `data-copy-key="..."`，图片或背景元素上标 `data-image-key="..."`。
+3. Banner 必须同时保留专用端口 `data-hero-kicker / data-hero-title / data-hero-subtitle / data-hero-layer`。
+4. `/settings/` 必须能编辑 `content.banner`，并提供 `content.copy` / `content.images` JSON textarea。
+5. 保存时只写 `emptyinkpot-visual-settings`，不改文章 markdown、不改仓库默认内容。
+6. reset 必须当场恢复原 DOM 文案和图片，不要求用户刷新。
+
 Heritage 默认视觉语言：
 
 | 语义 | Token / 色值 | 用途 |
