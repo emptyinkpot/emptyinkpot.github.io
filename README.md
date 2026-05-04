@@ -1189,14 +1189,14 @@ Showcase 实现规则：
 
 `/projects/` 不再只是项目链接列表；当前目标是把它升级为 `Project Studio / 项目工坊`，与 `/books/`、`/music/`、`/github/`、`/knowledge/` 并列，承担项目、仓库、模块、Wiki 与协作记录的统一入口。
 
-`/projects/[slug]/` 当前进一步升级为 `Project OS`：Obsidian 式左侧知识导航 + NapCat / Linear 式应用工作区 + Heritage 视觉气质。它不是普通博客详情页，而是项目工作台。
+`/projects/[slug]/` 当前进一步升级为 `Project Workbench`：GitHub repo 工作台 + Obsidian 式左侧导航 + NapCat / Linear 式应用工作区 + Heritage 视觉气质。它不是普通博客详情页，而是打开后可以进入 Wiki、Timeline、Issues、Commits、Contributors 的项目工作区。
 
 页面分类：
 
 | 路由 | 页面模式 | 职责 |
 | --- | --- | --- |
 | `/projects/` | list / dashboard | 项目工坊首页；展示项目卡片网格、项目状态、GitHub 信号和最近项目动态 |
-| `/projects/[slug]/` | app workspace / project-os | 单个项目工作台；展示 Overview、Modules、Wiki、Timeline、Contributors、Graph，并提供本地时间线编辑 |
+| `/projects/[slug]/` | app workspace / project-workbench | 单个 GitHub 项目工作台；展示 GitHub 状态栏、Wiki 编辑器、Timeline、Modules、Issues、PR、Commits、Contributors、Graph |
 
 现行实现边界：
 
@@ -1267,54 +1267,99 @@ Project card contract：
 - MUST 在长标题、长路径、长标签下保持 `min-width:0` 与可换行，不得撑破两列网格。
 - FORBIDDEN：卡片内嵌卡片、营销 hero 风、随机渐变、客户端 live GitHub fetch、把 GitHub API 失败变成页面失败。
 
-Project OS workspace contract：
+Project Workbench workspace contract：
 
 ```text
 /projects/[slug]/
-├─ Project OS Sidebar：项目导航、状态、总体进度
-├─ Project OS Topbar：当前项目、首页 / 知识图谱 / GitHub / Wiki edit action
-└─ Main Workspace
-   ├─ Overview Hero：项目标题、摘要、tags、总体指标
-   ├─ Modules：模块进度行，不使用卡片堆叠
-   ├─ Wiki Reader：Markdown 正文 + GitHub-backed Wiki 入口
-   ├─ Timeline：GitHub snapshot + milestones + localStorage 本地编辑记录
-   ├─ Contributors：协作者
-   └─ Graph：当前项目的静态 mini graph
+├─ Left Sidebar：Wiki / Timeline / Modules / Issues / PR / Commits / Contributors / Graph
+├─ Main Workspace
+│  ├─ GitHub Statusbar：repo、branch、updated、issues、PR、contributors、sync / edit actions
+│  ├─ Wiki Editor：textarea，默认进入可编辑内容，不再先展示大标题
+│  ├─ Timeline Editor：提交到 timeline API，不写 localStorage
+│  ├─ Module Rows：模块进度行，不使用卡片堆叠
+│  ├─ Issues / PR / Commits Panels：API 未接入时显示明确 pending state
+└─ Right Inspector：contributors、wiki files、mini graph
 ```
 
-Project OS implementation contract：
+Project Workbench implementation contract：
 
 - MUST 在 `projects/[slug].astro` 使用 `BaseLayout hideSiteChrome appMode`，隐藏全站 SiteHeader / SiteFooter，让项目页成为应用工作台。
-- MUST 使用 `.project-os` 作为详情页根 class；`.project-space` 只保留为旧样式兼容，不再作为目标实现。
-- MUST 使用左侧 `.project-os__sidebar` 承载导航，主区 `.project-os__main` 是唯一滚动工作区。
+- MUST 使用 `.project-workbench` 作为详情页根 class；`.project-os` / `.project-space` 只保留为旧样式兼容，不再作为目标实现。
+- MUST 使用左侧 `.project-workbench__sidebar` 承载导航，主区 `.project-workbench__main` 是主要滚动工作区，右侧 `.project-workbench__inspector` 承载贡献者、Wiki 文件和 Graph 辅助信息。
 - MUST 使用轻边界和分区线：项目详情区块使用 `border-bottom`，不得恢复成卡片套卡片。
 - MUST 保留 `/projects/` 作为入口列表；不要把列表页也强行做成全屏应用。
-- MUST 保留 Astro 静态主链路。当前没有 React integration，Timeline 编辑第一版使用原生局部 JS + `localStorage`，不新增 React 依赖。
-- Timeline 本地存储键固定为 `project:${slug}:timeline`；后续接 GitHub API 前，不得把 token 暴露到前端。
+- MUST 保留 Astro 静态主链路。当前没有 React integration，Wiki / Timeline 编辑器使用原生局部 JS 调用未来 API，不新增 React 依赖。
+- MUST 明确浏览器前端不能直接安全写 GitHub。所有写入必须经过服务端 API 中间层，不得把 token 暴露给前端。
+- Wiki 保存按钮调用 `/api/github/file/save`；API 未接入时显示 pending / warning，不得伪造成功。
+- Timeline 保存按钮调用 `/api/projects/[slug]/timeline`，目标是后端更新仓库 `data/timeline.json`；当前公开静态站不写 localStorage。
+- 当前静态页根节点使用 `data-github-api-ready="false"`，因此不会请求不存在的 API endpoint，也不会在控制台制造 404；后端接入完成后才允许改成 `true`。
+- GitHub 状态栏当前读取构建期 snapshot；Issues / PR / Commits 详情需要后续 `/api/github/*` 或扩展构建期 snapshot。
 - Graph 第一版是确定性静态预览；不得引入随机力导向布局。
-- FORBIDDEN：在 Project OS 内恢复全站顶部导航、重复的卡片容器、后台表单按钮感、大面积渐变、玻璃 blur 或客户端 live GitHub fetch。
+- FORBIDDEN：在 Project Workbench 内恢复全站顶部导航、超大宣传标题、重复卡片容器、后台表单按钮感、大面积渐变、玻璃 blur、客户端直连 GitHub 写入、用假数据冒充 PR / commit / issue 列表。
+
+Required API contract for GitHub write-back：
+
+```text
+GET  /api/github/repo?repo=owner/name
+GET  /api/github/commits?repo=owner/name
+GET  /api/github/issues?repo=owner/name
+GET  /api/github/pulls?repo=owner/name
+GET  /api/github/contributors?repo=owner/name
+POST /api/github/file/read
+POST /api/github/file/save
+POST /api/projects/[slug]/timeline
+```
+
+`POST /api/github/file/save` body：
+
+```json
+{
+  "repo": "emptyinkpot/project-vita",
+  "path": "wiki/index.md",
+  "content": "markdown",
+  "message": "更新 Wiki：wiki/index.md"
+}
+```
+
+`POST /api/projects/[slug]/timeline` body：
+
+```json
+{
+  "title": "完成世界观 Wiki 初稿",
+  "body": "补充阵营、角色和卡牌基础设定。",
+  "repo": "emptyinkpot/project-vita"
+}
+```
+
+后端规则：
+
+- API 必须运行在 `apps/admin-next`、独立 serverless 函数或其他服务端边界，不能放在静态 Astro 前端里假装可用。
+- `GITHUB_TOKEN` 只能存在服务端环境变量。
+- 写文件前必须读取当前文件 SHA，再调用 GitHub contents API 创建 commit。
+- Timeline 持久化文件固定为项目仓库 `data/timeline.json`。
+- 失败时前端必须显示明确失败状态，不能把失败写进 localStorage 当成功。
 
 状态规则：
 
 - loading：静态构建页不显示 skeleton；如果后续接客户端 GitHub fetch，只允许在局部指标位置显示 loading，不阻断项目正文。
-- empty：无项目时 `/projects/` 显示添加 `apps/web/src/content/projects/` 条目的提示；模块、时间线缺失时显示局部空态；本地时间线为空时显示已构建的 GitHub / milestone 记录或空态。
-- error：缺失 repo 或 snapshot 未匹配时页面降级为手动项目空间，issues/updated 显示默认值，不抛出前台错误；localStorage 读取失败时忽略本地记录。
+- empty：无项目时 `/projects/` 显示添加 `apps/web/src/content/projects/` 条目的提示；模块、时间线缺失时显示局部空态；Issues / PR / Commits 详情 API 未接入时显示 pending，不伪造列表。
+- error：缺失 repo 或 snapshot 未匹配时页面降级为手动项目空间，issues/updated 显示默认值，不抛出前台错误；API 写入失败时显示 API 未接入或请求失败。
 
 升级路线：
 
 | 阶段 | 能力 | 约束 |
 | --- | --- | --- |
-| P0 | Project Studio 入口、Project OS 详情、GitHub edit links、GitHub snapshot 指标、本地时间线编辑 | 当前已落地路线；不新增后端 |
-| P1 | GitHub commits / contributors 深化、Wiki Markdown 展示增强、Decap CMS | 让成员通过 GitHub / `/admin` 编辑 Markdown 并提交 GitHub |
-| P2 | 页面内编辑写回 GitHub、Project Graph、TinaCMS / Outline / Wiki.js | 需要 API 保护 GitHub token，不允许前端直连写入 |
+| P0 | Project Studio 入口、Project Workbench 详情、GitHub edit links、GitHub snapshot 指标、Wiki / Timeline API pending 编辑器 | 当前已落地路线；不新增后端，不伪造写入 |
+| P1 | `/api/github/*` 与 `/api/projects/[slug]/timeline`，GitHub commits / contributors / issues / PR 深化 | 让页面内编辑通过服务端 API commit 到 GitHub |
+| P2 | Decap CMS / TinaCMS / Outline / Wiki.js、Project Graph | 需要 API 保护 GitHub token，不允许前端直连写入 |
 | P3 | Project Graph 与 Knowledge Graph 深联动、成员权限、PR / diff / 版本历史 | 使用统一 Knowledge Index，不引随机力导向 |
 
 AI / implementation checklist：
 
-1. 先判断页面是 `/projects/` list/dashboard 还是 `/projects/[slug]/` detail/project-space。
+1. 先判断页面是 `/projects/` list/dashboard 还是 `/projects/[slug]/` app workspace / project-workbench。
 2. 复用 `projects` content collection 和 `buildProjectStudioView()`，不得在页面内重复解析 repo、wiki、timeline。
 3. 优先读 GitHub snapshot；不要在静态页里临时添加客户端 GitHub API 请求。
-4. `/projects/` 使用 `.project-studio-*`；`/projects/[slug]/` 使用 `.project-os*`。不要把 `.project-space` 当作新目标。
+4. `/projects/` 使用 `.project-studio-*`；`/projects/[slug]/` 使用 `.project-workbench*`。不要把 `.project-space` 或 `.project-os` 当作新目标。
 5. 每个新增字段必须同步 `apps/web/src/content.config.ts` 与 README 内容模型。
 6. 发布前必须跑 `npm run lint`、`npm run check`、`npm run build`，并验证 `/projects/`、`/projects/[slug]/` 和首页 `项目工坊` filter。
 

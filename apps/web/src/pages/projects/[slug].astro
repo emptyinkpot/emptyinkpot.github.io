@@ -1,5 +1,5 @@
 ---
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/content';
 import { getGitHubOverview } from '../../lib/github';
@@ -19,285 +19,327 @@ const { project } = Astro.props as {
   project: CollectionEntry<'projects'>;
 };
 
-const { Content } = await render(project);
 const github = await getGitHubOverview('emptyinkpot');
 const projectView = buildProjectStudioView(project, github);
 const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : undefined;
-const timelineSeed = projectView.timeline.map((item) => ({
-  title: item.title,
-  date: item.date ? formatDate(item.date) : 'No date',
-  summary: item.summary,
-  href: item.href
-}));
+const repoLabel = projectView.owner && projectView.repoName ? `${projectView.owner}/${projectView.repoName}` : 'manual project';
+const primaryWiki = projectView.wiki[0];
+const initialWikiContent = project.body?.trim() || project.data.description;
 ---
 
-<BaseLayout title={`${project.data.title} / Project OS`} description={project.data.description} hideSiteChrome={true} appMode={true}>
-  <main class="project-os" data-pagefind-body data-project-slug={project.id}>
-    <aside class="project-os__sidebar" aria-label="Project OS navigation">
-      <a class="project-os__brand" href={withBase('/projects/')}>
-        <span>PROJECT OS</span>
+<BaseLayout title={`${project.data.title} / GitHub Workbench`} description={project.data.description} hideSiteChrome={true} appMode={true}>
+  <main class="project-workbench" data-pagefind-body data-project-slug={project.id} data-project-repo={repoLabel} data-github-api-ready="false">
+    <aside class="project-workbench__sidebar" aria-label="Project workbench navigation">
+      <a class="project-workbench__brand" href={withBase('/projects/')}>
+        <span>PROJECT WORKBENCH</span>
         <strong>{project.data.title}</strong>
       </a>
 
-      <nav class="project-os__nav">
-        <a class="is-active" href="#overview">总览</a>
-        <a href="#modules">模块进度</a>
-        <a href="#wiki">世界观 Wiki</a>
+      <nav class="project-workbench__nav">
+        <a class="is-active" href="#wiki">Wiki 文档</a>
         <a href="#timeline">时间线</a>
+        <a href="#modules">模块进度</a>
+        <a href="#issues">Issues</a>
+        <a href="#pulls">Pull Requests</a>
+        <a href="#commits">Commits</a>
         <a href="#contributors">贡献者</a>
         <a href="#graph">知识关系</a>
       </nav>
 
-      <div class="project-os__sidebar-meta">
-        <p>{getProjectTypeLabel(projectView.type)} / {projectView.status}</p>
-        <div class="project-os__mini-progress" aria-label={`Project progress ${projectView.progress}%`}>
-          <span style={`--progress:${projectView.progress}%`}></span>
-        </div>
-        <small>{projectView.progress}% overall</small>
+      <div class="project-workbench__sidebar-note">
+        <span>{getProjectTypeLabel(projectView.type)} / {projectView.status}</span>
+        <p>写入 GitHub 需要后端 API 中间层；当前公开站点只暴露安全的前端工作台与 GitHub edit fallback。</p>
       </div>
     </aside>
 
-    <section class="project-os__main">
-      <header class="project-os__topbar">
-        <div>
-          <p>项目工坊 / GitHub-backed workspace</p>
+    <section class="project-workbench__main">
+      <header class="project-workbench__statusbar">
+        <div class="project-workbench__repo">
+          <span>{repoLabel}</span>
           <strong>{project.data.title}</strong>
         </div>
 
-        <div class="project-os__actions">
-          <a href={withBase('/')}>首页</a>
-          <a href={withBase('/knowledge/')}>知识图谱</a>
-          {project.data.repo && <a href={project.data.repo} target="_blank" rel="noreferrer">查看仓库</a>}
-          {projectView.githubEditBase && (
-            <a href={`${projectView.githubEditBase}README.md`} target="_blank" rel="noreferrer">
-              编辑 Wiki
-            </a>
-          )}
+        <dl class="project-workbench__status">
+          <div>
+            <dt>Branch</dt>
+            <dd>main</dd>
+          </div>
+          <div>
+            <dt>Updated</dt>
+            <dd>{repoUpdatedAt ? formatDate(repoUpdatedAt) : 'manual'}</dd>
+          </div>
+          <div>
+            <dt>Issues</dt>
+            <dd>{projectView.repo?.issues ?? 0}</dd>
+          </div>
+          <div>
+            <dt>PR</dt>
+            <dd>API</dd>
+          </div>
+          <div>
+            <dt>Contributors</dt>
+            <dd>{projectView.contributors.length}</dd>
+          </div>
+        </dl>
+
+        <div class="project-workbench__status-actions">
+          <a href={project.data.repo ?? withBase('/projects/')} target={project.data.repo ? '_blank' : undefined} rel={project.data.repo ? 'noreferrer' : undefined}>仓库</a>
+          {primaryWiki?.editUrl && <a href={primaryWiki.editUrl} target="_blank" rel="noreferrer">GitHub 编辑</a>}
+          <button type="button" data-sync-project>同步</button>
         </div>
       </header>
 
-      <section id="overview" class="project-os__hero project-os__section section-reveal">
-        <div>
-          <p class="project-os__eyebrow">PROJECT STUDIO / {getProjectTypeLabel(projectView.type)}</p>
-          <h1>{project.data.title}</h1>
-          <p>{project.data.description}</p>
-
-          <div class="project-os__tags">
-            <span>{projectView.status}</span>
-            {project.data.date && <span>{formatDate(project.data.date)}</span>}
-            {project.data.stack.map((item) => <span>{item}</span>)}
+      <section id="wiki" class="project-work-panel project-work-panel--editor" data-wiki-editor>
+        <header class="project-work-panel__header">
+          <div>
+            <span>WIKI EDITOR</span>
+            <h1>{primaryWiki?.title ?? '项目 Wiki'}</h1>
           </div>
-        </div>
-
-        <aside class="project-os__progress">
-          <strong>{projectView.progress}%</strong>
-          <span>总体进度</span>
-          <div class="project-os__progress-line" aria-hidden="true">
-            <i style={`--progress:${projectView.progress}%`}></i>
+          <div class="project-work-panel__tools">
+            <code>{primaryWiki?.path ?? 'README.md'}</code>
+            <button type="button" data-save-wiki>提交到 GitHub</button>
           </div>
-          <dl>
-            <div>
-              <dt>Modules</dt>
-              <dd>{projectView.modules.length}</dd>
-            </div>
-            <div>
-              <dt>Issues</dt>
-              <dd>{projectView.repo?.issues ?? 0}</dd>
-            </div>
-            <div>
-              <dt>Updated</dt>
-              <dd>{repoUpdatedAt ? formatDate(repoUpdatedAt) : 'manual'}</dd>
-            </div>
-          </dl>
-        </aside>
+        </header>
+
+        <textarea
+          class="project-workbench__editor"
+          id="project-wiki-editor"
+          name="project-wiki-editor"
+          data-wiki-content
+          aria-label="Wiki editor"
+        >{initialWikiContent}</textarea>
+
+        <p class="project-workbench__message" data-wiki-message>
+          当前静态站不会暴露 GitHub token。点击提交会调用 `/api/github/file/save`；API 接入前请使用 GitHub 编辑入口。
+        </p>
       </section>
 
-      <section id="modules" class="project-os__section section-reveal">
-        <p class="project-os__eyebrow">MODULES</p>
-        <h2>模块进度</h2>
-        <div class="project-os__module-list">
+      <section id="timeline" class="project-work-panel" data-timeline-editor>
+        <header class="project-work-panel__header">
+          <div>
+            <span>TIMELINE</span>
+            <h2>项目时间线</h2>
+          </div>
+          <button type="button" data-save-timeline>提交 timeline.json</button>
+        </header>
+
+        <div class="project-workbench__timeline-compose">
+          <input id="project-timeline-title" name="project-timeline-title" data-timeline-title type="text" placeholder="记录本次进展标题" aria-label="Timeline title" />
+          <textarea id="project-timeline-body" name="project-timeline-body" data-timeline-body placeholder="补充说明：模块、Wiki、卡牌、世界观或协作状态。" aria-label="Timeline body"></textarea>
+          <p data-timeline-message>提交会调用 `/api/projects/[slug]/timeline`，由后端读取并更新仓库 `data/timeline.json`。</p>
+        </div>
+
+        <div class="project-workbench__timeline-list">
           {
-            projectView.modules.length > 0 ? (
-              projectView.modules.map((module) => (
-                <article class="project-os__module-row">
-                  <div>
-                    <strong>{module.name}</strong>
-                    <span>{module.status}</span>
-                  </div>
-                  <div class="project-os__module-progress" aria-label={`${module.name} progress ${module.progress}%`}>
-                    <i style={`--progress:${module.progress}%`}></i>
-                  </div>
-                  <em>{module.progress}%</em>
+            projectView.timeline.length > 0 ? (
+              projectView.timeline.map((item) => (
+                <article>
+                  <time>{item.date ? formatDate(item.date) : 'No date'}</time>
+                  <strong>{item.title}</strong>
+                  <p>{item.summary}</p>
+                  {item.href && <a href={item.href} target="_blank" rel="noreferrer">source</a>}
                 </article>
               ))
             ) : (
-              <p class="project-os__empty">模块等待补充。请在项目 frontmatter 的 modules 中维护进度。</p>
+              <p class="project-workbench__empty">等待 `data/timeline.json` 或 frontmatter milestones。</p>
             )
           }
         </div>
       </section>
 
-      <section id="wiki" class="project-os__section project-os__reader section-reveal">
-        <p class="project-os__eyebrow">WIKI READER</p>
-        <h2>项目总览与 Wiki</h2>
-        <article class="project-os__prose">
-          <Content />
-        </article>
-
-        <div class="project-os__wiki-list" aria-label="Project wiki pages">
-          {
-            projectView.wiki.map((item) => (
-              <article>
-                <span>{item.type}</span>
-                <h3>{item.title}</h3>
-                <code>{item.path}</code>
-                <p>{item.summary}</p>
-                {item.editUrl && (
-                  <a href={item.editUrl} target="_blank" rel="noreferrer">
-                    GitHub 编辑
-                  </a>
-                )}
-              </article>
-            ))
-          }
-        </div>
-      </section>
-
-      <section id="timeline" class="project-os__section section-reveal">
-        <p class="project-os__eyebrow">TIMELINE</p>
-        <h2>时间线</h2>
-        <div class="project-os__timeline-editor" data-project-timeline data-seed={JSON.stringify(timelineSeed)}>
-          <div class="project-os__timeline-compose">
-            <input id="project-timeline-title" name="project-timeline-title" data-timeline-title type="text" placeholder="记录今天的进展..." aria-label="Timeline title" />
-            <textarea id="project-timeline-body" name="project-timeline-body" data-timeline-body placeholder="补充说明，可写世界观、模块变更、卡牌调整..." aria-label="Timeline body"></textarea>
-            <button type="button" data-timeline-add>发布进展</button>
+      <section id="modules" class="project-work-panel">
+        <header class="project-work-panel__header">
+          <div>
+            <span>MODULES</span>
+            <h2>模块进度</h2>
           </div>
+          <strong>{projectView.progress}%</strong>
+        </header>
 
-          <div class="project-os__timeline-list" data-timeline-list>
-            {
-              projectView.timeline.length > 0 ? (
-                projectView.timeline.map((item) => (
-                  <article class="project-os__timeline-item">
-                    <time>{item.date ? formatDate(item.date) : 'No date'}</time>
-                    <strong>{item.title}</strong>
-                    <p>{item.summary}</p>
-                    {item.href && (
-                      <a href={item.href} target="_blank" rel="noreferrer">
-                        Open source
-                      </a>
-                    )}
-                  </article>
-                ))
-              ) : (
-                <p class="project-os__empty">暂无时间线记录。</p>
-              )
-            }
-          </div>
-        </div>
-      </section>
-
-      <section id="contributors" class="project-os__section section-reveal">
-        <p class="project-os__eyebrow">CONTRIBUTORS</p>
-        <h2>贡献者</h2>
-        <div class="project-os__contributors">
-          {
-            projectView.contributors.map((contributor) => (
-              <a href={contributor.href} target="_blank" rel="noreferrer">
-                <img src={contributor.avatarUrl} alt={`${contributor.name} avatar`} loading="lazy" decoding="async" />
-                <span>{contributor.name}</span>
-                <small>@{contributor.login}</small>
-              </a>
-            ))
-          }
-        </div>
-      </section>
-
-      <section id="graph" class="project-os__section project-os__graph section-reveal">
-        <p class="project-os__eyebrow">KNOWLEDGE GRAPH</p>
-        <h2>知识关系</h2>
-        <div class="project-os__graph-stage" aria-label="Project knowledge graph preview">
-          <div class="project-os__graph-node project-os__graph-node--center">{project.data.title}</div>
-          {projectView.modules.slice(0, 3).map((module, index) => (
-            <div class={`project-os__graph-node project-os__graph-node--module-${index + 1}`}>{module.name}</div>
+        <div class="project-workbench__module-list">
+          {projectView.modules.map((module) => (
+            <article>
+              <div>
+                <strong>{module.name}</strong>
+                <span>{module.status}</span>
+              </div>
+              <i aria-label={`${module.name} progress ${module.progress}%`}><b style={`--progress:${module.progress}%`}></b></i>
+              <em>{module.progress}%</em>
+            </article>
           ))}
-          {projectView.wiki.slice(0, 2).map((item, index) => (
-            <div class={`project-os__graph-node project-os__graph-node--wiki-${index + 1}`}>{item.title}</div>
+        </div>
+      </section>
+
+      <section id="issues" class="project-work-panel">
+        <header class="project-work-panel__header">
+          <div>
+            <span>ISSUES</span>
+            <h2>问题队列</h2>
+          </div>
+          <strong>{projectView.repo?.issues ?? 0} open</strong>
+        </header>
+        <p class="project-workbench__empty">Issues 列表需要 `/api/github/issues` 中间层或构建期 GitHub snapshot 扩展；当前只显示公开 snapshot 中的 open issue 计数。</p>
+      </section>
+
+      <section id="pulls" class="project-work-panel">
+        <header class="project-work-panel__header">
+          <div>
+            <span>PULL REQUESTS</span>
+            <h2>合并请求</h2>
+          </div>
+          <strong>API pending</strong>
+        </header>
+        <p class="project-workbench__empty">Pull Requests 需要 `/api/github/pulls`。接入前不伪造 PR 数据。</p>
+      </section>
+
+      <section id="commits" class="project-work-panel">
+        <header class="project-work-panel__header">
+          <div>
+            <span>COMMITS</span>
+            <h2>最近提交</h2>
+          </div>
+          {projectView.repo?.htmlUrl && <a href={`${projectView.repo.htmlUrl}/commits/main`} target="_blank" rel="noreferrer">GitHub commits</a>}
+        </header>
+        <div class="project-workbench__commit-list">
+          {projectView.timeline.map((item) => (
+            <article>
+              <strong>{item.title}</strong>
+              <span>{item.date ? formatDate(item.date) : 'No date'}</span>
+              <p>{item.summary}</p>
+            </article>
           ))}
         </div>
       </section>
     </section>
+
+    <aside class="project-workbench__inspector" aria-label="Project inspector">
+      <section id="contributors">
+        <span>CONTRIBUTORS</span>
+        <div class="project-workbench__contributors">
+          {projectView.contributors.map((contributor) => (
+            <a href={contributor.href} target="_blank" rel="noreferrer">
+              <img src={contributor.avatarUrl} alt={`${contributor.name} avatar`} loading="lazy" decoding="async" />
+              <strong>{contributor.name}</strong>
+              <small>@{contributor.login}</small>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <span>WIKI FILES</span>
+        <div class="project-workbench__wiki-files">
+          {projectView.wiki.map((item) => (
+            <a href={item.editUrl ?? '#'} target={item.editUrl ? '_blank' : undefined} rel={item.editUrl ? 'noreferrer' : undefined}>
+              <strong>{item.title}</strong>
+              <code>{item.path}</code>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="graph">
+        <span>KNOWLEDGE GRAPH</span>
+        <div class="project-workbench__graph" aria-label="Project graph preview">
+          <b>{project.data.title}</b>
+          {projectView.modules.slice(0, 3).map((module) => <i>{module.name}</i>)}
+          {project.data.stack.slice(0, 3).map((tag) => <i>#{tag}</i>)}
+        </div>
+      </section>
+    </aside>
   </main>
 
   <script>
     (() => {
-      const root = document.querySelector('[data-project-timeline]');
-      const page = document.querySelector('[data-project-slug]');
-      if (!(root instanceof HTMLElement) || !(page instanceof HTMLElement)) return;
+      const root = document.querySelector('[data-project-slug]');
+      if (!(root instanceof HTMLElement)) return;
 
-      const slug = page.dataset.projectSlug || 'project';
-      const storageKey = `project:${slug}:timeline`;
-      const titleInput = root.querySelector('[data-timeline-title]');
-      const bodyInput = root.querySelector('[data-timeline-body]');
-      const addButton = root.querySelector('[data-timeline-add]');
-      const list = root.querySelector('[data-timeline-list]');
+      const slug = root.dataset.projectSlug || 'project';
+      const repo = root.dataset.projectRepo || '';
+      const apiReady = root.dataset.githubApiReady === 'true';
+      const wikiButton = root.querySelector('[data-save-wiki]');
+      const wikiContent = root.querySelector('[data-wiki-content]');
+      const wikiMessage = root.querySelector('[data-wiki-message]');
+      const timelineButton = root.querySelector('[data-save-timeline]');
+      const timelineTitle = root.querySelector('[data-timeline-title]');
+      const timelineBody = root.querySelector('[data-timeline-body]');
+      const timelineMessage = root.querySelector('[data-timeline-message]');
+      const syncButton = root.querySelector('[data-sync-project]');
 
-      if (!(titleInput instanceof HTMLInputElement) || !(bodyInput instanceof HTMLTextAreaElement) || !(addButton instanceof HTMLButtonElement) || !(list instanceof HTMLElement)) {
-        return;
-      }
-
-      const readLocal = () => {
-        try {
-          const parsed = JSON.parse(localStorage.getItem(storageKey) || '[]');
-          return Array.isArray(parsed) ? parsed : [];
-        } catch {
-          return [];
-        }
+      const setMessage = (target, value, tone = '') => {
+        if (!(target instanceof HTMLElement)) return;
+        target.textContent = value;
+        target.dataset.tone = tone;
       };
 
-      const renderLocal = () => {
-        const items = readLocal();
-        list.querySelectorAll('[data-local-timeline-item]').forEach((node) => node.remove());
-        items.forEach((item) => {
-          const article = document.createElement('article');
-          article.className = 'project-os__timeline-item project-os__timeline-item--local';
-          article.dataset.localTimelineItem = 'true';
-          article.innerHTML = `
-            <time>${item.date}</time>
-            <strong></strong>
-            ${item.body ? '<p></p>' : ''}
-            <span>${item.author}</span>
-          `;
-          const title = article.querySelector('strong');
-          const body = article.querySelector('p');
-          if (title) title.textContent = item.title;
-          if (body) body.textContent = item.body;
-          list.prepend(article);
+      const postJson = async (url, payload) => {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        return response.json();
       };
 
-      addButton.addEventListener('click', () => {
-        const title = titleInput.value.trim();
-        const body = bodyInput.value.trim();
-        if (!title) return;
+      wikiButton?.addEventListener('click', async () => {
+        if (!(wikiContent instanceof HTMLTextAreaElement)) return;
+        if (!apiReady) {
+          setMessage(wikiMessage, 'API 中间层尚未接入；当前请使用 GitHub 编辑入口提交。', 'warn');
+          return;
+        }
 
-        const next = [
-          {
-            id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}`,
-            date: new Date().toISOString().slice(0, 10),
-            title,
-            body,
-            author: '本地编辑'
-          },
-          ...readLocal()
-        ];
-
-        localStorage.setItem(storageKey, JSON.stringify(next));
-        titleInput.value = '';
-        bodyInput.value = '';
-        renderLocal();
+        setMessage(wikiMessage, '正在提交到 /api/github/file/save ...');
+        try {
+          await postJson('/api/github/file/save', {
+            repo,
+            path: 'README.md',
+            content: wikiContent.value,
+            message: `更新 Wiki：${slug}`
+          });
+          setMessage(wikiMessage, '已提交到 GitHub。', 'ok');
+        } catch {
+          setMessage(wikiMessage, 'API 中间层尚未接入；当前请使用 GitHub 编辑入口提交。', 'warn');
+        }
       });
 
-      renderLocal();
+      timelineButton?.addEventListener('click', async () => {
+        if (!(timelineTitle instanceof HTMLInputElement) || !(timelineBody instanceof HTMLTextAreaElement)) return;
+        const title = timelineTitle.value.trim();
+        const body = timelineBody.value.trim();
+        if (!title) {
+          setMessage(timelineMessage, '请先填写时间线标题。', 'warn');
+          return;
+        }
+
+        if (!apiReady) {
+          setMessage(timelineMessage, 'API 中间层尚未接入；不会写入 localStorage 或伪造提交。', 'warn');
+          return;
+        }
+
+        setMessage(timelineMessage, '正在提交到 timeline API ...');
+        try {
+          await postJson(`/api/projects/${slug}/timeline`, { title, body, repo });
+          timelineTitle.value = '';
+          timelineBody.value = '';
+          setMessage(timelineMessage, '时间线已提交到 GitHub。', 'ok');
+        } catch {
+          setMessage(timelineMessage, 'API 中间层尚未接入；不会写入 localStorage 或伪造提交。', 'warn');
+        }
+      });
+
+      syncButton?.addEventListener('click', () => {
+        if (syncButton instanceof HTMLButtonElement) {
+          syncButton.textContent = '需要 API';
+          window.setTimeout(() => {
+            syncButton.textContent = '同步';
+          }, 1400);
+        }
+      });
     })();
   </script>
 </BaseLayout>
