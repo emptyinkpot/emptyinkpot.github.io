@@ -1,4 +1,4 @@
-export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'highlight' | 'seal';
+export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'highlight' | 'annotation' | 'seal';
 
 export type KnowledgeSearchDoc = {
   id: string;
@@ -111,6 +111,7 @@ export type KnowledgeGraphNodeType =
   | 'music'
   | 'tag'
   | 'highlight'
+  | 'annotation'
   | 'seal';
 
 export type KnowledgeGraphNode = {
@@ -130,7 +131,7 @@ export type KnowledgeGraphNode = {
 export type KnowledgeGraphLink = {
   source: string;
   target: string;
-  type: 'contains' | 'tagged' | 'references' | 'highlighted' | 'linked' | 'related';
+  type: 'contains' | 'tagged' | 'references' | 'highlighted' | 'annotated' | 'linked' | 'related';
   weight: number;
 };
 

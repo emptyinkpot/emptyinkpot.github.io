@@ -5665,6 +5665,11 @@ body.has-home-article-drawer .home-feed-main {
   stroke-dasharray: 4 4;
 }
 
+.knowledge-link--annotated {
+  stroke: rgba(47, 93, 80, 0.34);
+  stroke-dasharray: 2 5;
+}
+
 .knowledge-link.is-active {
   opacity: 1;
   stroke-width: 2.2;

@@ -1156,8 +1156,9 @@ Reader Knowledge Engine 合同：
 - orphan highlight 不删除；Reader 顶部显示无法定位的原文摘录，后续再提供重新定位 / 删除 / 保留操作。
 - `ReaderCommand` 是 Reader / Search / Graph 的统一命令协议：`openArticle`、`openHighlight`、`searchTag`、`focusGraphNode`。
 - 本地第一版使用 URL 参数和 `CustomEvent("reader-command")` 实现：`/?reader=post:id`、`/?reader=post:id&highlight=...`、`/?searchTag=...`、`/knowledge/?focus=post:id`。
-- Reader Drawer 内的 `.reader-mini-graph` 是当前文章的局部知识网络：当前文章、最多 3 条强关联、最多 3 个 tag、最多 3 条本地 highlight。
+- Reader Drawer 内的 `.reader-mini-graph` 是当前文章的局部知识网络：当前文章、最多 3 条强关联、最多 3 个 tag、最多 3 条本地 highlight / annotation。
 - Graph 页面读取 `emptyinkpot-reader-highlights` 后可把本地 highlight 注入为图谱节点；点击 highlight 节点回到 Reader 并滚动到对应 mark。
+- Graph 页面读取 `emptyinkpot-reader-annotations` 后可把本地 annotation 注入为图谱节点；annotation 优先连接对应 highlight，缺失时连接 article。
 - `/knowledge/` 点击 article / note / project 节点进入 Reader；点击 tag 节点进入首页 Search；collection / seal 节点保留 Inspector 行为。
 
 自动关系生成规则：
@@ -1267,7 +1268,7 @@ P2 partial:
 - Graph cluster/type 过滤
 - Graph Inspector：标题、类型、分区、meta、打开入口
 - Reader Knowledge Engine：`relations.ts` 确定性关系评分、Reader mini graph、Graph/Reader URL 命令联动
-- Graph 本地 highlight 节点注入：读取 `emptyinkpot-reader-highlights` 后生成 highlight node，并反向打开 Reader 定位
+- Graph 本地 highlight / annotation 节点注入：读取 `emptyinkpot-reader-highlights` 和 `emptyinkpot-reader-annotations` 后生成本地记忆 node，并反向打开 Reader 定位
 - Seal Palette：卡片 / 当前文章盖章
 - Seal 结果进入 Search；Seal 类型节点进入 Graph
 - Reader Memory Panel 默认折叠为浮层，不再打断正文流
@@ -1277,7 +1278,6 @@ P2 remaining:
 - FlexSearch 或等价搜索引擎
 - 高亮精准重定位和重绑 UI
 - Graph 默认限量节点继续维持当前 slice 策略；后续如内容量扩大，再把限量策略抽到 `lib/knowledge/graph.ts`
-- 批注参与关系评分
 - AI 摘要、主题聚类、知识缺口提示
 ```
 
@@ -1299,7 +1299,7 @@ P2 remaining:
 12. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
 13. Graph 交互验证：`/knowledge/` 的 cluster 按钮必须能过滤节点；hover 节点只强调一跳关系；点击或键盘 Enter 选择节点后 Inspector 必须更新标题、类型、分区和打开入口。
 14. Seal 验证：首页卡片 hover 出现盖章入口；选择印章后卡片和对应 drawer 标题区出现 `.knowledge-seal`；localStorage 写入 `emptyinkpot-reader-seals`；Search 的 `seal` tab 可搜到印章结果。
-15. Reader Knowledge Engine 验证：保存本地 highlight 后，Drawer mini graph 的高亮列出现该标记；`/knowledge/` 注入 highlight node；点击该 node 返回首页 Reader 并定位到 `.reader-highlight[data-highlight-id]`。
+15. Reader Knowledge Engine 验证：保存本地 highlight / annotation 后，Drawer mini graph 的标记列出现对应记忆；`/knowledge/` 注入 highlight / annotation node；点击这些 node 返回首页 Reader 并定位到 `.reader-highlight[data-highlight-id]`。
 16. Graph 联动验证：`/knowledge/?focus=post:id` 会选中目标节点；点击 post/note/project 节点进入 `/?reader=...`；点击 tag 节点进入 `/?searchTag=...` 并打开首页 Search。
 17. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
 18. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
@@ -1485,7 +1485,7 @@ Graph rules：
 - Graph 过滤入口固定在左侧 cluster list：All、Writing、Engineering、Reading、Media、GitHub、Tags、Seals。
 - Graph 仍是静态 SVG + 轻量客户端脚本，不引随机力导向；后续即使替换渲染库，也必须保留现有节点/边语义与 Inspector 行为。
 - Graph 和 Reader 通过 URL command 联动；Graph 不直接复制 Drawer 模板，跨页打开统一回到首页 Reader。
-- 本地 highlights 属于浏览器侧记忆节点，Graph 首屏从 localStorage 注入；构建期 Knowledge Index 不写入用户本地标记。
+- 本地 highlights / annotations 属于浏览器侧记忆节点，Graph 首屏从 localStorage 注入；构建期 Knowledge Index 不写入用户本地标记。
 
 Tangible Knowledge UI 扩展规则：
 
@@ -1501,7 +1501,7 @@ Graph = 回访结构
 - `.knowledge-seal` 是压印物件，不是 icon；支持 circle / square / vertical 三种形态，带轻微旋转和 multiply 压印感。
 - `.seal-palette` 负责选择印章；当前第一版支持单卡片 / 当前文章盖章与移除，不做批量管理页。
 - Annotation 必须绑定 Highlight；高亮只保存原文片段，批注保存个人思考。
-- Seal、Annotation、Highlight 都必须进入统一 Knowledge Artifact System；当前 Seal 已进入 Search 和 Graph 类型节点，Highlight 已进入 Search，Annotation 先随 Highlight 保存。
+- Seal、Annotation、Highlight 都必须进入统一 Knowledge Artifact System；当前 Seal 已进入 Search 和 Graph 类型节点，Highlight / Annotation 已进入 Search、Reader mini graph 和 Graph 本地节点。
 - 第一版仍保持 localStorage；引入后端前不得改变 `HighlightRecord`、`KnowledgeSearchDoc`、`KnowledgeGraphNode`、`KnowledgeGraphLink` 合同。
 
 最终验收标准：

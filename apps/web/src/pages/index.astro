@@ -739,7 +739,7 @@ function feedCardClass(item: FeedItem) {
         <kbd>Esc</kbd>
       </div>
       <nav class="knowledge-search-tabs" aria-label="搜索类型">
-        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'highlight', 'seal'].map((kind) => (
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'highlight', 'annotation', 'seal'].map((kind) => (
           <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
         ))}
       </nav>
@@ -855,9 +855,9 @@ function feedCardClass(item: FeedItem) {
                     )}
                   </section>
                   <section>
-                    <strong>高亮</strong>
+                    <strong>标记</strong>
                     <div data-mini-highlights>
-                      <p>暂无本地高亮</p>
+                      <p>暂无本地标记</p>
                     </div>
                   </section>
                 </div>
@@ -1423,6 +1423,7 @@ function feedCardClass(item: FeedItem) {
         const history = readJson(storageKeys.history, []).slice(0, 4);
         const bookmarks = readJson(storageKeys.bookmarks, []).slice(0, 4);
         const highlights = readJson(storageKeys.highlights, []).slice(0, 4);
+        const annotations = readJson(storageKeys.annotations, []).slice(0, 4);
         const appendSection = (title, items, type) => {
           const section = document.createElement('section');
           const heading = document.createElement('span');
@@ -1438,12 +1439,13 @@ function feedCardClass(item: FeedItem) {
           }
 
           items.forEach((item) => {
-            const target = type === 'highlight' ? item.articleId : item.id;
-            const label = type === 'highlight' ? item.text : item.title;
+            const target = type === 'highlight' || type === 'annotation' ? item.articleId : item.id;
+            const label = type === 'highlight' ? item.text : type === 'annotation' ? item.body : item.title;
             const button = document.createElement('button');
             button.type = 'button';
             button.dataset.memoryDrawer = target || '';
             if (type === 'highlight' && item.id) button.dataset.memoryHighlight = item.id;
+            if (type === 'annotation' && item.highlightId) button.dataset.memoryHighlight = item.highlightId;
             button.textContent = label || 'Untitled';
             section.append(button);
           });
@@ -1453,6 +1455,7 @@ function feedCardClass(item: FeedItem) {
         appendSection('最近阅读', history, 'history');
         appendSection('收藏', bookmarks, 'bookmark');
         appendSection('标记', highlights, 'highlight');
+        appendSection('批注', annotations, 'annotation');
         return panel;
       };
 
@@ -1469,19 +1472,27 @@ function feedCardClass(item: FeedItem) {
         const highlights = readJson(storageKeys.highlights, [])
           .filter((item) => item.articleId === currentArticle.id)
           .slice(0, 3);
-        if (!highlights.length) {
+        const annotations = readJson(storageKeys.annotations, [])
+          .filter((item) => item.articleId === currentArticle.id)
+          .slice(0, Math.max(0, 3 - highlights.length));
+        const memoryItems = [
+          ...highlights.map((item) => ({ ...item, memoryType: 'highlight', label: item.text })),
+          ...annotations.map((item) => ({ ...item, memoryType: 'annotation', label: item.body }))
+        ].slice(0, 3);
+        if (!memoryItems.length) {
           const empty = document.createElement('p');
-          empty.textContent = '暂无本地高亮';
+          empty.textContent = '暂无本地标记';
           highlightsTarget.replaceChildren(empty);
           return;
         }
         highlightsTarget.replaceChildren(
-          ...highlights.map((item) => {
+          ...memoryItems.map((item) => {
             const button = document.createElement('button');
             button.type = 'button';
             button.dataset.memoryDrawer = item.articleId;
             button.dataset.memoryHighlight = item.id;
-            button.textContent = item.text || 'Untitled highlight';
+            if (item.memoryType === 'annotation') button.dataset.memoryHighlight = item.highlightId || '';
+            button.textContent = item.label || 'Untitled memory';
             return button;
           })
         );
@@ -1620,6 +1631,15 @@ function feedCardClass(item: FeedItem) {
           drawerId: item.articleId,
           highlightId: item.id
         }));
+        const storedAnnotations = readJson(storageKeys.annotations, []).map((item) => ({
+          id: item.id,
+          type: 'annotation',
+          title: `批注 · ${item.articleId}`,
+          content: item.body,
+          tags: ['annotation', item.color, ...(item.tags || [])].filter(Boolean),
+          drawerId: item.articleId,
+          highlightId: item.highlightId
+        }));
         const storedSeals = getSeals().map((item) => ({
           id: item.id,
           type: 'seal',
@@ -1629,7 +1649,7 @@ function feedCardClass(item: FeedItem) {
           drawerId: item.drawerId,
           href: item.href
         }));
-        return [...searchDocs, ...storedHighlights, ...storedSeals]
+        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals]
           .filter((doc) => searchKind === 'all' || doc.type === searchKind)
           .map((doc) => {
             const content = [doc.title, doc.content, ...(doc.tags || [])].join(' ').toLowerCase();

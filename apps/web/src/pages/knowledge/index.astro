@@ -245,6 +245,7 @@ function colorFor(type: KnowledgeGraphNode['type']) {
     music: '#c9a227',
     tag: '#6b645c',
     highlight: '#c9a227',
+    annotation: '#2f5d50',
     seal: '#9e2a2b'
   }[type];
 }
@@ -460,7 +461,7 @@ const viewBox = '-620 -620 1240 1240';
         if (['post', 'note', 'project'].includes(nodeType || '')) {
           window.location.href = `/?reader=${encodeURIComponent(nodeId)}`;
         }
-        if (nodeType === 'highlight') {
+        if (nodeType === 'highlight' || nodeType === 'annotation') {
           window.location.href = `/?reader=${encodeURIComponent(node.dataset.nodeArticleId || '')}&highlight=${encodeURIComponent(node.dataset.nodeHighlightId || '')}`;
         }
         if (nodeType === 'tag') {
@@ -478,15 +479,54 @@ const viewBox = '-620 -620 1240 1240';
         return String(value).replace(/["\\]/g, '\\$&');
       };
 
-      const injectLocalHighlightNodes = () => {
+      const readLocalArray = (key) => {
+        try {
+          return JSON.parse(localStorage.getItem(key) || '[]');
+        } catch {
+          return [];
+        }
+      };
+
+      const createLocalLine = (sourceId, targetId, source, x, y, className) => {
+        const base = getTranslate(source);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', String(base.x));
+        line.setAttribute('y1', String(base.y));
+        line.setAttribute('x2', String(x));
+        line.setAttribute('y2', String(y));
+        line.classList.add('knowledge-link', className);
+        line.dataset.graphLink = 'true';
+        line.dataset.source = sourceId;
+        line.dataset.target = targetId;
+        graphSvg.insertBefore(line, graphSvg.querySelector('[data-graph-node]'));
+        links.push(line);
+      };
+
+      const createLocalNode = ({ id, label, type, x, y, summary, meta, articleId, highlightId, fill }) => {
+        const node = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        node.classList.add('knowledge-node', `knowledge-node--${type}`);
+        node.setAttribute('transform', `translate(${x} ${y})`);
+        node.setAttribute('tabindex', '0');
+        node.setAttribute('role', 'button');
+        node.dataset.graphNode = 'true';
+        node.dataset.nodeId = id;
+        node.dataset.nodeLabel = label || type;
+        node.dataset.nodeType = type;
+        node.dataset.nodeCluster = 'archive';
+        node.dataset.nodeSummary = summary || '';
+        node.dataset.nodeMeta = meta || type;
+        node.dataset.nodeArticleId = articleId || '';
+        node.dataset.nodeHighlightId = highlightId || '';
+        node.innerHTML = `<circle r="4" fill="${fill}"></circle><text x="9" y="4">${type === 'annotation' ? 'Annotation' : 'Highlight'}</text>`;
+        graphSvg.append(node);
+        nodes.push(node);
+        return node;
+      };
+
+      const injectLocalMemoryNodes = () => {
         if (!graphSvg) return;
-        const highlights = (() => {
-          try {
-            return JSON.parse(localStorage.getItem('emptyinkpot-reader-highlights') || '[]');
-          } catch {
-            return [];
-          }
-        })();
+        const highlights = readLocalArray('emptyinkpot-reader-highlights');
+        const annotations = readLocalArray('emptyinkpot-reader-annotations');
         highlights.slice(0, 12).forEach((highlight, index) => {
           const source = graphSvg.querySelector(`[data-node-id="${escapeCssIdentifier(highlight.articleId || '')}"]`);
           if (!source) return;
@@ -495,36 +535,46 @@ const viewBox = '-620 -620 1240 1240';
           const x = Number((base.x + Math.cos(angle) * 74).toFixed(2));
           const y = Number((base.y + Math.sin(angle) * 74).toFixed(2));
           const id = `highlight:${highlight.id}`;
+          createLocalLine(highlight.articleId, id, source, x, y, 'knowledge-link--highlighted');
+          createLocalNode({
+            id,
+            label: highlight.text || 'Highlight',
+            type: 'highlight',
+            x,
+            y,
+            summary: highlight.text || '',
+            meta: `highlight / ${highlight.color || 'gold'}`,
+            articleId: highlight.articleId || '',
+            highlightId: highlight.id || '',
+            fill: '#c9a227'
+          });
+        });
 
-          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', String(base.x));
-          line.setAttribute('y1', String(base.y));
-          line.setAttribute('x2', String(x));
-          line.setAttribute('y2', String(y));
-          line.classList.add('knowledge-link', 'knowledge-link--highlighted');
-          line.dataset.graphLink = 'true';
-          line.dataset.source = highlight.articleId;
-          line.dataset.target = id;
-          graphSvg.insertBefore(line, graphSvg.querySelector('[data-graph-node]'));
-
-          const node = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-          node.classList.add('knowledge-node', 'knowledge-node--highlight');
-          node.setAttribute('transform', `translate(${x} ${y})`);
-          node.setAttribute('tabindex', '0');
-          node.setAttribute('role', 'button');
-          node.dataset.graphNode = 'true';
-          node.dataset.nodeId = id;
-          node.dataset.nodeLabel = highlight.text || 'Highlight';
-          node.dataset.nodeType = 'highlight';
-          node.dataset.nodeCluster = 'archive';
-          node.dataset.nodeSummary = highlight.text || '';
-          node.dataset.nodeMeta = `highlight / ${highlight.color || 'gold'}`;
-          node.dataset.nodeArticleId = highlight.articleId || '';
-          node.dataset.nodeHighlightId = highlight.id || '';
-          node.innerHTML = '<circle r="4" fill="#c9a227"></circle><text x="9" y="4">Highlight</text>';
-          graphSvg.append(node);
-          nodes.push(node);
-          links.push(line);
+        annotations.slice(0, 12).forEach((annotation, index) => {
+          const highlightNodeId = `highlight:${annotation.highlightId}`;
+          const source =
+            graphSvg.querySelector(`[data-node-id="${escapeCssIdentifier(highlightNodeId)}"]`) ||
+            graphSvg.querySelector(`[data-node-id="${escapeCssIdentifier(annotation.articleId || '')}"]`);
+          if (!source) return;
+          const base = getTranslate(source);
+          const angle = (Math.PI * 2 * (index % 6)) / 6 + Math.PI / 6;
+          const distance = source.dataset.nodeType === 'highlight' ? 46 : 92;
+          const x = Number((base.x + Math.cos(angle) * distance).toFixed(2));
+          const y = Number((base.y + Math.sin(angle) * distance).toFixed(2));
+          const id = `annotation:${annotation.id}`;
+          createLocalLine(source.dataset.nodeId || annotation.articleId, id, source, x, y, 'knowledge-link--annotated');
+          createLocalNode({
+            id,
+            label: annotation.body || 'Annotation',
+            type: 'annotation',
+            x,
+            y,
+            summary: annotation.body || '',
+            meta: `annotation / ${annotation.color || 'gold'}`,
+            articleId: annotation.articleId || '',
+            highlightId: annotation.highlightId || '',
+            fill: '#2f5d50'
+          });
         });
       };
 
@@ -551,7 +601,7 @@ const viewBox = '-620 -620 1240 1240';
       });
 
       const firstInjectedIndex = nodes.length;
-      injectLocalHighlightNodes();
+      injectLocalMemoryNodes();
       nodes.slice(firstInjectedIndex).forEach((node) => {
         node.addEventListener('mouseenter', () => focusNode(node));
         node.addEventListener('mouseleave', clearHover);
