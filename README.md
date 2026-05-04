@@ -988,7 +988,7 @@ Color Hygiene Contract：
 | --- | --- | --- | --- |
 | 首页 | `apps/web/src/pages/index.astro` | `.home-feed-shell` + `.home-feed-grid` + `.home-article-drawer` | 必须保留左栏 `280px`、Feed columns、右侧 `760px` 抽屉；点击卡片不得跳走和重置 Feed 滚动 |
 | 文章 / 笔记列表 | `posts/index.astro`、`notes/index.astro` | `.page-wrap` + `.workbench-page__grid--posts` | 两列卡片在 `1100px` 以下变单列；卡片内容列必须 `minmax(0,1fr)` |
-| 项目工坊 | `projects/index.astro`、`projects/[slug].astro` | `.project-studio-grid` + `.project-space` | `/projects/` 是 list/dashboard；`/projects/[slug]/` 是 project-space；两列/三列网格在 `1100px` 以下变单列 |
+| 项目工坊 / Project OS | `projects/index.astro`、`projects/[slug].astro` | `.project-studio-grid` + `.project-os` | `/projects/` 是 list/dashboard；`/projects/[slug]/` 是 app workspace；项目详情使用左侧导航 + 主工作区，不再套全站顶部导航 |
 | 文章详情 / 页面详情 | `[slug].astro`、`about.astro` | `.page-wrap` + `.prose-shell` | 正文容器最大宽度由 `.page-wrap` 控制；代码块只能横向滚动，不得撑宽正文 |
 | 搜索 / taxonomy | `search.astro`、`tags/*`、`categories/*`、`series/*` | `.page-wrap` + `pagefind-ui` / workbench 列表 | Pagefind 输入框和结果抽屉宽度 `100%`，不得新增固定宽侧栏 |
 | 史料素材库公开页 | `evidence-library/index.astro` | `.evidence-library__hero/grid/source-grid` | hero 右列最小 `256px`；source key 列 `160px`；`860px` 以下全部单列 |
@@ -1189,12 +1189,14 @@ Showcase 实现规则：
 
 `/projects/` 不再只是项目链接列表；当前目标是把它升级为 `Project Studio / 项目工坊`，与 `/books/`、`/music/`、`/github/`、`/knowledge/` 并列，承担项目、仓库、模块、Wiki 与协作记录的统一入口。
 
+`/projects/[slug]/` 当前进一步升级为 `Project OS`：Obsidian 式左侧知识导航 + NapCat / Linear 式应用工作区 + Heritage 视觉气质。它不是普通博客详情页，而是项目工作台。
+
 页面分类：
 
 | 路由 | 页面模式 | 职责 |
 | --- | --- | --- |
 | `/projects/` | list / dashboard | 项目工坊首页；展示项目卡片网格、项目状态、GitHub 信号和最近项目动态 |
-| `/projects/[slug]/` | detail / project-space | 单个项目空间；展示 Overview、Modules、Wiki、Timeline、Contributors、Graph |
+| `/projects/[slug]/` | app workspace / project-os | 单个项目工作台；展示 Overview、Modules、Wiki、Timeline、Contributors、Graph，并提供本地时间线编辑 |
 
 现行实现边界：
 
@@ -1265,41 +1267,54 @@ Project card contract：
 - MUST 在长标题、长路径、长标签下保持 `min-width:0` 与可换行，不得撑破两列网格。
 - FORBIDDEN：卡片内嵌卡片、营销 hero 风、随机渐变、客户端 live GitHub fetch、把 GitHub API 失败变成页面失败。
 
-Project space contract：
+Project OS workspace contract：
 
 ```text
 /projects/[slug]/
-├─ Project Hero：类型、状态、进度、repo/demo、contributors 摘要
-├─ Section Nav：Overview / Modules / Wiki / Timeline / Contributors / Graph
-├─ Overview：项目 Markdown 正文
-├─ Modules：模块进度
-├─ Wiki：GitHub-backed 文档入口与 edit link
-├─ Timeline：GitHub snapshot + milestones
-├─ Contributors：协作者
-└─ Graph：当前项目的静态 mini graph
+├─ Project OS Sidebar：项目导航、状态、总体进度
+├─ Project OS Topbar：当前项目、首页 / 知识图谱 / GitHub / Wiki edit action
+└─ Main Workspace
+   ├─ Overview Hero：项目标题、摘要、tags、总体指标
+   ├─ Modules：模块进度行，不使用卡片堆叠
+   ├─ Wiki Reader：Markdown 正文 + GitHub-backed Wiki 入口
+   ├─ Timeline：GitHub snapshot + milestones + localStorage 本地编辑记录
+   ├─ Contributors：协作者
+   └─ Graph：当前项目的静态 mini graph
 ```
+
+Project OS implementation contract：
+
+- MUST 在 `projects/[slug].astro` 使用 `BaseLayout hideSiteChrome appMode`，隐藏全站 SiteHeader / SiteFooter，让项目页成为应用工作台。
+- MUST 使用 `.project-os` 作为详情页根 class；`.project-space` 只保留为旧样式兼容，不再作为目标实现。
+- MUST 使用左侧 `.project-os__sidebar` 承载导航，主区 `.project-os__main` 是唯一滚动工作区。
+- MUST 使用轻边界和分区线：项目详情区块使用 `border-bottom`，不得恢复成卡片套卡片。
+- MUST 保留 `/projects/` 作为入口列表；不要把列表页也强行做成全屏应用。
+- MUST 保留 Astro 静态主链路。当前没有 React integration，Timeline 编辑第一版使用原生局部 JS + `localStorage`，不新增 React 依赖。
+- Timeline 本地存储键固定为 `project:${slug}:timeline`；后续接 GitHub API 前，不得把 token 暴露到前端。
+- Graph 第一版是确定性静态预览；不得引入随机力导向布局。
+- FORBIDDEN：在 Project OS 内恢复全站顶部导航、重复的卡片容器、后台表单按钮感、大面积渐变、玻璃 blur 或客户端 live GitHub fetch。
 
 状态规则：
 
 - loading：静态构建页不显示 skeleton；如果后续接客户端 GitHub fetch，只允许在局部指标位置显示 loading，不阻断项目正文。
-- empty：无项目时 `/projects/` 显示添加 `apps/web/src/content/projects/` 条目的提示；模块、时间线缺失时显示局部空态。
-- error：缺失 repo 或 snapshot 未匹配时页面降级为手动项目空间，issues/updated 显示默认值，不抛出前台错误。
+- empty：无项目时 `/projects/` 显示添加 `apps/web/src/content/projects/` 条目的提示；模块、时间线缺失时显示局部空态；本地时间线为空时显示已构建的 GitHub / milestone 记录或空态。
+- error：缺失 repo 或 snapshot 未匹配时页面降级为手动项目空间，issues/updated 显示默认值，不抛出前台错误；localStorage 读取失败时忽略本地记录。
 
 升级路线：
 
 | 阶段 | 能力 | 约束 |
 | --- | --- | --- |
-| P0 | 静态 Project Studio、GitHub edit links、GitHub snapshot 指标 | 当前已落地路线；不新增后端 |
-| P1 | Decap CMS | 让成员通过 `/admin` 编辑 Markdown 并提交 GitHub |
-| P2 | TinaCMS / Outline / Wiki.js | 需要可视化编辑、团队权限或完整知识库后台时再接 |
-| P3 | Project Graph 与 Knowledge Graph 深联动 | 使用统一 Knowledge Index，不引随机力导向 |
+| P0 | Project Studio 入口、Project OS 详情、GitHub edit links、GitHub snapshot 指标、本地时间线编辑 | 当前已落地路线；不新增后端 |
+| P1 | GitHub commits / contributors 深化、Wiki Markdown 展示增强、Decap CMS | 让成员通过 GitHub / `/admin` 编辑 Markdown 并提交 GitHub |
+| P2 | 页面内编辑写回 GitHub、Project Graph、TinaCMS / Outline / Wiki.js | 需要 API 保护 GitHub token，不允许前端直连写入 |
+| P3 | Project Graph 与 Knowledge Graph 深联动、成员权限、PR / diff / 版本历史 | 使用统一 Knowledge Index，不引随机力导向 |
 
 AI / implementation checklist：
 
 1. 先判断页面是 `/projects/` list/dashboard 还是 `/projects/[slug]/` detail/project-space。
 2. 复用 `projects` content collection 和 `buildProjectStudioView()`，不得在页面内重复解析 repo、wiki、timeline。
 3. 优先读 GitHub snapshot；不要在静态页里临时添加客户端 GitHub API 请求。
-4. 使用 `.project-studio-*` / `.project-space-*` 现有类和 Heritage tokens，不创建新主题。
+4. `/projects/` 使用 `.project-studio-*`；`/projects/[slug]/` 使用 `.project-os*`。不要把 `.project-space` 当作新目标。
 5. 每个新增字段必须同步 `apps/web/src/content.config.ts` 与 README 内容模型。
 6. 发布前必须跑 `npm run lint`、`npm run check`、`npm run build`，并验证 `/projects/`、`/projects/[slug]/` 和首页 `项目工坊` filter。
 

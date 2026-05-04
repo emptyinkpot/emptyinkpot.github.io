@@ -9,13 +9,15 @@ interface Props {
   description?: string;
   canonical?: string;
   hideSiteChrome?: boolean;
+  appMode?: boolean;
 }
 
 const {
   title = 'emptyinkpot',
   description = 'emptyinkpot 的个人内容站，基于 Astro 构建，强调结构化内容、专题组织与长期演进能力。',
   canonical,
-  hideSiteChrome = false
+  hideSiteChrome = false,
+  appMode = false
 } = Astro.props;
 
 const buildVersion = new Date().toISOString();
@@ -430,7 +432,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
     </script>
     <slot name="head" />
   </head>
-  <body class:list={[hideSiteChrome && 'home-mode']}>
+  <body class:list={[hideSiteChrome && (appMode ? 'app-mode' : 'home-mode')]}>
     <div class="site-shell">
       <div class="site-shell__glow site-shell__glow--one"></div>
       <div class="site-shell__glow site-shell__glow--two"></div>

@@ -23,120 +23,138 @@ const { Content } = await render(project);
 const github = await getGitHubOverview('emptyinkpot');
 const projectView = buildProjectStudioView(project, github);
 const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : undefined;
+const timelineSeed = projectView.timeline.map((item) => ({
+  title: item.title,
+  date: item.date ? formatDate(item.date) : 'No date',
+  summary: item.summary,
+  href: item.href
+}));
 ---
 
-<BaseLayout title={`${project.data.title} / emptyinkpot`} description={project.data.description}>
-  <main class="project-space" data-pagefind-body>
-    <section class="project-space__hero">
-      <div class="project-space__hero-main">
-        <p class="project-space__kicker">PROJECT STUDIO / {getProjectTypeLabel(projectView.type)}</p>
-        <h1>{project.data.title}</h1>
-        <p>{project.data.description}</p>
+<BaseLayout title={`${project.data.title} / Project OS`} description={project.data.description} hideSiteChrome={true} appMode={true}>
+  <main class="project-os" data-pagefind-body data-project-slug={project.id}>
+    <aside class="project-os__sidebar" aria-label="Project OS navigation">
+      <a class="project-os__brand" href={withBase('/projects/')}>
+        <span>PROJECT OS</span>
+        <strong>{project.data.title}</strong>
+      </a>
 
-        <div class="project-space__tags">
-          <span>{projectView.status}</span>
-          {project.data.date && <span>{formatDate(project.data.date)}</span>}
-          {project.data.stack.map((item) => <span>{item}</span>)}
-        </div>
+      <nav class="project-os__nav">
+        <a class="is-active" href="#overview">总览</a>
+        <a href="#modules">模块进度</a>
+        <a href="#wiki">世界观 Wiki</a>
+        <a href="#timeline">时间线</a>
+        <a href="#contributors">贡献者</a>
+        <a href="#graph">知识关系</a>
+      </nav>
 
-        <div class="project-space__actions">
-          {project.data.repo && <a href={project.data.repo} target="_blank" rel="noreferrer">Repository</a>}
-          {project.data.demo && <a href={project.data.demo} target="_blank" rel="noreferrer">Demo</a>}
-          <a href={withBase('/projects/')}>Back to Project Studio</a>
-        </div>
-      </div>
-
-      <aside class="project-space__status" aria-label="Project status">
-        <span>{projectView.progress}%</span>
-        <p>Overall progress</p>
-        <div class="project-progress project-progress--large" aria-hidden="true">
+      <div class="project-os__sidebar-meta">
+        <p>{getProjectTypeLabel(projectView.type)} / {projectView.status}</p>
+        <div class="project-os__mini-progress" aria-label={`Project progress ${projectView.progress}%`}>
           <span style={`--progress:${projectView.progress}%`}></span>
         </div>
+        <small>{projectView.progress}% overall</small>
+      </div>
+    </aside>
 
-        <dl>
-          <div>
-            <dt>Modules</dt>
-            <dd>{projectView.modules.length}</dd>
-          </div>
-          <div>
-            <dt>Issues</dt>
-            <dd>{projectView.repo?.issues ?? 0}</dd>
-          </div>
-          <div>
-            <dt>Updated</dt>
-            <dd>{repoUpdatedAt ? formatDate(repoUpdatedAt) : 'manual'}</dd>
-          </div>
-        </dl>
-      </aside>
-    </section>
-
-    <nav class="project-space__nav" aria-label="Project space sections">
-      <a href="#overview">Overview</a>
-      <a href="#modules">Modules</a>
-      <a href="#wiki">Wiki</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#contributors">Contributors</a>
-      <a href="#graph">Graph</a>
-    </nav>
-
-    <div class="project-space__layout">
-      <section class="project-space__section" id="overview">
-        <div class="project-space__section-head">
-          <p>Overview</p>
-          <h2>项目总览</h2>
+    <section class="project-os__main">
+      <header class="project-os__topbar">
+        <div>
+          <p>项目工坊 / GitHub-backed workspace</p>
+          <strong>{project.data.title}</strong>
         </div>
-        <article class="prose-shell project-space__prose">
-          <Content />
-        </article>
+
+        <div class="project-os__actions">
+          <a href={withBase('/')}>首页</a>
+          <a href={withBase('/knowledge/')}>知识图谱</a>
+          {project.data.repo && <a href={project.data.repo} target="_blank" rel="noreferrer">查看仓库</a>}
+          {projectView.githubEditBase && (
+            <a href={`${projectView.githubEditBase}README.md`} target="_blank" rel="noreferrer">
+              编辑 Wiki
+            </a>
+          )}
+        </div>
+      </header>
+
+      <section id="overview" class="project-os__hero project-os__section section-reveal">
+        <div>
+          <p class="project-os__eyebrow">PROJECT STUDIO / {getProjectTypeLabel(projectView.type)}</p>
+          <h1>{project.data.title}</h1>
+          <p>{project.data.description}</p>
+
+          <div class="project-os__tags">
+            <span>{projectView.status}</span>
+            {project.data.date && <span>{formatDate(project.data.date)}</span>}
+            {project.data.stack.map((item) => <span>{item}</span>)}
+          </div>
+        </div>
+
+        <aside class="project-os__progress">
+          <strong>{projectView.progress}%</strong>
+          <span>总体进度</span>
+          <div class="project-os__progress-line" aria-hidden="true">
+            <i style={`--progress:${projectView.progress}%`}></i>
+          </div>
+          <dl>
+            <div>
+              <dt>Modules</dt>
+              <dd>{projectView.modules.length}</dd>
+            </div>
+            <div>
+              <dt>Issues</dt>
+              <dd>{projectView.repo?.issues ?? 0}</dd>
+            </div>
+            <div>
+              <dt>Updated</dt>
+              <dd>{repoUpdatedAt ? formatDate(repoUpdatedAt) : 'manual'}</dd>
+            </div>
+          </dl>
+        </aside>
       </section>
 
-      <section class="project-space__section" id="modules">
-        <div class="project-space__section-head">
-          <p>Modules</p>
-          <h2>模块进度</h2>
-        </div>
-
-        <div class="project-module-grid">
+      <section id="modules" class="project-os__section section-reveal">
+        <p class="project-os__eyebrow">MODULES</p>
+        <h2>模块进度</h2>
+        <div class="project-os__module-list">
           {
             projectView.modules.length > 0 ? (
               projectView.modules.map((module) => (
-                <article class="project-module-card">
+                <article class="project-os__module-row">
                   <div>
+                    <strong>{module.name}</strong>
                     <span>{module.status}</span>
-                    <strong>{module.progress}%</strong>
                   </div>
-                  <h3>{module.name}</h3>
-                  <div class="project-progress" aria-label={`${module.name} progress ${module.progress}%`}>
-                    <span style={`--progress:${module.progress}%`}></span>
+                  <div class="project-os__module-progress" aria-label={`${module.name} progress ${module.progress}%`}>
+                    <i style={`--progress:${module.progress}%`}></i>
                   </div>
+                  <em>{module.progress}%</em>
                 </article>
               ))
             ) : (
-              <p class="workbench-page__empty">模块等待补充。请在项目 frontmatter 的 modules 中维护进度。</p>
+              <p class="project-os__empty">模块等待补充。请在项目 frontmatter 的 modules 中维护进度。</p>
             )
           }
         </div>
       </section>
 
-      <section class="project-space__section" id="wiki">
-        <div class="project-space__section-head">
-          <p>Wiki</p>
-          <h2>协作文档</h2>
-        </div>
+      <section id="wiki" class="project-os__section project-os__reader section-reveal">
+        <p class="project-os__eyebrow">WIKI READER</p>
+        <h2>项目总览与 Wiki</h2>
+        <article class="project-os__prose">
+          <Content />
+        </article>
 
-        <div class="project-wiki-list">
+        <div class="project-os__wiki-list" aria-label="Project wiki pages">
           {
             projectView.wiki.map((item) => (
               <article>
-                <div>
-                  <span>{item.type}</span>
-                  <code>{item.path}</code>
-                </div>
+                <span>{item.type}</span>
                 <h3>{item.title}</h3>
+                <code>{item.path}</code>
                 <p>{item.summary}</p>
                 {item.editUrl && (
                   <a href={item.editUrl} target="_blank" rel="noreferrer">
-                    Edit on GitHub
+                    GitHub 编辑
                   </a>
                 )}
               </article>
@@ -145,41 +163,43 @@ const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : 
         </div>
       </section>
 
-      <section class="project-space__section" id="timeline">
-        <div class="project-space__section-head">
-          <p>Timeline</p>
-          <h2>时间线</h2>
-        </div>
+      <section id="timeline" class="project-os__section section-reveal">
+        <p class="project-os__eyebrow">TIMELINE</p>
+        <h2>时间线</h2>
+        <div class="project-os__timeline-editor" data-project-timeline data-seed={JSON.stringify(timelineSeed)}>
+          <div class="project-os__timeline-compose">
+            <input id="project-timeline-title" name="project-timeline-title" data-timeline-title type="text" placeholder="记录今天的进展..." aria-label="Timeline title" />
+            <textarea id="project-timeline-body" name="project-timeline-body" data-timeline-body placeholder="补充说明，可写世界观、模块变更、卡牌调整..." aria-label="Timeline body"></textarea>
+            <button type="button" data-timeline-add>发布进展</button>
+          </div>
 
-        <div class="project-timeline-list">
-          {
-            projectView.timeline.length > 0 ? (
-              projectView.timeline.map((item) => (
-                <article>
-                  <span>{item.date ? formatDate(item.date) : 'No date'}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.summary}</p>
-                  {item.href && (
-                    <a href={item.href} target="_blank" rel="noreferrer">
-                      Open source
-                    </a>
-                  )}
-                </article>
-              ))
-            ) : (
-              <p class="workbench-page__empty">时间线等待 milestones 或 GitHub snapshot 补充。</p>
-            )
-          }
+          <div class="project-os__timeline-list" data-timeline-list>
+            {
+              projectView.timeline.length > 0 ? (
+                projectView.timeline.map((item) => (
+                  <article class="project-os__timeline-item">
+                    <time>{item.date ? formatDate(item.date) : 'No date'}</time>
+                    <strong>{item.title}</strong>
+                    <p>{item.summary}</p>
+                    {item.href && (
+                      <a href={item.href} target="_blank" rel="noreferrer">
+                        Open source
+                      </a>
+                    )}
+                  </article>
+                ))
+              ) : (
+                <p class="project-os__empty">暂无时间线记录。</p>
+              )
+            }
+          </div>
         </div>
       </section>
 
-      <section class="project-space__section" id="contributors">
-        <div class="project-space__section-head">
-          <p>Contributors</p>
-          <h2>协作者</h2>
-        </div>
-
-        <div class="project-contributors">
+      <section id="contributors" class="project-os__section section-reveal">
+        <p class="project-os__eyebrow">CONTRIBUTORS</p>
+        <h2>贡献者</h2>
+        <div class="project-os__contributors">
           {
             projectView.contributors.map((contributor) => (
               <a href={contributor.href} target="_blank" rel="noreferrer">
@@ -192,21 +212,92 @@ const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : 
         </div>
       </section>
 
-      <section class="project-space__section" id="graph">
-        <div class="project-space__section-head">
-          <p>Graph</p>
-          <h2>项目关系图</h2>
-        </div>
-
-        <div class="project-mini-graph" aria-label="Project mini graph">
-          <div class="project-mini-graph__node project-mini-graph__node--main">{project.data.title}</div>
-          <div class="project-mini-graph__links">
-            {projectView.modules.slice(0, 3).map((module) => <span>{module.name}</span>)}
-            {projectView.wiki.slice(0, 3).map((item) => <span>{item.title}</span>)}
-            {project.data.stack.slice(0, 3).map((tag) => <span>#{tag}</span>)}
-          </div>
+      <section id="graph" class="project-os__section project-os__graph section-reveal">
+        <p class="project-os__eyebrow">KNOWLEDGE GRAPH</p>
+        <h2>知识关系</h2>
+        <div class="project-os__graph-stage" aria-label="Project knowledge graph preview">
+          <div class="project-os__graph-node project-os__graph-node--center">{project.data.title}</div>
+          {projectView.modules.slice(0, 3).map((module, index) => (
+            <div class={`project-os__graph-node project-os__graph-node--module-${index + 1}`}>{module.name}</div>
+          ))}
+          {projectView.wiki.slice(0, 2).map((item, index) => (
+            <div class={`project-os__graph-node project-os__graph-node--wiki-${index + 1}`}>{item.title}</div>
+          ))}
         </div>
       </section>
-    </div>
+    </section>
   </main>
+
+  <script>
+    (() => {
+      const root = document.querySelector('[data-project-timeline]');
+      const page = document.querySelector('[data-project-slug]');
+      if (!(root instanceof HTMLElement) || !(page instanceof HTMLElement)) return;
+
+      const slug = page.dataset.projectSlug || 'project';
+      const storageKey = `project:${slug}:timeline`;
+      const titleInput = root.querySelector('[data-timeline-title]');
+      const bodyInput = root.querySelector('[data-timeline-body]');
+      const addButton = root.querySelector('[data-timeline-add]');
+      const list = root.querySelector('[data-timeline-list]');
+
+      if (!(titleInput instanceof HTMLInputElement) || !(bodyInput instanceof HTMLTextAreaElement) || !(addButton instanceof HTMLButtonElement) || !(list instanceof HTMLElement)) {
+        return;
+      }
+
+      const readLocal = () => {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(storageKey) || '[]');
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      };
+
+      const renderLocal = () => {
+        const items = readLocal();
+        list.querySelectorAll('[data-local-timeline-item]').forEach((node) => node.remove());
+        items.forEach((item) => {
+          const article = document.createElement('article');
+          article.className = 'project-os__timeline-item project-os__timeline-item--local';
+          article.dataset.localTimelineItem = 'true';
+          article.innerHTML = `
+            <time>${item.date}</time>
+            <strong></strong>
+            ${item.body ? '<p></p>' : ''}
+            <span>${item.author}</span>
+          `;
+          const title = article.querySelector('strong');
+          const body = article.querySelector('p');
+          if (title) title.textContent = item.title;
+          if (body) body.textContent = item.body;
+          list.prepend(article);
+        });
+      };
+
+      addButton.addEventListener('click', () => {
+        const title = titleInput.value.trim();
+        const body = bodyInput.value.trim();
+        if (!title) return;
+
+        const next = [
+          {
+            id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}`,
+            date: new Date().toISOString().slice(0, 10),
+            title,
+            body,
+            author: '本地编辑'
+          },
+          ...readLocal()
+        ];
+
+        localStorage.setItem(storageKey, JSON.stringify(next));
+        titleInput.value = '';
+        bodyInput.value = '';
+        renderLocal();
+      });
+
+      renderLocal();
+    })();
+  </script>
 </BaseLayout>
