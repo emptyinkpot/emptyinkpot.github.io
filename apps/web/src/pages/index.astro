@@ -464,6 +464,19 @@ function feedCardClass(item: FeedItem) {
     </aside>
 
     <main class="home-feed-main" data-pagefind-body>
+      <section class="home-hero-banner" data-hero-banner aria-label="emptyinkpot hero banner">
+        <div class="home-hero-banner__layer home-hero-banner__layer--bg" data-hero-layer="bg"></div>
+        <div class="home-hero-banner__layer home-hero-banner__layer--mid" data-hero-layer="mid"></div>
+        <div class="home-hero-banner__layer home-hero-banner__layer--front" data-hero-layer="front"></div>
+        <canvas class="home-hero-banner__particles" data-hero-particles aria-hidden="true"></canvas>
+        <div class="home-hero-banner__overlay"></div>
+        <div class="home-hero-banner__content">
+          <span data-hero-season-label>Seasonal Field</span>
+          <h1>EMPTYINKPOT</h1>
+          <p>Content OS · Tangible Knowledge UI</p>
+        </div>
+      </section>
+
       <div class="home-feed-toolbar" aria-label="首页内容筛选">
         <div>
           <span>Feed</span>
@@ -787,6 +800,132 @@ function feedCardClass(item: FeedItem) {
       let selectedRange = null;
       let drawerCloseTimer = 0;
       let searchCloseTimer = 0;
+
+      const initHeroBanner = () => {
+        const hero = document.querySelector('[data-hero-banner]');
+        if (!hero) return;
+        const layers = {
+          bg: hero.querySelector('[data-hero-layer="bg"]'),
+          mid: hero.querySelector('[data-hero-layer="mid"]'),
+          front: hero.querySelector('[data-hero-layer="front"]')
+        };
+        const canvas = hero.querySelector('[data-hero-particles]');
+        const label = hero.querySelector('[data-hero-season-label]');
+        const month = new Date().getMonth();
+        const season = month < 2 || month === 11 ? 'winter' : month < 5 ? 'spring' : month < 8 ? 'summer' : 'autumn';
+        const seasonLabels = {
+          spring: 'Spring Field',
+          summer: 'Summer Field',
+          autumn: 'Autumn Field',
+          winter: 'Winter Field'
+        };
+        const heroImages = {
+          spring: '/images/home/homepage-floral-bg.png',
+          summer: '/images/home/homepage-floral-bg.png',
+          autumn: '/images/home/homepage-floral-bg.png',
+          winter: '/images/home/homepage-floral-bg.png'
+        };
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        hero.dataset.season = season;
+        hero.style.setProperty('--hero-bg-image', `url("${heroImages[season]}")`);
+        if (label) label.textContent = seasonLabels[season];
+
+        const resetLayers = () => {
+          if (layers.bg instanceof HTMLElement) layers.bg.style.transform = 'scale(1.1)';
+          if (layers.mid instanceof HTMLElement) layers.mid.style.transform = 'scale(1.08)';
+          if (layers.front instanceof HTMLElement) layers.front.style.transform = 'scale(1.05)';
+        };
+
+        if (!reducedMotion) {
+          hero.addEventListener('mousemove', (event) => {
+            const rect = hero.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+            if (layers.bg instanceof HTMLElement) layers.bg.style.transform = `scale(1.1) translate(${x * 10}px, ${y * 8}px)`;
+            if (layers.mid instanceof HTMLElement) layers.mid.style.transform = `scale(1.08) translate(${x * 20}px, ${y * 14}px)`;
+            if (layers.front instanceof HTMLElement) layers.front.style.transform = `scale(1.05) translate(${x * 34}px, ${y * 20}px)`;
+          });
+          hero.addEventListener('mouseleave', resetLayers);
+        }
+
+        if (!(canvas instanceof HTMLCanvasElement)) return;
+        const context = canvas.getContext('2d');
+        if (!context) return;
+        const palette = {
+          spring: ['rgba(255, 222, 226, 0.72)', 'rgba(158, 42, 43, 0.32)'],
+          summer: ['rgba(232, 244, 228, 0.6)', 'rgba(47, 93, 80, 0.34)'],
+          autumn: ['rgba(201, 162, 39, 0.54)', 'rgba(158, 42, 43, 0.28)'],
+          winter: ['rgba(255, 255, 255, 0.74)', 'rgba(232, 228, 221, 0.44)']
+        }[season];
+        let width = 0;
+        let height = 0;
+        let particles = [];
+        let animationFrame = 0;
+
+        const resize = () => {
+          const rect = hero.getBoundingClientRect();
+          const ratio = Math.min(window.devicePixelRatio || 1, 2);
+          width = Math.max(1, Math.round(rect.width));
+          height = Math.max(1, Math.round(rect.height));
+          canvas.width = Math.round(width * ratio);
+          canvas.height = Math.round(height * ratio);
+          canvas.style.width = `${width}px`;
+          canvas.style.height = `${height}px`;
+          context.setTransform(ratio, 0, 0, ratio, 0, 0);
+          particles = Array.from({ length: width < 720 ? 24 : 42 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            r: Math.random() * 2 + 0.8,
+            speed: Math.random() * 0.42 + 0.18,
+            drift: Math.random() * 0.35 - 0.16,
+            spin: Math.random() * Math.PI,
+            color: palette[Math.floor(Math.random() * palette.length)]
+          }));
+        };
+
+        const drawParticle = (particle) => {
+          context.save();
+          context.translate(particle.x, particle.y);
+          if (season === 'autumn') {
+            context.rotate(particle.spin);
+            context.fillStyle = particle.color;
+            context.fillRect(-particle.r * 1.6, -particle.r * 0.7, particle.r * 3.2, particle.r * 1.4);
+          } else {
+            context.beginPath();
+            context.arc(0, 0, particle.r, 0, Math.PI * 2);
+            context.fillStyle = particle.color;
+            context.fill();
+          }
+          context.restore();
+        };
+
+        const render = () => {
+          context.clearRect(0, 0, width, height);
+          particles.forEach((particle) => {
+            drawParticle(particle);
+            if (!reducedMotion) {
+              particle.y += particle.speed;
+              particle.x += particle.drift;
+              particle.spin += 0.01;
+              if (particle.y > height + 10) {
+                particle.y = -10;
+                particle.x = Math.random() * width;
+              }
+              if (particle.x < -10) particle.x = width + 10;
+              if (particle.x > width + 10) particle.x = -10;
+            }
+          });
+          if (!reducedMotion) animationFrame = window.requestAnimationFrame(render);
+        };
+
+        resize();
+        render();
+        window.addEventListener('resize', () => {
+          window.cancelAnimationFrame(animationFrame);
+          resize();
+          render();
+        });
+      };
 
       const readJson = (key, fallback) => {
         try {
@@ -1215,6 +1354,7 @@ function feedCardClass(item: FeedItem) {
       });
 
       applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
+      initHeroBanner();
     })();
   </script>
 </BaseLayout>

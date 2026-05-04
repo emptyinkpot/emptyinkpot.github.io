@@ -1202,17 +1202,19 @@ P2:
 5. 首页结构验证：`/` 必须是 `Profile Rail + Masonry-like Feed + Right Article Drawer`，不是旧 HomeWorkbench 多模块堆叠。
 6. 默认主题验证：首屏 `<html data-theme="heritage">`；不设置 localStorage 时默认 Heritage。
 7. 书签验证：首页 Feed 卡应出现 `.bookmark`，其数量应与可见 Feed 卡主视觉匹配；书签从卡片顶部露出。
-8. 抽屉验证：点击 Feed 卡和左栏主入口都打开 `.home-article-drawer`；关闭后回到原滚动位置；完整页链接只在 drawer action 中出现。
-9. 搜索验证：`Cmd/Ctrl + K` 打开 Knowledge Search；搜索 GitHub、书籍、音乐和文章标题都应返回结果。
-10. Reader 验证：drawer 内 light / sepia / dark 可切换；收藏写入 `emptyinkpot-reader-bookmarks`；阅读历史写入 `emptyinkpot-reading-history`。
-11. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
-12. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
-13. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
+8. Banner 验证：首页主 Feed 顶部必须有 `.home-hero-banner`；canvas 存在；鼠标移动会改变至少一层 `transform`；动效不得影响 Feed 滚动。
+9. 抽屉验证：点击 Feed 卡和左栏主入口都打开 `.home-article-drawer`；关闭后回到原滚动位置；完整页链接只在 drawer action 中出现。
+10. 搜索验证：`Cmd/Ctrl + K` 打开 Knowledge Search；搜索 GitHub、书籍、音乐和文章标题都应返回结果。
+11. Reader 验证：drawer 内 light / sepia / dark 可切换；收藏写入 `emptyinkpot-reader-bookmarks`；阅读历史写入 `emptyinkpot-reading-history`。
+12. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
+13. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
+14. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
 
 可用浏览器断言：
 
 ```js
 document.documentElement.dataset.theme === "heritage"
+document.querySelectorAll(".home-hero-banner").length === 1
 document.querySelectorAll(".home-feed-card").length > 0
 document.querySelectorAll(".bookmark").length > 0
 document.querySelectorAll(".home-feed-card a[href^='/posts/'], .home-feed-card a[href^='/notes/'], .home-feed-card a[href^='/projects/']").length === 0
@@ -1271,6 +1273,7 @@ Graph 负责回访
 | Drawer Reader | `.home-article-layer`、`.home-article-drawer` | 右侧临时书页 |
 | Search Overlay | `.knowledge-search-layer`、`.knowledge-search-panel` | Cmd/Ctrl + K command palette |
 | Graph View | `/knowledge/`、`.knowledge-page`、`.knowledge-graph-svg` | 静态 radial / clustered graph |
+| Hero Banner | `.home-hero-banner` | Feed 顶部的横向氛围层 |
 
 最终 token：
 
@@ -1336,6 +1339,35 @@ Search rules：
 - 打开方式固定为 `Cmd/Ctrl + K` 或首页搜索按钮。
 - Search panel 宽 `min(720px, calc(100vw - 28px))`，边框 `2px solid var(--heritage-line-strong)`。
 - Search 可以补 fade 动效，但不得破坏 Esc 优先关闭搜索、再关闭 drawer 的顺序。
+
+Hero Banner rules：
+
+- `.home-hero-banner` 位于 `.home-feed-main` 顶部、`.home-feed-toolbar` 之前；它是情绪层，不是内容卡片，也不能进入 FeedItem 计数。
+- Banner 必须是横向长图容器，高度约 `150px-210px`，边框使用 `var(--heritage-line-strong)`，圆角 `4px`。
+- 层级固定为：`bg` 远景、`mid` 中景、`front` 前景、`canvas particles` 氛围粒子、`overlay` 遮罩、`content` 品牌文字。
+- 鼠标移动只驱动轻微 parallax：远景约 `10px`，中景约 `20px`，前景约 `34px`；不得做大幅晃动。
+- 粒子必须轻量 canvas，数量桌面约 `42`、窄屏约 `24`；`prefers-reduced-motion: reduce` 下只绘制静态粒子，不持续动画。
+- 四季自动切换由客户端按月份写入 `data-season`：spring、summer、autumn、winter；不同季节只改变色彩和粒子气质，不改变布局。
+- 当前默认图片先使用 `apps/web/public/images/home/homepage-floral-bg.png` 横向裁切。后续替换真实多层素材时使用：
+
+```text
+apps/web/public/images/hero/
+├── spring-bg.jpg
+├── spring-mid.png
+├── spring-front.png
+├── summer-bg.jpg
+├── summer-mid.png
+├── summer-front.png
+├── autumn-bg.jpg
+├── autumn-mid.png
+├── autumn-front.png
+├── winter-bg.jpg
+├── winter-mid.png
+└── winter-front.png
+```
+
+- 如果真实素材尚未准备好，代码必须保留本地 fallback，不允许请求外部图床或留下破图。
+- Banner 文案只允许品牌和气质信号，例如 `EMPTYINKPOT`、`Content OS · Tangible Knowledge UI`；不得写成使用说明或功能介绍。
 
 Graph rules：
 

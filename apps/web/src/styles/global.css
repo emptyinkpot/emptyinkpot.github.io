@@ -2878,6 +2878,138 @@ body.home-mode .page-wrap--home {
   scrollbar-width: none;
 }
 
+.home-hero-banner {
+  --hero-bg-image: url('/images/home/homepage-floral-bg.png');
+  --hero-season-color: var(--heritage-purple, #6b2d5c);
+  position: relative;
+  height: clamp(150px, 18vw, 210px);
+  min-height: 150px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-radius: 4px;
+  background: #1e1b18;
+  isolation: isolate;
+}
+
+.home-hero-banner__layer,
+.home-hero-banner__particles,
+.home-hero-banner__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.home-hero-banner__layer {
+  background-position: center;
+  background-size: cover;
+  will-change: transform;
+  transition: transform var(--motion-base, 180ms) var(--ease-standard, ease);
+}
+
+.home-hero-banner__layer--bg {
+  background-image:
+    linear-gradient(90deg, rgba(30, 27, 24, 0.16), rgba(30, 27, 24, 0.08)),
+    var(--hero-bg-image);
+  background-position: center 42%;
+  filter: saturate(0.9) contrast(1.04);
+  transform: scale(1.1);
+}
+
+.home-hero-banner__layer--mid {
+  background:
+    radial-gradient(circle at 18% 78%, color-mix(in srgb, var(--hero-season-color) 42%, transparent) 0 16px, transparent 17px),
+    radial-gradient(circle at 80% 22%, rgba(255, 255, 255, 0.24) 0 18px, transparent 19px),
+    linear-gradient(110deg, transparent 0 35%, rgba(245, 241, 232, 0.1) 36% 48%, transparent 49% 100%);
+  mix-blend-mode: screen;
+  opacity: 0.78;
+  transform: scale(1.08);
+}
+
+.home-hero-banner__layer--front {
+  background:
+    linear-gradient(100deg, rgba(30, 27, 24, 0.54) 0 1px, transparent 1px 100%),
+    radial-gradient(ellipse at 8% 0, rgba(30, 27, 24, 0.42) 0 24%, transparent 25%),
+    radial-gradient(ellipse at 96% 100%, rgba(30, 27, 24, 0.42) 0 26%, transparent 27%);
+  background-size: 34px 100%, 260px 190px, 320px 210px;
+  background-position: center, left top, right bottom;
+  opacity: 0.36;
+  transform: scale(1.05);
+}
+
+.home-hero-banner__particles {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.home-hero-banner__overlay {
+  z-index: 3;
+  background:
+    linear-gradient(180deg, rgba(30, 27, 24, 0.08), rgba(30, 27, 24, 0.62)),
+    linear-gradient(90deg, rgba(30, 27, 24, 0.58), transparent 62%);
+}
+
+.home-hero-banner__content {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  align-content: end;
+  gap: 6px;
+  height: 100%;
+  padding: 18px;
+  color: #fff;
+}
+
+.home-hero-banner__content span {
+  color: rgba(255, 255, 255, 0.74);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.home-hero-banner__content h1 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 46px);
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.home-hero-banner__content p {
+  max-width: 520px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.home-hero-banner[data-season='spring'] {
+  --hero-season-color: #9e2a2b;
+}
+
+.home-hero-banner[data-season='summer'] {
+  --hero-season-color: #2f5d50;
+}
+
+.home-hero-banner[data-season='autumn'] {
+  --hero-season-color: #c9a227;
+}
+
+.home-hero-banner[data-season='winter'] {
+  --hero-season-color: #6b2d5c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-banner__layer {
+    transition: none;
+    will-change: auto;
+  }
+}
+
 .home-feed-toolbar {
   position: sticky;
   top: 0;
