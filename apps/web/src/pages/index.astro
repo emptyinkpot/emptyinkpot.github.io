@@ -457,29 +457,29 @@ function feedCardClass(item: FeedItem) {
     <aside class="home-feed-rail" aria-label="个人状态与知识记忆">
       <section class="home-feed-profile">
         <a class="home-feed-brand" href={withBase('/')}>
-          <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="emptyinkpot" />
-          <span>emptyinkpot</span>
+          <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="emptyinkpot" data-image-key="home.brand.logo" />
+          <span data-copy-key="home.brand.name">emptyinkpot</span>
         </a>
-        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} />
+        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} data-image-key="home.profile.avatar" />
         <h1>{github.profile.name}</h1>
-        <p>Content OS · Knowledge System</p>
+        <p data-copy-key="home.profile.tagline">Content OS · Knowledge System</p>
       </section>
 
       <section class="home-feed-rail-card home-feed-signals">
-        <span>Signals</span>
+        <span data-copy-key="home.signals.kicker">Signals</span>
         <strong>@{github.profile.login}</strong>
         <p>{github.totalContributions} 次年度活动 / {github.profile.publicRepos} 个公开仓库</p>
         <div class="home-feed-signal-grid" aria-label="GitHub signal summary">
           <div>
-            <small>Posts</small>
+            <small data-copy-key="home.signals.posts">Posts</small>
             <b>{posts.length}</b>
           </div>
           <div>
-            <small>Repos</small>
+            <small data-copy-key="home.signals.repos">Repos</small>
             <b>{github.profile.publicRepos}</b>
           </div>
           <div>
-            <small>Active</small>
+            <small data-copy-key="home.signals.active">Active</small>
             <b>{githubAnalytics.activeDays}</b>
           </div>
         </div>
@@ -492,32 +492,32 @@ function feedCardClass(item: FeedItem) {
       </section>
 
       <section class="home-feed-rail-card home-feed-memory">
-        <span>Reading Memory</span>
-        <strong>最近阅读</strong>
+        <span data-copy-key="home.memory.kicker">Reading Memory</span>
+        <strong data-copy-key="home.memory.title">最近阅读</strong>
         <ul data-sidebar-history>
-          <li>暂无记录</li>
+          <li data-copy-key="home.memory.empty">暂无记录</li>
         </ul>
       </section>
 
       <section class="home-feed-rail-card home-feed-stats">
-        <span>Knowledge Stats</span>
-        <strong>知识状态</strong>
+        <span data-copy-key="home.stats.kicker">Knowledge Stats</span>
+        <strong data-copy-key="home.stats.title">知识状态</strong>
         <div class="home-feed-stat-grid">
-          <div><small>高亮</small><b data-sidebar-stat="highlights">0</b></div>
-          <div><small>批注</small><b data-sidebar-stat="annotations">0</b></div>
-          <div><small>收藏</small><b data-sidebar-stat="bookmarks">0</b></div>
-          <div><small>阅读</small><b data-sidebar-stat="history">0</b></div>
+          <div><small data-copy-key="home.stats.highlights">高亮</small><b data-sidebar-stat="highlights">0</b></div>
+          <div><small data-copy-key="home.stats.annotations">批注</small><b data-sidebar-stat="annotations">0</b></div>
+          <div><small data-copy-key="home.stats.bookmarks">收藏</small><b data-sidebar-stat="bookmarks">0</b></div>
+          <div><small data-copy-key="home.stats.history">阅读</small><b data-sidebar-stat="history">0</b></div>
         </div>
         <ul data-sidebar-bookmarks>
-          <li>暂无收藏</li>
+          <li data-copy-key="home.stats.emptyBookmarks">暂无收藏</li>
         </ul>
       </section>
 
       <section class="home-feed-rail-card home-feed-quick">
-        <span>Quick Actions</span>
-        <button type="button" data-search-open>搜索</button>
-        <a href={withBase('/knowledge/')}>Graph</a>
-        <a href={withBase('/settings/')}>设置</a>
+        <span data-copy-key="home.quick.kicker">Quick Actions</span>
+        <button type="button" data-search-open data-copy-key="home.quick.search">搜索</button>
+        <a href={withBase('/knowledge/')} data-copy-key="home.quick.graph">Graph</a>
+        <a href={withBase('/settings/')} data-copy-key="home.quick.settings">设置</a>
       </section>
     </aside>
 
@@ -528,29 +528,29 @@ function feedCardClass(item: FeedItem) {
         <div class="home-hero-banner__layer home-hero-banner__layer--front" data-hero-layer="front"></div>
         <div class="home-hero-banner__overlay"></div>
         <div class="home-hero-banner__content">
-          <span data-hero-season-label>Seasonal Field</span>
-          <h1>EMPTYINKPOT</h1>
-          <p>Content OS · Tangible Knowledge UI</p>
+          <span data-hero-season-label data-hero-kicker data-copy-key="home.banner.kicker">Seasonal Field</span>
+          <h1 data-hero-title data-copy-key="home.banner.title">EMPTYINKPOT</h1>
+          <p data-hero-subtitle data-copy-key="home.banner.subtitle">Content OS · Tangible Knowledge UI</p>
         </div>
       </section>
 
       <div class="home-feed-toolbar" aria-label="首页内容筛选">
         <div>
-          <span>Feed</span>
-          <strong>连续浏览</strong>
+          <span data-copy-key="home.feed.kicker">Feed</span>
+          <strong data-copy-key="home.feed.title">连续浏览</strong>
         </div>
         <nav class="home-feed-tabs" aria-label="首页唯一导航">
-          <button type="button" class="home-feed-tab home-feed-tab--search" data-search-open>搜索</button>
-          <button type="button" class="home-feed-tab is-active" data-feed-filter="all">全部</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="post">文章</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="note">笔记</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="project">项目</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="book">书架</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="music">音乐</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="github">GitHub</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="bilibili">Bilibili</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="update">史料素材库</button>
-          <a class="home-feed-tab" href={withBase('/settings/')}>设置</a>
+          <button type="button" class="home-feed-tab home-feed-tab--search" data-search-open data-copy-key="home.feed.search">搜索</button>
+          <button type="button" class="home-feed-tab is-active" data-feed-filter="all" data-copy-key="home.feed.all">全部</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="project" data-copy-key="home.feed.project">项目</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="book" data-copy-key="home.feed.book">书架</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
+          <a class="home-feed-tab" href={withBase('/settings/')} data-copy-key="home.feed.settings">设置</a>
         </nav>
       </div>
 
@@ -735,7 +735,7 @@ function feedCardClass(item: FeedItem) {
     <button class="knowledge-search-backdrop" type="button" data-search-close aria-label="关闭搜索"></button>
     <section class="knowledge-search-panel" role="dialog" aria-modal="true" aria-label="Knowledge search">
       <div class="knowledge-search-input-row">
-        <input type="search" data-search-input placeholder="搜索文章、项目、书架、音乐、GitHub、标记..." />
+        <input type="search" name="knowledge-search" data-search-input placeholder="搜索文章、项目、书架、音乐、GitHub、标记..." aria-label="Knowledge search" />
         <kbd>Esc</kbd>
       </div>
       <nav class="knowledge-search-tabs" aria-label="搜索类型">
@@ -995,24 +995,36 @@ function feedCardClass(item: FeedItem) {
           front: hero.querySelector('[data-hero-layer="front"]')
         };
         const label = hero.querySelector('[data-hero-season-label]');
+        const title = hero.querySelector('[data-hero-title]');
+        const subtitle = hero.querySelector('[data-hero-subtitle]');
+        const contentSettings = window.emptyinkpotVisualSettings?.load?.().content;
+        const bannerSettings = contentSettings?.banner || {};
         const month = new Date().getMonth();
         const season = month < 2 || month === 11 ? 'winter' : month < 5 ? 'spring' : month < 8 ? 'summer' : 'autumn';
         const seasonLabels = {
-          spring: 'Spring Field',
-          summer: 'Summer Field',
-          autumn: 'Autumn Field',
-          winter: 'Winter Field'
+          spring: bannerSettings.springLabel || 'Spring Field',
+          summer: bannerSettings.summerLabel || 'Summer Field',
+          autumn: bannerSettings.autumnLabel || 'Autumn Field',
+          winter: bannerSettings.winterLabel || 'Winter Field'
         };
         const heroImages = {
-          spring: '/images/home/homepage-floral-bg.png',
-          summer: '/images/home/homepage-floral-bg.png',
-          autumn: '/images/home/homepage-floral-bg.png',
-          winter: '/images/home/homepage-floral-bg.png'
+          spring: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png',
+          summer: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png',
+          autumn: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png',
+          winter: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png'
         };
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         hero.dataset.season = season;
-        hero.style.setProperty('--hero-bg-image', `url("${heroImages[season]}")`);
-        if (label) label.textContent = seasonLabels[season];
+        const setImageVar = (name, value) => {
+          if (!value) return;
+          hero.style.setProperty(name, value.startsWith('url(') ? value : `url("${value.replaceAll('"', '%22')}")`);
+        };
+        setImageVar('--hero-bg-image', heroImages[season]);
+        setImageVar('--hero-mid-image', bannerSettings.midImage);
+        setImageVar('--hero-front-image', bannerSettings.frontImage);
+        if (label) label.textContent = bannerSettings.kicker || seasonLabels[season];
+        if (title && bannerSettings.title) title.textContent = bannerSettings.title;
+        if (subtitle && bannerSettings.subtitle) subtitle.textContent = bannerSettings.subtitle;
 
         const resetLayers = () => {
           if (layers.bg instanceof HTMLElement) layers.bg.style.transform = 'scale(1.1)';

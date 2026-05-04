@@ -4356,6 +4356,13 @@ body.has-home-article-drawer .home-feed-main {
   font-size: 13px;
 }
 
+.settings-control__textarea {
+  min-height: 180px;
+  resize: vertical;
+  font-family: var(--font-mono);
+  line-height: 1.55;
+}
+
 .settings-details {
   border: 1px solid rgba(87, 74, 60, 0.16);
   border-radius: 4px;

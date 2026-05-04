@@ -805,16 +805,35 @@ type VisualSettings = {
     highlightVisibility: "subtle" | "normal" | "strong";
     readerMemoryPanel: "collapsed" | "expanded" | "hidden";
   };
+  content: {
+    banner: {
+      kicker: string;
+      title: string;
+      subtitle: string;
+      springLabel: string;
+      summerLabel: string;
+      autumnLabel: string;
+      winterLabel: string;
+      bgImage: string;
+      midImage: string;
+      frontImage: string;
+    };
+    copy: Record<string, string>;
+    images: Record<string, string>;
+  };
 };
 ```
 
 设置页 contract：
 
 - `/settings/` 是“个人阅读与知识系统控制台”，不是只换颜色的主题页。
-- 分组固定为：外观主题、阅读排版、知识系统。
+- 分组固定为：外观主题、阅读排版、知识系统、Banner 内容、全站内容端口。
 - 阅读排版设置必须即时更新 `--type-body-size`、`--type-body-line`、`--reader-column-width`、`--type-title-scale`、`--reader-paragraph-gap`。
 - 字体模式通过 `data-font-mode` 切换 `--font-body / --font-display / --font-ui`。
 - Knowledge UI 设置通过 `data-graph-density`、`data-graph-labels`、`data-graph-motion`、`data-highlight-visibility`、`data-reader-memory-panel` 控制显示偏好。
+- Banner 内容设置必须暴露：kicker、title、subtitle、四季 label、bg/mid/front 图片 URL。空值表示沿用源码默认。
+- 全站内容端口使用 `content.copy` 和 `content.images` 两个 JSON map：普通 key 对应 `data-copy-key` / `data-image-key`；`selector:<css selector>` key 可覆盖任意前端元素文字或图片。selector 无效时必须静默忽略，不能中断页面。
+- `window.emptyinkpotVisualSettings.exportContentPorts()` 必须能导出当前页面已声明的 `data-copy-key` / `data-image-key` 端口，便于在 `/settings/` 里生成可编辑 JSON。
 - 设置页 preview 必须包含至少一个 Feed 预览、一个 Reader 预览和一个 Knowledge UI 预览。
 
 Heritage 默认视觉语言：
@@ -1522,6 +1541,8 @@ Hero Banner rules：
 - `.home-hero-banner` 位于 `.home-feed-main` 顶部、`.home-feed-toolbar` 之前；它是情绪层，不是内容卡片，也不能进入 FeedItem 计数。
 - Banner 必须是横向长图容器，高度约 `150px-210px`，边框使用 `var(--heritage-line-strong)`，圆角 `4px`。
 - 层级固定为：`bg` 远景、`mid` 中景、`front` 前景、`overlay` 遮罩、`content` 品牌文字。
+- Banner 上的全部文字和图片必须接入 `/settings/` 的 `content.banner`：`kicker/title/subtitle/springLabel/summerLabel/autumnLabel/winterLabel/bgImage/midImage/frontImage`。空值沿用默认文案和默认图片。
+- Banner DOM 必须保留 `data-hero-kicker`、`data-hero-title`、`data-hero-subtitle`、`data-hero-layer`，并同步提供 `data-copy-key`，便于全站内容端口统一覆盖。
 - 鼠标移动只驱动轻微 parallax：远景约 `10px`，中景约 `20px`，前景约 `34px`；不得做大幅晃动。
 - 默认不得启用粒子 canvas、半透明圆点、斜纹、漂浮色块等装饰层；Banner 的气氛由真实横向图片、轻微 parallax 和必要的文字可读性遮罩承担。
 - 四季自动切换由客户端按月份写入 `data-season`：spring、summer、autumn、winter；当前只切换季节 label 和本地 fallback 图片入口，不改变布局，也不叠加装饰粒子。

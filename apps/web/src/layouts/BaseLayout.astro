@@ -83,6 +83,22 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
             graphMotion: true,
             highlightVisibility: 'normal',
             readerMemoryPanel: 'collapsed'
+          },
+          content: {
+            banner: {
+              kicker: '',
+              title: '',
+              subtitle: '',
+              springLabel: '',
+              summerLabel: '',
+              autumnLabel: '',
+              winterLabel: '',
+              bgImage: '',
+              midImage: '',
+              frontImage: ''
+            },
+            copy: {},
+            images: {}
           }
         };
 
@@ -136,11 +152,41 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           return defaults.backgroundImage;
         };
 
+        const normalizeOptionalUrl = (value) => {
+          const raw = String(value ?? '').trim();
+          if (!raw) return '';
+          if (raw.startsWith('url(')) return raw;
+          if (raw.startsWith('/') || raw.startsWith('http://') || raw.startsWith('https://')) {
+            return `url("${raw.replaceAll('"', '%22')}")`;
+          }
+          return '';
+        };
+
+        const unwrapUrl = (value) => {
+          const raw = String(value || '');
+          const match = raw.match(/^url\(["']?(.*?)["']?\)$/);
+          return match ? match[1] : raw;
+        };
+
+        const normalizeTextMap = (value) => {
+          if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+          return Object.fromEntries(
+            Object.entries(value)
+              .filter(([key, item]) => key && item !== undefined && item !== null)
+              .map(([key, item]) => [String(key), String(item)])
+          );
+        };
+
         const normalize = (input = {}) => {
           const next = {
             ...defaults,
             typography: { ...defaults.typography },
-            knowledge: { ...defaults.knowledge }
+            knowledge: { ...defaults.knowledge },
+            content: {
+              banner: { ...defaults.content.banner },
+              copy: {},
+              images: {}
+            }
           };
           next.theme = input.theme === 'glass' ? 'glass' : 'heritage';
           for (const [key, range] of Object.entries(numericRanges)) {
@@ -179,8 +225,146 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
             ['collapsed', 'expanded', 'hidden'],
             defaults.knowledge.readerMemoryPanel
           );
+          const banner = input.content?.banner ?? input.banner ?? {};
+          for (const key of ['kicker', 'title', 'subtitle', 'springLabel', 'summerLabel', 'autumnLabel', 'winterLabel']) {
+            next.content.banner[key] = String(banner[key] ?? defaults.content.banner[key]).trim();
+          }
+          for (const key of ['bgImage', 'midImage', 'frontImage']) {
+            next.content.banner[key] = normalizeOptionalUrl(banner[key]);
+          }
+          next.content.copy = normalizeTextMap(input.content?.copy ?? input.copy);
+          next.content.images = normalizeTextMap(input.content?.images ?? input.images);
           return next;
         };
+
+        const applyContent = (settings) => {
+          const content = settings.content || defaults.content;
+          const restoreContentOverrides = () => {
+            document.querySelectorAll('[data-content-original-text]').forEach((element) => {
+              element.textContent = element.getAttribute('data-content-original-text') || '';
+            });
+            document.querySelectorAll('[data-content-original-src]').forEach((element) => {
+              if (element instanceof HTMLImageElement) {
+                element.src = element.getAttribute('data-content-original-src') || '';
+              }
+            });
+            document.querySelectorAll('[data-content-original-bg]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.backgroundImage = element.getAttribute('data-content-original-bg') || '';
+              }
+            });
+            document.querySelectorAll('[data-content-original-hero-bg]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.setProperty('--hero-bg-image', element.getAttribute('data-content-original-hero-bg') || '');
+              }
+            });
+            document.querySelectorAll('[data-content-original-hero-mid]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.setProperty('--hero-mid-image', element.getAttribute('data-content-original-hero-mid') || '');
+              }
+            });
+            document.querySelectorAll('[data-content-original-hero-front]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.setProperty('--hero-front-image', element.getAttribute('data-content-original-hero-front') || '');
+              }
+            });
+          };
+          const setText = (element, value) => {
+            if (!element.hasAttribute('data-content-original-text')) {
+              element.setAttribute('data-content-original-text', element.textContent || '');
+            }
+            element.textContent = value;
+          };
+          const setImage = (element, value) => {
+            if (!value) return;
+            if (element instanceof HTMLImageElement) {
+              if (!element.hasAttribute('data-content-original-src')) {
+                element.setAttribute('data-content-original-src', element.getAttribute('src') || '');
+              }
+              element.src = value;
+              return;
+            }
+            if (element instanceof HTMLElement) {
+              if (!element.hasAttribute('data-content-original-bg')) {
+                element.setAttribute('data-content-original-bg', element.style.backgroundImage || '');
+              }
+              element.style.backgroundImage = normalizeOptionalUrl(value);
+            }
+          };
+          const applyToTargets = (selector, callback) => {
+            try {
+              document.querySelectorAll(selector).forEach(callback);
+            } catch {
+              // Invalid user selectors are ignored so one bad override cannot break the page.
+            }
+          };
+
+          restoreContentOverrides();
+
+          document.querySelectorAll('[data-copy-key]').forEach((element) => {
+            const key = element.dataset.copyKey;
+            if (!key || content.copy[key] === undefined) return;
+            setText(element, content.copy[key]);
+          });
+
+          Object.entries(content.copy).forEach(([key, value]) => {
+            if (!key.startsWith('selector:')) return;
+            applyToTargets(key.slice('selector:'.length), (element) => {
+              setText(element, value);
+            });
+          });
+
+          document.querySelectorAll('[data-image-key]').forEach((element) => {
+            const key = element.dataset.imageKey;
+            const value = key ? content.images[key] : '';
+            if (!key || !value) return;
+            setImage(element, value);
+          });
+
+          Object.entries(content.images).forEach(([key, value]) => {
+            if (!key.startsWith('selector:')) return;
+            applyToTargets(key.slice('selector:'.length), (element) => setImage(element, value));
+          });
+
+          const hero = document.querySelector('[data-hero-banner]');
+          if (hero instanceof HTMLElement) {
+            const banner = content.banner || {};
+            const setHeroText = (selector, value) => {
+              const target = hero.querySelector(selector);
+              if (target && value) setText(target, value);
+            };
+            const setHeroVar = (name, value, originalKey) => {
+              if (!value) return;
+              if (!hero.hasAttribute(originalKey)) {
+                hero.setAttribute(originalKey, hero.style.getPropertyValue(name) || '');
+              }
+              hero.style.setProperty(name, value);
+            };
+            setHeroText('[data-hero-kicker]', banner.kicker);
+            setHeroText('[data-hero-title]', banner.title);
+            setHeroText('[data-hero-subtitle]', banner.subtitle);
+            setHeroVar('--hero-bg-image', banner.bgImage, 'data-content-original-hero-bg');
+            setHeroVar('--hero-mid-image', banner.midImage, 'data-content-original-hero-mid');
+            setHeroVar('--hero-front-image', banner.frontImage, 'data-content-original-hero-front');
+          }
+
+          window.dispatchEvent(new CustomEvent('emptyinkpot-content-settings-applied', { detail: settings }));
+        };
+
+        const exportContentPorts = () => ({
+          copy: Object.fromEntries(
+            [...document.querySelectorAll('[data-copy-key]')].map((element) => [
+              element.dataset.copyKey,
+              element.textContent?.trim() || ''
+            ]).filter(([key]) => Boolean(key))
+          ),
+          images: Object.fromEntries(
+            [...document.querySelectorAll('[data-image-key]')].map((element) => [
+              element.dataset.imageKey,
+              element instanceof HTMLImageElement ? element.currentSrc || element.src : unwrapUrl(getComputedStyle(element).backgroundImage)
+            ]).filter(([key]) => Boolean(key))
+          )
+        });
 
         const apply = (input = {}) => {
           const settings = normalize(input);
@@ -208,6 +392,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           root.dataset.graphMotion = settings.knowledge.graphMotion ? 'on' : 'off';
           root.dataset.highlightVisibility = settings.knowledge.highlightVisibility;
           root.dataset.readerMemoryPanel = settings.knowledge.readerMemoryPanel;
+          if (document.body) applyContent(settings);
           return settings;
         };
 
@@ -238,8 +423,9 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           return apply(defaults);
         };
 
-        window.emptyinkpotVisualSettings = { storageKey, defaults, apply, load, save, reset };
+        window.emptyinkpotVisualSettings = { storageKey, defaults, apply, load, save, reset, exportContentPorts };
         apply(load());
+        document.addEventListener('DOMContentLoaded', () => apply(load()), { once: true });
       })();
     </script>
     <slot name="head" />

@@ -22,6 +22,22 @@ const typographyControls = [
   { key: 'typography.paragraphGap', label: '段落间距', min: 12, max: 24, step: 4, suffix: 'px' }
 ];
 
+const bannerTextControls = [
+  { key: 'content.banner.kicker', label: 'Banner 角标', placeholder: 'Seasonal Field' },
+  { key: 'content.banner.title', label: 'Banner 标题', placeholder: 'EMPTYINKPOT' },
+  { key: 'content.banner.subtitle', label: 'Banner 副标题', placeholder: 'Content OS · Tangible Knowledge UI' },
+  { key: 'content.banner.springLabel', label: '春季角标', placeholder: 'Spring Field' },
+  { key: 'content.banner.summerLabel', label: '夏季角标', placeholder: 'Summer Field' },
+  { key: 'content.banner.autumnLabel', label: '秋季角标', placeholder: 'Autumn Field' },
+  { key: 'content.banner.winterLabel', label: '冬季角标', placeholder: 'Winter Field' }
+];
+
+const bannerImageControls = [
+  { key: 'content.banner.bgImage', label: 'Banner 背景图 URL', placeholder: '/images/home/homepage-floral-bg.png' },
+  { key: 'content.banner.midImage', label: 'Banner 中景图 URL', placeholder: '/images/hero/mid.png' },
+  { key: 'content.banner.frontImage', label: 'Banner 前景图 URL', placeholder: '/images/hero/front.png' }
+];
+
 const selectControls = [
   {
     key: 'typography.fontMode',
@@ -192,6 +208,76 @@ const selectControls = [
           ))}
         </section>
 
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Content Ports</span>
+            <strong>Banner 内容</strong>
+          </div>
+
+          {bannerTextControls.map((control) => (
+            <label class="settings-control settings-control--wide">
+              <span>{control.label}</span>
+              <input
+                class="settings-control__text"
+                type="text"
+                name={control.key}
+                data-setting={control.key}
+                placeholder={control.placeholder}
+                aria-label={control.label}
+              />
+            </label>
+          ))}
+
+          {bannerImageControls.map((control) => (
+            <label class="settings-control settings-control--wide">
+              <span>{control.label}</span>
+              <input
+                class="settings-control__text"
+                type="text"
+                name={control.key}
+                data-setting={control.key}
+                placeholder={control.placeholder}
+                aria-label={control.label}
+              />
+            </label>
+          ))}
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Frontend Copy</span>
+            <strong>全站内容端口</strong>
+          </div>
+
+          <label class="settings-control settings-control--wide">
+            <span>文字覆盖 JSON</span>
+            <textarea
+              class="settings-control__text settings-control__textarea"
+              name="content.copy"
+              data-setting="content.copy"
+              data-setting-json
+              spellcheck="false"
+              aria-label="文字覆盖 JSON"
+            ></textarea>
+          </label>
+
+          <label class="settings-control settings-control--wide">
+            <span>图片覆盖 JSON</span>
+            <textarea
+              class="settings-control__text settings-control__textarea"
+              name="content.images"
+              data-setting="content.images"
+              data-setting-json
+              spellcheck="false"
+              aria-label="图片覆盖 JSON"
+            ></textarea>
+          </label>
+
+          <div class="settings-page__actions">
+            <button type="button" data-export-content-ports>导出本页端口</button>
+          </div>
+        </section>
+
         <div class="settings-page__actions">
           <button type="button" data-settings-reset>恢复默认</button>
           <a href={withBase('/')}>打开首页</a>
@@ -231,6 +317,7 @@ const selectControls = [
 
       const form = document.querySelector('[data-visual-settings-form]');
       const resetButton = document.querySelector('[data-settings-reset]');
+      const exportButton = document.querySelector('[data-export-content-ports]');
       const inputs = [...document.querySelectorAll('[data-setting]')];
 
       const getPath = (source, path) =>
@@ -252,6 +339,8 @@ const selectControls = [
         return match ? match[1] : raw;
       };
 
+      const isUrlKey = (key) => key === 'backgroundImage' || key.endsWith('Image');
+
       const formatValue = (input, value) => {
         const suffix = input.dataset.settingSuffix || '';
         if (!(input instanceof HTMLInputElement) || input.type !== 'range') return String(value);
@@ -263,6 +352,13 @@ const selectControls = [
 
       const readInputValue = (input) => {
         if (input instanceof HTMLInputElement && input.type === 'range') return Number(input.value);
+        if (input.dataset.settingJson !== undefined) {
+          try {
+            return JSON.parse(input.value || '{}');
+          } catch {
+            return {};
+          }
+        }
         if (input.dataset.setting === 'knowledge.graphMotion') return input.value === 'true';
         return input.value;
       };
@@ -282,9 +378,9 @@ const selectControls = [
           const key = input.dataset.setting;
           if (!key) return;
           let value = getPath(settings, key);
-          if (key === 'backgroundImage') value = unwrapUrl(settings[key]);
+          if (isUrlKey(key)) value = unwrapUrl(value);
           if (key === 'knowledge.graphMotion') value = settings.knowledge?.graphMotion ? 'true' : 'false';
-          input.value = String(value);
+          input.value = input.dataset.settingJson !== undefined ? JSON.stringify(value || {}, null, 2) : String(value ?? '');
           const output = document.querySelector(`[data-setting-output="${key}"]`);
           if (output) output.textContent = formatValue(input, value);
         });
@@ -298,6 +394,11 @@ const selectControls = [
       paint(api.load());
       form?.addEventListener('input', saveFromForm);
       resetButton?.addEventListener('click', () => paint(api.reset()));
+      exportButton?.addEventListener('click', () => {
+        const ports = api.exportContentPorts?.() || { copy: {}, images: {} };
+        api.save({ ...api.load(), content: { ...api.load().content, ...ports } });
+        paint(api.load());
+      });
     })();
   </script>
 </BaseLayout>
