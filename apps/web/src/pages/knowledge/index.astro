@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { books } from '../../data/books';
+import { musicItems } from '../../data/music';
+import { getPrimaryCategory, sortPosts } from '../../lib/content';
+import { buildRadialGraph } from '../../lib/knowledge/graph';
+import type { KnowledgeGraphLink, KnowledgeGraphNode } from '../../lib/knowledge/types';
+import { withBase } from '../../lib/site';
+
+const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft)).slice(0, 16);
+const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].slice(0, 8);
+const projects = [...(await getCollection('projects'))].slice(0, 8);
+
+const collectionNodes: KnowledgeGraphNode[] = ['posts', 'notes', 'projects', 'books', 'music'].map((id) => ({
+  id: `collection:${id}`,
+  label: id,
+  type: 'collection',
+  level: 1,
+  weight: 8
+}));
+
+const contentNodes: KnowledgeGraphNode[] = [
+  ...posts.map((post) => ({ id: `post:${post.id}`, label: post.data.title, type: 'post' as const, level: 2, weight: 4 })),
+  ...notes.map((note) => ({ id: `note:${note.id}`, label: note.data.title, type: 'note' as const, level: 2, weight: 3 })),
+  ...projects.map((project) => ({ id: `project:${project.id}`, label: project.data.title, type: 'project' as const, level: 2, weight: 4 })),
+  ...books.map((book) => ({ id: `book:${book.title}`, label: book.title, type: 'book' as const, level: 2, weight: 3 })),
+  ...musicItems.map((item) => ({ id: `music:${item.id}`, label: item.title, type: 'music' as const, level: 2, weight: 2 }))
+];
+
+const tagLabels = Array.from(
+  new Set([
+    ...posts.flatMap((post) => [getPrimaryCategory(post), ...post.data.tags]),
+    ...projects.flatMap((project) => project.data.stack),
+    ...musicItems.flatMap((item) => item.mood)
+  ])
+).slice(0, 36);
+
+const tagNodes: KnowledgeGraphNode[] = tagLabels.map((tag) => ({
+  id: `tag:${tag}`,
+  label: tag,
+  type: 'tag',
+  level: 3,
+  weight: 2
+}));
+
+const links: KnowledgeGraphLink[] = [
+  ...collectionNodes.map((node) => ({ source: 'self:emptyinkpot', target: node.id, type: 'contains' as const, weight: 2 })),
+  ...posts.map((post) => ({ source: 'collection:posts', target: `post:${post.id}`, type: 'contains' as const, weight: 1 })),
+  ...notes.map((note) => ({ source: 'collection:notes', target: `note:${note.id}`, type: 'contains' as const, weight: 1 })),
+  ...projects.map((project) => ({ source: 'collection:projects', target: `project:${project.id}`, type: 'contains' as const, weight: 1 })),
+  ...books.map((book) => ({ source: 'collection:books', target: `book:${book.title}`, type: 'contains' as const, weight: 1 })),
+  ...musicItems.map((item) => ({ source: 'collection:music', target: `music:${item.id}`, type: 'contains' as const, weight: 1 })),
+  ...posts.flatMap((post) =>
+    [getPrimaryCategory(post), ...post.data.tags]
+      .filter((tag) => tagLabels.includes(tag))
+      .map((tag) => ({ source: `post:${post.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
+  )
+];
+
+const graph = buildRadialGraph(
+  [{ id: 'self:emptyinkpot', label: 'emptyinkpot', type: 'self', level: 0, weight: 10 }, ...collectionNodes, ...contentNodes, ...tagNodes],
+  links
+);
+
+function colorFor(type: KnowledgeGraphNode['type']) {
+  return {
+    self: '#6b2d5c',
+    collection: '#c9a227',
+    post: '#6b2d5c',
+    note: '#9e2a2b',
+    project: '#2f5d50',
+    book: '#9e2a2b',
+    music: '#c9a227',
+    tag: '#6b645c',
+    highlight: '#c9a227'
+  }[type];
+}
+
+const viewBox = '-620 -620 1240 1240';
+---
+
+<BaseLayout title="Knowledge Graph / emptyinkpot" description="emptyinkpot 的 Knowledge Layer 图谱入口。">
+  <main class="knowledge-page">
+    <section class="knowledge-page__hero glass-card">
+      <p class="section-kicker">Knowledge Layer</p>
+      <h1>搜索、标记和图谱的统一底座</h1>
+      <p>这里展示当前静态内容、标签和本地阅读记忆系统的第一版图谱。Graph 不追求炫技，先保持分层和语义清晰。</p>
+      <div class="knowledge-page__actions">
+        <a href={withBase('/data/knowledge-index.json')}>查看 Knowledge Index</a>
+        <a href={withBase('/')}>回到首页 Feed</a>
+      </div>
+    </section>
+
+    <section class="knowledge-page__panel glass-card">
+      <div class="knowledge-page__panel-head">
+        <span>Radial Graph</span>
+        <strong>{graph.nodes.length} nodes / {graph.links.length} links</strong>
+      </div>
+      <svg class="knowledge-graph-svg" viewBox={viewBox} role="img" aria-label="Knowledge graph">
+        {graph.links.map((link) => {
+          const source = graph.nodes.find((node) => node.id === link.source);
+          const target = graph.nodes.find((node) => node.id === link.target);
+          if (!source || !target) return null;
+          return <line x1={source.x} y1={source.y} x2={target.x} y2={target.y} class={`knowledge-link knowledge-link--${link.type}`} />;
+        })}
+        {graph.nodes.map((node) => (
+          <g class={`knowledge-node knowledge-node--${node.type}`} transform={`translate(${node.x ?? 0} ${node.y ?? 0})`}>
+            <circle r={node.level === 0 ? 16 : node.level === 1 ? 11 : node.level === 2 ? 7 : 4} fill={colorFor(node.type)} />
+            <text x={node.level <= 1 ? 18 : 9} y="4">{node.label}</text>
+          </g>
+        ))}
+      </svg>
+    </section>
+  </main>
+</BaseLayout>

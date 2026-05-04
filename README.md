@@ -982,6 +982,127 @@ Showcase 实现规则：
 - 左栏只放摘要，详情页放完整内容。
 - 不再把 GitHub 热力图、折线图、语言分布、团队信号作为独立首页模块堆叠回去。
 
+#### 0.7.5.15d Knowledge Layer / Reader System Contract
+
+这次新方向不是“再加几个 UI 功能”，而是把首页和阅读抽屉升级为一个轻量 `Knowledge Layer`。核心判断固定为：
+
+```text
+Highlight = 记忆点
+Search = 入口
+Graph = 结构
+Bookmark Object = 可触摸的内容隐喻
+Reader Drawer = 临时展开的书页
+```
+
+当前第一版仍保持 `Astro 静态构建 + 客户端 localStorage`，不引入后端，不把搜索、标记、图谱拆成三套孤岛。
+
+当前落地文件：
+
+```text
+apps/web/src/lib/knowledge/
+├── anchors.ts       三锚点 Highlight 基础：quote / position / dom path
+├── graph.ts         radial graph 布局
+├── search.ts        无依赖搜索 fallback
+├── storage.ts       reader history / bookmarks / highlights key 与纯函数
+└── types.ts         KnowledgeSearchDoc / HighlightRecord / GraphNode 等类型
+
+apps/web/src/pages/
+├── data/knowledge-index.json.ts   静态知识索引
+└── knowledge/index.astro          Knowledge Graph 页面
+```
+
+首页已对齐的 Reader v1 能力：
+
+- Feed 卡片使用真实 `Bookmark Object` 视觉隐喻：书签从卡片顶部插入，不再只是 UI 标签。
+- 书签颜色语义固定：post 紫、project/GitHub 绿、note/book 红、music 金。
+- 标题颜色跟随书签语义色，视觉识别由颜色完成。
+- `Cmd/Ctrl + K` 打开 Knowledge Search Overlay；首页也提供搜索按钮。
+- Search 同时搜索 Astro 渲染的 drawer 内容、书架、音乐、GitHub 和本地 highlight。
+- `J / K` 浏览可见 Feed 卡片，`Enter` 打开当前卡片 drawer，`Esc` 关闭 drawer 或搜索。
+- Reader Drawer 保存阅读历史到 `emptyinkpot-reading-history`。
+- Reader Drawer 支持收藏到 `emptyinkpot-reader-bookmarks`。
+- Reader Drawer 支持 `light / sepia / dark` 三种阅读主题，存储键为 `emptyinkpot-reader-theme`。
+- Reader Drawer 支持选中文本后保存本地 highlight 到 `emptyinkpot-reader-highlights`；当前 v1 用 exact 文本做恢复，P1 再增强容错。
+- Drawer 顶部有阅读进度条，关闭后继续遵守 scrollTop 恢复规则。
+
+Highlight 工程合同：
+
+```ts
+type HighlightAnchor = {
+  quote: TextQuoteSelector;
+  position: TextPositionSelector;
+  dom: DomPathSelector;
+  contentHash: string;
+};
+```
+
+恢复顺序固定：
+
+```text
+contentHash 相同 -> TextPositionSelector
+TextQuoteSelector exact/prefix/suffix
+DomPathSelector
+fuzzy quote fallback
+orphan highlight
+```
+
+当前 v1 已有 `anchors.ts` 基础实现；首页内联脚本为了稳发布，先使用 exact 文本恢复。后续 P1 必须把首页高亮恢复逻辑切到 `anchors.ts` 的三锚点实现，不能退回只存纯文本。
+
+Search 工程合同：
+
+```text
+build: content collections / books / music / github snapshot
+  -> /data/knowledge-index.json
+client: index docs + local highlights
+  -> Search Overlay
+```
+
+第一版不引 FlexSearch；当前用无依赖搜索，避免为了搜索引入新的 React island。后续如果引 FlexSearch，只能替换 `lib/knowledge/search.ts` 的搜索引擎，不得改变 `KnowledgeSearchDoc` 数据合同。
+
+Graph 工程合同：
+
+Graph 不做随机力导向毛线团。默认布局是：
+
+```text
+Level 0: self / emptyinkpot
+Level 1: collections
+Level 2: content nodes
+Level 3: tags / highlights
+```
+
+当前 `/knowledge/` 使用 `buildRadialGraph()` 做静态 radial SVG。后续如果引 `react-force-graph`，仍必须保留 `KnowledgeGraphNode` / `KnowledgeGraphLink` 的语义分层。
+
+Bookmark Object 视觉合同：
+
+- `.bookmark` 是“物件”，不是普通 tag。
+- 书签必须从卡片顶部伸出，模拟插入纸页。
+- 书签必须使用 clip-path 做底部缺口。
+- 卡片必须 `overflow: visible`，允许书签露出。
+- hover 只能轻微拉直书签，不允许卡片大幅漂浮。
+
+下一步优先级：
+
+```text
+P0 done:
+- Bookmark Object
+- Reader local history/bookmark/highlight v1
+- Search Overlay v1
+- Knowledge index endpoint
+- Static Knowledge Graph page
+
+P1:
+- 首页 highlight 恢复切到 anchors.ts 三锚点
+- orphan highlight UI
+- Reader Memory Panel：最近阅读 / 收藏 / 标记
+- Search 结果支持跳转到具体 highlight
+
+P2:
+- FlexSearch 或等价搜索引擎
+- Graph hover/click 交互
+- 高亮精准重定位和重绑 UI
+- Graph 默认限量节点和内容类型过滤
+```
+
 #### 0.7.5.16 Frontend Refactor Priority
 
 前台升级建议默认按以下顺序推进，而不是同时大改所有页面：

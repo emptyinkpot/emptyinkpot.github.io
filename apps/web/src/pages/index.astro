@@ -392,6 +392,15 @@ const drawerEntries = [
   ...utilityDrawerEntries
 ];
 const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
+const knowledgeDocs = drawerEntries.map((entry) => ({
+  id: entry.id,
+  type: entry.kind,
+  title: entry.title,
+  content: [entry.summary, ...(entry.tags ?? []), ...(entry.details?.map((detail) => `${detail.label} ${detail.value}`) ?? [])].join('\n'),
+  tags: entry.tags ?? [],
+  href: entry.href,
+  drawerId: entry.id
+}));
 
 function feedCardClass(item: FeedItem) {
   return ['home-feed-card', `home-feed-card--${item.type}`, `home-feed-card--${item.size ?? 'standard'}`].join(' ');
@@ -418,6 +427,7 @@ function feedCardClass(item: FeedItem) {
         <a href={withBase('/github/')}>GitHub</a>
         <a href={withBase('/books/')}>书架</a>
         <a href={withBase('/music/')}>音乐</a>
+        <a href={withBase('/knowledge/')}>知识图谱</a>
         <a href={withBase('/evidence-library/')}>史料素材库</a>
         <a href={withBase('/settings/')}>显示设置</a>
         <a href={withBase('/search/')}>搜索</a>
@@ -460,6 +470,7 @@ function feedCardClass(item: FeedItem) {
           <strong>连续浏览</strong>
         </div>
         <div class="home-feed-filters" role="list" aria-label="内容类型">
+          <button type="button" class="home-feed-filter home-feed-filter--search" data-search-open>搜索</button>
           <button type="button" class="home-feed-filter is-active" data-feed-filter="all">全部</button>
           <button type="button" class="home-feed-filter" data-feed-filter="post">文章</button>
           <button type="button" class="home-feed-filter" data-feed-filter="note">札记</button>
@@ -481,6 +492,7 @@ function feedCardClass(item: FeedItem) {
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
             >
+              <div class="bookmark bookmark--github"><span>GitHub</span></div>
               <ChartCard
                 kicker={item.kicker}
                 title={item.title}
@@ -499,6 +511,7 @@ function feedCardClass(item: FeedItem) {
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
             >
+              <div class="bookmark bookmark--github"><span>Line</span></div>
               <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
                 <GitHubMonthlyLine points={githubAnalytics.monthly} compact />
               </ChartCard>
@@ -511,6 +524,7 @@ function feedCardClass(item: FeedItem) {
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
             >
+              <div class="bookmark bookmark--github"><span>Donut</span></div>
               <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
                 <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
               </ChartCard>
@@ -523,6 +537,7 @@ function feedCardClass(item: FeedItem) {
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
             >
+              <div class="bookmark bookmark--music"><span>Music</span></div>
               <MusicCard item={item.musicItem} compact inertCard />
             </button>
           ) : item.drawerId && drawerById.has(item.drawerId) ? (
@@ -533,6 +548,7 @@ function feedCardClass(item: FeedItem) {
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
             >
+              <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
               {item.coverSrc ? (
                 <div class="home-feed-card__cover">
                   <img src={item.coverSrc} alt="" loading="lazy" />
@@ -595,12 +611,19 @@ function feedCardClass(item: FeedItem) {
   <div class="home-article-layer" data-article-layer hidden>
     <button class="home-article-backdrop" type="button" data-article-close aria-label="关闭阅读抽屉"></button>
     <aside class="home-article-drawer" role="dialog" aria-modal="true" aria-labelledby="home-article-title">
+      <div class="reading-progress" data-reading-progress></div>
       <header class="home-article-drawer__header">
         <div>
           <span data-article-kicker></span>
           <h2 id="home-article-title" data-article-title></h2>
         </div>
         <div class="home-article-drawer__actions">
+          <div class="reader-theme-switch" aria-label="阅读主题">
+            <button type="button" data-reader-theme="light">Light</button>
+            <button type="button" data-reader-theme="sepia">Sepia</button>
+            <button type="button" data-reader-theme="dark">Dark</button>
+          </div>
+          <button type="button" data-reader-bookmark>收藏</button>
           <a href={withBase('/posts/')} data-article-full>完整页面</a>
           <button type="button" data-article-close>关闭</button>
         </div>
@@ -608,6 +631,26 @@ function feedCardClass(item: FeedItem) {
       <div class="home-article-drawer__body" data-article-body></div>
     </aside>
   </div>
+
+  <div class="knowledge-search-layer" data-search-layer hidden>
+    <button class="knowledge-search-backdrop" type="button" data-search-close aria-label="关闭搜索"></button>
+    <section class="knowledge-search-panel" role="dialog" aria-modal="true" aria-label="Knowledge search">
+      <div class="knowledge-search-input-row">
+        <input type="search" data-search-input placeholder="搜索文章、项目、书架、音乐、GitHub、标记..." />
+        <kbd>Esc</kbd>
+      </div>
+      <nav class="knowledge-search-tabs" aria-label="搜索类型">
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'highlight'].map((kind) => (
+          <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
+        ))}
+      </nav>
+      <div class="knowledge-search-results" data-search-results>
+        <p class="knowledge-search-empty">输入关键词，或按 Cmd/Ctrl + K 随时打开搜索。</p>
+      </div>
+    </section>
+  </div>
+
+  <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
 
   <div class="home-article-templates" hidden>
     {drawerEntries.map((entry) => {
@@ -617,6 +660,7 @@ function feedCardClass(item: FeedItem) {
         <article
           class="home-article-reader"
           data-drawer-template={entry.id}
+          data-article-id={entry.id}
           data-full-href={entry.href}
           data-kicker={entry.kicker}
           data-title={entry.title}
@@ -706,12 +750,238 @@ function feedCardClass(item: FeedItem) {
       const titleTarget = document.querySelector('[data-article-title]');
       const kickerTarget = document.querySelector('[data-article-kicker]');
       const fullLink = document.querySelector('[data-article-full]');
+      const bookmarkButton = document.querySelector('[data-reader-bookmark]');
+      const progress = document.querySelector('[data-reading-progress]');
       const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
       const cards = [...document.querySelectorAll('[data-feed-card]')];
       const drawerTriggers = [...document.querySelectorAll('[data-drawer-id]')];
       const mainScroller = document.querySelector('.home-feed-main');
+      const searchLayer = document.querySelector('[data-search-layer]');
+      const searchInput = document.querySelector('[data-search-input]');
+      const searchResults = document.querySelector('[data-search-results]');
+      const searchKinds = [...document.querySelectorAll('[data-search-kind]')];
+      const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
+      const storageKeys = {
+        history: 'emptyinkpot-reading-history',
+        bookmarks: 'emptyinkpot-reader-bookmarks',
+        highlights: 'emptyinkpot-reader-highlights',
+        readerTheme: 'emptyinkpot-reader-theme'
+      };
       let lastFocused = null;
       let savedScrollTop = 0;
+      let currentArticle = null;
+      let activeIndex = 0;
+      let searchKind = 'all';
+
+      const readJson = (key, fallback) => {
+        try {
+          return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+        } catch {
+          return fallback;
+        }
+      };
+
+      const writeJson = (key, value) => {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch {
+          // Ignore local storage failures; reading should still work.
+        }
+      };
+
+      const normalizeReaderTheme = (theme) => (['light', 'sepia', 'dark'].includes(theme) ? theme : 'light');
+
+      const applyReaderTheme = (theme) => {
+        const next = normalizeReaderTheme(theme);
+        document.documentElement.dataset.readerTheme = next;
+        document.querySelectorAll('[data-reader-theme]').forEach((button) => {
+          button.classList.toggle('is-active', button.dataset.readerTheme === next);
+        });
+        try {
+          localStorage.setItem(storageKeys.readerTheme, next);
+        } catch {
+          // Ignore storage failures.
+        }
+      };
+
+      const getVisibleCards = () => cards.filter((card) => !card.hidden);
+
+      const setActiveCard = (index) => {
+        const visibleCards = getVisibleCards();
+        if (!visibleCards.length) return;
+        cards.forEach((card) => card.classList.remove('feed-card--active'));
+        activeIndex = Math.max(0, Math.min(index, visibleCards.length - 1));
+        const card = visibleCards[activeIndex];
+        card.classList.add('feed-card--active');
+        card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      };
+
+      const saveHistory = (article) => {
+        if (!article?.id) return;
+        const list = readJson(storageKeys.history, []);
+        const next = [{ id: article.id, title: article.title, href: article.href, timestamp: Date.now() }, ...list.filter((item) => item.id !== article.id)].slice(0, 50);
+        writeJson(storageKeys.history, next);
+      };
+
+      const getBookmarks = () => readJson(storageKeys.bookmarks, []);
+
+      const isBookmarked = (id) => getBookmarks().some((item) => item.id === id);
+
+      const updateBookmarkButton = () => {
+        if (!bookmarkButton || !currentArticle) return;
+        const active = isBookmarked(currentArticle.id);
+        bookmarkButton.classList.toggle('is-active', active);
+        bookmarkButton.textContent = active ? '已收藏' : '收藏';
+      };
+
+      const toggleBookmark = () => {
+        if (!currentArticle) return;
+        const list = getBookmarks();
+        const exists = list.some((item) => item.id === currentArticle.id);
+        const next = exists
+          ? list.filter((item) => item.id !== currentArticle.id)
+          : [{ id: currentArticle.id, title: currentArticle.title, href: currentArticle.href, createdAt: Date.now() }, ...list];
+        writeJson(storageKeys.bookmarks, next);
+        updateBookmarkButton();
+      };
+
+      const updateReadingProgress = () => {
+        if (!drawerBody || !progress) return;
+        const max = drawerBody.scrollHeight - drawerBody.clientHeight;
+        const ratio = max > 0 ? drawerBody.scrollTop / max : 0;
+        progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
+      };
+
+      const applyStoredHighlights = () => {
+        if (!drawerBody || !currentArticle) return;
+        const root = drawerBody.querySelector('.home-article-content');
+        if (!root) return;
+        const highlights = readJson(storageKeys.highlights, []).filter((item) => item.articleId === currentArticle.id);
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        let node = walker.nextNode();
+        while (node) {
+          textNodes.push(node);
+          node = walker.nextNode();
+        }
+        highlights.forEach((item) => {
+          const target = textNodes.find((textNode) => textNode.nodeValue?.includes(item.text));
+          if (!target || target.parentElement?.closest('mark')) return;
+          const start = target.nodeValue.indexOf(item.text);
+          if (start < 0) return;
+          const range = document.createRange();
+          range.setStart(target, start);
+          range.setEnd(target, start + item.text.length);
+          const mark = document.createElement('mark');
+          mark.className = `reader-highlight reader-highlight--${item.color || 'gold'}`;
+          mark.dataset.highlightId = item.id;
+          try {
+            mark.append(range.extractContents());
+            range.insertNode(mark);
+          } catch {
+            // If a text node changed, keep the stored highlight but skip rendering.
+          }
+        });
+      };
+
+      const saveSelectionHighlight = () => {
+        if (!currentArticle || !drawerBody) return;
+        const selection = window.getSelection();
+        const text = selection?.toString().trim() || '';
+        if (text.length < 10 || text.length > 240) return;
+        const range = selection.getRangeAt(0);
+        if (!drawerBody.contains(range.commonAncestorContainer)) return;
+        const record = {
+          id: `${currentArticle.id}:${Date.now()}`,
+          articleId: currentArticle.id,
+          title: currentArticle.title,
+          text,
+          color: 'gold',
+          anchor: {
+            quote: { type: 'TextQuoteSelector', exact: text, prefix: '', suffix: '' },
+            position: { type: 'TextPositionSelector', start: 0, end: text.length },
+            dom: { type: 'DomPathSelector', startPath: [], startOffset: 0, endPath: [], endOffset: 0 },
+            contentHash: ''
+          },
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        };
+        const mark = document.createElement('mark');
+        mark.className = 'reader-highlight reader-highlight--gold';
+        mark.dataset.highlightId = record.id;
+        try {
+          mark.append(range.extractContents());
+          range.insertNode(mark);
+          selection.removeAllRanges();
+        } catch {
+          return;
+        }
+        writeJson(storageKeys.highlights, [record, ...readJson(storageKeys.highlights, [])]);
+      };
+
+      const search = (query) => {
+        const q = query.trim().toLowerCase();
+        if (!q) return [];
+        const storedHighlights = readJson(storageKeys.highlights, []).map((item) => ({
+          id: item.id,
+          type: 'highlight',
+          title: item.title,
+          content: item.text,
+          tags: ['highlight'],
+          drawerId: item.articleId
+        }));
+        return [...searchDocs, ...storedHighlights]
+          .filter((doc) => searchKind === 'all' || doc.type === searchKind)
+          .map((doc) => {
+            const content = [doc.title, doc.content, ...(doc.tags || [])].join(' ').toLowerCase();
+            const score = (doc.title?.toLowerCase().includes(q) ? 5 : 0) + (content.includes(q) ? 1 : 0);
+            return { doc, score };
+          })
+          .filter((item) => item.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .map((item) => item.doc)
+          .slice(0, 24);
+      };
+
+      const renderSearch = () => {
+        if (!searchInput || !searchResults) return;
+        const results = search(searchInput.value || '');
+        if (!results.length) {
+          searchResults.innerHTML = '<p class="knowledge-search-empty">输入关键词，搜索文章、项目、书架、音乐、GitHub 和本地标记。</p>';
+          return;
+        }
+        searchResults.replaceChildren(
+          ...results.map((doc) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'knowledge-search-result';
+            button.innerHTML = `<span>${doc.type}</span><strong></strong><small></small>`;
+            button.querySelector('strong').textContent = doc.title;
+            button.querySelector('small').textContent = String(doc.content || '').slice(0, 150);
+            button.addEventListener('click', () => {
+              if (doc.drawerId) {
+                openDrawer(doc.drawerId, button);
+                closeSearch();
+              } else if (doc.href) {
+                window.location.href = doc.href;
+              }
+            });
+            return button;
+          })
+        );
+      };
+
+      const openSearch = () => {
+        if (!searchLayer || !searchInput) return;
+        searchLayer.hidden = false;
+        searchInput.focus({ preventScroll: true });
+        renderSearch();
+      };
+
+      const closeSearch = () => {
+        if (!searchLayer) return;
+        searchLayer.hidden = true;
+      };
 
       const setFilter = (kind) => {
         filterButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.feedFilter === kind));
@@ -719,6 +989,7 @@ function feedCardClass(item: FeedItem) {
           const visible = kind === 'all' || card.dataset.feedKind === kind;
           card.hidden = !visible;
         });
+        activeIndex = 0;
       };
 
       const closeDrawer = () => {
@@ -726,6 +997,7 @@ function feedCardClass(item: FeedItem) {
         layer.hidden = true;
         document.body.classList.remove('has-home-article-drawer');
         drawerBody?.replaceChildren();
+        currentArticle = null;
         if (mainScroller) {
           mainScroller.scrollTop = savedScrollTop;
         }
@@ -751,8 +1023,10 @@ function feedCardClass(item: FeedItem) {
         const title = reader?.dataset.title ?? '';
         const kicker = reader?.dataset.kicker ?? '';
         const href = reader?.dataset.fullHref ?? '#';
+        const articleId = reader?.dataset.articleId ?? id;
         lastFocused = trigger;
         savedScrollTop = mainScroller?.scrollTop ?? 0;
+        currentArticle = { id: articleId, title, href };
 
         drawerBody.replaceChildren(content);
         if (titleTarget) titleTarget.textContent = title;
@@ -760,6 +1034,10 @@ function feedCardClass(item: FeedItem) {
         if (fullLink) fullLink.setAttribute('href', href);
         layer.hidden = false;
         document.body.classList.add('has-home-article-drawer');
+        saveHistory(currentArticle);
+        updateBookmarkButton();
+        updateReadingProgress();
+        requestAnimationFrame(applyStoredHighlights);
         layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
       };
 
@@ -776,15 +1054,74 @@ function feedCardClass(item: FeedItem) {
         });
       });
 
+      document.querySelectorAll('[data-search-open]').forEach((button) => {
+        button.addEventListener('click', openSearch);
+      });
+
+      document.querySelectorAll('[data-search-close]').forEach((button) => {
+        button.addEventListener('click', closeSearch);
+      });
+
+      searchInput?.addEventListener('input', renderSearch);
+
+      searchKinds.forEach((button) => {
+        button.addEventListener('click', () => {
+          searchKind = button.dataset.searchKind || 'all';
+          searchKinds.forEach((item) => item.classList.toggle('is-active', item === button));
+          renderSearch();
+        });
+      });
+
+      document.querySelectorAll('[data-reader-theme]').forEach((button) => {
+        button.addEventListener('click', () => applyReaderTheme(button.dataset.readerTheme));
+      });
+
+      bookmarkButton?.addEventListener('click', toggleBookmark);
+      drawerBody?.addEventListener('scroll', updateReadingProgress);
+      drawerBody?.addEventListener('mouseup', () => setTimeout(saveSelectionHighlight, 0));
+
       document.querySelectorAll('[data-article-close]').forEach((button) => {
         button.addEventListener('click', closeDrawer);
       });
 
       document.addEventListener('keydown', (event) => {
+        const target = event.target;
+        const isTyping = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
+        const commandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
+        if (commandSearch) {
+          event.preventDefault();
+          openSearch();
+          return;
+        }
+        if (event.key === 'Escape' && !searchLayer?.hidden) {
+          closeSearch();
+          return;
+        }
         if (event.key === 'Escape' && !layer?.hidden) {
           closeDrawer();
+          return;
+        }
+        if (isTyping || !layer?.hidden || !searchLayer?.hidden) return;
+        if (event.key.toLowerCase() === 'j') {
+          event.preventDefault();
+          setActiveCard(activeIndex + 1);
+        }
+        if (event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          setActiveCard(activeIndex - 1);
+        }
+        if (event.key === 'Enter') {
+          const visibleCards = getVisibleCards();
+          const card = visibleCards[activeIndex];
+          const id = card?.dataset.drawerId;
+          if (id) {
+            event.preventDefault();
+            openDrawer(id, card);
+          }
         }
       });
+
+      applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
     })();
   </script>
 </BaseLayout>

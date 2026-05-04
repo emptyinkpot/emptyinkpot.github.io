@@ -339,6 +339,61 @@
         "homepage rail only shows bookshelf/music summaries"
       ]
     },
+    "knowledgeLayer": {
+      "status": "implemented v1 as static Astro plus browser-local reader memory",
+      "principles": {
+        "highlight": "memory point",
+        "search": "entry point",
+        "graph": "structure",
+        "bookmarkObject": "physical metaphor for feed item type",
+        "readerDrawer": "temporary book page, not a generic side panel"
+      },
+      "routes": {
+        "knowledgeGraph": "apps/web/src/pages/knowledge/index.astro",
+        "knowledgeIndex": "apps/web/src/pages/data/knowledge-index.json.ts"
+      },
+      "sourceFiles": [
+        "apps/web/src/lib/knowledge/types.ts",
+        "apps/web/src/lib/knowledge/anchors.ts",
+        "apps/web/src/lib/knowledge/storage.ts",
+        "apps/web/src/lib/knowledge/search.ts",
+        "apps/web/src/lib/knowledge/graph.ts",
+        "apps/web/src/pages/index.astro",
+        "apps/web/src/styles/global.css"
+      ],
+      "localStorageKeys": [
+        "emptyinkpot-reading-history",
+        "emptyinkpot-reader-bookmarks",
+        "emptyinkpot-reader-highlights",
+        "emptyinkpot-reader-theme"
+      ],
+      "readerThemes": ["light", "sepia", "dark"],
+      "bookmarkObjectSystem": {
+        "className": "bookmark",
+        "rules": [
+          "bookmark extends from top of feed card",
+          "clip-path creates paper bookmark notch",
+          "post=purple, project/github=green, note/book=red, music=gold",
+          "card title color follows bookmark semantic color"
+        ]
+      },
+      "highlightAnchorContract": {
+        "primary": "TextQuoteSelector exact/prefix/suffix",
+        "secondary": "TextPositionSelector start/end",
+        "fallback": "DomPathSelector start/end path and offsets",
+        "status": "types and anchor utilities implemented; homepage v1 currently restores by exact text and must migrate to anchors.ts in P1"
+      },
+      "searchContract": {
+        "indexEndpoint": "/data/knowledge-index.json",
+        "homepageOverlay": "Cmd/Ctrl+K and homepage search button",
+        "dependencyPolicy": "no external search dependency in v1; future FlexSearch must preserve KnowledgeSearchDoc shape"
+      },
+      "graphContract": {
+        "route": "/knowledge/",
+        "layout": "radial levels: self, collections, content, tags/highlights",
+        "dependencyPolicy": "no force graph dependency in v1; future graph libraries must preserve KnowledgeGraphNode/KnowledgeGraphLink semantics"
+      }
+    },
     "pageFamilies": {
       "home": {
         "files": [
