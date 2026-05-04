@@ -5,6 +5,7 @@ export const knowledgeStorageKeys = {
   bookmarks: 'emptyinkpot-reader-bookmarks',
   highlights: 'emptyinkpot-reader-highlights',
   annotations: 'emptyinkpot-reader-annotations',
+  seals: 'emptyinkpot-reader-seals',
   readerTheme: 'emptyinkpot-reader-theme'
 } as const;
 

@@ -1,4 +1,4 @@
-export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'highlight';
+export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'highlight' | 'seal';
 
 export type KnowledgeSearchDoc = {
   id: string;
@@ -66,6 +66,27 @@ export type AnnotationRecord = {
   updatedAt: number;
 };
 
+export type SealType = 'selected' | 'important' | 'insight' | 'unfinished' | 'reread' | 'archive';
+
+export type SealPlacement = {
+  id: string;
+  type: SealType;
+  label: string;
+  color: string;
+  shape: 'circle' | 'square' | 'vertical';
+  targetId: string;
+  targetType: 'card' | 'article' | 'highlight';
+  title: string;
+  kind?: string;
+  href?: string;
+  drawerId?: string;
+  x: number;
+  y: number;
+  rotation: number;
+  createdAt: number;
+  updatedAt: number;
+};
+
 export type BookmarkRecord = {
   id: string;
   title: string;
@@ -89,7 +110,8 @@ export type KnowledgeGraphNodeType =
   | 'book'
   | 'music'
   | 'tag'
-  | 'highlight';
+  | 'highlight'
+  | 'seal';
 
 export type KnowledgeGraphNode = {
   id: string;

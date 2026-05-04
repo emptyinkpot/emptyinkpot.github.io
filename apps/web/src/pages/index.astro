@@ -52,6 +52,15 @@ type FeedItem = {
   size?: 'compact' | 'standard' | 'tall';
 };
 
+const sealTypes = [
+  { id: 'selected', label: '精选', color: '#9E2A2B', shape: 'circle' },
+  { id: 'important', label: '重要', color: '#6B2D5C', shape: 'circle' },
+  { id: 'insight', label: '洞见', color: '#2F5D50', shape: 'square' },
+  { id: 'unfinished', label: '未完', color: '#6B645C', shape: 'square' },
+  { id: 'reread', label: '重读', color: '#C9A227', shape: 'vertical' },
+  { id: 'archive', label: '归档', color: '#3A3A3A', shape: 'vertical' }
+] as const;
+
 const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
 const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
@@ -88,6 +97,12 @@ const articleDrawerEntries: DrawerEntry[] = await Promise.all(
       date: 'date' in entry.data && entry.data.date ? formatDate(entry.data.date) : undefined,
       href: withBase(`/${basePath}/${entry.id}/`),
       summary,
+      tags:
+        kind === 'post'
+          ? (entry as CollectionEntry<'posts'>).data.tags
+          : kind === 'project'
+            ? (entry as CollectionEntry<'projects'>).data.stack
+            : ['note'],
       Content: rendered.Content,
       toc: rendered.headings
         .filter((heading) => heading.depth <= 3)
@@ -404,6 +419,22 @@ const knowledgeDocs = drawerEntries.map((entry) => ({
   drawerId: entry.id
 }));
 
+function getRelatedEntries(entry: DrawerEntry) {
+  const tagSet = new Set(entry.tags ?? []);
+  return drawerEntries
+    .filter((item) => item.id !== entry.id)
+    .map((item) => {
+      const score =
+        (item.kind === entry.kind ? 2 : 0) +
+        (item.tags ?? []).filter((tag) => tagSet.has(tag)).length;
+      return { item, score };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(({ item }) => item);
+}
+
 function feedCardClass(item: FeedItem) {
   return ['home-feed-card', `home-feed-card--${item.type}`, `home-feed-card--${item.size ?? 'standard'}`].join(' ');
 }
@@ -520,8 +551,12 @@ function feedCardClass(item: FeedItem) {
               data-feed-card
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
             >
               <div class="bookmark bookmark--github"><span>GitHub</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               <ChartCard
                 kicker={item.kicker}
                 title={item.title}
@@ -539,8 +574,12 @@ function feedCardClass(item: FeedItem) {
               data-feed-card
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
             >
               <div class="bookmark bookmark--github"><span>Line</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
                 <GitHubMonthlyLine points={githubAnalytics.monthly} compact />
               </ChartCard>
@@ -552,8 +591,12 @@ function feedCardClass(item: FeedItem) {
               data-feed-card
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
             >
               <div class="bookmark bookmark--github"><span>Donut</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
                 <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
               </ChartCard>
@@ -565,8 +608,12 @@ function feedCardClass(item: FeedItem) {
               data-feed-card
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
             >
               <div class="bookmark bookmark--music"><span>Music</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               <MusicCard item={item.musicItem} compact inertCard />
             </button>
           ) : item.drawerId && drawerById.has(item.drawerId) ? (
@@ -576,8 +623,12 @@ function feedCardClass(item: FeedItem) {
               data-feed-card
               data-feed-kind={item.type}
               data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
             >
               <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               {item.coverSrc ? (
                 <div class="home-feed-card__cover">
                   <img src={item.coverSrc} alt="" loading="lazy" />
@@ -606,8 +657,13 @@ function feedCardClass(item: FeedItem) {
               class={feedCardClass(item)}
               data-feed-card
               data-feed-kind={item.type}
+              data-seal-target={item.drawerId ?? item.href ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
               href={item.href ?? withBase('/')}
             >
+              <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               {item.coverSrc ? (
                 <div class="home-feed-card__cover">
                   <img src={item.coverSrc} alt="" loading="lazy" />
@@ -653,6 +709,7 @@ function feedCardClass(item: FeedItem) {
             <button type="button" data-reader-theme="dark">Dark</button>
           </div>
           <button type="button" data-reader-bookmark>收藏</button>
+          <button type="button" data-reader-seal>盖章</button>
           <a href={withBase('/posts/')} data-article-full>完整页面</a>
           <button type="button" data-article-close>关闭</button>
         </div>
@@ -669,7 +726,7 @@ function feedCardClass(item: FeedItem) {
         <kbd>Esc</kbd>
       </div>
       <nav class="knowledge-search-tabs" aria-label="搜索类型">
-        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'highlight'].map((kind) => (
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'highlight', 'seal'].map((kind) => (
           <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
         ))}
       </nav>
@@ -687,11 +744,38 @@ function feedCardClass(item: FeedItem) {
     <button type="button" data-copy-selection>复制</button>
   </div>
 
+  <div class="seal-palette" data-seal-palette hidden>
+    <div class="seal-palette__panel" role="dialog" aria-modal="false" aria-label="选择印章">
+      <header>
+        <span>Seal</span>
+        <strong data-seal-target-title>选择判断</strong>
+        <button type="button" data-seal-close>关闭</button>
+      </header>
+      <div class="seal-palette__grid">
+        {sealTypes.map((seal) => (
+          <button
+            type="button"
+            class={`seal-palette__option knowledge-seal knowledge-seal--${seal.shape}`}
+            style={`--seal-color:${seal.color}`}
+            data-seal-type={seal.id}
+            data-seal-label={seal.label}
+            data-seal-color={seal.color}
+            data-seal-shape={seal.shape}
+          >
+            {seal.label}
+          </button>
+        ))}
+      </div>
+      <button type="button" class="seal-palette__remove" data-seal-remove>移除当前印章</button>
+    </div>
+  </div>
+
   <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
 
   <div class="home-article-templates" hidden>
     {drawerEntries.map((entry) => {
       const Content = entry.Content;
+      const related = getRelatedEntries(entry);
 
       return (
         <article
@@ -709,23 +793,39 @@ function feedCardClass(item: FeedItem) {
             {entry.date && <small>{entry.date}</small>}
           </header>
           {Content ? (
-            <div class="home-article-reader__grid">
-              <nav class="home-article-toc" aria-label="文章目录">
-                <strong>目录</strong>
-                {entry.toc?.length ? (
-                  entry.toc.map((heading) => (
-                    <a href={heading.href} class={heading.className}>
-                      {heading.text}
-                    </a>
-                  ))
-                ) : (
-                  <span>暂无标题</span>
-                )}
-              </nav>
-              <div class="home-article-content prose-shell prose-shell--plain">
-                <Content />
+            <>
+              <div class="home-article-reader__grid">
+                <nav class="home-article-toc" aria-label="文章目录">
+                  <strong>目录</strong>
+                  {entry.toc?.length ? (
+                    entry.toc.map((heading) => (
+                      <a href={heading.href} class={heading.className}>
+                        {heading.text}
+                      </a>
+                    ))
+                  ) : (
+                    <span>暂无标题</span>
+                  )}
+                </nav>
+                <div class="home-article-content prose-shell prose-shell--plain">
+                  <Content />
+                </div>
               </div>
-            </div>
+              {related.length ? (
+                <section class="home-article-related" aria-label="继续阅读">
+                  <span>继续阅读</span>
+                  <h3>相关内容</h3>
+                  <div>
+                    {related.map((item) => (
+                      <button type="button" data-memory-drawer={item.id}>
+                        <small>{item.kicker}</small>
+                        <strong>{item.title}</strong>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+            </>
           ) : (
             <div class="home-drawer-summary">
               {entry.coverSrc ? (
@@ -798,6 +898,9 @@ function feedCardClass(item: FeedItem) {
       const searchResults = document.querySelector('[data-search-results]');
       const searchKinds = [...document.querySelectorAll('[data-search-kind]')];
       const selectionToolbar = document.querySelector('[data-selection-toolbar]');
+      const sealPalette = document.querySelector('[data-seal-palette]');
+      const sealTargetTitle = document.querySelector('[data-seal-target-title]');
+      const readerSealButton = document.querySelector('[data-reader-seal]');
       const sidebarHistory = document.querySelector('[data-sidebar-history]');
       const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
       const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
@@ -807,7 +910,16 @@ function feedCardClass(item: FeedItem) {
         bookmarks: 'emptyinkpot-reader-bookmarks',
         highlights: 'emptyinkpot-reader-highlights',
         annotations: 'emptyinkpot-reader-annotations',
+        seals: 'emptyinkpot-reader-seals',
         readerTheme: 'emptyinkpot-reader-theme'
+      };
+      const sealDefinitions = {
+        selected: { label: '精选', color: '#9E2A2B', shape: 'circle' },
+        important: { label: '重要', color: '#6B2D5C', shape: 'circle' },
+        insight: { label: '洞见', color: '#2F5D50', shape: 'square' },
+        unfinished: { label: '未完', color: '#6B645C', shape: 'square' },
+        reread: { label: '重读', color: '#C9A227', shape: 'vertical' },
+        archive: { label: '归档', color: '#3A3A3A', shape: 'vertical' }
       };
       const drawerTransitionMs = 180;
       const searchTransitionMs = 120;
@@ -818,6 +930,7 @@ function feedCardClass(item: FeedItem) {
       let searchKind = 'all';
       let selectedRange = null;
       let pendingHighlightId = null;
+      let sealContext = null;
       let drawerCloseTimer = 0;
       let searchCloseTimer = 0;
 
@@ -946,6 +1059,93 @@ function feedCardClass(item: FeedItem) {
         });
         renderSidebarList(sidebarHistory, history, '暂无记录', 'history');
         renderSidebarList(sidebarBookmarks, bookmarks.length ? bookmarks : highlights, bookmarks.length ? '暂无收藏' : '暂无标记', bookmarks.length ? 'bookmark' : 'highlight');
+      };
+
+      const getSeals = () => readJson(storageKeys.seals, []);
+
+      const latestSealFor = (targetId) =>
+        getSeals()
+          .filter((item) => item.targetId === targetId)
+          .sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0))[0];
+
+      const createSealElement = (record) => {
+        const definition = sealDefinitions[record.type] || sealDefinitions.selected;
+        const seal = document.createElement('span');
+        seal.className = `knowledge-seal knowledge-seal--${record.shape || definition.shape}`;
+        seal.dataset.renderedSeal = record.id;
+        seal.style.setProperty('--seal-color', record.color || definition.color);
+        seal.style.setProperty('--seal-rotation', `${record.rotation || -7}deg`);
+        seal.textContent = record.label || definition.label;
+        return seal;
+      };
+
+      const renderSeals = () => {
+        document.querySelectorAll('[data-rendered-seal]').forEach((node) => node.remove());
+        cards.forEach((card) => {
+          const targetId = card.dataset.sealTarget || card.dataset.drawerId || card.getAttribute('href');
+          if (!targetId) return;
+          const record = latestSealFor(targetId);
+          if (!record) return;
+          card.append(createSealElement(record));
+        });
+        if (currentArticle && drawerBody) {
+          const intro = drawerBody.querySelector('.home-article-intro');
+          const record = latestSealFor(currentArticle.id);
+          if (intro && record) intro.append(createSealElement(record));
+        }
+      };
+
+      const openSealPalette = (target, anchor) => {
+        if (!sealPalette || !target?.targetId) return;
+        sealContext = target;
+        if (sealTargetTitle) sealTargetTitle.textContent = target.title || '选择判断';
+        sealPalette.hidden = false;
+        const rect = anchor?.getBoundingClientRect?.();
+        if (rect && sealPalette instanceof HTMLElement) {
+          sealPalette.style.setProperty('--seal-palette-x', `${Math.min(window.innerWidth - 280, Math.max(12, rect.left))}px`);
+          sealPalette.style.setProperty('--seal-palette-y', `${Math.min(window.innerHeight - 260, Math.max(12, rect.bottom + 8))}px`);
+        }
+      };
+
+      const closeSealPalette = () => {
+        if (sealPalette) sealPalette.hidden = true;
+        sealContext = null;
+      };
+
+      const saveSeal = (type) => {
+        if (!sealContext?.targetId) return;
+        const definition = sealDefinitions[type] || sealDefinitions.selected;
+        const records = getSeals();
+        const previous = records.find((item) => item.targetId === sealContext.targetId);
+        const now = Date.now();
+        const record = {
+          id: previous?.id || `seal:${sealContext.targetId}:${now}`,
+          type,
+          label: definition.label,
+          color: definition.color,
+          shape: definition.shape,
+          targetId: sealContext.targetId,
+          targetType: sealContext.targetType || 'card',
+          title: sealContext.title || 'Untitled',
+          kind: sealContext.kind || 'post',
+          href: sealContext.href || '',
+          drawerId: sealContext.drawerId || '',
+          rotation: previous?.rotation ?? Math.round(Math.random() * 14 - 7),
+          x: previous?.x ?? 0.78,
+          y: previous?.y ?? 0.12,
+          createdAt: previous?.createdAt || now,
+          updatedAt: now
+        };
+        writeJson(storageKeys.seals, [record, ...records.filter((item) => item.id !== record.id && item.targetId !== record.targetId)]);
+        renderSeals();
+        closeSealPalette();
+      };
+
+      const removeSeal = () => {
+        if (!sealContext?.targetId) return;
+        writeJson(storageKeys.seals, getSeals().filter((item) => item.targetId !== sealContext.targetId));
+        renderSeals();
+        closeSealPalette();
       };
 
       const saveHistory = (article) => {
@@ -1150,6 +1350,14 @@ function feedCardClass(item: FeedItem) {
       const createReaderMemoryPanel = () => {
         const panel = document.createElement('aside');
         panel.className = 'reader-memory-panel';
+        const toggle = document.createElement('button');
+        const content = document.createElement('div');
+        toggle.type = 'button';
+        toggle.className = 'reader-memory-panel__toggle';
+        toggle.dataset.memoryToggle = 'true';
+        toggle.textContent = '阅读记忆';
+        content.className = 'reader-memory-panel__content';
+        panel.append(toggle, content);
         const history = readJson(storageKeys.history, []).slice(0, 4);
         const bookmarks = readJson(storageKeys.bookmarks, []).slice(0, 4);
         const highlights = readJson(storageKeys.highlights, []).slice(0, 4);
@@ -1163,7 +1371,7 @@ function feedCardClass(item: FeedItem) {
             const empty = document.createElement('p');
             empty.textContent = '暂无记录';
             section.append(empty);
-            panel.append(section);
+            content.append(section);
             return;
           }
 
@@ -1178,7 +1386,7 @@ function feedCardClass(item: FeedItem) {
             section.append(button);
           });
 
-          panel.append(section);
+          content.append(section);
         };
         appendSection('最近阅读', history, 'history');
         appendSection('收藏', bookmarks, 'bookmark');
@@ -1317,7 +1525,16 @@ function feedCardClass(item: FeedItem) {
           drawerId: item.articleId,
           highlightId: item.id
         }));
-        return [...searchDocs, ...storedHighlights]
+        const storedSeals = getSeals().map((item) => ({
+          id: item.id,
+          type: 'seal',
+          title: `${item.label} · ${item.title}`,
+          content: [item.label, item.type, item.title, item.kind].join(' '),
+          tags: ['seal', item.type, item.kind].filter(Boolean),
+          drawerId: item.drawerId,
+          href: item.href
+        }));
+        return [...searchDocs, ...storedHighlights, ...storedSeals]
           .filter((doc) => searchKind === 'all' || doc.type === searchKind)
           .map((doc) => {
             const content = [doc.title, doc.content, ...(doc.tags || [])].join(' ').toLowerCase();
@@ -1443,6 +1660,7 @@ function feedCardClass(item: FeedItem) {
         updateBookmarkButton();
         updateReadingProgress();
         requestAnimationFrame(applyStoredHighlights);
+        requestAnimationFrame(renderSeals);
         layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
       };
 
@@ -1492,6 +1710,13 @@ function feedCardClass(item: FeedItem) {
         openDrawer(drawerId, target, { highlightId: target.dataset.memoryHighlight });
       });
 
+      drawerBody?.addEventListener('click', (event) => {
+        const toggle = event.target instanceof Element ? event.target.closest('[data-memory-toggle]') : null;
+        if (!toggle) return;
+        const panel = toggle.closest('.reader-memory-panel');
+        panel?.classList.toggle('is-open');
+      });
+
       document.querySelector('.home-feed-rail')?.addEventListener('click', (event) => {
         const target = event.target instanceof Element ? event.target.closest('[data-sidebar-drawer]') : null;
         if (!target) return;
@@ -1499,6 +1724,55 @@ function feedCardClass(item: FeedItem) {
         if (!drawerId) return;
         openDrawer(drawerId, target, { highlightId: target.dataset.sidebarHighlight });
       });
+
+      document.addEventListener('click', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-seal-trigger]') : null;
+        if (!trigger) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const card = trigger.closest('[data-feed-card]');
+        if (!card) return;
+        openSealPalette(
+          {
+            targetId: card.dataset.sealTarget || card.dataset.drawerId || card.getAttribute('href'),
+            drawerId: card.dataset.drawerId || '',
+            href: card.getAttribute('href') || '',
+            title: card.dataset.sealTitle || card.textContent?.trim() || 'Untitled',
+            kind: card.dataset.sealKind || card.dataset.feedKind || 'post',
+            targetType: 'card'
+          },
+          trigger
+        );
+      }, true);
+
+      document.addEventListener('keydown', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-seal-trigger]') : null;
+        if (!trigger || (event.key !== 'Enter' && event.key !== ' ')) return;
+        event.preventDefault();
+        trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      readerSealButton?.addEventListener('click', () => {
+        if (!currentArticle) return;
+        openSealPalette(
+          {
+            targetId: currentArticle.id,
+            drawerId: currentArticle.id,
+            href: currentArticle.href,
+            title: currentArticle.title,
+            kind: currentArticle.id.split(':')[0],
+            targetType: 'article'
+          },
+          readerSealButton
+        );
+      });
+
+      sealPalette?.querySelectorAll('[data-seal-type]').forEach((button) => {
+        button.addEventListener('click', () => saveSeal(button.dataset.sealType || 'selected'));
+      });
+
+      sealPalette?.querySelector('[data-seal-close]')?.addEventListener('click', closeSealPalette);
+      sealPalette?.querySelector('[data-seal-remove]')?.addEventListener('click', removeSeal);
 
       selectionToolbar?.querySelectorAll('[data-highlight-color]').forEach((button) => {
         button.addEventListener('click', () => saveSelectionHighlight(button.dataset.highlightColor || 'gold'));
@@ -1563,6 +1837,7 @@ function feedCardClass(item: FeedItem) {
 
       applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
       renderSidebarState();
+      renderSeals();
       initHeroBanner();
     })();
   </script>

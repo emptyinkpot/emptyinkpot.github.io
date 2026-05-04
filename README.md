@@ -1110,9 +1110,11 @@ apps/web/src/pages/
 - Reader Drawer 支持收藏到 `emptyinkpot-reader-bookmarks`。
 - Reader Drawer 支持 `light / sepia / dark` 三种阅读主题，存储键为 `emptyinkpot-reader-theme`。
 - Reader Drawer 支持选中文本后保存本地 highlight 到 `emptyinkpot-reader-highlights`；当前恢复已经使用 `quote / position / dom path` 三锚点，旧的 exact-only 记录仍可用 quote fallback 恢复。
-- Reader Drawer 打开时会显示 Reader Memory Panel：最近阅读、收藏、标记，点击可直接回访对应 drawer 或标记位置。
+- Reader Drawer 打开时会生成折叠态 Reader Memory Panel：默认只显示“阅读记忆”入口，展开后显示最近阅读、收藏、标记，点击可直接回访对应 drawer 或标记位置。
 - Search 的本地 highlight 结果会携带 `highlightId`，点击后打开对应 drawer 并滚动聚焦到具体标记。
 - 如果内容变更导致三锚点都无法定位，drawer 顶部显示 orphan highlight 提示，不静默丢失本地记录。
+- Seal System 使用 `emptyinkpot-reader-seals` 保存卡片 / 文章印章；`selected / important / insight / unfinished / reread / archive` 表达人工判断。
+- Search 会把本地 seal 作为 `type: "seal"` 的结果纳入统一入口；Graph 页面提供静态 seal 类型节点，作为 Knowledge Artifact System 的回访结构。
 - Drawer 顶部有阅读进度条，关闭后继续遵守 scrollTop 恢复规则。
 
 Highlight 工程合同：
@@ -1157,7 +1159,7 @@ Graph 不做随机力导向毛线团。默认布局是：
 Level 0: self / emptyinkpot
 Level 1: collections
 Level 2: content nodes
-Level 3: tags / highlights
+Level 3: tags / highlights / seals
 ```
 
 当前 `/knowledge/` 使用 `buildRadialGraph()` 做静态 radial SVG。后续如果引 `react-force-graph`，仍必须保留 `KnowledgeGraphNode` / `KnowledgeGraphLink` 的语义分层。
@@ -1230,6 +1232,10 @@ P2 partial:
 - Graph hover/click 交互
 - Graph cluster/type 过滤
 - Graph Inspector：标题、类型、分区、meta、打开入口
+- Seal Palette：卡片 / 当前文章盖章
+- Seal 结果进入 Search；Seal 类型节点进入 Graph
+- Reader Memory Panel 默认折叠为浮层，不再打断正文流
+- Drawer 文章底部 Related 继续阅读
 
 P2 remaining:
 - FlexSearch 或等价搜索引擎
@@ -1254,8 +1260,9 @@ P2 remaining:
 11. Reader 验证：drawer 内 light / sepia / dark 可切换；收藏写入 `emptyinkpot-reader-bookmarks`；阅读历史写入 `emptyinkpot-reading-history`。
 12. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
 13. Graph 交互验证：`/knowledge/` 的 cluster 按钮必须能过滤节点；hover 节点只强调一跳关系；点击或键盘 Enter 选择节点后 Inspector 必须更新标题、类型、分区和打开入口。
-14. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
-14. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
+14. Seal 验证：首页卡片 hover 出现盖章入口；选择印章后卡片和对应 drawer 标题区出现 `.knowledge-seal`；localStorage 写入 `emptyinkpot-reader-seals`；Search 的 `seal` tab 可搜到印章结果。
+15. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
+16. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
 
 可用浏览器断言：
 
@@ -1378,9 +1385,21 @@ Drawer Reader rules：
 
 - `.home-article-layer` 负责 backdrop + drawer layer，不得直接 display none 后瞬移。
 - `.home-article-backdrop` 使用 `opacity` 过渡，背景 `rgba(30,27,24,.28)`。
-- `.home-article-drawer` 宽度 `min(860px,100vw)`，右侧滑入，`transform` 过渡 `180ms cubic-bezier(.2,0,.2,1)`。
+- `.home-article-drawer` 宽度 `min(980px,100vw)`，右侧滑入，`transform` 过渡 `180ms cubic-bezier(.2,0,.2,1)`。
 - 关闭 drawer 必须等过渡结束后再 hidden；关闭后恢复 `.home-feed-main.scrollTop` 并 focus 回原触发卡片。
 - reader themes 使用 `emptyinkpot-reader-theme`，仍只允许 `light / sepia / dark`。
+- Reader Memory 不得默认展开占据正文流；当前实现为右上折叠浮层 `.reader-memory-panel`，点击“阅读记忆”后显示最近阅读 / 收藏 / 标记。
+- 正文标题结构以 `.home-article-intro` 为权威标题块：轻 meta、强 h1、lead summary；辅助信息进入侧边或底部，不再方框套方框。
+- `.home-article-related` 是文章底部“继续阅读”入口，最多展示 3 条相关内容，负责让阅读从单篇流向下一篇。
+
+Reader Page 排版规则：
+
+- 阅读页不得按后台面板思路堆模块；正文是流动阅读路径，辅助状态必须进入折叠浮层、侧边目录或底部延伸区。
+- 顶部信息只保留 `meta -> h1 -> lead` 三层：meta 轻、标题强、lead 负责一句话概括；不得在标题下再放大块信息框。
+- 正文宽度控制在 `68ch` 左右，行高约 `1.9`；`h2 / h3 / blockquote / ul / ol / code` 负责制造阅读节奏，不允许所有段落等权堆叠。
+- TOC 是轻侧栏，不是内容卡片；它只辅助定位，不抢正文视觉权重。
+- 阅读结束不能是死路；`.home-article-related` 必须给出继续阅读入口，优先使用同类型和共享 tags 的内容。
+- 色彩只服务注意力：标题、书签、高亮、印章、Graph 节点可以使用语义色；正文容器和辅助面板保持安静。
 
 Search rules：
 
@@ -1420,10 +1439,10 @@ apps/web/public/images/hero/
 
 Graph rules：
 
-- Graph 不做随机星云；必须保留中心、collection、content、tag/highlight 的层级。
+- Graph 不做随机星云；必须保留中心、collection、content、tag/highlight/seal 的层级。
 - `/knowledge/` 的视觉容器使用白色 panel + 纸面 graph canvas。
 - 当前 `/knowledge/` 已使用 cluster sectors：writing、engineering、reading、media、github；hover 强调一跳关系，点击节点更新 Inspector。
-- Graph 过滤入口固定在左侧 cluster list：All、Writing、Engineering、Reading、Media、GitHub、Tags。
+- Graph 过滤入口固定在左侧 cluster list：All、Writing、Engineering、Reading、Media、GitHub、Tags、Seals。
 - Graph 仍是静态 SVG + 轻量客户端脚本，不引随机力导向；后续即使替换渲染库，也必须保留现有节点/边语义与 Inspector 行为。
 
 Tangible Knowledge UI 扩展规则：
@@ -1436,9 +1455,11 @@ Seal = 人工判断
 Graph = 回访结构
 ```
 
-- Seal System 可以作为 P1/P2 扩展，但不能替代 bookmark。印章表达“精选 / 重要 / 洞见 / 未完 / 重读 / 归档”等人工判断。
+- Seal System 已作为 P2 落地，但不能替代 bookmark。印章表达“精选 / 重要 / 洞见 / 未完 / 重读 / 归档”等人工判断。
+- `.knowledge-seal` 是压印物件，不是 icon；支持 circle / square / vertical 三种形态，带轻微旋转和 multiply 压印感。
+- `.seal-palette` 负责选择印章；当前第一版支持单卡片 / 当前文章盖章与移除，不做批量管理页。
 - Annotation 必须绑定 Highlight；高亮只保存原文片段，批注保存个人思考。
-- Seal、Annotation、Highlight 最终都应进入 Search 和 Graph，形成统一 Knowledge Artifact System。
+- Seal、Annotation、Highlight 都必须进入统一 Knowledge Artifact System；当前 Seal 已进入 Search 和 Graph 类型节点，Highlight 已进入 Search，Annotation 先随 Highlight 保存。
 - 第一版仍保持 localStorage；引入后端前不得改变 `HighlightRecord`、`KnowledgeSearchDoc`、`KnowledgeGraphNode`、`KnowledgeGraphLink` 合同。
 
 最终验收标准：
@@ -1459,7 +1480,7 @@ Drawer：
 Search：
 - Cmd/Ctrl + K 打开
 - Esc 关闭
-- 可搜文章、书、音乐、GitHub、高亮
+- 可搜文章、书、音乐、GitHub、高亮、印章
 
 Graph：
 - 不随机
