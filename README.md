@@ -1187,11 +1187,15 @@ P1 done:
 - Reader Memory Panel：最近阅读 / 收藏 / 标记
 - Search 结果支持跳转到具体 highlight
 
+P2 partial:
+- Graph hover/click 交互
+- Graph cluster/type 过滤
+- Graph Inspector：标题、类型、分区、meta、打开入口
+
 P2 remaining:
 - FlexSearch 或等价搜索引擎
-- Graph hover/click 交互
 - 高亮精准重定位和重绑 UI
-- Graph 默认限量节点和内容类型过滤
+- Graph 默认限量节点继续维持当前 slice 策略；后续如内容量扩大，再把限量策略抽到 `lib/knowledge/graph.ts`
 ```
 
 #### 0.7.5.15e Frontend Reproduction Checklist
@@ -1210,7 +1214,8 @@ P2 remaining:
 10. 搜索验证：`Cmd/Ctrl + K` 打开 Knowledge Search；搜索 GitHub、书籍、音乐和文章标题都应返回结果。
 11. Reader 验证：drawer 内 light / sepia / dark 可切换；收藏写入 `emptyinkpot-reader-bookmarks`；阅读历史写入 `emptyinkpot-reading-history`。
 12. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
-13. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
+13. Graph 交互验证：`/knowledge/` 的 cluster 按钮必须能过滤节点；hover 节点只强调一跳关系；点击或键盘 Enter 选择节点后 Inspector 必须更新标题、类型、分区和打开入口。
+14. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
 14. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
 
 可用浏览器断言：
@@ -1376,7 +1381,9 @@ Graph rules：
 
 - Graph 不做随机星云；必须保留中心、collection、content、tag/highlight 的层级。
 - `/knowledge/` 的视觉容器使用白色 panel + 纸面 graph canvas。
-- Graph 后续升级方向是 cluster sectors：writing、engineering、reading、media、github，而不是把所有节点丢进随机力导向。
+- 当前 `/knowledge/` 已使用 cluster sectors：writing、engineering、reading、media、github；hover 强调一跳关系，点击节点更新 Inspector。
+- Graph 过滤入口固定在左侧 cluster list：All、Writing、Engineering、Reading、Media、GitHub、Tags。
+- Graph 仍是静态 SVG + 轻量客户端脚本，不引随机力导向；后续即使替换渲染库，也必须保留现有节点/边语义与 Inspector 行为。
 
 Tangible Knowledge UI 扩展规则：
 

@@ -97,6 +97,10 @@ export type KnowledgeGraphNode = {
   type: KnowledgeGraphNodeType;
   level: number;
   weight: number;
+  cluster?: 'writing' | 'engineering' | 'reading' | 'media' | 'github' | 'archive';
+  href?: string;
+  summary?: string;
+  meta?: string;
   x?: number;
   y?: number;
 };

@@ -2,9 +2,10 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { books } from '../../data/books';
+import githubOverview from '../../data/github-overview.emptyinkpot.json';
 import { musicItems } from '../../data/music';
 import { getPrimaryCategory, sortPosts } from '../../lib/content';
-import { buildRadialGraph } from '../../lib/knowledge/graph';
+import { buildClusteredRadialGraph } from '../../lib/knowledge/graph';
 import type { KnowledgeGraphLink, KnowledgeGraphNode } from '../../lib/knowledge/types';
 import { withBase } from '../../lib/site';
 
@@ -12,36 +13,125 @@ const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft))
 const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].slice(0, 8);
 const projects = [...(await getCollection('projects'))].slice(0, 8);
 
-const collectionNodes: KnowledgeGraphNode[] = ['posts', 'notes', 'projects', 'books', 'music'].map((id) => ({
-  id: `collection:${id}`,
-  label: id,
+type GraphCluster = NonNullable<KnowledgeGraphNode['cluster']>;
+
+const collectionConfig: Array<{ id: string; label: string; cluster: GraphCluster; summary: string }> = [
+  { id: 'posts', label: 'Posts', cluster: 'writing', summary: 'Long-form writing and engineering notes.' },
+  { id: 'notes', label: 'Notes', cluster: 'writing', summary: 'Shorter notes and reconstruction logs.' },
+  { id: 'projects', label: 'Projects', cluster: 'engineering', summary: 'Implemented systems and active engineering work.' },
+  { id: 'books', label: 'Books', cluster: 'reading', summary: 'Reading queue and reference shelf.' },
+  { id: 'music', label: 'Music', cluster: 'media', summary: 'Listening context for writing and building.' },
+  { id: 'github', label: 'GitHub', cluster: 'github', summary: 'Repository activity and public code traces.' }
+];
+
+const collectionNodes: KnowledgeGraphNode[] = collectionConfig.map((item) => ({
+  id: `collection:${item.id}`,
+  label: item.label,
   type: 'collection',
   level: 1,
-  weight: 8
+  weight: 8,
+  cluster: item.cluster,
+  summary: item.summary,
+  href: item.id === 'github' ? withBase('/github/') : withBase(`/${item.id === 'posts' ? 'posts' : item.id}/`),
+  meta: 'collection'
 }));
 
+const githubRepos = githubOverview.overview.repos.slice(0, 5);
+
 const contentNodes: KnowledgeGraphNode[] = [
-  ...posts.map((post) => ({ id: `post:${post.id}`, label: post.data.title, type: 'post' as const, level: 2, weight: 4 })),
-  ...notes.map((note) => ({ id: `note:${note.id}`, label: note.data.title, type: 'note' as const, level: 2, weight: 3 })),
-  ...projects.map((project) => ({ id: `project:${project.id}`, label: project.data.title, type: 'project' as const, level: 2, weight: 4 })),
-  ...books.map((book) => ({ id: `book:${book.title}`, label: book.title, type: 'book' as const, level: 2, weight: 3 })),
-  ...musicItems.map((item) => ({ id: `music:${item.id}`, label: item.title, type: 'music' as const, level: 2, weight: 2 }))
+  ...posts.map((post) => ({
+    id: `post:${post.id}`,
+    label: post.data.title,
+    type: 'post' as const,
+    level: 2,
+    weight: 4,
+    cluster: 'writing' as const,
+    href: withBase(`/posts/${post.data.slug}/`),
+    summary: post.data.summary ?? post.data.description ?? '',
+    meta: [getPrimaryCategory(post), ...post.data.tags].filter(Boolean).slice(0, 4).join(' / ')
+  })),
+  ...notes.map((note) => ({
+    id: `note:${note.id}`,
+    label: note.data.title,
+    type: 'note' as const,
+    level: 2,
+    weight: 3,
+    cluster: 'writing' as const,
+    href: withBase(`/notes/${note.id}/`),
+    summary: note.data.description ?? '',
+    meta: 'note'
+  })),
+  ...projects.map((project) => ({
+    id: `project:${project.id}`,
+    label: project.data.title,
+    type: 'project' as const,
+    level: 2,
+    weight: 4,
+    cluster: 'engineering' as const,
+    href: withBase(`/projects/${project.id}/`),
+    summary: project.data.description ?? '',
+    meta: project.data.stack.slice(0, 4).join(' / ')
+  })),
+  ...books.map((book) => ({
+    id: `book:${book.title}`,
+    label: book.title,
+    type: 'book' as const,
+    level: 2,
+    weight: 3,
+    cluster: 'reading' as const,
+    href: book.href,
+    summary: book.note,
+    meta: `${book.author} / ${book.statusLabel}`
+  })),
+  ...musicItems.map((item) => ({
+    id: `music:${item.id}`,
+    label: item.title,
+    type: 'music' as const,
+    level: 2,
+    weight: 2,
+    cluster: 'media' as const,
+    href: item.href,
+    summary: item.note,
+    meta: [item.artist, ...item.mood].join(' / ')
+  })),
+  ...githubRepos.map((repo) => ({
+    id: `github:${repo.name}`,
+    label: repo.name,
+    type: 'github' as const,
+    level: 2,
+    weight: Math.max(2, Math.min(5, Math.round(repo.size / 4000))),
+    cluster: 'github' as const,
+    href: repo.htmlUrl,
+    summary: `${repo.language || 'Repository'} repo updated ${repo.updatedAt.slice(0, 10)}.`,
+    meta: `${repo.language || 'unknown'} / ${repo.stars} stars / ${repo.issues} issues`
+  }))
 ];
 
 const tagLabels = Array.from(
   new Set([
     ...posts.flatMap((post) => [getPrimaryCategory(post), ...post.data.tags]),
     ...projects.flatMap((project) => project.data.stack),
-    ...musicItems.flatMap((item) => item.mood)
+    ...musicItems.flatMap((item) => item.mood),
+    ...githubRepos.map((repo) => repo.language || 'code')
   ])
 ).slice(0, 36);
+
+const tagCluster = new Map<string, GraphCluster>();
+posts.forEach((post) => [getPrimaryCategory(post), ...post.data.tags].forEach((tag) => tagCluster.set(tag, 'writing')));
+projects.forEach((project) => project.data.stack.forEach((tag) => tagCluster.set(tag, 'engineering')));
+musicItems.forEach((item) => item.mood.forEach((tag) => tagCluster.set(tag, 'media')));
+githubRepos.forEach((repo) => tagCluster.set(repo.language || 'code', 'github'));
 
 const tagNodes: KnowledgeGraphNode[] = tagLabels.map((tag) => ({
   id: `tag:${tag}`,
   label: tag,
   type: 'tag',
   level: 3,
-  weight: 2
+  weight: 2,
+  cluster: tagCluster.get(tag) ?? 'archive',
+  href: withBase(`/search/?q=${encodeURIComponent(tag)}`),
+  summary: `Content tagged with ${tag}.`,
+  meta: 'tag'
 }));
 
 const links: KnowledgeGraphLink[] = [
@@ -51,15 +141,45 @@ const links: KnowledgeGraphLink[] = [
   ...projects.map((project) => ({ source: 'collection:projects', target: `project:${project.id}`, type: 'contains' as const, weight: 1 })),
   ...books.map((book) => ({ source: 'collection:books', target: `book:${book.title}`, type: 'contains' as const, weight: 1 })),
   ...musicItems.map((item) => ({ source: 'collection:music', target: `music:${item.id}`, type: 'contains' as const, weight: 1 })),
+  ...githubRepos.map((repo) => ({ source: 'collection:github', target: `github:${repo.name}`, type: 'contains' as const, weight: 1 })),
   ...posts.flatMap((post) =>
     [getPrimaryCategory(post), ...post.data.tags]
       .filter((tag) => tagLabels.includes(tag))
       .map((tag) => ({ source: `post:${post.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
-  )
+  ),
+  ...projects.flatMap((project) =>
+    project.data.stack
+      .filter((tag) => tagLabels.includes(tag))
+      .map((tag) => ({ source: `project:${project.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
+  ),
+  ...musicItems.flatMap((item) =>
+    item.mood
+      .filter((tag) => tagLabels.includes(tag))
+      .map((tag) => ({ source: `music:${item.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
+  ),
+  ...githubRepos.map((repo) => ({
+    source: `github:${repo.name}`,
+    target: `tag:${repo.language || 'code'}`,
+    type: 'tagged' as const,
+    weight: 1
+  }))
 ];
 
-const graph = buildRadialGraph(
-  [{ id: 'self:emptyinkpot', label: 'emptyinkpot', type: 'self', level: 0, weight: 10 }, ...collectionNodes, ...contentNodes, ...tagNodes],
+const graph = buildClusteredRadialGraph(
+  [
+    {
+      id: 'self:emptyinkpot',
+      label: 'emptyinkpot',
+      type: 'self',
+      level: 0,
+      weight: 10,
+      summary: 'Center node for the Content OS knowledge map.',
+      meta: 'self'
+    },
+    ...collectionNodes,
+    ...contentNodes,
+    ...tagNodes
+  ],
   links
 );
 
@@ -100,24 +220,49 @@ const viewBox = '-620 -620 1240 1240';
       <div class="knowledge-page__graph-layout">
         <aside class="knowledge-sidebar" aria-label="Graph clusters">
           <p>Clusters</p>
-          <button type="button" class="is-active">All</button>
-          <button type="button">Writing</button>
-          <button type="button">Engineering</button>
-          <button type="button">Reading</button>
-          <button type="button">Media</button>
-          <button type="button">GitHub</button>
+          <button type="button" class="is-active" data-graph-filter="all">All</button>
+          <button type="button" data-graph-filter="writing">Writing</button>
+          <button type="button" data-graph-filter="engineering">Engineering</button>
+          <button type="button" data-graph-filter="reading">Reading</button>
+          <button type="button" data-graph-filter="media">Media</button>
+          <button type="button" data-graph-filter="github">GitHub</button>
+          <button type="button" data-graph-filter="tag">Tags</button>
         </aside>
 
         <div class="knowledge-canvas">
-          <svg class="knowledge-graph-svg" viewBox={viewBox} role="img" aria-label="Knowledge graph">
+          <svg class="knowledge-graph-svg" viewBox={viewBox} role="img" aria-label="Knowledge graph" data-knowledge-graph>
             {graph.links.map((link) => {
               const source = graph.nodes.find((node) => node.id === link.source);
               const target = graph.nodes.find((node) => node.id === link.target);
               if (!source || !target) return null;
-              return <line x1={source.x} y1={source.y} x2={target.x} y2={target.y} class={`knowledge-link knowledge-link--${link.type}`} />;
+              return (
+                <line
+                  x1={source.x}
+                  y1={source.y}
+                  x2={target.x}
+                  y2={target.y}
+                  class={`knowledge-link knowledge-link--${link.type}`}
+                  data-graph-link
+                  data-source={source.id}
+                  data-target={target.id}
+                />
+              );
             })}
             {graph.nodes.map((node) => (
-              <g class={`knowledge-node knowledge-node--${node.type}`} transform={`translate(${node.x ?? 0} ${node.y ?? 0})`}>
+              <g
+                class={`knowledge-node knowledge-node--${node.type}`}
+                transform={`translate(${node.x ?? 0} ${node.y ?? 0})`}
+                tabindex="0"
+                role="button"
+                data-graph-node
+                data-node-id={node.id}
+                data-node-label={node.label}
+                data-node-type={node.type}
+                data-node-cluster={node.cluster ?? 'all'}
+                data-node-summary={node.summary ?? ''}
+                data-node-meta={node.meta ?? ''}
+                data-node-href={node.href ?? ''}
+              >
                 <circle r={node.level === 0 ? 16 : node.level === 1 ? 11 : node.level === 2 ? 7 : 4} fill={colorFor(node.type)} />
                 <text x={node.level <= 1 ? 18 : 9} y="4">{node.label}</text>
               </g>
@@ -127,12 +272,135 @@ const viewBox = '-620 -620 1240 1240';
 
         <aside class="knowledge-inspector" aria-label="Node inspector">
           <p>Inspector</p>
-          <h2>Knowledge</h2>
-          <p>选择一个节点后，后续版本在这里展示标题、类型、标签、印章、相关高亮和打开入口。</p>
-          <a href={withBase('/')}>打开首页 Drawer</a>
-          <a href={withBase('/search/')}>打开搜索页</a>
+          <span data-node-type-label>graph</span>
+          <h2 data-node-title>Knowledge</h2>
+          <p data-node-summary>选择一个节点查看类型、分区、关联入口和一跳关系。</p>
+          <dl>
+            <div>
+              <dt>Cluster</dt>
+              <dd data-node-cluster-label>all</dd>
+            </div>
+            <div>
+              <dt>Meta</dt>
+              <dd data-node-meta-label>center / collections / content / tags</dd>
+            </div>
+          </dl>
+          <a href={withBase('/')} data-node-open>打开首页 Feed</a>
+          <a href={withBase('/search/')} data-node-search>打开搜索页</a>
         </aside>
       </div>
     </section>
   </main>
+
+  <script>
+    (() => {
+      const nodes = [...document.querySelectorAll('[data-graph-node]')];
+      const links = [...document.querySelectorAll('[data-graph-link]')];
+      const filterButtons = [...document.querySelectorAll('[data-graph-filter]')];
+      const title = document.querySelector('[data-node-title]');
+      const summary = document.querySelector('[data-node-summary]');
+      const typeLabel = document.querySelector('[data-node-type-label]');
+      const clusterLabel = document.querySelector('[data-node-cluster-label]');
+      const metaLabel = document.querySelector('[data-node-meta-label]');
+      const openLink = document.querySelector('[data-node-open]');
+      const searchLink = document.querySelector('[data-node-search]');
+      let activeFilter = 'all';
+
+      const visibleNodeIds = () => new Set(nodes.filter((node) => !node.classList.contains('is-hidden')).map((node) => node.dataset.nodeId));
+
+      const nodeMatchesFilter = (node, filter) => {
+        if (filter === 'all') return true;
+        if (filter === 'tag') return node.dataset.nodeType === 'tag' || node.dataset.nodeType === 'self' || node.dataset.nodeType === 'collection';
+        if (node.dataset.nodeType === 'self') return true;
+        return node.dataset.nodeCluster === filter;
+      };
+
+      const applyFilter = (filter) => {
+        activeFilter = filter;
+        filterButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.graphFilter === filter));
+        nodes.forEach((node) => {
+          node.classList.toggle('is-hidden', !nodeMatchesFilter(node, filter));
+          node.classList.remove('is-muted', 'is-neighbor');
+        });
+        const visible = visibleNodeIds();
+        links.forEach((link) => {
+          const show = visible.has(link.dataset.source) && visible.has(link.dataset.target);
+          link.classList.toggle('is-hidden', !show);
+          link.classList.remove('is-active', 'is-muted');
+        });
+      };
+
+      const neighborsFor = (nodeId) => {
+        const neighborIds = new Set([nodeId]);
+        const activeLinks = new Set();
+        links.forEach((link, index) => {
+          if (link.dataset.source === nodeId || link.dataset.target === nodeId) {
+            activeLinks.add(index);
+            neighborIds.add(link.dataset.source);
+            neighborIds.add(link.dataset.target);
+          }
+        });
+        return { neighborIds, activeLinks };
+      };
+
+      const clearHover = () => {
+        nodes.forEach((node) => node.classList.remove('is-muted', 'is-neighbor'));
+        links.forEach((link) => link.classList.remove('is-active', 'is-muted'));
+      };
+
+      const focusNode = (node) => {
+        const nodeId = node.dataset.nodeId;
+        const { neighborIds, activeLinks } = neighborsFor(nodeId);
+        nodes.forEach((item) => {
+          if (item.classList.contains('is-hidden')) return;
+          item.classList.toggle('is-muted', !neighborIds.has(item.dataset.nodeId));
+          item.classList.toggle('is-neighbor', neighborIds.has(item.dataset.nodeId) && item !== node);
+        });
+        links.forEach((link, index) => {
+          if (link.classList.contains('is-hidden')) return;
+          link.classList.toggle('is-active', activeLinks.has(index));
+          link.classList.toggle('is-muted', !activeLinks.has(index));
+        });
+      };
+
+      const selectNode = (node) => {
+        nodes.forEach((item) => item.classList.toggle('is-active', item === node));
+        if (title) title.textContent = node.dataset.nodeLabel || 'Knowledge';
+        if (summary) summary.textContent = node.dataset.nodeSummary || '这个节点还没有摘要。';
+        if (typeLabel) typeLabel.textContent = node.dataset.nodeType || 'node';
+        if (clusterLabel) clusterLabel.textContent = node.dataset.nodeCluster || 'all';
+        if (metaLabel) metaLabel.textContent = node.dataset.nodeMeta || 'none';
+
+        const href = node.dataset.nodeHref;
+        if (openLink instanceof HTMLAnchorElement) {
+          openLink.hidden = !href;
+          if (href) openLink.href = href;
+          openLink.textContent = node.dataset.nodeType === 'tag' ? '查看搜索结果' : '打开节点';
+        }
+        if (searchLink instanceof HTMLAnchorElement) {
+          searchLink.href = `/search/?q=${encodeURIComponent(node.dataset.nodeLabel || '')}`;
+        }
+      };
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => applyFilter(button.dataset.graphFilter || 'all'));
+      });
+
+      nodes.forEach((node) => {
+        node.addEventListener('mouseenter', () => focusNode(node));
+        node.addEventListener('mouseleave', clearHover);
+        node.addEventListener('focus', () => focusNode(node));
+        node.addEventListener('blur', clearHover);
+        node.addEventListener('click', () => selectNode(node));
+        node.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            selectNode(node);
+          }
+        });
+      });
+
+      applyFilter(activeFilter);
+    })();
+  </script>
 </BaseLayout>
