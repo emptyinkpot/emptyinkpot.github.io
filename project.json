@@ -173,40 +173,46 @@
     },
     "homepage": {
       "shell": {
-        "className": "home-editorial-shell",
-        "maxWidthPx": 1560,
-        "viewportGutterPx": 32,
-        "columns": ["260px", "minmax(0, 1fr)"],
-        "gapPx": 24,
-        "paddingBlockPx": 16
+        "className": "home-feed-shell",
+        "maxWidthPx": 1480,
+        "viewportGutterPx": 40,
+        "columns": ["280px", "minmax(0, 1fr)"],
+        "gapPx": 20,
+        "paddingBlockPx": 20
       },
       "desktopScrollContainers": [
-        "home-side-rail__inner",
-        "home-editorial-page"
+        "home-feed-main"
       ],
-      "contentInnerMaxWidthPx": 1240,
-      "workbenchGapPx": 16,
+      "secondaryScrollContainers": [
+        "home-feed-rail",
+        "home-article-drawer__body"
+      ],
+      "leftRailWidthPx": 280,
+      "drawerWidthPx": 760,
+      "feedColumnCount": 3,
+      "feedColumnGapPx": 16,
       "primaryGrids": {
-        "leadGrid": ["minmax(0, 1.42fr)", "minmax(352px, 0.92fr)"],
-        "contentGrid": ["minmax(0, 1.3fr)", "minmax(352px, 0.98fr)"],
-        "hero": ["minmax(0, 1.34fr)", "minmax(352px, 0.96fr)"],
-        "feedSplit": ["minmax(336px, 0.82fr)", "minmax(448px, 1.18fr)"]
+        "homeFeedShell": ["280px", "minmax(0, 1fr)"],
+        "articleReader": ["180px", "minmax(0, 1fr)"]
       },
       "keyComponentSizesPx": {
-        "homeWorkbenchCardPadding": 15.2,
-        "homeSearchBoxMinWidth": 416,
-        "sideRailProfileMinHeight": 552,
-        "sideRailAvatar": 88,
-        "postPreviewCoverMinHeight": 224,
-        "routeCardMinHeight": 152,
-        "repoCardMinHeight": 128,
-        "donut": 137.6,
-        "donutCore": 76.8
+        "feedProfilePadding": 16,
+        "feedBrandMinHeight": 34,
+        "feedAvatar": 82,
+        "feedFilterMinHeight": 34,
+        "feedCardBodyPadding": 15,
+        "feedCardCoverMinHeight": 160,
+        "feedCardTallCoverMinHeight": 238,
+        "feedCardCompactCoverMinHeight": 118,
+        "drawerHeaderPaddingY": 18,
+        "drawerHeaderPaddingX": 22,
+        "drawerBodyPadding": 24,
+        "drawerTocWidth": 180
       },
       "breakpoints": {
-        "max1200": "lead/content grids collapse to one column",
-        "max1100": "home inner grids and analytics/feed split collapse to one column",
-        "max900": "home shell becomes one column and page-level scrolling returns",
+        "max1240": "home-feed-grid changes from 3 columns to 2 columns",
+        "max900": "home shell becomes block, page-level scrolling returns, feed grid becomes 1 column",
+        "max760": "article drawer becomes full viewport width and toc becomes non-sticky",
         "max860": "evidence-library grids collapse",
         "max720": "workbench page stats collapse"
       }
@@ -215,12 +221,14 @@
       "home": {
         "files": [
           "apps/web/src/pages/index.astro",
-          "apps/web/src/components/home/HomeWorkbench*.astro"
+          "apps/web/src/data/books.ts",
+          "apps/web/src/lib/profile.ts"
         ],
         "mustKeep": [
-          "260px side rail",
-          "1240px main inner max width",
-          "two desktop vertical scroll containers only"
+          "280px profile rail",
+          "css-columns feed",
+          "right drawer width min(760px, 100vw)",
+          "feed scroll position must not reset on filter or drawer close"
         ]
       },
       "collectionPages": {
@@ -295,13 +303,40 @@
       ]
     },
     "overlapRules": [
-      "do not add a third desktop vertical scroll container",
-      "do not reset scrollTop on tab/list item selection",
+      "home-feed-main is the only homepage main scroll container",
+      "do not reset home-feed-main scrollTop on filter/list/drawer selection",
       "all grid children that contain text must keep min-width: 0",
       "long text/path/code surfaces must use overflow-wrap:anywhere or line-clamp",
-      "sticky post preview must stay inside home-workbench__feedsplit",
+      "article toc sticky behavior must stay inside home-article-drawer",
       "admin wide tables/logs must not create console-main horizontal overflow",
       "fix overlap through grid constraints and wrapping, not z-index layering"
+    ]
+  },
+  "homepageFeedDrawerContract": {
+    "status": "implemented",
+    "source": "apps/web/src/pages/index.astro",
+    "styleSource": "apps/web/src/styles/global.css",
+    "dataSources": [
+      "apps/web/src/content/posts",
+      "apps/web/src/content/notes",
+      "apps/web/src/content/projects",
+      "apps/web/src/data/books.ts",
+      "apps/web/src/lib/profile.ts",
+      "apps/web/src/data/github-overview.emptyinkpot.json"
+    ],
+    "feedItemTypes": ["post", "note", "project", "book", "github", "bilibili", "update"],
+    "drawerTypes": ["post", "note", "project"],
+    "implementation": {
+      "masonry": "css-columns",
+      "drawer": "astro-rendered hidden reader nodes cloned by vanilla js",
+      "clientFetch": false,
+      "extraDependencies": []
+    },
+    "hardRules": [
+      "do not restore module-stacked homepage as the primary home experience",
+      "post/note/project cards open drawer without navigation",
+      "full detail pages remain canonical share and seo routes",
+      "bilibili link must be configured in apps/web/src/lib/profile.ts before claiming a real profile"
     ]
   },
   "frontendRefactorPriority": [

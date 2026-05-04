@@ -693,64 +693,46 @@ Hero / System Entry
 当前首页真源：
 
 - 页面：`apps/web/src/pages/index.astro`
-- 组件：`apps/web/src/components/home/HomeWorkbench*.astro`
+- 交互：`apps/web/src/pages/index.astro` 内的原生 drawer/filter 脚本
 - 样式：`apps/web/src/styles/global.css`
-- 数据：`apps/web/src/lib/home.ts`
+- 数据：`apps/web/src/content/*`、`apps/web/src/data/books.ts`、`apps/web/src/lib/profile.ts`、`apps/web/src/data/github-overview.emptyinkpot.json`
 
 桌面首页外壳：
 
 | 层级 / class | 当前值 |
 | --- | --- |
-| `body.home-mode` | 桌面锁定视口滚动，首页内部自己滚动 |
+| `body.home-mode` | 桌面锁定视口滚动，首页内部主 Feed 自己滚动 |
 | `.page-wrap--home` | `width: 100%` |
-| `.home-editorial-shell` | `display: grid`；列宽 `260px minmax(0, 1fr)`；列间距 `24px`；最大宽度 `min(1560px, 100% - 32px)`；上下 padding `16px`；高度 `100%` |
-| `.home-side-rail` | 左栏固定网格列 `260px`；高度 `100%`；`overflow: hidden` |
-| `.home-side-rail__inner` | 左栏内部唯一滚动容器；上下 padding `16px`；gap `16px`；隐藏滚动条 |
-| `.home-editorial-page` | 主内容唯一桌面滚动容器；上下 padding `16px`；`overflow-y: auto`；`overflow-x: hidden`；隐藏滚动条 |
-| `.home-editorial-page__inner` | 主内容最大宽度 `1240px` |
-| `.home-workbench` | 纵向 flex；模块间距 `16px`；底部 padding `28.8px` |
+| `.home-feed-shell` | `display:grid`；列宽 `280px minmax(0,1fr)`；gap `20px`；最大宽度 `min(1480px, 100% - 40px)`；上下 padding `20px`；高度 `100%` |
+| `.home-feed-rail` | 左侧个人展示栏；`position: sticky; top: 20px`；最大高度 `calc(100vh - 40px)`；内部可滚动；gap `14px` |
+| `.home-feed-main` | 首页主 Feed 唯一主滚动容器；`overflow-y:auto`；右 padding `2px`；底部 padding `26px`；`min-width:0` |
+| `.home-feed-toolbar` | sticky 筛选条；`top:0`；z-index `20`；gap `16px`；margin-bottom `16px`；padding `12px 0` |
+| `.home-feed-grid` | CSS columns 瀑布流；桌面 `column-count:3`；column gap `16px` |
+| `.home-article-drawer` | 右侧阅读抽屉；fixed；宽 `min(760px,100vw)`；高 `100vh`；z-index `90` |
 
-桌面首页网格：
-
-| class | 当前值 |
-| --- | --- |
-| `.home-workbench__lead-grid` | 两列：`minmax(0, 1.42fr) minmax(352px, 0.92fr)`；gap `16px` |
-| `.home-workbench__content-grid` | 两列：`minmax(0, 1.3fr) minmax(352px, 0.98fr)`；gap `16px` |
-| `.home-workbench__hero` | 两列：`minmax(0, 1.34fr) minmax(352px, 0.96fr)`；gap `16px` |
-| `.home-workbench__utility` / `.home-workbench__double` | 两列：`minmax(0, 1.06fr) minmax(0, 0.94fr)`；gap `16px` |
-| `.home-workbench__triple` | 三列等分；gap `16px` |
-| `.home-workbench__feedsplit` | 两列：`minmax(336px, 0.82fr) minmax(448px, 1.18fr)`；gap `22.4px` |
-| `.home-workbench__mini-grid` | 三列等分；gap `12.8px` |
-| `.home-workbench__repo-grid` / `.home-workbench__status-grid` | 两列等分；gap `10.4px` |
-| `.home-workbench__analytics` | 两列：`1.02fr 0.98fr`；gap `16px`；顶部边线后 padding `18.4px` |
-
-卡片与控件尺寸：
+首页 Feed / Drawer 精确尺寸：
 
 | class | 当前值 |
 | --- | --- |
-| `.home-workbench__card` | padding `15.2px`；内部 gap `12.48px`；背景 `rgba(255,255,255,0.58)`；边框 `1px rgba(255,255,255,0.45)`；无圆角 |
-| `.home-workbench__card--panel` | 背景 `rgba(255,255,255,0.62)` |
-| `.home-workbench__card--accent` / `.home-workbench__snapshot` | 背景 `#660874`；文字白色 |
-| `.home-workbench__searchbar` | padding `11.52px 15.2px`；水平 gap `16px` |
-| `.home-workbench__searchbox` | 最小宽度 `min(100%, 416px)`；padding `9.92px 14.72px`；gap `16px` |
-| `.home-workbench__filterchip` | padding `8px 14.4px`；圆角 `999px`；字号 `13.12px` |
-| `.home-workbench__hero-actions a` | 最小高 `37.6px`；padding `7.2px 16px` |
-| `.home-workbench__hero-main h1` | 最大宽度 `12ch`；字号 `clamp(30.4px, 2.55vw, 48px)`；行高 `1.02`；允许 `overflow-wrap: anywhere` |
-| `.home-workbench__hero-summary` | 最大宽度 `576px`；字号 `14.08px`；行高 `1.64` |
-| `.home-workbench__analytics-card` | 最小高 `228px`；padding `14.4px`；gap `15.2px` |
-| `.home-workbench__donut` | `137.6px × 137.6px` |
-| `.home-workbench__donut-core` | `76.8px × 76.8px` |
-| `.home-workbench__postitem` | 两列：`76px minmax(0,1fr)`；padding `12.8px`；gap `14.4px` |
-| `.home-workbench__postcover` | 最小高 `91.2px`；padding `9.28px` |
-| `.home-workbench__postpreview-cover` | 最小高 `224px`；padding `16px` |
-| `.home-workbench__mini-card` | 最小高 `134.4px`；顶部 padding `10.88px` |
-| `.home-workbench__route-card` | 最小高 `152px`；padding `13.12px 14.08px`；gap `8.8px` |
-| `.home-workbench__repo-card` / `.home-workbench__status-card` | 最小高 `128px`；padding `13.12px 14.08px` |
-| `.home-side-rail__profile-panel` | 最小高 `552px` |
-| `.home-side-rail__brandbar` | 宽 `169.6px`；最小高 `37.6px`；padding `5.44px 12.8px` |
-| `.home-side-rail__avatar-shell` | `88px × 88px` |
-| `.home-side-rail__avatar-orb` | `68.8px × 68.8px` |
-| `.home-side-rail__link` | 最小高 `29.6px`；padding `6.08px 11.52px`；字号 `10.88px` |
+| `.home-feed-profile` / `.home-feed-nav` / `.home-feed-rail-card` | padding `16px`；边框 `1px rgba(255,255,255,0.45)`；背景 `rgba(255,255,255,0.66)` |
+| `.home-feed-brand` | min-height `34px`；padding `6px 12px`；gap `8px`；logo `18px × 18px` |
+| `.home-feed-avatar` | `82px × 82px`；圆形 |
+| `.home-feed-nav` | 两列 `repeat(2,minmax(0,1fr))`；gap `8px` |
+| `.home-feed-nav a` | min-height `34px`；padding `8px 10px`；字号 `13px` |
+| `.home-feed-filter` | min-height `34px`；padding `8px 13px`；圆角 `999px`；字号 `13px` |
+| `.home-feed-card` | `display:inline-block`；宽 `100%`；底部 margin `16px`；`break-inside: avoid`；hover 只 `translateY(-2px)` |
+| `.home-feed-card__cover` | 标准 min-height `160px`；tall `238px`；compact `118px` |
+| `.home-feed-card__mark` | min-height `122px`；padding `14px` |
+| `.home-feed-card__body` | padding `15px`；gap `10px` |
+| `.home-feed-card h2` | 标准字号 `21px`；compact `18px`；行高 `1.12`；必须 `overflow-wrap:anywhere` |
+| `.home-feed-card p` | 字号 `13px`；行高 `1.68`；必须 `overflow-wrap:anywhere` |
+| `.home-feed-card__tags span` | min-height `24px`；padding `5px 8px`；字号 `11px` |
+| `.home-article-backdrop` | fixed `inset:0`；z-index 跟随 layer；背景 `rgba(15,15,20,0.36)`；blur `4px` |
+| `.home-article-drawer__header` | padding `18px 22px`；gap `16px`；底边框 `1px #ddd5d0` |
+| `.home-article-drawer__body` | padding `24px`；`overflow-y:auto` |
+| `.home-article-reader__grid` | 两列 `180px minmax(0,1fr)`；gap `24px` |
+| `.home-article-toc` | sticky；top `20px`；max-height `calc(100vh - 120px)`；右边框 `1px`；右 padding `14px` |
+| `.home-article-intro h1` | 字号 `clamp(32px,5vw,54px)`；行高 `0.98` |
 
 非首页 workbench 页：
 
@@ -770,7 +752,7 @@ Hero / System Entry
 
 | 页面族 | 源文件 | 复用布局 | 复刻要求 |
 | --- | --- | --- | --- |
-| 首页 | `apps/web/src/pages/index.astro` + `HomeWorkbench*.astro` | `.home-editorial-shell` + `.home-workbench` | 必须保留左栏 `260px`、主内容 `1240px` 内宽、两个桌面滚动容器 |
+| 首页 | `apps/web/src/pages/index.astro` | `.home-feed-shell` + `.home-feed-grid` + `.home-article-drawer` | 必须保留左栏 `280px`、Feed columns、右侧 `760px` 抽屉；点击卡片不得跳走和重置 Feed 滚动 |
 | 文章 / 笔记 / 项目列表 | `posts/index.astro`、`notes/index.astro`、`projects/index.astro` | `.page-wrap` + `.workbench-page__grid--posts/projects` | 两列卡片在 `1100px` 以下变单列；卡片内容列必须 `minmax(0,1fr)` |
 | 文章详情 / 页面详情 | `[slug].astro`、`about.astro` | `.page-wrap` + `.prose-shell` | 正文容器最大宽度由 `.page-wrap` 控制；代码块只能横向滚动，不得撑宽正文 |
 | 搜索 / taxonomy | `search.astro`、`tags/*`、`categories/*`、`series/*` | `.page-wrap` + `pagefind-ui` / workbench 列表 | Pagefind 输入框和结果抽屉宽度 `100%`，不得新增固定宽侧栏 |
@@ -830,25 +812,65 @@ Hero / System Entry
 
 | 断点 | 当前行为 |
 | --- | --- |
-| `max-width: 1200px` | `.home-workbench__lead-grid` 和 `.home-workbench__content-grid` 变单列 |
-| `max-width: 1100px` | `.home-workbench__utility`、`.home-workbench__hero`、`.home-workbench__double`、`.home-workbench__triple`、`.home-workbench__analytics`、`.home-workbench__feedsplit`、repo/status/link/snapshot 等网格全部变单列 |
-| `max-width: 900px` | `body.home-mode` 恢复页面级滚动；`.home-editorial-shell` 单列；宽度 `calc(100% - 8px)`；gap `8px`；padding `8px 0 16px`；左栏不再固定高度；主内容 `overflow: visible`；主内容 padding `12px`；侧栏 nav 变横向 wrap；侧栏 link 最小高 `40px`、字号 `14.4px` |
+| `max-width: 1240px` | `.home-feed-grid` 从 3 columns 改 2 columns |
+| `max-width: 1200px` | 遗留 `.home-workbench__lead-grid` 和 `.home-workbench__content-grid` 变单列；当前首页不再依赖它们 |
+| `max-width: 1100px` | 遗留 HomeWorkbench 网格和 workbench 列表页网格变单列 |
+| `max-width: 900px` | `body.home-mode` 恢复页面级滚动；`.home-feed-shell` 改 block；宽度 `calc(100% - 24px)`；左栏不 sticky；主 Feed `overflow: visible`；Feed columns 改 1 |
 | `max-width: 860px` | `evidence-library` hero/grid 变单列，source grid 变单列 |
+| drawer `max-width: 760px` | `.home-article-drawer` 宽 `100vw`；header padding `14px`；drawer body padding `16px`；TOC 从 sticky 侧栏改正文上方块 |
 | `max-width: 720px` | `.workbench-page` 顶部 padding 改 `18.4px`；stats 单列 |
 | admin `max-width: 1100px` | `.console-shell` 从 `240px 1fr` 改单列；sidebar 改底边框；`.metric-grid`、`.two-column-grid`、`.ai-layout`、`.timeline-grid` 全部单列 |
 
 重叠与卡顿禁止规则：
 
-- 桌面首页只允许两个纵向滚动容器：`.home-side-rail__inner` 和 `.home-editorial-page`。点击、tab 切换、文章预览切换不得重置这两个容器的 `scrollTop`。
+- 桌面首页只允许一个主内容纵向滚动容器：`.home-feed-main`。左侧 `.home-feed-rail` 可内部滚动，但不得驱动主内容定位。点击筛选、打开/关闭 drawer 不得重置 `.home-feed-main.scrollTop`。
 - 任意两列 / 三列网格子项必须保留 `min-width: 0`；会显示标题、摘要、标签、路径、代码的元素必须设置 `overflow-wrap: anywhere` 或明确的 `line-clamp`。
-- 不要在桌面断点下把 `.home-workbench__feedsplit` 的右列最小宽度降到 `448px` 以下；低于这个宽度必须走 `max-width: 1100px` 单列。
-- `.home-workbench__postpreview` 当前使用 `position: sticky; top: 0`，只能在自己的列内吸附，不得脱离 `.home-workbench__feedsplit` 或覆盖左侧 post list。
-- `.home-workbench__sectionline` 默认两端文字 `white-space: nowrap`；放进窄侧栏时必须使用现有 `.home-workbench__lead-side` / `.home-workbench__hero-side` 的单列 sectionline 规则。
-- 首页卡片不允许新增绝对定位浮层作为主要信息容器；已有封面图渐变层只能在封面容器内 `inset: 0`，不得跨出父级。
+- 首页文章阅读必须通过 `.home-article-drawer` 克隆隐藏的 `.home-article-reader` 内容；完整文章页继续保留给 SEO、分享和深度阅读。
+- `.home-article-toc` 只能 sticky 在 drawer 内部，不能脱离 drawer 覆盖 Feed。
+- 首页卡片不允许新增绝对定位浮层作为主要信息容器；封面图层只能留在 `.home-feed-card__cover` 内，不能跨出父级。
 - hover 动效只允许 `translateY(-2px)` 或 `translateX(2px)` 级别，不得改变布局尺寸。
-- 任何新增首页模块必须先放入现有结构之一：`searchbar`、`lead-grid`、`content-grid`、`project-notes`、`routes`、`planned`、`signals`。不要再新增第三个桌面主滚动容器。
+- 任何新增首页内容必须先抽象成 FeedItem 类型之一：`post`、`note`、`project`、`book`、`github`、`bilibili`、`update`。不要再恢复多模块堆叠首页。
 - admin 页长表格、长日志、长路径只允许在 `.table-shell` / `.log-lines pre` / `.meta-grid code` 内换行或滚动；不得让 `.console-main` 横向溢出。
 - 如果页面出现重叠，优先检查：网格最小列宽、`min-width: 0`、长文本换行、sticky 父容器、移动断点是否生效，而不是靠增大 z-index 盖过去。
+
+#### 0.7.5.15b Homepage Feed / Drawer Contract
+
+首页目标已经从“模块堆叠式工作台”改成“连续内容流”：
+
+```txt
+Profile Rail
++ Masonry-like Feed
++ Right Article Drawer
+```
+
+当前实现选择：
+
+- 不新增 React / nanostores / masonry 依赖，先用 Astro 静态渲染、CSS columns 和原生 JS drawer/filter 保持发布链稳定。
+- Feed 数据来自文章、札记、项目、书架、GitHub 快照、Bilibili 配置和更新卡片，统一在 `apps/web/src/pages/index.astro` 组装。
+- 文章 / 札记 / 项目卡片点击后不跳转整页，而是打开右侧 `.home-article-drawer`；drawer 内正文来自 Astro 已渲染的 Markdown 内容，不再发起客户端 fetch。
+- 完整详情页仍保留：`/posts/[slug]/`、`/notes/[slug]/`、`/projects/[slug]/` 用于 SEO、分享和深度阅读。
+- Bilibili 链接当前集中在 `apps/web/src/lib/profile.ts`，未配置真实主页前只展示占位卡片，不伪造账号信息。
+
+首页内容模型：
+
+```ts
+type FeedItem =
+  | { type: "post"; drawerId: string }
+  | { type: "note"; drawerId: string }
+  | { type: "project"; drawerId: string }
+  | { type: "book"; href?: string }
+  | { type: "github"; href: string }
+  | { type: "bilibili"; href: string }
+  | { type: "update"; href: string };
+```
+
+交互硬规则：
+
+- Filter 只隐藏 / 显示已有 Feed 卡片，不重建列表，不重置滚动。
+- Drawer 打开时记录触发卡片，关闭后 focus 回到原卡片，且使用 `preventScroll`。
+- Drawer 内 TOC 来自 Astro `render(entry).headings`，H2/H3 以内展示。
+- 不把正文 HTML 通过 API 拉取，避免首页阅读依赖网络请求。
+- 以后如果接入 `@egjs/react-grid` 或 React Aria，必须保持同样的 FeedItem / drawer 语义，不得回到多模块堆叠。
 
 #### 0.7.5.16 Frontend Refactor Priority
 

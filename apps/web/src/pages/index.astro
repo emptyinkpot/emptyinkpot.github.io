@@ -1,108 +1,460 @@
 ---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HomeWorkbenchHero from '../components/home/HomeWorkbenchHero.astro';
-import HomeWorkbenchFeatureBand from '../components/home/HomeWorkbenchFeatureBand.astro';
-import HomeWorkbenchLatestPosts from '../components/home/HomeWorkbenchLatestPosts.astro';
-import HomeWorkbenchMaintenance from '../components/home/HomeWorkbenchMaintenance.astro';
-import HomeWorkbenchPlanned from '../components/home/HomeWorkbenchPlanned.astro';
-import HomeWorkbenchProjectNotes from '../components/home/HomeWorkbenchProjectNotes.astro';
-import HomeWorkbenchRoutes from '../components/home/HomeWorkbenchRoutes.astro';
-import HomeWorkbenchScripts from '../components/home/HomeWorkbenchScripts.astro';
-import HomeWorkbenchSearch from '../components/home/HomeWorkbenchSearch.astro';
-import HomeWorkbenchSidebar from '../components/home/HomeWorkbenchSidebar.astro';
-import HomeWorkbenchSignals from '../components/home/HomeWorkbenchSignals.astro';
-import HomeWorkbenchTaxonomy from '../components/home/HomeWorkbenchTaxonomy.astro';
-import HomeWorkbenchUtility from '../components/home/HomeWorkbenchUtility.astro';
-import { formatDate, getExcerptFromBody, getPrimaryCategory, toSlug } from '../lib/content';
-import { getHomePagePayload } from '../lib/home';
+import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sortPosts, toSlug } from '../lib/content';
+import { books } from '../data/books';
+import { getGitHubOverview } from '../lib/github';
+import { profileLinks } from '../lib/profile';
 import { getPostCover } from '../lib/postCovers';
 import { withBase } from '../lib/site';
 
-const payload = await getHomePagePayload();
+type DrawerKind = 'post' | 'note' | 'project';
 
-const sideNavItems = [
-  { label: '首页', href: withBase('/') },
-  { label: '文章', href: withBase('/posts') },
-  { label: '专题', href: withBase('/series') },
-  { label: '项目', href: withBase('/projects') },
-  { label: '更新', href: withBase('/updates') },
-  { label: '搜索', href: withBase('/search') },
-  { label: '关于', href: withBase('/about') }
+type DrawerEntry = {
+  id: string;
+  kind: DrawerKind;
+  title: string;
+  kicker: string;
+  date?: string;
+  href: string;
+  summary: string;
+  Content: Awaited<ReturnType<typeof render>>['Content'];
+  toc: Array<{ href: string; className: string; text: string }>;
+};
+
+type FeedItem = {
+  id: string;
+  type: 'post' | 'note' | 'project' | 'book' | 'github' | 'bilibili' | 'update';
+  title: string;
+  summary: string;
+  kicker: string;
+  meta?: string;
+  href?: string;
+  drawerId?: string;
+  coverSrc?: string;
+  tags?: string[];
+  accent?: string;
+  size?: 'compact' | 'standard' | 'tall';
+};
+
+const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
+const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const projects = [...(await getCollection('projects'))].sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0)
+);
+const github = await getGitHubOverview('emptyinkpot');
+
+const drawerSources = [
+  ...posts.map((entry) => ({ entry, kind: 'post' as const })),
+  ...notes.map((entry) => ({ entry, kind: 'note' as const })),
+  ...projects.map((entry) => ({ entry, kind: 'project' as const }))
 ];
 
-const topicCards = payload.topics.map((topic) => ({
-  kicker: 'TOPICS',
-  title: topic.label,
-  meta: `${topic.count} 篇内容`,
-  href: topic.href
-}));
+const drawerEntries: DrawerEntry[] = await Promise.all(
+  drawerSources.map(async ({ entry, kind }) => {
+    const rendered = await render(entry as CollectionEntry<'posts'>);
+    const basePath = kind === 'post' ? 'posts' : kind === 'note' ? 'notes' : 'projects';
+    const summary =
+      'summary' in entry.data && entry.data.summary
+        ? entry.data.summary
+        : entry.data.description ?? getExcerptFromBody(entry.body, 180);
 
-const seriesCards = payload.series.map((series) => ({
-  kicker: 'SERIES',
-  title: series.label,
-  meta: `${series.count} 篇连续内容`,
-  href: series.href
-}));
+    return {
+      id: `${kind}:${entry.id}`,
+      kind,
+      title: entry.data.title,
+      kicker: kind === 'post' ? getPrimaryCategory(entry as CollectionEntry<'posts'>) : kind === 'note' ? '札记' : '项目',
+      date: 'date' in entry.data && entry.data.date ? formatDate(entry.data.date) : undefined,
+      href: withBase(`/${basePath}/${entry.id}/`),
+      summary,
+      Content: rendered.Content,
+      toc: rendered.headings
+        .filter((heading) => heading.depth <= 3)
+        .map((heading) => ({
+          href: `#${heading.slug}`,
+          className: `depth-${heading.depth}`,
+          text: heading.text
+        }))
+    };
+  })
+);
 
-const routeTopCards = payload.routeCards.slice(0, 3);
-const routeBottomCards = payload.routeCards.slice(3);
+const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
 
-const activeProject = payload.activeProject;
-const latestNote = payload.latestNotes[0];
-const latestPostCards = payload.latestPosts.map((post) => ({
-  id: post.id,
-  href: withBase(`/posts/${post.id}/`),
+const postItems: FeedItem[] = posts.map((post, index) => ({
+  id: `post-${post.id}`,
+  type: 'post',
   title: post.data.title,
-  date: formatDate(post.data.date),
-  category: getPrimaryCategory(post),
-  categoryHref: withBase(`/categories/${toSlug(getPrimaryCategory(post))}/`),
-  summary: post.data.summary ?? post.data.description ?? getExcerptFromBody(post.body, 92),
-  preview:
-    post.data.description ??
-    post.data.summary ??
-    getExcerptFromBody(post.body, 320),
-  tags:
-    post.data.tags?.slice(0, 3).map((tag) => ({
-      label: tag,
-      href: withBase(`/tags/${toSlug(tag)}/`)
-    })) ?? [],
-  coverSrc: getPostCover(post)
+  summary: post.data.summary ?? post.data.description ?? getExcerptFromBody(post.body, index === 0 ? 220 : 130),
+  kicker: getPrimaryCategory(post),
+  meta: `${formatDate(post.data.date)} / ${getReadingTime(post.body)} min read`,
+  href: withBase(`/posts/${post.id}/`),
+  drawerId: `post:${post.id}`,
+  coverSrc: getPostCover(post),
+  tags: post.data.tags.slice(0, 3),
+  size: index % 5 === 0 ? 'tall' : index % 3 === 0 ? 'compact' : 'standard'
 }));
+
+const noteItems: FeedItem[] = notes.map((note) => ({
+  id: `note-${note.id}`,
+  type: 'note',
+  title: note.data.title,
+  summary: note.data.description ?? getExcerptFromBody(note.body, 120),
+  kicker: '札记',
+  meta: formatDate(note.data.date),
+  href: withBase(`/notes/${note.id}/`),
+  drawerId: `note:${note.id}`,
+  tags: ['note'],
+  size: 'compact'
+}));
+
+const projectItems: FeedItem[] = projects.map((project) => ({
+  id: `project-${project.id}`,
+  type: 'project',
+  title: project.data.title,
+  summary: project.data.description ?? getExcerptFromBody(project.body, 130),
+  kicker: `项目 / ${project.data.status}`,
+  meta: project.data.stack.slice(0, 3).join(' / '),
+  href: withBase(`/projects/${project.id}/`),
+  drawerId: `project:${project.id}`,
+  tags: project.data.stack.slice(0, 3),
+  size: 'standard'
+}));
+
+const githubItems: FeedItem[] = github.repos.slice(0, 6).map((repo, index) => ({
+  id: `github-${repo.name}`,
+  type: 'github',
+  title: repo.name,
+  summary: `${repo.language} / ${repo.stars} stars / ${repo.issues} issues`,
+  kicker: 'GitHub',
+  meta: `更新 ${formatDate(new Date(repo.updatedAt))}`,
+  href: repo.htmlUrl,
+  accent: ['#660874', '#244a5a', '#3b6b50', '#8e53a2'][index % 4],
+  tags: [repo.language],
+  size: 'compact'
+}));
+
+const bookItems: FeedItem[] = books.map((book) => ({
+  id: `book-${toSlug(book.title)}`,
+  type: 'book',
+  title: book.title,
+  summary: book.note,
+  kicker: `书架 / ${book.statusLabel}`,
+  meta: book.author,
+  href: book.href,
+  coverSrc: book.cover,
+  tags: [book.statusLabel],
+  size: 'compact'
+}));
+
+const bilibiliItems: FeedItem[] = [
+  {
+    id: 'bilibili-profile',
+    type: 'bilibili',
+    title: profileLinks.bilibiliLabel,
+    summary: profileLinks.bilibiliDescription,
+    kicker: 'Bilibili',
+    meta: profileLinks.bilibiliConfigured ? '视频主页' : '待配置主页链接',
+    href: profileLinks.bilibili,
+    tags: ['video'],
+    accent: '#fb7299',
+    size: 'compact'
+  }
+];
+
+const updateItems: FeedItem[] = [
+  {
+    id: 'update-evidence-library',
+    type: 'update',
+    title: '史料素材库已经成为独立板块',
+    summary: '用于沉淀 OpenList、Remotion、Evidence Resolver 和素材标注的公开说明入口。',
+    kicker: 'Update',
+    meta: 'evidence-library',
+    href: withBase('/evidence-library/'),
+    tags: ['evidence', 'remotion'],
+    size: 'standard'
+  }
+];
+
+const feedItems = [
+  postItems[0],
+  ...projectItems.slice(0, 1),
+  ...noteItems.slice(0, 1),
+  ...bookItems.slice(0, 2),
+  ...githubItems.slice(0, 2),
+  ...postItems.slice(1, 5),
+  ...bilibiliItems,
+  ...updateItems,
+  ...postItems.slice(5),
+  ...projectItems.slice(1),
+  ...noteItems.slice(1),
+  ...githubItems.slice(2),
+  ...bookItems.slice(2)
+].filter(Boolean) as FeedItem[];
+
+function feedCardClass(item: FeedItem) {
+  return ['home-feed-card', `home-feed-card--${item.type}`, `home-feed-card--${item.size ?? 'standard'}`].join(' ');
+}
 ---
 
-<BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、专题、项目与阶段笔记。" hideSiteChrome={true}>
-  <div class="home-editorial-shell">
-    <HomeWorkbenchSidebar items={sideNavItems} />
+<BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
+  <div class="home-feed-shell">
+    <aside class="home-feed-rail" aria-label="个人展示与站点入口">
+      <section class="home-feed-profile">
+        <a class="home-feed-brand" href={withBase('/')}>
+          <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="emptyinkpot" />
+          <span>emptyinkpot</span>
+        </a>
+        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} />
+        <h1>{github.profile.name}</h1>
+        <p>个人内容工作台。文章、项目、书架、GitHub 与视频入口混排在一条可连续浏览的信息流里。</p>
+      </section>
 
-    <main class="home-editorial-page" data-pagefind-body>
-      <div class="home-editorial-page__inner home-workbench">
-        <HomeWorkbenchSearch filters={payload.quickFilters} />
-        <div class="home-workbench__lead-grid">
-          <HomeWorkbenchHero
-            hero={payload.hero}
-            snapshot={payload.snapshot}
-            checkIn={payload.checkIn}
-            github={payload.github}
-            featuredPost={payload.featuredPost}
-          />
-          <div class="home-workbench__lead-side">
-            <HomeWorkbenchUtility friendlySites={payload.friendlySites} teams={payload.teams} />
-          </div>
+      <nav class="home-feed-nav" aria-label="站点导航">
+        <a href={withBase('/posts/')}>文章</a>
+        <a href={withBase('/notes/')}>札记</a>
+        <a href={withBase('/projects/')}>项目</a>
+        <a href={withBase('/evidence-library/')}>史料素材库</a>
+        <a href={withBase('/search/')}>搜索</a>
+        <a href={withBase('/about/')}>关于</a>
+      </nav>
+
+      <section class="home-feed-rail-card">
+        <span>GitHub</span>
+        <strong>@{github.profile.login}</strong>
+        <p>{github.totalContributions} 次年度活动 / {github.profile.publicRepos} 个公开仓库</p>
+        <a href={github.profile.profileUrl}>打开 GitHub</a>
+      </section>
+
+      <section class="home-feed-rail-card">
+        <span>书架</span>
+        <strong>{books[0]?.title ?? 'Reading shelf'}</strong>
+        <p>{books[0]?.note ?? '正在整理阅读记录。'}</p>
+      </section>
+
+      <section class="home-feed-rail-card">
+        <span>Bilibili</span>
+        <strong>{profileLinks.bilibiliLabel}</strong>
+        <p>{profileLinks.bilibiliDescription}</p>
+        <a href={profileLinks.bilibili}>{profileLinks.bilibiliConfigured ? '打开主页' : '稍后配置'}</a>
+      </section>
+    </aside>
+
+    <main class="home-feed-main" data-pagefind-body>
+      <div class="home-feed-toolbar" aria-label="首页内容筛选">
+        <div>
+          <span>Feed</span>
+          <strong>连续浏览</strong>
         </div>
-        <div class="home-workbench__content-grid">
-          <HomeWorkbenchLatestPosts posts={latestPostCards} />
-          <div class="home-workbench__content-side">
-            <HomeWorkbenchFeatureBand featuredPost={payload.featuredPost} />
-            <HomeWorkbenchTaxonomy topics={topicCards} series={seriesCards} />
-            <HomeWorkbenchMaintenance items={payload.maintenanceItems} />
-          </div>
+        <div class="home-feed-filters" role="list" aria-label="内容类型">
+          <button type="button" class="home-feed-filter is-active" data-feed-filter="all">全部</button>
+          <button type="button" class="home-feed-filter" data-feed-filter="post">文章</button>
+          <button type="button" class="home-feed-filter" data-feed-filter="note">札记</button>
+          <button type="button" class="home-feed-filter" data-feed-filter="project">项目</button>
+          <button type="button" class="home-feed-filter" data-feed-filter="book">书架</button>
+          <button type="button" class="home-feed-filter" data-feed-filter="github">GitHub</button>
+          <button type="button" class="home-feed-filter" data-feed-filter="bilibili">Bilibili</button>
         </div>
-        <HomeWorkbenchProjectNotes activeProject={activeProject} latestNote={latestNote} />
-        <HomeWorkbenchRoutes topCards={routeTopCards} bottomCards={routeBottomCards} />
-        <HomeWorkbenchPlanned cards={payload.plannedCards} />
-        <HomeWorkbenchSignals teams={payload.teams} />
       </div>
+
+      <section class="home-feed-grid" aria-label="内容流">
+        {feedItems.map((item) =>
+          item.drawerId && drawerById.has(item.drawerId) ? (
+            <button
+              type="button"
+              class={feedCardClass(item)}
+              data-feed-card
+              data-feed-kind={item.type}
+              data-drawer-id={item.drawerId}
+            >
+              {item.coverSrc ? (
+                <div class="home-feed-card__cover">
+                  <img src={item.coverSrc} alt="" loading="lazy" />
+                </div>
+              ) : (
+                <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
+                  {item.type}
+                </div>
+              )}
+              <div class="home-feed-card__body">
+                <div class="home-feed-card__meta">
+                  <span>{item.kicker}</span>
+                  {item.meta && <small>{item.meta}</small>}
+                </div>
+                <h2>{item.title}</h2>
+                <p>{item.summary}</p>
+                {item.tags?.length ? (
+                  <div class="home-feed-card__tags">
+                    {item.tags.map((tag) => <span>{tag}</span>)}
+                  </div>
+                ) : null}
+              </div>
+            </button>
+          ) : (
+            <a
+              class={feedCardClass(item)}
+              data-feed-card
+              data-feed-kind={item.type}
+              href={item.href ?? withBase('/')}
+            >
+              {item.coverSrc ? (
+                <div class="home-feed-card__cover">
+                  <img src={item.coverSrc} alt="" loading="lazy" />
+                </div>
+              ) : (
+                <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
+                  {item.type}
+                </div>
+              )}
+              <div class="home-feed-card__body">
+                <div class="home-feed-card__meta">
+                  <span>{item.kicker}</span>
+                  {item.meta && <small>{item.meta}</small>}
+                </div>
+                <h2>{item.title}</h2>
+                <p>{item.summary}</p>
+                {item.tags?.length ? (
+                  <div class="home-feed-card__tags">
+                    {item.tags.map((tag) => <span>{tag}</span>)}
+                  </div>
+                ) : null}
+              </div>
+            </a>
+          )
+        )}
+      </section>
     </main>
   </div>
-  <HomeWorkbenchScripts />
+
+  <div class="home-article-layer" data-article-layer hidden>
+    <button class="home-article-backdrop" type="button" data-article-close aria-label="关闭阅读抽屉"></button>
+    <aside class="home-article-drawer" role="dialog" aria-modal="true" aria-labelledby="home-article-title">
+      <header class="home-article-drawer__header">
+        <div>
+          <span data-article-kicker></span>
+          <h2 id="home-article-title" data-article-title></h2>
+        </div>
+        <div class="home-article-drawer__actions">
+          <a href={withBase('/posts/')} data-article-full>完整页面</a>
+          <button type="button" data-article-close>关闭</button>
+        </div>
+      </header>
+      <div class="home-article-drawer__body" data-article-body></div>
+    </aside>
+  </div>
+
+  <div class="home-article-templates" hidden>
+    {drawerEntries.map((entry) => {
+      const Content = entry.Content;
+
+      return (
+        <article
+          class="home-article-reader"
+          data-drawer-template={entry.id}
+          data-full-href={entry.href}
+          data-kicker={entry.kicker}
+          data-title={entry.title}
+        >
+          <header class="home-article-intro">
+            <span>{entry.kicker}</span>
+            <h1>{entry.title}</h1>
+            <p>{entry.summary}</p>
+            {entry.date && <small>{entry.date}</small>}
+          </header>
+          <div class="home-article-reader__grid">
+            <nav class="home-article-toc" aria-label="文章目录">
+              <strong>目录</strong>
+              {entry.toc.length ? (
+                entry.toc.map((heading) => (
+                  <a href={heading.href} class={heading.className}>
+                    {heading.text}
+                  </a>
+                ))
+              ) : (
+                <span>暂无标题</span>
+              )}
+            </nav>
+            <div class="home-article-content prose-shell prose-shell--plain">
+              <Content />
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <script>
+    (() => {
+      const layer = document.querySelector('[data-article-layer]');
+      const drawerBody = document.querySelector('[data-article-body]');
+      const titleTarget = document.querySelector('[data-article-title]');
+      const kickerTarget = document.querySelector('[data-article-kicker]');
+      const fullLink = document.querySelector('[data-article-full]');
+      const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
+      const cards = [...document.querySelectorAll('[data-feed-card]')];
+      let lastFocused = null;
+
+      const setFilter = (kind) => {
+        filterButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.feedFilter === kind));
+        cards.forEach((card) => {
+          const visible = kind === 'all' || card.dataset.feedKind === kind;
+          card.hidden = !visible;
+        });
+      };
+
+      const closeDrawer = () => {
+        if (!layer) return;
+        layer.hidden = true;
+        document.body.classList.remove('has-home-article-drawer');
+        drawerBody?.replaceChildren();
+        if (lastFocused instanceof HTMLElement) {
+          lastFocused.focus({ preventScroll: true });
+        }
+      };
+
+      const openDrawer = (id, trigger) => {
+        const template = [...document.querySelectorAll('[data-drawer-template]')].find(
+          (node) => node.dataset.drawerTemplate === id
+        );
+        if (!template || !drawerBody || !layer) return;
+
+        const content = template.cloneNode(true);
+        content.removeAttribute('data-drawer-template');
+        const reader = content.matches('.home-article-reader') ? content : content.querySelector('.home-article-reader');
+        const title = reader?.dataset.title ?? '';
+        const kicker = reader?.dataset.kicker ?? '';
+        const href = reader?.dataset.fullHref ?? '#';
+        lastFocused = trigger;
+
+        drawerBody.replaceChildren(content);
+        if (titleTarget) titleTarget.textContent = title;
+        if (kickerTarget) kickerTarget.textContent = kicker;
+        if (fullLink) fullLink.setAttribute('href', href);
+        layer.hidden = false;
+        document.body.classList.add('has-home-article-drawer');
+        layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
+      };
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => setFilter(button.dataset.feedFilter || 'all'));
+      });
+
+      cards.forEach((card) => {
+        if (!card.dataset.drawerId) return;
+        card.addEventListener('click', () => openDrawer(card.dataset.drawerId, card));
+      });
+
+      document.querySelectorAll('[data-article-close]').forEach((button) => {
+        button.addEventListener('click', closeDrawer);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !layer?.hidden) {
+          closeDrawer();
+        }
+      });
+    })();
+  </script>
 </BaseLayout>
