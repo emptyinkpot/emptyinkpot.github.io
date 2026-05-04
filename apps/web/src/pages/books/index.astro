@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookshelfCard from '../../components/showcase/BookshelfCard.astro';
+import { books } from '../../data/books';
+
+const groups = [
+  { key: 'reading', label: '正在读' },
+  { key: 'finished', label: '已读' },
+  { key: 'planned', label: '想读' }
+] as const;
+---
+
+<BaseLayout title="书架 / emptyinkpot" description="emptyinkpot 的书架展示页。">
+  <main class="showcase-page">
+    <section class="showcase-page__hero glass-card">
+      <div>
+        <p class="section-kicker">Bookshelf</p>
+        <h1>书架</h1>
+        <p>首页只放书架摘要，这里作为完整书架页。第一阶段仍用 `src/data/books.ts`，后续需要长笔记时再升级 content collection。</p>
+      </div>
+      <div class="showcase-page__metrics">
+        <span><strong>{books.length}</strong>本书</span>
+        <span><strong>{books.filter((book) => book.status === 'reading').length}</strong>在读</span>
+        <span><strong>{books.filter((book) => book.status === 'planned').length}</strong>想读</span>
+      </div>
+    </section>
+
+    {groups.map((group) => {
+      const items = books.filter((book) => book.status === group.key);
+
+      return (
+        <section class="showcase-page__section glass-card">
+          <div class="showcase-page__section-head">
+            <span>{group.key}</span>
+            <h2>{group.label}</h2>
+          </div>
+          {items.length ? (
+            <div class="showcase-page__cards">
+              {items.map((book) => <BookshelfCard book={book} />)}
+            </div>
+          ) : (
+            <p class="showcase-page__empty">这一组暂时没有条目。</p>
+          )}
+        </section>
+      );
+    })}
+  </main>
+</BaseLayout>

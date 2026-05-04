@@ -844,6 +844,7 @@ Hero / System Entry
 - 首页卡片不允许新增绝对定位浮层作为主要信息容器；封面图层只能留在 `.home-feed-card__cover` 内，不能跨出父级。
 - hover 动效只允许 `translateY(-2px)` 或 `translateX(2px)` 级别，不得改变布局尺寸。
 - 任何新增首页内容必须先抽象成 FeedItem 类型之一：`post`、`note`、`project`、`book`、`github`、`bilibili`、`update`。不要再恢复多模块堆叠首页。
+- 图表、书架、音乐也必须作为 FeedItem 或详情页进入系统；不要另起首页模块堆叠。
 - admin 页长表格、长日志、长路径只允许在 `.table-shell` / `.log-lines pre` / `.meta-grid code` 内换行或滚动；不得让 `.console-main` 横向溢出。
 - 如果页面出现重叠，优先检查：网格最小列宽、`min-width: 0`、长文本换行、sticky 父容器、移动断点是否生效，而不是靠增大 z-index 盖过去。
 
@@ -860,7 +861,7 @@ Profile Rail
 当前实现选择：
 
 - 不新增 React / nanostores / masonry 依赖，先用 Astro 静态渲染、CSS columns 和原生 JS drawer/filter 保持发布链稳定。
-- Feed 数据来自文章、札记、项目、书架、GitHub 快照、Bilibili 配置和更新卡片，统一在 `apps/web/src/pages/index.astro` 组装。
+- Feed 数据来自文章、札记、项目、书架、音乐、GitHub 快照、Bilibili 配置和更新卡片，统一在 `apps/web/src/pages/index.astro` 组装。
 - 文章 / 札记 / 项目卡片点击后不跳转整页，而是打开右侧 `.home-article-drawer`；drawer 内正文来自 Astro 已渲染的 Markdown 内容，不再发起客户端 fetch。
 - 完整详情页仍保留：`/posts/[slug]/`、`/notes/[slug]/`、`/projects/[slug]/` 用于 SEO、分享和深度阅读。
 - Bilibili 链接当前集中在 `apps/web/src/lib/profile.ts`，未配置真实主页前只展示占位卡片，不伪造账号信息。
@@ -873,7 +874,8 @@ type FeedItem =
   | { type: "note"; drawerId: string }
   | { type: "project"; drawerId: string }
   | { type: "book"; href?: string }
-  | { type: "github"; href: string }
+  | { type: "music"; href?: string }
+  | { type: "github"; variant: "repo" | "heatmap" | "line" | "language" | "team"; href?: string }
   | { type: "bilibili"; href: string }
   | { type: "update"; href: string };
 ```
@@ -885,6 +887,78 @@ type FeedItem =
 - Drawer 内 TOC 来自 Astro `render(entry).headings`，H2/H3 以内展示。
 - 不把正文 HTML 通过 API 拉取，避免首页阅读依赖网络请求。
 - 以后如果接入 `@egjs/react-grid` 或 React Aria，必须保持同样的 FeedItem / drawer 语义，不得回到多模块堆叠。
+
+#### 0.7.5.15c Visualization / Showcase Layer Contract
+
+当前新的执行结论是：旧 GitHub 图表资产不应被 Feed 首页压缩掉，也不应恢复为旧 HomeWorkbench 多模块堆叠；它们应升级为独立的 Visualization / Showcase 层。
+
+分层固定为：
+
+```text
+数据层：apps/web/src/data/
+派生层：apps/web/src/lib/analytics.ts
+展示层：apps/web/src/components/visualizations/ 和 apps/web/src/components/showcase/
+```
+
+当前已落地的 P0/P1 骨架：
+
+```text
+apps/web/src/lib/
+├── analytics.ts
+├── github.ts
+└── profile.ts
+
+apps/web/src/data/
+├── books.ts
+├── music.ts
+└── github-overview.emptyinkpot.json
+
+apps/web/src/components/visualizations/
+├── ChartCard.astro
+├── GitHubHeatmap.astro
+├── GitHubMonthlyLine.astro
+├── GitHubLanguageDonut.astro
+├── GitHubRepoMatrix.astro
+└── TeamSignalGraph.astro
+
+apps/web/src/components/showcase/
+├── BookCover.astro
+├── BookshelfCard.astro
+├── AlbumCover.astro
+└── MusicCard.astro
+```
+
+页面层级固定为：
+
+```text
+首页 /            只放摘要、mini 图表、Feed 卡片和 Drawer
+/github/          完整 GitHub 仪表盘
+/books/           完整书架
+/music/           音乐 / 歌单 / 专辑墙
+/posts/[slug]/    文章完整阅读
+右侧 drawer        快速阅读模式
+```
+
+图表实现规则：
+
+- 热力图用 div grid 静态渲染，不新增图表库。
+- 折线图用 SVG polyline 静态渲染。
+- 语言 donut 用 CSS `conic-gradient`。
+- 团队图第一版用静态关系图，不做复杂力导向图。
+- 所有图表必须包进 `ChartCard`，不得在首页裸放。
+
+Showcase 实现规则：
+
+- 书架第一阶段继续用 `apps/web/src/data/books.ts`，需要长笔记时再升级 content collection。
+- 音乐第一阶段用 `apps/web/src/data/music.ts`，图片约定放 `apps/web/public/images/music/`。
+- 首页只放 `BookshelfCard` / `MusicCard` 摘要；完整内容进入 `/books/` 和 `/music/`。
+
+首页硬规则追加：
+
+- 首页只保留一个主 Feed。
+- 图表、书籍、音乐都是 FeedItem。
+- 左栏只放摘要，详情页放完整内容。
+- 不再把 GitHub 热力图、折线图、语言分布、团队信号作为独立首页模块堆叠回去。
 
 #### 0.7.5.16 Frontend Refactor Priority
 
@@ -1053,6 +1127,9 @@ right: metadata / seo / status / save actions
   - `apps/web/src/pages/index.astro`
   - `apps/web/src/pages/about.astro`
   - `apps/web/src/pages/api-keys.astro`
+  - `apps/web/src/pages/books/index.astro`
+  - `apps/web/src/pages/github/index.astro`
+  - `apps/web/src/pages/music/index.astro`
   - `apps/web/src/pages/settings.astro`
   - `apps/web/src/pages/search.astro`
   - `apps/web/src/pages/updates.astro`
@@ -1094,26 +1171,42 @@ right: metadata / seo / status / save actions
 - `apps/web/src/components/home/HomeWorkbenchTaxonomy.astro`
 - `apps/web/src/components/home/HomeWorkbenchUtility.astro`
 
+### 当前 Visualization / Showcase 组件
+
+- Visualization 组件：
+  - `apps/web/src/components/visualizations/ChartCard.astro`
+  - `apps/web/src/components/visualizations/GitHubHeatmap.astro`
+  - `apps/web/src/components/visualizations/GitHubMonthlyLine.astro`
+  - `apps/web/src/components/visualizations/GitHubLanguageDonut.astro`
+  - `apps/web/src/components/visualizations/GitHubRepoMatrix.astro`
+  - `apps/web/src/components/visualizations/TeamSignalGraph.astro`
+- Showcase 组件：
+  - `apps/web/src/components/showcase/BookCover.astro`
+  - `apps/web/src/components/showcase/BookshelfCard.astro`
+  - `apps/web/src/components/showcase/AlbumCover.astro`
+  - `apps/web/src/components/showcase/MusicCard.astro`
+
 ### GitHub 可视化资产与旧首页配置
 
 README 之前只零散记录了 `HomeWorkbenchSignals`、`apps/web/src/lib/github.ts`、`apps/web/src/data/github-overview.emptyinkpot.json` 与部分 CSS class，没有把 GitHub 热力图、折线图、团队图、饼状图作为一套资产清单完整写清。当前真实状态如下：
 
 | 能力 | 数据源 | 构建/类型入口 | 视觉入口 | 当前首页状态 |
 | --- | --- | --- | --- | --- |
-| GitHub 热力图 | `overview.months`、`overview.weeks`、`overview.totalContributions` | `buildCheckInData()`、`HomeCheckInData`、`HomeCheckInWeek`、`HomeCheckInCell` in `apps/web/src/lib/home.ts` | CSS：`.home-workbench__cell--0` 到 `.home-workbench__cell--4` | 新 Feed 首页未展开渲染；左栏只显示年度活动总数 |
-| GitHub 月度折线图 | `overview.monthly` | `buildGitHubData()`、`HomeGitHubMonthlyPoint` | CSS：`.home-workbench__linechart`、`.home-workbench__linechart-labels` | 新 Feed 首页未展开渲染 |
-| GitHub 语言饼状图 / donut | `overview.languages` | `buildGitHubData()`、`HomeGitHubLanguageSlice` | CSS：`.home-workbench__donut`、`.home-workbench__donut-core`、`.home-workbench__donut-legend` | 新 Feed 首页未展开渲染 |
-| 团队图 / 团队信号 | `overview.profile`、`overview.repos` 加本地团队配置 | `buildTeamSignals()`、`HomeTeamSignal`、`HomeRepoSignal`、`HomeAutomationSignal` | 组件：`HomeWorkbenchSignals.astro`；CSS：`.home-team-switcher`、`.home-team-panel`、`.home-github-signals` | 新 Feed 首页未展开渲染；GitHub 仓库以 Feed 卡片形式展示 |
-| 仓库矩阵 | `overview.repos` | `githubItems` in `apps/web/src/pages/index.astro`；旧入口 `HomeRepoSignal` | 新 Feed 卡片 `.home-feed-card--github`；旧 CSS `.home-workbench__repo-grid` | 当前首页已展示前 6 个仓库卡片 |
+| GitHub 热力图 | `overview.months`、`overview.weeks`、`overview.totalContributions` | 旧：`buildCheckInData()`；新：`buildGitHubAnalytics()` in `apps/web/src/lib/analytics.ts` | 新：`GitHubHeatmap.astro` + `ChartCard.astro`；旧：`.home-workbench__cell--0..4` | 首页已作为 mini Feed 图表恢复；`/github/` 展示完整版 |
+| GitHub 月度折线图 | `overview.monthly` | 旧：`buildGitHubData()`；新：`buildGitHubAnalytics()` | 新：`GitHubMonthlyLine.astro`；旧：`.home-workbench__linechart` | 首页已作为 mini Feed 图表恢复；`/github/` 展示完整版 |
+| GitHub 语言饼状图 / donut | `overview.languages` | 旧：`buildGitHubData()`；新：`buildGitHubAnalytics()` | 新：`GitHubLanguageDonut.astro`；旧：`.home-workbench__donut` | 首页已作为 mini Feed 图表恢复；`/github/` 展示完整版 |
+| 团队图 / 团队信号 | `overview.profile`、`overview.repos` 加本地团队配置 | 旧：`buildTeamSignals()`；新：`TeamSignalGraph.astro` 直接吃 profile/repos | 新：`TeamSignalGraph.astro`；旧：`HomeWorkbenchSignals.astro` | 不塞回首页；`/github/` 展示静态关系图 |
+| 仓库矩阵 | `overview.repos` | `githubItems` in `apps/web/src/pages/index.astro`；新：`GitHubRepoMatrix.astro` | 新 Feed 卡片 `.home-feed-card--github`；详情页 `GitHubRepoMatrix.astro` | 当前首页展示仓库卡片；`/github/` 展示完整矩阵 |
 
 这套 GitHub 数据的长期真源是：
 
 - 快照文件：`apps/web/src/data/github-overview.emptyinkpot.json`
 - 校验与读取：`apps/web/src/lib/github.ts`
+- 新派生层：`apps/web/src/lib/analytics.ts`
 - 旧首页 payload 生成：`apps/web/src/lib/home.ts`
 - 新首页 Feed 使用：`apps/web/src/pages/index.astro`
 
-后续如果要恢复完整 GitHub 数据仪表盘，不应重新抓一套数据或手写静态图；应从上述 snapshot 和类型继续派生，做成独立 Feed 卡或 `/github/` 详情页。当前 README 的判断是：旧可视化资产仍在仓库中，但新首页为了避免信息堆叠，只保留了紧凑 GitHub 卡片和左栏摘要。
+后续如果要扩展 GitHub 数据仪表盘，不应重新抓一套数据或手写静态图；应从上述 snapshot 和 `analytics.ts` 继续派生，做成独立 Feed 卡或 `/github/` 详情页。当前 README 的判断是：旧可视化资产已升级为 Visualization 层，首页只保留 mini 卡片和摘要，完整内容进入 `/github/`。
 
 ### 当前共享组件与内容页组件
 
@@ -1132,6 +1225,7 @@ README 之前只零散记录了 `HomeWorkbenchSignals`、`apps/web/src/lib/githu
   - `apps/web/src/layouts/BaseLayout.astro`
 - 前台支撑模块：
   - `apps/web/src/lib/content.ts`
+  - `apps/web/src/lib/analytics.ts`
   - `apps/web/src/lib/github.ts`
   - `apps/web/src/lib/home.ts`
   - `apps/web/src/lib/postCovers.ts`
@@ -1142,6 +1236,11 @@ README 之前只零散记录了 `HomeWorkbenchSignals`、`apps/web/src/lib/githu
   - `apps/web/src/content/notes/`
   - `apps/web/src/content/projects/`
   - `apps/web/src/content/pages/`
+- 当前轻数据：
+  - `apps/web/src/data/books.ts`
+  - `apps/web/src/data/music.ts`
+  - `apps/web/src/data/github-overview.emptyinkpot.json`
+  - `apps/web/src/lib/profile.ts`
 
 ### 当前平台化拆分原则
 

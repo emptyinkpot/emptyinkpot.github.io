@@ -1,8 +1,15 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ChartCard from '../components/visualizations/ChartCard.astro';
+import GitHubHeatmap from '../components/visualizations/GitHubHeatmap.astro';
+import GitHubLanguageDonut from '../components/visualizations/GitHubLanguageDonut.astro';
+import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine.astro';
+import MusicCard from '../components/showcase/MusicCard.astro';
 import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sortPosts, toSlug } from '../lib/content';
+import { buildGitHubAnalytics, getRecentHeatmapWeeks } from '../lib/analytics';
 import { books } from '../data/books';
+import { musicItems, type MusicItem } from '../data/music';
 import { getGitHubOverview } from '../lib/github';
 import { profileLinks } from '../lib/profile';
 import { getPostCover } from '../lib/postCovers';
@@ -24,13 +31,15 @@ type DrawerEntry = {
 
 type FeedItem = {
   id: string;
-  type: 'post' | 'note' | 'project' | 'book' | 'github' | 'bilibili' | 'update';
+  type: 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'bilibili' | 'update';
   title: string;
   summary: string;
   kicker: string;
   meta?: string;
   href?: string;
   drawerId?: string;
+  githubVariant?: 'repo' | 'heatmap' | 'line' | 'language' | 'team';
+  musicItem?: MusicItem;
   coverSrc?: string;
   tags?: string[];
   accent?: string;
@@ -45,6 +54,8 @@ const projects = [...(await getCollection('projects'))].sort(
   (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0)
 );
 const github = await getGitHubOverview('emptyinkpot');
+const githubAnalytics = buildGitHubAnalytics(github);
+const recentHeatmapWeeks = getRecentHeatmapWeeks(githubAnalytics, 12);
 
 const drawerSources = [
   ...posts.map((entry) => ({ entry, kind: 'post' as const })),
@@ -126,6 +137,7 @@ const projectItems: FeedItem[] = projects.map((project) => ({
 const githubItems: FeedItem[] = github.repos.slice(0, 6).map((repo, index) => ({
   id: `github-${repo.name}`,
   type: 'github',
+  githubVariant: 'repo',
   title: repo.name,
   summary: `${repo.language} / ${repo.stars} stars / ${repo.issues} issues`,
   kicker: 'GitHub',
@@ -135,6 +147,47 @@ const githubItems: FeedItem[] = github.repos.slice(0, 6).map((repo, index) => ({
   tags: [repo.language],
   size: 'compact'
 }));
+
+const githubChartItems: FeedItem[] = [
+  {
+    id: 'github-heatmap-mini',
+    type: 'github',
+    githubVariant: 'heatmap',
+    title: 'GitHub 活动热力图',
+    summary: `${githubAnalytics.totalContributions} 次年度活动 / ${githubAnalytics.activeDays} 个活跃日`,
+    kicker: 'GitHub / Heatmap',
+    meta: '最近 12 周',
+    href: withBase('/github/'),
+    tags: ['heatmap', 'activity'],
+    size: 'standard'
+  },
+  {
+    id: 'github-line-mini',
+    type: 'github',
+    githubVariant: 'line',
+    title: '月度贡献折线',
+    summary: '从 GitHub 快照派生的月度活动趋势，不在首页重抓数据。',
+    kicker: 'GitHub / Line',
+    meta: 'monthly',
+    href: withBase('/github/'),
+    tags: ['line', 'trend'],
+    size: 'compact'
+  },
+  {
+    id: 'github-language-mini',
+    type: 'github',
+    githubVariant: 'language',
+    title: '语言占比',
+    summary: githubAnalytics.topLanguage
+      ? `${githubAnalytics.topLanguage.label} 当前占比 ${githubAnalytics.topLanguage.percent}%`
+      : '语言分布等待快照数据。',
+    kicker: 'GitHub / Donut',
+    meta: 'languages',
+    href: withBase('/github/'),
+    tags: ['donut', 'language'],
+    size: 'compact'
+  }
+];
 
 const bookItems: FeedItem[] = books.map((book) => ({
   id: `book-${toSlug(book.title)}`,
@@ -146,6 +199,20 @@ const bookItems: FeedItem[] = books.map((book) => ({
   href: book.href,
   coverSrc: book.cover,
   tags: [book.statusLabel],
+  size: 'compact'
+}));
+
+const musicFeedItems: FeedItem[] = musicItems.map((item) => ({
+  id: `music-${item.id}`,
+  type: 'music',
+  title: item.title,
+  summary: item.note,
+  kicker: `音乐 / ${item.platform}`,
+  meta: item.artist,
+  href: item.href,
+  musicItem: item,
+  coverSrc: item.cover,
+  tags: item.mood,
   size: 'compact'
 }));
 
@@ -183,15 +250,20 @@ const feedItems = [
   ...projectItems.slice(0, 1),
   ...noteItems.slice(0, 1),
   ...bookItems.slice(0, 2),
+  githubChartItems[0],
+  musicFeedItems[0],
   ...githubItems.slice(0, 2),
   ...postItems.slice(1, 5),
+  githubChartItems[1],
   ...bilibiliItems,
   ...updateItems,
+  githubChartItems[2],
   ...postItems.slice(5),
   ...projectItems.slice(1),
   ...noteItems.slice(1),
   ...githubItems.slice(2),
-  ...bookItems.slice(2)
+  ...bookItems.slice(2),
+  ...musicFeedItems.slice(1)
 ].filter(Boolean) as FeedItem[];
 
 function feedCardClass(item: FeedItem) {
@@ -216,6 +288,9 @@ function feedCardClass(item: FeedItem) {
         <a href={withBase('/posts/')}>文章</a>
         <a href={withBase('/notes/')}>札记</a>
         <a href={withBase('/projects/')}>项目</a>
+        <a href={withBase('/github/')}>GitHub</a>
+        <a href={withBase('/books/')}>书架</a>
+        <a href={withBase('/music/')}>音乐</a>
         <a href={withBase('/evidence-library/')}>史料素材库</a>
         <a href={withBase('/settings/')}>显示设置</a>
         <a href={withBase('/search/')}>搜索</a>
@@ -226,13 +301,21 @@ function feedCardClass(item: FeedItem) {
         <span>GitHub</span>
         <strong>@{github.profile.login}</strong>
         <p>{github.totalContributions} 次年度活动 / {github.profile.publicRepos} 个公开仓库</p>
-        <a href={github.profile.profileUrl}>打开 GitHub</a>
+        <a href={withBase('/github/')}>查看仪表盘</a>
       </section>
 
       <section class="home-feed-rail-card">
         <span>书架</span>
         <strong>{books[0]?.title ?? 'Reading shelf'}</strong>
         <p>{books[0]?.note ?? '正在整理阅读记录。'}</p>
+        <a href={withBase('/books/')}>打开书架</a>
+      </section>
+
+      <section class="home-feed-rail-card">
+        <span>音乐</span>
+        <strong>{musicItems[0]?.title ?? 'Music shelf'}</strong>
+        <p>{musicItems[0]?.note ?? '正在整理音乐记录。'}</p>
+        <a href={withBase('/music/')}>打开音乐</a>
       </section>
 
       <section class="home-feed-rail-card">
@@ -255,6 +338,7 @@ function feedCardClass(item: FeedItem) {
           <button type="button" class="home-feed-filter" data-feed-filter="note">札记</button>
           <button type="button" class="home-feed-filter" data-feed-filter="project">项目</button>
           <button type="button" class="home-feed-filter" data-feed-filter="book">书架</button>
+          <button type="button" class="home-feed-filter" data-feed-filter="music">音乐</button>
           <button type="button" class="home-feed-filter" data-feed-filter="github">GitHub</button>
           <button type="button" class="home-feed-filter" data-feed-filter="bilibili">Bilibili</button>
         </div>
@@ -262,7 +346,36 @@ function feedCardClass(item: FeedItem) {
 
       <section class="home-feed-grid" aria-label="内容流">
         {feedItems.map((item) =>
-          item.drawerId && drawerById.has(item.drawerId) ? (
+          item.type === 'github' && item.githubVariant === 'heatmap' ? (
+            <div class={feedCardClass(item)} data-feed-card data-feed-kind={item.type}>
+              <ChartCard
+                kicker={item.kicker}
+                title={item.title}
+                summary={item.summary}
+                metric={item.meta}
+                href={item.href}
+                compact
+              >
+                <GitHubHeatmap weeks={recentHeatmapWeeks} compact />
+              </ChartCard>
+            </div>
+          ) : item.type === 'github' && item.githubVariant === 'line' ? (
+            <div class={feedCardClass(item)} data-feed-card data-feed-kind={item.type}>
+              <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} href={item.href} compact>
+                <GitHubMonthlyLine points={githubAnalytics.monthly} compact />
+              </ChartCard>
+            </div>
+          ) : item.type === 'github' && item.githubVariant === 'language' ? (
+            <div class={feedCardClass(item)} data-feed-card data-feed-kind={item.type}>
+              <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} href={item.href} compact>
+                <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
+              </ChartCard>
+            </div>
+          ) : item.type === 'music' && item.musicItem ? (
+            <div class={feedCardClass(item)} data-feed-card data-feed-kind={item.type}>
+              <MusicCard item={item.musicItem} compact />
+            </div>
+          ) : item.drawerId && drawerById.has(item.drawerId) ? (
             <button
               type="button"
               class={feedCardClass(item)}

@@ -33,6 +33,9 @@
   "publicBaseUrl": "https://blog.tengokukk.com/",
   "siteEntrypoints": {
     "home": "https://blog.tengokukk.com/",
+    "github": "https://blog.tengokukk.com/github/",
+    "books": "https://blog.tengokukk.com/books/",
+    "music": "https://blog.tengokukk.com/music/",
     "posts": "https://blog.tengokukk.com/posts/",
     "tags": "https://blog.tengokukk.com/tags/",
     "evidenceLibrary": "https://blog.tengokukk.com/evidence-library/",
@@ -239,10 +242,20 @@
       "persistence": "localStorage only; not a server-side CMS setting"
     },
     "githubVisualizationAssets": {
-      "status": "data-and-legacy-components-exist; new feed homepage currently surfaces a compact GitHub card list",
+      "status": "implemented as Visualization layer; homepage surfaces mini Feed chart cards and /github renders full dashboard",
       "dataSource": "apps/web/src/data/github-overview.emptyinkpot.json",
       "loader": "apps/web/src/lib/github.ts",
+      "analyticsLayer": "apps/web/src/lib/analytics.ts",
       "legacyPayloadBuilder": "apps/web/src/lib/home.ts",
+      "components": [
+        "apps/web/src/components/visualizations/ChartCard.astro",
+        "apps/web/src/components/visualizations/GitHubHeatmap.astro",
+        "apps/web/src/components/visualizations/GitHubMonthlyLine.astro",
+        "apps/web/src/components/visualizations/GitHubLanguageDonut.astro",
+        "apps/web/src/components/visualizations/GitHubRepoMatrix.astro",
+        "apps/web/src/components/visualizations/TeamSignalGraph.astro"
+      ],
+      "detailPage": "apps/web/src/pages/github/index.astro",
       "visualSurfaces": [
         {
           "name": "GitHub contribution heatmap",
@@ -274,8 +287,31 @@
         "home-github-signals"
       ],
       "currentHomepageMapping": [
-        "GitHub feed cards use overview.repos",
+        "GitHub repo feed cards use overview.repos",
+        "GitHub mini heatmap/line/language cards use analytics.ts derived data",
         "left rail GitHub card uses overview.profile and overview.totalContributions"
+      ]
+    },
+    "showcaseLayer": {
+      "status": "implemented as lightweight data plus Astro showcase components",
+      "dataSources": [
+        "apps/web/src/data/books.ts",
+        "apps/web/src/data/music.ts"
+      ],
+      "components": [
+        "apps/web/src/components/showcase/BookCover.astro",
+        "apps/web/src/components/showcase/BookshelfCard.astro",
+        "apps/web/src/components/showcase/AlbumCover.astro",
+        "apps/web/src/components/showcase/MusicCard.astro"
+      ],
+      "detailPages": [
+        "apps/web/src/pages/books/index.astro",
+        "apps/web/src/pages/music/index.astro"
+      ],
+      "homepageMapping": [
+        "book entries are FeedItem type=book",
+        "music entries are FeedItem type=music",
+        "homepage rail only shows bookshelf/music summaries"
       ]
     },
     "pageFamilies": {
@@ -283,6 +319,8 @@
         "files": [
           "apps/web/src/pages/index.astro",
           "apps/web/src/data/books.ts",
+          "apps/web/src/data/music.ts",
+          "apps/web/src/lib/analytics.ts",
           "apps/web/src/lib/profile.ts"
         ],
         "mustKeep": [
@@ -311,7 +349,10 @@
           "apps/web/src/pages/notes/[slug].astro",
           "apps/web/src/pages/projects/[slug].astro",
           "apps/web/src/pages/about.astro",
-          "apps/web/src/pages/settings.astro"
+          "apps/web/src/pages/settings.astro",
+          "apps/web/src/pages/github/index.astro",
+          "apps/web/src/pages/books/index.astro",
+          "apps/web/src/pages/music/index.astro"
         ],
         "wrapperMaxWidthPx": 1180,
         "codeBlockRule": "pre may scroll horizontally; it must not widen page-wrap"
@@ -383,10 +424,12 @@
       "apps/web/src/content/notes",
       "apps/web/src/content/projects",
       "apps/web/src/data/books.ts",
+      "apps/web/src/data/music.ts",
       "apps/web/src/lib/profile.ts",
       "apps/web/src/data/github-overview.emptyinkpot.json"
     ],
-    "feedItemTypes": ["post", "note", "project", "book", "github", "bilibili", "update"],
+    "feedItemTypes": ["post", "note", "project", "book", "music", "github", "bilibili", "update"],
+    "githubFeedVariants": ["repo", "heatmap", "line", "language", "team"],
     "drawerTypes": ["post", "note", "project"],
     "implementation": {
       "masonry": "css-columns",

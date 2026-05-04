@@ -1,0 +1,30 @@
+---
+import { getDonutGradient, type LanguageSlice } from '../../lib/analytics';
+
+interface Props {
+  languages: LanguageSlice[];
+  compact?: boolean;
+}
+
+const { languages, compact = false } = Astro.props;
+const gradient = getDonutGradient(languages);
+const topLanguage = languages[0];
+---
+
+<div class:list={['github-language-donut', compact && 'github-language-donut--compact']}>
+  <div class="github-language-donut__ring" style={`--donut-gradient:${gradient}`}>
+    <div>
+      <strong>{topLanguage?.percent ?? 0}%</strong>
+      <span>{topLanguage?.label ?? 'N/A'}</span>
+    </div>
+  </div>
+  <div class="github-language-donut__legend">
+    {languages.map((language) => (
+      <span>
+        <i style={`background:${language.color}`}></i>
+        <strong>{language.label}</strong>
+        <small>{language.percent}%</small>
+      </span>
+    ))}
+  </div>
+</div>
