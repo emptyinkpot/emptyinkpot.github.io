@@ -1436,10 +1436,14 @@ Reader Page 排版规则：
 
 - 阅读页不得按后台面板思路堆模块；正文是流动阅读路径，辅助状态必须进入折叠浮层、侧边目录或底部延伸区。
 - 顶部信息只保留 `meta -> h1 -> lead` 三层：meta 轻、标题强、lead 负责一句话概括；不得在标题下再放大块信息框。
-- 正文宽度控制在 `68ch` 左右，行高约 `1.9`；`h2 / h3 / blockquote / ul / ol / code` 负责制造阅读节奏，不允许所有段落等权堆叠。
+- 标题不是海报；`.home-article-intro h1` 必须降到阅读级字号，当前约 `clamp(28px, 2.5vw, 34px)`，并用 `max-width:18ch` 控制成稳定标题块。
+- 正文和标题共享稳定阅读矩形：`.home-article-intro`、`.home-article-content`、`.reader-mini-graph`、`.home-article-related` 的主列宽度都围绕 `68ch`。
+- 正文行高约 `1.9`；`h2 / h3 / blockquote / mark / ul / ol / code` 负责制造阅读节奏，不允许所有段落等权堆叠。
 - TOC 是轻侧栏，不是内容卡片；它只辅助定位，不抢正文视觉权重。
+- TOC 不得显示浏览器默认粗滚动条；当前 `.home-article-toc` 使用 `scrollbar-width:none` 和 `::-webkit-scrollbar{display:none}`。
 - 阅读结束不能是死路；`.home-article-related` 必须给出继续阅读入口，优先使用同类型和共享 tags 的内容。
 - 色彩只服务注意力：标题、书签、高亮、印章、Graph 节点可以使用语义色；正文容器和辅助面板保持安静。
+- Highlight 不得过亮；gold 约 `rgba(201,162,39,.28)`，purple/green/red 约 `.18` 透明度。
 
 Search rules：
 
