@@ -430,7 +430,7 @@
     ],
     "feedItemTypes": ["post", "note", "project", "book", "music", "github", "bilibili", "update"],
     "githubFeedVariants": ["repo", "heatmap", "line", "language", "team"],
-    "drawerTypes": ["post", "note", "project"],
+    "drawerTypes": ["post", "note", "project", "book", "music", "github", "bilibili", "update"],
     "implementation": {
       "masonry": "css-columns",
       "drawer": "astro-rendered hidden reader nodes cloned by vanilla js",
@@ -439,7 +439,8 @@
     },
     "hardRules": [
       "do not restore module-stacked homepage as the primary home experience",
-      "post/note/project cards open drawer without navigation",
+      "all homepage feed cards and rail summary actions open drawer without navigation",
+      "drawer close restores home-feed-main scrollTop before returning focus",
       "full detail pages remain canonical share and seo routes",
       "bilibili link must be configured in apps/web/src/lib/profile.ts before claiming a real profile"
     ]

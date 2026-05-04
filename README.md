@@ -862,8 +862,10 @@ Profile Rail
 
 - 不新增 React / nanostores / masonry 依赖，先用 Astro 静态渲染、CSS columns 和原生 JS drawer/filter 保持发布链稳定。
 - Feed 数据来自文章、札记、项目、书架、音乐、GitHub 快照、Bilibili 配置和更新卡片，统一在 `apps/web/src/pages/index.astro` 组装。
-- 文章 / 札记 / 项目卡片点击后不跳转整页，而是打开右侧 `.home-article-drawer`；drawer 内正文来自 Astro 已渲染的 Markdown 内容，不再发起客户端 fetch。
-- 完整详情页仍保留：`/posts/[slug]/`、`/notes/[slug]/`、`/projects/[slug]/` 用于 SEO、分享和深度阅读。
+- 首页 Feed 卡片和左栏摘要入口统一使用右侧 `.home-article-drawer` 打开；不允许一部分类别跳页、一部分类别开抽屉。
+- 文章 / 札记 / 项目 drawer 内正文来自 Astro 已渲染的 Markdown 内容，不再发起客户端 fetch。
+- 书架、音乐、GitHub 图表、GitHub 仓库、Bilibili、更新卡片也必须先打开 drawer；drawer 顶部的“完整页面”链接再进入 `/github/`、`/books/`、`/music/`、`/evidence-library/` 或外部站点。
+- 完整详情页仍保留：`/posts/[slug]/`、`/notes/[slug]/`、`/projects/[slug]/`、`/github/`、`/books/`、`/music/` 用于 SEO、分享和深度阅读。
 - Bilibili 链接当前集中在 `apps/web/src/lib/profile.ts`，未配置真实主页前只展示占位卡片，不伪造账号信息。
 
 首页内容模型：
@@ -873,19 +875,20 @@ type FeedItem =
   | { type: "post"; drawerId: string }
   | { type: "note"; drawerId: string }
   | { type: "project"; drawerId: string }
-  | { type: "book"; href?: string }
-  | { type: "music"; href?: string }
-  | { type: "github"; variant: "repo" | "heatmap" | "line" | "language" | "team"; href?: string }
-  | { type: "bilibili"; href: string }
-  | { type: "update"; href: string };
+  | { type: "book"; drawerId: string; href?: string }
+  | { type: "music"; drawerId: string; href?: string }
+  | { type: "github"; variant: "repo" | "heatmap" | "line" | "language" | "team"; drawerId: string; href?: string }
+  | { type: "bilibili"; drawerId: string; href: string }
+  | { type: "update"; drawerId: string; href: string };
 ```
 
 交互硬规则：
 
 - Filter 只隐藏 / 显示已有 Feed 卡片，不重建列表，不重置滚动。
-- Drawer 打开时记录触发卡片，关闭后 focus 回到原卡片，且使用 `preventScroll`。
+- Drawer 打开时记录触发卡片和 `.home-feed-main.scrollTop`；关闭后恢复 scrollTop，再 focus 回到原卡片，且使用 `preventScroll`。
 - Drawer 内 TOC 来自 Astro `render(entry).headings`，H2/H3 以内展示。
 - 不把正文 HTML 通过 API 拉取，避免首页阅读依赖网络请求。
+- 首页卡片内不得再放直接跳转的内链作为主要打开方式；主点击行为必须是 drawer，完整页只放在 drawer action。
 - 以后如果接入 `@egjs/react-grid` 或 React Aria，必须保持同样的 FeedItem / drawer 语义，不得回到多模块堆叠。
 
 #### 0.7.5.15c Visualization / Showcase Layer Contract
@@ -951,7 +954,7 @@ Showcase 实现规则：
 
 - 书架第一阶段继续用 `apps/web/src/data/books.ts`，需要长笔记时再升级 content collection。
 - 音乐第一阶段用 `apps/web/src/data/music.ts`，图片约定放 `apps/web/public/images/music/`。
-- 首页只放 `BookshelfCard` / `MusicCard` 摘要；完整内容进入 `/books/` 和 `/music/`。
+- 首页只放书架 / 音乐摘要卡片；主点击行为打开 drawer，完整内容通过 drawer action 进入 `/books/` 和 `/music/`。
 
 首页硬规则追加：
 

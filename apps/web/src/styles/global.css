@@ -2828,7 +2828,8 @@ body.home-mode .page-wrap--home {
 }
 
 .home-feed-nav a:hover,
-.home-feed-rail-card a:hover {
+.home-feed-rail-card a:hover,
+.home-feed-rail-card button:hover {
   color: var(--home-accent);
 }
 
@@ -2855,10 +2856,17 @@ body.home-mode .page-wrap--home {
   line-height: 1.16;
 }
 
-.home-feed-rail-card a {
+.home-feed-rail-card a,
+.home-feed-rail-card button {
+  width: fit-content;
+  border: 0;
+  background: transparent;
+  padding: 0;
   color: #3a2a42;
   font-size: 12px;
   font-weight: 800;
+  cursor: pointer;
+  text-align: left;
 }
 
 .home-feed-main {
@@ -3217,6 +3225,79 @@ body.home-mode .page-wrap--home {
 
 .home-article-content :where(h2, h3) {
   scroll-margin-top: 24px;
+}
+
+.home-drawer-summary {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.home-drawer-summary__media,
+.home-drawer-summary__mark {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 180px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--feed-accent, var(--home-accent)) 16%, transparent), transparent 72%),
+    rgba(255, 255, 255, 0.72);
+  color: var(--feed-accent, var(--home-accent));
+  overflow: hidden;
+}
+
+.home-drawer-summary__media--round {
+  border-radius: 999px;
+  min-height: 168px;
+}
+
+.home-drawer-summary__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-drawer-summary__mark {
+  padding: 16px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.home-drawer-summary__main {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.home-drawer-summary__details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.home-drawer-summary__details div {
+  display: grid;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.62);
+  padding: 12px;
+}
+
+.home-drawer-summary__details dt {
+  color: var(--home-accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-drawer-summary__details dd {
+  color: #17120d;
+  font-size: 14px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
 }
 
 body.has-home-article-drawer .home-feed-main {
@@ -4001,6 +4082,17 @@ body.has-home-article-drawer .home-feed-main {
 
   .home-article-reader__grid {
     display: block;
+  }
+
+  .home-drawer-summary,
+  .home-drawer-summary__details {
+    grid-template-columns: 1fr;
+  }
+
+  .home-drawer-summary__media,
+  .home-drawer-summary__media--round,
+  .home-drawer-summary__mark {
+    min-height: 140px;
   }
 
   .home-article-toc {
