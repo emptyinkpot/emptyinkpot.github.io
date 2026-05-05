@@ -209,17 +209,37 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
       }[kind] || { content: '贴纸', width: 112, height: 64, color: '#c9a227' };
     }
 
-    function createSticker(targetId, targetType, kind) {
+    function getStickerPlacement(surface, anchor, preset) {
+      const bounds = surface?.getBoundingClientRect();
+      if (!bounds) {
+        return {
+          x: 18 + Math.round(Math.random() * 28),
+          y: 18 + Math.round(Math.random() * 28)
+        };
+      }
+      const anchorBounds = anchor?.getBoundingClientRect();
+      const visibleTop = Math.max(bounds.top, 96);
+      const fallbackY = visibleTop - bounds.top + 32;
+      const rawX = anchorBounds ? anchorBounds.left - bounds.left - preset.width + anchorBounds.width : bounds.width - preset.width - 24;
+      const rawY = anchorBounds ? anchorBounds.top - bounds.top - preset.height - 18 : fallbackY;
+      return {
+        x: Math.round(Math.max(12, Math.min(bounds.width - preset.width - 12, rawX))),
+        y: Math.round(Math.max(12, Math.min(bounds.height - preset.height - 12, rawY)))
+      };
+    }
+
+    function createSticker(targetId, targetType, kind, surface, anchor) {
       const preset = stickerPreset(kind);
       const now = Date.now();
+      const placement = getStickerPlacement(surface, anchor, preset);
       const sticker = {
         id: `sticker:${now}:${Math.random().toString(16).slice(2)}`,
         targetId,
         targetType,
         kind,
         content: preset.content,
-        x: 18 + Math.round(Math.random() * 28),
-        y: 18 + Math.round(Math.random() * 28),
+        x: placement.x,
+        y: placement.y,
         width: preset.width,
         height: preset.height,
         rotation: Math.round((Math.random() * 8 - 4) * 10) / 10,
@@ -433,7 +453,7 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
       if (stickerAdd) {
         const surface = stickerAdd.closest('[data-sticker-surface]');
         if (surface?.dataset.stickerTarget) {
-          createSticker(surface.dataset.stickerTarget, surface.dataset.stickerTargetType || 'visual', stickerAdd.dataset.stickerAdd || 'note');
+          createSticker(surface.dataset.stickerTarget, surface.dataset.stickerTargetType || 'visual', stickerAdd.dataset.stickerAdd || 'note', surface, stickerAdd);
         }
         return;
       }
