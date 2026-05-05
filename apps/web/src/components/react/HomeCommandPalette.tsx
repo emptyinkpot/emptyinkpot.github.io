@@ -93,7 +93,6 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
       <button className="home-command__trigger" type="button" onClick={() => setOpen(true)}>
         <Search aria-hidden="true" size={15} />
         <span>全局检索</span>
-        <kbd>Ctrl K</kbd>
       </button>
       <button
         className="home-command__help"

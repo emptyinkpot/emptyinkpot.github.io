@@ -1420,7 +1420,8 @@ Homepage implementation contract：
 - MUST 保留 Banner，并把 Banner 作为首页情绪层；Banner 可展示轻量 metrics，但不得退化为 Dashboard。
 - MUST 删除首页顶部 Dashboard / Bento 大卡片区：不得恢复 Project Studio、GitHub、Knowledge、Books、Music 这类首屏大入口卡，也不得恢复装饰性进度条。
 - MUST 使用 `.home-quickbar` 替代 Dashboard：QuickBar 只承载 Command、项目工坊、知识图谱、书架、视觉素材、GitHub、搜索、设置等轻量入口，不承载正文内容或大块数据。
-- MUST 让 Feed 成为主角：桌面结构为 `.home-feed-main` 主列 + `.home-feed-rail` 辅助侧栏，侧栏弱化为 Profile / Reading Memory / Mini Graph，不再承担导航或统计 Dashboard。
+- MUST 让 Feed 成为主角：桌面结构为 `.home-feed-main` 主列 + 右侧 `.home-feed-rail` 辅助栏，侧栏弱化为 Profile / Reading Memory / Mini Graph，不再承担导航或统计 Dashboard。
+- MUST 按 NapCatQQ 的侧栏原则处理首页右栏：外层 `.home-feed-rail` 是唯一承载边框、背景、阴影和受控 blur 的连续面板；内部 `.home-feed-profile` / `.home-feed-rail-card` / stats 只能是轻量 section 或 row，使用分隔线、弱 hover 背景和轻位移反馈，不允许卡片套卡片、统计盒子网格或厚重内边框。
 - MUST 在主区首屏展示动态 Hero 指标：posts、repos、projects、knowledge nodes；数字可用 React island ticker，但必须在低动效偏好下直接显示最终值。
 - MUST 维持书籍唯一真源：书籍元数据只来自 `apps/web/src/data/books.ts` 的 `books: BookItem[]`，首页 Feed、书架页、书籍详情页、Reader、Knowledge 搜索和图谱都必须使用 `book.id` 作为节点 ID 与路由 ID，不得再用 `book.title` 派生第二套 ID。
 - MUST 在首页顶部 Feed tabs 中把“书架”实现为 `data-feed-filter="book"` 的首页内筛选，不得直接链接到 `/books/`；`/books/` 作为完整书架页，只从 drawer action、Command Palette 或明确的“完整书架”入口进入。
@@ -1433,7 +1434,7 @@ Homepage implementation contract：
 - `.card-paperclip` 必须使用 Bootstrap Icons `paperclip` 开源 SVG 轮廓作为图形源，锚定在卡片右上边缘并与卡片边框重叠；不得手搓脱位线圈、可见色块贴片，或只画一个浮在卡片表面的图标框。
 - 图文/书籍卡片的封面必须像夹入卡片的照片或书页：有纸白边、轻阴影、轻微旋转和 hover 微动；视觉素材卡仍可保留沉浸媒体，但不能恢复纯 UI 色条。
 - MUST 使用 Activity Marquee 展示最近文章、项目进度、GitHub 更新、书架、音乐、Knowledge 状态；它只能横向展示短句，不承载正文内容。
-- MUST 在首页提供全站 Command Palette，默认入口是 `Ctrl/Command + K`，可以跳转搜索、文章、项目工坊、项目工作台、GitHub、书架、音乐、Knowledge、设置。
+- MUST 在首页提供全站 Command Palette，键盘入口是 `Ctrl/Command + K`，可见 QuickBar 按钮只显示“全局检索”；快捷键规则必须收纳进旁边的 `?` 帮助按钮，不在主按钮上展示 `Ctrl K` 文案。
 - MUST 继续保留原有 Feed、阅读 drawer、本地高亮、批注、印章、搜索层和设置联动。
 - FORBIDDEN：恢复首页 Dashboard / Bento 大卡片、把首页改成单屏 hero、删除 feed、删除阅读记忆系统、用全屏粒子/光束遮挡内容、引入横向滚动、照搬 Magic UI / Aceternity 默认主题。
 

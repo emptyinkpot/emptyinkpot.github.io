@@ -4531,6 +4531,7 @@ body.app-mode .site-shell__glow {
 
 .home-feed-rail-card:hover {
   background: rgba(255, 255, 255, 0.4);
+  transform: translateX(-2px);
 }
 
 .home-feed-rail-card span,
@@ -4566,25 +4567,33 @@ body.app-mode .site-shell__glow {
 
 .home-feed-stat-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px;
+  gap: 0;
 }
 
 .home-feed-stat-grid div {
   display: flex;
+  min-height: 34px;
   min-width: 0;
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
   border: 0;
-  border-radius: 8px;
-  background: rgba(30, 27, 24, 0.035);
-  padding: 7px 8px;
-  transition: background-color 180ms ease;
+  border-bottom: 1px solid rgba(45, 30, 56, 0.08);
+  border-radius: 6px;
+  background: transparent;
+  padding: 7px 4px;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.home-feed-stat-grid div:last-child {
+  border-bottom: 0;
 }
 
 .home-feed-stat-grid div:hover {
-  background: rgba(102, 8, 116, 0.07);
+  background: rgba(102, 8, 116, 0.055);
+  transform: translateX(-2px);
 }
 
 .home-feed-stat-grid small {
@@ -4625,8 +4634,19 @@ body.app-mode .site-shell__glow {
   display: grid;
   gap: 3px;
   width: 100%;
+  border-radius: 6px;
+  padding: 6px 4px;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.home-feed-memory li button:hover,
+.home-feed-stats li button:hover {
+  background: rgba(102, 8, 116, 0.055);
+  transform: translateX(-2px);
 }
 
 .home-feed-memory li button span,
@@ -4896,17 +4916,6 @@ body.app-mode .site-shell__glow {
   font-size: 12px;
   font-weight: 900;
   cursor: pointer;
-}
-
-.home-command__trigger kbd {
-  border: 1px solid rgba(102, 8, 116, 0.16);
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 2px 5px;
-  color: var(--heritage-muted, #6b645c);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 850;
 }
 
 .home-command__help {
@@ -7742,7 +7751,8 @@ body.has-home-article-drawer .home-feed-main {
 }
 
 :root[data-theme='heritage'] .home-feed-stat-grid div {
-  background: color-mix(in srgb, var(--heritage-ink), transparent 96%);
+  border-bottom-color: var(--heritage-line);
+  background: transparent;
 }
 
 :root[data-theme='heritage'] .home-feed-stat-grid div:hover,
