@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { visualItems } from '../../data/visuals';
+import { withBase } from '../../lib/site';
+---
+
+<BaseLayout title="视觉素材 / emptyinkpot" description="视觉素材、调色板、设计笔记和知识图谱入口。">
+  <main class="visuals-page">
+    <section class="visuals-hero">
+      <p class="section-kicker">Visual Knowledge Layer</p>
+      <h1>视觉素材不是图片墙，是可回访的设计节点。</h1>
+      <p>这里收集海报、植物排版、色彩参考和世界观素材。每张图都带标签、笔记、调色板、印章和 Graph 入口。</p>
+      <div class="visuals-hero__actions">
+        <a href={withBase('/')}>回到首页 Feed</a>
+        <a href={withBase('/knowledge/')}>打开 Knowledge Graph</a>
+      </div>
+    </section>
+
+    <section class="visuals-grid" aria-label="视觉素材">
+      {visualItems.map((item) => (
+        <article class="visual-library-card" id={item.id} style={`--visual-accent:${item.palette.dominant}`}>
+          <div class="visual-library-card__image">
+            <img src={item.image} alt="" loading="lazy" />
+          </div>
+          <div class="visual-library-card__body">
+            <p>{item.type}</p>
+            <h2>{item.title}</h2>
+            <span>{item.summary}</span>
+            <div class="visual-palette-row">
+              {item.palette.colors.map((color) => (
+                <button type="button" data-copy-color={color} style={`background:${color}`} title={`复制 ${color}`}>
+                  <span>{color}</span>
+                </button>
+              ))}
+            </div>
+            <div class="home-feed-card__tags">
+              {item.tags.map((tag) => <span>{tag}</span>)}
+            </div>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('click', async (event) => {
+      const button = event.target instanceof Element ? event.target.closest('[data-copy-color]') : null;
+      const color = button?.dataset.copyColor;
+      if (!color) return;
+      try {
+        await navigator.clipboard?.writeText(color);
+      } catch {
+        window.prompt('复制颜色', color);
+      }
+    });
+  </script>
+</BaseLayout>

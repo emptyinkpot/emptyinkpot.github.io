@@ -1,4 +1,4 @@
-export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'highlight' | 'annotation' | 'seal';
+export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'highlight' | 'annotation' | 'seal';
 
 export type KnowledgeSearchDoc = {
   id: string;
@@ -112,6 +112,7 @@ export type KnowledgeGraphNodeType =
   | 'project'
   | 'book'
   | 'music'
+  | 'visual'
   | 'tag'
   | 'highlight'
   | 'annotation'
@@ -123,7 +124,7 @@ export type KnowledgeGraphNode = {
   type: KnowledgeGraphNodeType;
   level: number;
   weight: number;
-  cluster?: 'writing' | 'engineering' | 'reading' | 'media' | 'github' | 'archive';
+  cluster?: 'writing' | 'engineering' | 'reading' | 'media' | 'github' | 'visual' | 'archive';
   href?: string;
   summary?: string;
   meta?: string;

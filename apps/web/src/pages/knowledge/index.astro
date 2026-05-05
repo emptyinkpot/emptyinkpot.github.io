@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { books } from '../../data/books';
 import githubOverview from '../../data/github-overview.emptyinkpot.json';
 import { musicItems } from '../../data/music';
+import { visualItems } from '../../data/visuals';
 import { getPrimaryCategory, sortPosts } from '../../lib/content';
 import { buildClusteredRadialGraph } from '../../lib/knowledge/graph';
 import { buildKnowledgeRelations, type KnowledgeRelationSource } from '../../lib/knowledge/relations';
@@ -23,6 +24,7 @@ const collectionConfig: Array<{ id: string; label: string; cluster: GraphCluster
   { id: 'projects', label: 'Projects', cluster: 'engineering', summary: 'Implemented systems and active engineering work.' },
   { id: 'books', label: 'Books', cluster: 'reading', summary: 'Reading queue and reference shelf.' },
   { id: 'music', label: 'Music', cluster: 'media', summary: 'Listening context for writing and building.' },
+  { id: 'visuals', label: 'Visuals', cluster: 'visual', summary: 'Mood cards, posters, palettes and visual references.' },
   { id: 'github', label: 'GitHub', cluster: 'github', summary: 'Repository activity and public code traces.' }
 ];
 
@@ -96,6 +98,17 @@ const contentNodes: KnowledgeGraphNode[] = [
     summary: item.note,
     meta: [item.artist, ...item.mood].join(' / ')
   })),
+  ...visualItems.map((item) => ({
+    id: `visual:${item.id}`,
+    label: item.title,
+    type: 'visual' as const,
+    level: 2,
+    weight: 3,
+    cluster: 'visual' as const,
+    href: withBase(`/visuals/#${item.id}`),
+    summary: item.summary,
+    meta: [item.type, ...item.tags.slice(0, 3)].join(' / ')
+  })),
   ...githubRepos.map((repo) => ({
     id: `github:${repo.name}`,
     label: repo.name,
@@ -115,6 +128,7 @@ const tagLabels = Array.from(
     ...projects.flatMap((project) => project.data.stack),
     ...books.flatMap((book) => [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags]),
     ...musicItems.flatMap((item) => item.mood),
+    ...visualItems.flatMap((item) => [item.type, ...item.tags]),
     ...githubRepos.map((repo) => repo.language || 'code')
   ])
 ).slice(0, 36);
@@ -124,6 +138,7 @@ posts.forEach((post) => [getPrimaryCategory(post), ...post.data.tags].forEach((t
 projects.forEach((project) => project.data.stack.forEach((tag) => tagCluster.set(tag, 'engineering')));
 books.forEach((book) => [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].forEach((tag) => tagCluster.set(tag, 'reading')));
 musicItems.forEach((item) => item.mood.forEach((tag) => tagCluster.set(tag, 'media')));
+visualItems.forEach((item) => [item.type, ...item.tags].forEach((tag) => tagCluster.set(tag, 'visual')));
 githubRepos.forEach((repo) => tagCluster.set(repo.language || 'code', 'github'));
 
 const tagNodes: KnowledgeGraphNode[] = tagLabels.map((tag) => ({
@@ -166,6 +181,15 @@ const relationSources = [
     tags: project.data.stack,
     href: withBase(`/projects/${project.id}/`),
     body: project.body
+  })),
+  ...visualItems.map((item) => ({
+    id: `visual:${item.id}`,
+    kind: 'visual',
+    title: item.title,
+    summary: item.summary,
+    tags: [item.type, ...item.tags],
+    href: withBase(`/visuals/#${item.id}`),
+    body: item.note
   }))
 ] satisfies KnowledgeRelationSource[];
 
@@ -189,6 +213,7 @@ const links: KnowledgeGraphLink[] = [
   ...projects.map((project) => ({ source: 'collection:projects', target: `project:${project.id}`, type: 'contains' as const, weight: 1 })),
   ...books.map((book) => ({ source: 'collection:books', target: `book:${book.id}`, type: 'contains' as const, weight: 1 })),
   ...musicItems.map((item) => ({ source: 'collection:music', target: `music:${item.id}`, type: 'contains' as const, weight: 1 })),
+  ...visualItems.map((item) => ({ source: 'collection:visuals', target: `visual:${item.id}`, type: 'contains' as const, weight: 1 })),
   ...githubRepos.map((repo) => ({ source: 'collection:github', target: `github:${repo.name}`, type: 'contains' as const, weight: 1 })),
   ...posts.flatMap((post) =>
     [getPrimaryCategory(post), ...post.data.tags]
@@ -209,6 +234,11 @@ const links: KnowledgeGraphLink[] = [
     item.mood
       .filter((tag) => tagLabels.includes(tag))
       .map((tag) => ({ source: `music:${item.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
+  ),
+  ...visualItems.flatMap((item) =>
+    [item.type, ...item.tags]
+      .filter((tag) => tagLabels.includes(tag))
+      .map((tag) => ({ source: `visual:${item.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
   ),
   ...githubRepos.map((repo) => ({
     source: `github:${repo.name}`,
@@ -253,6 +283,7 @@ function colorFor(type: KnowledgeGraphNode['type']) {
     project: '#2f5d50',
     book: '#9e2a2b',
     music: '#c9a227',
+    visual: '#e9b6c8',
     tag: '#6b645c',
     highlight: '#c9a227',
     annotation: '#2f5d50',
@@ -288,6 +319,7 @@ const viewBox = '-620 -620 1240 1240';
           <button type="button" data-graph-filter="engineering">Engineering</button>
           <button type="button" data-graph-filter="reading">Reading</button>
           <button type="button" data-graph-filter="media">Media</button>
+          <button type="button" data-graph-filter="visual">Visuals</button>
           <button type="button" data-graph-filter="github">GitHub</button>
           <button type="button" data-graph-filter="tag">Tags</button>
           <button type="button" data-graph-filter="seal">Seals</button>

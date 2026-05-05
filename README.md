@@ -1534,6 +1534,9 @@ apps/web/src/pages/
 - Seal System 使用 `emptyinkpot-reader-seals` 保存卡片 / 文章印章；`selected / important / insight / unfinished / reread / archive / done / canon` 表达人工判断。
 - Seal Definition 使用 `emptyinkpot-seal-definitions` 作为后续自定义印章入口；默认定义集中在 `apps/web/src/lib/knowledge/seals.ts`，页面不得再各自硬编码一套印章表。
 - Search 会把本地 seal 作为 `type: "seal"` 的结果纳入统一入口；Graph 页面提供 seal 类型节点，并在浏览器端读取本地印章记录，把真实盖章对象连回对应内容节点。
+- Visual Knowledge Layer 使用 `apps/web/src/data/visuals.ts` 保存视觉素材节点；`visual` 是和 post / project / book / music 并列的一等内容类型，不允许退化成普通 `<img>`。
+- `/visuals/` 展示视觉素材墙；首页 Feed 可插入 `.visual-feed-card`，点击后仍走 Reader Drawer，而不是跳出当前阅读流。
+- Visual 节点必须进入 Search 和 Graph：Search type 为 `visual`，Graph 节点 id 为 `visual:<id>`，并通过 tags / related 连接文章、项目、书架和其他视觉素材。
 - Drawer 顶部有阅读进度条，关闭后继续遵守 scrollTop 恢复规则。
 
 Highlight 工程合同：
@@ -1718,10 +1721,11 @@ P2 remaining:
 12. Knowledge 验证：`/knowledge/` 返回 200，图谱使用 radial / level 语义；`/data/knowledge-index.json` 返回构建期索引。
 13. Graph 交互验证：`/knowledge/` 的 cluster 按钮必须能过滤节点；hover 节点只强调一跳关系；点击或键盘 Enter 选择节点后 Inspector 必须更新标题、类型、分区和打开入口。
 14. Seal 验证：首页卡片 hover 出现盖章入口；选择印章后卡片和对应 drawer 标题区出现 `.knowledge-seal`；localStorage 写入 `emptyinkpot-reader-seals`；Search 的 `seal` tab 可搜到印章结果。
-15. Reader Knowledge Engine 验证：保存本地 highlight / annotation 后，Drawer mini graph 的标记列出现对应记忆；`/knowledge/` 注入 highlight / annotation node；点击这些 node 返回首页 Reader 并定位到 `.reader-highlight[data-highlight-id]`。
-16. Graph 联动验证：`/knowledge/?focus=post:id` 会选中目标节点；点击 post/note/project 节点进入 `/?reader=...`；点击 tag 节点进入 `/?searchTag=...` 并打开首页 Search。
-17. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
-18. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
+15. Visual 验证：`/visuals/` 返回 200；首页存在 `.visual-feed-card`；点击视觉卡打开 drawer；Search 的 `visual` tab 可搜到视觉节点；`/knowledge/` 存在 `visual:*` 节点。
+16. Reader Knowledge Engine 验证：保存本地 highlight / annotation 后，Drawer mini graph 的标记列出现对应记忆；`/knowledge/` 注入 highlight / annotation node；点击这些 node 返回首页 Reader 并定位到 `.reader-highlight[data-highlight-id]`。
+17. Graph 联动验证：`/knowledge/?focus=post:id` 会选中目标节点；点击 post/note/project 节点进入 `/?reader=...`；点击 tag 节点进入 `/?searchTag=...` 并打开首页 Search。
+18. 视觉验收：默认画面不得出现大面积 blur、玻璃、neon、发光 hover；卡片 radius 约 `4px`，按钮 radius 约 `3px`，边界线清晰可见。
+19. 移动验收：`max-width:900px` 后首页转单列；drawer `max-width:760px` 后占满屏宽；文本不得压住按钮或溢出容器。
 
 可用浏览器断言：
 
@@ -1966,6 +1970,64 @@ P3:
 - GitHub / CMS persistence
 - import / export seal templates
 - highlight-level and project-wiki-level stamps
+```
+
+Visual Knowledge Layer 合同：
+
+```ts
+type VisualItem = {
+  id: string;
+  title: string;
+  image: string;
+  type: "poster" | "illustration" | "layout" | "color" | "reference";
+  summary: string;
+  note: string;
+  tags: string[];
+  palette: {
+    dominant: string;
+    colors: string[];
+  };
+  seal?: string;
+  related?: {
+    posts?: string[];
+    books?: string[];
+    projects?: string[];
+    visuals?: string[];
+  };
+};
+```
+
+- Visual 不是装饰图，也不是 banner 备选项；它表达“情绪、概念、世界观素材、风格锚点、设计 token 来源”。
+- 当前 P0 数据源为 `apps/web/src/data/visuals.ts`，示例资产位于 `apps/web/public/images/visuals/`。
+- `.visual-feed-card` 必须是可打开 Drawer、可盖章、可搜索、可进入 Graph 的内容卡。
+- Drawer 中必须显示大图、笔记、标签、调色板和可复制设计 token；后续接入 Color Thief / image annotation 时仍沿用同一数据结构。
+- `/visuals/` 是视觉素材库首页，使用 masonry-like column layout；不要把它做成营销 landing page。
+
+Visual roadmap:
+
+```text
+P0 current:
+- VisualItem data
+- /visuals visual wall
+- homepage visual feed cards
+- drawer detail / palette / token copy
+- Search visual docs
+- Graph visual nodes and tag links
+
+P1:
+- Color Thief palette extraction
+- user-uploaded source image registry
+- settings preview for visual card density
+
+P2:
+- react-image-annotate region notes
+- image annotation localStorage schema
+- visual item to article / project backlinks
+
+P3:
+- React Flow / xyflow visual graph editing
+- drag visual into graph
+- AI tagging and design token generation pipeline
 ```
 
 最终验收标准：

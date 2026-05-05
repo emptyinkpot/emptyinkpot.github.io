@@ -12,6 +12,7 @@ import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sor
 import { buildGitHubAnalytics, getRecentHeatmapWeeks } from '../lib/analytics';
 import { books } from '../data/books';
 import { musicItems, type MusicItem } from '../data/music';
+import { visualItems, type VisualItem } from '../data/visuals';
 import { getGitHubOverview } from '../lib/github';
 import { profileLinks } from '../lib/profile';
 import { getPostCover } from '../lib/postCovers';
@@ -19,7 +20,7 @@ import { getRelatedKnowledgeEntries, type KnowledgeRelationSource } from '../lib
 import { defaultSealDefinitions, sealDefinitionStorageKey } from '../lib/knowledge/seals';
 import { withBase } from '../lib/site';
 
-type DrawerKind = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'knowledge' | 'bilibili' | 'update';
+type DrawerKind = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'knowledge' | 'bilibili' | 'update';
 
 type DrawerEntry = {
   id: string;
@@ -38,12 +39,13 @@ type DrawerEntry = {
   body?: string;
   details?: Array<{ label: string; value: string }>;
   chartVariant?: 'heatmap' | 'line' | 'language';
+  visualItem?: VisualItem;
   readHref?: string;
 };
 
 type FeedItem = {
   id: string;
-  type: 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'bilibili' | 'update';
+  type: 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'bilibili' | 'update';
   title: string;
   summary: string;
   kicker: string;
@@ -52,6 +54,7 @@ type FeedItem = {
   drawerId?: string;
   githubVariant?: 'repo' | 'heatmap' | 'line' | 'language' | 'team';
   musicItem?: MusicItem;
+  visualItem?: VisualItem;
   coverSrc?: string;
   tags?: string[];
   accent?: string;
@@ -280,8 +283,25 @@ const updateItems: FeedItem[] = [
   }
 ];
 
+const visualFeedItems: FeedItem[] = visualItems.map((item, index) => ({
+  id: `visual:${item.id}`,
+  type: 'visual',
+  title: item.title,
+  summary: item.summary,
+  kicker: `Visual / ${item.type}`,
+  meta: item.tags.slice(0, 2).join(' / '),
+  href: withBase('/visuals/'),
+  drawerId: `visual:${item.id}`,
+  coverSrc: item.image,
+  tags: item.tags,
+  accent: item.palette.dominant,
+  visualItem: item,
+  size: index === 0 ? 'tall' : 'standard'
+}));
+
 const feedItems = [
   postItems[0],
+  visualFeedItems[0],
   ...projectItems.slice(0, 1),
   ...noteItems.slice(0, 1),
   ...bookItems.slice(0, 2),
@@ -290,6 +310,7 @@ const feedItems = [
   ...githubItems.slice(0, 2),
   ...postItems.slice(1, 5),
   githubChartItems[1],
+  visualFeedItems[1],
   ...bilibiliItems,
   ...updateItems,
   githubChartItems[2],
@@ -297,6 +318,7 @@ const feedItems = [
   ...projectItems.slice(1),
   ...noteItems.slice(1),
   ...githubItems.slice(2),
+  ...visualFeedItems.slice(2),
   ...bookItems.slice(2),
   ...musicFeedItems.slice(1)
 ].filter(Boolean) as FeedItem[];
@@ -389,6 +411,25 @@ const githubDrawerEntries: DrawerEntry[] = [
   }))
 ];
 
+const visualDrawerEntries: DrawerEntry[] = visualItems.map((item) => ({
+  id: `visual:${item.id}`,
+  kind: 'visual',
+  title: item.title,
+  kicker: `视觉素材 / ${item.type}`,
+  href: withBase('/visuals/'),
+  summary: item.summary,
+  coverSrc: item.image,
+  accent: item.palette.dominant,
+  tags: item.tags,
+  visualItem: item,
+  details: [
+    { label: '类型', value: item.type },
+    { label: '来源', value: item.source ?? '未记录' },
+    { label: '主色', value: item.palette.dominant },
+    { label: '用途', value: '视觉素材 / 设计锚点 / Graph 节点' }
+  ]
+}));
+
 const utilityDrawerEntries: DrawerEntry[] = [
   {
     id: 'knowledge:index',
@@ -430,6 +471,7 @@ const drawerEntries = [
   ...bookDrawerEntries,
   ...musicDrawerEntries,
   ...githubDrawerEntries,
+  ...visualDrawerEntries,
   ...utilityDrawerEntries
 ];
 const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
@@ -678,6 +720,7 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="book" data-copy-key="home.feed.book">书架</button>
           <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
           <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="visual">视觉素材</button>
           <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>
           <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
           <a class="home-feed-tab" href={withBase('/settings/')} data-copy-key="home.feed.settings">设置</a>
@@ -742,6 +785,34 @@ const homeCommands = [
               <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
                 <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
               </ChartCard>
+            </button>
+          ) : item.type === 'visual' && item.visualItem ? (
+            <button
+              type="button"
+              class={`${feedCardClass(item)} visual-feed-card`}
+              data-feed-card
+              data-feed-kind={item.type}
+              data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+              style={`--visual-accent:${item.visualItem.palette.dominant}`}
+            >
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <div class="visual-feed-card__media">
+                <img src={item.visualItem.image} alt="" loading="lazy" />
+              </div>
+              <div class="visual-feed-card__overlay">
+                <small>{item.kicker}</small>
+                <h2>{item.title}</h2>
+                <p>{item.summary}</p>
+                <div class="visual-feed-card__palette" aria-label="调色板">
+                  {item.visualItem.palette.colors.slice(0, 5).map((color) => <i style={`background:${color}`}></i>)}
+                </div>
+                <div class="home-feed-card__tags">
+                  {item.tags?.slice(0, 4).map((tag) => <span>{tag}</span>)}
+                </div>
+              </div>
             </button>
           ) : item.type === 'music' && item.musicItem ? (
             <button
@@ -883,7 +954,7 @@ const homeCommands = [
         <kbd>Esc</kbd>
       </div>
       <nav class="knowledge-search-tabs" aria-label="搜索类型">
-        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'highlight', 'annotation', 'seal'].map((kind) => (
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'highlight', 'annotation', 'seal'].map((kind) => (
           <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
         ))}
       </nav>
@@ -934,6 +1005,7 @@ const homeCommands = [
   </div>
 
   <script type="application/json" id="seal-definition-data" set:html={JSON.stringify({ key: sealDefinitionStorageKey, definitions: sealTypes })} />
+  <script type="application/json" id="visual-knowledge-data" set:html={JSON.stringify(visualItems)} />
   <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
 
   <div class="home-article-templates" hidden>
@@ -1032,7 +1104,38 @@ const homeCommands = [
             </>
           ) : (
             <div class="home-drawer-summary">
-              {entry.coverSrc ? (
+              {entry.visualItem ? (
+                <section class="visual-drawer-panel" style={`--visual-accent:${entry.visualItem.palette.dominant}`}>
+                  <div class="visual-drawer-panel__image">
+                    <img src={entry.visualItem.image} alt="" loading="lazy" />
+                  </div>
+                  <div class="visual-drawer-panel__content">
+                    <p>{entry.visualItem.note}</p>
+                    <section>
+                      <h3>调色板</h3>
+                      <div class="visual-palette-row">
+                        {entry.visualItem.palette.colors.map((color) => (
+                          <button type="button" data-copy-color={color} style={`background:${color}`} title={`复制 ${color}`}>
+                            <span>{color}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                    <section>
+                      <h3>知识关联</h3>
+                      <div class="home-feed-card__tags">
+                        {entry.visualItem.tags.map((tag) => <span>{tag}</span>)}
+                      </div>
+                    </section>
+                    <section>
+                      <h3>设计 Token</h3>
+                      <button type="button" class="visual-token-copy" data-copy-visual-token={entry.visualItem.id}>
+                        复制视觉 Token
+                      </button>
+                    </section>
+                  </div>
+                </section>
+              ) : entry.coverSrc ? (
                 <div class:list={['home-drawer-summary__media', entry.kind === 'music' && 'home-drawer-summary__media--round']}>
                   <img src={entry.coverSrc} alt="" loading="lazy" />
                 </div>
@@ -1113,6 +1216,7 @@ const homeCommands = [
       const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
       const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
       const sealConfig = JSON.parse(document.getElementById('seal-definition-data')?.textContent || '{"definitions":[]}');
+      const visualKnowledgeItems = JSON.parse(document.getElementById('visual-knowledge-data')?.textContent || '[]');
       const storageKeys = {
         history: 'emptyinkpot-reading-history',
         bookmarks: 'emptyinkpot-reader-bookmarks',
@@ -2123,6 +2227,41 @@ const homeCommands = [
 
       sealPalette?.querySelector('[data-seal-close]')?.addEventListener('click', closeSealPalette);
       sealPalette?.querySelector('[data-seal-remove]')?.addEventListener('click', removeSeal);
+
+      document.addEventListener('click', async (event) => {
+        const colorButton = event.target instanceof Element ? event.target.closest('[data-copy-color]') : null;
+        const tokenButton = event.target instanceof Element ? event.target.closest('[data-copy-visual-token]') : null;
+        const copyValue = colorButton?.dataset.copyColor;
+        const visualId = tokenButton?.dataset.copyVisualToken;
+        if (!copyValue && !visualId) return;
+        event.preventDefault();
+        event.stopPropagation();
+        let text = copyValue || '';
+        if (visualId) {
+          const item = visualKnowledgeItems.find((visual) => visual.id === visualId);
+          if (!item) return;
+          const colors = item.palette?.colors || [];
+          text = JSON.stringify(
+            {
+              name: item.id,
+              tokens: {
+                accent: colors[0] || item.palette?.dominant,
+                accentMuted: colors[1],
+                background: colors[2],
+                text: colors[3],
+                border: colors[4]
+              }
+            },
+            null,
+            2
+          );
+        }
+        try {
+          await navigator.clipboard?.writeText(text);
+        } catch {
+          window.prompt('复制这段内容', text);
+        }
+      });
 
       selectionToolbar?.querySelectorAll('[data-highlight-color]').forEach((button) => {
         button.addEventListener('click', () => saveSelectionHighlight(button.dataset.highlightColor || 'gold'));
