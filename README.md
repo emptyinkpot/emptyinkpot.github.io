@@ -1288,8 +1288,73 @@ NapCat-derived visual contract：
 - MUST 使用高密度工作面板：Wiki、Timeline、Modules、Issues、PR、Commits 都是可操作面板；一屏必须看到多个状态或操作。
 - MUST 使用受控 frosted panel：仅 app shell、sticky statusbar、work panel、inspector section 可使用 `backdrop-filter`；不要把整站所有卡片都变成玻璃。
 - MUST 保持 Heritage 语义色：主色 `--heritage-green`，系统提示 `--heritage-purple`，风险 `--heritage-red`，强调 `--heritage-gold`；不要照搬 NapCat 粉蓝主题。
-- MUST 保持 Astro 静态前台：当前不引入 HeroUI、Tailwind 组件库、React Router 或 motion；NapCat 只提供布局和状态语言。
+- MUST 保持 Astro 静态前台：当前不引入 HeroUI、React Router 或全量 dashboard 框架；React / motion 只能作为局部 island 能力，NapCat 只提供布局和状态语言。
 - FORBIDDEN：直接复制 NapCat 源码、照搬 NapCat 品牌 / 文案 / 主题、引入不必要前端依赖、用毛玻璃掩盖信息稀疏、把项目页退回营销 hero。
+
+#### 0.7.5.15c.2 Mature Template Increment Contract
+
+本轮新方向不是继续手搓所有页面，而是把 MyBlog 拆成“成熟模板 + 动效库 + GitHub CMS + 少量缝合代码”。执行方式必须是增量改造，不能破坏现有 Heritage 色彩、内容真源和静态发布链路。
+
+当前已落地的事实：
+
+- `apps/web` 已接入 `@astrojs/react`，允许在 Astro 页面中使用 React islands 和客户端 hydration。
+- `apps/web` 已安装 `react`、`react-dom`、`cmdk`、`lucide-react`、`motion`，作为项目工坊、设置页和未来动态首页的最小 React 交互基座。
+- `/projects/[slug]/` 已新增 `ProjectWorkbenchCommand` React island，提供 `Ctrl/Command + K` 命令面板；它只跳转到现有锚点或 GitHub edit 外链，不写 GitHub、不伪造 API。
+- 当前尚未初始化完整 `shadcn/ui` 组件目录，尚未接入 TinaCMS / Decap CMS，尚未接入 React Flow；这些仍是后续阶段。
+
+成熟模板分层：
+
+| 层 | 当前边界 | 后续推荐 |
+| --- | --- | --- |
+| 前台展示 | Astro content collections，Heritage 主题，静态构建 | 继续保留 Astro；首页可逐步引入 Magic UI / Motion Primitives 风格的 React islands |
+| 项目工坊 / 工作台 | Astro 页面 + React command island + 静态 GitHub snapshot | 逐步迁移工作区内部控件到 React + shadcn/ui 范式 |
+| 设置页 | Astro + 原生 JS 写入 localStorage token | 后续用 React + shadcn form / slider / switch / tabs 重构，但必须沿用现有 visual settings key |
+| 内容编辑 | GitHub edit fallback | P1 选 Decap CMS 或 TinaCMS；P2 再做自有 API commit |
+| 世界观 / Graph | 静态 SVG / 确定性预览 | 世界观编辑用 React Flow；知识探索用 Cytoscape / force graph |
+
+Template source policy：
+
+- 可参考 Astrofy、Astro themes、shadcn dashboard templates、Magic UI、Aceternity UI、Motion Primitives、TinaCMS、Decap CMS、Outline、Wiki.js。
+- 只允许吸收布局范式、组件合同、交互模式和源码组织方式；不得整段复制外部项目源码进本仓。
+- 任何 template block 进入 MyBlog 前，都必须改写成 MyBlog token：`--heritage-green`、`--heritage-purple`、`--heritage-red`、`--heritage-gold`、`--heritage-bg`、`--heritage-card`。
+- 不允许为了“模板感”改掉中文 UI、内容真源、README truth layer、部署链路或 GitHub token 安全边界。
+
+React island contract：
+
+- React islands 只用于 app-like 交互：命令面板、tabs、table、form、drawer、toast、settings preview、graph editor。
+- 文章正文、普通列表页、RSS、sitemap、content collection 渲染继续优先使用 Astro。
+- 每个 React island 必须有明确边界：输入 props、输出 DOM、是否触发 API、失败/空态行为。
+- 所有可写操作默认 pending，只有服务端 API / CMS 接入后才能把按钮改成真实写入。
+- 禁止把 GitHub token、Tina token、OAuth secret 或 CMS secret 放进客户端 island。
+
+shadcn/ui 增量规则：
+
+- 以后初始化 shadcn 时，优先在 `apps/web` 内执行，不能新开并行前台项目。
+- 只允许按需添加组件：`button`、`card`、`tabs`、`table`、`dialog`、`sheet`、`command`、`form`、`input`、`textarea`、`badge`、`tooltip`、`dropdown-menu`、`toast`、`progress`、`separator`、`scroll-area`。
+- shadcn 默认主题必须被 Heritage wrapper 覆盖；不要引入蓝紫渐变、纯 SaaS 灰白或一键主题色覆盖整站。
+- `cmdk` 当前承担 Command Palette 基座；未来 shadcn `command` 必须复用或替换这个边界，不能并存两套命令面板。
+
+CMS 增量规则：
+
+- Decap CMS 适合最小 GitHub-backed 内容编辑。Decap 官方说明其 GitHub backend 需要 GitHub auth，并通过 GitHub API 读取和更新仓库内容；所以生产接入必须配置 OAuth / Git Gateway / 自托管 auth proxy。
+- TinaCMS 适合可视化编辑与 Markdown / MDX / JSON 内容模型。Tina 官方说明其内容以 Markdown、MDX、JSON 文件形式存储在 Git 中；接入前必须明确它编辑哪些 collection，不得接管整个仓。
+- P0 继续使用 GitHub edit fallback。
+- P1 先选一个 CMS，不要 Tina 和 Decap 同时接。
+- P2 自有 API commit 只能放在服务端边界，不能放进 Astro 静态前台。
+
+动效增量规则：
+
+- 首页可逐步引入 Bento、Marquee、NumberTicker、ScrollReveal、SpotlightCard、FilmGrain，但每次只引入一种页面级能力。
+- 动效必须尊重现有 `graphMotion` / motion settings；未来 settings 应统一增加“动效强度” token。
+- 动效不可遮挡内容、不可影响首屏可读性、不可制造横向溢出。
+
+参考来源：
+
+- Astro React integration：`https://docs.astro.build/guides/integrations-guide/react/`
+- shadcn Vite / existing project setup：`https://ui.shadcn.com/docs/installation/vite`
+- cmdk command menu：`https://github.com/pacocoursey/cmdk`
+- TinaCMS docs：`https://tina.io/docs`
+- Decap CMS GitHub backend：`https://decapcms.org/docs/github-backend/`
 
 Project Workbench implementation contract：
 

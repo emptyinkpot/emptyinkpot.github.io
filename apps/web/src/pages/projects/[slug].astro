@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectWorkbenchCommand from '../../components/react/ProjectWorkbenchCommand';
 import { formatDate } from '../../lib/content';
 import { getGitHubOverview } from '../../lib/github';
 import { buildProjectStudioView, getProjectTypeLabel } from '../../lib/projects';
@@ -25,6 +26,76 @@ const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : 
 const repoLabel = projectView.owner && projectView.repoName ? `${projectView.owner}/${projectView.repoName}` : 'manual project';
 const primaryWiki = projectView.wiki[0];
 const initialWikiContent = project.body?.trim() || project.data.description;
+const commandItems = [
+  {
+    id: 'wiki',
+    label: 'Wiki 文档',
+    description: primaryWiki?.path ?? '项目 Wiki 编辑区',
+    href: '#wiki',
+    kind: 'internal',
+    icon: 'wiki'
+  },
+  {
+    id: 'timeline',
+    label: '时间线',
+    description: '提交到未来 timeline API',
+    href: '#timeline',
+    kind: 'internal',
+    icon: 'timeline'
+  },
+  {
+    id: 'modules',
+    label: '模块进度',
+    description: `${projectView.modules.length} 个模块`,
+    href: '#modules',
+    kind: 'internal',
+    icon: 'modules'
+  },
+  {
+    id: 'issues',
+    label: 'Issues',
+    description: `${projectView.repo?.issues ?? 0} open`,
+    href: '#issues',
+    kind: 'internal',
+    icon: 'issues'
+  },
+  {
+    id: 'pulls',
+    label: 'Pull Requests',
+    description: 'API pending',
+    href: '#pulls',
+    kind: 'internal',
+    icon: 'pulls'
+  },
+  {
+    id: 'commits',
+    label: 'Commits',
+    description: '最近提交与 GitHub commits',
+    href: '#commits',
+    kind: 'internal',
+    icon: 'commits'
+  },
+  {
+    id: 'contributors',
+    label: '贡献者',
+    description: `${projectView.contributors.length} contributors`,
+    href: '#contributors',
+    kind: 'internal',
+    icon: 'contributors'
+  },
+  ...(primaryWiki?.editUrl
+    ? [
+        {
+          id: 'github-edit',
+          label: 'GitHub 编辑',
+          description: primaryWiki.path,
+          href: primaryWiki.editUrl,
+          kind: 'external',
+          icon: 'github'
+        }
+      ]
+    : [])
+] as const;
 ---
 
 <BaseLayout title={`${project.data.title} / GitHub Workbench`} description={project.data.description} hideSiteChrome={true} appMode={true}>
@@ -85,6 +156,7 @@ const initialWikiContent = project.body?.trim() || project.data.description;
 
         <div class="project-workbench__status-actions">
           <span class="project-workbench__api-badge">API pending</span>
+          <ProjectWorkbenchCommand client:idle commands={commandItems} />
           <a href={project.data.repo ?? withBase('/projects/')} target={project.data.repo ? '_blank' : undefined} rel={project.data.repo ? 'noreferrer' : undefined}>仓库</a>
           {primaryWiki?.editUrl && <a href={primaryWiki.editUrl} target="_blank" rel="noreferrer">GitHub 编辑</a>}
           <button type="button" data-sync-project>同步</button>
