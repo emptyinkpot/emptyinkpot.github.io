@@ -87,6 +87,9 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
             highlightVisibility: 'normal',
             readerMemoryPanel: 'collapsed'
           },
+          home: {
+            feedToolbarSticky: false
+          },
           interactions: {
             hoverPreview: false
           },
@@ -188,6 +191,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
             ...defaults,
             typography: { ...defaults.typography },
             knowledge: { ...defaults.knowledge },
+            home: { ...defaults.home },
             content: {
               banner: { ...defaults.content.banner },
               copy: {},
@@ -230,6 +234,10 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
             input.knowledge?.readerMemoryPanel ?? input.readerMemoryPanel,
             ['collapsed', 'expanded', 'hidden'],
             defaults.knowledge.readerMemoryPanel
+          );
+          next.home.feedToolbarSticky = normalizeBoolean(
+            input.home?.feedToolbarSticky ?? input.feedToolbarSticky,
+            defaults.home.feedToolbarSticky
           );
           next.interactions = {
             hoverPreview: normalizeBoolean(
@@ -404,6 +412,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           root.dataset.graphMotion = settings.knowledge.graphMotion ? 'on' : 'off';
           root.dataset.highlightVisibility = settings.knowledge.highlightVisibility;
           root.dataset.readerMemoryPanel = settings.knowledge.readerMemoryPanel;
+          root.dataset.homeFeedToolbarSticky = settings.home.feedToolbarSticky ? 'on' : 'off';
           root.dataset.hoverPreview = settings.interactions.hoverPreview ? 'on' : 'off';
           if (document.body) applyContent(settings);
           return settings;

@@ -5232,7 +5232,7 @@ body.app-mode .site-shell__glow {
 }
 
 .home-feed-toolbar {
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 20;
   display: flex;
@@ -5249,6 +5249,10 @@ body.app-mode .site-shell__glow {
   -webkit-backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
   backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
   padding: 12px 0;
+}
+
+:root[data-home-feed-toolbar-sticky='on'] .home-feed-toolbar {
+  position: sticky;
 }
 
 .home-feed-toolbar strong {
