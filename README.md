@@ -1496,6 +1496,7 @@ POST /api/projects/[slug]/timeline
 后端规则：
 
 - API 必须运行在 `apps/admin-next`、独立 serverless 函数或其他服务端边界，不能放在静态 Astro 前端里假装可用。
+- 当前源码已在 `apps/admin-next/app/api/github/**` 和 `apps/admin-next/app/api/projects/[slug]/timeline/route.js` 落地最小 route handlers；生产站点仍保持未启用，直到服务器配置 `GITHUB_TOKEN` / `GH_TOKEN` 并把 `blog.tengokukk.com/api/` 代理到 admin-next。
 - `GITHUB_TOKEN` 只能存在服务端环境变量。
 - 写文件前必须读取当前文件 SHA，再调用 GitHub contents API 创建 commit。
 - Timeline 持久化文件固定为项目仓库 `data/timeline.json`。
