@@ -14,5 +14,5 @@ export interface BookItem {
   sourceType: BookSourceType;
   openlistPath?: string;
   description?: string;
-  cover?: string;
+  cover: string;
 }

@@ -11,6 +11,7 @@ export const books: BookItem[] = [
     category: '技术',
     tags: ['AI', '深度学习', 'PDF'],
     sourceType: 'pdf',
+    cover: '/images/books/nndl-book.svg',
     openlistPath: '/夸克网盘/来自：分享/一周热点72分享/nndl-book.pdf',
     description: '用于补齐神经网络、训练范式和深度学习基础概念的长期参考书。'
   },
@@ -24,6 +25,7 @@ export const books: BookItem[] = [
     category: '报告',
     tags: ['AI', '职业', 'PDF'],
     sourceType: 'pdf',
+    cover: '/images/books/future-of-jobs-2025.svg',
     openlistPath: '/夸克网盘/来自：分享/一周热点72分享/WEF_Future_of_Jobs_Report_2025.pdf',
     description: '从宏观就业结构观察 AI 和自动化对知识工作流的影响。'
   },
@@ -37,6 +39,7 @@ export const books: BookItem[] = [
     category: '英语',
     tags: ['英语', '词汇', 'PDF'],
     sourceType: 'pdf',
+    cover: '/images/books/kaoyan-english-vocabulary.svg',
     openlistPath: '/夸克网盘/来自：分享/02.英语历年真题/考研英语阅读高频词汇整理.pdf',
     description: '作为轻量 PDF 样例，验证私有阅读系统的文件读取和进度保存。'
   }

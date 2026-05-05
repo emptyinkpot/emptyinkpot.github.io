@@ -654,7 +654,7 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
           <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
           <button type="button" class="home-feed-tab" data-feed-filter="project" data-copy-key="home.feed.project">项目工坊</button>
-          <a class="home-feed-tab" href={withBase('/books/')} data-copy-key="home.feed.book">书架</a>
+          <button type="button" class="home-feed-tab" data-feed-filter="book" data-copy-key="home.feed.book">书架</button>
           <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
           <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
           <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>
@@ -751,8 +751,14 @@ const homeCommands = [
               <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               {item.coverSrc ? (
-                <div class="home-feed-card__cover">
+                <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
+                </div>
+              ) : item.type === 'book' ? (
+                <div class="home-feed-book-cover" aria-hidden="true">
+                  <span>{item.tags?.[0] ?? 'Book'}</span>
+                  <strong>{item.title}</strong>
+                  <small>{item.meta}</small>
                 </div>
               ) : (
                 <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
@@ -786,8 +792,14 @@ const homeCommands = [
               <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               {item.coverSrc ? (
-                <div class="home-feed-card__cover">
+                <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
+                </div>
+              ) : item.type === 'book' ? (
+                <div class="home-feed-book-cover" aria-hidden="true">
+                  <span>{item.tags?.[0] ?? 'Book'}</span>
+                  <strong>{item.title}</strong>
+                  <small>{item.meta}</small>
                 </div>
               ) : (
                 <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
@@ -834,6 +846,7 @@ const homeCommands = [
           <a href={withBase('/knowledge/')} data-reader-graph>知识图谱</a>
           <a href={withBase('/posts/')} data-article-full>完整页面</a>
           <a href={withBase('/books/')} data-article-read hidden>开始阅读</a>
+          <a href={withBase('/books/')} data-article-shelf hidden>完整书架</a>
           <button type="button" data-article-close>关闭</button>
         </div>
       </header>
@@ -1051,6 +1064,7 @@ const homeCommands = [
       const kickerTarget = document.querySelector('[data-article-kicker]');
       const fullLink = document.querySelector('[data-article-full]');
       const readLink = document.querySelector('[data-article-read]');
+      const shelfLink = document.querySelector('[data-article-shelf]');
       const bookmarkButton = document.querySelector('[data-reader-bookmark]');
       const progress = document.querySelector('[data-reading-progress]');
       const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
@@ -1912,6 +1926,9 @@ const homeCommands = [
             readLink.hidden = true;
             readLink.setAttribute('href', '#');
           }
+        }
+        if (shelfLink) {
+          shelfLink.hidden = kind !== 'book';
         }
         updateReaderGraphLink();
         window.clearTimeout(drawerCloseTimer);

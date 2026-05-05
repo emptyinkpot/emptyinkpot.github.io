@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1008" role="img" aria-labelledby="title desc">
+  <title id="title">Future of Jobs Report 2025 book cover</title>
+  <desc id="desc">A research report style cover for the private bookshelf.</desc>
+  <rect width="720" height="1008" fill="#f2eee4"/>
+  <rect x="0" y="0" width="720" height="210" fill="#264f73"/>
+  <rect x="84" y="126" width="552" height="756" fill="#ffffff" stroke="#cfc4b3" stroke-width="3"/>
+  <text x="116" y="240" fill="#26313a" font-family="Arial, sans-serif" font-size="58" font-weight="800">Future of</text>
+  <text x="116" y="310" fill="#26313a" font-family="Arial, sans-serif" font-size="58" font-weight="800">Jobs Report</text>
+  <text x="116" y="386" fill="#2f5d50" font-family="Arial, sans-serif" font-size="72" font-weight="800">2025</text>
+  <text x="116" y="470" fill="#6b6258" font-family="Arial, sans-serif" font-size="26" letter-spacing="4">WORK / AI / SKILLS</text>
+  <g fill="none" stroke="#2f5d50" stroke-width="10" stroke-linecap="round">
+    <path d="M132 690h88l56-130 76 220 58-170h178"/>
+    <path d="M132 762h456"/>
+  </g>
+  <circle cx="220" cy="690" r="18" fill="#264f73"/>
+  <circle cx="352" cy="780" r="18" fill="#264f73"/>
+  <circle cx="588" cy="610" r="18" fill="#264f73"/>
+  <text x="116" y="828" fill="#264f73" font-family="Arial, sans-serif" font-size="28" font-weight="700">World Economic Forum</text>
+</svg>
