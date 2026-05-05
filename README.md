@@ -1394,8 +1394,9 @@ Homepage implementation contract：
 - MAY 使用全站 Hover Preview 交互层：内容卡可以通过 `data-hover-preview` 暴露预览数据；hover 只负责快速预览，click 仍负责打开 drawer 或明确跳转。
 - Hover Preview MUST 默认关闭，并由设置页 `交互实验 / 启用 Hover 预览浮层` 控制；启用后必须 portal 到 body，并具备延迟打开、延迟关闭、跟随鼠标、viewport flip/shift 避让。当前实现使用 `@floating-ui/react` + `motion/react`，不得退回被父容器 overflow 裁剪的局部绝对定位。
 - MUST 将 Bento 视觉收敛为 Heritage 纸张 / 档案索引风格：`var(--heritage-card)` 背景、`var(--heritage-line-strong)` 边框、纸张压痕和真实物件隐喻；不得使用玻璃拟态、扫光、渐变光斑、厚浮动阴影或硬色竖线。
-- MUST 将首页 Feed 卡片进一步收口为“手账风卡片系统”：不得使用紫/绿硬竖线作为主要视觉语义；卡片语义色必须转为纸张压痕、半透明胶带标签、纸纹、轻微照片/书封倾斜、CSS 回形针、印章/贴纸等真实物件隐喻。
-- `.home-feed-card` 在 Heritage 模式下必须保持纸张卡片：`border: 1px solid var(--heritage-line-strong)`、轻纸纹背景、`::before` 纸张压痕、`::after` 回形针；`.bookmark` 语义标签必须表现为胶带，而不是 UI 书签或硬色块。
+- MUST 将首页 Feed 卡片进一步收口为“手账风卡片系统”：不得使用紫/绿硬竖线作为主要视觉语义；卡片语义色必须转为纸张压痕、照片/书封倾斜、CSS 回形针、印章/贴纸等真实物件隐喻。
+- MUST 避免在 Feed 卡片系统里使用大面积渐变；Heritage 模式下卡片、mark 区和压痕应以纯色、半透明色、边框、阴影和材质关系表达层级。
+- `.home-feed-card` 在 Heritage 模式下必须保持纸张卡片：`border: 1px solid var(--heritage-line-strong)`、纯色纸面、`::before` 纸张压痕、`::after` 回形针；`.bookmark` 语义标签保留原先书签/折角形状，不改成胶带条。
 - 图文/书籍卡片的封面必须像夹入卡片的照片或书页：有纸白边、轻阴影、轻微旋转和 hover 微动；视觉素材卡仍可保留沉浸媒体，但不能恢复纯 UI 色条。
 - MUST 使用 Activity Marquee 展示最近文章、项目进度、GitHub 更新、书架、音乐、Knowledge 状态；它只能横向展示短句，不承载正文内容。
 - MUST 在首页提供全站 Command Palette，默认入口是 `Ctrl/Command + K`，可以跳转搜索、文章、项目工坊、项目工作台、GitHub、书架、音乐、Knowledge、设置。
