@@ -1174,9 +1174,42 @@ apps/web/src/components/showcase/
 
 Showcase 实现规则：
 
-- 书架第一阶段继续用 `apps/web/src/data/books.ts`，需要长笔记时再升级 content collection。
+- 书架元数据继续用 `apps/web/src/data/books.ts` 作为唯一前台真源；需要长笔记时再升级 content collection。
 - 音乐第一阶段用 `apps/web/src/data/music.ts`，图片约定放 `apps/web/public/images/music/`。
 - 首页只放书架 / 音乐摘要卡片；主点击行为打开 drawer，完整内容通过 drawer action 进入 `/books/` 和 `/music/`。
+
+#### 0.7.5.15c.3 Private Bookshelf / Reader Contract
+
+`/books/` 当前升级为站内私人阅读系统入口，不再只是 Showcase 卡片页。边界固定为：
+
+```text
+MyBlog
+├─ /books/          微信读书式书架：封面墙、分类、搜索、最近阅读
+├─ /books/[id]/     书籍详情：元数据、OpenList 路径、进入 reader
+├─ /reader/[id]/    在线阅读器：EPUB 用 react-reader，PDF 用 react-pdf
+└─ /settings/       OpenList Base URL、书籍目录、阅读主题、最近阅读开关
+
+OpenList
+└─ /api/fs/get      返回 raw_url，作为 reader 的真实文件 URL
+```
+
+当前本机 OpenList 事实：
+
+- 工程路径：`E:\My Project\OpenList`
+- 本地 HTTP：`http://127.0.0.1:5244`
+- 已验证存储挂载：`/夸克网盘`
+- 已验证 API：`POST /api/fs/list`、`POST /api/fs/get`
+- `server/handles/fsread.go` 的 `FsGetResp` 包含 `raw_url`
+- 不把 OpenList token、网盘 cookie 或其他 secret 写入 MyBlog 前端；私有鉴权后续必须走服务端代理。
+
+书籍系统实现规则：
+
+- 书籍文件源属于 OpenList；书名、作者、分类、标签、阅读状态、`sourceType`、`openlistPath` 属于 `apps/web/src/data/books.ts`。
+- `openlistPath` 写绝对路径时直接请求该路径；写相对路径时拼接 `/settings/` 的 `openlistBooksPath`。
+- 浏览器本地设置写入 `emptyinkpot-book-settings`；阅读主题继续同步 `emptyinkpot-reader-theme`，与首页 reader drawer 共用主题 token。
+- 阅读进度写入 `emptyinkpot-book-progress:<id>`；最近阅读写入 `emptyinkpot-book-recent`。
+- EPUB reader 使用 `react-reader`，其底层为 `epubjs`；PDF reader 使用 `react-pdf`，其底层为 PDF.js。
+- `/books/` 的视觉目标是“个人书架 / 阅读状态”，不是后台控制面；导航仍由顶部 Feed tabs 和详情页入口承担。
 
 首页硬规则追加：
 
@@ -1347,6 +1380,17 @@ CMS 增量规则：
 - 首页可逐步引入 Bento、Marquee、NumberTicker、ScrollReveal、SpotlightCard、FilmGrain，但每次只引入一种页面级能力。
 - 动效必须尊重现有 `graphMotion` / motion settings；未来 settings 应统一增加“动效强度” token。
 - 动效不可遮挡内容、不可影响首屏可读性、不可制造横向溢出。
+
+Homepage implementation contract：
+
+- `/` 是 `Content OS Home`，不是营销 landing，也不是项目工作台详情页。
+- MUST 保留左侧 profile / signals / reading memory / quick actions rail，主区承担动态入口、Bento、activity、feed。
+- MUST 在主区首屏展示动态 Hero 指标：posts、repos、projects、knowledge nodes；数字可用 React island ticker，但必须在低动效偏好下直接显示最终值。
+- MUST 使用 Bento 入口承载项目工坊、GitHub、Knowledge、书架、音乐；Bento 必须是功能入口，不是装饰卡片。
+- MUST 使用 Activity Marquee 展示最近文章、项目进度、GitHub 更新、书架、音乐、Knowledge 状态；它只能横向展示短句，不承载正文内容。
+- MUST 在首页提供全站 Command Palette，默认入口是 `Ctrl/Command + K`，可以跳转搜索、文章、项目工坊、项目工作台、GitHub、书架、音乐、Knowledge、设置。
+- MUST 继续保留原有 Feed、阅读 drawer、本地高亮、批注、印章、搜索层和设置联动。
+- FORBIDDEN：把首页改成单屏 hero、删除 feed、删除左侧记忆系统、用全屏粒子/光束遮挡内容、引入横向滚动、照搬 Magic UI / Aceternity 默认主题。
 
 参考来源：
 
@@ -2091,6 +2135,8 @@ right: metadata / seo / status / save actions
   - `apps/web/src/pages/search.astro`
   - `apps/web/src/pages/updates.astro`
 - 列表/详情页：
+  - `apps/web/src/pages/books/[id].astro`
+  - `apps/web/src/pages/reader/[id].astro`
   - `apps/web/src/pages/posts/index.astro`
   - `apps/web/src/pages/posts/[slug].astro`
   - `apps/web/src/pages/notes/index.astro`
@@ -2143,6 +2189,11 @@ right: metadata / seo / status / save actions
   - `apps/web/src/components/showcase/BookshelfCard.astro`
   - `apps/web/src/components/showcase/AlbumCover.astro`
   - `apps/web/src/components/showcase/MusicCard.astro`
+- Bookshelf / Reader React islands：
+  - `apps/web/src/components/books/BookshelfGrid.tsx`
+  - `apps/web/src/components/books/BookReader.tsx`
+  - `apps/web/src/components/books/EpubReader.tsx`
+  - `apps/web/src/components/books/PdfReader.tsx`
 
 ### 当前 Knowledge Layer 模块
 
@@ -2205,6 +2256,9 @@ README 之前只零散记录了 `HomeWorkbenchSignals`、`apps/web/src/lib/githu
   - `apps/web/src/lib/postCovers.ts`
   - `apps/web/src/lib/site.ts`
   - `apps/web/src/lib/updateLog.ts`
+  - `apps/web/src/lib/books/types.ts`
+  - `apps/web/src/lib/books/openlist.ts`
+  - `apps/web/src/lib/books/storage.ts`
 - 当前内容集合：
   - `apps/web/src/content/posts/`
   - `apps/web/src/content/notes/`

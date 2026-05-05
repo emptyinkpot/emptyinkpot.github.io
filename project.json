@@ -35,6 +35,7 @@
     "home": "https://blog.tengokukk.com/",
     "github": "https://blog.tengokukk.com/github/",
     "books": "https://blog.tengokukk.com/books/",
+    "bookReader": "https://blog.tengokukk.com/reader/nndl-book/",
     "music": "https://blog.tengokukk.com/music/",
     "posts": "https://blog.tengokukk.com/posts/",
     "tags": "https://blog.tengokukk.com/tags/",
@@ -54,6 +55,7 @@
     "notes": ["title", "date", "summary", "slug"],
     "projects": ["title", "summary", "slug"],
     "pages": ["title", "slug"],
+    "books": ["id", "title", "author", "category", "tags", "sourceType", "openlistPath"],
     "evidenceLibrary": [
       "asset",
       "clip",
@@ -265,6 +267,43 @@
         "--home-background-image"
       ],
       "persistence": "localStorage only; not a server-side CMS setting"
+    },
+    "bookshelfReader": {
+      "status": "implemented",
+      "routes": [
+        "apps/web/src/pages/books/index.astro",
+        "apps/web/src/pages/books/[id].astro",
+        "apps/web/src/pages/reader/[id].astro",
+        "apps/web/src/pages/settings.astro"
+      ],
+      "dataSource": "apps/web/src/data/books.ts",
+      "clientModules": [
+        "apps/web/src/lib/books/types.ts",
+        "apps/web/src/lib/books/openlist.ts",
+        "apps/web/src/lib/books/storage.ts"
+      ],
+      "reactIslands": [
+        "apps/web/src/components/books/BookshelfGrid.tsx",
+        "apps/web/src/components/books/BookReader.tsx",
+        "apps/web/src/components/books/EpubReader.tsx",
+        "apps/web/src/components/books/PdfReader.tsx"
+      ],
+      "openList": {
+        "localProjectRoot": "E:\\My Project\\OpenList",
+        "defaultBaseUrl": "http://127.0.0.1:5244",
+        "verifiedMount": "/夸克网盘",
+        "verifiedApis": ["POST /api/fs/list", "POST /api/fs/get"],
+        "rawUrlField": "raw_url",
+        "frontendSecretPolicy": "do not store OpenList tokens or netdisk cookies in static frontend source"
+      },
+      "localStorageKeys": [
+        "emptyinkpot-book-settings",
+        "emptyinkpot-book-progress:<id>",
+        "emptyinkpot-book-location:<id>",
+        "emptyinkpot-book-recent",
+        "emptyinkpot-reader-theme"
+      ],
+      "readerLibraries": ["react-reader", "react-pdf"]
     },
     "githubVisualizationAssets": {
       "status": "implemented as Visualization layer; homepage surfaces mini Feed chart cards and /github renders full dashboard",

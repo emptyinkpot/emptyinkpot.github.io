@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { books } from '../../data/books';
+import { withBase } from '../../lib/site';
+
+export function getStaticPaths() {
+  return books.map((book) => ({
+    params: { id: book.id },
+    props: { book }
+  }));
+}
+
+const { book } = Astro.props;
+---
+
+<BaseLayout title={`${book.title} / 书架 / emptyinkpot`} description={book.description ?? book.note}>
+  <main class="book-detail-page">
+    <nav class="book-detail-breadcrumb" aria-label="书架路径">
+      <a href={withBase('/books/')}>书架</a>
+      <span>{book.category}</span>
+    </nav>
+
+    <section class="book-detail-hero">
+      <div class="book-detail-cover">
+        {book.cover ? (
+          <img src={book.cover} alt={`${book.title} 封面`} />
+        ) : (
+          <span class="book-cover-fallback">
+            <i>{book.category}</i>
+            <strong>{book.title}</strong>
+            <small>{book.author}</small>
+          </span>
+        )}
+      </div>
+
+      <div class="book-detail-copy">
+        <p class="section-kicker">Bookshelf / {book.statusLabel}</p>
+        <h1>{book.title}</h1>
+        <p>{book.description ?? book.note}</p>
+        <dl>
+          <div>
+            <dt>作者</dt>
+            <dd>{book.author}</dd>
+          </div>
+          <div>
+            <dt>分类</dt>
+            <dd>{book.category}</dd>
+          </div>
+          <div>
+            <dt>来源</dt>
+            <dd>{book.sourceType.toUpperCase()} / OpenList</dd>
+          </div>
+          <div>
+            <dt>路径</dt>
+            <dd>{book.openlistPath ?? '未配置'}</dd>
+          </div>
+        </dl>
+        <div class="book-detail-tags">
+          {book.tags.map((tag) => <span>{tag}</span>)}
+        </div>
+        <div class="book-detail-actions">
+          <a href={withBase(`/reader/${book.id}/`)}>进入阅读器</a>
+          <a href={withBase('/settings/')}>OpenList 设置</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

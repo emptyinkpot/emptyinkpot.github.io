@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookReader from '../../components/books/BookReader';
+import { books } from '../../data/books';
+
+export function getStaticPaths() {
+  return books.map((book) => ({
+    params: { id: book.id },
+    props: { book }
+  }));
+}
+
+const { book } = Astro.props;
+---
+
+<BaseLayout title={`阅读：${book.title} / emptyinkpot`} description={book.description ?? book.note} hideSiteChrome={true} appMode={true}>
+  <BookReader book={book} client:only="react" />
+</BaseLayout>

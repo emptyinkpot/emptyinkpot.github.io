@@ -243,6 +243,56 @@ const selectControls = [
           ))}
         </section>
 
+        <section class="settings-group" data-book-settings-form>
+          <div class="settings-page__panel-head">
+            <span>Bookshelf System</span>
+            <strong>书架与 OpenList</strong>
+          </div>
+
+          <label class="settings-control settings-control--wide">
+            <span>OpenList Base URL</span>
+            <input
+              class="settings-control__text"
+              type="url"
+              name="openlistBaseUrl"
+              data-book-setting="openlistBaseUrl"
+              placeholder="http://127.0.0.1:5244"
+              aria-label="OpenList Base URL"
+            />
+          </label>
+
+          <label class="settings-control settings-control--wide">
+            <span>默认书籍目录</span>
+            <input
+              class="settings-control__text"
+              type="text"
+              name="openlistBooksPath"
+              data-book-setting="openlistBooksPath"
+              placeholder="/夸克网盘"
+              aria-label="默认书籍目录"
+            />
+          </label>
+
+          <label class="settings-control settings-control--wide">
+            <span>默认阅读主题</span>
+            <select class="settings-control__text" name="readerTheme" data-book-setting="readerTheme" aria-label="默认阅读主题">
+              <option value="light">白天</option>
+              <option value="sepia">护眼</option>
+              <option value="dark">夜间</option>
+            </select>
+          </label>
+
+          <label class="settings-control settings-control--inline">
+            <input type="checkbox" name="showRecent" data-book-setting="showRecent" />
+            <span>显示最近阅读</span>
+          </label>
+
+          <div class="settings-page__actions">
+            <button type="button" data-book-settings-reset>恢复书架默认</button>
+            <a href={withBase('/books/')}>打开书架</a>
+          </div>
+        </section>
+
         <section class="settings-group">
           <div class="settings-page__panel-head">
             <span>Frontend Copy</span>
@@ -398,6 +448,74 @@ const selectControls = [
         const ports = api.exportContentPorts?.() || { copy: {}, images: {} };
         api.save({ ...api.load(), content: { ...api.load().content, ...ports } });
         paint(api.load());
+      });
+    })();
+
+    (() => {
+      const storageKey = 'emptyinkpot-book-settings';
+      const readerThemeKey = 'emptyinkpot-reader-theme';
+      const defaults = {
+        openlistBaseUrl: 'http://127.0.0.1:5244',
+        openlistBooksPath: '/夸克网盘',
+        readerTheme: 'sepia',
+        showRecent: true
+      };
+      const form = document.querySelector('[data-book-settings-form]');
+      const resetButton = document.querySelector('[data-book-settings-reset]');
+      const inputs = [...document.querySelectorAll('[data-book-setting]')];
+
+      const normalize = (input = {}) => ({
+        openlistBaseUrl: String(input.openlistBaseUrl || defaults.openlistBaseUrl).trim(),
+        openlistBooksPath: String(input.openlistBooksPath || defaults.openlistBooksPath).trim().replace(/\/$/, '') || '/',
+        readerTheme: ['light', 'sepia', 'dark'].includes(input.readerTheme) ? input.readerTheme : defaults.readerTheme,
+        showRecent: input.showRecent !== false
+      });
+
+      const load = () => {
+        try {
+          return normalize(JSON.parse(localStorage.getItem(storageKey) || '{}'));
+        } catch {
+          return normalize();
+        }
+      };
+
+      const paint = (settings) => {
+        inputs.forEach((input) => {
+          const key = input.dataset.bookSetting;
+          if (!key) return;
+          if (input instanceof HTMLInputElement && input.type === 'checkbox') {
+            input.checked = Boolean(settings[key]);
+            return;
+          }
+          input.value = String(settings[key] ?? '');
+        });
+      };
+
+      const read = () => {
+        const values = {};
+        inputs.forEach((input) => {
+          const key = input.dataset.bookSetting;
+          if (!key) return;
+          values[key] = input instanceof HTMLInputElement && input.type === 'checkbox' ? input.checked : input.value;
+        });
+        return normalize(values);
+      };
+
+      const save = () => {
+        const settings = read();
+        localStorage.setItem(storageKey, JSON.stringify(settings));
+        localStorage.setItem(readerThemeKey, settings.readerTheme);
+        document.documentElement.dataset.readerTheme = settings.readerTheme;
+        paint(settings);
+      };
+
+      paint(load());
+      form?.addEventListener('input', save);
+      resetButton?.addEventListener('click', () => {
+        localStorage.removeItem(storageKey);
+        localStorage.setItem(readerThemeKey, defaults.readerTheme);
+        document.documentElement.dataset.readerTheme = defaults.readerTheme;
+        paint(defaults);
       });
     })();
   </script>

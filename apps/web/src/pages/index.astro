@@ -6,8 +6,10 @@ import GitHubHeatmap from '../components/visualizations/GitHubHeatmap.astro';
 import GitHubLanguageDonut from '../components/visualizations/GitHubLanguageDonut.astro';
 import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine.astro';
 import MusicCard from '../components/showcase/MusicCard.astro';
+import HomeCommandPalette from '../components/react/HomeCommandPalette';
+import HomeNumberTicker from '../components/react/HomeNumberTicker';
 import type { HomeBook } from '../data/books';
-import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sortPosts, toSlug } from '../lib/content';
+import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sortPosts } from '../lib/content';
 import { buildGitHubAnalytics, getRecentHeatmapWeeks } from '../lib/analytics';
 import { books } from '../data/books';
 import { musicItems, type MusicItem } from '../data/music';
@@ -225,16 +227,16 @@ const githubChartItems: FeedItem[] = [
 ];
 
 const bookItems: FeedItem[] = books.map((book) => ({
-  id: `book-${toSlug(book.title)}`,
+  id: `book-${book.id}`,
   type: 'book',
   title: book.title,
   summary: book.note,
   kicker: `书架 / ${book.statusLabel}`,
   meta: book.author,
-  href: withBase('/books/'),
-  drawerId: `book:${toSlug(book.title)}`,
+  href: withBase(`/reader/${book.id}/`),
+  drawerId: `book:${book.id}`,
   coverSrc: book.cover,
-  tags: [book.statusLabel],
+  tags: [book.statusLabel, book.sourceType.toUpperCase()],
   size: 'compact'
 }));
 
@@ -306,17 +308,18 @@ const feedItems = [
 ].filter(Boolean) as FeedItem[];
 
 const bookDrawerEntries: DrawerEntry[] = books.map((book: HomeBook) => ({
-  id: `book:${toSlug(book.title)}`,
+  id: `book:${book.id}`,
   kind: 'book',
   title: book.title,
   kicker: `书架 / ${book.statusLabel}`,
-  href: withBase('/books/'),
+  href: withBase(`/reader/${book.id}/`),
   summary: book.note,
   coverSrc: book.cover,
-  tags: [book.statusLabel],
+  tags: [book.statusLabel, book.sourceType.toUpperCase()],
   details: [
     { label: '作者', value: book.author },
-    { label: '状态', value: book.statusLabel }
+    { label: '状态', value: book.statusLabel },
+    { label: '来源', value: `${book.sourceType.toUpperCase()} / OpenList` }
   ]
 }));
 
@@ -450,6 +453,32 @@ function getRelatedEntries(entry: DrawerEntry) {
 function feedCardClass(item: FeedItem) {
   return ['home-feed-card', `home-feed-card--${item.type}`, `home-feed-card--${item.size ?? 'standard'}`].join(' ');
 }
+
+const latestPost = posts[0];
+const latestProject = projects[0];
+const latestRepo = github.repos[0];
+const latestBook = books[0];
+const latestMusic = musicItems[0];
+const uniqueTagCount = new Set(posts.flatMap((post) => post.data.tags)).size;
+const activityItems = [
+  latestPost && `最新文章：${latestPost.data.title}`,
+  latestProject && `项目工坊：${latestProject.data.title} / ${latestProject.data.progress}%`,
+  latestRepo && `GitHub：${latestRepo.name} 更新于 ${formatDate(new Date(latestRepo.updatedAt))}`,
+  latestBook && `书架：${latestBook.title}`,
+  latestMusic && `音乐：${latestMusic.title}`,
+  `Knowledge：${knowledgeDocs.length} 个入口 / ${uniqueTagCount} 个标签`
+].filter(Boolean) as string[];
+const homeCommands = [
+  { id: 'search', label: '搜索全站', description: '文章、项目、书架、音乐、GitHub、本地标记', action: 'search', icon: 'search' },
+  { id: 'posts', label: '文章', description: `${posts.length} 篇公开文章`, href: withBase('/posts/'), icon: 'posts' },
+  { id: 'projects', label: '项目工坊', description: latestProject ? `${latestProject.data.title} / ${latestProject.data.progress}%` : '项目空间', href: withBase('/projects/'), icon: 'projects' },
+  { id: 'project-workbench', label: '项目工作台', description: 'GitHub Workbench / Wiki / Timeline', href: withBase('/projects/site-v2/'), icon: 'projects' },
+  { id: 'github', label: 'GitHub', description: `${github.profile.publicRepos} 个公开仓库`, href: withBase('/github/'), icon: 'github' },
+  { id: 'books', label: '书架', description: `${books.length} 条阅读记录`, href: withBase('/books/'), icon: 'books' },
+  { id: 'music', label: '音乐', description: `${musicItems.length} 条音乐记录`, href: withBase('/music/'), icon: 'music' },
+  { id: 'knowledge', label: 'Knowledge Graph', description: `${knowledgeDocs.length} 个知识入口`, href: withBase('/knowledge/'), icon: 'knowledge' },
+  { id: 'settings', label: '设置', description: '阅读排版、Graph、视觉偏好', href: withBase('/settings/'), icon: 'settings' }
+];
 ---
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
@@ -515,6 +544,7 @@ function feedCardClass(item: FeedItem) {
 
       <section class="home-feed-rail-card home-feed-quick">
         <span data-copy-key="home.quick.kicker">Quick Actions</span>
+        <HomeCommandPalette client:idle commands={homeCommands} />
         <button type="button" data-search-open data-copy-key="home.quick.search">搜索</button>
         <a href={withBase('/knowledge/')} data-copy-key="home.quick.graph">Graph</a>
         <a href={withBase('/settings/')} data-copy-key="home.quick.settings">设置</a>
@@ -531,6 +561,64 @@ function feedCardClass(item: FeedItem) {
           <span data-hero-season-label data-hero-kicker data-copy-key="home.banner.kicker">Seasonal Field</span>
           <h1 data-hero-title data-copy-key="home.banner.title">EMPTYINKPOT</h1>
           <p data-hero-subtitle data-copy-key="home.banner.subtitle">Content OS · Tangible Knowledge UI</p>
+          <div class="home-hero-banner__metrics" aria-label="站点动态指标">
+            <div>
+              <HomeNumberTicker client:visible value={posts.length} />
+              <small>Posts</small>
+            </div>
+            <div>
+              <HomeNumberTicker client:visible value={github.profile.publicRepos} />
+              <small>Repos</small>
+            </div>
+            <div>
+              <HomeNumberTicker client:visible value={projects.length} />
+              <small>Projects</small>
+            </div>
+            <div>
+              <HomeNumberTicker client:visible value={knowledgeDocs.length} />
+              <small>Nodes</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-os-bento" aria-label="Content OS quick entry">
+        <a class="home-os-bento__item home-os-bento__item--wide" href={withBase('/projects/')}>
+          <span>Project Studio</span>
+          <strong>{latestProject?.data.title ?? '项目工坊'}</strong>
+          <p>{latestProject?.data.description ?? '项目、Wiki、Timeline 与 GitHub 状态的统一入口。'}</p>
+          <div class="home-os-bento__progress" aria-label="项目进度">
+            <i style={`--progress:${latestProject?.data.progress ?? 0}%`}></i>
+          </div>
+          <small>{latestProject?.data.progress ?? 0}% / 进入项目空间</small>
+        </a>
+        <a class="home-os-bento__item" href={withBase('/github/')}>
+          <span>GitHub</span>
+          <strong>{latestRepo?.name ?? '@emptyinkpot'}</strong>
+          <p>{github.totalContributions} 次年度活动，{githubAnalytics.activeDays} 个活跃日。</p>
+        </a>
+        <a class="home-os-bento__item" href={withBase('/knowledge/')}>
+          <span>Knowledge</span>
+          <strong>{knowledgeDocs.length} 个入口</strong>
+          <p>文章、项目、书架、音乐和本地标记共同构成知识图谱。</p>
+        </a>
+        <a class="home-os-bento__item" href={withBase('/books/')}>
+          <span>Books</span>
+          <strong>{latestBook?.title ?? '书架'}</strong>
+          <p>{latestBook?.note ?? '阅读记录、摘录和知识回流。'}</p>
+        </a>
+        <a class="home-os-bento__item" href={withBase('/music/')}>
+          <span>Music</span>
+          <strong>{latestMusic?.title ?? '音乐'}</strong>
+          <p>{latestMusic ? `${latestMusic.artist} / ${latestMusic.platform}` : '音乐状态和专辑入口。'}</p>
+        </a>
+      </section>
+
+      <section class="home-activity-marquee" aria-label="站点活动流">
+        <div>
+          {[...activityItems, ...activityItems].map((item) => (
+            <span>{item}</span>
+          ))}
         </div>
       </section>
 
