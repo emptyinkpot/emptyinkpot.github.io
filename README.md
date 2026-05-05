@@ -1190,22 +1190,28 @@ MyBlog
 └─ /settings/       OpenList Base URL、书籍目录、阅读主题、最近阅读开关
 
 OpenList
-└─ /api/fs/get      返回 raw_url，作为 reader 的真实文件 URL
+├─ /api/openlist/status         检查服务端 OpenList 连接与公开 root
+├─ /api/openlist/get            读取单个文件信息，返回本站 raw 代理 URL
+├─ /api/openlist/raw            代理真实文件流，供 reader / preview 使用
+├─ /api/openlist/list           列出允许公开 root 内的目录
+├─ /api/openlist/index          读取服务端文件索引
+└─ /api/openlist/index/rebuild  递归扫描 OpenList，生成文件数据库
 ```
 
 当前本机 OpenList 事实：
 
 - 工程路径：`E:\My Project\OpenList`
-- 本地 HTTP：`http://127.0.0.1:5244`
+- 服务器本机 HTTP：`http://127.0.0.1:5244`，前台不再直连该地址，统一通过 `blog.tengokukk.com/api/openlist/*` 代理。
 - 已验证存储挂载：`/夸克网盘`
 - 已验证 API：`POST /api/fs/list`、`POST /api/fs/get`
 - `server/handles/fsread.go` 的 `FsGetResp` 包含 `raw_url`
-- 不把 OpenList token、网盘 cookie 或其他 secret 写入 MyBlog 前端；私有鉴权后续必须走服务端代理。
+- 不把 OpenList token、网盘 cookie 或其他 secret 写入 MyBlog 前端；私有鉴权与 raw 文件读取必须走 `apps/admin-next` 服务端代理。
+- 文件数据库第一版写入 `public-data/openlist-index/files.json`；OpenList 负责文件存储，MyBlog/OpenList Index 负责语义索引。
 
 书籍系统实现规则：
 
 - 书籍文件源属于 OpenList；书名、作者、分类、标签、阅读状态、`sourceType`、`openlistPath` 属于 `apps/web/src/data/books.ts`。
-- `openlistPath` 写绝对路径时直接请求该路径；写相对路径时拼接 `/settings/` 的 `openlistBooksPath`。
+- `openlistPath` 写绝对路径时直接使用该路径；写相对路径时拼接 `/settings/` 的 `openlistBooksPath`。Reader 默认调用 `/api/openlist/get` 与 `/api/openlist/raw`，不让浏览器直接访问 OpenList。
 - 浏览器本地设置写入 `emptyinkpot-book-settings`；阅读主题继续同步 `emptyinkpot-reader-theme`，与首页 reader drawer 共用主题 token。
 - 阅读进度写入 `emptyinkpot-book-progress:<id>`；最近阅读写入 `emptyinkpot-book-recent`。
 - EPUB reader 使用 `react-reader`，其底层为 `epubjs`；PDF reader 使用 `react-pdf`，其底层为 PDF.js。
