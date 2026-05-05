@@ -4800,10 +4800,11 @@ body.app-mode .site-shell__glow {
 }
 
 .home-quickbar .home-command {
-  flex: 0 0 148px;
+  flex: 0 0 150px;
 }
 
-.home-quickbar .home-command__trigger {
+.home-quickbar .home-command__trigger,
+.home-quickbar .home-command__help {
   min-height: 32px;
   padding: 6px 10px;
 }
@@ -4841,15 +4842,21 @@ body.app-mode .site-shell__glow {
   white-space: nowrap;
 }
 
-.home-command,
-.home-command__trigger {
+.home-command {
   width: 100%;
 }
 
+.home-command {
+  position: relative;
+  display: flex;
+  gap: 6px;
+}
+
 .home-command__trigger {
+  flex: 1 1 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 8px;
   border: 1px solid rgba(45, 30, 56, 0.16);
   background: rgba(102, 8, 116, 0.08);
@@ -4861,13 +4868,85 @@ body.app-mode .site-shell__glow {
   cursor: pointer;
 }
 
-.home-command__trigger kbd {
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.78);
-  padding: 2px 6px;
-  color: rgba(102, 8, 116, 0.78);
+.home-command__help {
+  flex: 0 0 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(45, 30, 56, 0.16);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--heritage-muted, #6b645c);
+  cursor: pointer;
+}
+
+.home-command__help:hover,
+.home-command__help:focus-visible {
+  background: rgba(30, 27, 24, 0.05);
+  color: var(--heritage-ink, #1e1b18);
+  outline: none;
+}
+
+.home-command__help-popover {
+  position: fixed;
+  z-index: 180;
+  width: min(280px, calc(100vw - 40px));
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-radius: 6px;
+  background: var(--heritage-card, #fffaf0);
+  box-shadow: 0 18px 48px rgba(30, 27, 24, 0.14);
+  padding: 12px;
+  color: var(--heritage-ink, #1e1b18);
+}
+
+.home-command__help-popover header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.home-command__help-popover header strong {
+  color: var(--heritage-purple, #6b2d5c);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.home-command__help-popover header button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  padding: 3px;
+  color: inherit;
+  cursor: pointer;
+}
+
+.home-command__help-popover dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.home-command__help-popover dl div {
+  display: grid;
+  gap: 2px;
+}
+
+.home-command__help-popover dt {
+  color: var(--heritage-ink, #1e1b18);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.home-command__help-popover dd {
+  margin: 0;
+  color: var(--heritage-muted, #6b645c);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .home-command__layer {

@@ -1,11 +1,14 @@
 import { Command } from 'cmdk';
 import { AnimatePresence, motion } from 'motion/react';
+import { createPortal } from 'react-dom';
+import type { MouseEvent } from 'react';
 import {
   BookOpen,
   Boxes,
   CircleUserRound,
   Code2,
   ExternalLink,
+  CircleHelp,
   Library,
   Music2,
   Search,
@@ -42,6 +45,8 @@ const iconMap = {
 
 export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps) {
   const [open, setOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [helpPosition, setHelpPosition] = useState({ left: 12, top: 12 });
   const safeCommands = useMemo(() => commands.filter((command) => command.href || command.action), [commands]);
 
   useEffect(() => {
@@ -53,6 +58,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
 
       if (event.key === 'Escape') {
         setOpen(false);
+        setHelpOpen(false);
       }
     };
 
@@ -73,13 +79,73 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
     }
   };
 
+  const toggleHelp = (event: MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setHelpPosition({
+      left: Math.min(window.innerWidth - 300, Math.max(12, rect.left)),
+      top: rect.bottom + 8
+    });
+    setHelpOpen((value) => !value);
+  };
+
   return (
     <div className="home-command">
       <button className="home-command__trigger" type="button" onClick={() => setOpen(true)}>
         <Search aria-hidden="true" size={15} />
         <span>Command</span>
-        <kbd>Ctrl K</kbd>
       </button>
+      <button
+        className="home-command__help"
+        type="button"
+        aria-label="查看快捷规则"
+        aria-expanded={helpOpen}
+        onClick={toggleHelp}
+      >
+        <CircleHelp aria-hidden="true" size={15} />
+      </button>
+
+      {typeof document !== 'undefined'
+        ? createPortal(
+            <AnimatePresence>
+              {helpOpen ? (
+                <motion.aside
+                  className="home-command__help-popover"
+                  style={{ left: helpPosition.left, top: helpPosition.top }}
+                  initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                  transition={{ duration: 0.14 }}
+                >
+                  <header>
+                    <strong>快捷规则</strong>
+                    <button type="button" aria-label="关闭快捷规则" onClick={() => setHelpOpen(false)}>
+                      <X aria-hidden="true" size={14} />
+                    </button>
+                  </header>
+                  <dl>
+                    <div>
+                      <dt>Ctrl / Command + K</dt>
+                      <dd>打开 Command Palette。</dd>
+                    </div>
+                    <div>
+                      <dt>J / K</dt>
+                      <dd>在首页 Feed 里上下移动。</dd>
+                    </div>
+                    <div>
+                      <dt>Enter</dt>
+                      <dd>打开当前卡片的阅读抽屉。</dd>
+                    </div>
+                    <div>
+                      <dt>Esc</dt>
+                      <dd>关闭搜索、Command 或阅读抽屉。</dd>
+                    </div>
+                  </dl>
+                </motion.aside>
+              ) : null}
+            </AnimatePresence>,
+            document.body
+          )
+        : null}
 
       <AnimatePresence>
         {open ? (
