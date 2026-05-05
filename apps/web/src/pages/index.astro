@@ -5,6 +5,7 @@ import ChartCard from '../components/visualizations/ChartCard.astro';
 import GitHubHeatmap from '../components/visualizations/GitHubHeatmap.astro';
 import GitHubLanguageDonut from '../components/visualizations/GitHubLanguageDonut.astro';
 import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine.astro';
+import GitHubRuntimeSync from '../components/visualizations/GitHubRuntimeSync.astro';
 import MusicCard from '../components/showcase/MusicCard.astro';
 import HomeCommandPalette from '../components/react/HomeCommandPalette';
 import HomeNumberTicker from '../components/react/HomeNumberTicker';
@@ -196,7 +197,7 @@ const githubChartItems: FeedItem[] = [
     type: 'github',
     githubVariant: 'line',
     title: '月度贡献折线',
-    summary: '从 GitHub 快照派生的月度活动趋势，不在首页重抓数据。',
+    summary: '打开页面后由 GitHub runtime API 刷新月度活动趋势。',
     kicker: 'GitHub / Line',
     meta: 'monthly',
     href: withBase('/github/'),
@@ -379,7 +380,7 @@ const githubDrawerEntries: DrawerEntry[] = [
     title: '月度贡献折线',
     kicker: 'GitHub / Line',
     href: withBase('/github/'),
-    summary: '从 GitHub snapshot 派生的月度贡献趋势。首页只保留摘要，完整图表进入 /github/。',
+    summary: '由 GitHub runtime API 聚合月度贡献趋势。首页保留摘要，完整图表进入 /github/。',
     chartVariant: 'line',
     tags: ['line', 'trend']
   },
@@ -554,16 +555,17 @@ const homeCommands = [
 ---
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
-  <div class="home-feed-shell">
+  <div class="home-feed-shell" data-github-live-root data-github-username="emptyinkpot">
     <aside class="home-feed-rail" aria-label="个人状态与知识记忆">
       <section class="home-feed-profile">
         <a class="home-feed-brand" href={withBase('/')}>
           <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="emptyinkpot" data-image-key="home.brand.logo" />
           <span data-copy-key="home.brand.name">emptyinkpot</span>
         </a>
-        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} data-image-key="home.profile.avatar" />
-        <h1>{github.profile.name}</h1>
+        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} data-image-key="home.profile.avatar" data-github-profile="avatar" />
+        <h1 data-github-profile="name">{github.profile.name}</h1>
         <p data-copy-key="home.profile.tagline">Content OS · Knowledge System</p>
+        <small class="github-live-status" data-github-live-status data-github-live-state="loading">GitHub 快照待同步</small>
       </section>
 
       <section class="home-feed-rail-card home-feed-memory">
@@ -605,7 +607,7 @@ const homeCommands = [
               <small>Posts</small>
             </div>
             <div>
-              <HomeNumberTicker client:visible value={github.profile.publicRepos} />
+              <span data-github-metric="publicRepos"><HomeNumberTicker client:visible value={github.profile.publicRepos} /></span>
               <small>Repos</small>
             </div>
             <div>
@@ -2416,4 +2418,5 @@ const homeCommands = [
       }
     })();
   </script>
+  <GitHubRuntimeSync />
 </BaseLayout>

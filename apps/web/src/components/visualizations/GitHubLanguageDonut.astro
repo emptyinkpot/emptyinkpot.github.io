@@ -11,7 +11,11 @@ const gradient = getDonutGradient(languages);
 const topLanguage = languages[0];
 ---
 
-<div class:list={['github-language-donut', compact && 'github-language-donut--compact']}>
+<div
+  class:list={['github-language-donut', compact && 'github-language-donut--compact']}
+  data-github-viz="language-donut"
+  data-github-compact={compact ? 'true' : undefined}
+>
   <div class="github-language-donut__ring" style={`--donut-gradient:${gradient}`}>
     <div>
       <strong>{topLanguage?.percent ?? 0}%</strong>

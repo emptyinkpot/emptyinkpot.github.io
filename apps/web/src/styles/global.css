@@ -6752,6 +6752,24 @@ body.has-home-article-drawer .home-feed-main {
   font-weight: 800;
 }
 
+.github-live-status,
+.showcase-page__profile small {
+  width: fit-content;
+  border: 1px solid rgba(95, 133, 117, 0.26);
+  background: rgba(248, 245, 241, 0.72);
+  padding: 4px 8px;
+  color: #5f8575;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.github-live-status[data-github-live-state='error'],
+.showcase-page__profile small[data-github-live-state='error'] {
+  border-color: rgba(158, 42, 43, 0.24);
+  color: #9e2a2b;
+}
+
 .team-signal-graph {
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr);
@@ -6904,6 +6922,38 @@ body.has-home-article-drawer .home-feed-main {
   color: #5b5148;
   font-size: 15px;
   line-height: 1.72;
+}
+
+.showcase-page__profile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.showcase-page__profile img {
+  width: 44px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(30, 27, 24, 0.12);
+  object-fit: cover;
+}
+
+.showcase-page__profile div {
+  display: grid;
+  gap: 2px;
+}
+
+.showcase-page__profile strong {
+  color: #17120d;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.showcase-page__profile span {
+  color: #6e625b;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .showcase-page__metrics {

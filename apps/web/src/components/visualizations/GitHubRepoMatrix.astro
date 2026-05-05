@@ -10,7 +10,11 @@ interface Props {
 const { repos, compact = false } = Astro.props;
 ---
 
-<div class:list={['github-repo-matrix', compact && 'github-repo-matrix--compact']}>
+<div
+  class:list={['github-repo-matrix', compact && 'github-repo-matrix--compact']}
+  data-github-viz="repo-matrix"
+  data-github-compact={compact ? 'true' : undefined}
+>
   {repos.map((repo) => (
     <a class="github-repo-matrix__item" href={repo.htmlUrl}>
       <strong>{repo.name}</strong>

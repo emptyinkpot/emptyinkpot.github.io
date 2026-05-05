@@ -9,7 +9,12 @@ interface Props {
 const { weeks, compact = false } = Astro.props;
 ---
 
-<div class:list={['github-heatmap', compact && 'github-heatmap--compact']} aria-label="GitHub contribution heatmap">
+<div
+  class:list={['github-heatmap', compact && 'github-heatmap--compact']}
+  aria-label="GitHub contribution heatmap"
+  data-github-viz="heatmap"
+  data-github-compact={compact ? 'true' : undefined}
+>
   {weeks.map((week) => (
     <div class="github-heatmap__week" title={week.label}>
       {week.days.map((day) => (
