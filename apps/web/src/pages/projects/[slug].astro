@@ -26,7 +26,7 @@ const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : 
 const repoLabel = projectView.owner && projectView.repoName ? `${projectView.owner}/${projectView.repoName}` : 'manual project';
 const primaryWiki = projectView.wiki[0];
 const initialWikiContent = project.body?.trim() || project.data.description;
-const githubRuntimeMode = 'Local mode';
+const githubRuntimeMode = 'GitHub API';
 const commandItems = [
   {
     id: 'wiki',
@@ -100,7 +100,7 @@ const commandItems = [
 ---
 
 <BaseLayout title={`${project.data.title} / GitHub Workbench`} description={project.data.description} hideSiteChrome={true} appMode={true}>
-  <main class="project-workbench" data-pagefind-body data-project-slug={project.id} data-project-repo={repoLabel} data-github-api-ready="false">
+  <main class="project-workbench" data-pagefind-body data-project-slug={project.id} data-project-repo={repoLabel} data-github-api-ready="true">
     <aside class="project-workbench__sidebar" aria-label="Project workbench navigation">
       <a class="project-workbench__brand" href={withBase('/projects/')}>
         <i aria-hidden="true"></i>
@@ -130,7 +130,7 @@ const commandItems = [
         <div class="project-workbench__repo">
           <span>项目工坊 / {repoLabel} / {githubRuntimeMode}</span>
           <strong>{project.data.title}</strong>
-          <small>当前读取构建期 GitHub snapshot；写入使用 GitHub edit fallback，服务端 API 接入后才会启用站内提交。</small>
+          <small>当前读取构建期 GitHub snapshot；Wiki 与 Timeline 写入通过服务端 GitHub API 提交。</small>
         </div>
 
         <dl class="project-workbench__status">
@@ -157,7 +157,7 @@ const commandItems = [
         </dl>
 
         <div class="project-workbench__status-actions">
-          <span class="project-workbench__api-badge">Local mode</span>
+          <span class="project-workbench__api-badge">GitHub API</span>
           <ProjectWorkbenchCommand client:idle commands={commandItems} />
           <a href={project.data.repo ?? withBase('/projects/')} target={project.data.repo ? '_blank' : undefined} rel={project.data.repo ? 'noreferrer' : undefined}>仓库</a>
           {primaryWiki?.editUrl && <a href={primaryWiki.editUrl} target="_blank" rel="noreferrer">GitHub 编辑</a>}
@@ -186,7 +186,7 @@ const commandItems = [
         >{initialWikiContent}</textarea>
 
         <p class="project-workbench__message" data-wiki-message>
-          当前静态站不会暴露 GitHub token。点击提交会调用 `/api/github/file/save`；API 接入前请使用 GitHub 编辑入口。
+          当前静态站不会暴露 GitHub token。点击提交会调用服务端 `/api/github/file/save` 写入 GitHub。
         </p>
       </section>
 

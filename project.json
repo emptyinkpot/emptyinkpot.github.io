@@ -70,6 +70,10 @@
   },
   "serverHost": "124.220.233.126",
   "serverRuntimeRoot": "/srv/myblog/site",
+  "adminServerRuntimeRoot": "/srv/myblog/admin-next/current",
+  "adminServerService": "myblog-admin-next.service",
+  "adminServerPort": 4117,
+  "adminServerEnvFile": "/etc/myblog-admin-next.env",
   "nginxSiteConfig": "/etc/nginx/sites-available/myblog.conf",
   "publishMode": "local-build-then-upload-dist",
   "publishArtifactRoots": [

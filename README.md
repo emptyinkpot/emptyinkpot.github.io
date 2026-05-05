@@ -1400,6 +1400,7 @@ Reality Pass 禁止事项：
 
 Reality Pass 当前源码对齐：
 
+- `2026-05-05` 起，生产 `blog.tengokukk.com/api/` 已代理到 `myblog-admin-next.service`，GitHub API 写入边界为 `apps/admin-next`；项目页可使用 `data-github-api-ready="true"`，但 GitHub 状态栏仍保留构建期 snapshot，直到 Issues / PR / Commits 详情接入 live fetch。
 - Project Workbench 顶部必须显示 `Local mode` / snapshot 状态；`data-github-api-ready="false"` 时 Wiki、Timeline、Sync 只显示明确 pending / fallback，不发起写入。
 - `/settings/` 必须说明“外观偏好 / 内容端口”为当前浏览器本地模式，并列出 GitHub API、CMS、Visual Upload、OpenList 的连接状态。
 - `/visuals/` 当前 `emptyinkpot-visual-items` 仍是本地素材编辑器；接 API 前只允许导出 JSON 或手动合入 `apps/web/src/data/visuals.ts`。
@@ -1496,7 +1497,8 @@ POST /api/projects/[slug]/timeline
 后端规则：
 
 - API 必须运行在 `apps/admin-next`、独立 serverless 函数或其他服务端边界，不能放在静态 Astro 前端里假装可用。
-- 当前源码已在 `apps/admin-next/app/api/github/**` 和 `apps/admin-next/app/api/projects/[slug]/timeline/route.js` 落地最小 route handlers；生产站点仍保持未启用，直到服务器配置 `GITHUB_TOKEN` / `GH_TOKEN` 并把 `blog.tengokukk.com/api/` 代理到 admin-next。
+- 当前生产运行态：`myblog-admin-next.service` 监听 `127.0.0.1:4117`，nginx `blog.tengokukk.com/api/` 代理到该服务；服务端环境文件为 `/etc/myblog-admin-next.env`。
+- 当前源码已在 `apps/admin-next/app/api/github/**` 和 `apps/admin-next/app/api/projects/[slug]/timeline/route.js` 落地最小 route handlers；生产站点已通过 `myblog-admin-next.service` 启用 GitHub API。
 - `GITHUB_TOKEN` 只能存在服务端环境变量。
 - 写文件前必须读取当前文件 SHA，再调用 GitHub contents API 创建 commit。
 - Timeline 持久化文件固定为项目仓库 `data/timeline.json`。
