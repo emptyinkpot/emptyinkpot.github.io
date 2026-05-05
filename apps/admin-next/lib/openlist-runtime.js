@@ -31,7 +31,8 @@ export function normalizeOpenListPath(value) {
 
 export function assertPublicOpenListPath(value) {
   const normalized = normalizeOpenListPath(value);
-  if (!normalized || normalized.includes("..")) {
+  const segments = normalized.split("/").filter(Boolean);
+  if (!normalized || segments.includes("..")) {
     const error = new Error("OpenList path is not allowed.");
     error.status = 400;
     throw error;
