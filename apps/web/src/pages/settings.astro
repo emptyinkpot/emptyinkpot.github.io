@@ -287,7 +287,7 @@ const selectControls = [
               type="url"
               name="openlistBaseUrl"
               data-book-setting="openlistBaseUrl"
-              placeholder="http://127.0.0.1:5244"
+              placeholder="/api/openlist"
               aria-label="OpenList Base URL"
             />
           </label>
@@ -491,7 +491,7 @@ const selectControls = [
       const storageKey = 'emptyinkpot-book-settings';
       const readerThemeKey = 'emptyinkpot-reader-theme';
       const defaults = {
-        openlistBaseUrl: 'http://127.0.0.1:5244',
+        openlistBaseUrl: '/api/openlist',
         openlistBooksPath: '/夸克网盘',
         readerTheme: 'sepia',
         showRecent: true
@@ -501,7 +501,9 @@ const selectControls = [
       const inputs = [...document.querySelectorAll('[data-book-setting]')];
 
       const normalize = (input = {}) => ({
-        openlistBaseUrl: String(input.openlistBaseUrl || defaults.openlistBaseUrl).trim(),
+        openlistBaseUrl: ['http://127.0.0.1:5244', 'http://localhost:5244'].includes(String(input.openlistBaseUrl || '').trim())
+          ? defaults.openlistBaseUrl
+          : String(input.openlistBaseUrl || defaults.openlistBaseUrl).trim(),
         openlistBooksPath: String(input.openlistBooksPath || defaults.openlistBooksPath).trim().replace(/\/$/, '') || '/',
         readerTheme: ['light', 'sepia', 'dark'].includes(input.readerTheme) ? input.readerTheme : defaults.readerTheme,
         showRecent: input.showRecent !== false

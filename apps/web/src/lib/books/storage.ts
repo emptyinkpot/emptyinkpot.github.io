@@ -14,7 +14,7 @@ export interface BookSettings {
 }
 
 export const defaultBookSettings: BookSettings = {
-  openlistBaseUrl: import.meta.env.PUBLIC_OPENLIST_BASE_URL || 'http://127.0.0.1:5244',
+  openlistBaseUrl: import.meta.env.PUBLIC_OPENLIST_BASE_URL || '/api/openlist',
   openlistBooksPath: '/夸克网盘',
   readerTheme: 'sepia',
   showRecent: true
@@ -24,9 +24,13 @@ export function normalizeBookSettings(input: Partial<BookSettings> = {}): BookSe
   const theme = ['light', 'sepia', 'dark'].includes(String(input.readerTheme))
     ? (input.readerTheme as BookReaderTheme)
     : defaultBookSettings.readerTheme;
+  const rawBaseUrl = String(input.openlistBaseUrl ?? defaultBookSettings.openlistBaseUrl).trim();
+  const openlistBaseUrl = ['http://127.0.0.1:5244', 'http://localhost:5244'].includes(rawBaseUrl)
+    ? defaultBookSettings.openlistBaseUrl
+    : rawBaseUrl;
 
   return {
-    openlistBaseUrl: String(input.openlistBaseUrl ?? defaultBookSettings.openlistBaseUrl).trim(),
+    openlistBaseUrl,
     openlistBooksPath: normalizePath(input.openlistBooksPath || defaultBookSettings.openlistBooksPath),
     readerTheme: theme,
     showRecent: input.showRecent !== false
