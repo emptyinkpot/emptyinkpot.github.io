@@ -1206,7 +1206,7 @@ OpenList
 - 已验证 API：`POST /api/fs/list`、`POST /api/fs/get`
 - `server/handles/fsread.go` 的 `FsGetResp` 包含 `raw_url`
 - 不把 OpenList token、网盘 cookie 或其他 secret 写入 MyBlog 前端；私有鉴权与 raw 文件读取必须走 `apps/admin-next` 服务端代理。
-- 文件数据库第一版写入 `public-data/openlist-index/files.json`；OpenList 负责文件存储，MyBlog/OpenList Index 负责语义索引。
+- 文件数据库第一版写入 `public-data/openlist-index/files.json`；OpenList 负责文件存储，MyBlog/OpenList Index 负责语义索引，默认递归到 8 层并索引最多 50000 个条目。
 
 书籍系统实现规则：
 

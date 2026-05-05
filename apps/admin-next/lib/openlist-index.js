@@ -5,8 +5,8 @@ import { getOpenListConfig, listOpenListFiles, normalizeOpenListPath } from "./o
 
 const dataRoot = path.resolve(process.cwd(), "../../public-data/openlist-index");
 const indexPath = path.join(dataRoot, "files.json");
-const DEFAULT_MAX_DEPTH = 4;
-const DEFAULT_MAX_FILES = 5000;
+const DEFAULT_MAX_DEPTH = 8;
+const DEFAULT_MAX_FILES = 50000;
 const PAGE_SIZE = 200;
 
 export function openListIndexPaths() {
