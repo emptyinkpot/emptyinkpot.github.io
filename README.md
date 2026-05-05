@@ -1209,6 +1209,7 @@ OpenList
 - 浏览器本地设置写入 `emptyinkpot-book-settings`；阅读主题继续同步 `emptyinkpot-reader-theme`，与首页 reader drawer 共用主题 token。
 - 阅读进度写入 `emptyinkpot-book-progress:<id>`；最近阅读写入 `emptyinkpot-book-recent`。
 - EPUB reader 使用 `react-reader`，其底层为 `epubjs`；PDF reader 使用 `react-pdf`，其底层为 PDF.js。
+- PDF.js worker 当前使用 React-PDF 支持的 HTTPS CDN worker URL，避免线上 Nginx 对 `.mjs` worker 的 MIME 配置影响 reader。
 - `/books/` 的视觉目标是“个人书架 / 阅读状态”，不是后台控制面；导航仍由顶部 Feed tabs 和详情页入口承担。
 
 首页硬规则追加：

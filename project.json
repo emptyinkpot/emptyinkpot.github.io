@@ -303,7 +303,8 @@
         "emptyinkpot-book-recent",
         "emptyinkpot-reader-theme"
       ],
-      "readerLibraries": ["react-reader", "react-pdf"]
+      "readerLibraries": ["react-reader", "react-pdf"],
+      "pdfWorker": "https://unpkg.com/pdfjs-dist@<react-pdf pdfjs.version>/build/pdf.worker.min.mjs"
     },
     "githubVisualizationAssets": {
       "status": "implemented as Visualization layer; homepage surfaces mini Feed chart cards and /github renders full dashboard",
