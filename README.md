@@ -1400,8 +1400,8 @@ Reality Pass 禁止事项：
 
 Reality Pass 当前源码对齐：
 
-- `2026-05-05` 起，生产 `blog.tengokukk.com/api/` 已代理到 `myblog-admin-next.service`，GitHub API 写入边界为 `apps/admin-next`；项目页可使用 `data-github-api-ready="true"`，但 GitHub 状态栏仍保留构建期 snapshot，直到 Issues / PR / Commits 详情接入 live fetch。
 - Project Workbench 顶部必须显示 `Local mode` / snapshot 状态；`data-github-api-ready="false"` 时 Wiki、Timeline、Sync 只显示明确 pending / fallback，不发起写入。
+- `2026-05-05` 起，生产 `blog.tengokukk.com/api/` 已代理到 `myblog-admin-next.service`，GitHub API 写入边界为 `apps/admin-next`；项目页可使用 `data-github-api-ready="true"`，但 GitHub 状态栏仍保留构建期 snapshot，直到 Issues / PR / Commits 详情接入 live fetch。
 - `/settings/` 必须说明“外观偏好 / 内容端口”为当前浏览器本地模式，并列出 GitHub API、CMS、Visual Upload、OpenList 的连接状态。
 - `/visuals/` 当前 `emptyinkpot-visual-items` 仍是本地素材编辑器；接 API 前只允许导出 JSON 或手动合入 `apps/web/src/data/visuals.ts`。
 - `/search/` Pagefind 与首页 overlay 的分裂必须在 P2 收口；P2 前不得声称本地贴纸、印章、高亮已经进入 Pagefind。
@@ -1410,22 +1410,23 @@ Reality Pass 当前源码对齐：
 
 动效增量规则：
 
-- 首页可逐步引入 Bento、Marquee、NumberTicker、ScrollReveal、SpotlightCard、FilmGrain，但每次只引入一种页面级能力。
+- 首页可逐步引入 Marquee、NumberTicker、ScrollReveal、FilmGrain，但不得恢复 Dashboard / Bento 大入口卡；每次只引入一种页面级能力。
 - 动效必须尊重现有 `graphMotion` / motion settings；未来 settings 应统一增加“动效强度” token。
 - 动效不可遮挡内容、不可影响首屏可读性、不可制造横向溢出。
 
 Homepage implementation contract：
 
 - `/` 是 `Content OS Home`，不是营销 landing，也不是项目工作台详情页。
-- MUST 保留左侧 profile / signals / reading memory / quick actions rail，主区承担动态入口、Bento、activity、feed。
+- MUST 保留 Banner，并把 Banner 作为首页情绪层；Banner 可展示轻量 metrics，但不得退化为 Dashboard。
+- MUST 删除首页顶部 Dashboard / Bento 大卡片区：不得恢复 Project Studio、GitHub、Knowledge、Books、Music 这类首屏大入口卡，也不得恢复装饰性进度条。
+- MUST 使用 `.home-quickbar` 替代 Dashboard：QuickBar 只承载 Command、项目工坊、知识图谱、书架、视觉素材、GitHub、搜索、设置等轻量入口，不承载正文内容或大块数据。
+- MUST 让 Feed 成为主角：桌面结构为 `.home-feed-main` 主列 + `.home-feed-rail` 辅助侧栏，侧栏弱化为 Profile / Reading Memory / Mini Graph，不再承担导航或统计 Dashboard。
 - MUST 在主区首屏展示动态 Hero 指标：posts、repos、projects、knowledge nodes；数字可用 React island ticker，但必须在低动效偏好下直接显示最终值。
-- MUST 使用 Bento 入口承载项目工坊、GitHub、Knowledge、书架、音乐；Bento 必须是功能入口，不是装饰卡片，主点击必须通过 `data-drawer-id` 打开 `.home-article-drawer`，不要在首页直接跳走。
 - MUST 维持书籍唯一真源：书籍元数据只来自 `apps/web/src/data/books.ts` 的 `books: BookItem[]`，首页 Feed、书架页、书籍详情页、Reader、Knowledge 搜索和图谱都必须使用 `book.id` 作为节点 ID 与路由 ID，不得再用 `book.title` 派生第二套 ID。
 - MUST 在首页顶部 Feed tabs 中把“书架”实现为 `data-feed-filter="book"` 的首页内筛选，不得直接链接到 `/books/`；`/books/` 作为完整书架页，只从 drawer action、Command Palette 或明确的“完整书架”入口进入。
 - MUST 在首页 Feed 保留具体图书卡片；图书卡片必须展示书籍封面，点击打开阅读 drawer，drawer 内必须同时提供 `书籍详情`（`/books/[id]/`）、`开始阅读`（`/reader/[id]/`）和 `完整书架`（`/books/`）。
 - MAY 使用全站 Hover Preview 交互层：内容卡可以通过 `data-hover-preview` 暴露预览数据；hover 只负责快速预览，click 仍负责打开 drawer 或明确跳转。
 - Hover Preview MUST 默认关闭，并由设置页 `交互实验 / 启用 Hover 预览浮层` 控制；启用后必须 portal 到 body，并具备延迟打开、延迟关闭、跟随鼠标、viewport flip/shift 避让。当前实现使用 `@floating-ui/react` + `motion/react`，不得退回被父容器 overflow 裁剪的局部绝对定位。
-- MUST 将 Bento 视觉收敛为 Heritage 纸张 / 档案索引风格：`var(--heritage-card)` 背景、`var(--heritage-line-strong)` 边框、纸张压痕和真实物件隐喻；不得使用玻璃拟态、扫光、渐变光斑、厚浮动阴影或硬色竖线。
 - MUST 将首页 Feed 卡片进一步收口为“手账风卡片系统”：不得使用紫/绿硬竖线作为主要视觉语义；卡片语义色必须转为纸张压痕、照片/书封倾斜、CSS 回形针、印章/贴纸等真实物件隐喻。
 - MUST 避免在 Feed 卡片系统里使用大面积渐变；Heritage 模式下卡片、mark 区和压痕应以纯色、半透明色、边框、阴影和材质关系表达层级。
 - `.home-feed-card` 在 Heritage 模式下必须保持纸张卡片：`border: 1px solid var(--heritage-line-strong)`、纯色纸面、`::before` 纸张压痕、`.card-paperclip` 夹纸结构；`.bookmark` 语义标签保留原先书签/折角形状，不改成胶带条。
@@ -1434,7 +1435,7 @@ Homepage implementation contract：
 - MUST 使用 Activity Marquee 展示最近文章、项目进度、GitHub 更新、书架、音乐、Knowledge 状态；它只能横向展示短句，不承载正文内容。
 - MUST 在首页提供全站 Command Palette，默认入口是 `Ctrl/Command + K`，可以跳转搜索、文章、项目工坊、项目工作台、GitHub、书架、音乐、Knowledge、设置。
 - MUST 继续保留原有 Feed、阅读 drawer、本地高亮、批注、印章、搜索层和设置联动。
-- FORBIDDEN：把首页改成单屏 hero、删除 feed、删除左侧记忆系统、用全屏粒子/光束遮挡内容、引入横向滚动、照搬 Magic UI / Aceternity 默认主题。
+- FORBIDDEN：恢复首页 Dashboard / Bento 大卡片、把首页改成单屏 hero、删除 feed、删除阅读记忆系统、用全屏粒子/光束遮挡内容、引入横向滚动、照搬 Magic UI / Aceternity 默认主题。
 
 参考来源：
 
@@ -1497,8 +1498,8 @@ POST /api/projects/[slug]/timeline
 后端规则：
 
 - API 必须运行在 `apps/admin-next`、独立 serverless 函数或其他服务端边界，不能放在静态 Astro 前端里假装可用。
+- 当前源码已在 `apps/admin-next/app/api/github/**` 和 `apps/admin-next/app/api/projects/[slug]/timeline/route.js` 落地最小 route handlers；生产 `blog.tengokukk.com/api/` 已代理到 admin-next，是否可写取决于服务器环境中的 `GITHUB_TOKEN` / `GH_TOKEN`。
 - 当前生产运行态：`myblog-admin-next.service` 监听 `127.0.0.1:4117`，nginx `blog.tengokukk.com/api/` 代理到该服务；服务端环境文件为 `/etc/myblog-admin-next.env`。
-- 当前源码已在 `apps/admin-next/app/api/github/**` 和 `apps/admin-next/app/api/projects/[slug]/timeline/route.js` 落地最小 route handlers；生产站点已通过 `myblog-admin-next.service` 启用 GitHub API。
 - `GITHUB_TOKEN` 只能存在服务端环境变量。
 - 写文件前必须读取当前文件 SHA，再调用 GitHub contents API 创建 commit。
 - Timeline 持久化文件固定为项目仓库 `data/timeline.json`。
@@ -1566,6 +1567,7 @@ apps/web/src/pages/
 - Search 同时搜索 Astro 渲染的 drawer 内容、书架、音乐、GitHub 和本地 highlight。
 - `J / K` 浏览可见 Feed 卡片，`Enter` 打开当前卡片 drawer，`Esc` 关闭 drawer 或搜索。
 - Reader Drawer 保存阅读历史到 `emptyinkpot-reading-history`。
+- Reader Drawer 必须把 `emptyinkpot-reading-history` 升级为 Reader Memory：每条记录至少保存 `id/title/href/timestamp/lastReadAt/scrollTop/progress`，再次打开同一 drawer 时恢复 `scrollTop`，滚动时节流写回 `progress`。
 - Reader Drawer 支持收藏到 `emptyinkpot-reader-bookmarks`。
 - Reader Drawer 支持 `light / sepia / dark` 三种阅读主题，存储键为 `emptyinkpot-reader-theme`。
 - Reader Drawer 支持选中文本后保存本地 highlight 到 `emptyinkpot-reader-highlights`；当前恢复已经使用 `quote / position / dom path` 三锚点，旧的 exact-only 记录仍可用 quote fallback 恢复。
@@ -1675,7 +1677,7 @@ Bookmark Object 视觉合同：
 首页信息架构固定为：
 
 ```text
-左侧 = 你是谁 / 状态 / 记忆
+侧栏 = 你是谁 / 阅读记忆 / 小型知识状态
 顶部 = 你在看什么
 中间 = 内容流
 ```
@@ -1684,31 +1686,34 @@ Bookmark Object 视觉合同：
 
 - 主导航只能有一个，且只能在 `.home-feed-toolbar` 的 `.home-feed-tabs` 内。
 - `.home-feed-rail` 不再承载站点导航，不得恢复文章 / 札记 / 项目 / GitHub / 书架 / 音乐的左侧按钮矩阵。
-- 左侧只放 Profile、Signals、Reading Memory、Knowledge Stats、Quick Actions。
-- Quick Actions 最多 3 个：搜索、Graph、设置；不得扩成第二套导航。
+- `.home-feed-rail` 只放 Profile、Reading Memory、Mini Graph；不得恢复 Signals 统计卡、Quick Actions 按钮组、GitHub 热力图和小柱状图。
+- `.home-quickbar` 是 Dashboard 替代物，只能是轻量横向入口；不得承载大标题、大摘要、进度条或多行数据。
 - 顶部 tabs 使用轻量标签式视觉，不做厚边框、重阴影、胶囊按钮组。
-- 导航 = 横向；状态 = 纵向。
+- 导航 = 横向；阅读/状态 = 侧栏；内容 = Feed。
 
 当前源码落点：
 
 ```text
 apps/web/src/pages/index.astro
+├── .home-feed-main
+│   ├── .home-hero-banner
+│   ├── .home-quickbar
+│   ├── .home-activity-marquee
+│   ├── .home-feed-toolbar
+│   └── .home-feed-grid
 ├── .home-feed-rail
 │   ├── .home-feed-profile
-│   ├── .home-feed-signals
 │   ├── .home-feed-memory
-│   ├── .home-feed-stats
-│   └── .home-feed-quick
+│   └── .home-feed-stats
 └── .home-feed-toolbar
     └── .home-feed-tabs
 ```
 
 左侧状态数据规则：
 
-- Signals 只展示 GitHub 活动、仓库、文章与短趋势，不提供重复导航。
 - Reading Memory 从 `emptyinkpot-reading-history` 读取最近阅读。
 - Knowledge Stats 从 `emptyinkpot-reader-highlights`、`emptyinkpot-reader-annotations`、`emptyinkpot-reader-bookmarks` 和 `emptyinkpot-reading-history` 读取计数。
-- 左侧本地状态只读 localStorage，不改变内容源、不写后端。
+- 侧栏本地状态只读 localStorage，不改变内容源、不写后端。
 
 下一步优先级：
 
@@ -1980,7 +1985,7 @@ Graph = 回访结构
 
 - Seal System 已作为 P2 落地，但不能替代 bookmark。印章表达“精选 / 重要 / 洞见 / 未完 / 重读 / 归档 / 完成 / 正典”等人工判断。
 - `.knowledge-seal` 是压印物件，不是 icon；支持 circle / square / oval / vertical / ticket 五种形态，带内环、副文字、轻微旋转、multiply 压印感、rough / aged / ink 质感和 `seal-stamp-in` 盖章动画。
-- `.seal-palette` 负责选择印章；当前第一版支持 Bento / Feed 卡片 / 当前文章盖章与移除。它保存一个最新判断，仍不做批量管理页。
+- `.seal-palette` 负责选择印章；当前第一版支持 Feed 卡片 / 当前文章盖章与移除。它保存一个最新判断，仍不做批量管理页。
 - `SealPlacement.x / y` 必须参与渲染；默认位置在卡片右上方，但从点击入口进入时会记录相对位置，后续拖拽盖章不得丢弃这个字段。
 - Graph 必须同时保留静态 seal 类型节点和本地 placement link：`seal:<type> -> targetId`。这保证“印章 = 判断”能回流到 Knowledge Graph，而不是只停留在视觉层。
 - Annotation 必须绑定 Highlight；高亮只保存原文片段，批注保存个人思考。
@@ -2050,7 +2055,7 @@ Seal roadmap:
 P0 current:
 - shared seal definitions
 - localStorage placements
-- Bento / Feed / Reader stamping
+- Feed / Reader stamping
 - Search seal results
 - Graph local seal links
 - pressed-paper visual with stamp-in motion

@@ -4406,7 +4406,7 @@ body.app-mode .site-shell__glow {
 
 .home-feed-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 260px;
   gap: 20px;
   width: min(1480px, calc(100% - 40px));
   height: 100%;
@@ -4416,6 +4416,7 @@ body.app-mode .site-shell__glow {
 }
 
 .home-feed-rail {
+  grid-column: 2;
   position: sticky;
   top: 20px;
   align-self: start;
@@ -4428,6 +4429,11 @@ body.app-mode .site-shell__glow {
   overflow-x: hidden;
   padding-right: 2px;
   scrollbar-width: none;
+}
+
+.home-feed-main {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .home-feed-rail::-webkit-scrollbar,
@@ -4539,29 +4545,18 @@ body.app-mode .site-shell__glow {
   text-align: left;
 }
 
-.home-feed-signals .github-heatmap {
-  max-width: 100%;
-}
-
-.home-feed-signal-grid,
 .home-feed-stat-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.home-feed-stat-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.home-feed-signal-grid div,
 .home-feed-stat-grid div {
   border: 1px solid rgba(45, 30, 56, 0.12);
   background: rgba(255, 255, 255, 0.48);
   padding: 8px;
 }
 
-.home-feed-signal-grid small,
 .home-feed-stat-grid small {
   display: block;
   color: #7b6a73;
@@ -4570,30 +4565,12 @@ body.app-mode .site-shell__glow {
   text-transform: uppercase;
 }
 
-.home-feed-signal-grid b,
 .home-feed-stat-grid b {
   display: block;
   margin-top: 3px;
   color: #17120d;
   font-size: 17px;
   line-height: 1;
-}
-
-.home-feed-trend {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  align-items: end;
-  gap: 4px;
-  height: 42px;
-  border-top: 1px solid rgba(45, 30, 56, 0.12);
-  padding-top: 8px;
-}
-
-.home-feed-trend i {
-  display: block;
-  height: var(--signal-height, 10%);
-  min-height: 4px;
-  background: var(--home-accent);
 }
 
 .home-feed-memory ul,
@@ -4620,17 +4597,6 @@ body.app-mode .site-shell__glow {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.home-feed-quick {
-  gap: 6px;
-}
-
-.home-feed-quick a,
-.home-feed-quick button {
-  width: 100%;
-  border: 1px solid rgba(45, 30, 56, 0.16);
-  padding: 7px 8px;
 }
 
 .home-feed-main {
@@ -4778,51 +4744,54 @@ body.app-mode .site-shell__glow {
   }
 }
 
-.home-os-bento {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 0.85fr));
-  gap: 12px;
-  margin-bottom: 14px;
+.home-quickbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  border-bottom: 1px solid var(--heritage-line-strong, #cbbda9);
+  padding: 0 0 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-.home-os-bento__item {
-  position: relative;
-  min-width: 0;
-  min-height: 138px;
-  display: grid;
-  align-content: start;
-  gap: 8px;
-  border: 1px solid var(--heritage-line-strong, #cbbda9);
-  border-left: 4px solid var(--heritage-green, #2f5d50);
-  background: var(--heritage-card, #fffaf0);
-  padding: 14px;
-  color: inherit;
-  cursor: pointer;
+.home-quickbar::-webkit-scrollbar {
+  display: none;
+}
+
+.home-quickbar a,
+.home-quickbar button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 6px 10px;
+  color: var(--heritage-muted, #6b645c);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
   text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease;
-  animation: home-panel-in 360ms ease both;
+  cursor: pointer;
 }
 
-.home-os-bento__item:nth-child(2) { animation-delay: 40ms; }
-.home-os-bento__item:nth-child(3) { animation-delay: 80ms; }
-.home-os-bento__item:nth-child(4) { animation-delay: 120ms; }
-.home-os-bento__item:nth-child(5) { animation-delay: 160ms; }
-
-.home-os-bento__item:hover,
-.home-os-bento__item:focus-visible {
-  background: var(--heritage-paper, #fff7e8);
-  border-color: var(--heritage-green, #2f5d50);
+.home-quickbar a:hover,
+.home-quickbar a:focus-visible,
+.home-quickbar button:hover,
+.home-quickbar button:focus-visible {
+  background: rgba(30, 27, 24, 0.05);
+  color: var(--heritage-ink, #1e1b18);
   outline: none;
 }
 
-.home-os-bento__item--wide {
-  grid-row: span 2;
-  min-height: 288px;
+.home-quickbar .home-command {
+  flex: 0 0 148px;
 }
 
-.home-os-bento__item span,
+.home-quickbar .home-command__trigger {
+  min-height: 32px;
+  padding: 6px 10px;
+}
+
 .home-activity-marquee span {
   color: var(--home-accent);
   font-family: var(--font-ui);
@@ -4830,46 +4799,6 @@ body.app-mode .site-shell__glow {
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-.home-os-bento__item strong {
-  color: #17120d;
-  font-size: clamp(20px, 2vw, 32px);
-  line-height: 1.04;
-  overflow-wrap: anywhere;
-}
-
-.home-os-bento__item p {
-  max-width: 34rem;
-  margin: 0;
-  color: #5b5148;
-  font-size: 13px;
-  line-height: 1.68;
-  overflow-wrap: anywhere;
-}
-
-.home-os-bento__item small {
-  color: #6b645c;
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 850;
-}
-
-.home-os-bento__progress {
-  align-self: end;
-  height: 8px;
-  margin-top: auto;
-  border-radius: 999px;
-  background: rgba(47, 93, 80, 0.12);
-  overflow: hidden;
-}
-
-.home-os-bento__progress i {
-  display: block;
-  width: var(--progress);
-  height: 100%;
-  border-radius: inherit;
-  background: var(--heritage-green, #2f5d50);
 }
 
 .home-activity-marquee {
@@ -7339,15 +7268,6 @@ body.has-home-article-drawer .home-feed-main {
     display: grid;
   }
 
-  .home-os-bento {
-    grid-template-columns: 1fr;
-  }
-
-  .home-os-bento__item,
-  .home-os-bento__item--wide {
-    min-height: 132px;
-  }
-
   .home-hero-banner {
     height: auto;
     min-height: 260px;
@@ -8111,8 +8031,6 @@ body.has-home-article-drawer .home-feed-main {
 
 .home-feed-card:hover .seal-trigger,
 .home-feed-card:focus-visible .seal-trigger,
-.home-os-bento__item:hover .seal-trigger,
-.home-os-bento__item:focus-visible .seal-trigger,
 .seal-trigger:focus-visible {
   opacity: 1;
   transform: translateY(0);
@@ -8261,8 +8179,7 @@ body.has-home-article-drawer .home-feed-main {
   animation: seal-stamp-in 420ms var(--ease-standard, ease) both;
 }
 
-.home-feed-card:hover .knowledge-seal:not(.knowledge-seal--stamp-in),
-.home-os-bento__item:hover .knowledge-seal:not(.knowledge-seal--stamp-in) {
+.home-feed-card:hover .knowledge-seal:not(.knowledge-seal--stamp-in) {
   opacity: 0.9;
   filter: contrast(1.12) saturate(1.08);
 }

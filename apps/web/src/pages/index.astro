@@ -73,8 +73,6 @@ const projects = [...(await getCollection('projects'))].sort(
 const github = await getGitHubOverview('emptyinkpot');
 const githubAnalytics = buildGitHubAnalytics(github);
 const recentHeatmapWeeks = getRecentHeatmapWeeks(githubAnalytics, 12);
-const recentSignalDays = githubAnalytics.heatmapWeeks.flatMap((week) => week.days).slice(-7);
-const maxRecentSignal = Math.max(...recentSignalDays.map((day) => day.count), 1);
 
 const drawerSources = [
   ...posts.map((entry) => ({ entry, kind: 'post' as const })),
@@ -534,10 +532,6 @@ const latestRepo = github.repos[0];
 const latestBook = books[0];
 const latestMusic = musicItems[0];
 const uniqueTagCount = new Set(posts.flatMap((post) => post.data.tags)).size;
-const homeBentoProjectDrawerId = latestProject ? `project:${latestProject.id}` : undefined;
-const homeBentoGitHubDrawerId = latestRepo ? `github-repo:${latestRepo.name}` : 'github:heatmap';
-const homeBentoBookDrawerId = bookItems[0]?.drawerId;
-const homeBentoMusicDrawerId = latestMusic ? `music:${latestMusic.id}` : undefined;
 const activityItems = [
   latestPost && `最新文章：${latestPost.data.title}`,
   latestProject && `项目工坊：${latestProject.data.title} / ${latestProject.data.progress}%`,
@@ -572,32 +566,6 @@ const homeCommands = [
         <p data-copy-key="home.profile.tagline">Content OS · Knowledge System</p>
       </section>
 
-      <section class="home-feed-rail-card home-feed-signals">
-        <span data-copy-key="home.signals.kicker">Signals</span>
-        <strong>@{github.profile.login}</strong>
-        <p>{github.totalContributions} 次年度活动 / {github.profile.publicRepos} 个公开仓库</p>
-        <div class="home-feed-signal-grid" aria-label="GitHub signal summary">
-          <div>
-            <small data-copy-key="home.signals.posts">Posts</small>
-            <b>{posts.length}</b>
-          </div>
-          <div>
-            <small data-copy-key="home.signals.repos">Repos</small>
-            <b>{github.profile.publicRepos}</b>
-          </div>
-          <div>
-            <small data-copy-key="home.signals.active">Active</small>
-            <b>{githubAnalytics.activeDays}</b>
-          </div>
-        </div>
-        <GitHubHeatmap weeks={recentHeatmapWeeks} compact />
-        <div class="home-feed-trend" aria-label="最近 7 天活动趋势">
-          {recentSignalDays.map((day) => (
-            <i style={`--signal-height:${Math.max(10, Math.round((day.count / maxRecentSignal) * 100))}%`} title={`${day.date}: ${day.count}`} />
-          ))}
-        </div>
-      </section>
-
       <section class="home-feed-rail-card home-feed-memory">
         <span data-copy-key="home.memory.kicker">Reading Memory</span>
         <strong data-copy-key="home.memory.title">最近阅读</strong>
@@ -607,7 +575,7 @@ const homeCommands = [
       </section>
 
       <section class="home-feed-rail-card home-feed-stats">
-        <span data-copy-key="home.stats.kicker">Knowledge Stats</span>
+        <span data-copy-key="home.stats.kicker">Mini Graph</span>
         <strong data-copy-key="home.stats.title">知识状态</strong>
         <div class="home-feed-stat-grid">
           <div><small data-copy-key="home.stats.highlights">高亮</small><b data-sidebar-stat="highlights">0</b></div>
@@ -618,15 +586,6 @@ const homeCommands = [
         <ul data-sidebar-bookmarks>
           <li data-copy-key="home.stats.emptyBookmarks">暂无收藏</li>
         </ul>
-      </section>
-
-      <section class="home-feed-rail-card home-feed-quick">
-        <span data-copy-key="home.quick.kicker">Quick Actions</span>
-        <HomeCommandPalette client:idle commands={homeCommands} />
-        <button type="button" data-search-open data-copy-key="home.quick.search">搜索</button>
-        <a href={withBase('/visuals/')} data-copy-key="home.quick.visuals">视觉素材</a>
-        <a href={withBase('/knowledge/')} data-copy-key="home.quick.graph">Graph</a>
-        <a href={withBase('/settings/')} data-copy-key="home.quick.settings">设置</a>
       </section>
     </aside>
 
@@ -661,63 +620,15 @@ const homeCommands = [
         </div>
       </section>
 
-      <section class="home-os-bento" aria-label="Content OS quick entry">
-        <a class="home-os-bento__item home-os-bento__item--wide" href={withBase('/projects/')} data-drawer-id={homeBentoProjectDrawerId}>
-          <span>Project Studio</span>
-          <strong>{latestProject?.data.title ?? '项目工坊'}</strong>
-          <p>{latestProject?.data.description ?? '项目、Wiki、Timeline 与 GitHub 状态的统一入口。'}</p>
-          <div class="home-os-bento__progress" aria-label="项目进度">
-            <i style={`--progress:${latestProject?.data.progress ?? 0}%`}></i>
-          </div>
-          <small>{latestProject?.data.progress ?? 0}% / 进入项目空间</small>
-        </a>
-        <a class="home-os-bento__item" href={withBase('/github/')} data-drawer-id={homeBentoGitHubDrawerId}>
-          <span>GitHub</span>
-          <strong>{latestRepo?.name ?? '@emptyinkpot'}</strong>
-          <p>{github.totalContributions} 次年度活动，{githubAnalytics.activeDays} 个活跃日。</p>
-        </a>
-        <a
-          class="home-os-bento__item"
-          href={withBase('/knowledge/')}
-          data-drawer-id="knowledge:index"
-          data-seal-surface
-          data-seal-target="knowledge:index"
-          data-seal-title="Knowledge"
-          data-seal-kind="knowledge"
-        >
-          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
-          <span>Knowledge</span>
-          <strong>{knowledgeDocs.length} 个入口</strong>
-          <p>文章、项目、书架、音乐和本地标记共同构成知识图谱。</p>
-        </a>
-        <a
-          class="home-os-bento__item"
-          href={withBase('/books/')}
-          data-drawer-id={homeBentoBookDrawerId}
-          data-seal-surface
-          data-seal-target={homeBentoBookDrawerId}
-          data-seal-title={latestBook?.title ?? '书架'}
-          data-seal-kind="book"
-        >
-          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
-          <span>Books</span>
-          <strong>{latestBook?.title ?? '书架'}</strong>
-          <p>{latestBook?.note ?? '阅读记录、摘录和知识回流。'}</p>
-        </a>
-        <a
-          class="home-os-bento__item"
-          href={withBase('/music/')}
-          data-drawer-id={homeBentoMusicDrawerId}
-          data-seal-surface
-          data-seal-target={homeBentoMusicDrawerId}
-          data-seal-title={latestMusic?.title ?? '音乐'}
-          data-seal-kind="music"
-        >
-          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
-          <span>Music</span>
-          <strong>{latestMusic?.title ?? '音乐'}</strong>
-          <p>{latestMusic ? `${latestMusic.artist} / ${latestMusic.platform}` : '音乐状态和专辑入口。'}</p>
-        </a>
+      <section class="home-quickbar" aria-label="Content OS quick entry">
+        <HomeCommandPalette client:idle commands={homeCommands} />
+        <a href={withBase('/projects/')}>项目工坊</a>
+        <a href={withBase('/knowledge/')}>知识图谱</a>
+        <a href={withBase('/books/')}>书架</a>
+        <a href={withBase('/visuals/')}>视觉素材</a>
+        <a href={withBase('/github/')}>GitHub</a>
+        <button type="button" data-search-open>搜索</button>
+        <a href={withBase('/settings/')}>设置</a>
       </section>
 
       <section class="home-activity-marquee" aria-label="站点活动流">
@@ -1290,6 +1201,7 @@ const homeCommands = [
       let sealContext = null;
       let drawerCloseTimer = 0;
       let searchCloseTimer = 0;
+      let readerMemoryFrame = 0;
 
       const initHeroBanner = () => {
         const hero = document.querySelector('[data-hero-banner]');
@@ -1338,15 +1250,38 @@ const homeCommands = [
         };
 
         if (!reducedMotion) {
+          let targetX = 0;
+          let targetY = 0;
+          let currentX = 0;
+          let currentY = 0;
+          let hovering = false;
+
           hero.addEventListener('mousemove', (event) => {
             const rect = hero.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width - 0.5;
-            const y = (event.clientY - rect.top) / rect.height - 0.5;
-            if (layers.bg instanceof HTMLElement) layers.bg.style.transform = `scale(1.1) translate(${x * 10}px, ${y * 8}px)`;
-            if (layers.mid instanceof HTMLElement) layers.mid.style.transform = `scale(1.08) translate(${x * 20}px, ${y * 14}px)`;
-            if (layers.front instanceof HTMLElement) layers.front.style.transform = `scale(1.05) translate(${x * 34}px, ${y * 20}px)`;
+            targetX = (event.clientX - rect.left) / rect.width - 0.5;
+            targetY = (event.clientY - rect.top) / rect.height - 0.5;
+            hovering = true;
           });
-          hero.addEventListener('mouseleave', resetLayers);
+          hero.addEventListener('mouseleave', () => {
+            targetX = 0;
+            targetY = 0;
+            hovering = false;
+          });
+
+          const animate = () => {
+            currentX += (targetX - currentX) * 0.08;
+            currentY += (targetY - currentY) * 0.08;
+            if (Math.abs(currentX) > 0.001 || Math.abs(currentY) > 0.001 || hovering) {
+              if (layers.bg instanceof HTMLElement) layers.bg.style.transform = `scale(1.1) translate(${currentX * 10}px, ${currentY * 8}px)`;
+              if (layers.mid instanceof HTMLElement) layers.mid.style.transform = `scale(1.08) translate(${currentX * 20}px, ${currentY * 14}px)`;
+              if (layers.front instanceof HTMLElement) layers.front.style.transform = `scale(1.05) translate(${currentX * 34}px, ${currentY * 20}px)`;
+            } else {
+              resetLayers();
+            }
+            requestAnimationFrame(animate);
+          };
+
+          requestAnimationFrame(animate);
         }
       };
 
@@ -1548,9 +1483,47 @@ const homeCommands = [
       const saveHistory = (article) => {
         if (!article?.id) return;
         const list = readJson(storageKeys.history, []);
-        const next = [{ id: article.id, title: article.title, href: article.href, timestamp: Date.now() }, ...list.filter((item) => item.id !== article.id)].slice(0, 50);
+        const previous = list.find((item) => item.id === article.id) || {};
+        const now = Date.now();
+        const next = [
+          {
+            ...previous,
+            id: article.id,
+            title: article.title,
+            href: article.href,
+            timestamp: now,
+            lastReadAt: now,
+            scrollTop: previous.scrollTop || 0,
+            progress: previous.progress || 0
+          },
+          ...list.filter((item) => item.id !== article.id)
+        ].slice(0, 50);
         writeJson(storageKeys.history, next);
         renderSidebarState();
+      };
+
+      const getHistoryEntry = (id) => readJson(storageKeys.history, []).find((item) => item.id === id);
+
+      const persistReadingMemory = (ratio) => {
+        if (!currentArticle || !drawerBody) return;
+        if (readerMemoryFrame) return;
+        readerMemoryFrame = requestAnimationFrame(() => {
+          readerMemoryFrame = 0;
+          const list = readJson(storageKeys.history, []);
+          const previous = list.find((item) => item.id === currentArticle.id) || {};
+          const now = Date.now();
+          const record = {
+            ...previous,
+            id: currentArticle.id,
+            title: currentArticle.title,
+            href: currentArticle.href,
+            timestamp: previous.timestamp || now,
+            lastReadAt: now,
+            scrollTop: drawerBody.scrollTop,
+            progress: Number.isFinite(ratio) ? Math.max(0, Math.min(1, ratio)) : 0
+          };
+          writeJson(storageKeys.history, [record, ...list.filter((item) => item.id !== currentArticle.id)].slice(0, 50));
+        });
       };
 
       const getBookmarks = () => readJson(storageKeys.bookmarks, []);
@@ -1581,6 +1554,7 @@ const homeCommands = [
         const max = drawerBody.scrollHeight - drawerBody.clientHeight;
         const ratio = max > 0 ? drawerBody.scrollTop / max : 0;
         progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
+        persistReadingMemory(ratio);
       };
 
       const updateReaderGraphLink = () => {
@@ -2116,6 +2090,7 @@ const homeCommands = [
         const kind = reader?.dataset.kind ?? '';
         const readHref = reader?.dataset.readHref ?? '';
         const articleId = reader?.dataset.articleId ?? id;
+        const storedMemory = getHistoryEntry(articleId);
         lastFocused = trigger;
         savedScrollTop = mainScroller?.scrollTop ?? 0;
         currentArticle = { id: articleId, title, href };
@@ -2149,7 +2124,14 @@ const homeCommands = [
         });
         saveHistory(currentArticle);
         updateBookmarkButton();
-        updateReadingProgress();
+        if (storedMemory?.scrollTop && !options.highlightId) {
+          requestAnimationFrame(() => {
+            drawerBody.scrollTop = storedMemory.scrollTop;
+            updateReadingProgress();
+          });
+        } else {
+          updateReadingProgress();
+        }
         requestAnimationFrame(applyStoredHighlights);
         requestAnimationFrame(renderReaderMiniGraph);
         requestAnimationFrame(renderSeals);
