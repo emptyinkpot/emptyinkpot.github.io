@@ -7370,6 +7370,9 @@ body.has-home-article-drawer .home-feed-main {
   transform: translate(-50%, -50%) rotate(var(--seal-rotation, -7deg));
   user-select: none;
   filter: contrast(1.08) saturate(1.06);
+  transition:
+    opacity var(--motion-fast, 120ms) var(--ease-standard, ease),
+    filter var(--motion-fast, 120ms) var(--ease-standard, ease);
 }
 
 .knowledge-seal::before,
@@ -7478,9 +7481,10 @@ body.has-home-article-drawer .home-feed-main {
   animation: seal-stamp-in 420ms var(--ease-standard, ease) both;
 }
 
-.home-feed-card:hover .knowledge-seal,
-.home-os-bento__item:hover .knowledge-seal {
-  animation: seal-wobble 520ms var(--ease-standard, ease) both;
+.home-feed-card:hover .knowledge-seal:not(.knowledge-seal--stamp-in),
+.home-os-bento__item:hover .knowledge-seal:not(.knowledge-seal--stamp-in) {
+  opacity: 0.9;
+  filter: contrast(1.12) saturate(1.08);
 }
 
 @keyframes seal-stamp-in {
@@ -7498,17 +7502,6 @@ body.has-home-article-drawer .home-feed-main {
   100% {
     opacity: 0.82;
     transform: translate(-50%, -50%) scale(1) rotate(var(--seal-rotation, -7deg));
-  }
-}
-
-@keyframes seal-wobble {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) rotate(var(--seal-rotation, -7deg));
-  }
-
-  45% {
-    transform: translate(-50%, -50%) rotate(calc(var(--seal-rotation, -7deg) + 1.6deg));
   }
 }
 

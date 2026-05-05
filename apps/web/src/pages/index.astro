@@ -1301,12 +1301,13 @@ const homeCommands = [
           .filter((item) => item.targetId === targetId)
           .sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0))[0];
 
-      const createSealElement = (record) => {
+      const createSealElement = (record, options = {}) => {
         const definition = sealDefinitions[record.sealId || record.type] || sealDefinitions[record.type] || sealDefinitions.selected;
         const seal = document.createElement('span');
         const shape = record.shape || definition.shape || 'circle';
         const texture = record.texture || definition.texture || 'clean';
-        seal.className = `knowledge-seal knowledge-seal--${shape} knowledge-seal--${texture} knowledge-seal--stamp-in`;
+        seal.className = `knowledge-seal knowledge-seal--${shape} knowledge-seal--${texture}`;
+        if (options.animate) seal.classList.add('knowledge-seal--stamp-in');
         seal.dataset.renderedSeal = record.id;
         seal.style.setProperty('--seal-color', record.color || definition.color);
         seal.style.setProperty('--seal-rotation', `${record.rotation || -7}deg`);
@@ -1327,7 +1328,8 @@ const homeCommands = [
         return seal;
       };
 
-      const renderSeals = () => {
+      const renderSeals = (options = {}) => {
+        const animateId = options.animateId || '';
         document.querySelectorAll('[data-rendered-seal]').forEach((node) => node.remove());
         const sealSurfaces = [...document.querySelectorAll('[data-seal-surface], [data-feed-card]')];
         sealSurfaces.forEach((card) => {
@@ -1335,12 +1337,12 @@ const homeCommands = [
           if (!targetId) return;
           const record = latestSealFor(targetId);
           if (!record) return;
-          card.append(createSealElement(record));
+          card.append(createSealElement(record, { animate: record.id === animateId }));
         });
         if (currentArticle && drawerBody) {
           const intro = drawerBody.querySelector('.home-article-intro');
           const record = latestSealFor(currentArticle.id);
-          if (intro && record) intro.append(createSealElement(record));
+          if (intro && record) intro.append(createSealElement(record, { animate: record.id === animateId }));
         }
       };
 
@@ -1391,7 +1393,7 @@ const homeCommands = [
           updatedAt: now
         };
         writeJson(storageKeys.seals, [record, ...records.filter((item) => item.id !== record.id && item.targetId !== record.targetId)]);
-        renderSeals();
+        renderSeals({ animateId: record.id });
         closeSealPalette();
       };
 
