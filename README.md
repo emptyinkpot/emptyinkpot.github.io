@@ -719,9 +719,9 @@ Hero / System Entry
 | --- | --- |
 | `body.home-mode` | 桌面锁定视口滚动，首页内部主 Feed 自己滚动 |
 | `.page-wrap--home` | `width: 100%` |
-| `.home-feed-shell` | `display:grid`；列宽 `280px minmax(0,1fr)`；gap `20px`；最大宽度 `min(1480px, 100% - 40px)`；上下 padding `20px`；高度 `100%` |
-| `.home-feed-rail` | 左侧个人展示栏；`position: sticky; top: 20px`；最大高度 `calc(100vh - 40px)`；内部可滚动；gap `14px` |
-| `.home-feed-main` | 首页主 Feed 唯一主滚动容器；`overflow-y:auto`；右 padding `2px`；底部 padding `26px`；`min-width:0` |
+| `.home-feed-shell` | `display:grid`；列宽 `minmax(0,1fr) 260px`；折叠态 `minmax(0,1fr) 56px`；gap `0`；最大宽度 `min(1480px, 100% - 40px)`；高度 `100%` |
+| `.home-feed-rail` | 右侧系统级侧边栏；`position: sticky; top: 0`；高度 `100vh`；内部可滚动；只允许左分割线和极浅背景 |
+| `.home-feed-main` | 首页主 Feed 唯一主滚动容器；`overflow-y:auto`；右 padding `20px`；底部 padding `32px`；`min-width:0` |
 | `.home-feed-toolbar` | sticky 筛选条；`top:0`；z-index `20`；gap `16px`；margin-bottom `16px`；padding `12px 0` |
 | `.home-feed-grid` | CSS columns 瀑布流；桌面 `column-count:3`；column gap `16px` |
 | `.home-article-drawer` | 右侧阅读抽屉；fixed；宽 `min(760px,100vw)`；高 `100vh`；z-index `90` |
@@ -732,9 +732,9 @@ Hero / System Entry
 
 | class | 当前值 |
 | --- | --- |
-| `.home-feed-profile` / `.home-feed-rail-card` | padding `16px`；边框 `1px rgba(255,255,255,0.68)`；背景 `linear-gradient(180deg, rgb(255 255 255 / var(--home-rail-glass-top-alpha)), rgb(255 255 255 / var(--home-rail-glass-bottom-alpha)))`；默认 alpha `0.9 -> 0.76`；毛玻璃 `blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate))` |
-| `.home-feed-brand` | min-height `34px`；padding `6px 12px`；gap `8px`；logo `18px × 18px` |
-| `.home-feed-avatar` | `82px × 82px`；圆形 |
+| `.home-feed-profile` / `.home-feed-rail-card` | 作为 `.home-sidebar-section` 分组使用；无独立边框、无圆角、无阴影、无毛玻璃；只用底部分割线 |
+| `.home-feed-brand` | min-height `34px`；padding `0`；gap `8px`；logo `18px × 18px`；不做 badge/pill |
+| `.home-feed-avatar` | `64px × 64px`；折叠态 `32px × 32px`；圆形 |
 | `.home-feed-tabs` | 顶部唯一导航；`display:flex`；gap `6px`；允许 wrap |
 | `.home-feed-tab` | min-height `31px`；padding `6px 10px`；字号 `13px`；底边 `2px solid transparent`；active 只改底边和文字色 |
 | `.home-feed-toolbar` | 背景 `linear-gradient(180deg, rgb(244 238 231 / var(--home-toolbar-glass-top-alpha)), rgb(244 238 231 / var(--home-toolbar-glass-bottom-alpha)))`；默认 alpha `0.94 -> 0.84`；毛玻璃变量同卡片 |
@@ -907,10 +907,11 @@ Heritage 实际覆盖值（当前默认画面）：
 | `--heritage-paper` | `#efe8da` | 左栏、设置面板、控制面板的默认面 |
 | `--heritage-paper-deep` | `#e0d6c3` | 封面占位、正文 mark 背景、hover 面 |
 | `--heritage-line-strong` | `#cbbda9` | 卡片边框、toolbar 底线、drawer 左线、搜索面板边界 |
-| `.home-feed-shell` | `width:min(1520px,100% - 40px)`；gap `20px`；padding `20px 0 32px` | 比 legacy 宽 40px，给书签露出和三列 Feed 留空间 |
-| `.home-feed-profile` / `.home-feed-rail-card` | border `1px solid #cbbda9`；radius `4px`；background `#efe8da`；shadow `0 1px 0 rgba(0,0,0,.04)` | 左栏是米色状态面，不承载主导航 |
+| `.home-feed-shell` | `width:min(1520px,100% - 40px)`；gap `0`；padding `0` | 右侧栏是布局层，主内容自己承担内部 padding |
+| `.home-feed-rail` | `border-left:1px solid #cbbda9`；radius `0`；background 极浅 `paper-deep`；shadow none | 右栏是系统级 sidebar，不是内容卡片 |
+| `.home-feed-profile` / `.home-feed-rail-card` | border `0` + `border-bottom:1px solid #d8cfc2`；radius `0`；background transparent；shadow none | 栏内只做分组列表，不做模块卡片 |
 | `.home-feed-card` / `.chart-card` / `.showcase-card` | border `1px solid #cbbda9`；radius `4px`；background `#ffffff`；shadow `0 1px 0 rgba(0,0,0,.04)` | 当前主内容卡片必须白，不允许恢复 `linear-gradient`、blur 和厚阴影 |
-| `.home-feed-profile` | 顶边 `4px solid #6b2d5c` | 左栏只做身份、状态和记忆，不承载完整内容 |
+| `.home-sidebar-nav` | 固定导航列表；链接只允许弱 hover 背景和文字色变化 | 右栏上半区承担稳定入口，不恢复 dashboard |
 | `.home-feed-toolbar` | background `#f5f1e8`；底边 `2px solid #d8cfc2`；sticky | 筛选时只隐藏已有卡片，不重建 DOM |
 | `.home-feed-card` | `position:relative`；`overflow:visible`；`border-left-width:4px`；transition `transform var(--motion-base) var(--ease-standard)` | 允许书签露出；正文、图片、图表不得溢出卡片内容区 |
 | `.home-feed-card:hover` | `translateY(-1px)`；无阴影增强 | hover 只给结构反馈，不制造漂浮感 |
@@ -1426,8 +1427,10 @@ Homepage implementation contract：
 - MUST 保留 Banner，并把 Banner 作为首页情绪层；Banner 可展示轻量 metrics，但不得退化为 Dashboard。
 - MUST 删除首页顶部 Dashboard / Bento 大卡片区：不得恢复 Project Studio、GitHub、Knowledge、Books、Music 这类首屏大入口卡，也不得恢复装饰性进度条。
 - MUST 使用 `.home-quickbar` 替代 Dashboard：QuickBar 只承载 Command、项目工坊、知识图谱、书架、视觉素材、GitHub、搜索、设置等轻量入口，不承载正文内容或大块数据。
-- MUST 让 Feed 成为主角：桌面结构为 `.home-feed-main` 主列 + 右侧 `.home-feed-rail` 辅助栏，侧栏弱化为 Profile / Reading Memory / Mini Graph，不再承担导航或统计 Dashboard。
-- MUST 按 NapCatQQ 的侧栏原则处理首页右栏：外层 `.home-feed-rail` 是唯一承载边框、背景、阴影和受控 blur 的连续面板；内部 `.home-feed-profile` / `.home-feed-rail-card` / stats 只能是轻量 section 或 row，使用分隔线、弱 hover 背景和轻位移反馈，不允许卡片套卡片、统计盒子网格或厚重内边框。
+- MUST 让 Feed 成为主角：桌面结构为 `.home-feed-main` 主列 + 右侧 `.home-feed-rail` 系统级侧边栏；主内容可以保留手账/纸张视觉，侧边栏必须工具化、扁平化、可扫读。
+- MUST 把首页右栏当作 layout layer，而不是内容卡片：`.home-feed-rail` 贴右侧边缘，只允许 `border-left` / 极浅背景 / 无圆角 / 无阴影；内部 `.home-sidebar-section` 只能是分组列表，不允许卡片套卡片、stamp、badge、图表或展示型模块。
+- MUST 使用“单右侧栏混合模式”：上半固定导航（项目工坊、知识图谱、书架、GitHub、设置），下半动态上下文（最近阅读、本地阅读状态）。不得升级为左中右三栏，也不得恢复 dashboard/bento。
+- MUST 支持右侧栏折叠：展开态约 `260px`，折叠态约 `56px`；折叠后隐藏文字，只保留头像/短图标，折叠按钮贴在侧栏边缘，不放进内容卡片里。
 - MUST 在主区首屏展示动态 Hero 指标：posts、repos、projects、knowledge nodes；数字可用 React island ticker，但必须在低动效偏好下直接显示最终值。
 - MUST 维持书籍唯一真源：书籍元数据只来自 `apps/web/src/data/books.ts` 的 `books: BookItem[]`，首页 Feed、书架页、书籍详情页、Reader、Knowledge 搜索和图谱都必须使用 `book.id` 作为节点 ID 与路由 ID，不得再用 `book.title` 派生第二套 ID。
 - MUST 在首页顶部 Feed tabs 中把“书架”实现为 `data-feed-filter="book"` 的首页内筛选，不得直接链接到 `/books/`；`/books/` 作为完整书架页，只从 drawer action、Command Palette 或明确的“完整书架”入口进入。
@@ -1684,19 +1687,20 @@ Bookmark Object 视觉合同：
 首页信息架构固定为：
 
 ```text
-侧栏 = 你是谁 / 阅读记忆 / 小型知识状态
+侧栏 = 系统导航 / 最近阅读 / 状态上下文
 顶部 = 你在看什么
 中间 = 内容流
 ```
 
 核心原则：
 
-- 主导航只能有一个，且只能在 `.home-feed-toolbar` 的 `.home-feed-tabs` 内。
-- `.home-feed-rail` 不再承载站点导航，不得恢复文章 / 札记 / 项目 / GitHub / 书架 / 音乐的左侧按钮矩阵。
-- `.home-feed-rail` 只放 Profile、Reading Memory、Mini Graph；不得恢复 Signals 统计卡、Quick Actions 按钮组、GitHub 热力图和小柱状图。
+- `.home-feed-rail` 是系统级侧边栏，不是内容卡片：必须贴右侧边缘，使用扁平分组列表、分割线和弱 hover，不得使用独立卡片边框、圆角、阴影或毛玻璃。
+- 主导航采用单右侧栏混合模式：`.home-sidebar-nav` 固定提供项目工坊、知识图谱、书架、GitHub、设置；`.home-feed-toolbar` 的 tabs 继续负责 Feed 内筛选。
+- `.home-feed-rail` 下半部分只放最近阅读和阅读状态上下文；不得恢复 Signals 统计卡、Quick Actions 按钮组、GitHub 热力图、小柱状图、Mini Graph 展示块或多层方框。
+- `.home-feed-rail` 必须可折叠：展开态约 `260px`，折叠态约 `56px`；折叠后文字隐藏，只保留头像/短图标，状态信息不抢占主内容视线。
 - `.home-quickbar` 是 Dashboard 替代物，只能是轻量横向入口；不得承载大标题、大摘要、进度条或多行数据。
 - 顶部 tabs 使用轻量标签式视觉，不做厚边框、重阴影、胶囊按钮组。
-- 导航 = 横向；阅读/状态 = 侧栏；内容 = Feed。
+- 导航 = 右侧栏固定入口 + 顶部 Feed 筛选；阅读/状态 = 侧栏上下文；内容 = Feed。
 
 当前源码落点：
 
@@ -1709,7 +1713,9 @@ apps/web/src/pages/index.astro
 │   ├── .home-feed-toolbar
 │   └── .home-feed-grid
 ├── .home-feed-rail
+│   ├── .home-sidebar-collapse
 │   ├── .home-feed-profile
+│   ├── .home-sidebar-nav
 │   ├── .home-feed-memory
 │   └── .home-feed-stats
 └── .home-feed-toolbar
@@ -1838,7 +1844,7 @@ Graph 负责回访
 | 合同概念 | 当前真实 selector / 文件 | 说明 |
 | --- | --- | --- |
 | Content OS shell | `.home-feed-shell` in `index.astro` / `global.css` | 首页两列骨架 |
-| Profile Rail | `.home-feed-rail`、`.home-feed-profile`、`.home-feed-rail-card` | 左栏只放摘要、记忆入口和快速链接 |
+| System Sidebar | `.home-feed-rail`、`.home-sidebar-nav`、`.home-feed-profile`、`.home-feed-rail-card` | 右侧系统级侧边栏，固定导航 + 动态上下文 |
 | Feed | `.home-feed-main`、`.home-feed-toolbar`、`.home-feed-grid` | 主滚动与瀑布流 |
 | FeedCard | `.home-feed-card` | 统一白色内容容器 |
 | Bookmark Object | `.bookmark` | 内容分类的唯一强颜色来源 |
