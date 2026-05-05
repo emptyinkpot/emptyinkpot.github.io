@@ -111,6 +111,9 @@
     const renderHeatmap = (node, analytics) => {
       const compact = node.dataset.githubCompact === 'true';
       const weeks = compact ? analytics.heatmapWeeks.slice(-12) : analytics.heatmapWeeks;
+      const visibleDays = weeks.flatMap((week) => week.days);
+      const visibleContributions = visibleDays.reduce((sum, day) => sum + day.count, 0);
+      const visibleActiveDays = visibleDays.filter((day) => day.count > 0).length;
       const weekNodes = weeks.map((week) => {
         const weekNode = document.createElement('div');
         weekNode.className = 'github-heatmap__week';
@@ -125,8 +128,15 @@
         return weekNode;
       });
       node.replaceChildren(...weekNodes);
-      const metric = node.closest('.chart-card')?.querySelector('.chart-card__header > strong');
+      const chartCard = node.closest('.chart-card');
+      const metric = chartCard?.querySelector('.chart-card__header > strong');
+      const summary = chartCard?.querySelector(':scope > p');
       if (metric && !compact) metric.textContent = `${analytics.totalContributions} total`;
+      if (summary) {
+        summary.textContent = compact
+          ? `最近 12 周 ${visibleContributions} 次活动 / ${visibleActiveDays} 个活跃日，实时同步自 GitHub。`
+          : `${analytics.totalContributions} 次年度活动 / ${analytics.activeDays} 个活跃日，实时同步自 GitHub。`;
+      }
     };
 
     const renderLine = (node, analytics) => {
@@ -155,6 +165,8 @@
         labels.append(label);
       });
       node.replaceChildren(svg, labels);
+      const summary = node.closest('.chart-card')?.querySelector(':scope > p');
+      if (summary) summary.textContent = '最近 12 个月贡献趋势，实时同步自 GitHub contribution calendar。';
     };
 
     const renderLanguages = (node, analytics) => {
@@ -187,6 +199,10 @@
 
       const metric = node.closest('.chart-card')?.querySelector('.chart-card__header > strong');
       if (metric && topLanguage) metric.textContent = topLanguage.label;
+      const summary = node.closest('.chart-card')?.querySelector(':scope > p');
+      if (summary && topLanguage) {
+        summary.textContent = `${topLanguage.label} 当前占比 ${topLanguage.percent}%，语言分布实时聚合自公开仓库。`;
+      }
     };
 
     const renderRepoMatrix = (node, analytics) => {
