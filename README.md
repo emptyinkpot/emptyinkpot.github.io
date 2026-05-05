@@ -1189,7 +1189,7 @@ Showcase 实现规则：
 
 `/projects/` 不再只是项目链接列表；当前目标是把它升级为 `Project Studio / 项目工坊`，与 `/books/`、`/music/`、`/github/`、`/knowledge/` 并列，承担项目、仓库、模块、Wiki 与协作记录的统一入口。
 
-`/projects/[slug]/` 当前进一步升级为 `Project Workbench`：GitHub repo 工作台 + Obsidian 式左侧导航 + NapCat / Linear 式应用工作区 + Heritage 视觉气质。它不是普通博客详情页，而是打开后可以进入 Wiki、Timeline、Issues、Commits、Contributors 的项目工作区。
+`/projects/[slug]/` 当前进一步升级为 `Project Workbench`：GitHub repo 工作台 + Obsidian 式左侧导航 + NapCat 式应用壳 + Heritage 视觉气质。它不是普通博客详情页，而是打开后可以进入 Wiki、Timeline、Issues、Commits、Contributors 的项目工作区。
 
 页面分类：
 
@@ -1271,22 +1271,32 @@ Project Workbench workspace contract：
 
 ```text
 /projects/[slug]/
-├─ Left Sidebar：Wiki / Timeline / Modules / Issues / PR / Commits / Contributors / Graph
+├─ Fullscreen App Shell：隐藏全站 chrome，页面自身承担导航、状态与工作区
+├─ Left Sidebar：品牌锚点、图标导航、当前态、API / GitHub 写入说明
 ├─ Main Workspace
-│  ├─ GitHub Statusbar：repo、branch、updated、issues、PR、contributors、sync / edit actions
-│  ├─ Wiki Editor：textarea，默认进入可编辑内容，不再先展示大标题
-│  ├─ Timeline Editor：提交到 timeline API，不写 localStorage
-│  ├─ Module Rows：模块进度行，不使用卡片堆叠
-│  ├─ Issues / PR / Commits Panels：API 未接入时显示明确 pending state
+│  ├─ Sticky Statusbar：breadcrumb/repo、branch、updated、issues、PR、contributors、API badge、actions
+│  ├─ Work Panels：Wiki Editor、Timeline、Modules、Issues、PR、Commits
+│  └─ Pending States：API 未接入时显示真实 pending，不伪造成功
 └─ Right Inspector：contributors、wiki files、mini graph
 ```
+
+NapCat-derived visual contract：
+
+- MUST 使用 app-shell 思维：页面高度为 `100dvh`，左侧、主区、右侧各自滚动；移动端再降级为普通流。
+- MUST 使用左侧品牌锚点 + 图标化导航：导航项需要有短 icon marker、当前态、hover 位移和 active 状态，不只是文字列表。
+- MUST 使用 sticky 顶部状态栏：它承担面包屑 / repo context / status metrics / action buttons，不再放超大宣传标题。
+- MUST 使用高密度工作面板：Wiki、Timeline、Modules、Issues、PR、Commits 都是可操作面板；一屏必须看到多个状态或操作。
+- MUST 使用受控 frosted panel：仅 app shell、sticky statusbar、work panel、inspector section 可使用 `backdrop-filter`；不要把整站所有卡片都变成玻璃。
+- MUST 保持 Heritage 语义色：主色 `--heritage-green`，系统提示 `--heritage-purple`，风险 `--heritage-red`，强调 `--heritage-gold`；不要照搬 NapCat 粉蓝主题。
+- MUST 保持 Astro 静态前台：当前不引入 HeroUI、Tailwind 组件库、React Router 或 motion；NapCat 只提供布局和状态语言。
+- FORBIDDEN：直接复制 NapCat 源码、照搬 NapCat 品牌 / 文案 / 主题、引入不必要前端依赖、用毛玻璃掩盖信息稀疏、把项目页退回营销 hero。
 
 Project Workbench implementation contract：
 
 - MUST 在 `projects/[slug].astro` 使用 `BaseLayout hideSiteChrome appMode`，隐藏全站 SiteHeader / SiteFooter，让项目页成为应用工作台。
 - MUST 使用 `.project-workbench` 作为详情页根 class；`.project-os` / `.project-space` 只保留为旧样式兼容，不再作为目标实现。
 - MUST 使用左侧 `.project-workbench__sidebar` 承载导航，主区 `.project-workbench__main` 是主要滚动工作区，右侧 `.project-workbench__inspector` 承载贡献者、Wiki 文件和 Graph 辅助信息。
-- MUST 使用轻边界和分区线：项目详情区块使用 `border-bottom`，不得恢复成卡片套卡片。
+- MUST 使用 NapCat 式 panel density：允许顶栏、面板、右侧 inspector section 使用 8px radius、轻阴影、半透明背景与受控 blur；禁止卡片套卡片和展示页堆卡片。
 - MUST 保留 `/projects/` 作为入口列表；不要把列表页也强行做成全屏应用。
 - MUST 保留 Astro 静态主链路。当前没有 React integration，Wiki / Timeline 编辑器使用原生局部 JS 调用未来 API，不新增 React 依赖。
 - MUST 明确浏览器前端不能直接安全写 GitHub。所有写入必须经过服务端 API 中间层，不得把 token 暴露给前端。
@@ -1295,7 +1305,7 @@ Project Workbench implementation contract：
 - 当前静态页根节点使用 `data-github-api-ready="false"`，因此不会请求不存在的 API endpoint，也不会在控制台制造 404；后端接入完成后才允许改成 `true`。
 - GitHub 状态栏当前读取构建期 snapshot；Issues / PR / Commits 详情需要后续 `/api/github/*` 或扩展构建期 snapshot。
 - Graph 第一版是确定性静态预览；不得引入随机力导向布局。
-- FORBIDDEN：在 Project Workbench 内恢复全站顶部导航、超大宣传标题、重复卡片容器、后台表单按钮感、大面积渐变、玻璃 blur、客户端直连 GitHub 写入、用假数据冒充 PR / commit / issue 列表。
+- FORBIDDEN：在 Project Workbench 内恢复全站顶部导航、超大宣传标题、重复卡片容器、后台表单按钮感、大面积渐变、客户端直连 GitHub 写入、用假数据冒充 PR / commit / issue 列表。
 
 Required API contract for GitHub write-back：
 

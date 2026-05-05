@@ -31,19 +31,20 @@ const initialWikiContent = project.body?.trim() || project.data.description;
   <main class="project-workbench" data-pagefind-body data-project-slug={project.id} data-project-repo={repoLabel} data-github-api-ready="false">
     <aside class="project-workbench__sidebar" aria-label="Project workbench navigation">
       <a class="project-workbench__brand" href={withBase('/projects/')}>
+        <i aria-hidden="true"></i>
         <span>PROJECT WORKBENCH</span>
         <strong>{project.data.title}</strong>
       </a>
 
       <nav class="project-workbench__nav">
-        <a class="is-active" href="#wiki">Wiki 文档</a>
-        <a href="#timeline">时间线</a>
-        <a href="#modules">模块进度</a>
-        <a href="#issues">Issues</a>
-        <a href="#pulls">Pull Requests</a>
-        <a href="#commits">Commits</a>
-        <a href="#contributors">贡献者</a>
-        <a href="#graph">知识关系</a>
+        <a class="is-active" href="#wiki"><span aria-hidden="true">W</span>Wiki 文档</a>
+        <a href="#timeline"><span aria-hidden="true">T</span>时间线</a>
+        <a href="#modules"><span aria-hidden="true">M</span>模块进度</a>
+        <a href="#issues"><span aria-hidden="true">I</span>Issues</a>
+        <a href="#pulls"><span aria-hidden="true">P</span>Pull Requests</a>
+        <a href="#commits"><span aria-hidden="true">C</span>Commits</a>
+        <a href="#contributors"><span aria-hidden="true">U</span>贡献者</a>
+        <a href="#graph"><span aria-hidden="true">G</span>知识关系</a>
       </nav>
 
       <div class="project-workbench__sidebar-note">
@@ -55,7 +56,7 @@ const initialWikiContent = project.body?.trim() || project.data.description;
     <section class="project-workbench__main">
       <header class="project-workbench__statusbar">
         <div class="project-workbench__repo">
-          <span>{repoLabel}</span>
+          <span>项目工坊 / {repoLabel}</span>
           <strong>{project.data.title}</strong>
         </div>
 
@@ -83,6 +84,7 @@ const initialWikiContent = project.body?.trim() || project.data.description;
         </dl>
 
         <div class="project-workbench__status-actions">
+          <span class="project-workbench__api-badge">API pending</span>
           <a href={project.data.repo ?? withBase('/projects/')} target={project.data.repo ? '_blank' : undefined} rel={project.data.repo ? 'noreferrer' : undefined}>仓库</a>
           {primaryWiki?.editUrl && <a href={primaryWiki.editUrl} target="_blank" rel="noreferrer">GitHub 编辑</a>}
           <button type="button" data-sync-project>同步</button>
