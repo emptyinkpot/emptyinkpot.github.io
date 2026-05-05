@@ -108,6 +108,101 @@
       }
     };
 
+    const formatRepoSummary = (repo) =>
+      `${repo.language || 'Unknown'} / ${repo.stars || 0} stars / ${repo.issues || 0} issues`;
+
+    const renderTagRow = (container, tags) => {
+      if (!container) return;
+      container.replaceChildren(
+        ...tags.filter(Boolean).map((tag) => {
+          const item = document.createElement('span');
+          item.textContent = tag;
+          return item;
+        })
+      );
+    };
+
+    const renderRepoDetails = (container, repo) => {
+      if (!container) return;
+      const rows = [
+        ['Stars', String(repo.stars || 0)],
+        ['Issues', String(repo.issues || 0)],
+        ['Updated', formatDate(repo.updatedAt)]
+      ];
+      container.replaceChildren(
+        ...rows.map(([label, value]) => {
+          const row = document.createElement('div');
+          const term = document.createElement('dt');
+          const detail = document.createElement('dd');
+          term.textContent = label;
+          detail.textContent = value;
+          row.append(term, detail);
+          return row;
+        })
+      );
+    };
+
+    const updateRepoCards = (analytics) => {
+      const liveRepos = analytics.repos || [];
+
+      document.querySelectorAll('[data-github-repo-card]').forEach((card, index) => {
+        const oldName = card.dataset.githubRepoCard;
+        const repo = liveRepos[index] || liveRepos.find((item) => item.name === oldName);
+        if (!repo) return;
+
+        card.dataset.githubRepoCard = repo.name;
+        card.dataset.drawerId = `github-repo:${repo.name}`;
+        card.dataset.sealTarget = `github-repo:${repo.name}`;
+        card.dataset.sealTitle = repo.name;
+        card.dataset.hoverId = `github-repo:${repo.name}`;
+        card.dataset.hoverTitle = repo.name;
+        card.dataset.hoverSummary = repo.description || formatRepoSummary(repo);
+        card.dataset.hoverMeta = `更新 ${formatDate(repo.updatedAt)}`;
+        card.dataset.hoverTags = JSON.stringify([repo.language || 'Unknown']);
+
+        const title = card.querySelector('.home-feed-card__body h2');
+        const summary = card.querySelector('.home-feed-card__body p');
+        const meta = card.querySelector('.home-feed-card__meta small');
+        const tags = card.querySelector('.home-feed-card__tags');
+        if (title) title.textContent = repo.name;
+        if (summary) summary.textContent = formatRepoSummary(repo);
+        if (meta) meta.textContent = `更新 ${formatDate(repo.updatedAt)}`;
+        renderTagRow(tags, [repo.language || 'Unknown']);
+      });
+    };
+
+    const updateRepoDrawerTemplates = (analytics) => {
+      const liveRepos = analytics.repos || [];
+
+      document.querySelectorAll('[data-github-repo-template]').forEach((template, index) => {
+        const oldName = template.dataset.githubRepoTemplate;
+        const repo = liveRepos[index] || liveRepos.find((item) => item.name === oldName);
+        if (!repo) return;
+
+        const drawerId = `github-repo:${repo.name}`;
+        template.dataset.githubRepoTemplate = repo.name;
+        template.dataset.drawerTemplate = drawerId;
+        template.dataset.articleId = drawerId;
+        template.dataset.fullHref = repo.htmlUrl;
+        template.dataset.title = repo.name;
+
+        const introTitle = template.querySelector('.home-article-intro h1');
+        const introSummary = template.querySelector('.home-article-intro p');
+        const details = template.querySelector('[data-github-repo-details]');
+        const tags = template.querySelector('.home-drawer-summary__main .home-feed-card__tags');
+        if (introTitle) introTitle.textContent = repo.name;
+        if (introSummary) introSummary.textContent = repo.description || `${repo.language || 'Unknown'} repository`;
+        renderRepoDetails(details, repo);
+        renderTagRow(tags, [repo.language || 'Unknown']);
+
+        if (oldName && window.CSS?.escape) {
+          document.querySelectorAll(`[data-memory-drawer="github-repo:${CSS.escape(oldName)}"]`).forEach((node) => {
+            node.dataset.memoryDrawer = drawerId;
+          });
+        }
+      });
+    };
+
     const renderHeatmap = (node, analytics) => {
       const compact = node.dataset.githubCompact === 'true';
       const weeks = compact ? analytics.heatmapWeeks.slice(-12) : analytics.heatmapWeeks;
@@ -270,6 +365,8 @@
         const analytics = payload.analytics || buildAnalytics(overview);
         updateProfile(overview);
         updateMetrics(overview, analytics);
+        updateRepoCards(analytics);
+        updateRepoDrawerTemplates(analytics);
         renderVisualizations(overview, analytics);
         setStatus(`实时同步 · ${formatDate(payload.fetchedAt)}`, 'live');
       } catch (error) {
