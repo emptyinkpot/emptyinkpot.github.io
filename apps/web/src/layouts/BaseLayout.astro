@@ -1,6 +1,7 @@
 ---
 import SiteFooter from '../components/shared/SiteFooter.astro';
 import SiteHeader from '../components/shared/SiteHeader.astro';
+import HoverPreviewSystem from '../components/react/HoverPreviewSystem';
 import { withBase } from '../lib/site';
 import '../styles/global.css';
 
@@ -85,6 +86,9 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
             graphMotion: true,
             highlightVisibility: 'normal',
             readerMemoryPanel: 'collapsed'
+          },
+          interactions: {
+            hoverPreview: false
           },
           content: {
             banner: {
@@ -227,6 +231,12 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
             ['collapsed', 'expanded', 'hidden'],
             defaults.knowledge.readerMemoryPanel
           );
+          next.interactions = {
+            hoverPreview: normalizeBoolean(
+              input.interactions?.hoverPreview ?? input.hoverPreview,
+              defaults.interactions.hoverPreview
+            )
+          };
           const banner = input.content?.banner ?? input.banner ?? {};
           for (const key of ['kicker', 'title', 'subtitle', 'springLabel', 'summerLabel', 'autumnLabel', 'winterLabel']) {
             next.content.banner[key] = String(banner[key] ?? defaults.content.banner[key]).trim();
@@ -394,6 +404,7 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
           root.dataset.graphMotion = settings.knowledge.graphMotion ? 'on' : 'off';
           root.dataset.highlightVisibility = settings.knowledge.highlightVisibility;
           root.dataset.readerMemoryPanel = settings.knowledge.readerMemoryPanel;
+          root.dataset.hoverPreview = settings.interactions.hoverPreview ? 'on' : 'off';
           if (document.body) applyContent(settings);
           return settings;
         };
@@ -442,5 +453,6 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
       </div>
       {!hideSiteChrome && <SiteFooter />}
     </div>
+    <HoverPreviewSystem client:load />
   </body>
 </html>

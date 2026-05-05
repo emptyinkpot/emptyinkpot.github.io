@@ -977,7 +977,7 @@ const homeCommands = [
         <kbd>Esc</kbd>
       </div>
       <nav class="knowledge-search-tabs" aria-label="搜索类型">
-        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'highlight', 'annotation', 'seal'].map((kind) => (
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'highlight', 'annotation', 'seal', 'sticker'].map((kind) => (
           <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
         ))}
       </nav>
@@ -1246,12 +1246,13 @@ const homeCommands = [
         highlights: 'emptyinkpot-reader-highlights',
         annotations: 'emptyinkpot-reader-annotations',
         seals: 'emptyinkpot-reader-seals',
+        stickers: 'emptyinkpot-stickers',
         sealDefinitions: sealConfig.key || 'emptyinkpot-seal-definitions',
         readerTheme: 'emptyinkpot-reader-theme'
       };
       const defaultSealDefinitions = Array.isArray(sealConfig.definitions) ? sealConfig.definitions : [];
       const loadSealDefinitions = () => {
-        let stored = [];
+        let stored;
         try {
           stored = JSON.parse(localStorage.getItem(storageKeys.sealDefinitions) || '[]');
         } catch {
@@ -1975,7 +1976,16 @@ const homeCommands = [
           drawerId: item.drawerId,
           href: item.href
         }));
-        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals]
+        const storedStickers = readJson(storageKeys.stickers, []).map((item) => ({
+          id: item.id,
+          type: 'sticker',
+          title: `贴纸 · ${item.content || item.kind}`,
+          content: [item.kind, item.content, item.note, item.targetId, item.targetType].join(' '),
+          tags: ['sticker', item.kind, item.targetType].filter(Boolean),
+          drawerId: item.targetId,
+          href: item.targetId?.startsWith('visual:') ? `/visuals/#${encodeURIComponent(item.targetId.slice('visual:'.length))}` : undefined
+        }));
+        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals, ...storedStickers]
           .filter((doc) => searchKind === 'all' || doc.type === searchKind)
           .map((doc) => {
             const content = [doc.title, doc.content, ...(doc.tags || [])].join(' ').toLowerCase();

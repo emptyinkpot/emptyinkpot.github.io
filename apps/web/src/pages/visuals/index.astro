@@ -97,6 +97,9 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
           class="visual-library-card"
           id={item.id}
           data-visual-card={item.id}
+          data-sticker-surface
+          data-sticker-target={`visual:${item.id}`}
+          data-sticker-target-type="visual"
           data-hover-preview="true"
           data-hover-type="visual"
           data-hover-id={`visual:${item.id}`}
@@ -111,6 +114,7 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
           <div class="visual-library-card__image">
             <img src={item.image} alt="" loading="lazy" />
           </div>
+          <div class="sticker-layer" data-sticker-layer></div>
           <div class="visual-library-card__body">
             <p>{item.type}</p>
             <h2>{item.title}</h2>
@@ -127,6 +131,10 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
             </div>
             <div class="visual-library-card__actions">
               <button type="button" data-visual-edit={item.id}>编辑</button>
+              <button type="button" data-sticker-add="note">便签</button>
+              <button type="button" data-sticker-add="tape">胶带</button>
+              <button type="button" data-sticker-add="task">任务</button>
+              <button type="button" data-sticker-add="marker">标记</button>
             </div>
           </div>
         </article>
@@ -144,6 +152,7 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
     const message = document.querySelector('[data-visual-message]');
     const preview = document.querySelector('[data-visual-preview]');
     const field = (name) => form?.elements.namedItem(name);
+    const stickersKey = 'emptyinkpot-stickers';
 
     const normalizeList = (value) =>
       String(value || '')
@@ -178,6 +187,99 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
       localStorage.setItem(storageKey, JSON.stringify(items));
     }
 
+    function loadStickers() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(stickersKey) || '[]');
+        return Array.isArray(stored) ? stored : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveStickers(items) {
+      localStorage.setItem(stickersKey, JSON.stringify(items));
+    }
+
+    function stickerPreset(kind) {
+      return {
+        tape: { content: '重要', width: 118, height: 38, color: '#f5f1e8' },
+        note: { content: '灵感', width: 118, height: 76, color: '#f4d35e' },
+        task: { content: '待处理', width: 122, height: 54, color: '#2f5d50' },
+        marker: { content: '圈出', width: 112, height: 70, color: '#9e2a2b' }
+      }[kind] || { content: '贴纸', width: 112, height: 64, color: '#c9a227' };
+    }
+
+    function createSticker(targetId, targetType, kind) {
+      const preset = stickerPreset(kind);
+      const now = Date.now();
+      const sticker = {
+        id: `sticker:${now}:${Math.random().toString(16).slice(2)}`,
+        targetId,
+        targetType,
+        kind,
+        content: preset.content,
+        x: 18 + Math.round(Math.random() * 28),
+        y: 18 + Math.round(Math.random() * 28),
+        width: preset.width,
+        height: preset.height,
+        rotation: Math.round((Math.random() * 8 - 4) * 10) / 10,
+        zIndex: now,
+        color: preset.color,
+        note: '',
+        createdAt: now,
+        updatedAt: now
+      };
+      saveStickers([sticker, ...loadStickers()]);
+      renderStickers();
+      setMessage(`已添加贴纸：${preset.content}`);
+      return sticker;
+    }
+
+    function updateSticker(id, patch, shouldRender = true) {
+      const next = loadStickers().map((item) => (item.id === id ? { ...item, ...patch, updatedAt: Date.now() } : item));
+      saveStickers(next);
+      if (shouldRender) renderStickers();
+    }
+
+    function deleteSticker(id) {
+      saveStickers(loadStickers().filter((item) => item.id !== id));
+      renderStickers();
+      setMessage('已删除贴纸。');
+    }
+
+    function renderSticker(sticker) {
+      return `
+        <div
+          class="sticker-item sticker-item--${escapeHtml(sticker.kind)}"
+          data-sticker-id="${escapeHtml(sticker.id)}"
+          style="left:${Number(sticker.x) || 0}px; top:${Number(sticker.y) || 0}px; width:${Number(sticker.width) || 100}px; height:${Number(sticker.height) || 60}px; z-index:${Number(sticker.zIndex) || 1}; --sticker-color:${escapeHtml(sticker.color || '#c9a227')}; --sticker-rotation:${Number(sticker.rotation) || 0}deg;"
+        >
+          <div class="sticker-item__surface">
+            <button type="button" class="sticker-item__drag" data-sticker-drag title="拖动">移动</button>
+            <textarea data-sticker-content aria-label="贴纸内容">${escapeHtml(sticker.content || '')}</textarea>
+            <div class="sticker-item__tools">
+              <button type="button" data-sticker-rotate title="旋转">旋转</button>
+              <button type="button" data-sticker-delete title="删除">删除</button>
+            </div>
+            <span data-sticker-resize title="缩放"></span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderStickers() {
+      const stickers = loadStickers();
+      document.querySelectorAll('[data-sticker-surface]').forEach((surface) => {
+        const targetId = surface.dataset.stickerTarget;
+        const layer = surface.querySelector('[data-sticker-layer]');
+        if (!targetId || !layer) return;
+        layer.innerHTML = stickers
+          .filter((item) => item.targetId === targetId)
+          .map(renderSticker)
+          .join('');
+      });
+    }
+
     function setMessage(text) {
       if (message) message.textContent = text;
     }
@@ -199,6 +301,9 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
               class="visual-library-card"
               id="${escapeHtml(item.id)}"
               data-visual-card="${escapeHtml(item.id)}"
+              data-sticker-surface
+              data-sticker-target="visual:${escapeHtml(item.id)}"
+              data-sticker-target-type="visual"
               data-hover-preview="true"
               data-hover-type="visual"
               data-hover-id="visual:${escapeHtml(item.id)}"
@@ -213,6 +318,7 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
               <div class="visual-library-card__image">
                 <img src="${escapeHtml(item.image)}" alt="" loading="lazy" />
               </div>
+              <div class="sticker-layer" data-sticker-layer></div>
               <div class="visual-library-card__body">
                 <p>${escapeHtml(item.type || 'reference')}</p>
                 <h2>${escapeHtml(item.title)}</h2>
@@ -233,12 +339,17 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
                 </div>
                 <div class="visual-library-card__actions">
                   <button type="button" data-visual-edit="${escapeHtml(item.id)}">编辑</button>
+                  <button type="button" data-sticker-add="note">便签</button>
+                  <button type="button" data-sticker-add="tape">胶带</button>
+                  <button type="button" data-sticker-add="task">任务</button>
+                  <button type="button" data-sticker-add="marker">标记</button>
                 </div>
               </div>
             </article>
           `;
         })
         .join('');
+      renderStickers();
     }
 
     function fillForm(item) {
@@ -315,6 +426,26 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
       const color = button?.dataset.copyColor;
       const editButton = event.target instanceof Element ? event.target.closest('[data-visual-edit]') : null;
       const editId = editButton?.dataset.visualEdit;
+      const stickerAdd = event.target instanceof Element ? event.target.closest('[data-sticker-add]') : null;
+      const stickerRotate = event.target instanceof Element ? event.target.closest('[data-sticker-rotate]') : null;
+      const stickerDelete = event.target instanceof Element ? event.target.closest('[data-sticker-delete]') : null;
+      const stickerItem = event.target instanceof Element ? event.target.closest('[data-sticker-id]') : null;
+      if (stickerAdd) {
+        const surface = stickerAdd.closest('[data-sticker-surface]');
+        if (surface?.dataset.stickerTarget) {
+          createSticker(surface.dataset.stickerTarget, surface.dataset.stickerTargetType || 'visual', stickerAdd.dataset.stickerAdd || 'note');
+        }
+        return;
+      }
+      if (stickerRotate && stickerItem?.dataset.stickerId) {
+        const current = loadStickers().find((item) => item.id === stickerItem.dataset.stickerId);
+        updateSticker(stickerItem.dataset.stickerId, { rotation: ((current?.rotation || 0) + 12) % 360 });
+        return;
+      }
+      if (stickerDelete && stickerItem?.dataset.stickerId) {
+        if (confirm('删除这个贴纸？')) deleteSticker(stickerItem.dataset.stickerId);
+        return;
+      }
       if (editId) {
         const item = items.find((entry) => entry.id === editId);
         if (item) fillForm(item);
@@ -328,6 +459,67 @@ const visualEditorStorageKey = 'emptyinkpot-visual-items';
           window.prompt('复制颜色', color);
         }
       }
+    });
+
+    document.addEventListener('input', (event) => {
+      const textarea = event.target instanceof Element ? event.target.closest('[data-sticker-content]') : null;
+      const sticker = textarea?.closest('[data-sticker-id]');
+      if (!textarea || !sticker?.dataset.stickerId) return;
+      updateSticker(sticker.dataset.stickerId, { content: textarea.value }, false);
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      const dragHandle = event.target instanceof Element ? event.target.closest('[data-sticker-drag]') : null;
+      const resizeHandle = event.target instanceof Element ? event.target.closest('[data-sticker-resize]') : null;
+      const item = (dragHandle || resizeHandle)?.closest('[data-sticker-id]');
+      const surface = item?.closest('[data-sticker-surface]');
+      if (!item || !surface || !item.dataset.stickerId) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const startX = event.clientX;
+      const startY = event.clientY;
+      const startLeft = parseFloat(item.style.left || '0');
+      const startTop = parseFloat(item.style.top || '0');
+      const startWidth = parseFloat(item.style.width || '100');
+      const startHeight = parseFloat(item.style.height || '60');
+      const bounds = surface.getBoundingClientRect();
+      try {
+        event.target.setPointerCapture?.(event.pointerId);
+      } catch {
+        // The move/up listeners below are the source of truth; pointer capture is only an enhancement.
+      }
+
+      const onMove = (moveEvent) => {
+        moveEvent.preventDefault();
+        const dx = moveEvent.clientX - startX;
+        const dy = moveEvent.clientY - startY;
+        if (resizeHandle) {
+          const width = Math.max(46, Math.min(bounds.width - startLeft - 6, startWidth + dx));
+          const height = Math.max(30, Math.min(bounds.height - startTop - 6, startHeight + dy));
+          item.style.width = `${width}px`;
+          item.style.height = `${height}px`;
+          return;
+        }
+        const left = Math.max(0, Math.min(bounds.width - startWidth, startLeft + dx));
+        const top = Math.max(0, Math.min(bounds.height - startHeight, startTop + dy));
+        item.style.left = `${left}px`;
+        item.style.top = `${top}px`;
+      };
+
+      const onUp = () => {
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+        updateSticker(item.dataset.stickerId, {
+          x: Math.round(parseFloat(item.style.left || '0')),
+          y: Math.round(parseFloat(item.style.top || '0')),
+          width: Math.round(parseFloat(item.style.width || '100')),
+          height: Math.round(parseFloat(item.style.height || '60')),
+          zIndex: Date.now()
+        });
+      };
+
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp, { once: true });
     });
 
     field('image')?.addEventListener('input', () => renderPreview(field('image').value));

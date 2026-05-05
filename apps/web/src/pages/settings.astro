@@ -210,6 +210,18 @@ const selectControls = [
 
         <section class="settings-group">
           <div class="settings-page__panel-head">
+            <span>Interactions</span>
+            <strong>交互实验</strong>
+          </div>
+
+          <label class="settings-control settings-control--inline">
+            <input type="checkbox" name="interactions.hoverPreview" data-setting="interactions.hoverPreview" />
+            <span>启用 Hover 预览浮层</span>
+          </label>
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
             <span>Content Ports</span>
             <strong>Banner 内容</strong>
           </div>
@@ -401,6 +413,7 @@ const selectControls = [
       };
 
       const readInputValue = (input) => {
+        if (input instanceof HTMLInputElement && input.type === 'checkbox') return input.checked;
         if (input instanceof HTMLInputElement && input.type === 'range') return Number(input.value);
         if (input.dataset.settingJson !== undefined) {
           try {
@@ -430,6 +443,10 @@ const selectControls = [
           let value = getPath(settings, key);
           if (isUrlKey(key)) value = unwrapUrl(value);
           if (key === 'knowledge.graphMotion') value = settings.knowledge?.graphMotion ? 'true' : 'false';
+          if (input instanceof HTMLInputElement && input.type === 'checkbox') {
+            input.checked = Boolean(value);
+            return;
+          }
           input.value = input.dataset.settingJson !== undefined ? JSON.stringify(value || {}, null, 2) : String(value ?? '');
           const output = document.querySelector(`[data-setting-output="${key}"]`);
           if (output) output.textContent = formatValue(input, value);

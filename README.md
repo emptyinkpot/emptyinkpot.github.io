@@ -1391,7 +1391,12 @@ Homepage implementation contract：
 - MUST 维持书籍唯一真源：书籍元数据只来自 `apps/web/src/data/books.ts` 的 `books: BookItem[]`，首页 Feed、书架页、书籍详情页、Reader、Knowledge 搜索和图谱都必须使用 `book.id` 作为节点 ID 与路由 ID，不得再用 `book.title` 派生第二套 ID。
 - MUST 在首页顶部 Feed tabs 中把“书架”实现为 `data-feed-filter="book"` 的首页内筛选，不得直接链接到 `/books/`；`/books/` 作为完整书架页，只从 drawer action、Command Palette 或明确的“完整书架”入口进入。
 - MUST 在首页 Feed 保留具体图书卡片；图书卡片必须展示书籍封面，点击打开阅读 drawer，drawer 内必须同时提供 `书籍详情`（`/books/[id]/`）、`开始阅读`（`/reader/[id]/`）和 `完整书架`（`/books/`）。
-- MUST 将 Bento 视觉收敛为 Heritage 纸张 / 档案索引风格：`var(--heritage-card)` 背景、`var(--heritage-line-strong)` 边框、左侧 Heritage 色条；不得使用玻璃拟态、扫光、渐变光斑或厚浮动阴影。
+- MAY 使用全站 Hover Preview 交互层：内容卡可以通过 `data-hover-preview` 暴露预览数据；hover 只负责快速预览，click 仍负责打开 drawer 或明确跳转。
+- Hover Preview MUST 默认关闭，并由设置页 `交互实验 / 启用 Hover 预览浮层` 控制；启用后必须 portal 到 body，并具备延迟打开、延迟关闭、跟随鼠标、viewport flip/shift 避让。当前实现使用 `@floating-ui/react` + `motion/react`，不得退回被父容器 overflow 裁剪的局部绝对定位。
+- MUST 将 Bento 视觉收敛为 Heritage 纸张 / 档案索引风格：`var(--heritage-card)` 背景、`var(--heritage-line-strong)` 边框、纸张压痕和真实物件隐喻；不得使用玻璃拟态、扫光、渐变光斑、厚浮动阴影或硬色竖线。
+- MUST 将首页 Feed 卡片进一步收口为“手账风卡片系统”：不得使用紫/绿硬竖线作为主要视觉语义；卡片语义色必须转为纸张压痕、半透明胶带标签、纸纹、轻微照片/书封倾斜、CSS 回形针、印章/贴纸等真实物件隐喻。
+- `.home-feed-card` 在 Heritage 模式下必须保持纸张卡片：`border: 1px solid var(--heritage-line-strong)`、轻纸纹背景、`::before` 纸张压痕、`::after` 回形针；`.bookmark` 语义标签必须表现为胶带，而不是 UI 书签或硬色块。
+- 图文/书籍卡片的封面必须像夹入卡片的照片或书页：有纸白边、轻阴影、轻微旋转和 hover 微动；视觉素材卡仍可保留沉浸媒体，但不能恢复纯 UI 色条。
 - MUST 使用 Activity Marquee 展示最近文章、项目进度、GitHub 更新、书架、音乐、Knowledge 状态；它只能横向展示短句，不承载正文内容。
 - MUST 在首页提供全站 Command Palette，默认入口是 `Ctrl/Command + K`，可以跳转搜索、文章、项目工坊、项目工作台、GitHub、书架、音乐、Knowledge、设置。
 - MUST 继续保留原有 Feed、阅读 drawer、本地高亮、批注、印章、搜索层和设置联动。
@@ -1933,6 +1938,7 @@ Bookmark = 分类
 Highlight = 记忆
 Annotation = 思考
 Seal = 人工判断
+Sticker = 情绪 / 临时想法 / 可视批注
 Graph = 回访结构
 ```
 
@@ -1944,6 +1950,63 @@ Graph = 回访结构
 - Annotation 必须绑定 Highlight；高亮只保存原文片段，批注保存个人思考。
 - Seal、Annotation、Highlight 都必须进入统一 Knowledge Artifact System；当前 Seal 已进入 Search 和 Graph 类型节点，Highlight / Annotation 已进入 Search、Reader mini graph 和 Graph 本地节点。
 - 第一版仍保持 localStorage；引入后端前不得改变 `HighlightRecord`、`KnowledgeSearchDoc`、`KnowledgeGraphNode`、`KnowledgeGraphLink` 合同。
+
+Sticker System 合同：
+
+```ts
+type StickerItem = {
+  id: string;
+  targetId: string;
+  targetType: "feed-card" | "article" | "image" | "book" | "project" | "wiki" | "visual";
+  kind: "tape" | "note" | "label" | "emoji" | "image" | "marker" | "task" | "warning" | "world";
+  content: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotation: number;
+  zIndex: number;
+  color?: string;
+  note?: string;
+  createdAt: number;
+  updatedAt: number;
+};
+```
+
+- Sticker 不是 emoji 装饰，而是 `Visual Annotation Layer`：表达情绪、临时想法、任务、世界观标记和非结构化批注。
+- P0 存储键固定为 `emptyinkpot-stickers`；贴纸必须绑定 `targetId`，当前 `/visuals/` 使用 `visual:<id>` 作为目标。
+- `/visuals/` 每张视觉素材卡必须支持 4 类轻量贴纸：`note` 便签、`tape` 胶带、`task` 任务、`marker` 标记。
+- P0 贴纸必须可拖拽、可缩放、可旋转、可编辑文字、可删除，并在刷新后从 localStorage 恢复。
+- Search 必须把本地贴纸作为 `type: "sticker"` 纳入统一搜索；Graph 必须把本地贴纸作为 `sticker:*` 节点连接回目标内容。
+- 交互语义固定：Hover = 预览；Click = Drawer / 编辑；Drag = 操作；Scroll = 浏览。贴纸拖拽不得触发页面跳转或 Drawer。
+
+Sticker roadmap:
+
+```text
+P0 current:
+- /visuals visual card stickers
+- note / tape / task / marker presets
+- localStorage persistence
+- drag / resize / rotate / edit / delete
+- Search sticker results
+- Graph local sticker nodes
+
+P1:
+- sticker palette manager
+- color picker and custom sticker text
+- card / article / drawer sticker layer
+- keyboard delete / duplicate
+
+P2:
+- Moveable rotation handles and snap lines
+- custom PNG sticker import
+- sticker filter and batch management
+
+P3:
+- tldraw moodboard / worldbuilding board
+- GitHub / CMS persistence
+- Fabric.js export / image composition
+```
 
 Seal roadmap:
 
@@ -2013,11 +2076,14 @@ P0 current:
 - VisualItem data
 - /visuals visual wall
 - /visuals local visual editor
+- /visuals sticker layer
 - site navigation visual category
 - homepage visual feed cards
 - drawer detail / palette / token copy
 - Search visual docs
+- Search sticker docs
 - Graph visual nodes and tag links
+- Graph local sticker links
 
 P1:
 - Color Thief palette extraction

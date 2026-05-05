@@ -1,4 +1,4 @@
-export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'highlight' | 'annotation' | 'seal';
+export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'highlight' | 'annotation' | 'seal' | 'sticker';
 
 export type KnowledgeSearchDoc = {
   id: string;
@@ -90,6 +90,26 @@ export type SealPlacement = {
   updatedAt: number;
 };
 
+export type StickerKind = 'tape' | 'note' | 'label' | 'emoji' | 'image' | 'marker' | 'task' | 'warning' | 'world';
+
+export type StickerItem = {
+  id: string;
+  targetId: string;
+  targetType: 'feed-card' | 'article' | 'image' | 'book' | 'project' | 'wiki' | 'visual';
+  kind: StickerKind;
+  content: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotation: number;
+  zIndex: number;
+  color?: string;
+  note?: string;
+  createdAt: number;
+  updatedAt: number;
+};
+
 export type BookmarkRecord = {
   id: string;
   title: string;
@@ -116,7 +136,8 @@ export type KnowledgeGraphNodeType =
   | 'tag'
   | 'highlight'
   | 'annotation'
-  | 'seal';
+  | 'seal'
+  | 'sticker';
 
 export type KnowledgeGraphNode = {
   id: string;
