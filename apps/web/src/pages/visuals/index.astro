@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { visualItems } from '../../data/visuals';
 import { withBase } from '../../lib/site';
+
+const visualEditorStorageKey = 'emptyinkpot-visual-items';
 ---
 
 <BaseLayout title="视觉素材 / emptyinkpot" description="视觉素材、调色板、设计笔记和知识图谱入口。">
@@ -12,13 +14,100 @@ import { withBase } from '../../lib/site';
       <p>这里收集海报、植物排版、色彩参考和世界观素材。每张图都带标签、笔记、调色板、印章和 Graph 入口。</p>
       <div class="visuals-hero__actions">
         <a href={withBase('/')}>回到首页 Feed</a>
+        <a href="#visual-editor">编辑视觉素材</a>
         <a href={withBase('/knowledge/')}>打开 Knowledge Graph</a>
       </div>
     </section>
 
-    <section class="visuals-grid" aria-label="视觉素材">
+    <section class="visual-editor" id="visual-editor" aria-label="编辑视觉素材">
+      <div class="visual-editor__head">
+        <div>
+          <p class="section-kicker">Local Visual Editor</p>
+          <h2>编辑图片内容，后续可接上传 / GitHub CMS。</h2>
+        </div>
+        <div class="visual-editor__actions">
+          <button type="button" data-visual-new>新建素材</button>
+          <button type="button" data-visual-export>导出 JSON</button>
+          <button type="button" data-visual-reset>恢复默认</button>
+        </div>
+      </div>
+
+      <form class="visual-editor__form" data-visual-form>
+        <input type="hidden" name="id" />
+        <label>
+          <span>标题</span>
+          <input name="title" required placeholder="例如：Hibiscus 植物排版" />
+        </label>
+        <label>
+          <span>类型</span>
+          <select name="type">
+            <option value="poster">poster</option>
+            <option value="illustration">illustration</option>
+            <option value="layout">layout</option>
+            <option value="color">color</option>
+            <option value="reference">reference</option>
+          </select>
+        </label>
+        <label class="visual-editor__wide">
+          <span>图片地址</span>
+          <input name="image" required placeholder="/images/visuals/example.svg 或 https://..." />
+        </label>
+        <label class="visual-editor__wide">
+          <span>从本地选择图片</span>
+          <input name="imageFile" type="file" accept="image/*" />
+        </label>
+        <label class="visual-editor__wide">
+          <span>摘要</span>
+          <input name="summary" required placeholder="一句话说明它为什么值得进入视觉知识层。" />
+        </label>
+        <label class="visual-editor__wide">
+          <span>笔记</span>
+          <textarea name="note" rows="4" required placeholder="记录构图、情绪、世界观用途、设计 token 用法等。"></textarea>
+        </label>
+        <label>
+          <span>标签</span>
+          <input name="tags" placeholder="花卉, 排版, 色彩" />
+        </label>
+        <label>
+          <span>调色板</span>
+          <input name="palette" placeholder="#e9b6c8, #2f5d50, #f5f1e8" />
+        </label>
+        <label>
+          <span>来源</span>
+          <input name="source" placeholder="Original study / Pinterest / Book..." />
+        </label>
+        <label>
+          <span>来源链接</span>
+          <input name="sourceUrl" placeholder="https://..." />
+        </label>
+        <div class="visual-editor__preview visual-editor__wide" data-visual-preview>
+          <span>预览图会显示在这里。</span>
+        </div>
+        <div class="visual-editor__submit visual-editor__wide">
+          <button type="submit">保存到本地素材库</button>
+          <button type="button" data-visual-delete>删除当前素材</button>
+          <span data-visual-message>本地保存使用 localStorage；导出 JSON 后可合入源码或接 GitHub API。</span>
+        </div>
+      </form>
+    </section>
+
+    <section class="visuals-grid" aria-label="视觉素材" data-visual-grid>
       {visualItems.map((item) => (
-        <article class="visual-library-card" id={item.id} style={`--visual-accent:${item.palette.dominant}`}>
+        <article
+          class="visual-library-card"
+          id={item.id}
+          data-visual-card={item.id}
+          data-hover-preview="true"
+          data-hover-type="visual"
+          data-hover-id={`visual:${item.id}`}
+          data-hover-title={item.title}
+          data-hover-summary={item.summary}
+          data-hover-kicker={`Visual / ${item.type}`}
+          data-hover-image={item.image}
+          data-hover-accent={item.palette.dominant}
+          data-hover-tags={JSON.stringify(item.tags)}
+          style={`--visual-accent:${item.palette.dominant}`}
+        >
           <div class="visual-library-card__image">
             <img src={item.image} alt="" loading="lazy" />
           </div>
@@ -36,22 +125,253 @@ import { withBase } from '../../lib/site';
             <div class="home-feed-card__tags">
               {item.tags.map((tag) => <span>{tag}</span>)}
             </div>
+            <div class="visual-library-card__actions">
+              <button type="button" data-visual-edit={item.id}>编辑</button>
+            </div>
           </div>
         </article>
       ))}
     </section>
   </main>
 
+  <script type="application/json" id="visual-editor-seed" set:html={JSON.stringify({ key: visualEditorStorageKey, items: visualItems })} />
   <script>
+    const seed = JSON.parse(document.getElementById('visual-editor-seed')?.textContent || '{"items":[]}');
+    const storageKey = seed.key || 'emptyinkpot-visual-items';
+    const defaultItems = Array.isArray(seed.items) ? seed.items : [];
+    const form = document.querySelector('[data-visual-form]');
+    const grid = document.querySelector('[data-visual-grid]');
+    const message = document.querySelector('[data-visual-message]');
+    const preview = document.querySelector('[data-visual-preview]');
+    const field = (name) => form?.elements.namedItem(name);
+
+    const normalizeList = (value) =>
+      String(value || '')
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+    const escapeHtml = (value) =>
+      String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+
+    const slugify = (value) =>
+      String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+        .replace(/^-+|-+$/g, '') || `visual-${Date.now()}`;
+
+    function loadItems() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
+        return Array.isArray(stored) && stored.length ? stored : defaultItems;
+      } catch {
+        return defaultItems;
+      }
+    }
+
+    function saveItems(items) {
+      localStorage.setItem(storageKey, JSON.stringify(items));
+    }
+
+    function setMessage(text) {
+      if (message) message.textContent = text;
+    }
+
+    function renderPreview(src) {
+      if (!preview) return;
+      const image = String(src || '').trim();
+      preview.innerHTML = image ? `<img src="${escapeHtml(image)}" alt="" />` : '<span>预览图会显示在这里。</span>';
+    }
+
+    function renderGrid(items) {
+      if (!grid) return;
+      grid.innerHTML = items
+        .map((item) => {
+          const colors = item.palette?.colors?.length ? item.palette.colors : [item.palette?.dominant || '#6b2d5c'];
+          const dominant = item.palette?.dominant || colors[0] || '#6b2d5c';
+          return `
+            <article
+              class="visual-library-card"
+              id="${escapeHtml(item.id)}"
+              data-visual-card="${escapeHtml(item.id)}"
+              data-hover-preview="true"
+              data-hover-type="visual"
+              data-hover-id="visual:${escapeHtml(item.id)}"
+              data-hover-title="${escapeHtml(item.title)}"
+              data-hover-summary="${escapeHtml(item.summary)}"
+              data-hover-kicker="Visual / ${escapeHtml(item.type || 'reference')}"
+              data-hover-image="${escapeHtml(item.image)}"
+              data-hover-accent="${escapeHtml(dominant)}"
+              data-hover-tags="${escapeHtml(JSON.stringify(item.tags || []))}"
+              style="--visual-accent:${escapeHtml(dominant)}"
+            >
+              <div class="visual-library-card__image">
+                <img src="${escapeHtml(item.image)}" alt="" loading="lazy" />
+              </div>
+              <div class="visual-library-card__body">
+                <p>${escapeHtml(item.type || 'reference')}</p>
+                <h2>${escapeHtml(item.title)}</h2>
+                <span>${escapeHtml(item.summary)}</span>
+                <div class="visual-palette-row">
+                  ${colors
+                    .map(
+                      (color) => `
+                        <button type="button" data-copy-color="${escapeHtml(color)}" style="background:${escapeHtml(color)}" title="复制 ${escapeHtml(color)}">
+                          <span>${escapeHtml(color)}</span>
+                        </button>
+                      `
+                    )
+                    .join('')}
+                </div>
+                <div class="home-feed-card__tags">
+                  ${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}
+                </div>
+                <div class="visual-library-card__actions">
+                  <button type="button" data-visual-edit="${escapeHtml(item.id)}">编辑</button>
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    function fillForm(item) {
+      if (!form || !item) return;
+      field('id').value = item.id || '';
+      field('title').value = item.title || '';
+      field('type').value = item.type || 'reference';
+      field('image').value = item.image || '';
+      field('summary').value = item.summary || '';
+      field('note').value = item.note || '';
+      field('tags').value = (item.tags || []).join(', ');
+      field('palette').value = (item.palette?.colors || []).join(', ');
+      field('source').value = item.source || '';
+      field('sourceUrl').value = item.sourceUrl || '';
+      renderPreview(item.image);
+      setMessage(`正在编辑：${item.title || item.id}`);
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function clearForm() {
+      if (!form) return;
+      form.reset();
+      field('id').value = '';
+      renderPreview('');
+      setMessage('新建素材：填写后会保存到本地素材库。');
+    }
+
+    function readFormItem() {
+      const colors = normalizeList(field('palette').value);
+      const id = field('id').value || slugify(field('title').value);
+      return {
+        id,
+        title: field('title').value.trim(),
+        image: field('image').value.trim(),
+        type: field('type').value,
+        source: field('source').value.trim(),
+        sourceUrl: field('sourceUrl').value.trim(),
+        summary: field('summary').value.trim(),
+        note: field('note').value.trim(),
+        tags: normalizeList(field('tags').value),
+        palette: {
+          dominant: colors[0] || '#6b2d5c',
+          colors: colors.length ? colors : ['#6b2d5c', '#2f5d50', '#f5f1e8']
+        }
+      };
+    }
+
+    let items = loadItems();
+    renderGrid(items);
+
+    document.querySelector('[data-visual-new]')?.addEventListener('click', clearForm);
+
+    document.querySelector('[data-visual-reset]')?.addEventListener('click', () => {
+      if (!confirm('恢复默认视觉素材？这会清除本地编辑内容。')) return;
+      localStorage.removeItem(storageKey);
+      items = [...defaultItems];
+      renderGrid(items);
+      clearForm();
+      setMessage('已恢复默认视觉素材。');
+    });
+
+    document.querySelector('[data-visual-export]')?.addEventListener('click', async () => {
+      const text = JSON.stringify(items, null, 2);
+      try {
+        await navigator.clipboard?.writeText(text);
+        setMessage('已复制 JSON，可合入 apps/web/src/data/visuals.ts。');
+      } catch {
+        window.prompt('复制视觉素材 JSON', text);
+      }
+    });
+
     document.addEventListener('click', async (event) => {
       const button = event.target instanceof Element ? event.target.closest('[data-copy-color]') : null;
       const color = button?.dataset.copyColor;
-      if (!color) return;
-      try {
-        await navigator.clipboard?.writeText(color);
-      } catch {
-        window.prompt('复制颜色', color);
+      const editButton = event.target instanceof Element ? event.target.closest('[data-visual-edit]') : null;
+      const editId = editButton?.dataset.visualEdit;
+      if (editId) {
+        const item = items.find((entry) => entry.id === editId);
+        if (item) fillForm(item);
+        return;
       }
+      if (color) {
+        try {
+          await navigator.clipboard?.writeText(color);
+          setMessage(`已复制颜色：${color}`);
+        } catch {
+          window.prompt('复制颜色', color);
+        }
+      }
+    });
+
+    field('image')?.addEventListener('input', () => renderPreview(field('image').value));
+
+    field('imageFile')?.addEventListener('change', () => {
+      const file = field('imageFile').files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        field('image').value = String(reader.result || '');
+        renderPreview(field('image').value);
+        setMessage('已载入本地图片预览。大图建议后续接上传 API，不建议长期塞进 localStorage。');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const item = readFormItem();
+      if (!item.title || !item.image || !item.summary || !item.note) {
+        setMessage('标题、图片、摘要、笔记都必须填写。');
+        return;
+      }
+      const index = items.findIndex((entry) => entry.id === item.id);
+      items = index >= 0 ? items.map((entry) => (entry.id === item.id ? item : entry)) : [item, ...items];
+      saveItems(items);
+      renderGrid(items);
+      fillForm(item);
+      setMessage(`已保存：${item.title}`);
+    });
+
+    document.querySelector('[data-visual-delete]')?.addEventListener('click', () => {
+      const id = field('id')?.value;
+      if (!id) {
+        clearForm();
+        return;
+      }
+      const item = items.find((entry) => entry.id === id);
+      if (!item || !confirm(`删除「${item.title}」？`)) return;
+      items = items.filter((entry) => entry.id !== id);
+      saveItems(items);
+      renderGrid(items);
+      clearForm();
+      setMessage('已删除本地素材。');
     });
   </script>
 </BaseLayout>

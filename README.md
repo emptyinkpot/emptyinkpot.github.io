@@ -2002,6 +2002,9 @@ type VisualItem = {
 - `.visual-feed-card` 必须是可打开 Drawer、可盖章、可搜索、可进入 Graph 的内容卡。
 - Drawer 中必须显示大图、笔记、标签、调色板和可复制设计 token；后续接入 Color Thief / image annotation 时仍沿用同一数据结构。
 - `/visuals/` 是视觉素材库首页，使用 masonry-like column layout；不要把它做成营销 landing page。
+- 全站导航必须有 `/visuals/` 的显式入口，中文标签为“视觉素材”，避免图片内容只藏在首页 Feed 过滤器里。
+- `/visuals/` 提供本地编辑器，使用 `emptyinkpot-visual-items` 保存可编辑素材集合；支持编辑标题、类型、图片地址、本地图片预览、摘要、笔记、标签、来源和调色板。
+- 本地编辑器的“导出 JSON”用于把浏览器草稿合入 `apps/web/src/data/visuals.ts`；正式上传 / 多人协作阶段再改为 GitHub API、TinaCMS 或 Decap CMS 写回仓库。
 
 Visual roadmap:
 
@@ -2009,6 +2012,8 @@ Visual roadmap:
 P0 current:
 - VisualItem data
 - /visuals visual wall
+- /visuals local visual editor
+- site navigation visual category
 - homepage visual feed cards
 - drawer detail / palette / token copy
 - Search visual docs

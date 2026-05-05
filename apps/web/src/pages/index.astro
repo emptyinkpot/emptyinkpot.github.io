@@ -507,6 +507,21 @@ function feedCardClass(item: FeedItem) {
   return ['home-feed-card', `home-feed-card--${item.type}`, `home-feed-card--${item.size ?? 'standard'}`].join(' ');
 }
 
+function hoverPreviewAttrs(item: FeedItem) {
+  return {
+    'data-hover-preview': 'true',
+    'data-hover-type': item.type,
+    'data-hover-id': item.drawerId ?? item.id,
+    'data-hover-title': item.title,
+    'data-hover-summary': item.summary,
+    'data-hover-kicker': item.kicker,
+    'data-hover-meta': item.meta,
+    'data-hover-image': item.coverSrc,
+    'data-hover-accent': item.visualItem?.palette.dominant ?? item.accent,
+    'data-hover-tags': JSON.stringify(item.tags ?? [])
+  };
+}
+
 const latestPost = posts[0];
 const latestProject = projects[0];
 const latestRepo = github.repos[0];
@@ -603,6 +618,7 @@ const homeCommands = [
         <span data-copy-key="home.quick.kicker">Quick Actions</span>
         <HomeCommandPalette client:idle commands={homeCommands} />
         <button type="button" data-search-open data-copy-key="home.quick.search">搜索</button>
+        <a href={withBase('/visuals/')} data-copy-key="home.quick.visuals">视觉素材</a>
         <a href={withBase('/knowledge/')} data-copy-key="home.quick.graph">Graph</a>
         <a href={withBase('/settings/')} data-copy-key="home.quick.settings">设置</a>
       </section>
@@ -735,6 +751,7 @@ const homeCommands = [
               class={feedCardClass(item)}
               data-feed-card
               data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
@@ -758,6 +775,7 @@ const homeCommands = [
               class={feedCardClass(item)}
               data-feed-card
               data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
@@ -775,6 +793,7 @@ const homeCommands = [
               class={feedCardClass(item)}
               data-feed-card
               data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
@@ -792,6 +811,7 @@ const homeCommands = [
               class={`${feedCardClass(item)} visual-feed-card`}
               data-feed-card
               data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
@@ -820,6 +840,7 @@ const homeCommands = [
               class={feedCardClass(item)}
               data-feed-card
               data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
@@ -835,6 +856,7 @@ const homeCommands = [
               class={feedCardClass(item)}
               data-feed-card
               data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
@@ -876,6 +898,7 @@ const homeCommands = [
               class={feedCardClass(item)}
               data-feed-card
               data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
               data-seal-target={item.drawerId ?? item.href ?? item.id}
               data-seal-title={item.title}
               data-seal-kind={item.type}

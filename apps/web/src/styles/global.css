@@ -5870,6 +5870,125 @@ body.app-mode .site-shell__glow {
   text-decoration: none;
 }
 
+.visual-editor {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 28px;
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  background: var(--heritage-card, #fffaf0);
+  padding: 18px;
+}
+
+.visual-editor__head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--heritage-line, #e1d8c8);
+  padding-bottom: 16px;
+}
+
+.visual-editor__head h2 {
+  margin: 0;
+  color: var(--heritage-green, #2f5d50);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.08;
+}
+
+.visual-editor__actions,
+.visual-editor__submit,
+.visual-library-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.visual-editor button,
+.visual-library-card__actions button {
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  background: transparent;
+  padding: 8px 10px;
+  color: var(--heritage-green, #2f5d50);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.visual-editor button:hover,
+.visual-editor button:focus-visible,
+.visual-library-card__actions button:hover,
+.visual-library-card__actions button:focus-visible {
+  background: var(--heritage-paper, #f5f1e8);
+}
+
+.visual-editor__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.visual-editor label {
+  display: grid;
+  gap: 6px;
+}
+
+.visual-editor label span {
+  color: var(--heritage-muted, #6b645c);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.visual-editor input,
+.visual-editor select,
+.visual-editor textarea {
+  width: 100%;
+  border: 1px solid var(--heritage-line, #e1d8c8);
+  background: var(--heritage-paper, #f5f1e8);
+  padding: 10px;
+  color: var(--heritage-ink, #1e1b18);
+  font: inherit;
+  outline: none;
+}
+
+.visual-editor textarea {
+  resize: vertical;
+}
+
+.visual-editor input:focus,
+.visual-editor select:focus,
+.visual-editor textarea:focus {
+  border-color: var(--heritage-green, #2f5d50);
+}
+
+.visual-editor__wide {
+  grid-column: 1 / -1;
+}
+
+.visual-editor__preview {
+  min-height: 180px;
+  border: 1px dashed var(--heritage-line-strong, #cbbda9);
+  background: var(--heritage-paper, #f5f1e8);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.visual-editor__preview img {
+  max-width: 100%;
+  max-height: 360px;
+  display: block;
+}
+
+.visual-editor__preview span,
+.visual-editor__submit span {
+  color: var(--heritage-muted, #6b645c);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
 .visuals-grid {
   column-count: 2;
   column-gap: 18px;
@@ -5929,7 +6048,20 @@ body.app-mode .site-shell__glow {
   line-height: 1.7;
 }
 
+.visual-library-card__actions {
+  border-top: 1px solid var(--heritage-line, #e1d8c8);
+  padding-top: 10px;
+}
+
 @media (max-width: 780px) {
+  .visual-editor__head {
+    display: grid;
+  }
+
+  .visual-editor__form {
+    grid-template-columns: 1fr;
+  }
+
   .visuals-grid {
     column-count: 1;
   }
