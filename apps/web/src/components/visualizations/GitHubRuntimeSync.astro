@@ -7,6 +7,7 @@
     const roots = Array.from(document.querySelectorAll('[data-github-live-root]'));
     if (!roots.length) return;
 
+    const apiReady = roots.some((root) => root.dataset.githubApiReady === 'true');
     const username = roots[0]?.dataset.githubUsername || 'emptyinkpot';
     const endpoint = `/api/github/overview?username=${encodeURIComponent(username)}`;
 
@@ -26,6 +27,11 @@
         node.dataset.githubLiveState = state;
       });
     };
+
+    if (!apiReady) {
+      setStatus('GitHub 快照', 'snapshot');
+      return;
+    }
 
     const buildAnalytics = (overview) => {
       const heatmapWeeks = (overview.weeks || []).map((week) => ({
