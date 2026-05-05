@@ -1387,7 +1387,10 @@ Homepage implementation contract：
 - `/` 是 `Content OS Home`，不是营销 landing，也不是项目工作台详情页。
 - MUST 保留左侧 profile / signals / reading memory / quick actions rail，主区承担动态入口、Bento、activity、feed。
 - MUST 在主区首屏展示动态 Hero 指标：posts、repos、projects、knowledge nodes；数字可用 React island ticker，但必须在低动效偏好下直接显示最终值。
-- MUST 使用 Bento 入口承载项目工坊、GitHub、Knowledge、书架、音乐；Bento 必须是功能入口，不是装饰卡片。
+- MUST 使用 Bento 入口承载项目工坊、GitHub、Knowledge、书架、音乐；Bento 必须是功能入口，不是装饰卡片。项目工坊、GitHub、Knowledge、音乐可以通过 `data-drawer-id` 打开 `.home-article-drawer`，但书架入口必须直接进入 `/books/`。
+- MUST 维持书籍唯一真源：书籍元数据只来自 `apps/web/src/data/books.ts` 的 `books: BookItem[]`，首页 Feed、书架页、书籍详情页、Reader、Knowledge 搜索和图谱都必须使用 `book.id` 作为节点 ID 与路由 ID，不得再用 `book.title` 派生第二套 ID。
+- MUST 在首页 Feed 保留具体图书卡片；图书卡片点击打开阅读 drawer，drawer 内必须同时提供 `书籍详情`（`/books/[id]/`）和 `开始阅读`（`/reader/[id]/`）。
+- MUST 将 Bento 视觉收敛为 Heritage 纸张 / 档案索引风格：`var(--heritage-card)` 背景、`var(--heritage-line-strong)` 边框、左侧 Heritage 色条；不得使用玻璃拟态、扫光、渐变光斑或厚浮动阴影。
 - MUST 使用 Activity Marquee 展示最近文章、项目进度、GitHub 更新、书架、音乐、Knowledge 状态；它只能横向展示短句，不承载正文内容。
 - MUST 在首页提供全站 Command Palette，默认入口是 `Ctrl/Command + K`，可以跳转搜索、文章、项目工坊、项目工作台、GitHub、书架、音乐、Knowledge、设置。
 - MUST 继续保留原有 Feed、阅读 drawer、本地高亮、批注、印章、搜索层和设置联动。

@@ -8,7 +8,6 @@ import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine.as
 import MusicCard from '../components/showcase/MusicCard.astro';
 import HomeCommandPalette from '../components/react/HomeCommandPalette';
 import HomeNumberTicker from '../components/react/HomeNumberTicker';
-import type { HomeBook } from '../data/books';
 import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sortPosts } from '../lib/content';
 import { buildGitHubAnalytics, getRecentHeatmapWeeks } from '../lib/analytics';
 import { books } from '../data/books';
@@ -19,7 +18,7 @@ import { getPostCover } from '../lib/postCovers';
 import { getRelatedKnowledgeEntries, type KnowledgeRelationSource } from '../lib/knowledge/relations';
 import { withBase } from '../lib/site';
 
-type DrawerKind = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'bilibili' | 'update';
+type DrawerKind = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'knowledge' | 'bilibili' | 'update';
 
 type DrawerEntry = {
   id: string;
@@ -38,6 +37,7 @@ type DrawerEntry = {
   body?: string;
   details?: Array<{ label: string; value: string }>;
   chartVariant?: 'heatmap' | 'line' | 'language';
+  readHref?: string;
 };
 
 type FeedItem = {
@@ -233,10 +233,10 @@ const bookItems: FeedItem[] = books.map((book) => ({
   summary: book.note,
   kicker: `书架 / ${book.statusLabel}`,
   meta: book.author,
-  href: withBase(`/reader/${book.id}/`),
+  href: withBase(`/books/${book.id}/`),
   drawerId: `book:${book.id}`,
   coverSrc: book.cover,
-  tags: [book.statusLabel, book.sourceType.toUpperCase()],
+  tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].slice(0, 4),
   size: 'compact'
 }));
 
@@ -307,19 +307,22 @@ const feedItems = [
   ...musicFeedItems.slice(1)
 ].filter(Boolean) as FeedItem[];
 
-const bookDrawerEntries: DrawerEntry[] = books.map((book: HomeBook) => ({
+const bookDrawerEntries: DrawerEntry[] = books.map((book) => ({
   id: `book:${book.id}`,
   kind: 'book',
   title: book.title,
   kicker: `书架 / ${book.statusLabel}`,
-  href: withBase(`/reader/${book.id}/`),
-  summary: book.note,
+  href: withBase(`/books/${book.id}/`),
+  readHref: withBase(`/reader/${book.id}/`),
+  summary: book.description ?? book.note,
   coverSrc: book.cover,
-  tags: [book.statusLabel, book.sourceType.toUpperCase()],
+  tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].slice(0, 6),
   details: [
     { label: '作者', value: book.author },
+    { label: '分类', value: book.category },
     { label: '状态', value: book.statusLabel },
-    { label: '来源', value: `${book.sourceType.toUpperCase()} / OpenList` }
+    { label: '来源', value: `${book.sourceType.toUpperCase()} / OpenList` },
+    { label: '路径', value: book.openlistPath ?? '未配置' }
   ]
 }));
 
@@ -394,6 +397,20 @@ const githubDrawerEntries: DrawerEntry[] = [
 
 const utilityDrawerEntries: DrawerEntry[] = [
   {
+    id: 'knowledge:index',
+    kind: 'knowledge',
+    title: 'Knowledge Graph',
+    kicker: 'Knowledge / Index',
+    href: withBase('/knowledge/'),
+    summary: '文章、项目、书架、音乐、GitHub 和本地标记共同进入知识图谱。首页入口默认打开这张摘要索引，完整关系图保留在 Knowledge 页面。',
+    tags: ['graph', 'memory', 'reader'],
+    details: [
+      { label: '知识入口', value: String(articleDrawerEntries.length + bookDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 3) },
+      { label: '标签', value: String(new Set(posts.flatMap((post) => post.data.tags)).size) },
+      { label: '交互', value: '抽屉预览 / 完整图谱' }
+    ]
+  },
+  {
     id: 'bilibili:profile',
     kind: 'bilibili',
     title: profileLinks.bilibiliLabel,
@@ -460,6 +477,10 @@ const latestRepo = github.repos[0];
 const latestBook = books[0];
 const latestMusic = musicItems[0];
 const uniqueTagCount = new Set(posts.flatMap((post) => post.data.tags)).size;
+const homeBentoProjectDrawerId = latestProject ? `project:${latestProject.id}` : undefined;
+const homeBentoGitHubDrawerId = latestRepo ? `github-repo:${latestRepo.name}` : 'github:heatmap';
+const homeBentoBookDrawerId = bookItems[0]?.drawerId;
+const homeBentoMusicDrawerId = latestMusic ? `music:${latestMusic.id}` : undefined;
 const activityItems = [
   latestPost && `最新文章：${latestPost.data.title}`,
   latestProject && `项目工坊：${latestProject.data.title} / ${latestProject.data.progress}%`,
@@ -583,7 +604,7 @@ const homeCommands = [
       </section>
 
       <section class="home-os-bento" aria-label="Content OS quick entry">
-        <a class="home-os-bento__item home-os-bento__item--wide" href={withBase('/projects/')}>
+        <a class="home-os-bento__item home-os-bento__item--wide" href={withBase('/projects/')} data-drawer-id={homeBentoProjectDrawerId}>
           <span>Project Studio</span>
           <strong>{latestProject?.data.title ?? '项目工坊'}</strong>
           <p>{latestProject?.data.description ?? '项目、Wiki、Timeline 与 GitHub 状态的统一入口。'}</p>
@@ -592,22 +613,22 @@ const homeCommands = [
           </div>
           <small>{latestProject?.data.progress ?? 0}% / 进入项目空间</small>
         </a>
-        <a class="home-os-bento__item" href={withBase('/github/')}>
+        <a class="home-os-bento__item" href={withBase('/github/')} data-drawer-id={homeBentoGitHubDrawerId}>
           <span>GitHub</span>
           <strong>{latestRepo?.name ?? '@emptyinkpot'}</strong>
           <p>{github.totalContributions} 次年度活动，{githubAnalytics.activeDays} 个活跃日。</p>
         </a>
-        <a class="home-os-bento__item" href={withBase('/knowledge/')}>
+        <a class="home-os-bento__item" href={withBase('/knowledge/')} data-drawer-id="knowledge:index">
           <span>Knowledge</span>
           <strong>{knowledgeDocs.length} 个入口</strong>
           <p>文章、项目、书架、音乐和本地标记共同构成知识图谱。</p>
         </a>
-        <a class="home-os-bento__item" href={withBase('/books/')}>
+        <a class="home-os-bento__item" href={withBase('/books/')} data-drawer-id={homeBentoBookDrawerId}>
           <span>Books</span>
           <strong>{latestBook?.title ?? '书架'}</strong>
           <p>{latestBook?.note ?? '阅读记录、摘录和知识回流。'}</p>
         </a>
-        <a class="home-os-bento__item" href={withBase('/music/')}>
+        <a class="home-os-bento__item" href={withBase('/music/')} data-drawer-id={homeBentoMusicDrawerId}>
           <span>Music</span>
           <strong>{latestMusic?.title ?? '音乐'}</strong>
           <p>{latestMusic ? `${latestMusic.artist} / ${latestMusic.platform}` : '音乐状态和专辑入口。'}</p>
@@ -633,7 +654,7 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
           <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
           <button type="button" class="home-feed-tab" data-feed-filter="project" data-copy-key="home.feed.project">项目工坊</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="book" data-copy-key="home.feed.book">书架</button>
+          <a class="home-feed-tab" href={withBase('/books/')} data-copy-key="home.feed.book">书架</a>
           <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
           <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
           <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>
@@ -812,6 +833,7 @@ const homeCommands = [
           <button type="button" data-reader-seal>盖章</button>
           <a href={withBase('/knowledge/')} data-reader-graph>知识图谱</a>
           <a href={withBase('/posts/')} data-article-full>完整页面</a>
+          <a href={withBase('/books/')} data-article-read hidden>开始阅读</a>
           <button type="button" data-article-close>关闭</button>
         </div>
       </header>
@@ -883,7 +905,9 @@ const homeCommands = [
           class="home-article-reader"
           data-drawer-template={entry.id}
           data-article-id={entry.id}
+          data-kind={entry.kind}
           data-full-href={entry.href}
+          data-read-href={entry.readHref ?? ''}
           data-kicker={entry.kicker}
           data-title={entry.title}
         >
@@ -1026,6 +1050,7 @@ const homeCommands = [
       const titleTarget = document.querySelector('[data-article-title]');
       const kickerTarget = document.querySelector('[data-article-kicker]');
       const fullLink = document.querySelector('[data-article-full]');
+      const readLink = document.querySelector('[data-article-read]');
       const bookmarkButton = document.querySelector('[data-reader-bookmark]');
       const progress = document.querySelector('[data-reading-progress]');
       const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
@@ -1864,6 +1889,8 @@ const homeCommands = [
         const title = reader?.dataset.title ?? '';
         const kicker = reader?.dataset.kicker ?? '';
         const href = reader?.dataset.fullHref ?? '#';
+        const kind = reader?.dataset.kind ?? '';
+        const readHref = reader?.dataset.readHref ?? '';
         const articleId = reader?.dataset.articleId ?? id;
         lastFocused = trigger;
         savedScrollTop = mainScroller?.scrollTop ?? 0;
@@ -1873,7 +1900,19 @@ const homeCommands = [
         drawerBody.replaceChildren(createReaderMemoryPanel(), content);
         if (titleTarget) titleTarget.textContent = title;
         if (kickerTarget) kickerTarget.textContent = kicker;
-        if (fullLink) fullLink.setAttribute('href', href);
+        if (fullLink) {
+          fullLink.setAttribute('href', href);
+          fullLink.textContent = kind === 'book' ? '书籍详情' : '完整页面';
+        }
+        if (readLink) {
+          if (kind === 'book' && readHref) {
+            readLink.hidden = false;
+            readLink.setAttribute('href', readHref);
+          } else {
+            readLink.hidden = true;
+            readLink.setAttribute('href', '#');
+          }
+        }
         updateReaderGraphLink();
         window.clearTimeout(drawerCloseTimer);
         layer.hidden = false;

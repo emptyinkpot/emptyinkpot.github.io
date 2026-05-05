@@ -4784,20 +4784,15 @@ body.app-mode .site-shell__glow {
   display: grid;
   align-content: start;
   gap: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  background:
-    radial-gradient(circle at top right, rgba(102, 8, 116, 0.1), transparent 42%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.72));
-  box-shadow: 0 18px 46px rgba(47, 33, 54, 0.09);
-  -webkit-backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
-  backdrop-filter: blur(var(--home-glass-blur)) saturate(var(--home-glass-saturate));
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-left: 4px solid var(--heritage-green, #2f5d50);
+  background: var(--heritage-card, #fffaf0);
   padding: 14px;
   color: inherit;
-  overflow: hidden;
+  cursor: pointer;
   text-decoration: none;
   transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
+    background-color 160ms ease,
     border-color 160ms ease;
   animation: home-panel-in 360ms ease both;
 }
@@ -4807,32 +4802,11 @@ body.app-mode .site-shell__glow {
 .home-os-bento__item:nth-child(4) { animation-delay: 120ms; }
 .home-os-bento__item:nth-child(5) { animation-delay: 160ms; }
 
-.home-os-bento__item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(120deg, transparent 12%, rgba(255, 255, 255, 0.28), transparent 38%);
-  opacity: 0;
-  transform: translateX(-34%);
-  transition:
-    opacity 160ms ease,
-    transform 320ms ease;
-  pointer-events: none;
-}
-
 .home-os-bento__item:hover,
 .home-os-bento__item:focus-visible {
-  border-color: rgba(102, 8, 116, 0.2);
-  box-shadow: 0 22px 58px rgba(47, 33, 54, 0.13), inset 0 0 0 1px rgba(102, 8, 116, 0.12);
+  background: var(--heritage-paper, #fff7e8);
+  border-color: var(--heritage-green, #2f5d50);
   outline: none;
-  transform: translateY(-2px);
-}
-
-.home-os-bento__item:hover::after,
-.home-os-bento__item:focus-visible::after {
-  opacity: 1;
-  transform: translateX(42%);
 }
 
 .home-os-bento__item--wide {
