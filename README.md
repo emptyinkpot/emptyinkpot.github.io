@@ -1088,7 +1088,7 @@ Profile Rail
 - 文章 / 札记 / 项目 drawer 内正文来自 Astro 已渲染的 Markdown 内容，不再发起客户端 fetch。
 - 书架、音乐、GitHub 图表、GitHub 仓库、Bilibili、更新卡片也必须先打开 drawer；drawer 顶部的“完整页面”链接再进入 `/github/`、`/books/`、`/music/`、`/evidence-library/` 或外部站点。
 - 完整详情页仍保留：`/posts/[slug]/`、`/notes/[slug]/`、`/projects/[slug]/`、`/github/`、`/books/`、`/music/` 用于 SEO、分享和深度阅读。
-- Bilibili 链接当前集中在 `apps/web/src/lib/profile.ts`，未配置真实主页前只展示占位卡片，不伪造账号信息。
+- Bilibili 链接当前集中在 `apps/web/src/lib/profile.ts`；`bilibiliConfigured: false` 时不得进入首页 Feed、drawer 或首页 tabs，只能作为设置 / profile 配置待办存在，不伪造账号信息。
 
 首页内容模型：
 
@@ -1375,6 +1375,37 @@ CMS 增量规则：
 - P0 继续使用 GitHub edit fallback。
 - P1 先选一个 CMS，不要 Tina 和 Decap 同时接。
 - P2 自有 API commit 只能放在服务端边界，不能放进 Astro 静态前台。
+
+Reality Pass / 闭环修复规则：
+
+当前阶段不再优先新增 UI、动效或页面入口，而是把已有功能从 `Content OS Mockup` 收敛为 `Content OS Runtime`。所有工作按闭环优先级排序：
+
+```text
+P0：项目工作台 GitHub 写入
+P1：视觉素材持久化
+P2：统一搜索索引
+P3：Graph 数据化 / 可编辑化
+P4：贴纸 / 印章跨页面统一
+P5：书架 OpenList 体验兜底
+P6：Bilibili 配置或隐藏
+P7：设置页本地模式 / 后台连接边界
+```
+
+Reality Pass 禁止事项：
+
+- 不新增新的手账卡片样式、新 Banner 动效、新贴纸视觉样式或新占位模块，除非它直接关闭上述 P0-P7 的某个闭环。
+- 不把 localStorage demo 写成 CMS，不把静态 GitHub snapshot 写成实时同步，不把 API pending 写成已连接。
+- 不在 Astro 静态前台暴露 `GITHUB_TOKEN`、CMS secret、OpenList token 或任何写入凭据。
+- 不在 API 未接入时请求不存在的 endpoint 制造 404，也不把失败写入 localStorage 当成功。
+
+Reality Pass 当前源码对齐：
+
+- Project Workbench 顶部必须显示 `Local mode` / snapshot 状态；`data-github-api-ready="false"` 时 Wiki、Timeline、Sync 只显示明确 pending / fallback，不发起写入。
+- `/settings/` 必须说明“外观偏好 / 内容端口”为当前浏览器本地模式，并列出 GitHub API、CMS、Visual Upload、OpenList 的连接状态。
+- `/visuals/` 当前 `emptyinkpot-visual-items` 仍是本地素材编辑器；接 API 前只允许导出 JSON 或手动合入 `apps/web/src/data/visuals.ts`。
+- `/search/` Pagefind 与首页 overlay 的分裂必须在 P2 收口；P2 前不得声称本地贴纸、印章、高亮已经进入 Pagefind。
+- `/knowledge/` 当前是静态 SVG + localStorage 节点注入；P3 前不得声称它是 React Flow / Cytoscape 级可编辑图谱。
+- `bilibiliConfigured: false` 时首页不展示 Bilibili 占位卡片或 tab。
 
 动效增量规则：
 

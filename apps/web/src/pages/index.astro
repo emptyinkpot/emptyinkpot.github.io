@@ -252,21 +252,23 @@ const musicFeedItems: FeedItem[] = musicItems.map((item) => ({
   size: 'compact'
 }));
 
-const bilibiliItems: FeedItem[] = [
-  {
-    id: 'bilibili-profile',
-    type: 'bilibili',
-    title: profileLinks.bilibiliLabel,
-    summary: profileLinks.bilibiliDescription,
-    kicker: 'Bilibili',
-    meta: profileLinks.bilibiliConfigured ? '视频主页' : '待配置主页链接',
-    href: profileLinks.bilibili,
-    drawerId: 'bilibili:profile',
-    tags: ['video'],
-    accent: '#fb7299',
-    size: 'compact'
-  }
-];
+const bilibiliItems: FeedItem[] = profileLinks.bilibiliConfigured
+  ? [
+      {
+        id: 'bilibili-profile',
+        type: 'bilibili',
+        title: profileLinks.bilibiliLabel,
+        summary: profileLinks.bilibiliDescription,
+        kicker: 'Bilibili',
+        meta: '视频主页',
+        href: profileLinks.bilibili,
+        drawerId: 'bilibili:profile',
+        tags: ['video'],
+        accent: '#fb7299',
+        size: 'compact'
+      }
+    ]
+  : [];
 
 const updateItems: FeedItem[] = [
   {
@@ -440,21 +442,25 @@ const utilityDrawerEntries: DrawerEntry[] = [
     summary: '文章、项目、书架、音乐、GitHub 和本地标记共同进入知识图谱。首页入口默认打开这张摘要索引，完整关系图保留在 Knowledge 页面。',
     tags: ['graph', 'memory', 'reader'],
     details: [
-      { label: '知识入口', value: String(articleDrawerEntries.length + bookDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 3) },
+      { label: '知识入口', value: String(articleDrawerEntries.length + bookDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 2 + bilibiliItems.length) },
       { label: '标签', value: String(new Set(posts.flatMap((post) => post.data.tags)).size) },
       { label: '交互', value: '抽屉预览 / 完整图谱' }
     ]
   },
-  {
-    id: 'bilibili:profile',
-    kind: 'bilibili',
-    title: profileLinks.bilibiliLabel,
-    kicker: 'Bilibili',
-    href: profileLinks.bilibili,
-    summary: profileLinks.bilibiliDescription,
-    accent: '#fb7299',
-    tags: [profileLinks.bilibiliConfigured ? 'configured' : 'pending']
-  },
+  ...(profileLinks.bilibiliConfigured
+    ? [
+        {
+          id: 'bilibili:profile',
+          kind: 'bilibili' as const,
+          title: profileLinks.bilibiliLabel,
+          kicker: 'Bilibili',
+          href: profileLinks.bilibili,
+          summary: profileLinks.bilibiliDescription,
+          accent: '#fb7299',
+          tags: ['configured']
+        }
+      ]
+    : []),
   {
     id: 'update:evidence-library',
     kind: 'update',
@@ -737,7 +743,7 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
           <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
           <button type="button" class="home-feed-tab" data-feed-filter="visual">视觉素材</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>
+          {profileLinks.bilibiliConfigured && <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>}
           <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
           <a class="home-feed-tab" href={withBase('/settings/')} data-copy-key="home.feed.settings">设置</a>
         </nav>

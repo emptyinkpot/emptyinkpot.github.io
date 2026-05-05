@@ -225,6 +225,9 @@ const selectControls = [
             <span>Content Ports</span>
             <strong>Banner 内容</strong>
           </div>
+          <p class="settings-mode-note">
+            当前为本地模式：这些内容端口只保存到当前浏览器的 <code>emptyinkpot-visual-settings</code>，不会写入 Markdown、JSON 数据源或 GitHub 仓库。
+          </p>
 
           {bannerTextControls.map((control) => (
             <label class="settings-control settings-control--wide">
@@ -253,6 +256,22 @@ const selectControls = [
               />
             </label>
           ))}
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Backend Connections</span>
+            <strong>后台连接状态</strong>
+          </div>
+          <p class="settings-mode-note">
+            GitHub 写入 API、视觉素材上传、CMS、统一搜索后端和 OpenList 检测仍处于 Reality Pass 待接入阶段。接入前，设置页只负责本地偏好和本地内容覆盖。
+          </p>
+          <div class="settings-status-list" aria-label="后台连接状态">
+            <span>GitHub API：未连接</span>
+            <span>CMS：未接入</span>
+            <span>Visual Upload：未接入</span>
+            <span>OpenList：本地配置</span>
+          </div>
         </section>
 
         <section class="settings-group" data-book-settings-form>

@@ -26,6 +26,7 @@ const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : 
 const repoLabel = projectView.owner && projectView.repoName ? `${projectView.owner}/${projectView.repoName}` : 'manual project';
 const primaryWiki = projectView.wiki[0];
 const initialWikiContent = project.body?.trim() || project.data.description;
+const githubRuntimeMode = 'Local mode';
 const commandItems = [
   {
     id: 'wiki',
@@ -62,7 +63,7 @@ const commandItems = [
   {
     id: 'pulls',
     label: 'Pull Requests',
-    description: 'API pending',
+    description: '等待 GitHub API',
     href: '#pulls',
     kind: 'internal',
     icon: 'pulls'
@@ -127,8 +128,9 @@ const commandItems = [
     <section class="project-workbench__main">
       <header class="project-workbench__statusbar">
         <div class="project-workbench__repo">
-          <span>项目工坊 / {repoLabel}</span>
+          <span>项目工坊 / {repoLabel} / {githubRuntimeMode}</span>
           <strong>{project.data.title}</strong>
+          <small>当前读取构建期 GitHub snapshot；写入使用 GitHub edit fallback，服务端 API 接入后才会启用站内提交。</small>
         </div>
 
         <dl class="project-workbench__status">
@@ -146,7 +148,7 @@ const commandItems = [
           </div>
           <div>
             <dt>PR</dt>
-            <dd>API</dd>
+            <dd>pending</dd>
           </div>
           <div>
             <dt>Contributors</dt>
@@ -155,7 +157,7 @@ const commandItems = [
         </dl>
 
         <div class="project-workbench__status-actions">
-          <span class="project-workbench__api-badge">API pending</span>
+          <span class="project-workbench__api-badge">Local mode</span>
           <ProjectWorkbenchCommand client:idle commands={commandItems} />
           <a href={project.data.repo ?? withBase('/projects/')} target={project.data.repo ? '_blank' : undefined} rel={project.data.repo ? 'noreferrer' : undefined}>仓库</a>
           {primaryWiki?.editUrl && <a href={primaryWiki.editUrl} target="_blank" rel="noreferrer">GitHub 编辑</a>}
