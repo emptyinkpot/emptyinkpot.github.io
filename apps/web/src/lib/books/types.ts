@@ -15,5 +15,4 @@ export interface BookItem {
   openlistPath?: string;
   description?: string;
   cover?: string;
-  href?: string;
 }

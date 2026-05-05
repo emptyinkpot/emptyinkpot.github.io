@@ -1,9 +1,6 @@
-import { withBase } from '../lib/site';
 import type { BookItem } from '../lib/books/types';
 
-export type HomeBook = BookItem;
-
-export const books: HomeBook[] = [
+export const books: BookItem[] = [
   {
     id: 'nndl-book',
     title: '神经网络与深度学习',
@@ -15,8 +12,7 @@ export const books: HomeBook[] = [
     tags: ['AI', '深度学习', 'PDF'],
     sourceType: 'pdf',
     openlistPath: '/夸克网盘/来自：分享/一周热点72分享/nndl-book.pdf',
-    description: '用于补齐神经网络、训练范式和深度学习基础概念的长期参考书。',
-    href: withBase('/reader/nndl-book/')
+    description: '用于补齐神经网络、训练范式和深度学习基础概念的长期参考书。'
   },
   {
     id: 'future-of-jobs-2025',
@@ -29,8 +25,7 @@ export const books: HomeBook[] = [
     tags: ['AI', '职业', 'PDF'],
     sourceType: 'pdf',
     openlistPath: '/夸克网盘/来自：分享/一周热点72分享/WEF_Future_of_Jobs_Report_2025.pdf',
-    description: '从宏观就业结构观察 AI 和自动化对知识工作流的影响。',
-    href: withBase('/reader/future-of-jobs-2025/')
+    description: '从宏观就业结构观察 AI 和自动化对知识工作流的影响。'
   },
   {
     id: 'kaoyan-english-vocabulary',
@@ -43,7 +38,6 @@ export const books: HomeBook[] = [
     tags: ['英语', '词汇', 'PDF'],
     sourceType: 'pdf',
     openlistPath: '/夸克网盘/来自：分享/02.英语历年真题/考研英语阅读高频词汇整理.pdf',
-    description: '作为轻量 PDF 样例，验证私有阅读系统的文件读取和进度保存。',
-    href: withBase('/reader/kaoyan-english-vocabulary/')
+    description: '作为轻量 PDF 样例，验证私有阅读系统的文件读取和进度保存。'
   }
 ];

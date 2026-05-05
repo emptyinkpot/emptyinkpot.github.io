@@ -52,14 +52,14 @@ export const GET: APIRoute = async () => {
       updatedAt: project.data.date?.toISOString()
     })),
     ...books.map((book) => ({
-      id: `book:${book.title}`,
+      id: `book:${book.id}`,
       type: 'book' as const,
       title: book.title,
-      content: [book.author, book.statusLabel, book.note].join('\n'),
-      tags: [book.statusLabel],
-      href: withBase('/books/'),
-      drawerId: `book:${book.title.toLowerCase().replaceAll(' ', '-')}`,
-      sourceId: book.title
+      content: [book.author, book.category, book.statusLabel, book.note, book.description, book.openlistPath].filter(Boolean).join('\n'),
+      tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags],
+      href: withBase(`/books/${book.id}/`),
+      drawerId: `book:${book.id}`,
+      sourceId: book.id
     })),
     ...musicItems.map((item) => ({
       id: `music:${item.id}`,
