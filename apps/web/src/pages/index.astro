@@ -629,7 +629,6 @@ const homeCommands = [
         <a href={withBase('/books/')}>书架</a>
         <a href={withBase('/visuals/')}>视觉素材</a>
         <a href={withBase('/github/')}>GitHub</a>
-        <button type="button" data-search-open>搜索</button>
         <a href={withBase('/settings/')}>设置</a>
       </section>
 
@@ -647,7 +646,6 @@ const homeCommands = [
           <strong data-copy-key="home.feed.title">连续浏览</strong>
         </div>
         <nav class="home-feed-tabs" aria-label="首页唯一导航">
-          <button type="button" class="home-feed-tab home-feed-tab--search" data-search-open data-copy-key="home.feed.search">搜索</button>
           <button type="button" class="home-feed-tab is-active" data-feed-filter="all" data-copy-key="home.feed.all">全部</button>
           <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
           <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
@@ -2175,9 +2173,7 @@ const homeCommands = [
         });
       });
 
-      document.querySelectorAll('[data-search-open]').forEach((button) => {
-        button.addEventListener('click', openSearch);
-      });
+      window.addEventListener('home-search-open', openSearch);
 
       document.querySelectorAll('[data-search-close]').forEach((button) => {
         button.addEventListener('click', closeSearch);

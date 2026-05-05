@@ -70,7 +70,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
     setOpen(false);
 
     if (command.action === 'search') {
-      document.querySelector<HTMLElement>('[data-search-open]')?.click();
+      window.dispatchEvent(new CustomEvent('home-search-open'));
       return;
     }
 
@@ -92,7 +92,8 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
     <div className="home-command">
       <button className="home-command__trigger" type="button" onClick={() => setOpen(true)}>
         <Search aria-hidden="true" size={15} />
-        <span>Command</span>
+        <span>全局检索</span>
+        <kbd>Ctrl K</kbd>
       </button>
       <button
         className="home-command__help"
@@ -117,7 +118,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
                   transition={{ duration: 0.14 }}
                 >
                   <header>
-                    <strong>快捷规则</strong>
+                    <strong>全局检索</strong>
                     <button type="button" aria-label="关闭快捷规则" onClick={() => setHelpOpen(false)}>
                       <X aria-hidden="true" size={14} />
                     </button>
@@ -125,7 +126,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
                   <dl>
                     <div>
                       <dt>Ctrl / Command + K</dt>
-                      <dd>打开 Command Palette。</dd>
+                      <dd>打开全局检索，搜索入口、书架、文章、项目和本地标记。</dd>
                     </div>
                     <div>
                       <dt>J / K</dt>
@@ -172,7 +173,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
               <Command label="Home Command Palette">
                 <div className="home-command__input-row">
                   <Search aria-hidden="true" size={17} />
-                  <Command.Input placeholder="跳转文章、项目工坊、书架、音乐、GitHub、Knowledge..." autoFocus />
+                  <Command.Input placeholder="搜索或跳转：文章、项目、书架、音乐、GitHub、Knowledge、本地标记..." autoFocus />
                   <button type="button" aria-label="关闭" onClick={() => setOpen(false)}>
                     <X aria-hidden="true" size={16} />
                   </button>
@@ -180,7 +181,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
 
                 <Command.List className="home-command__list">
                   <Command.Empty className="home-command__empty">没有匹配的入口。</Command.Empty>
-                  <Command.Group heading="Content OS">
+                  <Command.Group heading="全局检索">
                     {safeCommands.map((command) => {
                       const Icon = iconMap[command.icon as keyof typeof iconMap] ?? ExternalLink;
 
