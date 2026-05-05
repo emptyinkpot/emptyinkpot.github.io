@@ -577,6 +577,7 @@ const homeCommands = [
         <a class="home-sidebar-item" href={withBase('/projects/')} aria-label="项目工坊"><b>项</b><span data-sidebar-label>项目工坊</span></a>
         <a class="home-sidebar-item" href={withBase('/knowledge/')} aria-label="知识图谱"><b>知</b><span data-sidebar-label>知识图谱</span></a>
         <a class="home-sidebar-item" href={withBase('/books/')} aria-label="书架"><b>书</b><span data-sidebar-label>书架</span></a>
+        <a class="home-sidebar-item" href={withBase('/visuals/')} aria-label="视觉素材"><b>视</b><span data-sidebar-label>视觉素材</span></a>
         <a class="home-sidebar-item" href={withBase('/github/')} aria-label="GitHub"><b>G</b><span data-sidebar-label>GitHub</span></a>
         <a class="home-sidebar-item" href={withBase('/settings/')} aria-label="设置"><b>设</b><span data-sidebar-label>设置</span></a>
       </nav>
@@ -635,16 +636,6 @@ const homeCommands = [
         </div>
       </section>
 
-      <section class="home-quickbar" aria-label="Content OS quick entry">
-        <HomeCommandPalette client:idle commands={homeCommands} />
-        <a href={withBase('/projects/')}>项目工坊</a>
-        <a href={withBase('/knowledge/')}>知识图谱</a>
-        <a href={withBase('/books/')}>书架</a>
-        <a href={withBase('/visuals/')}>视觉素材</a>
-        <a href={withBase('/github/')}>GitHub</a>
-        <a href={withBase('/settings/')}>设置</a>
-      </section>
-
       <section class="home-activity-marquee" aria-label="站点活动流">
         <div>
           {[...activityItems, ...activityItems].map((item) => (
@@ -659,6 +650,7 @@ const homeCommands = [
           <strong data-copy-key="home.feed.title">连续浏览</strong>
         </div>
         <nav class="home-feed-tabs" aria-label="首页唯一导航">
+          <HomeCommandPalette client:idle commands={homeCommands} />
           <button type="button" class="home-feed-tab is-active" data-feed-filter="all" data-copy-key="home.feed.all">全部</button>
           <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
           <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
@@ -669,7 +661,6 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="visual">视觉素材</button>
           {profileLinks.bilibiliConfigured && <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>}
           <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
-          <a class="home-feed-tab" href={withBase('/settings/')} data-copy-key="home.feed.settings">设置</a>
         </nav>
       </div>
 

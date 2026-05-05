@@ -4933,55 +4933,6 @@ body.app-mode .site-shell__glow {
   }
 }
 
-.home-quickbar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 14px;
-  border-bottom: 1px solid var(--heritage-line-strong, #cbbda9);
-  padding: 0 0 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.home-quickbar::-webkit-scrollbar {
-  display: none;
-}
-
-.home-quickbar a,
-.home-quickbar button {
-  flex: 0 0 auto;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  padding: 6px 10px;
-  color: var(--heritage-muted, #6b645c);
-  font-family: var(--font-ui);
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.home-quickbar a:hover,
-.home-quickbar a:focus-visible,
-.home-quickbar button:hover,
-.home-quickbar button:focus-visible {
-  background: rgba(30, 27, 24, 0.05);
-  color: var(--heritage-ink, #1e1b18);
-  outline: none;
-}
-
-.home-quickbar .home-command {
-  flex: 0 0 230px;
-}
-
-.home-quickbar .home-command__trigger,
-.home-quickbar .home-command__help {
-  min-height: 32px;
-  padding: 6px 10px;
-}
-
 .home-activity-marquee span {
   color: var(--home-accent);
   font-family: var(--font-ui);
@@ -5310,9 +5261,25 @@ body.app-mode .site-shell__glow {
 .home-feed-tabs {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
   gap: 6px;
   min-width: 0;
+}
+
+.home-feed-tabs .home-command {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.home-feed-tabs .home-command__trigger,
+.home-feed-tabs .home-command__help {
+  min-height: 31px;
+  padding: 6px 10px;
+}
+
+.home-feed-tabs .home-command__trigger {
+  background: rgba(102, 8, 116, 0.06);
 }
 
 .home-feed-tab {
