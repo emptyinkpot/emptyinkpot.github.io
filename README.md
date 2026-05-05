@@ -1397,7 +1397,7 @@ Homepage implementation contract：
 - MUST 将首页 Feed 卡片进一步收口为“手账风卡片系统”：不得使用紫/绿硬竖线作为主要视觉语义；卡片语义色必须转为纸张压痕、照片/书封倾斜、CSS 回形针、印章/贴纸等真实物件隐喻。
 - MUST 避免在 Feed 卡片系统里使用大面积渐变；Heritage 模式下卡片、mark 区和压痕应以纯色、半透明色、边框、阴影和材质关系表达层级。
 - `.home-feed-card` 在 Heritage 模式下必须保持纸张卡片：`border: 1px solid var(--heritage-line-strong)`、纯色纸面、`::before` 纸张压痕、`.card-paperclip` 夹纸结构；`.bookmark` 语义标签保留原先书签/折角形状，不改成胶带条。
-- `.card-paperclip` 必须像真实别在纸边上的回形针：双层线圈、跨过卡片上边缘，并用线条断开 / mask 表现“穿过纸张”的前后关系；不得用可见色块贴片或只画一个浮在卡片表面的图标框。
+- `.card-paperclip` 必须使用 Bootstrap Icons `paperclip` 开源 SVG 轮廓作为图形源，锚定在卡片右上边缘并与卡片边框重叠；不得手搓脱位线圈、可见色块贴片，或只画一个浮在卡片表面的图标框。
 - 图文/书籍卡片的封面必须像夹入卡片的照片或书页：有纸白边、轻阴影、轻微旋转和 hover 微动；视觉素材卡仍可保留沉浸媒体，但不能恢复纯 UI 色条。
 - MUST 使用 Activity Marquee 展示最近文章、项目进度、GitHub 更新、书架、音乐、Knowledge 状态；它只能横向展示短句，不承载正文内容。
 - MUST 在首页提供全站 Command Palette，默认入口是 `Ctrl/Command + K`，可以跳转搜索、文章、项目工坊、项目工作台、GitHub、书架、音乐、Knowledge、设置。
