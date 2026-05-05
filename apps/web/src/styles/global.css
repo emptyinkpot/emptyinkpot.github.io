@@ -4592,11 +4592,27 @@ body.app-mode .site-shell__glow {
 
 .home-feed-memory li button,
 .home-feed-stats li button {
-  display: block;
+  display: grid;
+  gap: 3px;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.home-feed-memory li button span,
+.home-feed-stats li button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.home-feed-memory li button small,
+.reader-memory-panel button small {
+  color: var(--heritage-muted, #6b645c);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0;
 }
 
 .home-feed-main {
@@ -8505,6 +8521,8 @@ body.has-home-article-drawer .home-feed-main {
 }
 
 .reader-memory-panel button {
+  display: grid;
+  gap: 3px;
   min-width: 0;
   border: 0;
   background: transparent;

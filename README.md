@@ -1567,7 +1567,7 @@ apps/web/src/pages/
 - Search 同时搜索 Astro 渲染的 drawer 内容、书架、音乐、GitHub 和本地 highlight。
 - `J / K` 浏览可见 Feed 卡片，`Enter` 打开当前卡片 drawer，`Esc` 关闭 drawer 或搜索。
 - Reader Drawer 保存阅读历史到 `emptyinkpot-reading-history`。
-- Reader Drawer 必须把 `emptyinkpot-reading-history` 升级为 Reader Memory：每条记录至少保存 `id/title/href/timestamp/lastReadAt/scrollTop/progress`，再次打开同一 drawer 时恢复 `scrollTop`，滚动时节流写回 `progress`。
+- Reader Drawer 必须把 `emptyinkpot-reading-history` 升级为 Reader Memory：每条记录至少保存 `id/title/href/timestamp/lastReadAt/scrollTop/progress`，再次打开同一 drawer 时恢复 `scrollTop`，滚动时节流写回 `progress`，首页侧栏和 Drawer 记忆面板都要显示最近阅读进度。
 - Reader Drawer 支持收藏到 `emptyinkpot-reader-bookmarks`。
 - Reader Drawer 支持 `light / sepia / dark` 三种阅读主题，存储键为 `emptyinkpot-reader-theme`。
 - Reader Drawer 支持选中文本后保存本地 highlight 到 `emptyinkpot-reader-highlights`；当前恢复已经使用 `quote / position / dom path` 三锚点，旧的 exact-only 记录仍可用 quote fallback 恢复。

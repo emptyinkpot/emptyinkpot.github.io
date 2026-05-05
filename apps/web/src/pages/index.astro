@@ -1333,6 +1333,14 @@ const homeCommands = [
         card.scrollIntoView({ block: 'center', behavior: 'smooth' });
       };
 
+      const formatReaderProgress = (item) => {
+        const progress = Number(item?.progress || 0);
+        const percent = Math.round(Math.max(0, Math.min(1, progress)) * 100);
+        const when = Number(item?.lastReadAt || item?.timestamp || 0);
+        const date = when ? new Date(when).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }) : '';
+        return [percent ? `${percent}%` : '未开始', date].filter(Boolean).join(' · ');
+      };
+
       const renderSidebarList = (target, items, emptyText, type) => {
         if (!target) return;
         if (!items.length) {
@@ -1349,7 +1357,14 @@ const homeCommands = [
             button.type = 'button';
             button.dataset.sidebarDrawer = drawerId || '';
             if (type === 'highlight' && item.id) button.dataset.sidebarHighlight = item.id;
-            button.textContent = type === 'highlight' ? item.text || 'Untitled highlight' : item.title || 'Untitled';
+            const label = document.createElement('span');
+            label.textContent = type === 'highlight' ? item.text || 'Untitled highlight' : item.title || 'Untitled';
+            button.append(label);
+            if (type === 'history') {
+              const meta = document.createElement('small');
+              meta.textContent = formatReaderProgress(item);
+              button.append(meta);
+            }
             row.append(button);
             return row;
           })
@@ -1756,11 +1771,18 @@ const homeCommands = [
             const target = type === 'highlight' || type === 'annotation' ? item.articleId : item.id;
             const label = type === 'highlight' ? item.text : type === 'annotation' ? item.body : item.title;
             const button = document.createElement('button');
+            const text = document.createElement('span');
             button.type = 'button';
             button.dataset.memoryDrawer = target || '';
             if (type === 'highlight' && item.id) button.dataset.memoryHighlight = item.id;
             if (type === 'annotation' && item.highlightId) button.dataset.memoryHighlight = item.highlightId;
-            button.textContent = label || 'Untitled';
+            text.textContent = label || 'Untitled';
+            button.append(text);
+            if (type === 'history') {
+              const meta = document.createElement('small');
+              meta.textContent = formatReaderProgress(item);
+              button.append(meta);
+            }
             section.append(button);
           });
 
