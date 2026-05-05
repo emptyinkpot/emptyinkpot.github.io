@@ -7,6 +7,7 @@ import { musicItems } from '../../data/music';
 import { getPrimaryCategory, sortPosts } from '../../lib/content';
 import { buildClusteredRadialGraph } from '../../lib/knowledge/graph';
 import { buildKnowledgeRelations, type KnowledgeRelationSource } from '../../lib/knowledge/relations';
+import { defaultSealDefinitions } from '../../lib/knowledge/seals';
 import type { KnowledgeGraphLink, KnowledgeGraphNode } from '../../lib/knowledge/types';
 import { withBase } from '../../lib/site';
 
@@ -170,14 +171,16 @@ const relationSources = [
 
 const relationLinks = buildKnowledgeRelations(relationSources, { minScore: 4, limitPerSource: 8 });
 
-const sealNodes: KnowledgeGraphNode[] = [
-  { id: 'seal:selected', label: '精选', type: 'seal', level: 3, weight: 3, cluster: 'archive', summary: '人工判断：内容价值高，值得优先回访。', meta: 'seal / selected' },
-  { id: 'seal:important', label: '重要', type: 'seal', level: 3, weight: 3, cluster: 'archive', summary: '人工判断：对系统或长期主题有关键意义。', meta: 'seal / important' },
-  { id: 'seal:insight', label: '洞见', type: 'seal', level: 3, weight: 3, cluster: 'archive', summary: '人工判断：包含可复用观点或推理。', meta: 'seal / insight' },
-  { id: 'seal:unfinished', label: '未完', type: 'seal', level: 3, weight: 2, cluster: 'archive', summary: '人工判断：仍需补写、重构或验证。', meta: 'seal / unfinished' },
-  { id: 'seal:reread', label: '重读', type: 'seal', level: 3, weight: 2, cluster: 'archive', summary: '人工判断：适合复盘和周期性重读。', meta: 'seal / reread' },
-  { id: 'seal:archive', label: '归档', type: 'seal', level: 3, weight: 2, cluster: 'archive', summary: '人工判断：保留历史价值，降低当前优先级。', meta: 'seal / archive' }
-];
+const sealNodes: KnowledgeGraphNode[] = defaultSealDefinitions.map((seal) => ({
+  id: `seal:${seal.id}`,
+  label: seal.label,
+  type: 'seal',
+  level: 3,
+  weight: ['selected', 'important', 'insight'].includes(seal.id) ? 3 : 2,
+  cluster: 'archive',
+  summary: `人工判断：${seal.summary}`,
+  meta: `seal / ${seal.id}`
+}));
 
 const links: KnowledgeGraphLink[] = [
   ...collectionNodes.map((node) => ({ source: 'self:emptyinkpot', target: node.id, type: 'contains' as const, weight: 2 })),
@@ -370,14 +373,61 @@ const viewBox = '-620 -620 1240 1240';
       const graphSvg = document.querySelector('[data-knowledge-graph]');
       let activeFilter = 'all';
 
+      const storageKeys = {
+        seals: 'emptyinkpot-reader-seals'
+      };
+
       const visibleNodeIds = () => new Set(nodes.filter((node) => !node.classList.contains('is-hidden')).map((node) => node.dataset.nodeId));
 
       const nodeMatchesFilter = (node, filter) => {
         if (filter === 'all') return true;
         if (filter === 'tag') return node.dataset.nodeType === 'tag' || node.dataset.nodeType === 'self' || node.dataset.nodeType === 'collection';
-        if (filter === 'seal') return node.dataset.nodeType === 'seal' || node.dataset.nodeType === 'self';
+        if (filter === 'seal') return node.dataset.nodeType === 'seal' || node.dataset.nodeType === 'self' || node.dataset.localSealed === 'true';
         if (node.dataset.nodeType === 'self') return true;
         return node.dataset.nodeCluster === filter;
+      };
+
+      const nodeCoordinates = (node) => {
+        const match = node.getAttribute('transform')?.match(/translate\(([-\d.]+)\s+([-\d.]+)\)/);
+        return {
+          x: Number(match?.[1] || 0),
+          y: Number(match?.[2] || 0)
+        };
+      };
+
+      const hydrateLocalSealLinks = () => {
+        if (!graphSvg) return;
+        let placements = [];
+        try {
+          placements = JSON.parse(localStorage.getItem(storageKeys.seals) || '[]');
+        } catch {
+          placements = [];
+        }
+        if (!Array.isArray(placements) || !placements.length) return;
+        const nodesById = new Map(nodes.map((node) => [node.dataset.nodeId, node]));
+        const existing = new Set(links.map((link) => `${link.dataset.source}->${link.dataset.target}`));
+        const firstNode = graphSvg.querySelector('[data-graph-node]');
+        placements.forEach((placement) => {
+          const sealId = `seal:${placement.sealId || placement.type}`;
+          const targetId = placement.targetId;
+          const source = nodesById.get(sealId);
+          const target = nodesById.get(targetId);
+          if (!source || !target || existing.has(`${sealId}->${targetId}`)) return;
+          target.dataset.localSealed = 'true';
+          const sourcePoint = nodeCoordinates(source);
+          const targetPoint = nodeCoordinates(target);
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', `${sourcePoint.x}`);
+          line.setAttribute('y1', `${sourcePoint.y}`);
+          line.setAttribute('x2', `${targetPoint.x}`);
+          line.setAttribute('y2', `${targetPoint.y}`);
+          line.dataset.graphLink = '';
+          line.dataset.source = sealId;
+          line.dataset.target = targetId;
+          line.classList.add('knowledge-link', 'knowledge-link--related', 'knowledge-link--local-seal');
+          graphSvg.insertBefore(line, firstNode);
+          links.push(line);
+        });
       };
 
       const applyFilter = (filter) => {
@@ -626,6 +676,7 @@ const viewBox = '-620 -620 1240 1240';
           }
         });
       });
+      hydrateLocalSealLinks();
       applyFilter(activeFilter);
       const focus = new URLSearchParams(window.location.search).get('focus');
       if (focus) {

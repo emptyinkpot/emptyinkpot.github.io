@@ -66,16 +66,19 @@ export type AnnotationRecord = {
   updatedAt: number;
 };
 
-export type SealType = 'selected' | 'important' | 'insight' | 'unfinished' | 'reread' | 'archive';
+export type SealType = 'selected' | 'important' | 'insight' | 'unfinished' | 'reread' | 'archive' | 'done' | 'canon' | 'custom';
 
 export type SealPlacement = {
   id: string;
+  sealId?: string;
   type: SealType;
   label: string;
+  subLabel?: string;
   color: string;
-  shape: 'circle' | 'square' | 'vertical';
+  shape: 'circle' | 'square' | 'oval' | 'vertical' | 'ticket';
+  texture?: 'clean' | 'rough' | 'aged' | 'ink';
   targetId: string;
-  targetType: 'card' | 'article' | 'highlight';
+  targetType: 'card' | 'article' | 'highlight' | 'book' | 'project' | 'wiki' | 'graph-node';
   title: string;
   kind?: string;
   href?: string;

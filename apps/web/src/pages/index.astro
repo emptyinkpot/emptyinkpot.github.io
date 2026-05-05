@@ -16,6 +16,7 @@ import { getGitHubOverview } from '../lib/github';
 import { profileLinks } from '../lib/profile';
 import { getPostCover } from '../lib/postCovers';
 import { getRelatedKnowledgeEntries, type KnowledgeRelationSource } from '../lib/knowledge/relations';
+import { defaultSealDefinitions, sealDefinitionStorageKey } from '../lib/knowledge/seals';
 import { withBase } from '../lib/site';
 
 type DrawerKind = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'knowledge' | 'bilibili' | 'update';
@@ -57,14 +58,7 @@ type FeedItem = {
   size?: 'compact' | 'standard' | 'tall';
 };
 
-const sealTypes = [
-  { id: 'selected', label: '精选', color: '#9E2A2B', shape: 'circle' },
-  { id: 'important', label: '重要', color: '#6B2D5C', shape: 'circle' },
-  { id: 'insight', label: '洞见', color: '#2F5D50', shape: 'square' },
-  { id: 'unfinished', label: '未完', color: '#6B645C', shape: 'square' },
-  { id: 'reread', label: '重读', color: '#C9A227', shape: 'vertical' },
-  { id: 'archive', label: '归档', color: '#3A3A3A', shape: 'vertical' }
-] as const;
+const sealTypes = defaultSealDefinitions;
 
 const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
 const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
@@ -618,17 +612,44 @@ const homeCommands = [
           <strong>{latestRepo?.name ?? '@emptyinkpot'}</strong>
           <p>{github.totalContributions} 次年度活动，{githubAnalytics.activeDays} 个活跃日。</p>
         </a>
-        <a class="home-os-bento__item" href={withBase('/knowledge/')} data-drawer-id="knowledge:index">
+        <a
+          class="home-os-bento__item"
+          href={withBase('/knowledge/')}
+          data-drawer-id="knowledge:index"
+          data-seal-surface
+          data-seal-target="knowledge:index"
+          data-seal-title="Knowledge"
+          data-seal-kind="knowledge"
+        >
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
           <span>Knowledge</span>
           <strong>{knowledgeDocs.length} 个入口</strong>
           <p>文章、项目、书架、音乐和本地标记共同构成知识图谱。</p>
         </a>
-        <a class="home-os-bento__item" href={withBase('/books/')} data-drawer-id={homeBentoBookDrawerId}>
+        <a
+          class="home-os-bento__item"
+          href={withBase('/books/')}
+          data-drawer-id={homeBentoBookDrawerId}
+          data-seal-surface
+          data-seal-target={homeBentoBookDrawerId}
+          data-seal-title={latestBook?.title ?? '书架'}
+          data-seal-kind="book"
+        >
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
           <span>Books</span>
           <strong>{latestBook?.title ?? '书架'}</strong>
           <p>{latestBook?.note ?? '阅读记录、摘录和知识回流。'}</p>
         </a>
-        <a class="home-os-bento__item" href={withBase('/music/')} data-drawer-id={homeBentoMusicDrawerId}>
+        <a
+          class="home-os-bento__item"
+          href={withBase('/music/')}
+          data-drawer-id={homeBentoMusicDrawerId}
+          data-seal-surface
+          data-seal-target={homeBentoMusicDrawerId}
+          data-seal-title={latestMusic?.title ?? '音乐'}
+          data-seal-kind="music"
+        >
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
           <span>Music</span>
           <strong>{latestMusic?.title ?? '音乐'}</strong>
           <p>{latestMusic ? `${latestMusic.artist} / ${latestMusic.platform}` : '音乐状态和专辑入口。'}</p>
@@ -891,14 +912,20 @@ const homeCommands = [
         {sealTypes.map((seal) => (
           <button
             type="button"
-            class={`seal-palette__option knowledge-seal knowledge-seal--${seal.shape}`}
+            class={`seal-palette__option knowledge-seal knowledge-seal--${seal.shape} knowledge-seal--${seal.texture}`}
             style={`--seal-color:${seal.color}`}
             data-seal-type={seal.id}
             data-seal-label={seal.label}
+            data-seal-sublabel={seal.subLabel}
             data-seal-color={seal.color}
             data-seal-shape={seal.shape}
+            data-seal-texture={seal.texture}
+            title={seal.summary}
           >
-            {seal.label}
+            <span class="knowledge-seal__inner">
+              <strong>{seal.label}</strong>
+              <em>{seal.subLabel}</em>
+            </span>
           </button>
         ))}
       </div>
@@ -906,6 +933,7 @@ const homeCommands = [
     </div>
   </div>
 
+  <script type="application/json" id="seal-definition-data" set:html={JSON.stringify({ key: sealDefinitionStorageKey, definitions: sealTypes })} />
   <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
 
   <div class="home-article-templates" hidden>
@@ -1084,22 +1112,31 @@ const homeCommands = [
       const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
       const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
       const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
+      const sealConfig = JSON.parse(document.getElementById('seal-definition-data')?.textContent || '{"definitions":[]}');
       const storageKeys = {
         history: 'emptyinkpot-reading-history',
         bookmarks: 'emptyinkpot-reader-bookmarks',
         highlights: 'emptyinkpot-reader-highlights',
         annotations: 'emptyinkpot-reader-annotations',
         seals: 'emptyinkpot-reader-seals',
+        sealDefinitions: sealConfig.key || 'emptyinkpot-seal-definitions',
         readerTheme: 'emptyinkpot-reader-theme'
       };
-      const sealDefinitions = {
-        selected: { label: '精选', color: '#9E2A2B', shape: 'circle' },
-        important: { label: '重要', color: '#6B2D5C', shape: 'circle' },
-        insight: { label: '洞见', color: '#2F5D50', shape: 'square' },
-        unfinished: { label: '未完', color: '#6B645C', shape: 'square' },
-        reread: { label: '重读', color: '#C9A227', shape: 'vertical' },
-        archive: { label: '归档', color: '#3A3A3A', shape: 'vertical' }
+      const defaultSealDefinitions = Array.isArray(sealConfig.definitions) ? sealConfig.definitions : [];
+      const loadSealDefinitions = () => {
+        let stored = [];
+        try {
+          stored = JSON.parse(localStorage.getItem(storageKeys.sealDefinitions) || '[]');
+        } catch {
+          stored = [];
+        }
+        const source = Array.isArray(stored) && stored.length ? stored : defaultSealDefinitions;
+        return source.reduce((map, definition) => {
+          if (definition?.id) map[definition.id] = definition;
+          return map;
+        }, {});
       };
+      let sealDefinitions = loadSealDefinitions();
       const drawerTransitionMs = 180;
       const searchTransitionMs = 120;
       let lastFocused = null;
@@ -1265,19 +1302,35 @@ const homeCommands = [
           .sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0))[0];
 
       const createSealElement = (record) => {
-        const definition = sealDefinitions[record.type] || sealDefinitions.selected;
+        const definition = sealDefinitions[record.sealId || record.type] || sealDefinitions[record.type] || sealDefinitions.selected;
         const seal = document.createElement('span');
-        seal.className = `knowledge-seal knowledge-seal--${record.shape || definition.shape}`;
+        const shape = record.shape || definition.shape || 'circle';
+        const texture = record.texture || definition.texture || 'clean';
+        seal.className = `knowledge-seal knowledge-seal--${shape} knowledge-seal--${texture} knowledge-seal--stamp-in`;
         seal.dataset.renderedSeal = record.id;
         seal.style.setProperty('--seal-color', record.color || definition.color);
         seal.style.setProperty('--seal-rotation', `${record.rotation || -7}deg`);
-        seal.textContent = record.label || definition.label;
+        seal.style.setProperty('--seal-x', `${Math.max(4, Math.min(96, (record.x ?? 0.78) * 100))}%`);
+        seal.style.setProperty('--seal-y', `${Math.max(4, Math.min(96, (record.y ?? 0.12) * 100))}%`);
+        const inner = document.createElement('span');
+        inner.className = 'knowledge-seal__inner';
+        const label = document.createElement('strong');
+        label.textContent = record.label || definition.label;
+        inner.append(label);
+        const subLabelText = record.subLabel || definition.subLabel;
+        if (subLabelText) {
+          const subLabel = document.createElement('em');
+          subLabel.textContent = subLabelText;
+          inner.append(subLabel);
+        }
+        seal.append(inner);
         return seal;
       };
 
       const renderSeals = () => {
         document.querySelectorAll('[data-rendered-seal]').forEach((node) => node.remove());
-        cards.forEach((card) => {
+        const sealSurfaces = [...document.querySelectorAll('[data-seal-surface], [data-feed-card]')];
+        sealSurfaces.forEach((card) => {
           const targetId = card.dataset.sealTarget || card.dataset.drawerId || card.getAttribute('href');
           if (!targetId) return;
           const record = latestSealFor(targetId);
@@ -1293,6 +1346,7 @@ const homeCommands = [
 
       const openSealPalette = (target, anchor) => {
         if (!sealPalette || !target?.targetId) return;
+        sealDefinitions = loadSealDefinitions();
         sealContext = target;
         if (sealTargetTitle) sealTargetTitle.textContent = target.title || '选择判断';
         sealPalette.hidden = false;
@@ -1310,16 +1364,20 @@ const homeCommands = [
 
       const saveSeal = (type) => {
         if (!sealContext?.targetId) return;
+        sealDefinitions = loadSealDefinitions();
         const definition = sealDefinitions[type] || sealDefinitions.selected;
         const records = getSeals();
         const previous = records.find((item) => item.targetId === sealContext.targetId);
         const now = Date.now();
         const record = {
           id: previous?.id || `seal:${sealContext.targetId}:${now}`,
+          sealId: definition.id || type,
           type,
           label: definition.label,
+          subLabel: definition.subLabel,
           color: definition.color,
           shape: definition.shape,
+          texture: definition.texture,
           targetId: sealContext.targetId,
           targetType: sealContext.targetType || 'card',
           title: sealContext.title || 'Untitled',
@@ -1327,8 +1385,8 @@ const homeCommands = [
           href: sealContext.href || '',
           drawerId: sealContext.drawerId || '',
           rotation: previous?.rotation ?? Math.round(Math.random() * 14 - 7),
-          x: previous?.x ?? 0.78,
-          y: previous?.y ?? 0.12,
+          x: sealContext.x ?? previous?.x ?? 0.78,
+          y: sealContext.y ?? previous?.y ?? 0.14,
           createdAt: previous?.createdAt || now,
           updatedAt: now
         };
@@ -1783,8 +1841,8 @@ const homeCommands = [
           id: item.id,
           type: 'seal',
           title: `${item.label} · ${item.title}`,
-          content: [item.label, item.type, item.title, item.kind].join(' '),
-          tags: ['seal', item.type, item.kind].filter(Boolean),
+          content: [item.label, item.subLabel, item.sealId || item.type, item.title, item.kind].join(' '),
+          tags: ['seal', item.sealId || item.type, item.type, item.kind].filter(Boolean),
           drawerId: item.drawerId,
           href: item.href
         }));
@@ -2017,8 +2075,9 @@ const homeCommands = [
         if (!trigger) return;
         event.preventDefault();
         event.stopPropagation();
-        const card = trigger.closest('[data-feed-card]');
+        const card = trigger.closest('[data-seal-surface], [data-feed-card]');
         if (!card) return;
+        const rect = card.getBoundingClientRect?.();
         openSealPalette(
           {
             targetId: card.dataset.sealTarget || card.dataset.drawerId || card.getAttribute('href'),
@@ -2026,7 +2085,9 @@ const homeCommands = [
             href: card.getAttribute('href') || '',
             title: card.dataset.sealTitle || card.textContent?.trim() || 'Untitled',
             kind: card.dataset.sealKind || card.dataset.feedKind || 'post',
-            targetType: 'card'
+            targetType: 'card',
+            x: rect ? Math.min(0.88, Math.max(0.12, (event.clientX - rect.left) / rect.width)) : 0.78,
+            y: rect ? Math.min(0.28, Math.max(0.1, (event.clientY - rect.top) / rect.height)) : 0.14
           },
           trigger
         );

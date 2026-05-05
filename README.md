@@ -1531,8 +1531,9 @@ apps/web/src/pages/
 - Reader Drawer 打开时会生成折叠态 Reader Memory Panel：默认只显示“阅读记忆”入口，展开后显示最近阅读、收藏、标记，点击可直接回访对应 drawer 或标记位置。
 - Search 的本地 highlight 结果会携带 `highlightId`，点击后打开对应 drawer 并滚动聚焦到具体标记。
 - 如果内容变更导致三锚点都无法定位，drawer 顶部显示 orphan highlight 提示，不静默丢失本地记录。
-- Seal System 使用 `emptyinkpot-reader-seals` 保存卡片 / 文章印章；`selected / important / insight / unfinished / reread / archive` 表达人工判断。
-- Search 会把本地 seal 作为 `type: "seal"` 的结果纳入统一入口；Graph 页面提供静态 seal 类型节点，作为 Knowledge Artifact System 的回访结构。
+- Seal System 使用 `emptyinkpot-reader-seals` 保存卡片 / 文章印章；`selected / important / insight / unfinished / reread / archive / done / canon` 表达人工判断。
+- Seal Definition 使用 `emptyinkpot-seal-definitions` 作为后续自定义印章入口；默认定义集中在 `apps/web/src/lib/knowledge/seals.ts`，页面不得再各自硬编码一套印章表。
+- Search 会把本地 seal 作为 `type: "seal"` 的结果纳入统一入口；Graph 页面提供 seal 类型节点，并在浏览器端读取本地印章记录，把真实盖章对象连回对应内容节点。
 - Drawer 顶部有阅读进度条，关闭后继续遵守 scrollTop 恢复规则。
 
 Highlight 工程合同：
@@ -1931,12 +1932,41 @@ Seal = 人工判断
 Graph = 回访结构
 ```
 
-- Seal System 已作为 P2 落地，但不能替代 bookmark。印章表达“精选 / 重要 / 洞见 / 未完 / 重读 / 归档”等人工判断。
-- `.knowledge-seal` 是压印物件，不是 icon；支持 circle / square / vertical 三种形态，带轻微旋转和 multiply 压印感。
-- `.seal-palette` 负责选择印章；当前第一版支持单卡片 / 当前文章盖章与移除，不做批量管理页。
+- Seal System 已作为 P2 落地，但不能替代 bookmark。印章表达“精选 / 重要 / 洞见 / 未完 / 重读 / 归档 / 完成 / 正典”等人工判断。
+- `.knowledge-seal` 是压印物件，不是 icon；支持 circle / square / oval / vertical / ticket 五种形态，带内环、副文字、轻微旋转、multiply 压印感、rough / aged / ink 质感和 `seal-stamp-in` 盖章动画。
+- `.seal-palette` 负责选择印章；当前第一版支持 Bento / Feed 卡片 / 当前文章盖章与移除。它保存一个最新判断，仍不做批量管理页。
+- `SealPlacement.x / y` 必须参与渲染；默认位置在卡片右上方，但从点击入口进入时会记录相对位置，后续拖拽盖章不得丢弃这个字段。
+- Graph 必须同时保留静态 seal 类型节点和本地 placement link：`seal:<type> -> targetId`。这保证“印章 = 判断”能回流到 Knowledge Graph，而不是只停留在视觉层。
 - Annotation 必须绑定 Highlight；高亮只保存原文片段，批注保存个人思考。
 - Seal、Annotation、Highlight 都必须进入统一 Knowledge Artifact System；当前 Seal 已进入 Search 和 Graph 类型节点，Highlight / Annotation 已进入 Search、Reader mini graph 和 Graph 本地节点。
 - 第一版仍保持 localStorage；引入后端前不得改变 `HighlightRecord`、`KnowledgeSearchDoc`、`KnowledgeGraphNode`、`KnowledgeGraphLink` 合同。
+
+Seal roadmap:
+
+```text
+P0 current:
+- shared seal definitions
+- localStorage placements
+- Bento / Feed / Reader stamping
+- Search seal results
+- Graph local seal links
+- pressed-paper visual with stamp-in motion
+
+P1:
+- settings -> knowledge system -> custom seal manager
+- clean / rough / aged / ink preview
+- user-defined label, subLabel, shape and color
+
+P2:
+- drawstamputils-style Canvas texture generation
+- drag placement using x / y
+- batch stamping and filter presets
+
+P3:
+- GitHub / CMS persistence
+- import / export seal templates
+- highlight-level and project-wiki-level stamps
+```
 
 最终验收标准：
 

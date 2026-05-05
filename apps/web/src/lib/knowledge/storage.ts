@@ -1,4 +1,5 @@
 import type { BookmarkRecord, HighlightRecord, ReadingHistoryItem } from './types';
+import { sealDefinitionStorageKey } from './seals';
 
 export const knowledgeStorageKeys = {
   readingHistory: 'emptyinkpot-reading-history',
@@ -6,6 +7,7 @@ export const knowledgeStorageKeys = {
   highlights: 'emptyinkpot-reader-highlights',
   annotations: 'emptyinkpot-reader-annotations',
   seals: 'emptyinkpot-reader-seals',
+  sealDefinitions: sealDefinitionStorageKey,
   readerTheme: 'emptyinkpot-reader-theme'
 } as const;
 
