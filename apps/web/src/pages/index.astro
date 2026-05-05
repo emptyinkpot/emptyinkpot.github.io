@@ -479,6 +479,7 @@ const latestMusic = musicItems[0];
 const uniqueTagCount = new Set(posts.flatMap((post) => post.data.tags)).size;
 const homeBentoProjectDrawerId = latestProject ? `project:${latestProject.id}` : undefined;
 const homeBentoGitHubDrawerId = latestRepo ? `github-repo:${latestRepo.name}` : 'github:heatmap';
+const homeBentoBookDrawerId = bookItems[0]?.drawerId;
 const homeBentoMusicDrawerId = latestMusic ? `music:${latestMusic.id}` : undefined;
 const activityItems = [
   latestPost && `最新文章：${latestPost.data.title}`,
@@ -622,7 +623,7 @@ const homeCommands = [
           <strong>{knowledgeDocs.length} 个入口</strong>
           <p>文章、项目、书架、音乐和本地标记共同构成知识图谱。</p>
         </a>
-        <a class="home-os-bento__item" href={withBase('/books/')}>
+        <a class="home-os-bento__item" href={withBase('/books/')} data-drawer-id={homeBentoBookDrawerId}>
           <span>Books</span>
           <strong>{latestBook?.title ?? '书架'}</strong>
           <p>{latestBook?.note ?? '阅读记录、摘录和知识回流。'}</p>
