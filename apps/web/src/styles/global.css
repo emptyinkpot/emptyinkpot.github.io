@@ -7702,21 +7702,69 @@ body.has-home-article-drawer .home-feed-main {
 }
 
 :root[data-theme='heritage'] .home-feed-card::after {
+  content: none;
+}
+
+:root[data-theme='heritage'] .home-feed-card > .card-paperclip {
+  position: absolute;
+  top: -24px;
+  right: 20px;
+  z-index: 6;
+  width: 34px;
+  height: 64px;
+  color: rgba(64, 56, 48, 0.56);
+  transform: rotate(11deg);
+  transform-origin: 50% 24px;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1px rgba(30, 27, 24, 0.14));
+}
+
+:root[data-theme='heritage'] .home-feed-card > .card-paperclip::before,
+:root[data-theme='heritage'] .home-feed-card > .card-paperclip::after {
   content: "";
   position: absolute;
-  top: -9px;
-  right: 24px;
-  z-index: 8;
-  width: 18px;
-  height: 30px;
-  border: 2px solid rgba(64, 56, 48, 0.46);
-  border-left-color: rgba(64, 56, 48, 0.26);
-  border-radius: 10px;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+}
+
+:root[data-theme='heritage'] .home-feed-card > .card-paperclip::before {
+  inset: 0 2px 0 3px;
+  z-index: 1;
+}
+
+:root[data-theme='heritage'] .home-feed-card > .card-paperclip::after {
+  top: 10px;
+  right: 9px;
+  bottom: 11px;
+  left: 12px;
+  z-index: 3;
+  border-left-color: transparent;
+}
+
+:root[data-theme='heritage'] .home-feed-card > .card-paperclip > span {
+  position: absolute;
+  top: 21px;
+  right: -8px;
+  left: -10px;
+  z-index: 2;
+  height: 15px;
+  border-top: 1px solid var(--heritage-line-strong);
+  border-bottom: 1px solid rgba(203, 189, 169, 0.46);
+  border-radius: 2px;
+  background: var(--heritage-card);
   box-shadow:
-    inset -4px 0 0 -2px rgba(64, 56, 48, 0.22),
-    0 2px 2px rgba(30, 27, 24, 0.12);
-  transform: rotate(16deg);
-  pointer-events: none;
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    0 1px 1px rgba(30, 27, 24, 0.04);
+  transform: rotate(-11deg);
+  transform-origin: 50% 50%;
+}
+
+:root[data-theme='heritage'] .home-feed-card:has(.home-feed-card__mark) > .card-paperclip > span {
+  background: var(--heritage-paper-deep);
+}
+
+:root[data-theme='heritage'] .visual-feed-card > .card-paperclip {
+  display: none;
 }
 
 :root[data-theme='heritage'] .home-feed-card--post {

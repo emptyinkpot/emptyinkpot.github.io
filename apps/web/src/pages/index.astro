@@ -759,6 +759,7 @@ const homeCommands = [
             >
               <div class="bookmark bookmark--github"><span>GitHub</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"><span></span></span>
               <ChartCard
                 kicker={item.kicker}
                 title={item.title}
@@ -783,6 +784,7 @@ const homeCommands = [
             >
               <div class="bookmark bookmark--github"><span>Line</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"><span></span></span>
               <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
                 <GitHubMonthlyLine points={githubAnalytics.monthly} compact />
               </ChartCard>
@@ -801,6 +803,7 @@ const homeCommands = [
             >
               <div class="bookmark bookmark--github"><span>Donut</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"><span></span></span>
               <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
                 <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
               </ChartCard>
@@ -819,6 +822,7 @@ const homeCommands = [
               style={`--visual-accent:${item.visualItem.palette.dominant}`}
             >
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"><span></span></span>
               <div class="visual-feed-card__media">
                 <img src={item.visualItem.image} alt="" loading="lazy" />
               </div>
@@ -848,6 +852,7 @@ const homeCommands = [
             >
               <div class="bookmark bookmark--music"><span>Music</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"><span></span></span>
               <MusicCard item={item.musicItem} compact inertCard />
             </button>
           ) : item.drawerId && drawerById.has(item.drawerId) ? (
@@ -864,6 +869,7 @@ const homeCommands = [
             >
               <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"><span></span></span>
               {item.coverSrc ? (
                 <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
@@ -906,6 +912,7 @@ const homeCommands = [
             >
               <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"><span></span></span>
               {item.coverSrc ? (
                 <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
