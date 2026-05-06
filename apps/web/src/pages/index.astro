@@ -330,7 +330,7 @@ const bookDrawerEntries: DrawerEntry[] = books.map((book) => ({
   title: book.title,
   kicker: `书架 / ${book.statusLabel}`,
   href: withBase(`/books/${book.id}/`),
-  readHref: withBase(`/reader/${book.id}/`),
+  readHref: book.sourceType === 'external' ? undefined : withBase(`/reader/${book.id}/`),
   summary: book.description ?? book.note,
   coverSrc: book.cover,
   tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].slice(0, 6),

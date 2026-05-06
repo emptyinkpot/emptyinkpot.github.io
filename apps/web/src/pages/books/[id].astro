@@ -59,7 +59,11 @@ const { book } = Astro.props;
           {book.tags.map((tag) => <span>{tag}</span>)}
         </div>
         <div class="book-detail-actions">
-          <a href={withBase(`/reader/${book.id}/`)}>进入阅读器</a>
+          {book.sourceType === 'external' ? (
+            <a href={withBase('/openlist/')} data-openlist-embed-open>打开 OpenList 源目录</a>
+          ) : (
+            <a href={withBase(`/reader/${book.id}/`)}>进入阅读器</a>
+          )}
           <a href={withBase('/settings/')}>OpenList 设置</a>
         </div>
       </div>

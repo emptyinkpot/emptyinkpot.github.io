@@ -38,6 +38,7 @@ export default function BookshelfGrid({ books }: Props) {
 
   const recentBooks = recentIds
     .map((id) => books.find((book) => book.id === id))
+    .filter((book) => book?.sourceType !== 'external')
     .filter(Boolean)
     .slice(0, 3) as BookItem[];
 
@@ -116,10 +117,17 @@ export default function BookshelfGrid({ books }: Props) {
               <span>{book.author}</span>
               <small>{progress[book.id] || '未开始'}</small>
               <div className="book-tile__actions">
-                <a href={`/reader/${book.id}/`}>
-                  <BookOpen aria-hidden="true" size={14} />
-                  阅读
-                </a>
+                {book.sourceType === 'external' ? (
+                  <a href={`/books/${book.id}/`}>
+                    <BookOpen aria-hidden="true" size={14} />
+                    源文件
+                  </a>
+                ) : (
+                  <a href={`/reader/${book.id}/`}>
+                    <BookOpen aria-hidden="true" size={14} />
+                    阅读
+                  </a>
+                )}
                 <a href={`/books/${book.id}/`}>
                   <FileText aria-hidden="true" size={14} />
                   详情
