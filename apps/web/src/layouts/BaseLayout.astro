@@ -495,12 +495,56 @@ const openListEmbedUrl = withBase('/openlist/');
         let closeTimer = 0;
         let lastFocused = null;
         const transitionMs = 180;
+        let frameObserver = null;
+
+        const hideOpenListLogin = () => {
+          let frameDocument;
+          try {
+            frameDocument = frame.contentDocument;
+          } catch {
+            return;
+          }
+          if (!frameDocument?.head || !frameDocument.body) return;
+
+          let style = frameDocument.getElementById('emptyinkpot-openlist-embed-style');
+          if (!style) {
+            style = frameDocument.createElement('style');
+            style.id = 'emptyinkpot-openlist-embed-style';
+            style.textContent = `
+              a[href$="/@login"],
+              a[href$="@login"],
+              a[href*="/@login"] {
+                display: none !important;
+              }
+            `;
+            frameDocument.head.appendChild(style);
+          }
+
+          const hideLoginLinks = () => {
+            frameDocument.querySelectorAll('a[href$="/@login"], a[href$="@login"], a[href*="/@login"]').forEach((link) => {
+              const previous = link.previousSibling;
+              if (previous?.nodeType === Node.TEXT_NODE && previous.textContent?.trim() === '|') {
+                previous.textContent = '';
+              }
+              link.setAttribute('aria-hidden', 'true');
+              link.setAttribute('tabindex', '-1');
+              link.hidden = true;
+            });
+          };
+
+          hideLoginLinks();
+          frameObserver?.disconnect();
+          frameObserver = new MutationObserver(hideLoginLinks);
+          frameObserver.observe(frameDocument.body, { childList: true, subtree: true });
+        };
 
         const open = (trigger) => {
           window.clearTimeout(closeTimer);
           lastFocused = trigger instanceof HTMLElement ? trigger : document.activeElement;
           if (!frame.getAttribute('src')) {
             frame.setAttribute('src', frame.dataset.src || '/openlist/');
+          } else {
+            hideOpenListLogin();
           }
           layer.hidden = false;
           document.body.classList.add('has-openlist-embed');
@@ -533,6 +577,7 @@ const openListEmbedUrl = withBase('/openlist/');
           button.addEventListener('click', close);
         });
 
+        frame.addEventListener('load', hideOpenListLogin);
         window.addEventListener('openlist-embed-open', (event) => open(event.target));
         window.addEventListener('keydown', (event) => {
           if (event.key === 'Escape' && !layer.hidden) close();
