@@ -11,8 +11,12 @@ export async function GET(request) {
       return Response.json({ ok: false, error: "OpenList did not return raw_url." }, { status: 502 });
     }
 
+    const range = request.headers.get("range");
     const upstream = await fetch(rawUrl, {
-      headers: { accept: request.headers.get("accept") || "*/*" },
+      headers: {
+        accept: request.headers.get("accept") || "*/*",
+        ...(range ? { range } : {}),
+      },
       cache: "no-store",
     });
 
@@ -23,8 +27,12 @@ export async function GET(request) {
     const headers = new Headers();
     const contentType = upstream.headers.get("content-type");
     const contentLength = upstream.headers.get("content-length");
+    const contentRange = upstream.headers.get("content-range");
+    const acceptRanges = upstream.headers.get("accept-ranges");
     if (contentType) headers.set("content-type", contentType);
     if (contentLength) headers.set("content-length", contentLength);
+    if (contentRange) headers.set("content-range", contentRange);
+    if (acceptRanges) headers.set("accept-ranges", acceptRanges);
     headers.set("cache-control", "private, max-age=300");
 
     return new Response(upstream.body, {
