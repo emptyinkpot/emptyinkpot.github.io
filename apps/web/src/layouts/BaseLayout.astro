@@ -526,6 +526,11 @@ const openListEmbedUrl = withBase('/openlist/');
               if (previous?.nodeType === Node.TEXT_NODE && previous.textContent?.trim() === '|') {
                 previous.textContent = '';
               }
+              link.parentNode?.childNodes.forEach((node) => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() === '|') {
+                  node.textContent = '';
+                }
+              });
               link.setAttribute('aria-hidden', 'true');
               link.setAttribute('tabindex', '-1');
               link.hidden = true;
