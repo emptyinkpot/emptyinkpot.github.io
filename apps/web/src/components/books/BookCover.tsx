@@ -4,6 +4,19 @@ import { getOpenListFile, resolveRawUrl } from '../../lib/books/openlist';
 
 const COVER_CACHE_PREFIX = 'emptyinkpot-book-cover';
 const COVER_CACHE_TTL = 1000 * 60 * 60 * 24 * 90;
+const COVER_MISS_CACHE_TTL = 1000 * 60 * 60 * 24 * 7;
+const COVER_EXTRACTION_TIMEOUT = 12000;
+const MAX_ACTIVE_EXTRACTIONS = 1;
+
+type CoverCacheEntry = {
+  value?: string;
+  status?: 'hit' | 'miss';
+  cachedAt?: number;
+};
+
+const inFlightExtractions = new Map<string, Promise<string>>();
+const extractionQueue: Array<() => void> = [];
+let activeExtractions = 0;
 
 type Props = {
   book: BookItem;
@@ -11,14 +24,17 @@ type Props = {
 };
 
 export default function BookCover({ book, className = '' }: Props) {
-  const [coverUrl, setCoverUrl] = useState(() => book.cover || readCachedCover(book) || '');
+  const [coverUrl, setCoverUrl] = useState(() => book.cover || readCachedCover(book).value || '');
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    if (book.cover || !book.openlistPath || book.sourceType === 'external') return undefined;
+    setShouldLoad(false);
+
+    if (book.cover || !book.openlistPath || book.sourceType === 'external' || !hasOpenListVersion(book)) return undefined;
     const cachedCover = readCachedCover(book);
-    if (cachedCover) {
-      setCoverUrl(cachedCover);
+    if (cachedCover.status === 'miss') return undefined;
+    if (cachedCover.value) {
+      setCoverUrl(cachedCover.value);
       return undefined;
     }
 
@@ -46,21 +62,25 @@ export default function BookCover({ book, className = '' }: Props) {
     let cancelled = false;
 
     async function loadCover() {
-      if (book.cover || !book.openlistPath || book.sourceType === 'external') return;
+      if (book.cover || !book.openlistPath || book.sourceType === 'external' || !hasOpenListVersion(book)) return;
       const cachedCover = readCachedCover(book);
-      if (cachedCover) {
-        setCoverUrl(cachedCover);
+      if (cachedCover.status === 'miss') return;
+      if (cachedCover.value) {
+        setCoverUrl(cachedCover.value);
         return;
       }
 
       try {
-        const file = await getOpenListFile('/api/openlist', book.openlistPath);
-        const rawUrl = resolveRawUrl(file.raw_url || '', '/api/openlist');
-        const nextCover = await withTimeout(book.sourceType === 'pdf' ? createPdfCover(rawUrl) : createEpubCover(rawUrl), 12000);
-        if (!nextCover || cancelled) return;
-        writeCachedCover(book, nextCover);
+        const nextCover = await scheduleCoverExtraction(book, () => extractCover(book));
+        if (!nextCover) {
+          writeCachedCover(book, { status: 'miss', cachedAt: Date.now() });
+          return;
+        }
+        if (cancelled) return;
+        writeCachedCover(book, { status: 'hit', value: nextCover, cachedAt: Date.now() });
         setCoverUrl(nextCover);
       } catch {
+        writeCachedCover(book, { status: 'miss', cachedAt: Date.now() });
         if (!cancelled) setCoverUrl('');
       }
     }
@@ -87,35 +107,72 @@ export default function BookCover({ book, className = '' }: Props) {
   );
 }
 
+function hasOpenListVersion(book: BookItem) {
+  return Boolean(book.modified && book.size && book.size > 0);
+}
+
+async function extractCover(book: BookItem) {
+  if (!book.openlistPath) return '';
+  const file = await getOpenListFile('/api/openlist', book.openlistPath);
+  const rawUrl = resolveRawUrl(file.raw_url || '', '/api/openlist');
+  return book.sourceType === 'pdf' ? createPdfCover(rawUrl) : createEpubCover(rawUrl);
+}
+
 async function createPdfCover(url: string) {
   if (!url) return '';
   const pdfjs = await import('pdfjs-dist');
   pdfjs.GlobalWorkerOptions.workerSrc ||= `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-  const document = await pdfjs.getDocument(url).promise;
-  const page = await document.getPage(1);
-  const viewport = page.getViewport({ scale: 0.42 });
-  const canvas = window.document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  if (!context) return '';
+  const loadingTask = pdfjs.getDocument(url);
 
-  canvas.width = Math.floor(viewport.width);
-  canvas.height = Math.floor(viewport.height);
-  await page.render({ canvasContext: context, viewport }).promise;
-  return canvas.toDataURL('image/jpeg', 0.82);
+  try {
+    return await withTimeout(
+      (async () => {
+        const document = await loadingTask.promise;
+        const page = await document.getPage(1);
+        const viewport = page.getViewport({ scale: 0.42 });
+        const canvas = window.document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        if (!context) return '';
+
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        await page.render({ canvasContext: context, viewport }).promise;
+        return canvas.toDataURL('image/jpeg', 0.82);
+      })(),
+      COVER_EXTRACTION_TIMEOUT,
+      () => void loadingTask.destroy()
+    );
+  } finally {
+    await loadingTask.destroy().catch(() => undefined);
+  }
 }
 
 async function createEpubCover(url: string) {
   if (!url) return '';
   const [{ default: ePub }] = await Promise.all([import('epubjs')]);
   const book = ePub(url, { openAs: 'epub' });
-  await book.ready;
-  const cover = await book.coverUrl();
-  return cover ? imageUrlToDataUrl(cover) : '';
+
+  try {
+    return await withTimeout(
+      (async () => {
+        await book.ready;
+        const cover = await book.coverUrl();
+        return cover ? imageUrlToDataUrl(cover) : '';
+      })(),
+      COVER_EXTRACTION_TIMEOUT,
+      () => book.destroy()
+    );
+  } finally {
+    book.destroy();
+  }
 }
 
-function withTimeout<T>(promise: Promise<T>, ms: number) {
+function withTimeout<T>(promise: Promise<T>, ms: number, onTimeout?: () => void) {
   return new Promise<T>((resolve, reject) => {
-    const timer = window.setTimeout(() => reject(new Error('cover extraction timed out')), ms);
+    const timer = window.setTimeout(() => {
+      onTimeout?.();
+      reject(new Error('cover extraction timed out'));
+    }, ms);
     promise
       .then(resolve)
       .catch(reject)
@@ -147,28 +204,34 @@ function getCoverCacheKey(book: BookItem) {
 }
 
 function readCachedCover(book: BookItem) {
-  if (typeof window === 'undefined') return '';
+  if (typeof window === 'undefined') return {};
 
   try {
     const raw = localStorage.getItem(getCoverCacheKey(book));
-    if (!raw) return '';
-    const cached = JSON.parse(raw) as { value?: string; cachedAt?: number };
-    if (!cached.value || !cached.cachedAt || Date.now() - cached.cachedAt > COVER_CACHE_TTL) return '';
-    return cached.value;
+    if (!raw) return {};
+    const cached = JSON.parse(raw) as CoverCacheEntry;
+    if (!cached.cachedAt) return {};
+    if (cached.status === 'miss') {
+      if (Date.now() - cached.cachedAt > COVER_MISS_CACHE_TTL) return {};
+      return cached;
+    }
+    if (!cached.value || Date.now() - cached.cachedAt > COVER_CACHE_TTL) return {};
+    return cached;
   } catch {
-    return '';
+    return {};
   }
 }
 
-function writeCachedCover(book: BookItem, value: string) {
-  if (typeof window === 'undefined' || !value.startsWith('data:image/')) return;
+function writeCachedCover(book: BookItem, entry: CoverCacheEntry) {
+  if (typeof window === 'undefined') return;
+  if (entry.status === 'hit' && !entry.value?.startsWith('data:image/')) return;
 
   try {
-    localStorage.setItem(getCoverCacheKey(book), JSON.stringify({ value, cachedAt: Date.now() }));
+    localStorage.setItem(getCoverCacheKey(book), JSON.stringify(entry));
   } catch {
     pruneCoverCache();
     try {
-      localStorage.setItem(getCoverCacheKey(book), JSON.stringify({ value, cachedAt: Date.now() }));
+      localStorage.setItem(getCoverCacheKey(book), JSON.stringify(entry));
     } catch {
       // Ignore quota failures; fallback cover remains available.
     }
@@ -183,5 +246,35 @@ function pruneCoverCache() {
       .forEach((key) => localStorage.removeItem(key));
   } catch {
     // Ignore storage access failures.
+  }
+}
+
+function scheduleCoverExtraction(book: BookItem, task: () => Promise<string>) {
+  const key = getCoverCacheKey(book);
+  const current = inFlightExtractions.get(key);
+  if (current) return current;
+
+  const next = new Promise<string>((resolve, reject) => {
+    extractionQueue.push(() => {
+      activeExtractions += 1;
+      task()
+        .then(resolve)
+        .catch(reject)
+        .finally(() => {
+          activeExtractions -= 1;
+          inFlightExtractions.delete(key);
+          runNextExtraction();
+        });
+    });
+    runNextExtraction();
+  });
+
+  inFlightExtractions.set(key, next);
+  return next;
+}
+
+function runNextExtraction() {
+  while (activeExtractions < MAX_ACTIVE_EXTRACTIONS && extractionQueue.length) {
+    extractionQueue.shift()?.();
   }
 }
