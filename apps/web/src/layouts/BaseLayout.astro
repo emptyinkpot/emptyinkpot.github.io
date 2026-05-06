@@ -535,6 +535,19 @@ const openListEmbedUrl = withBase('/openlist/');
               link.setAttribute('tabindex', '-1');
               link.hidden = true;
             });
+
+            const separators = [];
+            const walker = frameDocument.createTreeWalker(frameDocument.body, NodeFilter.SHOW_TEXT);
+            let node = walker.nextNode();
+            while (node) {
+              if (node.textContent?.trim() === '|') {
+                separators.push(node);
+              }
+              node = walker.nextNode();
+            }
+            separators.forEach((separator) => {
+              separator.textContent = '';
+            });
           };
 
           hideLoginLinks();
