@@ -66,6 +66,64 @@ export async function getOpenListFile(baseUrl: string, path: string) {
   return json.data as OpenListFileInfo;
 }
 
+export async function listOpenListFiles(baseUrl: string, path: string) {
+  const normalizedBaseUrl = baseUrl.replace(/\/$/, '');
+  const proxied = !normalizedBaseUrl || normalizedBaseUrl === '/api/openlist' || normalizedBaseUrl.startsWith('/api/openlist');
+  if (proxied) {
+    const response = await fetch('/api/openlist/list', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ path, perPage: 200 })
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenList 目录请求失败：${response.status}`);
+    }
+
+    const json = await response.json();
+    if (!json.ok) {
+      throw new Error(json.error || 'OpenList 目录代理返回了错误。');
+    }
+
+    return json.items as OpenListFileInfo[];
+  }
+
+  if (!baseUrl) {
+    throw new Error('尚未配置 OpenList Base URL。');
+  }
+
+  const response = await fetch(`${normalizedBaseUrl}/api/fs/list`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      path,
+      password: '',
+      page: 1,
+      per_page: 200,
+      refresh: false
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenList 目录请求失败：${response.status}`);
+  }
+
+  const json = await response.json();
+
+  if (json.code !== 200) {
+    throw new Error(json.message || 'OpenList 返回了目录错误。');
+  }
+
+  return (json.data?.content || []).map((item: OpenListFileInfo) => ({
+    ...item,
+    path: `${path.replace(/\/$/, '')}/${String(item.name || '').replace(/^\/+/, '')}`
+  })) as OpenListFileInfo[];
+}
+
 export function resolveBookOpenListPath(book: BookItem, settings: BookSettings) {
   if (!book.openlistPath) return '';
   if (book.openlistPath.startsWith('/')) return book.openlistPath;

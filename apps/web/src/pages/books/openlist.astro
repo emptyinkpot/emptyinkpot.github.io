@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RuntimeBookDetail from '../../components/books/RuntimeBookDetail';
+---
+
+<BaseLayout title="OpenList 书籍 / emptyinkpot" description="从 OpenList 实时同步的书籍详情。">
+  <RuntimeBookDetail client:only="react" />
+</BaseLayout>

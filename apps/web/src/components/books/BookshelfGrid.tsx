@@ -1,7 +1,10 @@
 import { BookOpen, FileText, Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { BookItem } from '../../lib/books/types';
-import { BOOK_RECENT_STORAGE_KEY, getBookProgressKey } from '../../lib/books/storage';
+import { listOpenListFiles } from '../../lib/books/openlist';
+import { BOOK_RECENT_STORAGE_KEY, getBookProgressKey, loadBookSettings } from '../../lib/books/storage';
+import { mergeBooks, normalizeOpenListBookFile } from '../../lib/books/dynamicLibrary';
+import BookCover from './BookCover';
 
 type Props = {
   books: BookItem[];
@@ -10,34 +13,58 @@ type Props = {
 type ProgressMap = Record<string, string>;
 
 export default function BookshelfGrid({ books }: Props) {
+  const [libraryBooks, setLibraryBooks] = useState(books);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('全部');
   const [progress, setProgress] = useState<ProgressMap>({});
   const [recentIds, setRecentIds] = useState<string[]>([]);
+  const [syncStatus, setSyncStatus] = useState('正在同步 OpenList 书库...');
 
   useEffect(() => {
     const nextProgress: ProgressMap = {};
-    books.forEach((book) => {
+    libraryBooks.forEach((book) => {
       nextProgress[book.id] = readProgressLabel(book.id);
     });
     setProgress(nextProgress);
     setRecentIds(readRecentIds());
+  }, [libraryBooks]);
+
+  useEffect(() => {
+    const settings = loadBookSettings();
+    let cancelled = false;
+
+    listOpenListFiles(settings.openlistBaseUrl, settings.openlistBooksPath)
+      .then((files) => {
+        if (cancelled) return;
+        const dynamicBooks = files.map(normalizeOpenListBookFile).filter(Boolean) as BookItem[];
+        setLibraryBooks(mergeBooks(books, dynamicBooks));
+        setSyncStatus(`已同步 ${dynamicBooks.length} 本 OpenList 书籍`);
+      })
+      .catch((error: Error) => {
+        if (cancelled) return;
+        setLibraryBooks(books);
+        setSyncStatus(`OpenList 同步失败：${error.message}`);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [books]);
 
-  const categories = useMemo(() => ['全部', ...Array.from(new Set(books.map((book) => book.category)))], [books]);
+  const categories = useMemo(() => ['全部', ...Array.from(new Set(libraryBooks.map((book) => book.category)))], [libraryBooks]);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
 
-    return books.filter((book) => {
+    return libraryBooks.filter((book) => {
       const matchesCategory = category === '全部' || book.category === category;
       const content = [book.title, book.author, book.category, book.statusLabel, ...book.tags].join(' ').toLowerCase();
       return matchesCategory && (!needle || content.includes(needle));
     });
-  }, [books, category, query]);
+  }, [libraryBooks, category, query]);
 
   const recentBooks = recentIds
-    .map((id) => books.find((book) => book.id === id))
+    .map((id) => libraryBooks.find((book) => book.id === id))
     .filter((book) => book?.sourceType !== 'external')
     .filter(Boolean)
     .slice(0, 3) as BookItem[];
@@ -48,7 +75,8 @@ export default function BookshelfGrid({ books }: Props) {
         <div>
           <p className="section-kicker">Private Bookshelf</p>
           <h1>我的书架</h1>
-          <p>书籍元数据由站点维护，真实文件从 OpenList 读取；阅读进度保存在当前浏览器。</p>
+          <p>书架会实时同步 OpenList 原始书库；PDF/EPUB 尝试自动识别封面，阅读进度保存在当前浏览器。</p>
+          <small className="bookshelf-sync-status">{syncStatus}</small>
         </div>
         <label className="bookshelf-search">
           <Search aria-hidden="true" size={16} />
@@ -59,15 +87,15 @@ export default function BookshelfGrid({ books }: Props) {
       <section className="bookshelf-overview" aria-label="书架状态">
         <div>
           <span>Books</span>
-          <strong>{books.length}</strong>
+          <strong>{libraryBooks.length}</strong>
         </div>
         <div>
           <span>Reading</span>
-          <strong>{books.filter((book) => book.status === 'reading').length}</strong>
+          <strong>{libraryBooks.filter((book) => book.status === 'reading').length}</strong>
         </div>
         <div>
           <span>OpenList</span>
-          <strong>{books.filter((book) => book.openlistPath).length}</strong>
+          <strong>{libraryBooks.filter((book) => book.openlistPath).length}</strong>
         </div>
         <div>
           <span>Recent</span>
@@ -99,36 +127,28 @@ export default function BookshelfGrid({ books }: Props) {
       <div className="bookshelf-grid">
         {filtered.map((book) => (
           <article className="book-tile" key={book.id}>
-            <a className="book-cover-wrap" href={`/books/${book.id}/`} aria-label={`查看 ${book.title}`}>
-              {book.cover ? (
-                <img src={book.cover} alt={`${book.title} 封面`} />
-              ) : (
-                <span className="book-cover-fallback">
-                  <i>{book.category}</i>
-                  <strong>{book.title}</strong>
-                  <small>{book.author}</small>
-                </span>
-              )}
+            <a className="book-cover-wrap" href={getBookDetailHref(book)} aria-label={`查看 ${book.title}`}>
+              <BookCover book={book} />
             </a>
             <div className="book-tile__body">
-              <a className="book-tile__title" href={`/books/${book.id}/`}>
+              <a className="book-tile__title" href={getBookDetailHref(book)}>
                 {book.title}
               </a>
               <span>{book.author}</span>
               <small>{progress[book.id] || '未开始'}</small>
               <div className="book-tile__actions">
                 {book.sourceType === 'external' ? (
-                  <a href={`/books/${book.id}/`}>
+                  <a href={getBookDetailHref(book)}>
                     <BookOpen aria-hidden="true" size={14} />
                     源文件
                   </a>
                 ) : (
-                  <a href={`/reader/${book.id}/`}>
+                  <a href={getBookReaderHref(book)}>
                     <BookOpen aria-hidden="true" size={14} />
                     阅读
                   </a>
                 )}
-                <a href={`/books/${book.id}/`}>
+                <a href={getBookDetailHref(book)}>
                   <FileText aria-hidden="true" size={14} />
                   详情
                 </a>
@@ -139,6 +159,20 @@ export default function BookshelfGrid({ books }: Props) {
       </div>
     </section>
   );
+}
+
+function isRuntimeBook(book: BookItem) {
+  return book.id.startsWith('openlist-');
+}
+
+function getBookDetailHref(book: BookItem) {
+  if (!isRuntimeBook(book)) return `/books/${book.id}/`;
+  return `/books/openlist/?path=${encodeURIComponent(book.openlistPath || '')}`;
+}
+
+function getBookReaderHref(book: BookItem) {
+  if (!isRuntimeBook(book)) return `/reader/${book.id}/`;
+  return `/reader/openlist/?path=${encodeURIComponent(book.openlistPath || '')}`;
 }
 
 function readProgressLabel(bookId: string) {

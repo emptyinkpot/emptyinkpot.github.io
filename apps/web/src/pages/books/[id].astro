@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { books } from '../../data/books';
 import { withBase } from '../../lib/site';
+import BookCover from '../../components/books/BookCover';
 
 export function getStaticPaths() {
   return books.map((book) => ({
@@ -22,15 +23,7 @@ const { book } = Astro.props;
 
     <section class="book-detail-hero">
       <div class="book-detail-cover">
-        {book.cover ? (
-          <img src={book.cover} alt={`${book.title} 封面`} />
-        ) : (
-          <span class="book-cover-fallback">
-            <i>{book.category}</i>
-            <strong>{book.title}</strong>
-            <small>{book.author}</small>
-          </span>
-        )}
+        <BookCover book={book} client:load />
       </div>
 
       <div class="book-detail-copy">

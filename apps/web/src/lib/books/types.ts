@@ -13,6 +13,8 @@ export interface BookItem {
   tags: string[];
   sourceType: BookSourceType;
   openlistPath?: string;
+  modified?: string;
+  size?: number;
   description?: string;
   cover: string;
 }

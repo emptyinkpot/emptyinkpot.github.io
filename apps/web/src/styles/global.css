@@ -9290,8 +9290,15 @@ body.has-home-article-drawer .home-feed-main {
   box-shadow: 0 16px 30px rgba(30, 27, 24, 0.16);
 }
 
+.book-cover-render {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .book-cover-wrap img,
-.book-detail-cover img {
+.book-detail-cover img,
+.book-cover-render img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -9301,6 +9308,7 @@ body.has-home-article-drawer .home-feed-main {
   display: grid;
   align-content: space-between;
   gap: 12px;
+  width: 100%;
   height: 100%;
   padding: 16px;
   background:

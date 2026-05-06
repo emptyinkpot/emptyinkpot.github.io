@@ -1218,8 +1218,9 @@ OpenList
 书籍系统实现规则：
 
 - 书籍文件源属于 OpenList；书名、作者、分类、标签、阅读状态、`sourceType`、`openlistPath` 属于 `apps/web/src/data/books.ts`。
-- 当前书籍资料库之一是 OpenList 路径 `/夸克网盘/obsidian/data/docs/books/original`；它对应 OpenList UI 面包屑 `首页 / 夸克网盘 / obsidian / data / docs / books / original`。博客书架必须与该目录中的书籍文件对齐，`.md` 报告类文件不进入书架。
+- 当前书籍资料库之一是 OpenList 路径 `/夸克网盘/obsidian/data/docs/books/original`；它对应 OpenList UI 面包屑 `首页 / 夸克网盘 / obsidian / data / docs / books / original`。博客书架必须在运行时通过 `/api/openlist/list` 与该目录实时同步，新增 EPUB/PDF/MOBI 文件不需要重新部署即可出现在 `/books/`；`.md` 报告类文件不进入书架。
 - `openlistPath` 写绝对路径时直接使用该路径；写相对路径时拼接 `/settings/` 的 `openlistBooksPath`。Reader 默认调用 `/api/openlist/get` 与 `/api/openlist/raw`，不让浏览器直接访问 OpenList。
+- 封面策略：优先使用 OpenList `thumb`；PDF 在浏览器端用 PDF.js 渲染第一页作为封面；EPUB 在浏览器端用 epub.js 读取内置 cover；MOBI 暂无浏览器端解析器，保留书脊式 fallback。
 - 浏览器本地设置写入 `emptyinkpot-book-settings`；阅读主题继续同步 `emptyinkpot-reader-theme`，与首页 reader drawer 共用主题 token。
 - 阅读进度写入 `emptyinkpot-book-progress:<id>`；最近阅读写入 `emptyinkpot-book-recent`。
 - EPUB reader 使用 `react-reader`，其底层为 `epubjs`；PDF reader 使用 `react-pdf`，其底层为 PDF.js。
