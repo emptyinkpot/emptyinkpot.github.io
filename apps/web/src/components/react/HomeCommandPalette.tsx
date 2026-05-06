@@ -22,7 +22,7 @@ type HomeCommand = {
   label: string;
   description: string;
   href?: string;
-  action?: 'search';
+  action?: 'search' | 'openlist';
   icon: string;
 };
 
@@ -71,6 +71,11 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
 
     if (command.action === 'search') {
       window.dispatchEvent(new CustomEvent('home-search-open'));
+      return;
+    }
+
+    if (command.action === 'openlist') {
+      window.dispatchEvent(new CustomEvent('openlist-embed-open'));
       return;
     }
 

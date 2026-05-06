@@ -40,6 +40,7 @@
     "posts": "https://blog.tengokukk.com/posts/",
     "tags": "https://blog.tengokukk.com/tags/",
     "evidenceLibrary": "https://blog.tengokukk.com/evidence-library/",
+    "openListEmbed": "https://blog.tengokukk.com/openlist/",
     "search": "https://blog.tengokukk.com/search/",
     "settings": "https://blog.tengokukk.com/settings/"
   },
@@ -295,6 +296,8 @@
       "openList": {
         "localProjectRoot": "E:\\My Project\\OpenList",
         "defaultBaseUrl": "http://127.0.0.1:5244",
+        "publicEmbedRoute": "https://blog.tengokukk.com/openlist/",
+        "apiPrefix": "/openlist",
         "verifiedMount": "/夸克网盘",
         "verifiedApis": ["POST /api/fs/list", "POST /api/fs/get"],
         "rawUrlField": "raw_url",

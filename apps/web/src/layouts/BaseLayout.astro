@@ -23,6 +23,7 @@ const {
 
 const buildVersion = new Date().toISOString();
 const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.png')}")`;
+const openListEmbedUrl = withBase('/openlist/');
 ---
 
 <html lang="zh-CN" data-theme="heritage">
@@ -462,6 +463,81 @@ const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.
       </div>
       {!hideSiteChrome && <SiteFooter />}
     </div>
+    <div class="openlist-embed-layer" data-openlist-layer hidden>
+      <button class="openlist-embed-backdrop" type="button" data-openlist-close aria-label="关闭 OpenList"></button>
+      <section class="openlist-embed-panel" role="dialog" aria-modal="true" aria-labelledby="openlist-embed-title">
+        <header class="openlist-embed-header">
+          <div>
+            <span>OpenList</span>
+            <h2 id="openlist-embed-title">文件源</h2>
+          </div>
+          <nav aria-label="OpenList 操作">
+            <a href={openListEmbedUrl} target="_blank" rel="noreferrer">新窗口</a>
+            <button type="button" data-openlist-close>关闭</button>
+          </nav>
+        </header>
+        <iframe
+          class="openlist-embed-frame"
+          data-openlist-frame
+          data-src={openListEmbedUrl}
+          title="OpenList 文件源"
+          loading="lazy"
+        ></iframe>
+      </section>
+    </div>
     <HoverPreviewSystem client:load />
+    <script is:inline>
+      (() => {
+        const layer = document.querySelector('[data-openlist-layer]');
+        const frame = document.querySelector('[data-openlist-frame]');
+        if (!layer || !(frame instanceof HTMLIFrameElement)) return;
+
+        let closeTimer = 0;
+        let lastFocused = null;
+        const transitionMs = 180;
+
+        const open = (trigger) => {
+          window.clearTimeout(closeTimer);
+          lastFocused = trigger instanceof HTMLElement ? trigger : document.activeElement;
+          if (!frame.getAttribute('src')) {
+            frame.setAttribute('src', frame.dataset.src || '/openlist/');
+          }
+          layer.hidden = false;
+          document.body.classList.add('has-openlist-embed');
+          requestAnimationFrame(() => {
+            layer.classList.add('is-open');
+            layer.querySelector('[data-openlist-close]')?.focus({ preventScroll: true });
+          });
+        };
+
+        const close = () => {
+          layer.classList.remove('is-open');
+          window.clearTimeout(closeTimer);
+          closeTimer = window.setTimeout(() => {
+            layer.hidden = true;
+            document.body.classList.remove('has-openlist-embed');
+            if (lastFocused instanceof HTMLElement) {
+              lastFocused.focus({ preventScroll: true });
+            }
+          }, transitionMs);
+        };
+
+        document.addEventListener('click', (event) => {
+          const trigger = event.target instanceof Element ? event.target.closest('[data-openlist-embed-open]') : null;
+          if (!trigger) return;
+          event.preventDefault();
+          open(trigger);
+        });
+
+        document.querySelectorAll('[data-openlist-close]').forEach((button) => {
+          button.addEventListener('click', close);
+        });
+
+        window.addEventListener('openlist-embed-open', (event) => open(event.target));
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !layer.hidden) close();
+        });
+      })();
+    </script>
   </body>
 </html>

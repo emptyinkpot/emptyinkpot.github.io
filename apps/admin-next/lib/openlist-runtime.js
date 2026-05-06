@@ -1,5 +1,6 @@
 const DEFAULT_BASE_URL = "http://127.0.0.1:5244";
 const DEFAULT_ROOT = "/夸克网盘";
+const DEFAULT_API_PREFIX = "/openlist";
 
 export function jsonError(message, status = 500, extra = {}) {
   return Response.json(
@@ -15,12 +16,19 @@ export function jsonError(message, status = 500, extra = {}) {
 export function getOpenListConfig() {
   return {
     baseUrl: String(process.env.OPENLIST_BASE_URL || DEFAULT_BASE_URL).replace(/\/$/, ""),
+    apiPrefix: normalizeApiPrefix(process.env.OPENLIST_API_PREFIX ?? DEFAULT_API_PREFIX),
     token: process.env.OPENLIST_TOKEN || "",
     publicRoots: String(process.env.OPENLIST_PUBLIC_ROOTS || process.env.OPENLIST_PUBLIC_ROOT || DEFAULT_ROOT)
       .split(",")
       .map((item) => normalizeOpenListPath(item))
       .filter(Boolean),
   };
+}
+
+function normalizeApiPrefix(value) {
+  const raw = String(value || "").trim().replace(/\/+$/, "");
+  if (!raw || raw === "/") return "";
+  return raw.startsWith("/") ? raw : `/${raw}`;
 }
 
 export function normalizeOpenListPath(value) {
@@ -60,13 +68,13 @@ export async function readJson(request) {
 }
 
 export async function openListFetch(route, body, init = {}) {
-  const { baseUrl, token } = getOpenListConfig();
+  const { baseUrl, apiPrefix, token } = getOpenListConfig();
   const headers = {
     "content-type": "application/json",
     ...(token ? { authorization: token } : {}),
     ...(init.headers || {}),
   };
-  const response = await fetch(`${baseUrl}${route}`, {
+  const response = await fetch(`${baseUrl}${apiPrefix}${route}`, {
     method: "POST",
     headers,
     body: JSON.stringify(body),

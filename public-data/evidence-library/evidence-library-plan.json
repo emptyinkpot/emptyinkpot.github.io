@@ -18,6 +18,7 @@
     "openlist": {
       "role": "large-file storage and cloud-drive mount layer",
       "baseUrl": "http://127.0.0.1:5244",
+      "publicEmbedRoute": "https://blog.tengokukk.com/openlist/",
       "activeMounts": ["/夸克网盘"],
       "apis": {
         "list": "POST /api/fs/list",

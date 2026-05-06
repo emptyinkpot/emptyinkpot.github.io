@@ -11,6 +11,7 @@ export async function GET() {
     return Response.json({
       ok: true,
       baseUrl: config.baseUrl,
+      apiPrefix: config.apiPrefix,
       publicRoots: config.publicRoots,
       total: Number(data?.total || 0),
       provider: data?.provider || "",

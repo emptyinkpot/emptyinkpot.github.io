@@ -550,6 +550,7 @@ const homeCommands = [
   { id: 'books', label: '书架', description: `${books.length} 条阅读记录`, href: withBase('/books/'), icon: 'books' },
   { id: 'music', label: '音乐', description: `${musicItems.length} 条音乐记录`, href: withBase('/music/'), icon: 'music' },
   { id: 'knowledge', label: 'Knowledge Graph', description: `${knowledgeDocs.length} 个知识入口`, href: withBase('/knowledge/'), icon: 'knowledge' },
+  { id: 'openlist', label: 'OpenList', description: '嵌入查看当前文件源', action: 'openlist', icon: 'external' },
   { id: 'settings', label: '设置', description: '阅读排版、Graph、视觉偏好', href: withBase('/settings/'), icon: 'settings' }
 ];
 ---
@@ -661,6 +662,7 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="visual">视觉素材</button>
           {profileLinks.bilibiliConfigured && <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>}
           <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
+          <button type="button" class="home-feed-tab home-feed-tab--openlist" data-openlist-embed-open>OpenList</button>
         </nav>
       </div>
 

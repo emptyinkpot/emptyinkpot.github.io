@@ -410,6 +410,25 @@ body.app-mode .site-shell__glow {
   padding: 0.65rem 0.8rem;
 }
 
+.evidence-library__openlist-action {
+  margin-top: 1rem;
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-radius: 3px;
+  background: transparent;
+  padding: 0.55rem 0.75rem;
+  color: var(--heritage-green, #2f5d50);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.evidence-library__openlist-action:hover,
+.evidence-library__openlist-action:focus-visible {
+  background: var(--heritage-paper-deep, #e4dac7);
+  outline: none;
+}
+
 .evidence-library__phases article {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -5312,6 +5331,10 @@ body.app-mode .site-shell__glow {
   color: #17120d;
 }
 
+.home-feed-tab--openlist {
+  color: var(--heritage-green, #2f5d50);
+}
+
 .home-feed-grid {
   column-count: 3;
   column-gap: 16px;
@@ -5721,6 +5744,139 @@ body.app-mode .site-shell__glow {
 
 .home-article-layer.is-open .home-article-drawer {
   transform: translateX(0);
+}
+
+.openlist-embed-layer[hidden] {
+  display: none;
+}
+
+.openlist-embed-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  pointer-events: none;
+}
+
+.openlist-embed-layer.is-open {
+  pointer-events: auto;
+}
+
+.openlist-embed-backdrop {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  background: rgba(30, 27, 24, 0.38);
+  backdrop-filter: blur(4px);
+  cursor: default;
+  opacity: 0;
+  transition: opacity var(--motion-base, 180ms) var(--ease-standard, ease);
+}
+
+.openlist-embed-layer.is-open .openlist-embed-backdrop {
+  opacity: 1;
+}
+
+.openlist-embed-panel {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  bottom: 18px;
+  z-index: 145;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(1120px, calc(100vw - 36px));
+  min-width: 0;
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-radius: 8px;
+  background: var(--heritage-bg, #f5f1e8);
+  box-shadow: -24px 0 80px rgba(30, 27, 24, 0.24);
+  overflow: hidden;
+  transform: translateX(calc(100% + 24px));
+  transition: transform var(--motion-base, 180ms) var(--ease-standard, ease);
+}
+
+.openlist-embed-layer.is-open .openlist-embed-panel {
+  transform: translateX(0);
+}
+
+.openlist-embed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--heritage-line-strong, #cbbda9);
+  padding: 12px 16px;
+}
+
+.openlist-embed-header span {
+  color: var(--heritage-green, #2f5d50);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.openlist-embed-header h2 {
+  margin: 2px 0 0;
+  color: var(--heritage-ink, #1e1b18);
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.openlist-embed-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.openlist-embed-header a,
+.openlist-embed-header button {
+  border: 1px solid var(--heritage-line-strong, #cbbda9);
+  border-radius: 3px;
+  background: transparent;
+  padding: 6px 10px;
+  color: var(--heritage-ink, #1e1b18);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 750;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.openlist-embed-header a:hover,
+.openlist-embed-header button:hover,
+.openlist-embed-header a:focus-visible,
+.openlist-embed-header button:focus-visible {
+  background: var(--heritage-paper-deep, #e4dac7);
+  color: var(--heritage-green, #2f5d50);
+  outline: none;
+}
+
+.openlist-embed-frame {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  border: 0;
+  background: #fff;
+}
+
+body.has-openlist-embed {
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .openlist-embed-panel {
+    inset: 0;
+    width: 100vw;
+    border-radius: 0;
+  }
+
+  .openlist-embed-header {
+    align-items: flex-start;
+  }
 }
 
 .home-article-drawer__header {
@@ -7958,6 +8114,10 @@ body.has-home-article-drawer .home-feed-main {
   border-radius: 0;
   border-color: transparent;
   background: transparent;
+}
+
+:root[data-theme='heritage'] .home-feed-tab--openlist {
+  color: var(--heritage-green);
 }
 
 :root[data-theme='heritage'] .home-feed-tab.is-active {
