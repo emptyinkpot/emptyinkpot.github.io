@@ -47,7 +47,7 @@ export default function BookshelfGrid({ books }: Props) {
         <div>
           <p className="section-kicker">Private Bookshelf</p>
           <h1>我的书架</h1>
-          <p>书籍元数据由站点维护，真实文件从 OpenList 读取；阅读进度保存在当前浏览器。</p>
+          <p>书籍作为 BookObject 进入阅读空间；文件真源在 OpenList/WebDAV，阅读记忆保存在当前浏览器。</p>
         </div>
         <label className="bookshelf-search">
           <Search aria-hidden="true" size={16} />

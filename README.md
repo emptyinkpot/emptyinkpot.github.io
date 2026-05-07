@@ -28,6 +28,7 @@ buildOutputRoot: E:\My Project\MyBlog\apps\web\dist
 publicBaseUrl: https://blog.tengokukk.com/
 siteEntrypoints:
   home: https://blog.tengokukk.com/
+  codex: https://blog.tengokukk.com/codex/
   posts: https://blog.tengokukk.com/posts/
   tags: https://blog.tengokukk.com/tags/
   projects: https://blog.tengokukk.com/projects/
@@ -139,6 +140,8 @@ https://blog.tengokukk.com/
 - 当前发布模式是“本地构建 -> 上传 `apps/web/dist/` -> Nginx 托管”，不是服务器内 Git 构建。
 - 当前 `apps/admin-next/` 只承载本地控制台原型；现阶段验证命令是 `npm run admin:build`，不参与当前公开站点发布链。
 - 当前 `public-data/evidence-library/` 是史料素材库的数据真源；`apps/admin-next/app/admin/evidence-library/` 已具备 OpenList 扫描入队和 Remotion manifest 导出原型。
+- 当前 Obsidian vault 文件真源不在 MyBlog 仓内；目标链路是 `Obsidian -> Remotely Save -> OpenList(WebDAV/S3) -> COS/S3`，MyBlog 只读取同一份文件真源的投影。
+- 当前 `/codex/` 是线上 Architecture Codex 阅读入口；源码真源是 `apps/web/src/data/architectureCodex.ts`，每次更新前端、阅读器、视觉系统或信息架构时必须同步维护它。
 
 ### 0.5.3 Observability Truth
 
@@ -175,6 +178,8 @@ https://blog.tengokukk.com/
 - 不要把本地预览地址、临时端口或未验证子域名写成当前正式公开入口。
 - 不要在未完成 `npm run lint`、`npm run check`、`npm run build` 前把改动当作可发布版本。
 - 不要把服务器运行目录当作长期 source of truth，GitHub 仓库仍是长期真源。
+- 不要让 MyBlog 手工上传或镜像 Obsidian `data/image`；缺图属于 vault 同步层问题，应该通过 Remotely Save / OpenList WebDAV 统一文件真源。
+- 不要把 BookObject、VisualObject、KnowledgeObject 的对象元数据和 OpenList/COS 的 blob authority 混成一个可写真源。
 
 ### 0.6.2 System Invariants
 
@@ -192,7 +197,17 @@ https://blog.tengokukk.com/
 - 当前公开文章真源：`apps/web/src/content/posts/`
 - 当前构建产物真源：`apps/web/dist/`
 - 当前服务器运行真源：`/srv/myblog/site`
+- 当前 vault 文件真源：`OpenList WebDAV` 暴露的 `/夸克网盘/obsidian/data`，长期目标可迁至 COS/S3 挂载；MyBlog 不拥有这份文件树。
+- 当前架构档案真源：README 的 `Architecture Codex Truth` 规则与 `apps/web/src/data/architectureCodex.ts`
 - 历史快照、旧 working copy、服务器临时文件、根目录零散文档都不得与上述真源并列。
+
+### 0.6.4 Architecture Codex Truth
+
+- `/codex/` 是 MyBlog 的系统设计档案入口，不是普通博客分类页。
+- `apps/web/src/data/architectureCodex.ts` 是 `/codex/` 的机器可读前端架构档案源。
+- 每次改动前端、UI、阅读器、视觉素材系统、Knowledge Graph、OpenList 边界或前端 runtime，都必须同步更新 README 与 Architecture Codex；如果无需更新，必须在交付说明里写明原因。
+- Architecture Codex 条目必须记录 `Inspiration`、`Runtime`、`Tradeoff`、`Future Direction` 和 `Related Systems`，避免只写结论不写设计原因。
+- MyBlog 的定位是 Projection Shell：展示、阅读、搜索、Graph 和操作入口都只是对象与文件真源的投影，不是所有数据的唯一后端。
 
 ## 0.7 Strategy Layer
 
@@ -1174,7 +1189,7 @@ apps/web/src/components/showcase/
 
 Showcase 实现规则：
 
-- 书架元数据继续用 `apps/web/src/data/books.ts` 作为唯一前台真源；需要长笔记时再升级 content collection。
+- 书架前台对象元数据继续用 `apps/web/src/data/books.ts` 作为唯一前台真源；文件 blob 真源属于 OpenList/WebDAV，不属于 MyBlog 仓。
 - 音乐第一阶段用 `apps/web/src/data/music.ts`，图片约定放 `apps/web/public/images/music/`。
 - 首页只放书架 / 音乐摘要卡片；主点击行为打开 drawer，完整内容通过 drawer action 进入 `/books/` 和 `/music/`。
 
@@ -1189,7 +1204,11 @@ MyBlog
 ├─ /reader/[id]/    在线阅读器：EPUB 用 react-reader，PDF 用 react-pdf
 └─ /settings/       OpenList Base URL、书籍目录、阅读主题、最近阅读开关
 
+Obsidian
+└─ Remotely Save    同步完整 vault，不只同步 docs，不由 MyBlog 手工搬 image
+
 OpenList
+├─ /dav/            WebDAV 文件真源入口
 └─ /api/fs/get      返回 raw_url，作为 reader 的真实文件 URL
 ```
 
@@ -1200,7 +1219,21 @@ OpenList
 - 已验证存储挂载：`/夸克网盘`
 - 已验证 API：`POST /api/fs/list`、`POST /api/fs/get`
 - `server/handles/fsread.go` 的 `FsGetResp` 包含 `raw_url`
+- 线上站点当前可通过 `/openlist/dav/` 进入 OpenList WebDAV 路由；客户端必须通过有权限的同步工具配置凭据，不得写入前端源码。
 - 不把 OpenList token、网盘 cookie 或其他 secret 写入 MyBlog 前端；私有鉴权后续必须走服务端代理。
+
+Vault Sync Contract：
+
+- Obsidian vault 必须按完整目录同步，包括 `docs`、`image`、attachments、PDF、EPUB、canvas 和配置所需文件。
+- 推荐成熟链路是 `Obsidian + Remotely Save + OpenList(WebDAV)`，而不是 MyBlog 自己写 rebuild / mirror / snapshot / upload timer。
+- OpenList/COS/S3 只负责 blob 与目录；对象关系、阅读状态、高亮、Graph 节点属于 Object Layer / Knowledge Runtime。
+- MyBlog 前端读取当前快照并渲染 Projection；缺少 `/夸克网盘/obsidian/data/image` 时应修复同步层，不应让博客补一份并行 image mirror。
+
+Object Layer Contract：
+
+- `BookObject`、`VisualObject`、`KnowledgeObject`、`ProjectObject` 必须使用稳定 `id`，不要从标题或文件路径派生第二套身份。
+- 文件只是对象的 carrier；OpenList/COS 保存原件，MyBlog 保存或读取对象元数据，Reader/Graph/Search 渲染对象投影。
+- Search、Graph、Reader Memory、Highlights 后续都应关联 object id，而不是直接绑定临时 raw URL。
 
 书籍系统实现规则：
 

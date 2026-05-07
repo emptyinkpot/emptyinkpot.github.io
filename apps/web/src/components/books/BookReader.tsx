@@ -102,7 +102,7 @@ export default function BookReader({ book }: Props) {
         <section className="book-reader-empty">
           <span>OpenList</span>
           <h1>{book.title}</h1>
-          <p>正在从 OpenList 读取文件。</p>
+          <p>正在解析 OpenList 文件真源。</p>
         </section>
       ) : book.sourceType === 'epub' ? (
         <EpubReader book={book} url={url} />

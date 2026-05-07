@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { architectureCodexEntries } from '../../data/architectureCodex';
+---
+
+<BaseLayout title="Architecture Codex / emptyinkpot" description="MyBlog 的系统设计档案，记录阅读、文件真源、对象层和投影壳的架构决策。">
+  <main class="workbench-page" data-pagefind-body>
+    <section class="workbench-page__intro home-workbench__card home-workbench__card--panel">
+      <div class="workbench-page__intro-copy">
+        <p class="section-kicker">SYSTEM / ARCHITECTURE CODEX</p>
+        <h1>系统架构档案</h1>
+        <p>
+          这里记录 MyBlog 为什么这样组织阅读器、OpenList、Obsidian、对象层和前端投影。它不是营销说明，也不是教程，而是后续维护时必须同步更新的设计考古档案。
+        </p>
+      </div>
+      <div class="workbench-page__stats">
+        <div class="workbench-page__stat">
+          <strong>{architectureCodexEntries.length}</strong>
+          <span>entries</span>
+        </div>
+        <div class="workbench-page__stat">
+          <strong>SSOT</strong>
+          <span>file truth</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="workbench-page__grid workbench-page__grid--projects" aria-label="Architecture Codex entries">
+      {
+        architectureCodexEntries.map((entry) => (
+          <article class="workbench-page__project-card home-workbench__card home-workbench__card--panel" id={entry.id}>
+            <p class="section-kicker">CODEX / {entry.id}</p>
+            <h2>{entry.title}</h2>
+            <p>{entry.summary}</p>
+
+            <div class="workbench-page__meta">
+              {entry.relatedSystems.map((system) => <span>{system}</span>)}
+            </div>
+
+            <h3>Runtime</h3>
+            <ul>
+              {entry.runtime.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <h3>Tradeoff</h3>
+            <ul>
+              {entry.tradeoff.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <h3>Future Direction</h3>
+            <ul>
+              {entry.futureDirection.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <h3>Inspiration</h3>
+            <p>{entry.inspiration.join(' / ')}</p>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+</BaseLayout>

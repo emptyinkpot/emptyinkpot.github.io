@@ -27,12 +27,16 @@
     "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
     "localActiveSourceRoot": "E:\\My Project\\MyBlog",
     "publicPostsRoot": "apps/web/src/content/posts",
+    "vaultFileTruthRoot": "/夸克网盘/obsidian/data",
+    "vaultSyncAuthority": "Obsidian + Remotely Save + OpenList WebDAV/S3",
+    "architectureCodexSource": "apps/web/src/data/architectureCodex.ts",
     "buildOutputRoot": "apps/web/dist",
     "serverRuntimeRoot": "/srv/myblog/site"
   },
   "publicBaseUrl": "https://blog.tengokukk.com/",
   "siteEntrypoints": {
     "home": "https://blog.tengokukk.com/",
+    "codex": "https://blog.tengokukk.com/codex/",
     "github": "https://blog.tengokukk.com/github/",
     "books": "https://blog.tengokukk.com/books/",
     "bookReader": "https://blog.tengokukk.com/reader/nndl-book/",
@@ -49,6 +53,34 @@
     "buildLogs": "local-cli-or-ci",
     "analytics": "not-configured",
     "errorTracking": "not-configured"
+  },
+  "architectureCodex": {
+    "status": "implemented",
+    "route": "apps/web/src/pages/codex/index.astro",
+    "dataSource": "apps/web/src/data/architectureCodex.ts",
+    "publicUrl": "https://blog.tengokukk.com/codex/",
+    "maintenanceRule": "frontend, UI, reader, visual-system, graph, information-architecture and frontend-runtime changes must keep README.md and architectureCodex.ts fresh"
+  },
+  "objectLayer": {
+    "position": "files are carriers; objects are identity and relation layer",
+    "objectTypes": ["KnowledgeObject", "BookObject", "VisualObject", "ProjectObject"],
+    "blobAuthority": ["OpenList", "COS/S3"],
+    "projectionShell": "MyBlog Astro/React frontend",
+    "idRule": "routes, graph nodes, reader memory and search records use stable object ids rather than titles or file paths"
+  },
+  "vaultSync": {
+    "status": "target contract; not hand-rolled by MyBlog",
+    "localAuthoring": "Obsidian vault",
+    "recommendedSync": "Remotely Save",
+    "transport": ["OpenList WebDAV", "S3/COS"],
+    "webDavPublicRoute": "https://blog.tengokukk.com/openlist/dav/",
+    "cloudVaultRoot": "/夸克网盘/obsidian/data",
+    "syncScope": "full vault including docs, image, attachments, pdf, epub and canvas",
+    "forbidden": [
+      "MyBlog hand-uploading data/image",
+      "static frontend storing WebDAV/OpenList credentials",
+      "parallel local image mirror as source of truth"
+    ]
   },
   "contentModel": {
     "posts": ["title", "date", "tags", "categories", "summary", "slug"],
@@ -296,9 +328,17 @@
         "localProjectRoot": "E:\\My Project\\OpenList",
         "defaultBaseUrl": "http://127.0.0.1:5244",
         "verifiedMount": "/夸克网盘",
+        "webDavPublicRoute": "https://blog.tengokukk.com/openlist/dav/",
+        "vaultFileTruthRoot": "/夸克网盘/obsidian/data",
         "verifiedApis": ["POST /api/fs/list", "POST /api/fs/get"],
         "rawUrlField": "raw_url",
         "frontendSecretPolicy": "do not store OpenList tokens or netdisk cookies in static frontend source"
+      },
+      "objectModel": {
+        "bookObjectId": "BookItem.id",
+        "blobCarrier": "openlistPath",
+        "projectionRoutes": ["/books/", "/books/[id]/", "/reader/[id]/"],
+        "readerMemory": "localStorage today; attach to object ids before server sync"
       },
       "localStorageKeys": [
         "emptyinkpot-book-settings",
