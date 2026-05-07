@@ -1,0 +1,41 @@
+{
+  "name": "myblog-android-shell",
+  "phase": "pwa-twa",
+  "status": "web-pwa-surface-ready-local",
+  "runtimeUrl": "https://blog.tengokukk.com/",
+  "manifestUrl": "https://blog.tengokukk.com/manifest.webmanifest",
+  "packageId": "com.tengokukk.myblog",
+  "androidName": "MyBlog Runtime",
+  "launcherName": "MyBlog",
+  "generatedProjectRoot": ".runtime/android-twa",
+  "artifactPolicy": "generated-only; do not commit Bubblewrap output",
+  "webManifestSource": "apps/web/public/manifest.webmanifest",
+  "serviceWorkerSource": "apps/web/public/sw.js",
+  "tooling": ["Bubblewrap 1.24.1", "Trusted Web Activity"],
+  "automation": {
+    "validate": "npm run android:twa:validate",
+    "generate": "npm run android:twa:generate",
+    "buildUnsigned": "npm run android:twa:build",
+    "ciWorkflow": ".github/workflows/android-twa.yml"
+  },
+  "authority": {
+    "runtimeTruth": "MyBlog Runtime API",
+    "objectGraphTruth": "KnowledgeObject graph",
+    "localCacheTruth": false
+  },
+  "forbidden": [
+    "WebView fork as final app",
+    "duplicating OpenList parsing",
+    "duplicating book existence logic",
+    "duplicating search ranking",
+    "duplicating graph relation logic",
+    "treating local Android cache as source of truth"
+  ],
+  "serviceWorkerBoundary": [
+    "do not intercept /api/*",
+    "do not intercept /openlist/*",
+    "do not intercept /reader/openlist",
+    "do not intercept /books/openlist",
+    "do not intercept HTTP Range requests"
+  ]
+}

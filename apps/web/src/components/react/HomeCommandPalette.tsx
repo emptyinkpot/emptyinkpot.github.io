@@ -22,13 +22,16 @@ type HomeCommand = {
   label: string;
   description: string;
   href?: string;
-  action?: 'search' | 'openlist';
+  action?: 'search' | 'openlist' | 'pinterest';
   icon: string;
 };
 
 type HomeCommandPaletteProps = {
   commands: HomeCommand[];
 };
+
+const RUNTIME_COMMAND_EVENT = 'runtime:command';
+const HOME_COMMAND_READY_ATTR = 'data-home-command-ready';
 
 const iconMap = {
   search: Search,
@@ -37,6 +40,7 @@ const iconMap = {
   github: ExternalLink,
   books: Library,
   music: Music2,
+  visuals: Boxes,
   knowledge: Code2,
   settings: Settings,
   profile: CircleUserRound,
@@ -50,6 +54,8 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
   const safeCommands = useMemo(() => commands.filter((command) => command.href || command.action), [commands]);
 
   useEffect(() => {
+    document.documentElement.setAttribute(HOME_COMMAND_READY_ATTR, 'true');
+
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
@@ -63,19 +69,41 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
     };
 
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.documentElement.removeAttribute(HOME_COMMAND_READY_ATTR);
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, []);
+
+  const dispatchRuntimeCommand = (kind: string, payload?: Record<string, unknown>) => {
+    window.dispatchEvent(
+      new CustomEvent(RUNTIME_COMMAND_EVENT, {
+        detail: {
+          kind,
+          source: 'HomeCommandPalette',
+          payload,
+          issuedAt: new Date().toISOString()
+        }
+      })
+    );
+  };
 
   const runCommand = (command: HomeCommand) => {
     setOpen(false);
 
     if (command.action === 'search') {
+      dispatchRuntimeCommand('search.open');
       window.dispatchEvent(new CustomEvent('home-search-open'));
       return;
     }
 
     if (command.action === 'openlist') {
       window.dispatchEvent(new CustomEvent('openlist-embed-open'));
+      return;
+    }
+
+    if (command.action === 'pinterest') {
+      window.dispatchEvent(new CustomEvent('pinterest-embed-open'));
       return;
     }
 

@@ -1,65 +1,26 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { books } from '../../data/books';
 import { withBase } from '../../lib/site';
-import BookCover from '../../components/books/BookCover';
 
 export function getStaticPaths() {
-  return books.map((book) => ({
-    params: { id: book.id },
-    props: { book }
-  }));
+  return [];
 }
 
-const { book } = Astro.props;
+const { id } = Astro.params;
 ---
 
-<BaseLayout title={`${book.title} / 书架 / emptyinkpot`} description={book.description ?? book.note}>
+<BaseLayout
+  title="书籍详情已迁移 / emptyinkpot"
+  description="书籍实体已经切换到 OpenList runtime authority。"
+  hideSiteChrome={true}
+  barePage={true}
+>
   <main class="book-detail-page">
-    <nav class="book-detail-breadcrumb" aria-label="书架路径">
-      <a href={withBase('/books/')}>书架</a>
-      <span>{book.category}</span>
-    </nav>
-
-    <section class="book-detail-hero">
-      <div class="book-detail-cover">
-        <BookCover book={book} client:load />
-      </div>
-
-      <div class="book-detail-copy">
-        <p class="section-kicker">Bookshelf / {book.statusLabel}</p>
-        <h1>{book.title}</h1>
-        <p>{book.description ?? book.note}</p>
-        <dl>
-          <div>
-            <dt>作者</dt>
-            <dd>{book.author}</dd>
-          </div>
-          <div>
-            <dt>分类</dt>
-            <dd>{book.category}</dd>
-          </div>
-          <div>
-            <dt>来源</dt>
-            <dd>{book.sourceType.toUpperCase()} / OpenList</dd>
-          </div>
-          <div>
-            <dt>路径</dt>
-            <dd>{book.openlistPath ?? '未配置'}</dd>
-          </div>
-        </dl>
-        <div class="book-detail-tags">
-          {book.tags.map((tag) => <span>{tag}</span>)}
-        </div>
-        <div class="book-detail-actions">
-          {book.sourceType === 'external' ? (
-            <a href={withBase('/openlist/')} data-openlist-embed-open>打开 OpenList 源目录</a>
-          ) : (
-            <a href={withBase(`/reader/${book.id}/`)}>进入阅读器</a>
-          )}
-          <a href={withBase('/settings/')}>OpenList 设置</a>
-        </div>
-      </div>
+    <section class="book-reader-empty">
+      <span>Book Authority Cutover</span>
+      <h1>这个静态书籍入口已经退役</h1>
+      <p>书籍现在由 OpenList 实时书库决定是否存在。旧静态 ID「{id}」不再拥有书籍详情 authority。</p>
+      <a href={withBase('/books/')}>进入 OpenList 书架</a>
     </section>
   </main>
 </BaseLayout>

@@ -118,9 +118,15 @@ export async function listOpenListFiles(input = {}) {
 }
 
 export function resolveRawUrl(rawUrl) {
-  const { baseUrl } = getOpenListConfig();
+  const { baseUrl, apiPrefix } = getOpenListConfig();
   if (!rawUrl) return "";
-  if (/^https?:\/\//i.test(rawUrl)) return rawUrl;
+  if (/^https?:\/\//i.test(rawUrl)) {
+    const parsed = new URL(rawUrl);
+    if (apiPrefix && (parsed.pathname === apiPrefix || parsed.pathname.startsWith(`${apiPrefix}/`))) {
+      return new URL(`${parsed.pathname}${parsed.search}`, `${baseUrl}/`).toString();
+    }
+    return rawUrl;
+  }
   return new URL(rawUrl, `${baseUrl}/`).toString();
 }
 
@@ -132,8 +138,19 @@ export function publicFileInfo(file, path) {
     modified: file?.modified || "",
     thumb: file?.thumb || "",
     type: file?.type,
-    raw_url: `/api/openlist/raw?path=${encodeURIComponent(path)}`,
+    raw_url: buildCachedRawUrl({
+      path,
+      modified: file?.modified || "",
+      size: file?.size || "",
+    }),
   };
+}
+
+export function buildCachedRawUrl(input = {}) {
+  const params = new URLSearchParams({ path: String(input.path || "") });
+  if (input.modified) params.set("modified", String(input.modified));
+  if (input.size) params.set("size", String(input.size));
+  return `/api/openlist/raw?${params.toString()}`;
 }
 
 export function handleRouteError(error) {

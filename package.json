@@ -12,12 +12,20 @@
     "astro": "npm --prefix apps/web run astro",
     "lint": "eslint \"apps/web/src/**/*.{ts,astro}\" \"tools/**/*.{js,mjs}\" \"*.{js,mjs}\"",
     "refresh:github-overview": "node tools/refresh-github-overview.mjs",
+    "import:visual-sources": "node tools/import-visual-sources.mjs",
+    "publish:vault": "node tools/publish-vault-docs.mjs",
+    "publish:vault:write": "node tools/publish-vault-docs.mjs --write",
     "new:update": "node tools/new-update-entry.mjs",
     "check:github-overview": "node tools/validate-github-overview-snapshot.mjs",
     "check:updates": "node tools/validate-update-log.mjs",
     "check:content": "node tools/validate-content-governance.mjs",
+    "check:vault-publish": "node tools/validate-vault-publish-pipeline.mjs",
+    "check:pwa": "node tools/validate-pwa-surface.mjs",
+    "android:twa:validate": "node tools/generate-android-twa.mjs --validate-only",
+    "android:twa:generate": "node tools/generate-android-twa.mjs --generate",
+    "android:twa:build": "node tools/generate-android-twa.mjs --generate --build --skip-signing",
     "check:governance": "node tools/validate-repo-governance.mjs",
-    "check": "npm run check:updates && npm run check:content && npm run check:governance && npm run check:github-overview"
+    "check": "npm run check:updates && npm run check:content && npm run check:vault-publish && npm run check:pwa && npm run check:governance && npm run check:github-overview"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

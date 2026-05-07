@@ -2,6 +2,7 @@
 import type { BookItem } from '../../lib/books/types';
 import BookCover from './BookCover.astro';
 import { withBase } from '../../lib/site';
+import { getBookDetailHref } from '../../lib/books/routes';
 
 interface Props {
   book: BookItem;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const { book, compact = false } = Astro.props;
-const href = withBase(`/books/${book.id}/`);
+const href = withBase(getBookDetailHref(book));
 ---
 
 <a class:list={['showcase-card', compact && 'showcase-card--compact']} href={href}>

@@ -7,7 +7,17 @@
   "localSourceRoot": "E:\\My Project\\MyBlog",
   "siteAppRoot": "apps/web",
   "adminAppRoot": "apps/admin-next",
+  "androidShellRoot": "apps/android-shell",
+  "runtimeContractRoot": "packages/runtime-contract",
+  "objectModelRoot": "packages/object-model",
+  "runtimeKernelRoot": "packages/runtime-kernel",
+  "designSystemRoot": "packages/design-system",
   "sourcePostsRoot": "apps/web/src/content/posts",
+  "vaultFileTruthRoot": "OpenList:/夸克网盘/obsidian/data",
+  "authoringTruthRoot": "OpenList:/夸克网盘/obsidian/data/docs",
+  "publishingTruthRoot": "apps/web/src/content/posts",
+  "runtimeTruth": "MySQL via apps/admin-next",
+  "fileTruth": "OpenList",
   "contentRoots": [
     "apps/web/src/content/posts",
     "apps/web/src/content/notes",
@@ -18,6 +28,10 @@
   "buildOutputRoot": "apps/web/dist",
   "docsEntrypoints": {
     "frontendReadme": "apps/web/README.md",
+    "architectureCodex": "apps/web/src/data/architectureCodex.ts",
+    "frontendRuntimeAudit": "docs/frontend-runtime-audit.md",
+    "frontendRuntimeConvergence": "docs/frontend-runtime-convergence.md",
+    "runtimeExperienceLayer": "docs/runtime-experience-layer.md",
     "planDoc": "docs/plans/update-plan.md",
     "adminP0Checklist": "docs/plans/admin-next-p0-checklist.md",
     "architectureChecklist": "docs/architecture/astro-blog-redesign-checklist.md",
@@ -26,9 +40,330 @@
   "sourceOfTruthMap": {
     "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
     "localActiveSourceRoot": "E:\\My Project\\MyBlog",
+    "vaultFileTruthRoot": "OpenList:/夸克网盘/obsidian/data",
+    "authoringTruthRoot": "OpenList:/夸克网盘/obsidian/data/docs",
     "publicPostsRoot": "apps/web/src/content/posts",
+    "publishingTruthRoot": "apps/web/src/content/posts",
+    "runtimeTruth": "MySQL via apps/admin-next",
+    "fileTruth": "OpenList",
+    "runtimeContractRoot": "packages/runtime-contract",
+    "objectModelRoot": "packages/object-model",
+    "runtimeKernelRoot": "packages/runtime-kernel",
+    "designSystemRoot": "packages/design-system",
+    "objectStorageTruth": "Tencent COS bucket myblog-media-1410041307 mounted in OpenList at /腾讯云COS",
     "buildOutputRoot": "apps/web/dist",
     "serverRuntimeRoot": "/srv/myblog/site"
+  },
+  "contentPipeline": {
+    "status": "Vault-backed / Git-backed CMS target documented; Vault file sync belongs to Remotely Save + OpenList WebDAV/S3; direct Obsidian-to-public sync is forbidden",
+    "vaultFileTruth": "OpenList:/夸克网盘/obsidian/data",
+    "vaultSync": {
+      "owner": "Obsidian Remotely Save",
+      "transport": ["OpenList WebDAV", "S3-compatible endpoint"],
+      "targetRoot": "OpenList:/夸克网盘/obsidian/data",
+      "syncScope": ["docs", "image", ".obsidian", "canvas", "pdf", "attachments"],
+      "forbidden": ["MyBlog one-off image upload as vault sync", "visual-manifest as vault attachment truth", "storing WebDAV credentials in source, README, logs or frontend bundle"]
+    },
+    "authoringTruth": "OpenList:/夸克网盘/obsidian/data/docs",
+    "gitMirror": "content-vault working copy target; path not created as active source yet",
+    "cmsPriority": ["TinaCMS", "Decap CMS"],
+    "cmsRule": "choose one CMS in P1; CMS edits must commit/write back to the vault working copy, not to MySQL or dist",
+    "publishingTruth": "apps/web/src/content/posts",
+    "script": "tools/publish-vault-docs.mjs",
+    "commands": {
+      "dryRun": "npm run publish:vault -- --vault <path>",
+      "write": "npm run publish:vault:write -- --vault <path>",
+      "check": "npm run check:vault-publish"
+    },
+    "validationScript": "tools/validate-vault-publish-pipeline.mjs",
+    "pipeline": ["Obsidian Remotely Save", "OpenList WebDAV/S3 vault file truth", "OpenList/Obsidian docs subtree", "Git mirror", "TinaCMS or Decap CMS", "scan", "filter published:true draft:false", "normalize frontmatter slug wikilinks assets folderTags tags", "write Astro content collection", "Astro build", "Pagefind/search/Graph generation"],
+    "folderMapping": {
+      "folderTags": "path segments",
+      "explicitTags": "frontmatter tags",
+      "finalTags": "deduped folderTags + explicitTags",
+      "collectionId": "parent folder path"
+    },
+    "inspirations": ["TinaCMS", "Decap CMS", "Quartz 4", "Flowershow", "Logseq Publish", "Obsidian Publish"],
+    "forbidden": ["treat Obsidian Vault as public site source", "treat OpenList as CMS", "treat MySQL as article body source", "run TinaCMS and Decap CMS as parallel editors", "edit apps/web/dist or /srv/myblog/site as content source"]
+  },
+  "composableServiceStack": {
+    "status": "target architecture documented; OpenList+COS is active, Immich skeleton is installed but not started, Directus and Meilisearch are not deployed",
+    "thesis": "MyBlog is the presentation shell; mature services own files, AI media management, metadata curation and search",
+    "presentationShell": {
+      "service": "Astro/MyBlog",
+      "status": "active",
+      "role": "Feed, Drawer, Reader, Visual Collections, Graph and public routes; consumes APIs, snapshots, manifests and Astro content collections"
+    },
+    "fileTruth": {
+      "service": "OpenList + Tencent COS",
+      "status": "active",
+      "openListMount": "/腾讯云COS",
+      "bucket": "myblog-media-1410041307",
+      "region": "ap-shanghai",
+      "verifiedWriteObject": "_verify/openlist-cos.txt",
+      "role": "large original files, books, visuals, videos and archives"
+    },
+    "mediaRuntime": {
+      "service": "Immich",
+      "status": "skeleton-installed-not-started",
+      "publicUrl": "https://photos.blog.tengokukk.com/",
+      "serverRoot": "/srv/immich",
+      "role": "photo/video ingest, thumbnails, EXIF, face/object recognition, CLIP embeddings and semantic search",
+      "blockedBy": ["photos.blog.tengokukk.com DNS NXDOMAIN", "root disk below readiness threshold", "dedicated media volume not configured"]
+    },
+    "metadataOverlay": {
+      "service": "Directus",
+      "status": "target-not-deployed",
+      "composeSkeleton": "infra/composable-stack/docker-compose.yml",
+      "role": "manual curation and metadata overlay for books, visuals, collections and knowledge_objects",
+      "filePolicy": "stores structured metadata only; large files remain in OpenList/COS"
+    },
+    "searchRuntime": {
+      "service": "Meilisearch",
+      "status": "target-not-deployed",
+      "composeSkeleton": "infra/composable-stack/docker-compose.yml",
+      "role": "dynamic full-text and semantic search for KnowledgeObject snapshots, OpenList file index, Directus metadata and Immich imports",
+      "currentFallback": "Pagefind remains the current static search until Meilisearch is deployed"
+    },
+    "infraSkeleton": {
+      "root": "infra/composable-stack",
+      "composeFile": "infra/composable-stack/docker-compose.yml",
+      "envExample": "infra/composable-stack/.env.example",
+      "readinessScript": "infra/composable-stack/check-readiness.sh",
+      "serverTargetRoot": "/srv/myblog/services/composable-stack",
+      "serverSkeletonStatus": "synced to server; .env is intentionally missing and containers are not started",
+      "startupGate": "run ./check-readiness.sh and require ready before docker compose up -d",
+      "status": "source skeleton only; not deployed as running services"
+    },
+    "authorityRules": [
+      "apps/web/src/data/books.ts is seed/compatibility metadata, not long-term book existence authority",
+      "apps/admin-next is a gateway/import/cache/runtime bridge, not a full CMS, media library or search engine",
+      "visitor page loads must read snapshots and caches, not run AI inference or re-index large files",
+      "do not describe Directus or Meilisearch as active before deployment and verification"
+    ],
+    "targetPipeline": ["COS/OpenList canonical file index", "Directus metadata overlay", "Meilisearch search index", "Astro/MyBlog frontend", "Immich API snapshot", "VisualCollection and KnowledgeObject projection"]
+  },
+  "projectionClients": {
+    "status": "target architecture documented; PWA/TWA first, native Android only after Runtime API schema stabilizes",
+    "thesis": "One Runtime and Object Graph, multiple projection surfaces. Web and Android may have different UI, but must not duplicate authority or business logic.",
+    "runtimeAuthority": ["OpenList/COS file truth", "MySQL runtime state", "Directus metadata overlay target", "Meilisearch search target", "Immich media runtime target", "KnowledgeObject graph"],
+    "runtimeApiTarget": ["/api/feed", "/api/books", "/api/visuals", "/api/search", "/api/graph", "/api/runtime/*"],
+    "surfaces": {
+      "web": {
+        "status": "active",
+        "stack": "Astro + React islands",
+        "role": "current production projection shell"
+      },
+      "pwaTwa": {
+        "status": "web-pwa-surface-ready-local",
+        "workspace": "apps/android-shell",
+        "stack": "PWA manifest + service worker + Bubblewrap / Trusted Web Activity",
+        "role": "installable Android shell that follows Web Runtime updates",
+        "manifestSource": "apps/web/public/manifest.webmanifest",
+        "serviceWorkerSource": "apps/web/public/sw.js",
+        "serviceWorkerBoundary": [
+          "do not intercept /api/*",
+          "do not intercept /openlist/*",
+          "do not intercept /reader/openlist",
+          "do not intercept /books/openlist",
+          "do not intercept HTTP Range requests"
+        ],
+        "validationCommand": "npm run check:pwa"
+      },
+      "androidNative": {
+        "status": "target phase 3",
+        "stack": "Kotlin + Compose + ViewModel/Flow + Ktor/Retrofit + Coil + Room",
+        "role": "native runtime client consuming the same Runtime API"
+      }
+    },
+    "sharedPackages": {
+      "runtimeContract": "packages/runtime-contract",
+      "objectModel": "packages/object-model"
+    },
+    "forbidden": [
+      "WebView shell as final app architecture",
+      "duplicating book existence logic in Android",
+      "duplicating OpenList parsing or metadata authority in Android",
+      "duplicating search ranking or graph relation logic per client",
+      "treating Room/local cache as source of truth"
+    ],
+    "localCacheRule": "Android Room/cache may mirror runtime data for offline and speed, but must use version/etag/modified/size/sync watermark invalidation and never become upstream truth",
+    "updateTarget": "GitHub Releases + AppUpdater first; F-Droid repo is optional later"
+  },
+  "runtimeFederation": {
+    "status": "architecture contract documented; only OpenList/COS and MyBlog runtime pieces are active unless separately marked",
+    "thesis": "Clone mature system roles, not UI or duplicate engines. MyBlog owns Object Layer Glue, Runtime Schema, Projection Logic and Knowledge Semantics.",
+    "targetPipeline": [
+      "Obsidian",
+      "Remotely Save",
+      "OpenList WebDAV or S3-compatible endpoint",
+      "OpenList + COS",
+      "MyBlog Runtime API and Object Layer Glue",
+      "Web / PWA-TWA / Android / Search / CLI / AI Agent"
+    ],
+    "referenceSystems": {
+      "obsidian": {
+        "url": "https://obsidian.md/",
+        "role": "Authoring Truth",
+        "status": "active upstream",
+        "learn": ["vault writing", "wikilinks", "attachments", "long-form knowledge authoring"]
+      },
+      "remotelySave": {
+        "url": "https://github.com/remotely-save/remotely-save",
+        "role": "Vault Sync",
+        "status": "target workflow",
+        "learn": ["WebDAV sync", "S3 sync", "conflict handling", "vault-level file sync"]
+      },
+      "openListCos": {
+        "url": "https://github.com/OpenListTeam/OpenList",
+        "role": "Blob / WebDAV / File Truth",
+        "status": "active",
+        "learn": ["file listing", "raw file access", "WebDAV bridge", "object storage mount"]
+      },
+      "affine": {
+        "url": "https://github.com/toeverything/AFFiNE",
+        "role": "Workspace Runtime reference",
+        "status": "reference only",
+        "learn": ["workspace runtime", "blocks", "local-first", "projection", "object runtime"]
+      },
+      "anytype": {
+        "url": "https://github.com/anyproto/anytype-ts",
+        "role": "Object Graph reference",
+        "status": "reference only",
+        "learn": ["object identity", "relation graph", "schema", "projection"]
+      },
+      "immich": {
+        "url": "https://github.com/immich-app/immich",
+        "role": "Media Runtime",
+        "status": "skeleton-not-started",
+        "learn": ["media ingest", "thumbnails", "EXIF", "AI tagging", "embeddings", "timeline"]
+      },
+      "paperlessNgx": {
+        "url": "https://github.com/paperless-ngx/paperless-ngx",
+        "role": "Document Object reference",
+        "status": "reference only",
+        "learn": ["file is not document", "metadata runtime", "document object lifecycle"]
+      },
+      "mihon": {
+        "url": "https://github.com/mihonapp/mihon",
+        "role": "Android Runtime reference",
+        "status": "reference only",
+        "learn": ["source abstraction", "reader runtime", "cache", "downloads", "updates", "extensions"]
+      },
+      "readYou": {
+        "url": "https://github.com/Ashinch/ReadYou",
+        "role": "Feed Runtime reference",
+        "status": "reference only",
+        "learn": ["feed sync", "offline cache", "reading state", "projection"]
+      },
+      "directus": {
+        "url": "https://github.com/directus/directus",
+        "role": "Metadata Overlay",
+        "status": "target-not-deployed",
+        "learn": ["curation metadata", "relations", "admin editing", "structured overlay"]
+      },
+      "meilisearch": {
+        "url": "https://github.com/meilisearch/meilisearch",
+        "role": "Search Runtime",
+        "status": "target-not-deployed",
+        "learn": ["dynamic object search", "file index search", "metadata search"]
+      }
+    },
+    "ownOnly": [
+      "Object Layer Glue",
+      "Runtime Schema",
+      "Projection Logic",
+      "Relation System",
+      "Knowledge Runtime Semantics",
+      "KnowledgeObject projection"
+    ],
+    "doNotBuild": [
+      "sync engine",
+      "media server",
+      "WebDAV or object storage",
+      "PDF engine",
+      "image cache or thumbnail pipeline",
+      "auth system",
+      "full CMS",
+      "search engine",
+      "Android source/download/update runtime"
+    ],
+    "rules": [
+      "clone roles, not UI",
+      "files are carriers and objects are identity",
+      "MyBlog writes glue, not engines",
+      "Android is a runtime projection, not a second app universe",
+      "every federation member must declare authority, status, integration path, secret boundary and failure mode"
+    ]
+  },
+  "frontendRuntimeAudit": {
+    "status": "first-pass documented",
+    "canonicalDoc": "docs/frontend-runtime-audit.md",
+    "method": "trace user behavior through DOM, event, state, render, hydration, network, animation, authority and fallback",
+    "mustCover": ["pages", "interactions", "hover", "click", "drag", "scroll", "keyboard", "hydration islands", "localStorage", "sessionStorage", "runtime fetch", "lazy load", "modal drawer dialog", "command palette", "search runtime", "iframe embed shell", "third-party runtime", "hidden fallback"],
+    "knownRuntimeOwners": ["apps/web/src/layouts/BaseLayout.astro", "apps/web/src/pages/index.astro", "apps/web/src/pages/visuals/index.astro", "apps/web/src/pages/knowledge/index.astro", "apps/web/src/pages/projects/[slug].astro", "apps/web/src/components/react/HomeCommandPalette.tsx", "apps/web/src/components/react/HoverPreviewSystem.tsx", "apps/web/src/components/books/BookDrawerReader.tsx", "apps/web/src/components/books/BookReader.tsx"],
+    "rule": "frontend runtime changes must update docs/frontend-runtime-audit.md or explicitly state why the audit map is unaffected"
+  },
+  "frontendRuntimeConvergence": {
+    "status": "P1 command/search convergence partially implemented",
+    "canonicalDoc": "docs/frontend-runtime-convergence.md",
+    "runtimeKernelRoot": "packages/runtime-kernel",
+    "thesis": "MyBlog must converge command, keyboard, overlays, drawers, focus, navigation and client cache behavior into one frontend runtime kernel before adding more independent runtime layers.",
+    "currentRisk": ["Inline Script Empire in apps/web/src/pages/index.astro", "Ctrl/Cmd+K split authority between HomeCommandPalette and fallback search", "custom window events as integration layer", "localStorage behaving as mixed preference/cache/migration/local-authority store"],
+    "kernelResponsibilities": ["command bus", "keyboard layer", "overlay stack", "drawer intents", "focus restore", "typed runtime events", "navigation/history intents", "storage classification"],
+    "activeLibraries": ["cmdk", "motion", "@floating-ui/react"],
+    "installedButUnmigratedLibraries": ["zustand", "Radix UI primitives", "Vaul", "React Flow"],
+    "targetConventionsNotInitialized": ["shadcn/ui component directory"],
+    "legacyBridgeEvents": ["home-search-open", "openlist-embed-open", "pinterest-embed-open", "reader-command", "emptyinkpot:book-drawer-open", "emptyinkpot:book-drawer-close"],
+    "storageClasses": ["preference", "cache", "legacy-migration", "temporary-local-authority", "forbidden-authority"],
+    "p1Implemented": [
+      "HomeCommandPalette sets html[data-home-command-ready=true] after hydration",
+      "home inline Ctrl/Cmd+K fallback only runs before command palette ready marker exists",
+      "HomeCommandPalette dispatches runtime:command kind search.open before legacy home-search-open bridge",
+      "home command and fallback search layers use runtime experience depth/surface/elevation/motion tokens"
+    ],
+    "rules": [
+      "migrate one interaction owner at a time",
+      "state current owner, target owner and fallback owner for runtime changes",
+      "do not add global listeners without updating audit and convergence docs",
+      "do not add custom events without typed runtime-kernel commands/events",
+      "do not introduce localStorage as new source of truth",
+      "installed runtime libraries only become active owners after a concrete migrated surface and browser evidence"
+    ]
+  },
+  "runtimeExperienceLayer": {
+    "status": "P1 command/search surfaces use runtime tokens; broader surfaces still pending",
+    "canonicalDoc": "docs/runtime-experience-layer.md",
+    "designSystemRoot": "packages/design-system",
+    "thesis": "MyBlog needs interaction quality and runtime coherence across surfaces, not more isolated components.",
+    "targetFeel": ["Linear discipline", "Arc spatial layers", "Cosmos visual browsing", "Immich gallery runtime", "MyBlog reading atmosphere"],
+    "surfaceVocabulary": {
+      "drawer": "Spatial Layer",
+      "modal": "Runtime Overlay",
+      "card": "Interactive Object",
+      "search": "Command Runtime",
+      "reader": "Continuous Surface",
+      "visuals": "Infinite Semantic Canvas"
+    },
+    "activeLibraries": ["cmdk", "motion", "@floating-ui/react", "lucide-react"],
+    "installedButUnmigratedLibraries": ["zustand", "Radix UI primitives", "Vaul", "React Flow"],
+    "targetConventionsNotInitialized": ["shadcn/ui component directory"],
+    "referenceOnly": ["Aceternity UI", "Magic UI", "React Bits", "tldraw", "AFFiNE", "Linear", "Arc Browser", "Cosmos", "Immich Web"],
+    "tokenGroups": ["motion", "depth", "elevation", "focus", "surface"],
+    "cssVariables": ["--runtime-motion-*", "--runtime-ease-*", "--runtime-depth-*", "--runtime-elevation-*", "--runtime-focus-*", "--runtime-surface-*"],
+    "p1Implemented": [
+      "home command layer uses runtime depth/surface/elevation tokens",
+      "fallback knowledge search layer uses runtime overlay depth/backdrop/elevation/motion tokens",
+      "Command/Search owner convergence is tracked in frontendRuntimeConvergence"
+    ],
+    "rules": [
+      "do not add isolated visual effects that are not tied to a runtime surface",
+      "do not import generic glowing particles, orbs, bokeh or marketing hero effects",
+      "new z-index values must use or extend the runtime depth scale",
+      "new motion timings must use or extend the runtime motion scale",
+      "new overlays must use Runtime Kernel ownership",
+      "new component libraries require a named migrated surface and browser evidence"
+    ]
   },
   "publicBaseUrl": "https://blog.tengokukk.com/",
   "siteEntrypoints": {
@@ -37,6 +372,9 @@
     "books": "https://blog.tengokukk.com/books/",
     "bookReader": "https://blog.tengokukk.com/reader/three-body/",
     "music": "https://blog.tengokukk.com/music/",
+    "visuals": "https://blog.tengokukk.com/visuals/",
+    "immichMediaRuntime": "https://photos.blog.tengokukk.com/",
+    "codex": "https://blog.tengokukk.com/codex/",
     "posts": "https://blog.tengokukk.com/posts/",
     "tags": "https://blog.tengokukk.com/tags/",
     "evidenceLibrary": "https://blog.tengokukk.com/evidence-library/",
@@ -57,6 +395,7 @@
     "projects": ["title", "summary", "slug"],
     "pages": ["title", "slug"],
     "books": ["id", "title", "author", "category", "tags", "sourceType", "openlistPath"],
+    "visualCollections": ["id", "title", "source", "sourceLabel", "summary", "mood", "tags", "palette", "coverImages", "images", "curationNote"],
     "evidenceLibrary": [
       "asset",
       "clip",
@@ -68,6 +407,53 @@
       "visibility",
       "remotionExport"
     ]
+  },
+  "visualCollectionSystem": {
+    "status": "P0 collection model implemented; Pinterest/Pixiv are bookmark-sync sources, Pinterest runtime mirror is backed by MySQL visual_pins",
+    "canonicalSource": "apps/web/src/data/visuals.ts",
+    "canonicalModel": "VisualCollection[]",
+    "compatibilityProjection": "visualItems is derived from visualCollections.flatMap(collection => collection.images)",
+    "importCommand": "npm run import:visual-sources",
+    "sourceConfig": "public-data/visual-sources/sources.json",
+    "generatedManifest": "public-data/visual-sources/visual-manifest.json",
+    "browserProfile": ".runtime/visual-import-browser-profile",
+    "secretPolicy": "never write Pinterest/Pixiv passwords, cookies, session storage, local storage auth blobs or tokens into JSON/docs/logs/source",
+    "frontendSurfaces": [
+      "apps/web/src/pages/index.astro",
+      "apps/web/src/pages/visuals/index.astro",
+      "apps/web/src/styles/global.css"
+    ],
+    "sourcePolicy": "Pinterest/Pixiv/OpenList are bookmark or mirror sources, not frontend live reads; current sync records source links and platform preview URLs without downloading originals",
+    "runtimeMirror": {
+      "schemaOwner": "apps/admin-next/lib/runtime-db.js",
+      "syncOwner": "apps/admin-next/lib/visual-runtime.js",
+      "snapshotApi": "/api/runtime/visuals/snapshot",
+      "syncApi": "/api/runtime/visuals/sync",
+      "providers": ["pinterest_api", "apify_dataset"],
+      "secretPolicy": "provider tokens stay in server env or provider secret store, never in source json or README",
+      "partitionPattern": [6, 4, 9, 12]
+    },
+    "mediaRuntime": {
+      "chosenService": "Immich",
+      "status": "server skeleton installed; service not started because DNS and dedicated storage are not ready",
+      "publicUrl": "https://photos.blog.tengokukk.com/",
+      "expectedPort": 2283,
+      "serverRoot": "/srv/immich",
+      "composeFile": "/srv/immich/docker-compose.yml",
+      "envFile": "/srv/immich/.env",
+      "readinessScript": "/srv/immich/check-readiness.sh",
+      "nginxConfig": "/etc/nginx/sites-available/immich-photos.conf",
+      "deploymentMode": "independent Docker Compose service behind its own root subdomain",
+      "subpathPolicy": "do not serve Immich from /immich or /openlist; use photos.blog.tengokukk.com root",
+      "storagePolicy": "do not place Immich uploads, thumbnails, database or ML cache on the current nearly-full root filesystem",
+      "responsibilities": ["photo video ingest", "timeline", "faces", "object recognition", "CLIP embeddings", "semantic search", "EXIF", "video thumbnails"],
+      "myBlogResponsibilities": ["VisualCollection curation", "Knowledge Object projection", "Graph links", "article/project references", "drawer/feed entry"],
+      "integrationPipeline": ["Immich API", "admin-next import", "MySQL runtime snapshot", "VisualCollection partition", "Search and Graph projection"],
+      "blockedBy": ["photos.blog.tengokukk.com DNS currently returns NXDOMAIN", "/srv/immich has about 7GB free, below the 30GB startup gate", "dedicated media storage volume not attached or configured"],
+      "forbidden": ["train custom image tagging model before using Immich", "run Immich inside Astro", "iframe a subpath deployment as the primary integration", "trigger AI inference during visitor page load"]
+    },
+    "currentPipeline": ["bookmark sync fallback", "runtime mirror sync", "MySQL upsert visual_pins", "deterministic partition", "frontend runtime snapshot"],
+    "futurePipeline": ["optional thumbnail mirror after explicit approval", "palette extraction", "collection intelligence", "graph integration"]
   },
   "serverHost": "124.220.233.126",
   "serverRuntimeRoot": "/srv/myblog/site",
@@ -298,8 +684,25 @@
         "defaultBaseUrl": "http://127.0.0.1:5244",
         "publicEmbedRoute": "https://blog.tengokukk.com/openlist/",
         "apiPrefix": "/openlist",
-        "verifiedMount": "/夸克网盘",
-        "verifiedApis": ["POST /api/fs/list", "POST /api/fs/get"],
+        "verifiedMounts": ["/夸克网盘", "/腾讯云COS"],
+        "objectStorage": {
+          "provider": "Tencent COS",
+          "bucket": "myblog-media-1410041307",
+          "region": "ap-shanghai",
+          "endpoint": "cos.ap-shanghai.myqcloud.com",
+          "openListMount": "/腾讯云COS",
+          "openListStorageId": 2,
+          "driver": "S3",
+          "verifiedWriteObject": "_verify/openlist-cos.txt",
+          "pathContract": {
+            "books": "/腾讯云COS/books",
+            "visuals": "/腾讯云COS/visuals",
+            "videos": "/腾讯云COS/videos",
+            "archive": "/腾讯云COS/archive"
+          },
+          "role": "large original files and archives; not a database disk and not a direct replacement for Immich/Postgres local volumes"
+        },
+        "verifiedApis": ["POST /api/fs/list", "POST /api/fs/get", "POST /api/fs/mkdir", "PUT /api/fs/put", "GET /api/admin/storage/list", "POST /api/admin/storage/create", "POST /api/admin/storage/load_all"],
         "rawUrlField": "raw_url",
         "frontendSecretPolicy": "do not store OpenList tokens or netdisk cookies in static frontend source"
       },

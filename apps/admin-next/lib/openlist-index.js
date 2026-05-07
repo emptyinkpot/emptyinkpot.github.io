@@ -1,13 +1,27 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import { getOpenListConfig, listOpenListFiles, normalizeOpenListPath } from "./openlist-runtime";
+import { buildCachedRawUrl, getOpenListConfig, listOpenListFiles, normalizeOpenListPath } from "./openlist-runtime";
 
-const dataRoot = path.resolve(process.cwd(), "../../public-data/openlist-index");
+const dataRoot = path.join(resolvePublicDataRoot(), "openlist-index");
 const indexPath = path.join(dataRoot, "files.json");
 const DEFAULT_MAX_DEPTH = 8;
 const DEFAULT_MAX_FILES = 50000;
 const PAGE_SIZE = 200;
+
+function resolvePublicDataRoot() {
+  if (process.env.MYBLOG_PUBLIC_DATA_DIR) {
+    return path.resolve(process.env.MYBLOG_PUBLIC_DATA_DIR);
+  }
+
+  const candidates = [
+    path.resolve(process.cwd(), "../../public-data"),
+    path.resolve(process.cwd(), "../../../public-data"),
+    "/srv/myblog/public-data",
+  ];
+
+  return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
+}
 
 export function openListIndexPaths() {
   return {
@@ -152,7 +166,13 @@ function toRecord(item, itemPath, root, depth) {
     modified: item.modified || "",
     type: item.type,
     thumb: item.thumb || "",
-    rawUrl: isDir ? "" : `/api/openlist/raw?path=${encodeURIComponent(itemPath)}`,
+    rawUrl: isDir
+      ? ""
+      : buildCachedRawUrl({
+          path: itemPath,
+          modified: item.modified || "",
+          size: item.size || "",
+        }),
     tags: buildTags({ name, ext, kind, root }),
     depth,
   };

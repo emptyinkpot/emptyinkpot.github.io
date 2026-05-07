@@ -1,4 +1,6 @@
 import type { BookItem, BookSourceType } from './types';
+import type { BookMetadataOverlay } from '../../data/books';
+import { bookMetadataByPath } from '../../data/books';
 
 const sourceTag = 'OpenList 原始库';
 const extensionPattern = /\.(epub|pdf|mobi)$/i;
@@ -43,23 +45,29 @@ export function normalizeOpenListBookFile(file: {
   };
 }
 
-export function mergeBooks(staticBooks: BookItem[], dynamicBooks: BookItem[]) {
-  const byPath = new Map(staticBooks.map((book) => [book.openlistPath, book]));
-  const merged = dynamicBooks.map((dynamicBook) => {
-    const staticBook = byPath.get(dynamicBook.openlistPath);
-    return staticBook ? { ...dynamicBook, ...staticBook, cover: staticBook.cover || dynamicBook.cover } : dynamicBook;
-  });
-
-  const dynamicPaths = new Set(merged.map((book) => book.openlistPath));
-  staticBooks.forEach((book) => {
-    if (!dynamicPaths.has(book.openlistPath)) merged.push(book);
-  });
-
-  return merged.sort((a, b) => {
+export function buildCanonicalBooks(dynamicBooks: BookItem[], overlays: Record<string, BookMetadataOverlay> = bookMetadataByPath) {
+  return dynamicBooks.map((book) => applyBookMetadataOverlay(book, overlays[book.openlistPath || ''])).sort((a, b) => {
     const left = Date.parse(a.modified || '') || 0;
     const right = Date.parse(b.modified || '') || 0;
     return right - left || a.title.localeCompare(b.title, 'zh-Hans-CN');
   });
+}
+
+export function applyBookMetadataOverlay(book: BookItem, overlay?: BookMetadataOverlay): BookItem {
+  if (!overlay) return book;
+
+  const overlayTags = overlay.tags || [];
+  const tags = Array.from(new Set([...(overlayTags.length ? overlayTags : book.tags), ...book.tags]));
+
+  return {
+    ...book,
+    category: overlay.category || book.category,
+    tags,
+    status: overlay.status || book.status,
+    statusLabel: overlay.statusLabel || book.statusLabel,
+    note: overlay.note || book.note,
+    description: overlay.description || book.description
+  };
 }
 
 function getSourceType(name: string): BookSourceType {

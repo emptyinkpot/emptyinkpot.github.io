@@ -1,286 +1,137 @@
-import type { BookItem } from '../lib/books/types';
+import type { BookStatus } from '../lib/books/types';
 
 export const openListOriginalBooksPath = '/夸克网盘/obsidian/data/docs/books/original';
 
-export const books: BookItem[] = [
-  {
-    id: 'weicheng-mobi-2',
-    title: '围城',
-    author: '钱钟书',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的 MOBI 文件；当前站内 reader 暂不接管 MOBI。',
+export type BookMetadataOverlay = {
+  category?: string;
+  tags?: string[];
+  status?: BookStatus;
+  statusLabel?: string;
+  note?: string;
+  description?: string;
+  rating?: number;
+  aliases?: string[];
+};
+
+export const bookMetadataByPath: Record<string, BookMetadataOverlay> = {
+  [`${openListOriginalBooksPath}/围城 (锺书·钱, 钱钟书) (z-library.sk, 1lib.sk, z-lib.sk) (2).mobi`]: {
     category: '文学',
     tags: ['小说', '中国文学', 'MOBI', 'OpenList 原始库'],
-    sourceType: 'external',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/围城 (锺书·钱, 钱钟书) (z-library.sk, 1lib.sk, z-lib.sk) (2).mobi`,
+    note: 'OpenList 原始书库中的 MOBI 文件；当前站内 reader 暂不接管 MOBI。',
     description: '钱钟书长篇小说，来自 OpenList 原始书籍资料库。'
   },
-  {
-    id: 'modern-vietnam-penguin-history',
-    title: '越南：世界史的失语者',
-    author: '克里斯托弗·高夏 / 谭天 译',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的现代越南史 PDF。',
+  [`${openListOriginalBooksPath}/越南：世界史的失語者 = The Penguin History of Modern Vietnam (克里斯托弗·高夏 (Christopher Goscha) 著； 譚天 譯) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['越南', '世界史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/越南：世界史的失語者 = The Penguin History of Modern Vietnam (克里斯托弗·高夏 (Christopher Goscha) 著； 譚天 譯) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的现代越南史 PDF。',
     description: '以现代越南史为主线的世界史阅读材料。'
   },
-  {
-    id: 'das-kapital-1-3',
-    title: '资本论（1-3）',
-    author: '中共中央马克思恩格斯列宁斯大林著作编译局',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的 EPUB 套装。',
+  [`${openListOriginalBooksPath}/资本论(1-3)(套装共3册) (中共中央马克思恩格斯列宁斯大林著作编译局) (z-library.sk, 1lib.sk, z-lib.sk).epub`]: {
     category: '思想',
     tags: ['马克思', '政治经济学', 'EPUB', 'OpenList 原始库'],
-    sourceType: 'epub',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/资本论(1-3)(套装共3册) (中共中央马克思恩格斯列宁斯大林著作编译局) (z-library.sk, 1lib.sk, z-lib.sk).epub`,
+    note: 'OpenList 原始书库中的 EPUB 套装。',
     description: '政治经济学经典文本，作为长期理论阅读条目。'
   },
-  {
-    id: 'design-elements-graphic-style',
-    title: '设计元素：平面设计样式',
-    author: '蒂莫西·萨马拉 / 齐际 译',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的平面设计 PDF。',
+  [`${openListOriginalBooksPath}/设计元素：平面设计样式 (蒂莫西·萨马拉 (Timothy Samara) (作者), 齐际 (译者) etc.) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '设计',
     tags: ['平面设计', '视觉', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/设计元素：平面设计样式 (蒂莫西·萨马拉 (Timothy Samara) (作者), 齐际 (译者) etc.) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的平面设计 PDF。',
     description: '平面设计样式、构成和视觉语言参考书。'
   },
-  {
-    id: 'designing-design',
-    title: '设计中的设计',
-    author: '原研哉',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的设计思想 EPUB。',
+  [`${openListOriginalBooksPath}/设计中的设计 ([日] 原研哉) (z-library.sk, 1lib.sk, z-lib.sk).epub`]: {
     category: '设计',
     tags: ['设计思想', '日本设计', 'EPUB', 'OpenList 原始库'],
-    sourceType: 'epub',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/设计中的设计 ([日] 原研哉) (z-library.sk, 1lib.sk, z-lib.sk).epub`,
+    note: 'OpenList 原始书库中的设计思想 EPUB。',
     description: '关于设计意识、日常物和信息组织的设计思想文本。'
   },
-  {
-    id: 'english-magic-spellbook',
-    title: '英文版 魔法圣经 魔法咒语书',
-    author: 'OpenList 原始书库',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的英文 PDF 文件。',
+  [`${openListOriginalBooksPath}/英文版 魔法圣经 魔法咒语书.pdf.pdf`]: {
     category: '资料',
     tags: ['英文', '魔法', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/英文版 魔法圣经 魔法咒语书.pdf.pdf`,
+    note: 'OpenList 原始书库中的英文 PDF 文件。',
     description: '英文资料类书籍，保留原始文件名进入资料库。'
   },
-  {
-    id: 'korean-general-history-collected',
-    title: '朝鲜通史 四卷重排合订本',
-    author: '姜孟山 / 李春虎 / 姜秀玉 / 金光洙 / 金龟春',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的朝鲜史 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜通史 四卷重排合订本 (姜孟山, 李春虎, 姜秀玉, 金光洙, 金龟春) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜史', '通史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜通史 四卷重排合订本 (姜孟山, 李春虎, 姜秀玉, 金光洙, 金龟春) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的朝鲜史 PDF。',
     description: '朝鲜通史合订本，作为历史资料库条目。'
   },
-  {
-    id: 'korean-general-history',
-    title: '朝鲜通史',
-    author: 'OpenList 原始书库',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的朝鲜通史 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜通史 ( etc.) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜史', '通史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜通史 ( etc.) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的朝鲜通史 PDF。',
     description: '朝鲜史阅读资料，保留 OpenList 原始文件来源。'
   },
-  {
-    id: 'korean-ethnic-brief-history',
-    title: '朝鲜族简史',
-    author: '《朝鲜族简史》编写组',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的民族史 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜族简史 (《朝鲜族简史》编写组) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜族', '民族史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜族简史 (《朝鲜族简史》编写组) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的民族史 PDF。',
     description: '朝鲜族历史资料条目。'
   },
-  {
-    id: 'korean-war-vol-2',
-    title: '朝鲜战争 第二卷：战线动荡时期',
-    author: '固城 / 齐丰 / 龚黎 译编',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的朝鲜战争史 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜战争 第二卷：战线动荡时期 (固城 齐丰 龚黎 译编) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜战争', '战争史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜战争 第二卷：战线动荡时期 (固城 齐丰 龚黎 译编) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的朝鲜战争史 PDF。',
     description: '朝鲜战争战线动荡时期资料。'
   },
-  {
-    id: 'korean-war-vol-3',
-    title: '朝鲜战争 第三卷：对峙初期',
-    author: '战史编纂委员会 / 固城等译编',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的朝鲜战争史 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜战争 第三卷 对峙初期 ([南朝鲜]战史编纂委员会编  固城等译编) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜战争', '战争史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜战争 第三卷 对峙初期 ([南朝鲜]战史编纂委员会编  固城等译编) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的朝鲜战争史 PDF。',
     description: '朝鲜战争对峙初期资料。'
   },
-  {
-    id: 'korean-history-studies',
-    title: '朝鲜史研究',
-    author: '中国朝鲜史研究会',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的朝鲜史研究 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜史研究 (中国朝鲜史研究会编辑) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜史', '研究', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜史研究 (中国朝鲜史研究会编辑) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的朝鲜史研究 PDF。',
     description: '朝鲜史专题研究资料。'
   },
-  {
-    id: 'complete-history-korea-vol-1',
-    title: '朝鲜全史 第1卷 原始编',
-    author: '朝鲜社会科学院',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的朝鲜全史 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜全史 第1卷 原始编 (朝鲜社会科学院) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜史', '原始史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜全史 第1卷 原始编 (朝鲜社会科学院) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的朝鲜全史 PDF。',
     description: '朝鲜全史第一卷，原始时期资料。'
   },
-  {
-    id: 'korean-justice-war-history',
-    title: '朝鲜人民正义的祖国解放战争史',
-    author: '朝鲜民主主义人民共和国科学院历史研究所',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的战争史 PDF。',
+  [`${openListOriginalBooksPath}/朝鲜人民正义的祖国解放战争史 (朝鲜民主主义人民共和国科学院历史研究所编) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '历史',
     tags: ['朝鲜战争', '战争史', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/朝鲜人民正义的祖国解放战争史 (朝鲜民主主义人民共和国科学院历史研究所编) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的战争史 PDF。',
     description: '朝鲜战争相关历史资料。'
   },
-  {
-    id: 'graphic-design-principles',
-    title: '平面设计原理',
-    author: 'Sun I 视觉设计',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的设计 PDF。',
+  [`${openListOriginalBooksPath}/平面设计原理 (Sun I视觉设计) (z-library.sk, 1lib.sk, z-lib.sk).pdf`]: {
     category: '设计',
     tags: ['平面设计', '设计原理', 'PDF', 'OpenList 原始库'],
-    sourceType: 'pdf',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/平面设计原理 (Sun I视觉设计) (z-library.sk, 1lib.sk, z-lib.sk).pdf`,
+    note: 'OpenList 原始书库中的设计 PDF。',
     description: '平面设计基础原理参考书。'
   },
-  {
-    id: 'grid-systems-graphic-design',
-    title: '平面设计中的网格系统',
-    author: '约瑟夫·米勒－布罗克曼 / 徐宸熹 / 张鹏宇 译',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的网格系统 EPUB。',
+  [`${openListOriginalBooksPath}/平面设计中的网格系统(平面设计字体编排和空间设计的视觉传达设计手册)(精) ([瑞士]约瑟夫·米勒－布罗克曼 著，徐宸熹 张鹏宇 译) (z-library.sk, 1lib.sk, z-lib.sk).epub`]: {
     category: '设计',
     tags: ['网格系统', '平面设计', 'EPUB', 'OpenList 原始库'],
-    sourceType: 'epub',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/平面设计中的网格系统(平面设计字体编排和空间设计的视觉传达设计手册)(精) ([瑞士]约瑟夫·米勒－布罗克曼 著，徐宸熹 张鹏宇 译) (z-library.sk, 1lib.sk, z-lib.sk).epub`,
+    note: 'OpenList 原始书库中的网格系统 EPUB。',
     description: '网格系统、字体编排和空间设计的视觉传达设计手册。'
   },
-  {
-    id: 'weicheng-mobi',
-    title: '围城',
-    author: '钱钟书',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的 MOBI 文件；当前站内 reader 暂不接管 MOBI。',
+  [`${openListOriginalBooksPath}/围城 (锺书·钱, 钱钟书) (z-library.sk, 1lib.sk, z-lib.sk).mobi`]: {
     category: '文学',
     tags: ['小说', '中国文学', 'MOBI', 'OpenList 原始库'],
-    sourceType: 'external',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/围城 (锺书·钱, 钱钟书) (z-library.sk, 1lib.sk, z-lib.sk).mobi`,
+    note: 'OpenList 原始书库中的 MOBI 文件；当前站内 reader 暂不接管 MOBI。',
     description: '钱钟书长篇小说，来自 OpenList 原始书籍资料库。'
   },
-  {
-    id: 'weicheng-mobi-3',
-    title: '围城',
-    author: '钱钟书',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的 MOBI 文件；当前站内 reader 暂不接管 MOBI。',
+  [`${openListOriginalBooksPath}/围城 (锺书·钱, 钱钟书) (z-library.sk, 1lib.sk, z-lib.sk) (3).mobi`]: {
     category: '文学',
     tags: ['小说', '中国文学', 'MOBI', 'OpenList 原始库'],
-    sourceType: 'external',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/围城 (锺书·钱, 钱钟书) (z-library.sk, 1lib.sk, z-lib.sk) (3).mobi`,
+    note: 'OpenList 原始书库中的 MOBI 文件；当前站内 reader 暂不接管 MOBI。',
     description: '钱钟书长篇小说，来自 OpenList 原始书籍资料库。'
   },
-  {
-    id: 'rise-and-fall-world-history-21',
-    title: '兴亡的世界史全21卷',
-    author: 'OpenList 原始书库',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的世界史 EPUB 套装。',
+  [`${openListOriginalBooksPath}/兴亡的世界史全21卷.epub`]: {
     category: '历史',
     tags: ['世界史', '套装', 'EPUB', 'OpenList 原始库'],
-    sourceType: 'epub',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/兴亡的世界史全21卷.epub`,
+    note: 'OpenList 原始书库中的世界史 EPUB 套装。',
     description: '世界史系列套装，作为历史阅读资料库条目。'
   },
-  {
-    id: 'three-body',
-    title: '三体',
-    author: '刘慈欣',
-    status: 'planned',
-    statusLabel: '想读',
-    note: 'OpenList 原始书库中的科幻 EPUB。',
+  [`${openListOriginalBooksPath}/三体 (刘慈欣) (z-library.sk, 1lib.sk, z-lib.sk).epub`]: {
     category: '文学',
     tags: ['科幻', '中国文学', 'EPUB', 'OpenList 原始库'],
-    sourceType: 'epub',
-    cover: '',
-    openlistPath: `${openListOriginalBooksPath}/三体 (刘慈欣) (z-library.sk, 1lib.sk, z-lib.sk).epub`,
+    note: 'OpenList 原始书库中的科幻 EPUB。',
     description: '刘慈欣科幻小说，来自 OpenList 原始书籍资料库。'
   }
-];
+};

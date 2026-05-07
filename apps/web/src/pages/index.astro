@@ -9,11 +9,13 @@ import GitHubRuntimeSync from '../components/visualizations/GitHubRuntimeSync.as
 import MusicCard from '../components/showcase/MusicCard.astro';
 import HomeCommandPalette from '../components/react/HomeCommandPalette';
 import HomeNumberTicker from '../components/react/HomeNumberTicker';
+import BookCover from '../components/books/BookCover';
+import RuntimeBookFeed from '../components/books/RuntimeBookFeed';
 import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sortPosts } from '../lib/content';
 import { buildGitHubAnalytics, getRecentHeatmapWeeks } from '../lib/analytics';
-import { books } from '../data/books';
+import type { BookItem } from '../lib/books/types';
 import { musicItems, type MusicItem } from '../data/music';
-import { visualItems, type VisualItem } from '../data/visuals';
+import { visualCollections, type VisualCollection, type VisualItem } from '../data/visuals';
 import { getGitHubOverview } from '../lib/github';
 import { profileLinks } from '../lib/profile';
 import { getPostCover } from '../lib/postCovers';
@@ -41,6 +43,8 @@ type DrawerEntry = {
   details?: Array<{ label: string; value: string }>;
   chartVariant?: 'heatmap' | 'line' | 'language';
   visualItem?: VisualItem;
+  visualCollection?: VisualCollection;
+  bookItem?: BookItem;
   readHref?: string;
 };
 
@@ -56,6 +60,7 @@ type FeedItem = {
   githubVariant?: 'repo' | 'heatmap' | 'line' | 'language' | 'team';
   musicItem?: MusicItem;
   visualItem?: VisualItem;
+  visualCollection?: VisualCollection;
   coverSrc?: string;
   tags?: string[];
   accent?: string;
@@ -222,20 +227,6 @@ const githubChartItems: FeedItem[] = [
   }
 ];
 
-const bookItems: FeedItem[] = books.map((book) => ({
-  id: `book-${book.id}`,
-  type: 'book',
-  title: book.title,
-  summary: book.note,
-  kicker: `书架 / ${book.statusLabel}`,
-  meta: book.author,
-  href: withBase(`/books/${book.id}/`),
-  drawerId: `book:${book.id}`,
-  coverSrc: book.cover,
-  tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].slice(0, 4),
-  size: 'compact'
-}));
-
 const musicFeedItems: FeedItem[] = musicItems.map((item) => ({
   id: `music-${item.id}`,
   type: 'music',
@@ -284,19 +275,19 @@ const updateItems: FeedItem[] = [
   }
 ];
 
-const visualFeedItems: FeedItem[] = visualItems.map((item, index) => ({
-  id: `visual:${item.id}`,
+const visualFeedItems: FeedItem[] = visualCollections.map((collection, index) => ({
+  id: `visual:${collection.id}`,
   type: 'visual',
-  title: item.title,
-  summary: item.summary,
-  kicker: `Visual / ${item.type}`,
-  meta: item.tags.slice(0, 2).join(' / '),
+  title: collection.title,
+  summary: collection.summary,
+  kicker: 'Visual Collection',
+  meta: `${collection.images.length} images / ${collection.sourceLabel}`,
   href: withBase('/visuals/'),
-  drawerId: `visual:${item.id}`,
-  coverSrc: item.image,
-  tags: item.tags,
-  accent: item.palette.dominant,
-  visualItem: item,
+  drawerId: `visual:${collection.id}`,
+  coverSrc: collection.coverImages[0] ?? collection.images[0]?.image,
+  tags: collection.tags,
+  accent: collection.palette.dominant,
+  visualCollection: collection,
   size: index === 0 ? 'tall' : 'standard'
 }));
 
@@ -305,7 +296,6 @@ const feedItems = [
   visualFeedItems[0],
   ...projectItems.slice(0, 1),
   ...noteItems.slice(0, 1),
-  ...bookItems.slice(0, 2),
   githubChartItems[0],
   musicFeedItems[0],
   ...githubItems.slice(0, 2),
@@ -320,28 +310,8 @@ const feedItems = [
   ...noteItems.slice(1),
   ...githubItems.slice(2),
   ...visualFeedItems.slice(2),
-  ...bookItems.slice(2),
   ...musicFeedItems.slice(1)
 ].filter(Boolean) as FeedItem[];
-
-const bookDrawerEntries: DrawerEntry[] = books.map((book) => ({
-  id: `book:${book.id}`,
-  kind: 'book',
-  title: book.title,
-  kicker: `书架 / ${book.statusLabel}`,
-  href: withBase(`/books/${book.id}/`),
-  readHref: book.sourceType === 'external' ? undefined : withBase(`/reader/${book.id}/`),
-  summary: book.description ?? book.note,
-  coverSrc: book.cover,
-  tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].slice(0, 6),
-  details: [
-    { label: '作者', value: book.author },
-    { label: '分类', value: book.category },
-    { label: '状态', value: book.statusLabel },
-    { label: '来源', value: `${book.sourceType.toUpperCase()} / OpenList` },
-    { label: '路径', value: book.openlistPath ?? '未配置' }
-  ]
-}));
 
 const musicDrawerEntries: DrawerEntry[] = musicItems.map((item) => ({
   id: `music:${item.id}`,
@@ -412,22 +382,22 @@ const githubDrawerEntries: DrawerEntry[] = [
   }))
 ];
 
-const visualDrawerEntries: DrawerEntry[] = visualItems.map((item) => ({
-  id: `visual:${item.id}`,
+const visualDrawerEntries: DrawerEntry[] = visualCollections.map((collection) => ({
+  id: `visual:${collection.id}`,
   kind: 'visual',
-  title: item.title,
-  kicker: `视觉素材 / ${item.type}`,
-  href: withBase('/visuals/'),
-  summary: item.summary,
-  coverSrc: item.image,
-  accent: item.palette.dominant,
-  tags: item.tags,
-  visualItem: item,
+  title: collection.title,
+  kicker: `视觉集合 / ${collection.sourceLabel}`,
+  href: withBase(`/visuals/#${collection.id}`),
+  summary: collection.summary,
+  coverSrc: collection.coverImages[0] ?? collection.images[0]?.image,
+  accent: collection.palette.dominant,
+  tags: collection.tags,
+  visualCollection: collection,
   details: [
-    { label: '类型', value: item.type },
-    { label: '来源', value: item.source ?? '未记录' },
-    { label: '主色', value: item.palette.dominant },
-    { label: '用途', value: '视觉素材 / 设计锚点 / Graph 节点' }
+    { label: '来源', value: collection.sourceLabel },
+    { label: '数量', value: `${collection.images.length} images` },
+    { label: '主色', value: collection.palette.dominant },
+    { label: '用途', value: '视觉集合 / Board / Graph 节点' }
   ]
 }));
 
@@ -441,7 +411,7 @@ const utilityDrawerEntries: DrawerEntry[] = [
     summary: '文章、项目、书架、音乐、GitHub 和本地标记共同进入知识图谱。首页入口默认打开这张摘要索引，完整关系图保留在 Knowledge 页面。',
     tags: ['graph', 'memory', 'reader'],
     details: [
-      { label: '知识入口', value: String(articleDrawerEntries.length + bookDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 2 + bilibiliItems.length) },
+      { label: '知识入口', value: String(articleDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 2 + bilibiliItems.length) },
       { label: '标签', value: String(new Set(posts.flatMap((post) => post.data.tags)).size) },
       { label: '交互', value: '抽屉预览 / 完整图谱' }
     ]
@@ -473,7 +443,6 @@ const utilityDrawerEntries: DrawerEntry[] = [
 
 const drawerEntries = [
   ...articleDrawerEntries,
-  ...bookDrawerEntries,
   ...musicDrawerEntries,
   ...githubDrawerEntries,
   ...visualDrawerEntries,
@@ -522,7 +491,7 @@ function hoverPreviewAttrs(item: FeedItem) {
     'data-hover-kicker': item.kicker,
     'data-hover-meta': item.meta,
     'data-hover-image': item.coverSrc,
-    'data-hover-accent': item.visualItem?.palette.dominant ?? item.accent,
+    'data-hover-accent': item.visualCollection?.palette.dominant ?? item.visualItem?.palette.dominant ?? item.accent,
     'data-hover-tags': JSON.stringify(item.tags ?? [])
   };
 }
@@ -530,14 +499,13 @@ function hoverPreviewAttrs(item: FeedItem) {
 const latestPost = posts[0];
 const latestProject = projects[0];
 const latestRepo = github.repos[0];
-const latestBook = books[0];
 const latestMusic = musicItems[0];
 const uniqueTagCount = new Set(posts.flatMap((post) => post.data.tags)).size;
 const activityItems = [
   latestPost && `最新文章：${latestPost.data.title}`,
   latestProject && `项目工坊：${latestProject.data.title} / ${latestProject.data.progress}%`,
   latestRepo && `GitHub：${latestRepo.name} 更新于 ${formatDate(new Date(latestRepo.updatedAt))}`,
-  latestBook && `书架：${latestBook.title}`,
+  '书架：OpenList runtime canonical',
   latestMusic && `音乐：${latestMusic.title}`,
   `Knowledge：${knowledgeDocs.length} 个入口 / ${uniqueTagCount} 个标签`
 ].filter(Boolean) as string[];
@@ -547,10 +515,13 @@ const homeCommands = [
   { id: 'projects', label: '项目工坊', description: latestProject ? `${latestProject.data.title} / ${latestProject.data.progress}%` : '项目空间', href: withBase('/projects/'), icon: 'projects' },
   { id: 'project-workbench', label: '项目工作台', description: 'GitHub Workbench / Wiki / Timeline', href: withBase('/projects/site-v2/'), icon: 'projects' },
   { id: 'github', label: 'GitHub', description: `${github.profile.publicRepos} 个公开仓库`, href: withBase('/github/'), icon: 'github' },
-  { id: 'books', label: '书架', description: `${books.length} 条阅读记录`, href: withBase('/books/'), icon: 'books' },
+  { id: 'books', label: '书架', description: 'OpenList 实时书库', href: withBase('/books/'), icon: 'books' },
   { id: 'music', label: '音乐', description: `${musicItems.length} 条音乐记录`, href: withBase('/music/'), icon: 'music' },
+  { id: 'visuals', label: '视觉素材', description: `${visualCollections.length} 个视觉 collection`, href: withBase('/visuals/'), icon: 'visuals' },
+  { id: 'immich', label: 'Immich 媒体库', description: 'AI 照片 / 视频管理与语义搜索', href: 'https://photos.blog.tengokukk.com/', icon: 'external' },
   { id: 'knowledge', label: 'Knowledge Graph', description: `${knowledgeDocs.length} 个知识入口`, href: withBase('/knowledge/'), icon: 'knowledge' },
   { id: 'openlist', label: 'OpenList', description: '嵌入查看当前文件源', action: 'openlist', icon: 'external' },
+  { id: 'pinterest', label: 'Pinterest', description: '站内嵌入视觉收藏流', action: 'pinterest', icon: 'visuals' },
   { id: 'settings', label: '设置', description: '阅读排版、Graph、视觉偏好', href: withBase('/settings/'), icon: 'settings' }
 ];
 ---
@@ -578,6 +549,7 @@ const homeCommands = [
         <a class="home-sidebar-item" href={withBase('/projects/')} aria-label="项目工坊"><b>项</b><span data-sidebar-label>项目工坊</span></a>
         <a class="home-sidebar-item" href={withBase('/knowledge/')} aria-label="知识图谱"><b>知</b><span data-sidebar-label>知识图谱</span></a>
         <a class="home-sidebar-item" href={withBase('/books/')} aria-label="书架"><b>书</b><span data-sidebar-label>书架</span></a>
+        <a class="home-sidebar-item" href={withBase('/codex/')} aria-label="设计圣典"><b>典</b><span data-sidebar-label>设计圣典</span></a>
         <a class="home-sidebar-item" href={withBase('/visuals/')} aria-label="视觉素材"><b>视</b><span data-sidebar-label>视觉素材</span></a>
         <a class="home-sidebar-item" href={withBase('/github/')} aria-label="GitHub"><b>G</b><span data-sidebar-label>GitHub</span></a>
         <a class="home-sidebar-item" href={withBase('/settings/')} aria-label="设置"><b>设</b><span data-sidebar-label>设置</span></a>
@@ -663,10 +635,12 @@ const homeCommands = [
           {profileLinks.bilibiliConfigured && <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>}
           <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
           <button type="button" class="home-feed-tab home-feed-tab--openlist" data-openlist-embed-open>OpenList</button>
+          <button type="button" class="home-feed-tab home-feed-tab--pinterest" data-pinterest-embed-open>Pinterest</button>
         </nav>
       </div>
 
       <section class="home-feed-grid" aria-label="内容流">
+        <RuntimeBookFeed targetId="home-feed" client:load />
         {feedItems.map((item) =>
           item.type === 'github' && item.githubVariant === 'heatmap' ? (
             <button
@@ -732,7 +706,7 @@ const homeCommands = [
                 <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
               </ChartCard>
             </button>
-          ) : item.type === 'visual' && item.visualItem ? (
+          ) : item.type === 'visual' && item.visualCollection ? (
             <button
               type="button"
               class={`${feedCardClass(item)} visual-feed-card`}
@@ -743,23 +717,25 @@ const homeCommands = [
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
               data-seal-kind={item.type}
-              style={`--visual-accent:${item.visualItem.palette.dominant}`}
+              style={`--visual-accent:${item.visualCollection.palette.dominant}`}
             >
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               <span class="card-paperclip" aria-hidden="true"></span>
-              <div class="visual-feed-card__media">
-                <img src={item.visualItem.image} alt="" loading="lazy" />
+              <div class="visual-feed-card__stack" aria-hidden="true">
+                {(item.visualCollection.coverImages.length ? item.visualCollection.coverImages : item.visualCollection.images.map((image) => image.image))
+                  .slice(0, 4)
+                  .map((image, coverIndex) => (
+                    <img src={image} alt="" loading="lazy" style={`--stack-index:${coverIndex}`} />
+                  ))}
               </div>
               <div class="visual-feed-card__overlay">
                 <small>{item.kicker}</small>
                 <h2>{item.title}</h2>
                 <p>{item.summary}</p>
                 <div class="visual-feed-card__palette" aria-label="调色板">
-                  {item.visualItem.palette.colors.slice(0, 5).map((color) => <i style={`background:${color}`}></i>)}
+                  {item.visualCollection.palette.colors.slice(0, 5).map((color) => <i style={`background:${color}`}></i>)}
                 </div>
-                <div class="home-feed-card__tags">
-                  {item.tags?.slice(0, 4).map((tag) => <span>{tag}</span>)}
-                </div>
+                <span class="visual-meta-line">{item.visualCollection.mood} · {item.visualCollection.images.length} IMAGES</span>
               </div>
             </button>
           ) : item.type === 'music' && item.musicItem ? (
@@ -798,12 +774,6 @@ const homeCommands = [
                 <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
                 </div>
-              ) : item.type === 'book' ? (
-                <div class="home-feed-book-cover" aria-hidden="true">
-                  <span>{item.tags?.[0] ?? 'Book'}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.meta}</small>
-                </div>
               ) : (
                 <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
                   {item.type}
@@ -841,12 +811,6 @@ const homeCommands = [
                 <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
                 </div>
-              ) : item.type === 'book' ? (
-                <div class="home-feed-book-cover" aria-hidden="true">
-                  <span>{item.tags?.[0] ?? 'Book'}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.meta}</small>
-                </div>
               ) : (
                 <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
                   {item.type}
@@ -883,9 +847,9 @@ const homeCommands = [
         </div>
         <div class="home-article-drawer__actions">
           <div class="reader-theme-switch" aria-label="阅读主题">
-            <button type="button" data-reader-theme="light">Light</button>
-            <button type="button" data-reader-theme="sepia">Sepia</button>
-            <button type="button" data-reader-theme="dark">Dark</button>
+            <button type="button" data-reader-theme="light" title="白天" aria-label="白天">☀</button>
+            <button type="button" data-reader-theme="sepia" title="护眼" aria-label="护眼">Aa</button>
+            <button type="button" data-reader-theme="dark" title="夜间" aria-label="夜间">☾</button>
           </div>
           <button type="button" data-reader-bookmark>收藏</button>
           <button type="button" data-reader-seal>盖章</button>
@@ -959,7 +923,7 @@ const homeCommands = [
   </div>
 
   <script type="application/json" id="seal-definition-data" set:html={JSON.stringify({ key: sealDefinitionStorageKey, definitions: sealTypes })} />
-  <script type="application/json" id="visual-knowledge-data" set:html={JSON.stringify(visualItems)} />
+  <script type="application/json" id="visual-knowledge-data" set:html={JSON.stringify(visualCollections)} />
   <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
 
   <div class="home-article-templates" hidden>
@@ -976,6 +940,7 @@ const homeCommands = [
           data-kind={entry.kind}
           data-full-href={entry.href}
           data-read-href={entry.readHref ?? ''}
+          data-book-id={entry.bookItem?.id ?? ''}
           data-kicker={entry.kicker}
           data-title={entry.title}
         >
@@ -1059,17 +1024,24 @@ const homeCommands = [
             </>
           ) : (
             <div class="home-drawer-summary">
-              {entry.visualItem ? (
-                <section class="visual-drawer-panel" style={`--visual-accent:${entry.visualItem.palette.dominant}`}>
-                  <div class="visual-drawer-panel__image">
-                    <img src={entry.visualItem.image} alt="" loading="lazy" />
+              {entry.visualCollection ? (
+                <section class="visual-drawer-panel" style={`--visual-accent:${entry.visualCollection.palette.dominant}`}>
+                  <div class="visual-drawer-panel__collection-stack" aria-hidden="true">
+                    {(entry.visualCollection.coverImages.length ? entry.visualCollection.coverImages : entry.visualCollection.images.map((image) => image.image))
+                      .slice(0, 4)
+                      .map((image, index) => (
+                        <img src={image} alt="" loading="lazy" style={`--stack-index:${index}`} />
+                      ))}
                   </div>
                   <div class="visual-drawer-panel__content">
-                    <p>{entry.visualItem.note}</p>
+                    <p>{entry.visualCollection.curationNote}</p>
+                    <span class="visual-meta-line">
+                      {entry.visualCollection.sourceLabel} · {entry.visualCollection.mood} · {entry.visualCollection.images.length} IMAGES
+                    </span>
                     <section>
                       <h3>调色板</h3>
                       <div class="visual-palette-row">
-                        {entry.visualItem.palette.colors.map((color) => (
+                        {entry.visualCollection.palette.colors.map((color) => (
                           <button type="button" data-copy-color={color} style={`background:${color}`} title={`复制 ${color}`}>
                             <span>{color}</span>
                           </button>
@@ -1077,19 +1049,68 @@ const homeCommands = [
                       </div>
                     </section>
                     <section>
-                      <h3>知识关联</h3>
-                      <div class="home-feed-card__tags">
-                        {entry.visualItem.tags.map((tag) => <span>{tag}</span>)}
+                      <h3>Board</h3>
+                      <div class="visual-drawer-board">
+                        {entry.visualCollection.images.map((image) => (
+                          <article>
+                            <img src={image.image} alt="" loading="lazy" />
+                            <strong>{image.title}</strong>
+                            <span>{image.summary}</span>
+                          </article>
+                        ))}
                       </div>
                     </section>
                     <section>
                       <h3>设计 Token</h3>
-                      <button type="button" class="visual-token-copy" data-copy-visual-token={entry.visualItem.id}>
-                        复制视觉 Token
+                      <button type="button" class="visual-token-copy" data-copy-visual-token={entry.visualCollection.id}>
+                        复制 Collection Token
                       </button>
                     </section>
                   </div>
                 </section>
+              ) : entry.kind === 'book' && entry.bookItem && entry.readHref ? (
+                <section class="book-drawer-reader-panel" aria-label={`${entry.title} 阅读器`}>
+                  <header class="book-drawer-reader-panel__intro">
+                    <div class="home-drawer-summary__media home-drawer-summary__media--book">
+                      <BookCover book={entry.bookItem} client:load />
+                    </div>
+                    <div class="book-drawer-reader-panel__copy">
+                      <span class="book-drawer-reader-panel__eyebrow">Library Record</span>
+                      <h3>{entry.title}</h3>
+                      <p>{entry.summary}</p>
+                      <div class="home-feed-card__tags">
+                        {entry.tags?.map((tag) => <span>{tag}</span>)}
+                      </div>
+                    </div>
+                  </header>
+                  <div
+                    class="book-drawer-reader-panel__mount"
+                    data-book-drawer-reader-mount={`${entry.bookItem.id}-${entry.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`}
+                  >
+                    {entry.bookItem.sourceType === 'pdf' ? (
+                      <section class="pdf-reader pdf-reader--drawer" data-book-drawer-instant>
+                        <article class="pdf-reader__instant" aria-label={`${entry.title} 阅读首屏`}>
+                          {entry.coverSrc ? (
+                            <img src={entry.coverSrc} alt={`${entry.title} 封面`} loading="eager" />
+                          ) : (
+                            <span class="book-cover-fallback">
+                              <i>无封面</i>
+                            </span>
+                          )}
+                          <div>
+                            <span>{entry.bookItem.sourceType.toUpperCase()} ARCHIVE</span>
+                            <h2>{entry.title}</h2>
+                            <p>{entry.bookItem.author}</p>
+                          </div>
+                        </article>
+                      </section>
+                    ) : null}
+                  </div>
+                </section>
+              ) : entry.kind === 'book' && entry.bookItem ? (
+                <div class="home-drawer-summary__media home-drawer-summary__media--book">
+                  <BookCover book={entry.bookItem} client:load />
+                </div>
               ) : entry.coverSrc ? (
                 <div class:list={['home-drawer-summary__media', entry.kind === 'music' && 'home-drawer-summary__media--round']}>
                   <img src={entry.coverSrc} alt="" loading="lazy" />
@@ -1148,6 +1169,7 @@ const homeCommands = [
   <script>
     (() => {
       const layer = document.querySelector('[data-article-layer]');
+      const articleDrawer = layer?.querySelector('.home-article-drawer');
       const drawerBody = document.querySelector('[data-article-body]');
       const titleTarget = document.querySelector('[data-article-title]');
       const kickerTarget = document.querySelector('[data-article-kicker]');
@@ -1157,8 +1179,7 @@ const homeCommands = [
       const bookmarkButton = document.querySelector('[data-reader-bookmark]');
       const progress = document.querySelector('[data-reading-progress]');
       const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
-      const cards = [...document.querySelectorAll('[data-feed-card]')];
-      const drawerTriggers = [...document.querySelectorAll('[data-drawer-id]')];
+      const getCards = () => [...document.querySelectorAll('[data-feed-card]')];
       const mainScroller = document.querySelector('.home-feed-main');
       const searchLayer = document.querySelector('[data-search-layer]');
       const searchInput = document.querySelector('[data-search-input]');
@@ -1175,7 +1196,7 @@ const homeCommands = [
       const sidebarHistory = document.querySelector('[data-sidebar-history]');
       const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
       const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
-      const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
+      let searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
       const sealConfig = JSON.parse(document.getElementById('seal-definition-data')?.textContent || '{"definitions":[]}');
       const visualKnowledgeItems = JSON.parse(document.getElementById('visual-knowledge-data')?.textContent || '[]');
       const storageKeys = {
@@ -1335,6 +1356,66 @@ const homeCommands = [
         }
       };
 
+      const runtimeState = {
+        memory: [],
+        highlights: [],
+        loaded: false
+      };
+
+      const loadRuntimeState = async () => {
+        if (runtimeState.loaded) return runtimeState;
+        runtimeState.loaded = true;
+        try {
+          const [memoryResponse, highlightResponse] = await Promise.all([
+            fetch('/api/runtime/reader/memory?limit=50', { cache: 'no-store' }),
+            fetch('/api/runtime/reader/highlights?limit=100', { cache: 'no-store' })
+          ]);
+          const [memoryData, highlightData] = await Promise.all([memoryResponse.json(), highlightResponse.json()]);
+          runtimeState.memory = Array.isArray(memoryData.items) ? memoryData.items : [];
+          runtimeState.highlights = Array.isArray(highlightData.items) ? highlightData.items : [];
+        } catch {
+          runtimeState.memory = [];
+          runtimeState.highlights = [];
+        }
+        return runtimeState;
+      };
+
+      const getRuntimeMergedHistory = () => {
+        const local = readJson(storageKeys.history, []);
+        const byId = new Map(local.map((item) => [item.id, item]));
+        runtimeState.memory
+          .filter((item) => item.objectType === 'article')
+          .forEach((item) => byId.set(item.objectId || item.id, { ...byId.get(item.objectId || item.id), ...item, id: item.objectId || item.id }));
+        return [...byId.values()].sort((a, b) => (b.lastReadAt || b.timestamp || 0) - (a.lastReadAt || a.timestamp || 0));
+      };
+
+      const getRuntimeMergedHighlights = () => {
+        const local = readJson(storageKeys.highlights, []);
+        const byId = new Map(local.map((item) => [item.id, item]));
+        runtimeState.highlights.forEach((item) => byId.set(item.id, { ...byId.get(item.id), ...item, articleId: item.articleId || item.objectId }));
+        return [...byId.values()].sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0));
+      };
+
+      const saveRuntimeMemory = (record) => {
+        fetch('/api/runtime/reader/memory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record)
+        }).catch(() => {
+          // Runtime persistence is server-side; local UI state should not block on it.
+        });
+      };
+
+      const saveRuntimeHighlight = (record) => {
+        fetch('/api/runtime/reader/highlights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record)
+        }).catch(() => {
+          // Runtime persistence is server-side; local UI state should not block on it.
+        });
+      };
+
       const normalizeReaderTheme = (theme) => (['light', 'sepia', 'dark'].includes(theme) ? theme : 'light');
 
       const applyReaderTheme = (theme) => {
@@ -1350,7 +1431,7 @@ const homeCommands = [
         }
       };
 
-      const getVisibleCards = () => cards.filter((card) => !card.hidden);
+      const getVisibleCards = () => getCards().filter((card) => !card.hidden);
 
       const setSearchKind = (kind) => {
         searchKind = kind || 'all';
@@ -1360,7 +1441,7 @@ const homeCommands = [
       const setActiveCard = (index) => {
         const visibleCards = getVisibleCards();
         if (!visibleCards.length) return;
-        cards.forEach((card) => card.classList.remove('feed-card--active'));
+        getCards().forEach((card) => card.classList.remove('feed-card--active'));
         activeIndex = Math.max(0, Math.min(index, visibleCards.length - 1));
         const card = visibleCards[activeIndex];
         card.classList.add('feed-card--active');
@@ -1406,9 +1487,9 @@ const homeCommands = [
       };
 
       const renderSidebarState = () => {
-        const history = readJson(storageKeys.history, []);
+        const history = getRuntimeMergedHistory();
         const bookmarks = readJson(storageKeys.bookmarks, []);
-        const highlights = readJson(storageKeys.highlights, []);
+        const highlights = getRuntimeMergedHighlights();
         const annotations = readJson(storageKeys.annotations, []);
         sidebarStats.forEach((node) => {
           const map = { history, bookmarks, highlights, annotations };
@@ -1531,39 +1612,42 @@ const homeCommands = [
 
       const saveHistory = (article) => {
         if (!article?.id) return;
-        const list = readJson(storageKeys.history, []);
+        const list = getRuntimeMergedHistory();
         const previous = list.find((item) => item.id === article.id) || {};
         const now = Date.now();
-        const next = [
-          {
-            ...previous,
-            id: article.id,
-            title: article.title,
-            href: article.href,
-            timestamp: now,
-            lastReadAt: now,
-            scrollTop: previous.scrollTop || 0,
-            progress: previous.progress || 0
-          },
-          ...list.filter((item) => item.id !== article.id)
-        ].slice(0, 50);
+        const record = {
+          ...previous,
+          id: article.id,
+          objectId: article.id,
+          objectType: 'article',
+          title: article.title,
+          href: article.href,
+          timestamp: now,
+          lastReadAt: now,
+          scrollTop: previous.scrollTop || 0,
+          progress: previous.progress || 0
+        };
+        const next = [record, ...list.filter((item) => item.id !== article.id)].slice(0, 50);
         writeJson(storageKeys.history, next);
+        saveRuntimeMemory(record);
         renderSidebarState();
       };
 
-      const getHistoryEntry = (id) => readJson(storageKeys.history, []).find((item) => item.id === id);
+      const getHistoryEntry = (id) => getRuntimeMergedHistory().find((item) => item.id === id || item.objectId === id);
 
       const persistReadingMemory = (ratio) => {
         if (!currentArticle || !drawerBody) return;
         if (readerMemoryFrame) return;
         readerMemoryFrame = requestAnimationFrame(() => {
           readerMemoryFrame = 0;
-          const list = readJson(storageKeys.history, []);
+          const list = getRuntimeMergedHistory();
           const previous = list.find((item) => item.id === currentArticle.id) || {};
           const now = Date.now();
           const record = {
             ...previous,
             id: currentArticle.id,
+            objectId: currentArticle.id,
+            objectType: 'article',
             title: currentArticle.title,
             href: currentArticle.href,
             timestamp: previous.timestamp || now,
@@ -1572,6 +1656,7 @@ const homeCommands = [
             progress: Number.isFinite(ratio) ? Math.max(0, Math.min(1, ratio)) : 0
           };
           writeJson(storageKeys.history, [record, ...list.filter((item) => item.id !== currentArticle.id)].slice(0, 50));
+          saveRuntimeMemory(record);
         });
       };
 
@@ -1783,9 +1868,9 @@ const homeCommands = [
         toggle.textContent = '阅读记忆';
         content.className = 'reader-memory-panel__content';
         panel.append(toggle, content);
-        const history = readJson(storageKeys.history, []).slice(0, 4);
+        const history = getRuntimeMergedHistory().slice(0, 4);
         const bookmarks = readJson(storageKeys.bookmarks, []).slice(0, 4);
-        const highlights = readJson(storageKeys.highlights, []).slice(0, 4);
+        const highlights = getRuntimeMergedHighlights().slice(0, 4);
         const annotations = readJson(storageKeys.annotations, []).slice(0, 4);
         const appendSection = (title, items, type) => {
           const section = document.createElement('section');
@@ -1839,7 +1924,7 @@ const homeCommands = [
           graphOpen.href = `/knowledge/?focus=${encodeURIComponent(currentArticle.id)}`;
         }
         if (!highlightsTarget) return;
-        const highlights = readJson(storageKeys.highlights, [])
+        const highlights = getRuntimeMergedHighlights()
           .filter((item) => item.articleId === currentArticle.id)
           .slice(0, 3);
         const annotations = readJson(storageKeys.annotations, [])
@@ -1872,7 +1957,7 @@ const homeCommands = [
         if (!drawerBody || !currentArticle) return;
         const root = drawerBody.querySelector('.home-article-content');
         if (!root) return;
-        const highlights = readJson(storageKeys.highlights, []).filter((item) => item.articleId === currentArticle.id);
+        const highlights = getRuntimeMergedHighlights().filter((item) => item.articleId === currentArticle.id || item.objectId === currentArticle.id);
         const orphaned = [];
         highlights.forEach((item) => {
           const range = resolveHighlightRange(root, item);
@@ -1970,7 +2055,10 @@ const homeCommands = [
         } catch {
           return;
         }
-        writeJson(storageKeys.highlights, [record, ...readJson(storageKeys.highlights, [])]);
+        const nextHighlights = [record, ...getRuntimeMergedHighlights().filter((item) => item.id !== record.id)];
+        runtimeState.highlights = nextHighlights;
+        writeJson(storageKeys.highlights, nextHighlights);
+        saveRuntimeHighlight({ ...record, objectId: currentArticle.id, objectType: 'article' });
         if (note.trim()) {
           const annotation = {
             id: `annotation:${record.id}`,
@@ -1992,7 +2080,7 @@ const homeCommands = [
       const search = (query) => {
         const q = query.trim().toLowerCase();
         if (!q) return [];
-        const storedHighlights = readJson(storageKeys.highlights, []).map((item) => ({
+        const storedHighlights = getRuntimeMergedHighlights().map((item) => ({
           id: item.id,
           type: 'highlight',
           title: item.title,
@@ -2100,7 +2188,7 @@ const homeCommands = [
 
       const setFilter = (kind) => {
         filterButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.feedFilter === kind));
-        cards.forEach((card) => {
+        getCards().forEach((card) => {
           const visible = kind === 'all' || card.dataset.feedKind === kind;
           card.hidden = !visible;
         });
@@ -2113,7 +2201,9 @@ const homeCommands = [
         layer.classList.remove('is-open');
         window.clearTimeout(drawerCloseTimer);
         drawerCloseTimer = window.setTimeout(() => {
+          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
           layer.hidden = true;
+          articleDrawer?.classList.remove('home-article-drawer--book');
           document.body.classList.remove('has-home-article-drawer');
           drawerBody?.replaceChildren();
           currentArticle = null;
@@ -2144,7 +2234,9 @@ const homeCommands = [
         const kicker = reader?.dataset.kicker ?? '';
         const href = reader?.dataset.fullHref ?? '#';
         const kind = reader?.dataset.kind ?? '';
+        const isBookDrawer = kind === 'book';
         const readHref = reader?.dataset.readHref ?? '';
+        const bookId = reader?.dataset.bookId ?? '';
         const articleId = reader?.dataset.articleId ?? id;
         const storedMemory = getHistoryEntry(articleId);
         lastFocused = trigger;
@@ -2153,14 +2245,15 @@ const homeCommands = [
         pendingHighlightId = options.highlightId || null;
 
         drawerBody.replaceChildren(createReaderMemoryPanel(), content);
+        articleDrawer?.classList.toggle('home-article-drawer--book', isBookDrawer);
         if (titleTarget) titleTarget.textContent = title;
         if (kickerTarget) kickerTarget.textContent = kicker;
         if (fullLink) {
           fullLink.setAttribute('href', href);
-          fullLink.textContent = kind === 'book' ? '书籍详情' : '完整页面';
+          fullLink.textContent = isBookDrawer ? '书籍详情' : '完整页面';
         }
         if (readLink) {
-          if (kind === 'book' && readHref) {
+          if (isBookDrawer && readHref) {
             readLink.hidden = false;
             readLink.setAttribute('href', readHref);
           } else {
@@ -2169,7 +2262,7 @@ const homeCommands = [
           }
         }
         if (shelfLink) {
-          shelfLink.hidden = kind !== 'book';
+          shelfLink.hidden = !isBookDrawer;
         }
         updateReaderGraphLink();
         window.clearTimeout(drawerCloseTimer);
@@ -2191,6 +2284,21 @@ const homeCommands = [
         requestAnimationFrame(applyStoredHighlights);
         requestAnimationFrame(renderReaderMiniGraph);
         requestAnimationFrame(renderSeals);
+        if (isBookDrawer && bookId && readHref) {
+          const mount = reader?.querySelector('[data-book-drawer-reader-mount]');
+          window.__emptyinkpotPendingBookDrawerOpen = {
+            bookId,
+            mountId: mount?.dataset.bookDrawerReaderMount || ''
+          };
+          window.dispatchEvent(
+            new CustomEvent('emptyinkpot:book-drawer-open', {
+              detail: window.__emptyinkpotPendingBookDrawerOpen
+            })
+          );
+        } else {
+          window.__emptyinkpotPendingBookDrawerOpen = null;
+          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
+        }
         layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
       };
 
@@ -2198,13 +2306,20 @@ const homeCommands = [
         button.addEventListener('click', () => setFilter(button.dataset.feedFilter || 'all'));
       });
 
-      drawerTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', (event) => {
-          const id = trigger.dataset.drawerId;
-          if (!id) return;
-          event.preventDefault();
-          openDrawer(id, trigger);
-        });
+      document.addEventListener('click', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-drawer-id]') : null;
+        if (!trigger) return;
+        const id = trigger.dataset.drawerId;
+        if (!id) return;
+        event.preventDefault();
+        openDrawer(id, trigger);
+      });
+
+      window.addEventListener('emptyinkpot:runtime-books-ready', (event) => {
+        const docs = Array.isArray(event.detail?.docs) ? event.detail.docs : [];
+        searchDocs = [...searchDocs.filter((doc) => doc.type !== 'book'), ...docs];
+        renderSearch();
+        renderSeals();
       });
 
       window.addEventListener('home-search-open', openSearch);
@@ -2331,7 +2446,10 @@ const homeCommands = [
                 accentMuted: colors[1],
                 background: colors[2],
                 text: colors[3],
-                border: colors[4]
+                border: colors[4],
+                mood: item.mood,
+                source: item.sourceLabel,
+                imageCount: item.images?.length ?? 0
               }
             },
             null,
@@ -2394,7 +2512,7 @@ const homeCommands = [
         const isTyping = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
         const commandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
         if (commandSearch) {
-          if (document.querySelector('.home-command__trigger')) {
+          if (document.documentElement.getAttribute('data-home-command-ready') === 'true') {
             return;
           }
           event.preventDefault();
@@ -2432,6 +2550,10 @@ const homeCommands = [
       applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
       initSidebar();
       renderSidebarState();
+      loadRuntimeState().then(() => {
+        renderSidebarState();
+        renderReaderMiniGraph();
+      });
       renderSeals();
       initHeroBanner();
       const params = new URLSearchParams(window.location.search);

@@ -70,6 +70,9 @@ export async function listOpenListFiles(baseUrl: string, path: string) {
   const normalizedBaseUrl = baseUrl.replace(/\/$/, '');
   const proxied = !normalizedBaseUrl || normalizedBaseUrl === '/api/openlist' || normalizedBaseUrl.startsWith('/api/openlist');
   if (proxied) {
+    const indexedFiles = await listIndexedOpenListFiles(path).catch(() => null);
+    if (indexedFiles?.length) return indexedFiles;
+
     const response = await fetch('/api/openlist/list', {
       method: 'POST',
       headers: {
@@ -124,6 +127,37 @@ export async function listOpenListFiles(baseUrl: string, path: string) {
   })) as OpenListFileInfo[];
 }
 
+async function listIndexedOpenListFiles(path: string) {
+  const response = await fetch('/api/openlist/index', { cache: 'no-store' });
+  if (!response.ok) return [];
+
+  const json = await response.json();
+  if (!json.ok || !Array.isArray(json.files)) return [];
+
+  const root = path.replace(/\/$/, '');
+  return json.files
+    .filter((file: { path?: string; isDir?: boolean }) => file.path?.startsWith(`${root}/`) && !file.isDir)
+    .map(
+      (file: {
+        name: string;
+        path: string;
+        size: number;
+        modified: string;
+        thumb?: string;
+        type?: number;
+      }) =>
+        ({
+          name: file.name,
+          path: file.path,
+          size: file.size,
+          modified: file.modified,
+          thumb: file.thumb || '',
+          type: file.type,
+          is_dir: false
+        }) as OpenListFileInfo
+    );
+}
+
 export function resolveBookOpenListPath(book: BookItem, settings: BookSettings) {
   if (!book.openlistPath) return '';
   if (book.openlistPath.startsWith('/')) return book.openlistPath;
@@ -135,4 +169,34 @@ export function resolveRawUrl(rawUrl: string, baseUrl: string) {
   if (/^https?:\/\//i.test(rawUrl)) return rawUrl;
   if (rawUrl.startsWith('/')) return rawUrl;
   return new URL(rawUrl, `${baseUrl.replace(/\/$/, '')}/`).toString();
+}
+
+export function buildCachedBookRawUrl(book: BookItem, settings: BookSettings) {
+  const path = resolveBookOpenListPath(book, settings);
+  if (!path || book.sourceType === 'external') return '';
+
+  const params = new URLSearchParams({ path });
+  if (book.modified) params.set('modified', book.modified);
+  if (book.size) params.set('size', String(book.size));
+  return `/api/openlist/raw?${params.toString()}`;
+}
+
+export function buildCachedBookCoverUrl(book: BookItem, settings: BookSettings) {
+  const path = resolveBookOpenListPath(book, settings);
+  if (!path || book.sourceType === 'external') return '';
+
+  const params = new URLSearchParams({ path });
+  if (book.modified) params.set('modified', book.modified);
+  if (book.size) params.set('size', String(book.size));
+  return `/api/openlist/cover?${params.toString()}`;
+}
+
+export function buildCachedBookPageUrl(book: BookItem, settings: BookSettings, page: number) {
+  const path = resolveBookOpenListPath(book, settings);
+  if (!path || book.sourceType !== 'pdf') return '';
+
+  const params = new URLSearchParams({ path, page: String(Math.max(1, Math.round(page))) });
+  if (book.modified) params.set('modified', book.modified);
+  if (book.size) params.set('size', String(book.size));
+  return `/api/openlist/page?${params.toString()}`;
 }

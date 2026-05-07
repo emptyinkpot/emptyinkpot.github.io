@@ -1,6 +1,5 @@
 import { getCollection } from 'astro:content';
 import type { APIRoute } from 'astro';
-import { books } from '../../data/books';
 import { musicItems } from '../../data/music';
 import { getExcerptFromBody, getPrimaryCategory, sortPosts } from '../../lib/content';
 import { getGitHubOverview } from '../../lib/github';
@@ -50,16 +49,6 @@ export const GET: APIRoute = async () => {
       drawerId: `project:${project.id}`,
       sourceId: project.id,
       updatedAt: project.data.date?.toISOString()
-    })),
-    ...books.map((book) => ({
-      id: `book:${book.id}`,
-      type: 'book' as const,
-      title: book.title,
-      content: [book.author, book.category, book.statusLabel, book.note, book.description, book.openlistPath].filter(Boolean).join('\n'),
-      tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags],
-      href: withBase(`/books/${book.id}/`),
-      drawerId: `book:${book.id}`,
-      sourceId: book.id
     })),
     ...musicItems.map((item) => ({
       id: `music:${item.id}`,

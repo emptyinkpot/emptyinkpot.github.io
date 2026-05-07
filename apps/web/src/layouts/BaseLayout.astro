@@ -1,7 +1,7 @@
 ---
 import SiteFooter from '../components/shared/SiteFooter.astro';
-import SiteHeader from '../components/shared/SiteHeader.astro';
 import HoverPreviewSystem from '../components/react/HoverPreviewSystem';
+import { visualCollections } from '../data/visuals';
 import { withBase } from '../lib/site';
 import '../styles/global.css';
 
@@ -11,6 +11,7 @@ interface Props {
   canonical?: string;
   hideSiteChrome?: boolean;
   appMode?: boolean;
+  barePage?: boolean;
 }
 
 const {
@@ -18,12 +19,16 @@ const {
   description = 'emptyinkpot 的个人内容站，基于 Astro 构建，强调结构化内容、专题组织与长期演进能力。',
   canonical,
   hideSiteChrome = false,
-  appMode = false
+  appMode = false,
+  barePage = false
 } = Astro.props;
 
 const buildVersion = new Date().toISOString();
 const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.png')}")`;
 const openListEmbedUrl = withBase('/openlist/');
+const pinterestShellSeed = visualCollections.filter((collection) => collection.source === 'pinterest');
+const bodyMode = hideSiteChrome ? (appMode ? 'app-mode' : barePage ? 'bare-mode' : 'home-mode') : false;
+const useFullBleedWrap = hideSiteChrome && !barePage;
 ---
 
 <html lang="zh-CN" data-theme="heritage">
@@ -33,9 +38,26 @@ const openListEmbedUrl = withBase('/openlist/');
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <meta name="site-build-version" content={buildVersion} />
+    <meta name="theme-color" content="#6b2d5c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="MyBlog" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="manifest" href={withBase('/manifest.webmanifest')} />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase('/images/branding/myblog-pwa-192.png')} />
     <link rel="alternate" type="application/rss+xml" title="emptyinkpot RSS" href={withBase('/rss.xml')} />
     <title>{title}</title>
+    <script is:inline>
+      (() => {
+        if (!('serviceWorker' in navigator)) return;
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {
+            // Installability should not block normal page rendering.
+          });
+        });
+      })();
+    </script>
     <script is:inline define:vars={{ buildVersion }}>
       (() => {
         const versionKey = 'emptyinkpot-build-version';
@@ -453,12 +475,11 @@ const openListEmbedUrl = withBase('/openlist/');
     </script>
     <slot name="head" />
   </head>
-  <body class:list={[hideSiteChrome && (appMode ? 'app-mode' : 'home-mode')]}>
+  <body class:list={[bodyMode]}>
     <div class="site-shell">
       <div class="site-shell__glow site-shell__glow--one"></div>
       <div class="site-shell__glow site-shell__glow--two"></div>
-      {!hideSiteChrome && <SiteHeader />}
-      <div class:list={['page-wrap', hideSiteChrome && 'page-wrap--home']}>
+      <div class:list={['page-wrap', useFullBleedWrap && 'page-wrap--home']}>
         <slot />
       </div>
       {!hideSiteChrome && <SiteFooter />}
@@ -485,6 +506,56 @@ const openListEmbedUrl = withBase('/openlist/');
         ></iframe>
       </section>
     </div>
+    <div class="openlist-embed-layer pinterest-embed-layer" data-pinterest-layer hidden>
+      <button class="openlist-embed-backdrop" type="button" data-pinterest-close aria-label="关闭 Pinterest"></button>
+      <section class="openlist-embed-panel pinterest-embed-panel" role="dialog" aria-modal="true" aria-labelledby="pinterest-embed-title">
+        <header class="openlist-embed-header">
+          <div>
+            <span>Pinterest</span>
+            <h2 id="pinterest-embed-title">视觉流镜像</h2>
+          </div>
+          <nav aria-label="Pinterest 操作">
+            <span data-pinterest-shell-status>读取本地镜像</span>
+            <button type="button" data-pinterest-close>关闭</button>
+          </nav>
+        </header>
+        <div class="pinterest-shell-frame" data-pinterest-frame>
+          <div class="pinterest-shell-note">
+            <p>Full Pinterest page cannot be iframed because Pinterest sends <code>frame-ancestors 'self'</code>. This shell renders the browser-session mirror inside MyBlog instead of using the official marketing widget.</p>
+            <p data-pinterest-shell-source>当前显示的是本地镜像快照，不是 Pinterest 官方页面。</p>
+          </div>
+          <div class="pinterest-shell-board" data-pinterest-shell-board>
+            {pinterestShellSeed.flatMap((collection) =>
+              collection.images.map((item) => (
+                <article class="pinterest-shell-pin" data-pinterest-shell-pin>
+                  <img src={item.image} alt="" loading="lazy" />
+                  <div>
+                    <strong>{item.title}</strong>
+                    <small>{collection.title}</small>
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+    </div>
+    <script
+      type="application/json"
+      id="pinterest-shell-seed"
+      set:html={JSON.stringify({
+        sources: [
+          {
+            id: 'pinterest-build-seed',
+            type: 'pinterest',
+            provider: 'visual-manifest',
+            syncedItems: pinterestShellSeed.reduce((count, collection) => count + collection.images.length, 0),
+            syncStatus: 'build-seed'
+          }
+        ],
+        collections: pinterestShellSeed
+      })}
+    />
     <HoverPreviewSystem client:load />
     <script is:inline>
       (() => {
@@ -597,6 +668,142 @@ const openListEmbedUrl = withBase('/openlist/');
 
         frame.addEventListener('load', hideOpenListLogin);
         window.addEventListener('openlist-embed-open', (event) => open(event.target));
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !layer.hidden) close();
+        });
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        const layer = document.querySelector('[data-pinterest-layer]');
+        const board = document.querySelector('[data-pinterest-shell-board]');
+        const status = document.querySelector('[data-pinterest-shell-status]');
+        const sourceStatus = document.querySelector('[data-pinterest-shell-source]');
+        if (!layer || !board) return;
+
+        let closeTimer = 0;
+        let lastFocused = null;
+        let hydrated = false;
+        const transitionMs = 180;
+
+        const setStatus = (text) => {
+          if (status) status.textContent = text;
+        };
+
+        const setSourceStatus = (text) => {
+          if (sourceStatus) sourceStatus.textContent = text;
+        };
+
+        const escapeHtml = (value) =>
+          String(value || '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;');
+
+        const renderCollections = (collections) => {
+          const pinterestCollections = Array.isArray(collections)
+            ? collections.filter((collection) => collection?.source === 'pinterest')
+            : [];
+          const pins = pinterestCollections.flatMap((collection) =>
+            Array.isArray(collection.images)
+              ? collection.images.map((item) => ({ ...item, collectionTitle: collection.title }))
+              : []
+          );
+          if (!pins.length) {
+            board.innerHTML = '<p class="pinterest-shell-empty">当前没有可展示的 Pinterest 镜像。请先运行 visual sync。</p>';
+            setStatus('0 pins');
+            return;
+          }
+          board.innerHTML = pins
+            .map((item) => {
+              const image = item.previewUrl || item.image || '';
+              return `
+                <article class="pinterest-shell-pin" data-pinterest-shell-pin>
+                  <img src="${escapeHtml(image)}" alt="" loading="lazy" />
+                  <div>
+                    <strong>${escapeHtml(item.title || 'Pinterest Pin')}</strong>
+                    <small>${escapeHtml(item.collectionTitle || item.source || 'Pinterest')}</small>
+                  </div>
+                </article>
+              `;
+            })
+            .join('');
+          setStatus(`${pins.length} pins`);
+        };
+
+        const renderSourceStatus = (sources) => {
+          const pinterestSource = Array.isArray(sources)
+            ? sources.find((source) => String(source?.type || '').includes('pinterest') || String(source?.id || '').includes('pinterest'))
+            : null;
+          if (!pinterestSource) {
+            setSourceStatus('当前显示的是本地镜像快照，不是 Pinterest 官方页面。');
+            return;
+          }
+          const count = pinterestSource.activeItems ?? pinterestSource.syncedItems ?? 0;
+          const provider = pinterestSource.provider ? ` / ${pinterestSource.provider}` : '';
+          const state = pinterestSource.syncStatus ? ` / ${pinterestSource.syncStatus}` : '';
+          setSourceStatus(`当前镜像源：${count} pins${provider}${state}。如果 Pinterest 账号里更多，说明上游 browser/session/API 只同步到了这部分。`);
+        };
+
+        const hydrateSnapshot = async () => {
+          if (hydrated) return;
+          hydrated = true;
+          setStatus('同步镜像');
+          try {
+            const response = await fetch('/api/runtime/visuals/snapshot', { headers: { Accept: 'application/json' } });
+            if (!response.ok) throw new Error(`snapshot ${response.status}`);
+            const payload = await response.json();
+            renderCollections(payload.collections);
+            renderSourceStatus(payload.sources);
+          } catch {
+            try {
+              const seed = JSON.parse(document.getElementById('pinterest-shell-seed')?.textContent || '{"collections":[]}');
+              renderCollections(seed.collections);
+              renderSourceStatus(seed.sources);
+              setStatus('构建期镜像');
+            } catch {
+              setStatus('镜像不可用');
+            }
+          }
+        };
+
+        const open = (trigger) => {
+          window.clearTimeout(closeTimer);
+          lastFocused = trigger instanceof HTMLElement ? trigger : document.activeElement;
+          layer.hidden = false;
+          document.body.classList.add('has-openlist-embed', 'has-pinterest-embed');
+          hydrateSnapshot();
+          requestAnimationFrame(() => {
+            layer.classList.add('is-open');
+            layer.querySelector('[data-pinterest-close]')?.focus({ preventScroll: true });
+          });
+        };
+
+        const close = () => {
+          layer.classList.remove('is-open');
+          window.clearTimeout(closeTimer);
+          closeTimer = window.setTimeout(() => {
+            layer.hidden = true;
+            document.body.classList.remove('has-openlist-embed', 'has-pinterest-embed');
+            if (lastFocused instanceof HTMLElement) {
+              lastFocused.focus({ preventScroll: true });
+            }
+          }, transitionMs);
+        };
+
+        document.addEventListener('click', (event) => {
+          const trigger = event.target instanceof Element ? event.target.closest('[data-pinterest-embed-open]') : null;
+          if (!trigger) return;
+          event.preventDefault();
+          open(trigger);
+        });
+
+        document.querySelectorAll('[data-pinterest-close]').forEach((button) => {
+          button.addEventListener('click', close);
+        });
+
+        window.addEventListener('pinterest-embed-open', (event) => open(event.target));
         window.addEventListener('keydown', (event) => {
           if (event.key === 'Escape' && !layer.hidden) close();
         });

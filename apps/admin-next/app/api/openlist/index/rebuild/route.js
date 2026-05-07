@@ -1,10 +1,22 @@
-import { handleRouteError } from "@/lib/openlist-runtime";
+import { handleRouteError, readJson } from "@/lib/openlist-runtime";
 import { rebuildOpenListIndex } from "@/lib/openlist-index";
+
+export async function GET(request) {
+  return rebuildFromInput(readQueryInput(request));
+}
 
 export async function POST(request) {
   try {
-    const body = await readOptionalJson(request);
-    const result = await rebuildOpenListIndex(body);
+    const body = await readJsonOrEmpty(request);
+    return rebuildFromInput({ ...readQueryInput(request), ...body });
+  } catch (error) {
+    return handleRouteError(error);
+  }
+}
+
+async function rebuildFromInput(input) {
+  try {
+    const result = await rebuildOpenListIndex(input);
 
     return Response.json({
       ok: true,
@@ -21,14 +33,16 @@ export async function POST(request) {
   }
 }
 
-async function readOptionalJson(request) {
-  const text = await request.text();
-  if (!text.trim()) return {};
-  try {
-    return JSON.parse(text);
-  } catch {
-    const error = new Error("request body must be valid JSON.");
-    error.status = 400;
-    throw error;
+async function readJsonOrEmpty(request) {
+  if (!request.headers.get("content-length") && !request.headers.get("transfer-encoding")) return {};
+  return readJson(request);
+}
+
+function readQueryInput(request) {
+  const params = new URL(request.url).searchParams;
+  const input = {};
+  for (const key of ["path", "maxDepth", "maxFiles", "refresh"]) {
+    if (params.has(key)) input[key] = params.get(key);
   }
+  return input;
 }

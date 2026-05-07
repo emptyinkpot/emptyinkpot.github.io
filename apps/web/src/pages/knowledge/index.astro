@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { books } from '../../data/books';
 import githubOverview from '../../data/github-overview.emptyinkpot.json';
 import { musicItems } from '../../data/music';
 import { visualItems } from '../../data/visuals';
@@ -76,17 +75,6 @@ const contentNodes: KnowledgeGraphNode[] = [
     summary: project.data.description ?? '',
     meta: project.data.stack.slice(0, 4).join(' / ')
   })),
-  ...books.map((book) => ({
-    id: `book:${book.id}`,
-    label: book.title,
-    type: 'book' as const,
-    level: 2,
-    weight: 3,
-    cluster: 'reading' as const,
-    href: withBase(`/books/${book.id}/`),
-    summary: book.description ?? book.note,
-    meta: `${book.author} / ${book.category} / ${book.statusLabel}`
-  })),
   ...musicItems.map((item) => ({
     id: `music:${item.id}`,
     label: item.title,
@@ -126,7 +114,6 @@ const tagLabels = Array.from(
   new Set([
     ...posts.flatMap((post) => [getPrimaryCategory(post), ...post.data.tags]),
     ...projects.flatMap((project) => project.data.stack),
-    ...books.flatMap((book) => [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags]),
     ...musicItems.flatMap((item) => item.mood),
     ...visualItems.flatMap((item) => [item.type, ...item.tags]),
     ...githubRepos.map((repo) => repo.language || 'code')
@@ -136,7 +123,6 @@ const tagLabels = Array.from(
 const tagCluster = new Map<string, GraphCluster>();
 posts.forEach((post) => [getPrimaryCategory(post), ...post.data.tags].forEach((tag) => tagCluster.set(tag, 'writing')));
 projects.forEach((project) => project.data.stack.forEach((tag) => tagCluster.set(tag, 'engineering')));
-books.forEach((book) => [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].forEach((tag) => tagCluster.set(tag, 'reading')));
 musicItems.forEach((item) => item.mood.forEach((tag) => tagCluster.set(tag, 'media')));
 visualItems.forEach((item) => [item.type, ...item.tags].forEach((tag) => tagCluster.set(tag, 'visual')));
 githubRepos.forEach((repo) => tagCluster.set(repo.language || 'code', 'github'));
@@ -211,7 +197,6 @@ const links: KnowledgeGraphLink[] = [
   ...posts.map((post) => ({ source: 'collection:posts', target: `post:${post.id}`, type: 'contains' as const, weight: 1 })),
   ...notes.map((note) => ({ source: 'collection:notes', target: `note:${note.id}`, type: 'contains' as const, weight: 1 })),
   ...projects.map((project) => ({ source: 'collection:projects', target: `project:${project.id}`, type: 'contains' as const, weight: 1 })),
-  ...books.map((book) => ({ source: 'collection:books', target: `book:${book.id}`, type: 'contains' as const, weight: 1 })),
   ...musicItems.map((item) => ({ source: 'collection:music', target: `music:${item.id}`, type: 'contains' as const, weight: 1 })),
   ...visualItems.map((item) => ({ source: 'collection:visuals', target: `visual:${item.id}`, type: 'contains' as const, weight: 1 })),
   ...githubRepos.map((repo) => ({ source: 'collection:github', target: `github:${repo.name}`, type: 'contains' as const, weight: 1 })),
@@ -224,11 +209,6 @@ const links: KnowledgeGraphLink[] = [
     project.data.stack
       .filter((tag) => tagLabels.includes(tag))
       .map((tag) => ({ source: `project:${project.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
-  ),
-  ...books.flatMap((book) =>
-    [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags]
-      .filter((tag) => tagLabels.includes(tag))
-      .map((tag) => ({ source: `book:${book.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
   ),
   ...musicItems.flatMap((item) =>
     item.mood
