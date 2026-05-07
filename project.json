@@ -11,6 +11,9 @@
   "runtimeContractRoot": "packages/runtime-contract",
   "objectModelRoot": "packages/object-model",
   "runtimeKernelRoot": "packages/runtime-kernel",
+  "runtimeMigrationRoot": "runtime-migration.json",
+  "runtimeOverlayRoot": "packages/runtime-overlay",
+  "runtimeStoreRoot": "packages/runtime-store",
   "designSystemRoot": "packages/design-system",
   "sourcePostsRoot": "apps/web/src/content/posts",
   "vaultFileTruthRoot": "OpenList:/夸克网盘/obsidian/data",
@@ -49,10 +52,58 @@
     "runtimeContractRoot": "packages/runtime-contract",
     "objectModelRoot": "packages/object-model",
     "runtimeKernelRoot": "packages/runtime-kernel",
+    "runtimeMigrationRoot": "runtime-migration.json",
+    "runtimeOverlayRoot": "packages/runtime-overlay",
+    "runtimeStoreRoot": "packages/runtime-store",
     "designSystemRoot": "packages/design-system",
     "objectStorageTruth": "Tencent COS bucket myblog-media-1410041307 mounted in OpenList at /腾讯云COS",
     "buildOutputRoot": "apps/web/dist",
     "serverRuntimeRoot": "/srv/myblog/site"
+  },
+  "workspaceFederation": {
+    "status": "active",
+    "thesis": "Multiple workspaces are allowed, but authority is capability-based and machine-checked before deployment.",
+    "manifest": "workspace.manifest.json",
+    "profilesRoot": "workspaces",
+    "guardScript": "tools/deploy-guard.mjs",
+    "deployScript": "tools/deploy-static-site.mjs",
+    "checkCommand": "npm run check:workspace",
+    "deployCommand": "npm run deploy:site",
+    "currentDeployAuthority": {
+      "workspaceId": "myblog-canonical-active",
+      "workspaceType": "canonical",
+      "root": "E:\\My Project\\MyBlog",
+      "deploymentAuthority": true
+    },
+    "profiles": {
+      "canonical": {
+        "profile": "workspaces/canonical.json",
+        "defaultRoot": "E:\\My Project\\MyBlog",
+        "deploymentAuthority": true,
+        "capabilities": ["build", "deploy", "runtime", "schema", "pwa", "openlist-authority", "search-index"]
+      },
+      "experimental": {
+        "profile": "workspaces/experimental.json",
+        "defaultRootPattern": "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*",
+        "deploymentAuthority": false,
+        "capabilities": ["build", "preview", "frontend-ui", "feed-ui", "drawer-ui", "animations", "visual-prototype", "codex-draft"],
+        "forbidden": ["deployment", "pwa", "runtime-books", "runtime-schema", "openlist-authority", "server-runtime"]
+      },
+      "sandbox": {
+        "profile": "workspaces/sandbox.json",
+        "deploymentAuthority": false,
+        "capabilities": ["prototype", "research", "throwaway-demo"],
+        "forbidden": ["deployment", "pwa", "runtime-books", "runtime-schema", "openlist-authority", "server-runtime", "production-content"]
+      }
+    },
+    "rules": [
+      "workspace existence is not authority",
+      "deploys must run through npm run deploy:site or at least tools/deploy-guard.mjs",
+      "do not hand-run scp to /srv/myblog/site from an unchecked workspace",
+      ".codex-runtime worktrees are experimental by default and cannot deploy",
+      "production promotion means moving changes back into a workspace with the required capability"
+    ],
+    "incidentReference": "2026-05-07 stale .codex-runtime worktree deploy regression"
   },
   "contentPipeline": {
     "status": "Vault-backed / Git-backed CMS target documented; Vault file sync belongs to Remotely Save + OpenList WebDAV/S3; direct Obsidian-to-public sync is forbidden",
@@ -155,7 +206,7 @@
         "role": "current production projection shell"
       },
       "pwaTwa": {
-        "status": "web-pwa-surface-ready-local",
+        "status": "auto-generated-twa-artifacts-verified",
         "workspace": "apps/android-shell",
         "stack": "PWA manifest + service worker + Bubblewrap / Trusted Web Activity",
         "role": "installable Android shell that follows Web Runtime updates",
@@ -168,7 +219,18 @@
           "do not intercept /books/openlist",
           "do not intercept HTTP Range requests"
         ],
-        "validationCommand": "npm run check:pwa"
+        "validationCommand": "npm run android:twa:validate",
+        "generateCommand": "npm run android:twa:generate",
+        "buildCommand": "npm run android:twa:build",
+        "buildTestSignedCommand": "npm run android:twa:build:test-signed",
+        "generatedProjectRoot": ".runtime/android-twa",
+        "ciWorkflow": ".github/workflows/android-twa.yml",
+        "generatedArtifacts": [
+          ".runtime/android-twa/app-release-unsigned-aligned.apk",
+          ".runtime/android-twa/app/build/outputs/bundle/release/app-release.aab",
+          ".runtime/android-twa/app-release-signed.apk"
+        ],
+        "artifactRule": "generated-only; do not commit Bubblewrap output"
       },
       "androidNative": {
         "status": "target phase 3",
@@ -305,9 +367,12 @@
     "rule": "frontend runtime changes must update docs/frontend-runtime-audit.md or explicitly state why the audit map is unaffected"
   },
   "frontendRuntimeConvergence": {
-    "status": "P1 command/search convergence partially implemented",
+    "status": "Runtime Migration Sprint contract active; P1 command/search convergence partially implemented",
     "canonicalDoc": "docs/frontend-runtime-convergence.md",
     "runtimeKernelRoot": "packages/runtime-kernel",
+    "runtimeMigrationManifest": "runtime-migration.json",
+    "runtimeOverlayRoot": "packages/runtime-overlay",
+    "runtimeStoreRoot": "packages/runtime-store",
     "thesis": "MyBlog must converge command, keyboard, overlays, drawers, focus, navigation and client cache behavior into one frontend runtime kernel before adding more independent runtime layers.",
     "currentRisk": ["Inline Script Empire in apps/web/src/pages/index.astro", "Ctrl/Cmd+K split authority between HomeCommandPalette and fallback search", "custom window events as integration layer", "localStorage behaving as mixed preference/cache/migration/local-authority store"],
     "kernelResponsibilities": ["command bus", "keyboard layer", "overlay stack", "drawer intents", "focus restore", "typed runtime events", "navigation/history intents", "storage classification"],
@@ -330,6 +395,20 @@
       "do not introduce localStorage as new source of truth",
       "installed runtime libraries only become active owners after a concrete migrated surface and browser evidence"
     ]
+  },
+  "runtimeMigration": {
+    "status": "authority-cutover-contract-active",
+    "manifest": "runtime-migration.json",
+    "checkCommand": "npm run check:runtime-migration",
+    "priorityOrder": ["overlay", "bookDrawer", "command", "store", "graph", "motion"],
+    "contractPackages": {
+      "overlay": "packages/runtime-overlay",
+      "store": "packages/runtime-store",
+      "kernel": "packages/runtime-kernel",
+      "experienceTokens": "packages/design-system"
+    },
+    "nextCutover": "Book Drawer shell -> Vaul through packages/runtime-overlay",
+    "currentRule": "installed dependency is not migration; migrated=true requires browser evidence and rollback path"
   },
   "runtimeExperienceLayer": {
     "status": "P1 command/search surfaces use runtime tokens; broader surfaces still pending",

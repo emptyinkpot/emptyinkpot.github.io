@@ -62,6 +62,33 @@ Do not optimize for generic blog polish. Optimize for runtime surfaces:
 
 Installed libraries do not count as active experience owners until a migrated surface has browser evidence.
 
+## Authority Cutover Contract
+
+The Runtime Experience Layer now follows the Runtime Migration Sprint manifest:
+
+```text
+runtime-migration.json
+```
+
+This manifest prevents the common failure mode:
+
+```text
+dependency installed
+=
+fake migration
+```
+
+The first real visual/runtime migration should be the Book Drawer shell:
+
+```text
+Book Drawer
+-> packages/runtime-overlay
+-> Vaul
+```
+
+That cutover must keep Reader Runtime, MySQL reader memory and highlight truth
+unchanged. The overlay shell may move first; data authority must not move.
+
 ## Reference Systems
 
 | Reference | Learn |

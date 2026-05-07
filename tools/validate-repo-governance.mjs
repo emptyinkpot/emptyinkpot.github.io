@@ -7,6 +7,8 @@ const issues = [];
 validateMigrationStatus();
 validatePackageScripts();
 validatePagesWorkflow();
+validateWorkspaceGovernance();
+validateRuntimeMigrationGovernance();
 
 if (issues.length) {
   console.error(['Repository governance validation failed:', ...issues.map((issue) => `- ${issue}`)].join('\n'));
@@ -86,6 +88,93 @@ function validatePagesWorkflow() {
 
   if (!workflow.includes('path: ./apps/web/dist')) {
     issues.push('Pages workflow is not uploading the Astro dist directory');
+  }
+}
+
+function validateWorkspaceGovernance() {
+  const manifestPath = resolvePath('workspace.manifest.json');
+  if (!fs.existsSync(manifestPath)) {
+    issues.push('workspace.manifest.json is required so build/deploy authority is machine-readable');
+    return;
+  }
+
+  const manifest = JSON.parse(readText(manifestPath));
+  const project = JSON.parse(readText(resolvePath('project.json')));
+  const requiredCapabilityKeys = [
+    'canBuild',
+    'canDeploy',
+    'canModifyRuntime',
+    'canTouchPWA',
+    'canModifyRuntimeSchema',
+    'canModifyOpenListAuthority'
+  ];
+
+  if (!manifest.workspaceId) {
+    issues.push('workspace.manifest.json is missing workspaceId');
+  }
+  if (!manifest.workspaceType) {
+    issues.push('workspace.manifest.json is missing workspaceType');
+  }
+  if (!manifest.capabilities || typeof manifest.capabilities !== 'object') {
+    issues.push('workspace.manifest.json is missing capabilities');
+  } else {
+    requiredCapabilityKeys.forEach((key) => {
+      if (typeof manifest.capabilities[key] !== 'boolean') {
+        issues.push(`workspace.manifest.json capabilities.${key} must be boolean`);
+      }
+    });
+  }
+
+  if (!fileExists('tools/deploy-guard.mjs')) {
+    issues.push('tools/deploy-guard.mjs is required for deployment authority checks');
+  }
+  if (!fileExists('tools/deploy-static-site.mjs')) {
+    issues.push('tools/deploy-static-site.mjs is required so deploys go through deploy guard');
+  }
+  if (!fileExists('workspaces/canonical.json')) {
+    issues.push('workspaces/canonical.json is required');
+  }
+  if (!fileExists('workspaces/experimental.json')) {
+    issues.push('workspaces/experimental.json is required');
+  }
+  if (!fileExists('workspaces/sandbox.json')) {
+    issues.push('workspaces/sandbox.json is required');
+  }
+
+  const allowedRoots = [manifest.root, ...(manifest.allowedRoots ?? [])].filter(Boolean);
+  if (project.localSourceRoot && !allowedRoots.includes(project.localSourceRoot)) {
+    issues.push('workspace.manifest.json allowedRoots must include project.json localSourceRoot');
+  }
+
+  if (manifest.workspaceType === 'canonical' && manifest.deploymentAuthority !== true) {
+    issues.push('canonical workspace must declare deploymentAuthority=true');
+  }
+
+  const packageJson = JSON.parse(readText(resolvePath('package.json')));
+  if (!packageJson.scripts?.['check:workspace']) {
+    issues.push('package.json is missing check:workspace script');
+  }
+  if (!packageJson.scripts?.['deploy:site']) {
+    issues.push('package.json is missing deploy:site script');
+  }
+}
+
+function validateRuntimeMigrationGovernance() {
+  if (!fileExists('runtime-migration.json')) {
+    issues.push('runtime-migration.json is required for Runtime Migration Sprint authority tracking');
+  }
+  if (!fileExists('tools/validate-runtime-migration.mjs')) {
+    issues.push('tools/validate-runtime-migration.mjs is required');
+  }
+  if (!fileExists('packages/runtime-overlay/README.md')) {
+    issues.push('packages/runtime-overlay/README.md is required');
+  }
+  if (!fileExists('packages/runtime-store/README.md')) {
+    issues.push('packages/runtime-store/README.md is required');
+  }
+  const packageJson = JSON.parse(readText(resolvePath('package.json')));
+  if (!packageJson.scripts?.['check:runtime-migration']) {
+    issues.push('package.json is missing check:runtime-migration script');
   }
 }
 

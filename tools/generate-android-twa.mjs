@@ -13,9 +13,12 @@ const outputDir = path.resolve(rootDir, getArgValue('--output', defaultOutputDir
 const shouldGenerate = args.has('--generate') || args.has('--build');
 const shouldBuild = args.has('--build');
 const validateOnly = args.has('--validate-only') || (!shouldGenerate && !shouldBuild);
-const skipSigning = args.has('--skip-signing') || process.env.TWA_SKIP_SIGNING === '1';
+const testSigning = args.has('--test-signing') || process.env.TWA_TEST_SIGNING === '1';
+const skipSigning = !testSigning && (args.has('--skip-signing') || process.env.TWA_SKIP_SIGNING === '1');
+const testSigningPassword = 'myblogtest';
 
 const contract = readJson(contractPath);
+let configuredJdkPath = '';
 let configuredAndroidSdkPath = '';
 
 await verifyLocalPwaSurface();
@@ -41,15 +44,21 @@ configureBubblewrap();
 
 runBubblewrap(['update', '--skipVersionUpgrade', `--manifest=${path.join(outputDir, 'twa-manifest.json')}`, `--directory=${outputDir}`]);
 patchGeneratedGradleProject();
+if (testSigning) {
+  ensureTestSigningKey();
+}
 
 if (shouldBuild) {
   runBubblewrap([
     'build',
-    ...(skipSigning ? ['--skipSigning'] : []),
+    ...(skipSigning || testSigning ? ['--skipSigning'] : []),
     '--skipPwaValidation',
     `--manifest=${path.join(outputDir, 'twa-manifest.json')}`,
     `--directory=${outputDir}`
   ]);
+  if (testSigning) {
+    signApkWithTestKey();
+  }
 }
 
 console.log(JSON.stringify({
@@ -58,7 +67,7 @@ console.log(JSON.stringify({
   outputDir: path.relative(rootDir, outputDir).replaceAll('\\', '/'),
   apk: shouldBuild ? path.relative(rootDir, path.join(outputDir, skipSigning ? 'app-release-unsigned-aligned.apk' : 'app-release-signed.apk')).replaceAll('\\', '/') : null,
   appBundle: shouldBuild ? path.relative(rootDir, path.join(outputDir, skipSigning ? 'app/build/outputs/bundle/release/app-release.aab' : 'app-release-bundle.aab')).replaceAll('\\', '/') : null,
-  signing: skipSigning ? 'skipped' : 'required'
+  signing: testSigning ? 'test-signed' : (skipSigning ? 'skipped' : 'required')
 }, null, 2));
 
 async function verifyLocalPwaSurface() {
@@ -197,6 +206,7 @@ function configureBubblewrap() {
   const configDir = path.join(bubblewrapHome, '.bubblewrap');
   fs.mkdirSync(configDir, { recursive: true });
   writeJson(path.join(configDir, 'config.json'), { jdkPath, androidSdkPath });
+  configuredJdkPath = jdkPath;
   configuredAndroidSdkPath = androidSdkPath;
 }
 
@@ -207,17 +217,19 @@ function runBubblewrap(bubblewrapArgs) {
       ...process.env,
       ANDROID_HOME: configuredAndroidSdkPath || process.env.ANDROID_HOME,
       ANDROID_SDK_ROOT: configuredAndroidSdkPath || process.env.ANDROID_SDK_ROOT,
-      BUBBLEWRAP_KEYSTORE_PASSWORD: process.env.BUBBLEWRAP_KEYSTORE_PASSWORD || '',
-      BUBBLEWRAP_KEY_PASSWORD: process.env.BUBBLEWRAP_KEY_PASSWORD || ''
+      BUBBLEWRAP_KEYSTORE_PASSWORD: testSigning ? testSigningPassword : (process.env.BUBBLEWRAP_KEYSTORE_PASSWORD || ''),
+      BUBBLEWRAP_KEY_PASSWORD: testSigning ? testSigningPassword : (process.env.BUBBLEWRAP_KEY_PASSWORD || '')
     }
   });
 }
 
 function patchGeneratedGradleProject() {
   const wrapperPropertiesPath = path.join(outputDir, 'gradle/wrapper/gradle-wrapper.properties');
-  if (fs.existsSync(wrapperPropertiesPath) && process.env.TWA_GRADLE_DISTRIBUTION_URL) {
+  const distributionUrl = process.env.TWA_GRADLE_DISTRIBUTION_URL ||
+    (process.platform === 'win32' ? 'https://mirrors.cloud.tencent.com/gradle/gradle-8.11.1-bin.zip' : '');
+  if (fs.existsSync(wrapperPropertiesPath) && distributionUrl) {
     const source = fs.readFileSync(wrapperPropertiesPath, 'utf8');
-    const escapedUrl = process.env.TWA_GRADLE_DISTRIBUTION_URL.replace('https://', 'https\\://');
+    const escapedUrl = distributionUrl.replace('https://', 'https\\://');
     fs.writeFileSync(
       wrapperPropertiesPath,
       source
@@ -227,10 +239,85 @@ function patchGeneratedGradleProject() {
   }
 }
 
+function ensureTestSigningKey() {
+  const keyPath = path.join(outputDir, 'android.keystore');
+  if (fs.existsSync(keyPath)) {
+    return;
+  }
+
+  const keytool = findExecutable(path.join(configuredJdkPath, 'bin'), 'keytool');
+  if (!fs.existsSync(keytool)) {
+    throw new Error(`Cannot find keytool for test signing: ${keytool}`);
+  }
+
+  run(keytool, [
+    '-genkeypair',
+    '-v',
+    '-keystore', keyPath,
+    '-storepass', testSigningPassword,
+    '-keypass', testSigningPassword,
+    '-alias', 'myblog',
+    '-keyalg', 'RSA',
+    '-keysize', '2048',
+    '-validity', '10000',
+    '-dname', 'CN=MyBlog Runtime, OU=MyBlog, O=TengokuKK, L=Shanghai, S=Shanghai, C=CN'
+  ], { cwd: outputDir });
+}
+
+function findExecutable(directory, name) {
+  const candidates = process.platform === 'win32'
+    ? [`${name}.exe`, `${name}.cmd`, `${name}.bat`, name]
+    : [name];
+  return candidates.map((candidate) => path.join(directory, candidate)).find((candidate) => fs.existsSync(candidate)) || path.join(directory, commandName(name));
+}
+
+function signApkWithTestKey() {
+  const java = findExecutable(path.join(configuredJdkPath, 'bin'), 'java');
+  const apksignerJar = path.join(configuredAndroidSdkPath, 'build-tools', '34.0.0', 'lib', 'apksigner.jar');
+  const unsignedApk = path.join(outputDir, 'app-release-unsigned-aligned.apk');
+  const signedApk = path.join(outputDir, 'app-release-signed.apk');
+  const keyPath = path.join(outputDir, 'android.keystore');
+
+  for (const filePath of [java, apksignerJar, unsignedApk, keyPath]) {
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Cannot sign test APK; missing ${filePath}`);
+    }
+  }
+
+  fs.rmSync(signedApk, { force: true });
+  run(java, [
+    '-Xmx1024M',
+    '-Xss1m',
+    '-jar',
+    apksignerJar,
+    'sign',
+    '--ks', keyPath,
+    '--ks-key-alias', 'myblog',
+    '--ks-pass', `pass:${testSigningPassword}`,
+    '--key-pass', `pass:${testSigningPassword}`,
+    '--out', signedApk,
+    unsignedApk
+  ], { cwd: outputDir });
+
+  run(java, [
+    '-jar',
+    apksignerJar,
+    'verify',
+    signedApk
+  ], { cwd: outputDir });
+}
+
 function run(command, commandArgs, options = {}) {
   const cwd = options.cwd || rootDir;
   const env = options.env || process.env;
-  const result = process.platform === 'win32'
+  const result = process.platform === 'win32' && isDirectWindowsExecutable(command)
+    ? spawnSync(command, commandArgs, {
+      cwd,
+      env,
+      stdio: 'inherit',
+      shell: false
+    })
+    : process.platform === 'win32'
     ? spawnSync(process.env.ComSpec || 'cmd.exe', ['/d', '/s', '/c', [command, ...commandArgs].map(quoteWindowsArg).join(' ')], {
       cwd,
       env,
@@ -259,6 +346,10 @@ function quoteWindowsArg(value) {
     return text;
   }
   return `"${text.replaceAll('"', '\\"')}"`;
+}
+
+function isDirectWindowsExecutable(command) {
+  return path.isAbsolute(command) && command.toLowerCase().endsWith('.exe');
 }
 
 function commandName(name) {

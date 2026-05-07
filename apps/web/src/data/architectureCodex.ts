@@ -60,7 +60,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     thesis:
       'Frontend Runtime Convergence 把 MyBlog 当前的 Astro SSR、React islands、inline scripts、custom events、Pagefind、OpenList shell、Pinterest shell、localStorage cache 和 Runtime APIs 收束到一个显式的前端 Runtime Kernel 合同里，先统一 command、keyboard、overlay、drawer、focus 和 storage classification，再逐步迁移具体 owner。',
     status: 'forming',
-    systems: ['Runtime Kernel', 'Command Bus', 'Keyboard Layer', 'Overlay Stack', 'Drawer Intents', 'Focus Restore', 'Storage Classification', 'cmdk', 'Motion', 'Floating UI'],
+    systems: ['Runtime Kernel', 'Runtime Migration Manifest', 'Runtime Overlay', 'Runtime Store', 'Command Bus', 'Keyboard Layer', 'Overlay Stack', 'Drawer Intents', 'Focus Restore', 'Storage Classification', 'cmdk', 'Motion', 'Floating UI'],
     inspiration: ['Linear runtime discipline', 'Raycast command model', 'AFFiNE workspace runtime', 'Arc Browser layering', 'React Aria focus semantics'],
     rejected: [
       '继续新增自由 inline script，因为首页已经有大型 Inline Script Empire，局部补丁会扩大 hidden coupling。',
@@ -72,6 +72,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     runtime: [
       '规范文档是 docs/frontend-runtime-convergence.md；它是前端运行时收束入口。',
       'P0 合同包是 packages/runtime-kernel，当前 dependency-free，只定义 command、overlay、drawer、keyboard、authority 和 storage classification，不改变生产行为。',
+      'Runtime Migration Sprint 的机器真源是 runtime-migration.json；它按 overlay、bookDrawer、command、store、graph、motion 记录 currentOwner、targetOwner、migrated、evidence 和 rollback。',
+      'packages/runtime-overlay 是 overlay / drawer / popover / tooltip / context menu 的 authority cutover 合同；packages/runtime-store 是 overlayStore、commandStore、readerStore、graphStore、visualStore 的 store authority 合同。',
       'packages/runtime-kernel 不替代 packages/runtime-contract；前者管前端交互意图，后者管 API transport envelope。',
       'packages/runtime-kernel 不替代 packages/object-model；前者管 runtime intent，后者管 KnowledgeObject identity 和 relation。',
       '当前 active libraries 是 cmdk、motion 和 @floating-ui/react；Zustand、Radix UI primitives、Vaul、React Flow 已安装但尚未迁移任何 runtime owner。',
@@ -89,6 +91,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     future: [
       'P1 让 HomeCommandPalette 成为唯一 Ctrl/Cmd+K owner，把 fallback search 改成 runtime command。',
       'P2 把 OpenList shell、Pinterest shell、Article Drawer 和 Book Drawer 纳入统一 overlay stack 与 focus restore 规则。',
+      '下一次真实 cutover 应优先迁 Book Drawer shell -> Vaul through packages/runtime-overlay，但 Reader memory / highlights 仍由 MySQL Runtime Truth 拥有。',
       'P3 在第一个 owner 迁移时引入 Zustand 或同级 store；优先迁移 overlay stack、command state 和 reader shell state。',
       'Graph 只有在 KnowledgeObject contract、search authority 和 drawer navigation 稳定后才迁移到 React Flow。',
       '生成 machine listener inventory，按 source file、event type、selector 和 owner 输出运行时清单。'
@@ -306,16 +309,18 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     title: 'Runtime Federation',
     subtitle: '克隆成熟系统角色，而不是重写底层引擎。',
     thesis:
-      'Runtime Federation 把 MyBlog 定义为 Object Layer Glue 和 Projection Shell：Obsidian / Remotely Save / OpenList / Immich / Directus / Meilisearch 等成熟系统各自拥有权威，MyBlog 只做对象投影、关系语义、阅读空间和多客户端 Runtime 合同。',
+      'Runtime Federation 把 MyBlog 定义为 Object Layer Glue 和 Projection Shell：Obsidian / Remotely Save / OpenList / Immich / Directus / Meilisearch 等成熟系统各自拥有权威，MyBlog 只做对象投影、关系语义、阅读空间和多客户端 Runtime 合同。同一原则也约束本地 workspace：多个 worktree 可以并存，但 build、deploy、PWA、runtime schema 和 OpenList authority 必须由 workspace capability 决定。',
     status: 'forming',
-    systems: ['Obsidian', 'Remotely Save', 'OpenList + COS', 'AFFiNE', 'Anytype', 'Immich', 'Paperless-ngx', 'Mihon', 'Read You', 'Directus', 'Meilisearch', 'MyBlog Object Layer Glue'],
-    inspiration: ['AFFiNE workspace runtime', 'Anytype object graph', 'Immich media runtime', 'Paperless-ngx document objects', 'Mihon Android runtime', 'Read You feed runtime', 'Obsidian Remotely Save'],
+    systems: ['Obsidian', 'Remotely Save', 'OpenList + COS', 'Workspace Capability System', 'Deploy Guard', 'AFFiNE', 'Anytype', 'Immich', 'Paperless-ngx', 'Mihon', 'Read You', 'Directus', 'Meilisearch', 'MyBlog Object Layer Glue'],
+    inspiration: ['AFFiNE workspace runtime', 'Anytype object graph', 'Kubernetes namespace capability', 'Android permission manifest', 'AWS IAM', 'GitHub Actions environment protection', 'Immich media runtime', 'Paperless-ngx document objects', 'Mihon Android runtime', 'Read You feed runtime', 'Obsidian Remotely Save'],
     rejected: [
       '自写 Vault sync，因为成熟 WebDAV / S3 同步和冲突处理应该交给 Remotely Save 这类系统。',
       '自写媒体服务器、缩略图、EXIF、AI tagging 和 embedding，因为 Immich 已经覆盖媒体 runtime 的主体职责。',
       '自写 CMS、搜索引擎、WebDAV、PDF engine、Android source/download/update runtime，因为这些都不是 MyBlog 的差异化价值。',
       '复制 AFFiNE / Anytype / Mihon / Read You 的 UI，因为 MyBlog 要学习系统边界和 authority，不是复制外观。',
-      '把 Android 做成第二套业务宇宙，因为 Android 只能消费同一 Runtime API 和 KnowledgeObject graph。'
+      '把 Android 做成第二套业务宇宙，因为 Android 只能消费同一 Runtime API 和 KnowledgeObject graph。',
+      '用“单 canonical workspace”禁止所有 worktree，因为真正问题不是 workspace 数量，而是旧 worktree 拥有了不该拥有的 deploy 行为。',
+      '继续手工从任意目录 scp 到 /srv/myblog/site，因为这绕过了 workspace authority 和 deploy capability。'
     ],
     runtime: [
       '目标链路是 Obsidian -> Remotely Save -> OpenList WebDAV / S3-compatible endpoint -> OpenList + COS -> MyBlog Runtime API / Object Layer Glue -> Web / PWA-TWA / Android / Search / CLI / AI Agent。',
@@ -325,16 +330,23 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'Paperless-ngx 是 Document Object reference，核心启发是 file != document，文件只是载体，文档对象才拥有 metadata lifecycle。',
       'Mihon 和 Read You 是 Android / Feed Runtime reference，主要学习 source abstraction、cache、downloads、updates、offline feed 和 reading state。',
       'Directus 与 Meilisearch 仍是 target-not-deployed，分别负责 metadata overlay 和 dynamic object search。',
-      'MyBlog 自己只写 Object Layer Glue、Runtime Schema、Projection Logic、Relation System、Knowledge Runtime Semantics 和 KnowledgeObject projection。'
+      'MyBlog 自己只写 Object Layer Glue、Runtime Schema、Projection Logic、Relation System、Knowledge Runtime Semantics 和 KnowledgeObject projection。',
+      'workspace.manifest.json 是当前 workspace 的机器可读 authority 声明；workspaces/canonical.json、workspaces/experimental.json、workspaces/sandbox.json 是分级模板。',
+      'tools/deploy-guard.mjs 在部署前检查 workspaceId、workspaceType、allowedRoots、deploymentAuthority 和 capabilities.canDeploy；.codex-runtime/worktrees/* 默认不能声明生产部署权。',
+      'npm run deploy:site 是生产静态站点发布入口；它先运行 deploy guard，再 build，再上传 apps/web/dist 到 /srv/myblog/site。'
     ],
     tradeoffs: [
       'Runtime federation 增加部署、监控和接口治理成本，但避免把个人项目拖进自研同步器、媒体库、搜索引擎和移动端运行时的长期维护泥潭。',
       '学习成熟项目的系统角色比直接 clone 代码慢一点，但能保护 MyBlog 的 authority 边界和视觉身份。',
       '多系统组合会有同步延迟和 failure mode，但每个系统拥有清楚 authority 后，比一个全能后端更容易排障和替换。',
-      'reference-only 系统必须明确标注，否则文档会把“应该学习”误写成“已经依赖”。'
+      'reference-only 系统必须明确标注，否则文档会把“应该学习”误写成“已经依赖”。',
+      'workspace capability 增加了发布前步骤，但能防止旧 worktree、实验分支或 AI 临时环境把生产站点回滚到早先版本。',
+      'experimental worktree 仍可 build 和 preview，保留并行研发效率；上线必须把改动提升回拥有对应 capability 的 workspace。'
     ],
     future: [
       '把 Runtime Federation 加入 project.json 的 machine-readable contract，并要求新服务声明 authority、status、integration path、secret boundary 和 failure mode。',
+      '为 workspace.manifest.json 增加 sync fingerprint：lastSyncedFrom、lastSyncedAt、baseCommit、syncAge 和 feature scope，部署前提示 stale workspace 风险。',
+      '把 feature capability audit 接入 git diff，修改 PWA、Reader Runtime、OpenList authority 或 runtime schema 时自动检查 workspace 是否拥有对应 capability。',
       '把 Runtime API schema 从 README 推进到 packages/runtime-contract，让 Web、PWA/TWA、Android、Search、CLI 和 AI Agent 共用同一 envelope。',
       '为 KnowledgeObject 增加 source provenance 字段，记录对象来自 OpenList、Directus、Immich、MySQL runtime 还是 Astro content collection。',
       '部署 Directus / Meilisearch 前先完成 disk readiness、secret boundary 和 rollback contract。',
@@ -399,6 +411,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'Runtime API 只能有一套：/api/feed、/api/books、/api/visuals、/api/search、/api/graph、/api/runtime/*。Web 和 Android 都消费同一套合同。',
       'Web 当前是 Astro Projection Shell；Android 未来只能是另一个 Projection Surface，不得拥有 book existence、metadata authority、OpenList parsing 或 search ranking authority。',
       'Phase 1 已建立 apps/android-shell skeleton，并在 apps/web/public/manifest.webmanifest 与 apps/web/public/sw.js 提供 Web PWA surface：目标是 PWA + Bubblewrap / Trusted Web Activity，快速得到可安装 Android 包，更新仍随 Web Runtime 发布。',
+      'Android TWA 现在由 tools/generate-android-twa.mjs 自动生成：npm run android:twa:validate 校验本地和线上 PWA，npm run android:twa:generate 生成 .runtime/android-twa，npm run android:twa:build 生成未签名 APK/AAB，npm run android:twa:build:test-signed 生成本机测试签名 APK。',
       'Phase 2 是 Runtime API 化：把 Feed、Books、Visuals、Search、Graph 明确成稳定 API 和 schema。',
       'Phase 3 才是 Kotlin + Compose Native Runtime Client：Compose UI、ViewModel + Flow、Ktor/Retrofit、Coil、Room、PdfRenderer / EPUB runtime、AppUpdater。',
       'packages/runtime-contract 和 packages/object-model 是 Web、Android、Search、CLI 和 AI Agent 的共享合同入口；它们不是数据真源。',
@@ -416,7 +429,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     future: [
       '定义 /api/feed、/api/books、/api/visuals、/api/search、/api/graph 的 response schema 和 versioning。',
       '部署 Web PWA surface 后，用 Lighthouse / Chrome installability 检查线上 manifest、service worker scope、icon 和 standalone display。',
-      '让 apps/android-shell 承接 Bubblewrap 配置，并在 installability 通过后生成 TWA 工程。',
+      '让 apps/android-shell 承接 Bubblewrap 配置，并在 installability 通过后生成 TWA 工程；CI 入口是 .github/workflows/android-twa.yml，生成物只作为 artifact 上传。',
       '建立 android-client target repo 或 apps/android 前，先冻结 Runtime API schema。',
       '为 Android native cache 定义 Room schema、sync watermark、etag/version 和 eviction policy。',
       '让 Web、Android、Search 和 AI Agent 都通过 KnowledgeObject projection 消费同一对象图。'
@@ -588,6 +601,14 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
 ];
 
 export const architectureCodexGlossary = [
+  {
+    term: 'Runtime Migration Sprint',
+    definition: '从 installed / not migrated 进入 authority cutover 的执行模式；机器真源是 runtime-migration.json，每个 surface 必须记录 owner、target、evidence 和 rollback。'
+  },
+  {
+    term: 'Authority Cutover',
+    definition: '把某个 runtime surface 的事件、状态、focus、Escape 和渲染 owner 从 legacy owner 切到目标 owner 的过程；依赖安装不算 cutover。'
+  },
   {
     term: 'Reader Pool',
     definition: '首页常驻的最近阅读器集合，关闭抽屉时隐藏但不销毁最近 3 本书的 reader runtime。'

@@ -14,17 +14,31 @@ It is intentionally a PWA/TWA shell target, not a native Kotlin client and not a
 
 - PWA manifest and service worker live under `apps/web`.
 - Current web entries are `apps/web/public/manifest.webmanifest` and `apps/web/public/sw.js`.
-- Bubblewrap / Trusted Web Activity configuration belongs here once the PWA manifest is ready.
+- Bubblewrap / Trusted Web Activity configuration is generated from `apps/android-shell/twa.contract.json`.
 - Native Android (`apps/android-native`) is blocked until `/api/feed`, `/api/books`, `/api/visuals`, `/api/search`, and `/api/graph` have stable schemas.
 
-## First Build Path
+## Automatic Build Path
 
 ```bash
-bubblewrap init --manifest=https://blog.tengokukk.com/manifest.webmanifest
-bubblewrap build
+npm run android:twa:validate
+npm run android:twa:generate
+npm run android:twa:build
+npm run android:twa:build:test-signed
 ```
 
-Do not run Bubblewrap against production until the deployed site exposes the manifest and installability checks pass.
+The generated Android project is `.runtime/android-twa`. It is disposable build output, not a source workspace.
+
+Generated unsigned artifacts:
+
+- `.runtime/android-twa/app-release-unsigned-aligned.apk`
+- `.runtime/android-twa/app/build/outputs/bundle/release/app-release.aab`
+- `.runtime/android-twa/app-release-signed.apk` from `android:twa:build:test-signed`
+
+CI entrypoint:
+
+- `.github/workflows/android-twa.yml`
+
+Do not run Bubblewrap against production until the deployed site exposes the manifest, service worker, PWA icons and installability checks pass.
 
 ## Service Worker Boundary
 

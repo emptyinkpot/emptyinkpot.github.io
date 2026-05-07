@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "status": "authority-cutover-contract-active",
+  "thesis": "Runtime libraries are not migration. A surface becomes migrated only after its authority, owner, fallback, evidence and rollback path are declared here.",
+  "rules": [
+    "migrate one runtime surface at a time",
+    "do not mark a surface migrated because a dependency is installed",
+    "do not create a feature-local store outside the runtime-store contract",
+    "do not add new custom window events without a runtime-kernel event or command",
+    "do not move graph to React Flow until object and search authority are stable",
+    "browser evidence is required before migrated=true"
+  ],
+  "priorityOrder": [
+    "overlay",
+    "bookDrawer",
+    "command",
+    "store",
+    "graph",
+    "motion"
+  ],
+  "surfaces": {
+    "overlay": {
+      "legacy": true,
+      "currentOwner": "inline-runtime + React islands + custom events",
+      "targetOwner": "packages/runtime-overlay",
+      "targetLibraries": ["Radix UI primitives", "Vaul"],
+      "migrated": false,
+      "phase": "P1",
+      "nextCutover": "Book Drawer enters overlay registry and focus/escape contract before visual restyling",
+      "evidence": [],
+      "rollback": "keep legacy drawer and shell custom events until one overlay owner is verified"
+    },
+    "bookDrawer": {
+      "legacy": true,
+      "currentOwner": "BookDrawerReader React island + homepage inline drawer runtime",
+      "targetOwner": "Vaul drawer through packages/runtime-overlay",
+      "targetLibraries": ["Vaul", "motion"],
+      "migrated": false,
+      "phase": "P1",
+      "nextCutover": "migrate Book Drawer shell first; keep Reader runtime and MySQL memory authority unchanged",
+      "evidence": [],
+      "rollback": "feature flag returns book drawer open events to current BookDrawerReader shell"
+    },
+    "command": {
+      "legacy": true,
+      "currentOwner": "HomeCommandPalette cmdk island with inline search bridge",
+      "targetOwner": "cmdk + packages/runtime-store commandStore",
+      "targetLibraries": ["cmdk", "zustand"],
+      "migrated": false,
+      "phase": "P2",
+      "currentEvidence": [
+        "HomeCommandPalette owns Ctrl/Cmd+K after hydration",
+        "runtime:command search.open is emitted before legacy home-search-open"
+      ],
+      "nextCutover": "move command open state and selected command action into commandStore",
+      "evidence": [],
+      "rollback": "keep ready marker and legacy search bridge until commandStore is verified"
+    },
+    "store": {
+      "legacy": true,
+      "currentOwner": "local component state + inline vars + localStorage",
+      "targetOwner": "packages/runtime-store",
+      "targetLibraries": ["zustand"],
+      "migrated": false,
+      "phase": "P2",
+      "nextCutover": "overlayStore first, then commandStore; reader memory remains MySQL runtime truth",
+      "evidence": [],
+      "rollback": "stores remain projection state only and can be bypassed by existing owners"
+    },
+    "graph": {
+      "legacy": "svg",
+      "currentOwner": "Astro-rendered graph and inline/runtime-local interactions",
+      "targetOwner": "@xyflow/react graph runtime",
+      "targetLibraries": ["@xyflow/react"],
+      "migrated": false,
+      "phase": "P4",
+      "blockedBy": [
+        "KnowledgeObject contract must stabilize",
+        "search authority must be settled",
+        "drawer navigation intents must be typed"
+      ],
+      "evidence": [],
+      "rollback": "keep existing /knowledge/ projection until React Flow route has browser evidence"
+    },
+    "motion": {
+      "legacy": true,
+      "currentOwner": "per-component CSS and motion/react usage",
+      "targetOwner": "Runtime Experience Layer object continuity contract",
+      "targetLibraries": ["motion"],
+      "migrated": false,
+      "phase": "P3",
+      "nextCutover": "Book Card -> Drawer -> Reader continuity after overlay owner is stable",
+      "evidence": [],
+      "rollback": "motion remains decorative tokens until authority cutover is done"
+    }
+  }
+}

@@ -377,19 +377,56 @@ https://blog.tengokukk.com/
 
 ### 0.7.2 Deployment Strategy
 
-1. 在本地源码仓 `E:\My Project\MyBlog` 完成编辑与构建。
-2. 确认 `apps/web/dist/` 是本轮有效构建产物。
-3. 再把构建产物发布到 `/srv/myblog/site`。
-4. 不要先改服务器再回补本地源码仓。
+1. 先运行 `npm run check:workspace`，确认当前 workspace 拥有本次操作需要的 capability。
+2. 在拥有 deploy authority 的 workspace 完成编辑与构建；当前 deploy-authoritative workspace 是 `E:\My Project\MyBlog`。
+3. 确认 `apps/web/dist/` 是本轮有效构建产物。
+4. 使用 `npm run deploy:site` 发布到 `/srv/myblog/site`；该命令会先执行 `tools/deploy-guard.mjs`。
+5. 不要从未经 workspace guard 校验的 worktree 手工 `scp` 到生产目录。
+6. 不要先改服务器再回补本地源码仓。
+
+### 0.7.2.1 Workspace Capability Governance
+
+MyBlog 允许多个 runtime workspace、AI worktree 和 projection 环境并存；事故根因不是“存在多个 workspace”，而是旧 worktree 拥有了实际 deploy 行为却没有当前 runtime authority。因此本仓采用 Workspace Capability System：
+
+```text
+workspace
+  !=
+authority
+```
+
+机器合同：
+
+- 当前 workspace 声明：`workspace.manifest.json`
+- workspace 分级模板：`workspaces/canonical.json`、`workspaces/experimental.json`、`workspaces/sandbox.json`
+- 部署前守门脚本：`tools/deploy-guard.mjs`
+- 生产发布入口：`npm run deploy:site`
+- 本地校验入口：`npm run check:workspace`
+
+能力分级：
+
+| Workspace | 默认路径 / 用途 | 允许 | 禁止 |
+| --- | --- | --- | --- |
+| canonical | `E:\My Project\MyBlog` | build、deploy、runtime、schema、PWA、OpenList authority | 无 |
+| experimental | `C:\Users\ASUS-KL\.codex-runtime\worktrees\*` | UI、feed、drawer、animations、visual prototype、Codex draft | deploy、PWA、runtime-books、runtime schema、OpenList authority |
+| sandbox | 一次性 prototype | research、throwaway demo | build/deploy、server runtime、production content |
+
+部署规则：
+
+- `deploymentAuthority=true` 只是声明，最终必须由 `tools/deploy-guard.mjs` 校验。
+- `.codex-runtime/worktrees/*` 默认不拥有部署能力；即使能构建，也不能发布到 `/srv/myblog/site`。
+- 如果某个 worktree 的实验成果要上线，先把改动提升回拥有对应 capability 的 workspace，再构建和部署。
+- 修改 PWA、Reader Runtime、OpenList authority、runtime schema、部署脚本或服务端运行时前，必须确认当前 workspace 有对应 capability。
+- 任何 workspace capability 变更必须同步更新 `README.md`、`project.json`、`workspace.manifest.json`、`workspaces/*.json` 和 `/codex/runtime-federation/`。
 
 ### 0.7.3 Publish Checklist
 
 1. 确认改动落在正确真源边界。
-2. 执行 `npm run lint`。
-3. 执行 `npm run check`。
-4. 执行 `npm run build`。
-5. 若改动涉及公开内容路由或首页交互，补一轮本地可见结果验证。
-6. 完成提交、推送与 PR 更新后，再判断是否需要发布到 `/srv/myblog/site`。
+2. 执行 `npm run check:workspace`。
+3. 执行 `npm run lint`。
+4. 执行 `npm run check`。
+5. 执行 `npm run build`。
+6. 若改动涉及公开内容路由或首页交互，补一轮本地可见结果验证。
+7. 完成提交、推送与 PR 更新后，再判断是否需要发布到 `/srv/myblog/site`；发布必须走 `npm run deploy:site`。
 
 ### 0.7.4 AI Execution Protocol
 
@@ -562,6 +599,8 @@ MyBlog Visuals / Search / Graph
 
 MyBlog 后续不再从零手写 sync、media runtime、reader engine、metadata backend 或 Android runtime。正确路线是 clone 成熟系统的系统角色，而不是复制 UI 或把第三方项目整段嵌入仓库。
 
+Runtime Federation 同时适用于本地工程 workspace：多个 workspace 可以并行存在，但必须声明 capability。`E:\My Project\MyBlog` 是当前 canonical / deploy-authoritative workspace；`.codex-runtime/worktrees/*` 默认是 experimental workspace，只能做 UI、Feed、Drawer、Visual 和 Codex draft，不能部署、改 PWA、改 runtime schema 或改 OpenList authority。部署前必须通过 `tools/deploy-guard.mjs`，否则不得写入 `/srv/myblog/site`。
+
 目标 federation：
 
 ```text
@@ -651,6 +690,34 @@ packages/runtime-kernel/
 ```
 
 `packages/runtime-kernel` 当前只是 P0 dependency-free contract，不改变线上行为、不替代 `packages/runtime-contract`、不替代 `packages/object-model`。它定义 command、overlay、drawer、keyboard、authority 和 localStorage classification，用于后续逐个迁移 owner。
+
+Runtime Migration Sprint 机器合同：
+
+```text
+runtime-migration.json
+packages/runtime-overlay/
+packages/runtime-store/
+tools/validate-runtime-migration.mjs
+```
+
+`runtime-migration.json` 是下一阶段 Authority Cutover 的机器真源。它把 overlay、bookDrawer、command、store、graph、motion 分成独立迁移 surface，并要求每个 surface 写清 `currentOwner`、`targetOwner`、`migrated`、`evidence` 和 `rollback`。依赖已安装不等于迁移完成；只有有浏览器证据并把 `migrated` 改为 `true` 才算完成。
+
+当前优先级：
+
+| Surface | 当前 owner | 目标 owner | 状态 |
+| --- | --- | --- | --- |
+| Overlay | inline runtime + React islands + custom events | `packages/runtime-overlay` + Radix / Vaul | contract active |
+| Book Drawer | `BookDrawerReader` + homepage drawer runtime | Vaul through `packages/runtime-overlay` | next cutover |
+| Command | `HomeCommandPalette` + legacy search bridge | `cmdk` + `commandStore` | partially converged |
+| Store | component state / inline vars / localStorage | `packages/runtime-store` + Zustand | contract only |
+| Graph | SVG / inline runtime | `@xyflow/react` | blocked until object/search authority settles |
+| Motion | per-component CSS / Motion usage | Runtime Experience object continuity | later phase |
+
+本地校验：
+
+```bash
+npm run check:runtime-migration
+```
 
 Runtime Kernel 职责边界：
 
@@ -772,6 +839,12 @@ Web Projection / PWA-TWA / Android Native / Search / CLI / AI Agent
 - 当前 Web PWA surface 已有 `apps/web/public/manifest.webmanifest` 与 `apps/web/public/sw.js`。Service worker 只允许缓存静态页面和构建资产，禁止拦截 `/api/*`、`/openlist/*`、`/reader/openlist`、`/books/openlist` 和 HTTP Range 请求，避免污染 OpenList raw、PDF/EPUB Reader 和 Runtime API。
 - `npm run check:pwa` 是 PWA/TWA surface 的本地质量门：检查 manifest、标准图标尺寸、service worker runtime 边界、BaseLayout 注册和 android-shell 合同；它已接入 `npm run check`。
 - `apps/android-shell/twa.contract.json` 是 Android shell 的机器合同；Bubblewrap 只能消费线上已部署并通过 installability 检查的 `https://blog.tengokukk.com/manifest.webmanifest`。
+- `npm run android:twa:validate` 会同时检查本地 PWA surface 与线上 manifest / service worker / homepage registration。
+- `npm run android:twa:generate` 会从线上 manifest 自动生成 Bubblewrap 工程到 `.runtime/android-twa`；该目录是生成物，不提交，不拥有业务 authority。
+- `npm run android:twa:build` 会继续生成未签名 APK 与 AAB：`.runtime/android-twa/app-release-unsigned-aligned.apk` 和 `.runtime/android-twa/app/build/outputs/bundle/release/app-release.aab`。
+- `npm run android:twa:build:test-signed` 会生成本机测试签名 APK：`.runtime/android-twa/app-release-signed.apk`。该测试 keystore 只用于本机安装验证，不是发布密钥。
+- `.github/workflows/android-twa.yml` 是 CI 自动生成入口，push 到相关 PWA / android-shell 文件或手动触发时会上传 APK/AAB artifact。
+- Windows 本机若 Gradle 下载慢，可临时设置 `TWA_GRADLE_DISTRIBUTION_URL=https://mirrors.cloud.tencent.com/gradle/gradle-8.11.1-bin.zip` 后运行 `npm run android:twa:build`。脚本会为 Bubblewrap 生成 Android SDK 兼容视图，不修改真实 SDK。
 
 当前 monorepo runtime skeleton：
 
@@ -791,7 +864,7 @@ emptyinkpot.github.io
 └── tools/
 ```
 
-`apps/android-shell` 当前只保存 TWA 合同和后续 Bubblewrap 入口，不包含 Kotlin Native 代码。`packages/runtime-contract` 与 `packages/object-model` 是后续 Web / Android / Search / Agent 的共享合同入口，不是新数据真源。`packages/runtime-kernel` 是前端交互收束合同，只定义 command / overlay / drawer / keyboard / storage classification，不是新 store，也不拥有数据 truth。`packages/design-system` 是 Runtime Experience token contract，不是组件库。
+`apps/android-shell` 当前只保存 TWA 合同和自动生成入口，不包含 Kotlin Native 代码。`packages/runtime-contract` 与 `packages/object-model` 是后续 Web / Android / Search / Agent 的共享合同入口，不是新数据真源。`packages/runtime-kernel` 是前端交互收束合同，只定义 command / overlay / drawer / keyboard / storage classification，不是新 store，也不拥有数据 truth。`packages/design-system` 是 Runtime Experience token contract，不是组件库。
 
 #### 0.7.5.2 Target High-Level Architecture
 

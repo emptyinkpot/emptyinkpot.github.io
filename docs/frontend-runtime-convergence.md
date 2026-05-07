@@ -42,6 +42,41 @@ User gesture
 
 The kernel is not a new backend. It is the frontend interaction contract that every runtime surface must obey.
 
+## Runtime Migration Sprint
+
+The next phase is Authority Cutover, not dependency installation.
+
+Machine-readable contract:
+
+```text
+runtime-migration.json
+packages/runtime-overlay/
+packages/runtime-store/
+tools/validate-runtime-migration.mjs
+```
+
+`runtime-migration.json` is the sprint source of truth. It tracks each surface
+with `currentOwner`, `targetOwner`, `migrated`, `evidence` and `rollback`.
+Installed libraries stay `installed / not migrated` until this file records
+browser evidence and `migrated: true`.
+
+Current priority:
+
+| Surface | Target | Status |
+| --- | --- | --- |
+| Overlay | `packages/runtime-overlay` + Radix / Vaul | contract active |
+| Book Drawer | Vaul through Runtime Overlay | next cutover |
+| Command | `cmdk` + `commandStore` | partially converged |
+| Store | `packages/runtime-store` + Zustand | contract only |
+| Graph | `@xyflow/react` | blocked until object/search authority settles |
+| Motion | Runtime Experience object continuity | later phase |
+
+Validation:
+
+```bash
+npm run check:runtime-migration
+```
+
 ## Kernel Responsibilities
 
 | Responsibility | Target owner | Notes |

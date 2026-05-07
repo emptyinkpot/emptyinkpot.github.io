@@ -1,7 +1,7 @@
 {
   "name": "myblog-android-shell",
   "phase": "pwa-twa",
-  "status": "web-pwa-surface-ready-local",
+  "status": "auto-generated-twa-artifacts-verified",
   "runtimeUrl": "https://blog.tengokukk.com/",
   "manifestUrl": "https://blog.tengokukk.com/manifest.webmanifest",
   "packageId": "com.tengokukk.myblog",
@@ -16,6 +16,7 @@
     "validate": "npm run android:twa:validate",
     "generate": "npm run android:twa:generate",
     "buildUnsigned": "npm run android:twa:build",
+    "buildTestSigned": "npm run android:twa:build:test-signed",
     "ciWorkflow": ".github/workflows/android-twa.yml"
   },
   "authority": {

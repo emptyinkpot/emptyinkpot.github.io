@@ -21,11 +21,15 @@
     "check:content": "node tools/validate-content-governance.mjs",
     "check:vault-publish": "node tools/validate-vault-publish-pipeline.mjs",
     "check:pwa": "node tools/validate-pwa-surface.mjs",
+    "check:runtime-migration": "node tools/validate-runtime-migration.mjs",
     "android:twa:validate": "node tools/generate-android-twa.mjs --validate-only",
     "android:twa:generate": "node tools/generate-android-twa.mjs --generate",
     "android:twa:build": "node tools/generate-android-twa.mjs --generate --build --skip-signing",
+    "android:twa:build:test-signed": "node tools/generate-android-twa.mjs --generate --build --test-signing",
+    "check:workspace": "node tools/deploy-guard.mjs --check",
+    "deploy:site": "node tools/deploy-static-site.mjs",
     "check:governance": "node tools/validate-repo-governance.mjs",
-    "check": "npm run check:updates && npm run check:content && npm run check:vault-publish && npm run check:pwa && npm run check:governance && npm run check:github-overview"
+    "check": "npm run check:updates && npm run check:content && npm run check:vault-publish && npm run check:pwa && npm run check:runtime-migration && npm run check:workspace && npm run check:governance && npm run check:github-overview"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

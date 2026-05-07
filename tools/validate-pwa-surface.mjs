@@ -115,7 +115,7 @@ function validateTwaContract() {
   const contract = readJson(twaContractPath);
 
   expectEqual(contract.phase, 'pwa-twa', 'TWA contract phase must be pwa-twa');
-  expectEqual(contract.status, 'web-pwa-surface-ready-local', 'TWA contract status must match local PWA surface readiness');
+  expectEqual(contract.status, 'auto-generated-twa-artifacts-verified', 'TWA contract status must match verified TWA automation readiness');
   expectEqual(contract.webManifestSource, manifestPath, 'TWA contract manifest source must match canonical path');
   expectEqual(contract.serviceWorkerSource, serviceWorkerPath, 'TWA contract service worker source must match canonical path');
 
