@@ -39,6 +39,7 @@ writeJson(path.join(outputDir, 'twa-manifest.json'), twaManifest);
 configureBubblewrap();
 
 runBubblewrap(['update', '--skipVersionUpgrade', `--manifest=${path.join(outputDir, 'twa-manifest.json')}`, `--directory=${outputDir}`]);
+patchGeneratedGradleProject();
 
 if (shouldBuild) {
   runBubblewrap([
@@ -206,6 +207,20 @@ function runBubblewrap(bubblewrapArgs) {
       BUBBLEWRAP_KEY_PASSWORD: process.env.BUBBLEWRAP_KEY_PASSWORD || ''
     }
   });
+}
+
+function patchGeneratedGradleProject() {
+  const wrapperPropertiesPath = path.join(outputDir, 'gradle/wrapper/gradle-wrapper.properties');
+  if (fs.existsSync(wrapperPropertiesPath) && process.env.TWA_GRADLE_DISTRIBUTION_URL) {
+    const source = fs.readFileSync(wrapperPropertiesPath, 'utf8');
+    const escapedUrl = process.env.TWA_GRADLE_DISTRIBUTION_URL.replace('https://', 'https\\://');
+    fs.writeFileSync(
+      wrapperPropertiesPath,
+      source
+        .replace(/^distributionUrl=.*$/m, `distributionUrl=${escapedUrl}`)
+        .replace(/^networkTimeout=.*$/m, 'networkTimeout=60000')
+    );
+  }
 }
 
 function run(command, commandArgs, options = {}) {
