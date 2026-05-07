@@ -16,6 +16,7 @@ const validateOnly = args.has('--validate-only') || (!shouldGenerate && !shouldB
 const skipSigning = args.has('--skip-signing') || process.env.TWA_SKIP_SIGNING === '1';
 
 const contract = readJson(contractPath);
+let configuredAndroidSdkPath = '';
 
 await verifyLocalPwaSurface();
 const online = await verifyOnlinePwaSurface(contract);
@@ -196,6 +197,7 @@ function configureBubblewrap() {
   const configDir = path.join(bubblewrapHome, '.bubblewrap');
   fs.mkdirSync(configDir, { recursive: true });
   writeJson(path.join(configDir, 'config.json'), { jdkPath, androidSdkPath });
+  configuredAndroidSdkPath = androidSdkPath;
 }
 
 function runBubblewrap(bubblewrapArgs) {
@@ -203,6 +205,8 @@ function runBubblewrap(bubblewrapArgs) {
     cwd: outputDir,
     env: {
       ...process.env,
+      ANDROID_HOME: configuredAndroidSdkPath || process.env.ANDROID_HOME,
+      ANDROID_SDK_ROOT: configuredAndroidSdkPath || process.env.ANDROID_SDK_ROOT,
       BUBBLEWRAP_KEYSTORE_PASSWORD: process.env.BUBBLEWRAP_KEYSTORE_PASSWORD || '',
       BUBBLEWRAP_KEY_PASSWORD: process.env.BUBBLEWRAP_KEY_PASSWORD || ''
     }
