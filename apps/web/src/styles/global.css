@@ -5422,6 +5422,189 @@ body.app-mode .site-shell__glow {
   font-weight: 800;
 }
 
+.home-feed-card--repost {
+  border-left: 4px solid #6b2d5c;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 241, 232, 0.86)),
+    #fffaf0;
+}
+
+.home-repost-card__quote {
+  display: grid;
+  gap: 8px;
+  padding: 18px 16px 12px;
+}
+
+.home-repost-card__quote span,
+.repost-composer header span {
+  color: #7b685a;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home-repost-card__quote p {
+  color: #1e1b18;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.58;
+}
+
+.home-repost-card__source,
+.repost-composer__source {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  margin: 0 16px 16px;
+  border: 1px solid #d8cfc2;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 10px;
+}
+
+.home-repost-card__source img,
+.repost-composer__source img {
+  width: 72px;
+  height: 88px;
+  object-fit: cover;
+}
+
+.home-repost-card__source i {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 88px;
+  background: #efe8da;
+  color: #6b2d5c;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-repost-card__source div,
+.repost-composer__source div {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-width: 0;
+}
+
+.home-repost-card__source small,
+.repost-composer__source small {
+  color: #8a7b70;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.home-repost-card__source strong,
+.repost-composer__source strong {
+  color: #1e1b18;
+  font-size: 15px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.home-repost-card__source p,
+.repost-composer__source p {
+  color: #5b5148;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.repost-composer-layer[hidden] {
+  display: none;
+}
+
+.repost-composer-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  pointer-events: none;
+}
+
+.repost-composer-layer.is-open {
+  pointer-events: auto;
+}
+
+.repost-composer-backdrop {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  background: rgba(20, 17, 14, 0.38);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 120ms var(--ease-standard, ease);
+}
+
+.repost-composer-layer.is-open .repost-composer-backdrop {
+  opacity: 1;
+}
+
+.repost-composer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  gap: 14px;
+  width: min(540px, calc(100vw - 28px));
+  border: 1px solid #cbbda9;
+  background: #fffaf0;
+  box-shadow: 0 24px 80px rgba(30, 27, 24, 0.26);
+  padding: 18px;
+  transform: translate(-50%, calc(-50% + 12px));
+  opacity: 0;
+  transition: opacity 120ms var(--ease-standard, ease), transform 120ms var(--ease-standard, ease);
+}
+
+.repost-composer-layer.is-open .repost-composer {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.repost-composer header,
+.repost-composer footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.repost-composer header strong {
+  color: #1e1b18;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.repost-composer textarea {
+  min-height: 130px;
+  resize: vertical;
+  border: 1px solid #d8cfc2;
+  background: #fff;
+  padding: 12px;
+  color: #1e1b18;
+  font: inherit;
+  line-height: 1.65;
+}
+
+.repost-composer footer button {
+  min-height: 34px;
+  border: 1px solid #1f1b18;
+  background: #fff;
+  padding: 7px 12px;
+  color: #1f1b18;
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.repost-composer footer [data-repost-publish] {
+  background: #1f1b18;
+  color: #fffaf0;
+}
+
 .hover-preview-card {
   z-index: 9999;
   width: min(340px, calc(100vw - 28px));
@@ -7794,6 +7977,11 @@ body.has-home-article-drawer .home-feed-main {
 :root[data-theme='heritage'] .home-feed-card--bilibili,
 :root[data-theme='heritage'] .home-feed-card--update {
   --bookmark-color: var(--heritage-purple);
+}
+
+:root[data-theme='heritage'] .home-feed-card--repost {
+  --bookmark-color: var(--heritage-purple);
+  border-left-color: var(--heritage-purple);
 }
 
 :root[data-theme='heritage'] .home-feed-card:hover,

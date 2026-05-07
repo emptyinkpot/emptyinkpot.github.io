@@ -63,10 +63,15 @@
   },
   "objectLayer": {
     "position": "files are carriers; objects are identity and relation layer",
-    "objectTypes": ["KnowledgeObject", "BookObject", "VisualObject", "ProjectObject"],
+    "objectTypes": ["KnowledgeObject", "BookObject", "VisualObject", "ProjectObject", "RepostObject"],
     "blobAuthority": ["OpenList", "COS/S3"],
     "projectionShell": "MyBlog Astro/React frontend",
-    "idRule": "routes, graph nodes, reader memory and search records use stable object ids rather than titles or file paths"
+    "idRule": "routes, graph nodes, reader memory and search records use stable object ids rather than titles or file paths",
+    "repostRuntime": {
+      "storageKey": "emptyinkpot-reposts",
+      "recordShape": ["id", "type", "targetId", "commentary", "snapshot", "createdAt", "updatedAt"],
+      "projectionRule": "RepostObject references the original object and injects a repost feed card; it must not create a new markdown source or duplicate the original object body."
+    }
   },
   "vaultSync": {
     "status": "target contract; not hand-rolled by MyBlog",

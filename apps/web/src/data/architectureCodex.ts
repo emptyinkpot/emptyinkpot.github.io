@@ -71,6 +71,26 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     relatedSystems: ['Architecture Codex', 'Reader Runtime', 'admin-next', 'Pagefind']
   },
   {
+    id: 'repost-runtime',
+    title: 'Repost Runtime',
+    summary:
+      'Repost is object reprojection, not a share button. A RepostObject references an existing object, adds commentary, and returns that projection to the same feed without duplicating the source object.',
+    inspiration: ['Tumblr Reblog Chain', 'Misskey Quote Renote', 'Twitter Quote Tweet', 'Mastodon Boost', 'Bluesky record model'],
+    runtime: [
+      'Drawer actions expose a Quote composer for every drawer-backed object.',
+      'The browser stores RepostObject records in emptyinkpot-reposts with targetId, commentary, snapshot and timestamps.',
+      'The homepage injects repost cards into the existing .home-feed-grid as data-feed-kind="repost".',
+      'Clicking a repost card resolves back to the original drawer target instead of creating a new markdown document.'
+    ],
+    tradeoff: [
+      'The first implementation is local-first and private to the browser.',
+      'It proves the Runtime Reprojection model before adding server authority or federation.',
+      'Snapshots keep feed cards readable if titles or covers change, but object identity still comes from targetId.'
+    ],
+    futureDirection: ['Promote RepostObject to a server-side object table when admin write boundaries are stable.', 'Attach reposts to Knowledge Graph relations.', 'Add quote reposts for highlights and visual collection partitions.'],
+    relatedSystems: ['Object Layer', 'Homepage Feed', 'Reader Drawer', 'Knowledge Search']
+  },
+  {
     id: 'reader-runtime',
     title: 'Reader Runtime',
     summary:

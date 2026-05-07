@@ -208,6 +208,7 @@ https://blog.tengokukk.com/
 - 每次改动前端、UI、阅读器、视觉素材系统、Knowledge Graph、OpenList 边界或前端 runtime，都必须同步更新 README 与 Architecture Codex；如果无需更新，必须在交付说明里写明原因。
 - Architecture Codex 条目必须记录 `Inspiration`、`Runtime`、`Tradeoff`、`Future Direction` 和 `Related Systems`，避免只写结论不写设计原因。
 - MyBlog 的定位是 Projection Shell：展示、阅读、搜索、Graph 和操作入口都只是对象与文件真源的投影，不是所有数据的唯一后端。
+- Repost / Quote 属于 Runtime Reprojection：`RepostObject` 只引用原对象 `targetId` 并保存 commentary 与轻量 snapshot，不生成新的 markdown 文件，也不复制 BookObject / VisualObject / KnowledgeObject。
 
 ## 0.7 Strategy Layer
 
@@ -1080,7 +1081,7 @@ Color Hygiene Contract：
 - 首页卡片不允许新增绝对定位浮层作为主要信息容器；封面图层只能留在 `.home-feed-card__cover` 内，不能跨出父级。
 - `.bookmark` 是唯一允许跨出 `.home-feed-card` 外边界的常驻视觉物件；卡片本体因此允许 `overflow: visible`，但封面、正文、标签、图表和媒体仍不得溢出内容区。
 - hover 动效只允许 `translateY(-2px)` 或 `translateX(2px)` 级别，不得改变布局尺寸。
-- 任何新增首页内容必须先抽象成 FeedItem 类型之一：`post`、`note`、`project`、`book`、`music`、`github`、`bilibili`、`update`。不要再恢复多模块堆叠首页。
+- 任何新增首页内容必须先抽象成 FeedItem / Runtime Projection 类型之一：`post`、`note`、`project`、`book`、`music`、`github`、`visual`、`bilibili`、`update`、`repost`。不要再恢复多模块堆叠首页。
 - 图表、书架、音乐也必须作为 FeedItem 或详情页进入系统；不要另起首页模块堆叠。
 - admin 页长表格、长日志、长路径只允许在 `.table-shell` / `.log-lines pre` / `.meta-grid code` 内换行或滚动；不得让 `.console-main` 横向溢出。
 - 如果页面出现重叠，优先检查：网格最小列宽、`min-width: 0`、长文本换行、sticky 父容器、移动断点是否生效，而不是靠增大 z-index 盖过去。
@@ -1115,8 +1116,10 @@ type FeedItem =
   | { type: "book"; drawerId: string; href?: string }
   | { type: "music"; drawerId: string; href?: string }
   | { type: "github"; variant: "repo" | "heatmap" | "line" | "language" | "team"; drawerId: string; href?: string }
+  | { type: "visual"; drawerId: string; href?: string }
   | { type: "bilibili"; drawerId: string; href: string }
-  | { type: "update"; drawerId: string; href: string };
+  | { type: "update"; drawerId: string; href: string }
+  | { type: "repost"; targetId: string; commentary?: string };
 ```
 
 交互硬规则：
@@ -1126,6 +1129,7 @@ type FeedItem =
 - Drawer 内 TOC 来自 Astro `render(entry).headings`，H2/H3 以内展示。
 - 不把正文 HTML 通过 API 拉取，避免首页阅读依赖网络请求。
 - 首页卡片内不得再放直接跳转的内链作为主要打开方式；主点击行为必须是 drawer，完整页只放在 drawer action。
+- Quote Repost 从 drawer action 打开 composer，发布后写入本地 `emptyinkpot-reposts`，并作为 `data-feed-kind="repost"` 注入同一个 `.home-feed-grid`；点击 Repost 卡片必须回到原 drawer，不得复制原对象正文。
 - 以后如果接入 `@egjs/react-grid` 或 React Aria，必须保持同样的 FeedItem / drawer 语义，不得回到多模块堆叠。
 
 #### 0.7.5.15c Visualization / Showcase Layer Contract
@@ -1232,6 +1236,7 @@ Vault Sync Contract：
 Object Layer Contract：
 
 - `BookObject`、`VisualObject`、`KnowledgeObject`、`ProjectObject` 必须使用稳定 `id`，不要从标题或文件路径派生第二套身份。
+- `RepostObject` 是对象重新投影，不是新内容真源；它必须保存 `targetId`、`commentary`、`snapshot`、`createdAt`，并通过原对象 id 打开 drawer。
 - 文件只是对象的 carrier；OpenList/COS 保存原件，MyBlog 保存或读取对象元数据，Reader/Graph/Search 渲染对象投影。
 - Search、Graph、Reader Memory、Highlights 后续都应关联 object id，而不是直接绑定临时 raw URL。
 

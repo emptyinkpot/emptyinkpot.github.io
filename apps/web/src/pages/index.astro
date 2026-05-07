@@ -480,6 +480,17 @@ const drawerEntries = [
   ...visualDrawerEntries,
   ...utilityDrawerEntries
 ];
+const repostSourceDocs = drawerEntries.map((entry) => ({
+  id: entry.id,
+  kind: entry.kind,
+  title: entry.title,
+  kicker: entry.kicker,
+  summary: entry.summary,
+  href: entry.href,
+  coverSrc: entry.coverSrc,
+  accent: entry.accent,
+  tags: entry.tags ?? []
+}));
 const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
 const relationSources = drawerEntries.map((entry) => ({
   id: entry.id,
@@ -743,6 +754,7 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
           <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
           <button type="button" class="home-feed-tab" data-feed-filter="visual">视觉素材</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="repost">引用</button>
           {profileLinks.bilibiliConfigured && <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>}
           <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
           <a class="home-feed-tab" href={withBase('/settings/')} data-copy-key="home.feed.settings">设置</a>
@@ -970,6 +982,7 @@ const homeCommands = [
             <button type="button" data-reader-theme="dark">Dark</button>
           </div>
           <button type="button" data-reader-bookmark>收藏</button>
+          <button type="button" data-reader-repost>引用</button>
           <button type="button" data-reader-seal>盖章</button>
           <a href={withBase('/knowledge/')} data-reader-graph>知识图谱</a>
           <a href={withBase('/posts/')} data-article-full>完整页面</a>
@@ -990,7 +1003,7 @@ const homeCommands = [
         <kbd>Esc</kbd>
       </div>
       <nav class="knowledge-search-tabs" aria-label="搜索类型">
-        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'highlight', 'annotation', 'seal', 'sticker'].map((kind) => (
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'repost', 'highlight', 'annotation', 'seal', 'sticker'].map((kind) => (
           <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
         ))}
       </nav>
@@ -1040,9 +1053,26 @@ const homeCommands = [
     </div>
   </div>
 
+  <div class="repost-composer-layer" data-repost-layer hidden>
+    <button class="repost-composer-backdrop" type="button" data-repost-close aria-label="关闭引用编辑器"></button>
+    <section class="repost-composer" role="dialog" aria-modal="true" aria-label="引用转发">
+      <header>
+        <span>Quote Repost</span>
+        <strong data-repost-target-title>选择对象</strong>
+      </header>
+      <textarea data-repost-commentary maxlength="360" placeholder="写下这次重新投影的理由、关联或批注。"></textarea>
+      <div class="repost-composer__target" data-repost-target-preview></div>
+      <footer>
+        <button type="button" data-repost-close>取消</button>
+        <button type="button" data-repost-publish>进入 Feed</button>
+      </footer>
+    </section>
+  </div>
+
   <script type="application/json" id="seal-definition-data" set:html={JSON.stringify({ key: sealDefinitionStorageKey, definitions: sealTypes })} />
   <script type="application/json" id="visual-knowledge-data" set:html={JSON.stringify(visualItems)} />
   <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
+  <script type="application/json" id="repost-source-data" set:html={JSON.stringify(repostSourceDocs)} />
 
   <div class="home-article-templates" hidden>
     {drawerEntries.map((entry) => {
@@ -1233,9 +1263,11 @@ const homeCommands = [
       const readLink = document.querySelector('[data-article-read]');
       const shelfLink = document.querySelector('[data-article-shelf]');
       const bookmarkButton = document.querySelector('[data-reader-bookmark]');
+      const repostButton = document.querySelector('[data-reader-repost]');
       const progress = document.querySelector('[data-reading-progress]');
       const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
-      const cards = [...document.querySelectorAll('[data-feed-card]')];
+      let cards = [...document.querySelectorAll('[data-feed-card]')];
+      const feedGrid = document.querySelector('.home-feed-grid');
       const drawerTriggers = [...document.querySelectorAll('[data-drawer-id]')];
       const mainScroller = document.querySelector('.home-feed-main');
       const searchLayer = document.querySelector('[data-search-layer]');
@@ -1244,6 +1276,10 @@ const homeCommands = [
       const searchKinds = [...document.querySelectorAll('[data-search-kind]')];
       const selectionToolbar = document.querySelector('[data-selection-toolbar]');
       const sealPalette = document.querySelector('[data-seal-palette]');
+      const repostLayer = document.querySelector('[data-repost-layer]');
+      const repostTargetTitle = document.querySelector('[data-repost-target-title]');
+      const repostPreview = document.querySelector('[data-repost-target-preview]');
+      const repostCommentary = document.querySelector('[data-repost-commentary]');
       const sealTargetTitle = document.querySelector('[data-seal-target-title]');
       const readerSealButton = document.querySelector('[data-reader-seal]');
       const readerGraphLink = document.querySelector('[data-reader-graph]');
@@ -1251,6 +1287,11 @@ const homeCommands = [
       const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
       const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
       const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
+      const repostSources = JSON.parse(document.getElementById('repost-source-data')?.textContent || '[]');
+      const repostSourceMap = repostSources.reduce((map, item) => {
+        if (item?.id) map[item.id] = item;
+        return map;
+      }, {});
       const sealConfig = JSON.parse(document.getElementById('seal-definition-data')?.textContent || '{"definitions":[]}');
       const visualKnowledgeItems = JSON.parse(document.getElementById('visual-knowledge-data')?.textContent || '[]');
       const storageKeys = {
@@ -1260,6 +1301,7 @@ const homeCommands = [
         annotations: 'emptyinkpot-reader-annotations',
         seals: 'emptyinkpot-reader-seals',
         stickers: 'emptyinkpot-stickers',
+        reposts: 'emptyinkpot-reposts',
         sealDefinitions: sealConfig.key || 'emptyinkpot-seal-definitions',
         readerTheme: 'emptyinkpot-reader-theme'
       };
@@ -1288,6 +1330,7 @@ const homeCommands = [
       let selectedRange = null;
       let pendingHighlightId = null;
       let sealContext = null;
+      let repostContext = null;
       let drawerCloseTimer = 0;
       let searchCloseTimer = 0;
 
@@ -1364,6 +1407,139 @@ const homeCommands = [
         } catch {
           // Ignore local storage failures; reading should still work.
         }
+      };
+
+      const escapeHtmlAttribute = (value = '') =>
+        String(value)
+          .replaceAll('&', '&amp;')
+          .replaceAll('"', '&quot;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;');
+
+      const getReposts = () => readJson(storageKeys.reposts, []);
+
+      const createRepostCard = (record) => {
+        const source = record.snapshot || repostSourceMap[record.targetId] || {};
+        const card = document.createElement('button');
+        const tags = Array.isArray(source.tags) ? source.tags.slice(0, 4) : [];
+        card.type = 'button';
+        card.className = 'home-feed-card home-feed-card--repost home-feed-card--standard';
+        card.dataset.feedCard = 'true';
+        card.dataset.feedKind = 'repost';
+        card.dataset.drawerId = record.targetId || '';
+        card.dataset.sealTarget = record.id;
+        card.dataset.sealTitle = source.title || 'Repost';
+        card.dataset.sealKind = 'repost';
+        card.dataset.repostCard = record.id;
+        card.innerHTML = `
+          <div class="bookmark bookmark--repost"><span>Quote</span></div>
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+          <span class="card-paperclip" aria-hidden="true"></span>
+          <div class="home-repost-card__quote">
+            <span>Repost</span>
+            <p></p>
+          </div>
+          <div class="home-repost-card__source">
+            ${source.coverSrc ? `<img src="${escapeHtmlAttribute(source.coverSrc)}" alt="" loading="lazy" />` : `<i>${escapeHtmlAttribute(source.kind || 'object')}</i>`}
+            <div>
+              <small></small>
+              <strong></strong>
+              <p></p>
+            </div>
+          </div>
+          <div class="home-feed-card__tags"></div>
+        `;
+        card.querySelector('.home-repost-card__quote p').textContent = record.commentary || '重新投影到 Feed。';
+        card.querySelector('.home-repost-card__source small').textContent = source.kicker || source.kind || 'Object';
+        card.querySelector('.home-repost-card__source strong').textContent = source.title || record.targetId || 'Untitled';
+        card.querySelector('.home-repost-card__source p').textContent = source.summary || '';
+        const tagRoot = card.querySelector('.home-feed-card__tags');
+        tags.forEach((tag) => {
+          const span = document.createElement('span');
+          span.textContent = tag;
+          tagRoot.append(span);
+        });
+        card.addEventListener('click', (event) => {
+          event.preventDefault();
+          if (record.targetId) openDrawer(record.targetId, card);
+        });
+        return card;
+      };
+
+      const renderReposts = () => {
+        if (!feedGrid) return;
+        document.querySelectorAll('[data-repost-card]').forEach((node) => node.remove());
+        const fragment = document.createDocumentFragment();
+        getReposts().slice(0, 12).forEach((record) => fragment.append(createRepostCard(record)));
+        feedGrid.prepend(fragment);
+        cards = [...document.querySelectorAll('[data-feed-card]')];
+        renderSeals();
+      };
+
+      const renderRepostPreview = (source) => {
+        if (!repostPreview) return;
+        repostPreview.replaceChildren();
+        const preview = document.createElement('article');
+        preview.className = 'repost-composer__source';
+        const image = source?.coverSrc ? document.createElement('img') : null;
+        const body = document.createElement('div');
+        const kicker = document.createElement('small');
+        const title = document.createElement('strong');
+        const summary = document.createElement('p');
+        if (image) {
+          image.src = source.coverSrc;
+          image.alt = '';
+          preview.append(image);
+        }
+        kicker.textContent = source?.kicker || source?.kind || 'Object';
+        title.textContent = source?.title || 'Untitled';
+        summary.textContent = source?.summary || '';
+        body.append(kicker, title, summary);
+        preview.append(body);
+        repostPreview.append(preview);
+      };
+
+      const openRepostComposer = (targetId) => {
+        const source = repostSourceMap[targetId];
+        if (!source || !repostLayer) return;
+        repostContext = source;
+        if (repostTargetTitle) repostTargetTitle.textContent = source.title || 'Untitled';
+        if (repostCommentary instanceof HTMLTextAreaElement) repostCommentary.value = '';
+        renderRepostPreview(source);
+        repostLayer.hidden = false;
+        requestAnimationFrame(() => {
+          repostLayer.classList.add('is-open');
+          repostCommentary?.focus?.({ preventScroll: true });
+        });
+      };
+
+      const closeRepostComposer = () => {
+        if (!repostLayer) return;
+        repostLayer.classList.remove('is-open');
+        window.setTimeout(() => {
+          repostLayer.hidden = true;
+          repostContext = null;
+        }, 120);
+      };
+
+      const publishRepost = () => {
+        if (!repostContext?.id) return;
+        const now = Date.now();
+        const commentary = repostCommentary instanceof HTMLTextAreaElement ? repostCommentary.value.trim() : '';
+        const record = {
+          id: `repost:${repostContext.id}:${now}`,
+          type: 'RepostObject',
+          targetId: repostContext.id,
+          commentary,
+          snapshot: repostContext,
+          createdAt: now,
+          updatedAt: now
+        };
+        writeJson(storageKeys.reposts, [record, ...getReposts().filter((item) => item.id !== record.id)].slice(0, 80));
+        closeRepostComposer();
+        renderReposts();
+        setFilter('repost');
+        closeDrawer();
       };
 
       const normalizeReaderTheme = (theme) => (['light', 'sepia', 'dark'].includes(theme) ? theme : 'light');
@@ -1562,6 +1738,11 @@ const homeCommands = [
         const active = isBookmarked(currentArticle.id);
         bookmarkButton.classList.toggle('is-active', active);
         bookmarkButton.textContent = active ? '已收藏' : '收藏';
+      };
+
+      const updateRepostButton = () => {
+        if (!repostButton || !currentArticle) return;
+        repostButton.hidden = !repostSourceMap[currentArticle.id];
       };
 
       const toggleBookmark = () => {
@@ -1998,7 +2179,16 @@ const homeCommands = [
           drawerId: item.targetId,
           href: item.targetId?.startsWith('visual:') ? `/visuals/#${encodeURIComponent(item.targetId.slice('visual:'.length))}` : undefined
         }));
-        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals, ...storedStickers]
+        const storedReposts = getReposts().map((item) => ({
+          id: item.id,
+          type: 'repost',
+          title: `引用 · ${item.snapshot?.title || item.targetId}`,
+          content: [item.commentary, item.snapshot?.summary, item.snapshot?.kicker].join(' '),
+          tags: ['repost', item.snapshot?.kind, ...(item.snapshot?.tags || [])].filter(Boolean),
+          drawerId: item.targetId,
+          href: item.snapshot?.href
+        }));
+        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals, ...storedStickers, ...storedReposts]
           .filter((doc) => searchKind === 'all' || doc.type === searchKind)
           .map((doc) => {
             const content = [doc.title, doc.content, ...(doc.tags || [])].join(' ').toLowerCase();
@@ -2141,6 +2331,7 @@ const homeCommands = [
           shelfLink.hidden = kind !== 'book';
         }
         updateReaderGraphLink();
+        updateRepostButton();
         window.clearTimeout(drawerCloseTimer);
         layer.hidden = false;
         document.body.classList.add('has-home-article-drawer');
@@ -2191,6 +2382,13 @@ const homeCommands = [
       });
 
       bookmarkButton?.addEventListener('click', toggleBookmark);
+      repostButton?.addEventListener('click', () => {
+        if (currentArticle?.id) openRepostComposer(currentArticle.id);
+      });
+      document.querySelectorAll('[data-repost-close]').forEach((button) => {
+        button.addEventListener('click', closeRepostComposer);
+      });
+      document.querySelector('[data-repost-publish]')?.addEventListener('click', publishRepost);
       drawerBody?.addEventListener('scroll', updateReadingProgress);
       drawerBody?.addEventListener('mouseup', () => setTimeout(showSelectionToolbar, 0));
       drawerBody?.addEventListener('click', (event) => {
@@ -2395,6 +2593,7 @@ const homeCommands = [
 
       applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
       renderSidebarState();
+      renderReposts();
       renderSeals();
       initHeroBanner();
       const params = new URLSearchParams(window.location.search);
