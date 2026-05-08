@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_d451709a8f52",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E8%A7%86%E9%A2%91%E6%96%87%E6%A1%88/%E5%94%90%E5%B8%9D%E5%9B%BD%E5%8F%B2.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/视频文案/唐帝国史.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/视频文案/唐帝国史.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E8%A7%86%E9%A2%91%E6%96%87%E6%A1%88/%E5%94%90%E5%B8%9D%E5%9B%BD%E5%8F%B2.md",
+    "slug": "blog-视频文案-唐帝国史",
+    "title": "唐帝国史",
+    "summary": "廿日牡丹零落尽，正如盛世不久留 牡丹盛开与春意之时，三千花瓣正逢盛世，他开，他盛，将所有的阴影都隐藏，只留下人们对花开富贵的想象，可转眼他又飘零散尽。 悲哉，秋之为气也！萧瑟兮，草木摇落而变衰。 杜牧 長鉟周都尉，閑如秋嶺雲。 取蝥弧登壘，以駢鄰翼軍。 百戰百勝價，河南、河北聞。 今遇太平日，老去誰...",
+    "description": "廿日牡丹零落尽，正如盛世不久留 牡丹盛开与春意之时，三千花瓣正逢盛世，他开，他盛，将所有的阴影都隐藏，只留下人们对花开富贵的想象，可转眼他又飘零散尽。 悲哉，秋之为气也！萧瑟兮，草木摇落而变衰。 杜牧 長鉟周都尉，閑如秋嶺雲。 取蝥弧登壘，以駢鄰翼軍。 百戰百勝價，河南、河北聞。 今遇太平日，老去誰...",
+    "date": "2026-05-07",
+    "updated": "2026-05-07",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "视频文案"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "视频文案"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "视频文案"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/视频文案/唐帝国史.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/视频文案/唐帝国史.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E8%A7%86%E9%A2%91%E6%96%87%E6%A1%88/%E5%94%90%E5%B8%9D%E5%9B%BD%E5%8F%B2.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "唐帝国史",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "视频文案",
+        "唐帝国史"
+      ],
+      "subtitle": "廿日牡丹零落尽，正如盛世不久留 牡丹盛开与春意之时，三千花瓣正逢盛世，他开，他盛，将所有的阴影都隐藏，只留下人们对花开富贵的想象，可转眼他又飘零散尽。 悲哉，秋之为气也！萧瑟兮，草木摇落而变衰。 杜牧 長鉟周都尉，閑如秋嶺雲。 取蝥弧登壘，以駢鄰翼軍。 百戰百勝價，河南、河北聞。 今遇太平日，老去誰..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "廿日牡丹零落尽，正如盛世不久留\n\n牡丹盛开与春意之时，三千花瓣正逢盛世，他开，他盛，将所有的阴影都隐藏，只留下人们对花开富贵的想象，可转眼他又飘零散尽。\n\n悲哉，秋之为气也！萧瑟兮，草木摇落而变衰。\n\n杜牧\n\n\n長鉟周都尉，閑如秋嶺雲。  \n取蝥弧登壘，以駢鄰翼軍。  \n百戰百勝價，河南、河北聞。  \n今遇太平日，老去誰憐君？  \n  \n壯氣蓋燕、趙，耽耽魁傑人。  \n彎弧五百步，長戟八十斤。  \n河湟非內地，安、史有遺塵。  \n何日武臺坐，兵符授虎臣。",
+    "html": "<p>廿日牡丹零落尽，正如盛世不久留</p>\n<p>牡丹盛开与春意之时，三千花瓣正逢盛世，他开，他盛，将所有的阴影都隐藏，只留下人们对花开富贵的想象，可转眼他又飘零散尽。</p>\n<p>悲哉，秋之为气也！萧瑟兮，草木摇落而变衰。</p>\n<p>杜牧</p>\n<p>長鉟周都尉，閑如秋嶺雲。<br>\n取蝥弧登壘，以駢鄰翼軍。<br>\n百戰百勝價，河南、河北聞。<br>\n今遇太平日，老去誰憐君？</p>\n<p>壯氣蓋燕、趙，耽耽魁傑人。<br>\n彎弧五百步，長戟八十斤。<br>\n河湟非內地，安、史有遺塵。<br>\n何日武臺坐，兵符授虎臣。</p>",
+    "toc": [],
+    "detailPath": "articles/md_d451709a8f52.json"
+  }
+}

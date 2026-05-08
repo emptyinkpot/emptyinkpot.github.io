@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_25c9de5201fd",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/Obsidian-%E4%B9%A6%E5%BA%93%E4%BF%AE%E5%A4%8D%E4%B8%8E%E6%A0%B7%E4%BE%8B%E6%8A%A5%E5%91%8A-2026-04-18.md",
+    "sourcePath": "/home/vault/Obsidian/docs/Obsidian-书库修复与样例报告-2026-04-18.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/Obsidian-书库修复与样例报告-2026-04-18.md",
+    "openlistUrl": "/openlist/Obsidian/docs/Obsidian-%E4%B9%A6%E5%BA%93%E4%BF%AE%E5%A4%8D%E4%B8%8E%E6%A0%B7%E4%BE%8B%E6%8A%A5%E5%91%8A-2026-04-18.md",
+    "slug": "obsidian-书库修复与样例报告-2026-04-18",
+    "title": "Obsidian 书库修复与 EPUB 样例报告",
+    "summary": "Obsidian 书库修复与 EPUB 样例报告 更新时间：2026 04 18 1. 便携版 Obsidian 修复 已将 E:\\My Project\\Obsidian\\app\\obsidian 从残缺目录替换为官方 Obsidian 1.12.7 的完整 Windows 包。 修复前缺失： re...",
+    "description": "Obsidian 书库修复与 EPUB 样例报告 更新时间：2026 04 18 1. 便携版 Obsidian 修复 已将 E:\\My Project\\Obsidian\\app\\obsidian 从残缺目录替换为官方 Obsidian 1.12.7 的完整 Windows 包。 修复前缺失： re...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-阅读书库",
+      "项目-书库",
+      "形态-记录",
+      "导入样例"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-阅读书库",
+        "项目-书库",
+        "形态-记录"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/Obsidian-书库修复与样例报告-2026-04-18.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/Obsidian-书库修复与样例报告-2026-04-18.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/Obsidian-%E4%B9%A6%E5%BA%93%E4%BF%AE%E5%A4%8D%E4%B8%8E%E6%A0%B7%E4%BE%8B%E6%8A%A5%E5%91%8A-2026-04-18.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "书库",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 阅读书库",
+        "项目 书库",
+        "形态 记录",
+        "导入样例",
+        "书库"
+      ],
+      "subtitle": "Obsidian 书库修复与 EPUB 样例报告 更新时间：2026 04 18 1. 便携版 Obsidian 修复 已将 E:\\My Project\\Obsidian\\app\\obsidian 从残缺目录替换为官方 Obsidian 1.12.7 的完整 Windows 包。 修复前缺失： re..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## Obsidian 书库修复与 EPUB 样例报告\n\n更新时间：2026-04-18\n\n### 1. 便携版 Obsidian 修复\n\n已将 `E:\\My Project\\Obsidian\\app\\obsidian` 从残缺目录替换为官方 `Obsidian 1.12.7` 的完整 Windows 包。\n\n修复前缺失：\n\n- `resources.pak`\n- `chrome_100_percent.pak`\n- 以及一批 Electron 运行资源\n\n本地备份：\n\n- `E:\\My Project\\Obsidian\\app-repair\\backup-before-repair-20260418-132028\\obsidian`\n- `E:\\My Project\\Obsidian\\app\\obsidian-broken-20260418-1322`\n\n下载与提取来源：\n\n- `E:\\My Project\\Obsidian\\app-repair\\downloads\\Obsidian-1.12.7.exe`\n- `E:\\My Project\\Obsidian\\app-repair\\extracted\\obsidian-1.12.7\\app-64`\n\n界面验证截图：\n\n- `E:\\My Project\\Obsidian\\data\\plugin-recovery\\verification\\obsidian-after-repair-20260418-1322.png`\n\n状态：`verified`\n\n### 2. books 全量检测结果\n\n检测目录：\n\n- `E:\\My Project\\Obsidian\\data\\docs\\books`\n\n最初统计：\n\n- `.mobi`：159\n- `.epub`：58\n- `.azw3`：3\n\n结论：\n\n- 这批 `.mobi/.epub/.azw3` 当前不是正常电子书文件\n- 我抽检了文件头，基本都是 `00 00 00 00 ...` 的零填充文件\n- 其中 `.epub` 也无法作为 zip/epub 打开\n- calibre 也无法读取这些 `.mobi`\n\n所以这批文件不是“可转换但格式旧”，而是“源文件本身已经坏掉/空洞化”。\n\n这也是为什么本次批量 `mobi -> epub` 没有成功产出：\n\n- 不是 calibre 不支持\n- 而是输入源已经不可读\n\n### 3. 这次我怎么处理坏书\n\n为了避免再次误删，我没有做永久抹除，而是统一移入隔离区。\n\n隔离目录：\n\n- `E:\\My Project\\Obsidian\\data\\books-maintenance\\quarantine`\n\n其中包括：\n\n- 坏 `.epub`\n- 坏 `.mobi`\n- 坏 `.azw3`\n\n批处理脚本：\n\n- `E:\\My Project\\Obsidian\\data\\books-maintenance\\scripts\\book-maintenance.ps1`\n\n本轮报告：\n\n- `E:\\My Project\\Obsidian\\data\\books-maintenance\\reports\\books-maintenance-20260418-132505.md`\n- `E:\\My Project\\Obsidian\\data\\books-maintenance\\reports\\books-maintenance-20260418-132505.csv`\n- `E:\\My Project\\Obsidian\\data\\books-maintenance\\reports\\books-maintenance-20260418-132505.json`\n\n注意：\n\n- 这份批处理报告里 `mobi_failed=159`，本质原因是输入书坏了\n- 不是因为格式本身不能转\n- 脚本里我也已经顺手修掉了带空格路径时 calibre 参数传递的问题，后面如果有健康 mobi，可以直接复用脚本再跑\n\n### 4. 当前 books 目录状态\n\n现在 `E:\\My Project\\Obsidian\\data\\docs\\books` 下，原来那批坏掉的 `.mobi/.epub/.azw3` 已经清出去，只保留：\n\n- 非目标文件（如 `.jpg/.md/.csv/.txt/.rar`）\n- 一个健康 EPUB 样例源\n\n健康样例源：\n\n- `E:\\My Project\\Obsidian\\data\\docs\\books\\_健康样例来源\\自控力（健康样例）.epub`\n\n这是我为了给你做实际阅读样例，临时放进去的一本可读 EPUB。\n\n### 5. 实际导入样例\n\n由于你原 `books` 目录里已经没有可读 EPUB，我采用了健康样例源来做一轮实际导入，生成了 Obsidian 内可滚动阅读的 Markdown 样例。\n\n导入输出目录：\n\n- `E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）`\n\n关键文件：\n\n- `E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）\\自控力（全文）.md`\n- `E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）\\README.md`\n- `E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）\\images`\n\n导入脚本：\n\n- `E:\\My Project\\Obsidian\\data\\books-maintenance\\scripts\\import-epub-sample.js`\n\n这个样例导入链路使用了：\n\n- `epub-importer` 的解析器\n- `epub-importer` 的 Turndown 转换规则\n- `imported_markdown` 目录下已经启用的中文阅读 CSS\n\n### 6. 可见性验证\n\n我已经通过 `obsidian://open` 直接把样例文件在 Obsidian 里打开，并截到了实际阅读界面。\n\n打开的文件：\n\n- `docs/books/imported_markdown/自控力（健康样例）/全文`\n\n界面截图：\n\n- `E:\\My Project\\Obsidian\\data\\plugin-recovery\\verification\\obsidian-sample-reading-20260418-1334.png`\n\n验证结果：`verified`\n\n也就是说：\n\n- 便携版 Obsidian 现在能正常起\n- 样例阅读文件已经能在 Obsidian 内直接打开\n- 当前样例阅读模式是连续滚动的 Markdown 长文阅读\n- 中文排版增强已经可作用于这个目录\n\n### 7. 现在最关键的事实\n\n你让我批量把 `books` 下面的 mobi 改成 epub，这一步没法对“当前这批原文件”真正完成，原因不是工具不够，而是：\n\n- 这批 `.mobi/.epub/.azw3` 文件本体已经坏了\n- 多数是零填充假文件/空文件式占位\n- 所以不存在可正常转换的内容体\n\n要继续恢复你的真实书库，后续重点已经不是“再转一次格式”，而是：\n\n- 从恢复区 / 历史副本 / 云盘 / 旧目录 / 下载缓存里重新找健康源文件\n- 找到健康源文件之后，再用 calibre 批量转 epub",
+    "html": "<h2 id=\"obsidian-书库修复与-epub-样例报告\">Obsidian 书库修复与 EPUB 样例报告</h2>\n<p>更新时间：2026-04-18</p>\n<h3 id=\"1-便携版-obsidian-修复\">1. 便携版 Obsidian 修复</h3>\n<p>已将 <code>E:\\My Project\\Obsidian\\app\\obsidian</code> 从残缺目录替换为官方 <code>Obsidian 1.12.7</code> 的完整 Windows 包。</p>\n<p>修复前缺失：</p>\n<ul>\n<li><code>resources.pak</code></li>\n<li><code>chrome_100_percent.pak</code></li>\n<li>以及一批 Electron 运行资源</li>\n</ul>\n<p>本地备份：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\app-repair\\backup-before-repair-20260418-132028\\obsidian</code></li>\n<li><code>E:\\My Project\\Obsidian\\app\\obsidian-broken-20260418-1322</code></li>\n</ul>\n<p>下载与提取来源：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\app-repair\\downloads\\Obsidian-1.12.7.exe</code></li>\n<li><code>E:\\My Project\\Obsidian\\app-repair\\extracted\\obsidian-1.12.7\\app-64</code></li>\n</ul>\n<p>界面验证截图：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\plugin-recovery\\verification\\obsidian-after-repair-20260418-1322.png</code></li>\n</ul>\n<p>状态：<code>verified</code></p>\n<h3 id=\"2-books-全量检测结果\">2. books 全量检测结果</h3>\n<p>检测目录：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\docs\\books</code></li>\n</ul>\n<p>最初统计：</p>\n<ul>\n<li><code>.mobi</code>：159</li>\n<li><code>.epub</code>：58</li>\n<li><code>.azw3</code>：3</li>\n</ul>\n<p>结论：</p>\n<ul>\n<li>这批 <code>.mobi/.epub/.azw3</code> 当前不是正常电子书文件</li>\n<li>我抽检了文件头，基本都是 <code>00 00 00 00 ...</code> 的零填充文件</li>\n<li>其中 <code>.epub</code> 也无法作为 zip/epub 打开</li>\n<li>calibre 也无法读取这些 <code>.mobi</code></li>\n</ul>\n<p>所以这批文件不是“可转换但格式旧”，而是“源文件本身已经坏掉/空洞化”。</p>\n<p>这也是为什么本次批量 <code>mobi -> epub</code> 没有成功产出：</p>\n<ul>\n<li>不是 calibre 不支持</li>\n<li>而是输入源已经不可读</li>\n</ul>\n<h3 id=\"3-这次我怎么处理坏书\">3. 这次我怎么处理坏书</h3>\n<p>为了避免再次误删，我没有做永久抹除，而是统一移入隔离区。</p>\n<p>隔离目录：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\books-maintenance\\quarantine</code></li>\n</ul>\n<p>其中包括：</p>\n<ul>\n<li>坏 <code>.epub</code></li>\n<li>坏 <code>.mobi</code></li>\n<li>坏 <code>.azw3</code></li>\n</ul>\n<p>批处理脚本：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\books-maintenance\\scripts\\book-maintenance.ps1</code></li>\n</ul>\n<p>本轮报告：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\books-maintenance\\reports\\books-maintenance-20260418-132505.md</code></li>\n<li><code>E:\\My Project\\Obsidian\\data\\books-maintenance\\reports\\books-maintenance-20260418-132505.csv</code></li>\n<li><code>E:\\My Project\\Obsidian\\data\\books-maintenance\\reports\\books-maintenance-20260418-132505.json</code></li>\n</ul>\n<p>注意：</p>\n<ul>\n<li>这份批处理报告里 <code>mobi_failed=159</code>，本质原因是输入书坏了</li>\n<li>不是因为格式本身不能转</li>\n<li>脚本里我也已经顺手修掉了带空格路径时 calibre 参数传递的问题，后面如果有健康 mobi，可以直接复用脚本再跑</li>\n</ul>\n<h3 id=\"4-当前-books-目录状态\">4. 当前 books 目录状态</h3>\n<p>现在 <code>E:\\My Project\\Obsidian\\data\\docs\\books</code> 下，原来那批坏掉的 <code>.mobi/.epub/.azw3</code> 已经清出去，只保留：</p>\n<ul>\n<li>非目标文件（如 <code>.jpg/.md/.csv/.txt/.rar</code>）</li>\n<li>一个健康 EPUB 样例源</li>\n</ul>\n<p>健康样例源：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\docs\\books\\_健康样例来源\\自控力（健康样例）.epub</code></li>\n</ul>\n<p>这是我为了给你做实际阅读样例，临时放进去的一本可读 EPUB。</p>\n<h3 id=\"5-实际导入样例\">5. 实际导入样例</h3>\n<p>由于你原 <code>books</code> 目录里已经没有可读 EPUB，我采用了健康样例源来做一轮实际导入，生成了 Obsidian 内可滚动阅读的 Markdown 样例。</p>\n<p>导入输出目录：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）</code></li>\n</ul>\n<p>关键文件：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）\\自控力（全文）.md</code></li>\n<li><code>E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）\\README.md</code></li>\n<li><code>E:\\My Project\\Obsidian\\data\\docs\\books\\imported_markdown\\自控力（健康样例）\\images</code></li>\n</ul>\n<p>导入脚本：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\books-maintenance\\scripts\\import-epub-sample.js</code></li>\n</ul>\n<p>这个样例导入链路使用了：</p>\n<ul>\n<li><code>epub-importer</code> 的解析器</li>\n<li><code>epub-importer</code> 的 Turndown 转换规则</li>\n<li><code>imported_markdown</code> 目录下已经启用的中文阅读 CSS</li>\n</ul>\n<h3 id=\"6-可见性验证\">6. 可见性验证</h3>\n<p>我已经通过 <code>obsidian://open</code> 直接把样例文件在 Obsidian 里打开，并截到了实际阅读界面。</p>\n<p>打开的文件：</p>\n<ul>\n<li><code>docs/books/imported_markdown/自控力（健康样例）/全文</code></li>\n</ul>\n<p>界面截图：</p>\n<ul>\n<li><code>E:\\My Project\\Obsidian\\data\\plugin-recovery\\verification\\obsidian-sample-reading-20260418-1334.png</code></li>\n</ul>\n<p>验证结果：<code>verified</code></p>\n<p>也就是说：</p>\n<ul>\n<li>便携版 Obsidian 现在能正常起</li>\n<li>样例阅读文件已经能在 Obsidian 内直接打开</li>\n<li>当前样例阅读模式是连续滚动的 Markdown 长文阅读</li>\n<li>中文排版增强已经可作用于这个目录</li>\n</ul>\n<h3 id=\"7-现在最关键的事实\">7. 现在最关键的事实</h3>\n<p>你让我批量把 <code>books</code> 下面的 mobi 改成 epub，这一步没法对“当前这批原文件”真正完成，原因不是工具不够，而是：</p>\n<ul>\n<li>这批 <code>.mobi/.epub/.azw3</code> 文件本体已经坏了</li>\n<li>多数是零填充假文件/空文件式占位</li>\n<li>所以不存在可正常转换的内容体</li>\n</ul>\n<p>要继续恢复你的真实书库，后续重点已经不是“再转一次格式”，而是：</p>\n<ul>\n<li>从恢复区 / 历史副本 / 云盘 / 旧目录 / 下载缓存里重新找健康源文件</li>\n<li>找到健康源文件之后，再用 calibre 批量转 epub</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "obsidian-书库修复与-epub-样例报告",
+        "text": "Obsidian 书库修复与 EPUB 样例报告"
+      },
+      {
+        "depth": 3,
+        "slug": "1-便携版-obsidian-修复",
+        "text": "1. 便携版 Obsidian 修复"
+      },
+      {
+        "depth": 3,
+        "slug": "2-books-全量检测结果",
+        "text": "2. books 全量检测结果"
+      },
+      {
+        "depth": 3,
+        "slug": "3-这次我怎么处理坏书",
+        "text": "3. 这次我怎么处理坏书"
+      },
+      {
+        "depth": 3,
+        "slug": "4-当前-books-目录状态",
+        "text": "4. 当前 books 目录状态"
+      },
+      {
+        "depth": 3,
+        "slug": "5-实际导入样例",
+        "text": "5. 实际导入样例"
+      },
+      {
+        "depth": 3,
+        "slug": "6-可见性验证",
+        "text": "6. 可见性验证"
+      },
+      {
+        "depth": 3,
+        "slug": "7-现在最关键的事实",
+        "text": "7. 现在最关键的事实"
+      }
+    ],
+    "detailPath": "articles/md_25c9de5201fd.json"
+  }
+}

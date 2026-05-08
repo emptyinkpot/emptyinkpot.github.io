@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_4a6bf497c78a",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/%E6%9C%AA%E5%91%BD%E5%90%8D%201.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/未命名 1.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/未命名 1.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E6%9C%AA%E5%91%BD%E5%90%8D%201.md",
+    "slug": "codex-knowledge-未命名-1",
+    "title": "未命名 1",
+    "summary": "好，这一步我直接给你一套 能落地的 MCP 可视化面板方案（不是概念图，是能跑的） ，而且完全贴合你现在 34 个 MCP + Codex 这套环境。 一、你最终要得到的东西（先看效果） 你会有一个页面，大概这样： 还能点进去： 二、架构（完全符合你之前的模块规范） 三、核心思路（很关键） 你不能只...",
+    "description": "好，这一步我直接给你一套 能落地的 MCP 可视化面板方案（不是概念图，是能跑的） ，而且完全贴合你现在 34 个 MCP + Codex 这套环境。 一、你最终要得到的东西（先看效果） 你会有一个页面，大概这样： 还能点进去： 二、架构（完全符合你之前的模块规范） 三、核心思路（很关键） 你不能只...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/未命名 1.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/未命名 1.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E6%9C%AA%E5%91%BD%E5%90%8D%201.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "未命名 1",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "未命名 1"
+      ],
+      "subtitle": "好，这一步我直接给你一套 能落地的 MCP 可视化面板方案（不是概念图，是能跑的） ，而且完全贴合你现在 34 个 MCP + Codex 这套环境。 一、你最终要得到的东西（先看效果） 你会有一个页面，大概这样： 还能点进去： 二、架构（完全符合你之前的模块规范） 三、核心思路（很关键） 你不能只..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "好，这一步我直接给你一套**能落地的 MCP 可视化面板方案（不是概念图，是能跑的）**，而且完全贴合你现在 34 个 MCP + Codex 这套环境。\n\n---\n\n# 一、你最终要得到的东西（先看效果）\n\n你会有一个页面，大概这样：\n\n```text\n┌─────────────────────────────── MCP Dashboard ───────────────────────────────┐\n│ 总数: 34   在线: 34   tools-only: 24   resources型: 10                        │\n├──────────────────────────────────────────────────────────────────────────────┤\n│ 名称                  类型        tools  resources  状态    延迟   最后调用  │\n│──────────────────────────────────────────────────────────────────────────────│\n│ playwright-browser    browser     12     2          🟢 OK   120ms   3s ago   │\n│ repo-inspector        code        8      0          🟢 OK   80ms    1m ago   │\n│ context-store         storage     3      2          🟢 OK   50ms    10s ago  │\n│ prompt-compressor     util        2      0          🟢 OK   30ms    -        │\n│ ...                                                                  ...    │\n└──────────────────────────────────────────────────────────────────────────────┘\n```\n\n还能点进去：\n\n```text\nplaywright-browser\n├ tools:\n│   - browser.open\n│   - browser.click\n│   - browser.screenshot\n├ resources:\n│   - latest-session\n├ 最近调用日志\n├ 平均耗时\n```\n\n---\n\n# 二、架构（完全符合你之前的模块规范）\n\n```text\napps/\n  mcp-dashboard/\n    backend/\n    frontend/\n\nmodules/\n  mcp-scanner/        ← 扫描 config + 握手\n  mcp-prober/         ← 测 tools/resources/延迟\n  mcp-registry/       ← 统一数据结构\n  mcp-telemetry/      ← 调用日志收集\n\n.runtime/\n  mcp-dashboard/\n    cache.json\n    history.log\n```\n\n---\n\n# 三、核心思路（很关键）\n\n你不能只用：\n\n```text\nlist_mcp_resources\n```\n\n必须做三件事：\n\n---\n\n## ① 读 config（拿全量）\n\n```ts\nconst servers = parseToml(\"C:\\\\Users\\\\ASUS-KL\\\\.codex\\\\config.toml\")\n```\n\n得到：\n\n```json\n[\"agent-runtime-mcp\", \"repo-inspector\", ... 34个]\n```\n\n---\n\n## ② 主动探测（关键）\n\n对每个 MCP 做：\n\n```ts\nawait probe({\n  type: \"initialize\"\n})\n```\n\n再测：\n\n```ts\ntools/list\nresources/list\n```\n\n---\n\n## ③ 构建统一模型\n\n```ts\ntype MCPServer = {\n  name: string\n  status: \"OK\" | \"FAIL\"\n  tools: number\n  resources: number\n  latency: number\n  lastUsed?: number\n}\n```\n\n---\n\n# 四、后端实现（Node.js 最小可用）\n\n## 1️⃣ 扫描器\n\n```js\nimport fs from \"fs\";\nimport toml from \"@iarna/toml\";\n\nexport function loadMCPServers() {\n  const raw = fs.readFileSync(\"C:\\\\Users\\\\ASUS-KL\\\\.codex\\\\config.toml\", \"utf-8\");\n  const parsed = toml.parse(raw);\n\n  return Object.keys(parsed.mcp_servers || {});\n}\n```\n\n---\n\n## 2️⃣ 探测器（核心）\n\n```js\nexport async function probeServer(name) {\n  const start = Date.now();\n\n  try {\n    const tools = await callMCP(name, \"tools/list\");\n    const resources = await callMCP(name, \"resources/list\");\n\n    return {\n      name,\n      status: \"OK\",\n      tools: tools.length,\n      resources: resources.length,\n      latency: Date.now() - start\n    };\n  } catch (e) {\n    return {\n      name,\n      status: \"FAIL\",\n      tools: 0,\n      resources: 0,\n      latency: -1\n    };\n  }\n}\n```\n\n---\n\n## 3️⃣ API\n\n```js\napp.get(\"/mcp/list\", async (req, res) => {\n  const servers = loadMCPServers();\n\n  const result = await Promise.all(\n    servers.map(s => probeServer(s))\n  );\n\n  res.json(result);\n});\n```\n\n---\n\n# 五、前端（简单但够用）\n\n## React + Tailwind\n\n```jsx\nexport default function MCPTable({ data }) {\n  return (\n    <table className=\"w-full text-sm\">\n      <thead>\n        <tr>\n          <th>名称</th>\n          <th>tools</th>\n          <th>resources</th>\n          <th>状态</th>\n          <th>延迟</th>\n        </tr>\n      </thead>\n      <tbody>\n        {data.map(mcp => (\n          <tr key={mcp.name}>\n            <td>{mcp.name}</td>\n            <td>{mcp.tools}</td>\n            <td>{mcp.resources}</td>\n            <td>{mcp.status === \"OK\" ? \"🟢\" : \"🔴\"}</td>\n            <td>{mcp.latency}ms</td>\n          </tr>\n        ))}\n      </tbody>\n    </table>\n  );\n}\n```\n\n---\n\n# 六、进阶（你这种情况必须加）\n\n## 1️⃣ 实时调用监控\n\n在 MCP 调用入口加：\n\n```js\nlog({\n  mcp: \"repo-inspector\",\n  tool: \"read_file\",\n  duration: 120,\n  timestamp: Date.now()\n});\n```\n\n---\n\n## 2️⃣ 热力图（找废 MCP）\n\n```text\n过去24小时调用次数\n```\n\n直接发现：\n\n```text\n哪些 MCP 根本没用\n```\n\n---\n\n## 3️⃣ 自动分类\n\n```text\nbrowser类\ncode类\ninfra类\nutility类\n```\n\n---\n\n# 七、部署方式（推荐你这样）\n\n你现在架构建议：\n\n```text\n本机：\n  Codex + MCP\n\n云端：\n  MCP Dashboard\n```\n\n或者：\n\n```text\n全部本地跑（先验证）\n```\n\n---\n\n# 八、一步到位版本（我建议你这样搞）\n\n我给你一个更狠的版本👇\n\n## 👉 MCP Control Center\n\n不仅是可视化，还能：\n\n```text\n✔ 启停 MCP\n✔ 动态加载 config\n✔ 限制权限\n✔ 调试工具调用\n✔ 查看每个 MCP 的输入输出\n✔ replay 调用\n```\n\n---\n\n# 九、你下一步该做什么（别乱搞）\n\n直接按这个顺序：\n\n```text\n1. 做 backend scanner + probe（最关键）\n2. 打一个 /mcp/list API\n3. 用最简单前端表格展示\n4. 确认 34 个全部可见\n5. 再做调用日志\n```\n\n---\n\n# 十、我给你一句核心建议（很重要）\n\n你现在的问题不是“没有工具”，而是：\n\n> **你没有“观察系统”的能力**\n\nMCP 一多：\n\n```text\n没有可视化 = 直接失控\n```\n\n---\n\n# 如果你要继续（建议你下一步）\n\n我可以直接帮你升级到👇\n\n### 👉 「AI 控制台（带 MCP + Agent + 任务调度可视化）」\n\n类似：\n\n```text\n像 Kubernetes Dashboard 一样管理 AI\n```\n\n你只要说：\n\n👉 **“做 AI 控制台”**\n\n我直接给你完整架构（比 MCP 面板再高一层）",
+    "html": "<p>好，这一步我直接给你一套<strong>能落地的 MCP 可视化面板方案（不是概念图，是能跑的）</strong>，而且完全贴合你现在 34 个 MCP + Codex 这套环境。</p>\n<hr>\n<h1 id=\"一你最终要得到的东西先看效果\">一、你最终要得到的东西（先看效果）</h1>\n<p>你会有一个页面，大概这样：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>┌─────────────────────────────── MCP Dashboard ───────────────────────────────┐</span></span>\n<span data-line=\"\"><span>│ 总数: 34   在线: 34   tools-only: 24   resources型: 10                        │</span></span>\n<span data-line=\"\"><span>├──────────────────────────────────────────────────────────────────────────────┤</span></span>\n<span data-line=\"\"><span>│ 名称                  类型        tools  resources  状态    延迟   最后调用  │</span></span>\n<span data-line=\"\"><span>│──────────────────────────────────────────────────────────────────────────────│</span></span>\n<span data-line=\"\"><span>│ playwright-browser    browser     12     2          🟢 OK   120ms   3s ago   │</span></span>\n<span data-line=\"\"><span>│ repo-inspector        code        8      0          🟢 OK   80ms    1m ago   │</span></span>\n<span data-line=\"\"><span>│ context-store         storage     3      2          🟢 OK   50ms    10s ago  │</span></span>\n<span data-line=\"\"><span>│ prompt-compressor     util        2      0          🟢 OK   30ms    -        │</span></span>\n<span data-line=\"\"><span>│ ...                                                                  ...    │</span></span>\n<span data-line=\"\"><span>└──────────────────────────────────────────────────────────────────────────────┘</span></span></code></pre></figure>\n<p>还能点进去：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>playwright-browser</span></span>\n<span data-line=\"\"><span>├ tools:</span></span>\n<span data-line=\"\"><span>│   - browser.open</span></span>\n<span data-line=\"\"><span>│   - browser.click</span></span>\n<span data-line=\"\"><span>│   - browser.screenshot</span></span>\n<span data-line=\"\"><span>├ resources:</span></span>\n<span data-line=\"\"><span>│   - latest-session</span></span>\n<span data-line=\"\"><span>├ 最近调用日志</span></span>\n<span data-line=\"\"><span>├ 平均耗时</span></span></code></pre></figure>\n<hr>\n<h1 id=\"二架构完全符合你之前的模块规范\">二、架构（完全符合你之前的模块规范）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>apps/</span></span>\n<span data-line=\"\"><span>  mcp-dashboard/</span></span>\n<span data-line=\"\"><span>    backend/</span></span>\n<span data-line=\"\"><span>    frontend/</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>modules/</span></span>\n<span data-line=\"\"><span>  mcp-scanner/        ← 扫描 config + 握手</span></span>\n<span data-line=\"\"><span>  mcp-prober/         ← 测 tools/resources/延迟</span></span>\n<span data-line=\"\"><span>  mcp-registry/       ← 统一数据结构</span></span>\n<span data-line=\"\"><span>  mcp-telemetry/      ← 调用日志收集</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>.runtime/</span></span>\n<span data-line=\"\"><span>  mcp-dashboard/</span></span>\n<span data-line=\"\"><span>    cache.json</span></span>\n<span data-line=\"\"><span>    history.log</span></span></code></pre></figure>\n<hr>\n<h1 id=\"三核心思路很关键\">三、核心思路（很关键）</h1>\n<p>你不能只用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>list_mcp_resources</span></span></code></pre></figure>\n<p>必须做三件事：</p>\n<hr>\n<h2 id=\"-读-config拿全量\">① 读 config（拿全量）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">const</span><span style=\"color:#79B8FF\"> servers</span><span style=\"color:#F97583\"> =</span><span style=\"color:#B392F0\"> parseToml</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#9ECBFF\">\"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">ASUS-KL</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">.codex</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">config.toml\"</span><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<p>得到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">[</span><span style=\"color:#9ECBFF\">\"agent-runtime-mcp\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"repo-inspector\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#FDAEB7;font-style:italic\">...</span><span style=\"color:#79B8FF\"> 34</span><span style=\"color:#FDAEB7;font-style:italic\">个</span><span style=\"color:#E1E4E8\">]</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-主动探测关键\">② 主动探测（关键）</h2>\n<p>对每个 MCP 做：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">await</span><span style=\"color:#B392F0\"> probe</span><span style=\"color:#E1E4E8\">({</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  type: </span><span style=\"color:#9ECBFF\">\"initialize\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">})</span></span></code></pre></figure>\n<p>再测：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">tools</span><span style=\"color:#F97583\">/</span><span style=\"color:#E1E4E8\">list</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">resources</span><span style=\"color:#F97583\">/</span><span style=\"color:#E1E4E8\">list</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-构建统一模型\">③ 构建统一模型</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">type</span><span style=\"color:#B392F0\"> MCPServer</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  name</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  status</span><span style=\"color:#F97583\">:</span><span style=\"color:#9ECBFF\"> \"OK\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"FAIL\"</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  tools</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  resources</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  latency</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  lastUsed</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> number</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h1 id=\"四后端实现nodejs-最小可用\">四、后端实现（Node.js 最小可用）</h1>\n<h2 id=\"1️⃣-扫描器\">1️⃣ 扫描器</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">import</span><span style=\"color:#E1E4E8\"> fs </span><span style=\"color:#F97583\">from</span><span style=\"color:#9ECBFF\"> \"fs\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">import</span><span style=\"color:#E1E4E8\"> toml </span><span style=\"color:#F97583\">from</span><span style=\"color:#9ECBFF\"> \"@iarna/toml\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">export</span><span style=\"color:#F97583\"> function</span><span style=\"color:#B392F0\"> loadMCPServers</span><span style=\"color:#E1E4E8\">() {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  const</span><span style=\"color:#79B8FF\"> raw</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> fs.</span><span style=\"color:#B392F0\">readFileSync</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#9ECBFF\">\"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">ASUS-KL</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">.codex</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">config.toml\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"utf-8\"</span><span style=\"color:#E1E4E8\">);</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  const</span><span style=\"color:#79B8FF\"> parsed</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> toml.</span><span style=\"color:#B392F0\">parse</span><span style=\"color:#E1E4E8\">(raw);</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">  return</span><span style=\"color:#E1E4E8\"> Object.</span><span style=\"color:#B392F0\">keys</span><span style=\"color:#E1E4E8\">(parsed.mcp_servers </span><span style=\"color:#F97583\">||</span><span style=\"color:#E1E4E8\"> {});</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2️⃣-探测器核心\">2️⃣ 探测器（核心）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">export</span><span style=\"color:#F97583\"> async</span><span style=\"color:#F97583\"> function</span><span style=\"color:#B392F0\"> probeServer</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#FFAB70\">name</span><span style=\"color:#E1E4E8\">) {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  const</span><span style=\"color:#79B8FF\"> start</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> Date.</span><span style=\"color:#B392F0\">now</span><span style=\"color:#E1E4E8\">();</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">  try</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    const</span><span style=\"color:#79B8FF\"> tools</span><span style=\"color:#F97583\"> =</span><span style=\"color:#F97583\"> await</span><span style=\"color:#B392F0\"> callMCP</span><span style=\"color:#E1E4E8\">(name, </span><span style=\"color:#9ECBFF\">\"tools/list\"</span><span style=\"color:#E1E4E8\">);</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    const</span><span style=\"color:#79B8FF\"> resources</span><span style=\"color:#F97583\"> =</span><span style=\"color:#F97583\"> await</span><span style=\"color:#B392F0\"> callMCP</span><span style=\"color:#E1E4E8\">(name, </span><span style=\"color:#9ECBFF\">\"resources/list\"</span><span style=\"color:#E1E4E8\">);</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">    return</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      name,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      status: </span><span style=\"color:#9ECBFF\">\"OK\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      tools: tools.</span><span style=\"color:#79B8FF\">length</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      resources: resources.</span><span style=\"color:#79B8FF\">length</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      latency: Date.</span><span style=\"color:#B392F0\">now</span><span style=\"color:#E1E4E8\">() </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\"> start</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    };</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  } </span><span style=\"color:#F97583\">catch</span><span style=\"color:#E1E4E8\"> (e) {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    return</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      name,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      status: </span><span style=\"color:#9ECBFF\">\"FAIL\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      tools: </span><span style=\"color:#79B8FF\">0</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      resources: </span><span style=\"color:#79B8FF\">0</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      latency: </span><span style=\"color:#F97583\">-</span><span style=\"color:#79B8FF\">1</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    };</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h2 id=\"3️⃣-api\">3️⃣ API</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">app.</span><span style=\"color:#B392F0\">get</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#9ECBFF\">\"/mcp/list\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#F97583\">async</span><span style=\"color:#E1E4E8\"> (</span><span style=\"color:#FFAB70\">req</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#FFAB70\">res</span><span style=\"color:#E1E4E8\">) </span><span style=\"color:#F97583\">=></span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  const</span><span style=\"color:#79B8FF\"> servers</span><span style=\"color:#F97583\"> =</span><span style=\"color:#B392F0\"> loadMCPServers</span><span style=\"color:#E1E4E8\">();</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">  const</span><span style=\"color:#79B8FF\"> result</span><span style=\"color:#F97583\"> =</span><span style=\"color:#F97583\"> await</span><span style=\"color:#79B8FF\"> Promise</span><span style=\"color:#E1E4E8\">.</span><span style=\"color:#B392F0\">all</span><span style=\"color:#E1E4E8\">(</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    servers.</span><span style=\"color:#B392F0\">map</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#FFAB70\">s</span><span style=\"color:#F97583\"> =></span><span style=\"color:#B392F0\"> probeServer</span><span style=\"color:#E1E4E8\">(s))</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  );</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  res.</span><span style=\"color:#B392F0\">json</span><span style=\"color:#E1E4E8\">(result);</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">});</span></span></code></pre></figure>\n<hr>\n<h1 id=\"五前端简单但够用\">五、前端（简单但够用）</h1>\n<h2 id=\"react--tailwind\">React + Tailwind</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"jsx\" data-theme=\"github-dark\"><code data-language=\"jsx\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">export</span><span style=\"color:#F97583\"> default</span><span style=\"color:#F97583\"> function</span><span style=\"color:#B392F0\"> MCPTable</span><span style=\"color:#E1E4E8\">({ </span><span style=\"color:#FFAB70\">data</span><span style=\"color:#E1E4E8\"> }) {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  return</span><span style=\"color:#E1E4E8\"> (</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    &#x3C;</span><span style=\"color:#85E89D\">table</span><span style=\"color:#B392F0\"> className</span><span style=\"color:#F97583\">=</span><span style=\"color:#9ECBFF\">\"w-full text-sm\"</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      &#x3C;</span><span style=\"color:#85E89D\">thead</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">        &#x3C;</span><span style=\"color:#85E89D\">tr</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">          &#x3C;</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">>名称&#x3C;/</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">          &#x3C;</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">>tools&#x3C;/</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">          &#x3C;</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">>resources&#x3C;/</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">          &#x3C;</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">>状态&#x3C;/</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">          &#x3C;</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">>延迟&#x3C;/</span><span style=\"color:#85E89D\">th</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">        &#x3C;/</span><span style=\"color:#85E89D\">tr</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      &#x3C;/</span><span style=\"color:#85E89D\">thead</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      &#x3C;</span><span style=\"color:#85E89D\">tbody</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">        {data.</span><span style=\"color:#B392F0\">map</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#FFAB70\">mcp</span><span style=\"color:#F97583\"> =></span><span style=\"color:#E1E4E8\"> (</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">          &#x3C;</span><span style=\"color:#85E89D\">tr</span><span style=\"color:#B392F0\"> key</span><span style=\"color:#F97583\">=</span><span style=\"color:#E1E4E8\">{mcp.name}></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">            &#x3C;</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">>{mcp.name}&#x3C;/</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">            &#x3C;</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">>{mcp.tools}&#x3C;/</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">            &#x3C;</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">>{mcp.resources}&#x3C;/</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">            &#x3C;</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">>{mcp.status </span><span style=\"color:#F97583\">===</span><span style=\"color:#9ECBFF\"> \"OK\"</span><span style=\"color:#F97583\"> ?</span><span style=\"color:#9ECBFF\"> \"🟢\"</span><span style=\"color:#F97583\"> :</span><span style=\"color:#9ECBFF\"> \"🔴\"</span><span style=\"color:#E1E4E8\">}&#x3C;/</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">            &#x3C;</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">>{mcp.latency}ms&#x3C;/</span><span style=\"color:#85E89D\">td</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">          &#x3C;/</span><span style=\"color:#85E89D\">tr</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">        ))}</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      &#x3C;/</span><span style=\"color:#85E89D\">tbody</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    &#x3C;/</span><span style=\"color:#85E89D\">table</span><span style=\"color:#E1E4E8\">></span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  );</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h1 id=\"六进阶你这种情况必须加\">六、进阶（你这种情况必须加）</h1>\n<h2 id=\"1️⃣-实时调用监控\">1️⃣ 实时调用监控</h2>\n<p>在 MCP 调用入口加：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">log</span><span style=\"color:#E1E4E8\">({</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  mcp: </span><span style=\"color:#9ECBFF\">\"repo-inspector\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  tool: </span><span style=\"color:#9ECBFF\">\"read_file\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  duration: </span><span style=\"color:#79B8FF\">120</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  timestamp: Date.</span><span style=\"color:#B392F0\">now</span><span style=\"color:#E1E4E8\">()</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">});</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2️⃣-热力图找废-mcp\">2️⃣ 热力图（找废 MCP）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>过去24小时调用次数</span></span></code></pre></figure>\n<p>直接发现：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>哪些 MCP 根本没用</span></span></code></pre></figure>\n<hr>\n<h2 id=\"3️⃣-自动分类\">3️⃣ 自动分类</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>browser类</span></span>\n<span data-line=\"\"><span>code类</span></span>\n<span data-line=\"\"><span>infra类</span></span>\n<span data-line=\"\"><span>utility类</span></span></code></pre></figure>\n<hr>\n<h1 id=\"七部署方式推荐你这样\">七、部署方式（推荐你这样）</h1>\n<p>你现在架构建议：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本机：</span></span>\n<span data-line=\"\"><span>  Codex + MCP</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>云端：</span></span>\n<span data-line=\"\"><span>  MCP Dashboard</span></span></code></pre></figure>\n<p>或者：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>全部本地跑（先验证）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"八一步到位版本我建议你这样搞\">八、一步到位版本（我建议你这样搞）</h1>\n<p>我给你一个更狠的版本👇</p>\n<h2 id=\"-mcp-control-center\">👉 MCP Control Center</h2>\n<p>不仅是可视化，还能：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 启停 MCP</span></span>\n<span data-line=\"\"><span>✔ 动态加载 config</span></span>\n<span data-line=\"\"><span>✔ 限制权限</span></span>\n<span data-line=\"\"><span>✔ 调试工具调用</span></span>\n<span data-line=\"\"><span>✔ 查看每个 MCP 的输入输出</span></span>\n<span data-line=\"\"><span>✔ replay 调用</span></span></code></pre></figure>\n<hr>\n<h1 id=\"九你下一步该做什么别乱搞\">九、你下一步该做什么（别乱搞）</h1>\n<p>直接按这个顺序：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>1. 做 backend scanner + probe（最关键）</span></span>\n<span data-line=\"\"><span>2. 打一个 /mcp/list API</span></span>\n<span data-line=\"\"><span>3. 用最简单前端表格展示</span></span>\n<span data-line=\"\"><span>4. 确认 34 个全部可见</span></span>\n<span data-line=\"\"><span>5. 再做调用日志</span></span></code></pre></figure>\n<hr>\n<h1 id=\"十我给你一句核心建议很重要\">十、我给你一句核心建议（很重要）</h1>\n<p>你现在的问题不是“没有工具”，而是：</p>\n<blockquote>\n<p><strong>你没有“观察系统”的能力</strong></p>\n</blockquote>\n<p>MCP 一多：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>没有可视化 = 直接失控</span></span></code></pre></figure>\n<hr>\n<h1 id=\"如果你要继续建议你下一步\">如果你要继续（建议你下一步）</h1>\n<p>我可以直接帮你升级到👇</p>\n<h3 id=\"-ai-控制台带-mcp--agent--任务调度可视化\">👉 「AI 控制台（带 MCP + Agent + 任务调度可视化）」</h3>\n<p>类似：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>像 Kubernetes Dashboard 一样管理 AI</span></span></code></pre></figure>\n<p>你只要说：</p>\n<p>👉 <strong>“做 AI 控制台”</strong></p>\n<p>我直接给你完整架构（比 MCP 面板再高一层）</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一-你最终要得到的东西-先看效果",
+        "text": "一、你最终要得到的东西（先看效果）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-架构-完全符合你之前的模块规范",
+        "text": "二、架构（完全符合你之前的模块规范）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-核心思路-很关键",
+        "text": "三、核心思路（很关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-读-config-拿全量",
+        "text": "① 读 config（拿全量）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-主动探测-关键",
+        "text": "② 主动探测（关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-构建统一模型",
+        "text": "③ 构建统一模型"
+      },
+      {
+        "depth": 1,
+        "slug": "四-后端实现-node-js-最小可用",
+        "text": "四、后端实现（Node.js 最小可用）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-扫描器",
+        "text": "1️⃣ 扫描器"
+      },
+      {
+        "depth": 2,
+        "slug": "2-探测器-核心",
+        "text": "2️⃣ 探测器（核心）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-api",
+        "text": "3️⃣ API"
+      },
+      {
+        "depth": 1,
+        "slug": "五-前端-简单但够用",
+        "text": "五、前端（简单但够用）"
+      },
+      {
+        "depth": 2,
+        "slug": "react-tailwind",
+        "text": "React + Tailwind"
+      },
+      {
+        "depth": 1,
+        "slug": "六-进阶-你这种情况必须加",
+        "text": "六、进阶（你这种情况必须加）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-实时调用监控",
+        "text": "1️⃣ 实时调用监控"
+      },
+      {
+        "depth": 2,
+        "slug": "2-热力图-找废-mcp",
+        "text": "2️⃣ 热力图（找废 MCP）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-自动分类",
+        "text": "3️⃣ 自动分类"
+      },
+      {
+        "depth": 1,
+        "slug": "七-部署方式-推荐你这样",
+        "text": "七、部署方式（推荐你这样）"
+      },
+      {
+        "depth": 1,
+        "slug": "八-一步到位版本-我建议你这样搞",
+        "text": "八、一步到位版本（我建议你这样搞）"
+      },
+      {
+        "depth": 2,
+        "slug": "mcp-control-center",
+        "text": "👉 MCP Control Center"
+      },
+      {
+        "depth": 1,
+        "slug": "九-你下一步该做什么-别乱搞",
+        "text": "九、你下一步该做什么（别乱搞）"
+      },
+      {
+        "depth": 1,
+        "slug": "十-我给你一句核心建议-很重要",
+        "text": "十、我给你一句核心建议（很重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要继续-建议你下一步",
+        "text": "如果你要继续（建议你下一步）"
+      },
+      {
+        "depth": 3,
+        "slug": "ai-控制台-带-mcp-agent-任务调度可视化",
+        "text": "👉 「AI 控制台（带 MCP + Agent + 任务调度可视化）」"
+      }
+    ],
+    "detailPath": "articles/md_4a6bf497c78a.json"
+  }
+}

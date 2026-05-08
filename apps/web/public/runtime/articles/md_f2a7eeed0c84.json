@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_f2a7eeed0c84",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/technical-blog-template.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/technical-blog-template.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/technical-blog-template.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/technical-blog-template.md",
+    "slug": "codex-knowledge-technical-blog-template",
+    "title": "技术博客 / 深度长文模板",
+    "summary": "<Blog Title 技术博客 / 深度长文 文档定位：本文用于把 <topic 讲清楚给外部读者，同时保持工程严密性、结构分层和证据意识。 适用读者：对 <topic 有兴趣、需要理解背景、实现、权衡与结论的读者。 写作原则：博客允许叙事性，但不允许牺牲定义、引用、目录、图注、公式解释与明确结论...",
+    "description": "<Blog Title 技术博客 / 深度长文 文档定位：本文用于把 <topic 讲清楚给外部读者，同时保持工程严密性、结构分层和证据意识。 适用读者：对 <topic 有兴趣、需要理解背景、实现、权衡与结论的读者。 写作原则：博客允许叙事性，但不允许牺牲定义、引用、目录、图注、公式解释与明确结论...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/technical-blog-template.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/technical-blog-template.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/technical-blog-template.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "technical blog template",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [
+        "md_d92d19fbfb47"
+      ],
+      "assets": [
+        "./images/<file-name>.png"
+      ]
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "TECHNICAL BLOG TEMPLATE"
+      ],
+      "subtitle": "<Blog Title 技术博客 / 深度长文 文档定位：本文用于把 <topic 讲清楚给外部读者，同时保持工程严密性、结构分层和证据意识。 适用读者：对 <topic 有兴趣、需要理解背景、实现、权衡与结论的读者。 写作原则：博客允许叙事性，但不允许牺牲定义、引用、目录、图注、公式解释与明确结论..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# <Blog Title>\n## 技术博客 / 深度长文\n\n> 文档定位：本文用于把 `<topic>` 讲清楚给外部读者，同时保持工程严密性、结构分层和证据意识。\n> 适用读者：对 `<topic>` 有兴趣、需要理解背景、实现、权衡与结论的读者。\n> 写作原则：博客允许叙事性，但不允许牺牲定义、引用、目录、图注、公式解释与明确结论。\n\n## 摘要\n\n用 3~6 句说明：\n\n- 这篇文章讨论什么\n- 为什么值得看\n- 最核心的结论是什么\n- 文章适合谁\n\n## 目录\n\n- [1. 背景](#1-背景)\n- [2. 问题定义](#2-问题定义)\n- [3. 核心概念与术语](#3-核心概念与术语)\n- [4. 系统或方案拆解](#4-系统或方案拆解)\n- [5. 关键实现细节](#5-关键实现细节)\n- [6. 图片图表与证据](#6-图片图表与证据)\n- [7. 对比与权衡](#7-对比与权衡)\n- [8. 常见误区](#8-常见误区)\n- [9. 结论](#9-结论)\n- [10. 参考与附录](#10-参考与附录)\n\n## 1. 背景\n\n### 1.1 主题背景\n\n### 1.2 为什么值得关心\n\n### 1.3 这篇文章不讲什么\n\n## 2. 问题定义\n\n### 2.1 文章要回答的问题\n\n### 2.2 适用边界\n\n## 3. 核心概念与术语\n\n| 术语 | 定义 | 备注 |\n| --- | --- | --- |\n| `<term>` | `<definition>` | `<note>` |\n\n## 4. 系统或方案拆解\n\n### 4.1 总体结构\n\n```text\n<component-a>\n  -> <component-b>\n  -> <component-c>\n```\n\n### 4.2 分层说明\n\n### 4.3 主链路说明\n\n## 5. 关键实现细节\n\n### 5.1 关键机制\n\n### 5.2 关键代码 / 配置 / 数据结构\n\n### 5.3 关键公式\n\n如果需要公式，按下面格式写：\n\n```latex\nS = \\alpha Q + \\beta C + \\gamma T\n```\n\n并跟一张变量表：\n\n| 符号 | 含义 |\n| --- | --- |\n| `S` | `<meaning>` |\n| `Q` | `<meaning>` |\n\n以及一段自然语言解释。\n\n## 6. 图片图表与证据\n\n### 6.1 图片 / 截图插入规范\n\n推荐每张图都按下面格式写：\n\n```md\n![图 1：<alt-text>](./images/<file-name>.png)\n\n图 1：<图标题>。说明这张图证明什么。来源：<原创截图 / 官方文档 / AI 生成示意图 / 外部来源链接>。\n```\n\n### 6.2 图表说明\n\n### 6.3 证据说明\n\n区分：\n\n- 运行截图证据\n- 架构示意图\n- 对比图表\n- AI 生成示意图\n\n## 7. 对比与权衡\n\n| 维度 | 方案 A | 方案 B | 结论 |\n| --- | --- | --- | --- |\n| `<dimension>` | `<summary>` | `<summary>` | `<conclusion>` |\n\n## 8. 常见误区\n\n- `<misunderstanding>`\n\n## 9. 结论\n\n### 9.1 主结论\n\n### 9.2 给不同读者的建议\n\n### 9.3 保留意见\n\n## 10. 参考与附录\n\n### 10.1 参考来源\n\n- `[官方] <title>, <version/date>`\n- `[代码] <repo/file/module>`\n- `[实验] <environment/date/method>`\n- `[推断] <why this is inference>`\n\n### 10.2 附录\n\n- 补充图\n- 扩展样例\n- 长表",
+    "html": "<h1 id=\"\"></h1>\n<h2 id=\"技术博客--深度长文\">技术博客 / 深度长文</h2>\n<blockquote>\n<p>文档定位：本文用于把 <code>&#x3C;topic></code> 讲清楚给外部读者，同时保持工程严密性、结构分层和证据意识。\n适用读者：对 <code>&#x3C;topic></code> 有兴趣、需要理解背景、实现、权衡与结论的读者。\n写作原则：博客允许叙事性，但不允许牺牲定义、引用、目录、图注、公式解释与明确结论。</p>\n</blockquote>\n<h2 id=\"摘要\">摘要</h2>\n<p>用 3~6 句说明：</p>\n<ul>\n<li>这篇文章讨论什么</li>\n<li>为什么值得看</li>\n<li>最核心的结论是什么</li>\n<li>文章适合谁</li>\n</ul>\n<h2 id=\"目录\">目录</h2>\n<ul>\n<li><a href=\"#1-%E8%83%8C%E6%99%AF\">1. 背景</a></li>\n<li><a href=\"#2-%E9%97%AE%E9%A2%98%E5%AE%9A%E4%B9%89\">2. 问题定义</a></li>\n<li><a href=\"#3-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%9C%AF%E8%AF%AD\">3. 核心概念与术语</a></li>\n<li><a href=\"#4-%E7%B3%BB%E7%BB%9F%E6%88%96%E6%96%B9%E6%A1%88%E6%8B%86%E8%A7%A3\">4. 系统或方案拆解</a></li>\n<li><a href=\"#5-%E5%85%B3%E9%94%AE%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82\">5. 关键实现细节</a></li>\n<li><a href=\"#6-%E5%9B%BE%E7%89%87%E5%9B%BE%E8%A1%A8%E4%B8%8E%E8%AF%81%E6%8D%AE\">6. 图片图表与证据</a></li>\n<li><a href=\"#7-%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9D%83%E8%A1%A1\">7. 对比与权衡</a></li>\n<li><a href=\"#8-%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA\">8. 常见误区</a></li>\n<li><a href=\"#9-%E7%BB%93%E8%AE%BA\">9. 结论</a></li>\n<li><a href=\"#10-%E5%8F%82%E8%80%83%E4%B8%8E%E9%99%84%E5%BD%95\">10. 参考与附录</a></li>\n</ul>\n<h2 id=\"1-背景\">1. 背景</h2>\n<h3 id=\"11-主题背景\">1.1 主题背景</h3>\n<h3 id=\"12-为什么值得关心\">1.2 为什么值得关心</h3>\n<h3 id=\"13-这篇文章不讲什么\">1.3 这篇文章不讲什么</h3>\n<h2 id=\"2-问题定义\">2. 问题定义</h2>\n<h3 id=\"21-文章要回答的问题\">2.1 文章要回答的问题</h3>\n<h3 id=\"22-适用边界\">2.2 适用边界</h3>\n<h2 id=\"3-核心概念与术语\">3. 核心概念与术语</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>术语</th>\n<th>定义</th>\n<th>备注</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>&#x3C;term></code></td>\n<td><code>&#x3C;definition></code></td>\n<td><code>&#x3C;note></code></td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"4-系统或方案拆解\">4. 系统或方案拆解</h2>\n<h3 id=\"41-总体结构\">4.1 总体结构</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>&#x3C;component-a></span></span>\n<span data-line=\"\"><span>  -> &#x3C;component-b></span></span>\n<span data-line=\"\"><span>  -> &#x3C;component-c></span></span></code></pre></figure>\n<h3 id=\"42-分层说明\">4.2 分层说明</h3>\n<h3 id=\"43-主链路说明\">4.3 主链路说明</h3>\n<h2 id=\"5-关键实现细节\">5. 关键实现细节</h2>\n<h3 id=\"51-关键机制\">5.1 关键机制</h3>\n<h3 id=\"52-关键代码--配置--数据结构\">5.2 关键代码 / 配置 / 数据结构</h3>\n<h3 id=\"53-关键公式\">5.3 关键公式</h3>\n<p>如果需要公式，按下面格式写：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"latex\" data-theme=\"github-dark\"><code data-language=\"latex\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">S = </span><span style=\"color:#79B8FF\">\\alpha</span><span style=\"color:#E1E4E8\"> Q + </span><span style=\"color:#79B8FF\">\\beta</span><span style=\"color:#E1E4E8\"> C + </span><span style=\"color:#79B8FF\">\\gamma</span><span style=\"color:#E1E4E8\"> T</span></span></code></pre></figure>\n<p>并跟一张变量表：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>符号</th>\n<th>含义</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>S</code></td>\n<td><code>&#x3C;meaning></code></td>\n</tr>\n<tr>\n<td><code>Q</code></td>\n<td><code>&#x3C;meaning></code></td>\n</tr>\n</tbody>\n</table></div>\n<p>以及一段自然语言解释。</p>\n<h2 id=\"6-图片图表与证据\">6. 图片图表与证据</h2>\n<h3 id=\"61-图片--截图插入规范\">6.1 图片 / 截图插入规范</h3>\n<p>推荐每张图都按下面格式写：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">![</span><span style=\"color:#DBEDFF;text-decoration:underline\">图 1：&#x3C;alt-text></span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">./images/&#x3C;file-name>.png</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">图 1：&#x3C;图标题>。说明这张图证明什么。来源：&#x3C;原创截图 / 官方文档 / AI 生成示意图 / 外部来源链接>。</span></span></code></pre></figure>\n<h3 id=\"62-图表说明\">6.2 图表说明</h3>\n<h3 id=\"63-证据说明\">6.3 证据说明</h3>\n<p>区分：</p>\n<ul>\n<li>运行截图证据</li>\n<li>架构示意图</li>\n<li>对比图表</li>\n<li>AI 生成示意图</li>\n</ul>\n<h2 id=\"7-对比与权衡\">7. 对比与权衡</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>维度</th>\n<th>方案 A</th>\n<th>方案 B</th>\n<th>结论</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>&#x3C;dimension></code></td>\n<td><code>&#x3C;summary></code></td>\n<td><code>&#x3C;summary></code></td>\n<td><code>&#x3C;conclusion></code></td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"8-常见误区\">8. 常见误区</h2>\n<ul>\n<li><code>&#x3C;misunderstanding></code></li>\n</ul>\n<h2 id=\"9-结论\">9. 结论</h2>\n<h3 id=\"91-主结论\">9.1 主结论</h3>\n<h3 id=\"92-给不同读者的建议\">9.2 给不同读者的建议</h3>\n<h3 id=\"93-保留意见\">9.3 保留意见</h3>\n<h2 id=\"10-参考与附录\">10. 参考与附录</h2>\n<h3 id=\"101-参考来源\">10.1 参考来源</h3>\n<ul>\n<li><code>[官方] &#x3C;title>, &#x3C;version/date></code></li>\n<li><code>[代码] &#x3C;repo/file/module></code></li>\n<li><code>[实验] &#x3C;environment/date/method></code></li>\n<li><code>[推断] &#x3C;why this is inference></code></li>\n</ul>\n<h3 id=\"102-附录\">10.2 附录</h3>\n<ul>\n<li>补充图</li>\n<li>扩展样例</li>\n<li>长表</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "blog-title",
+        "text": "<Blog Title>"
+      },
+      {
+        "depth": 2,
+        "slug": "技术博客-深度长文",
+        "text": "技术博客 / 深度长文"
+      },
+      {
+        "depth": 2,
+        "slug": "摘要",
+        "text": "摘要"
+      },
+      {
+        "depth": 2,
+        "slug": "目录",
+        "text": "目录"
+      },
+      {
+        "depth": 2,
+        "slug": "1-背景",
+        "text": "1. 背景"
+      },
+      {
+        "depth": 3,
+        "slug": "1-1-主题背景",
+        "text": "1.1 主题背景"
+      },
+      {
+        "depth": 3,
+        "slug": "1-2-为什么值得关心",
+        "text": "1.2 为什么值得关心"
+      },
+      {
+        "depth": 3,
+        "slug": "1-3-这篇文章不讲什么",
+        "text": "1.3 这篇文章不讲什么"
+      },
+      {
+        "depth": 2,
+        "slug": "2-问题定义",
+        "text": "2. 问题定义"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-文章要回答的问题",
+        "text": "2.1 文章要回答的问题"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-适用边界",
+        "text": "2.2 适用边界"
+      },
+      {
+        "depth": 2,
+        "slug": "3-核心概念与术语",
+        "text": "3. 核心概念与术语"
+      },
+      {
+        "depth": 2,
+        "slug": "4-系统或方案拆解",
+        "text": "4. 系统或方案拆解"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-总体结构",
+        "text": "4.1 总体结构"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-分层说明",
+        "text": "4.2 分层说明"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-主链路说明",
+        "text": "4.3 主链路说明"
+      },
+      {
+        "depth": 2,
+        "slug": "5-关键实现细节",
+        "text": "5. 关键实现细节"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-关键机制",
+        "text": "5.1 关键机制"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-关键代码-配置-数据结构",
+        "text": "5.2 关键代码 / 配置 / 数据结构"
+      },
+      {
+        "depth": 3,
+        "slug": "5-3-关键公式",
+        "text": "5.3 关键公式"
+      },
+      {
+        "depth": 2,
+        "slug": "6-图片图表与证据",
+        "text": "6. 图片图表与证据"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-图片-截图插入规范",
+        "text": "6.1 图片 / 截图插入规范"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-图表说明",
+        "text": "6.2 图表说明"
+      },
+      {
+        "depth": 3,
+        "slug": "6-3-证据说明",
+        "text": "6.3 证据说明"
+      },
+      {
+        "depth": 2,
+        "slug": "7-对比与权衡",
+        "text": "7. 对比与权衡"
+      },
+      {
+        "depth": 2,
+        "slug": "8-常见误区",
+        "text": "8. 常见误区"
+      },
+      {
+        "depth": 2,
+        "slug": "9-结论",
+        "text": "9. 结论"
+      },
+      {
+        "depth": 3,
+        "slug": "9-1-主结论",
+        "text": "9.1 主结论"
+      },
+      {
+        "depth": 3,
+        "slug": "9-2-给不同读者的建议",
+        "text": "9.2 给不同读者的建议"
+      },
+      {
+        "depth": 3,
+        "slug": "9-3-保留意见",
+        "text": "9.3 保留意见"
+      },
+      {
+        "depth": 2,
+        "slug": "10-参考与附录",
+        "text": "10. 参考与附录"
+      },
+      {
+        "depth": 3,
+        "slug": "10-1-参考来源",
+        "text": "10.1 参考来源"
+      },
+      {
+        "depth": 3,
+        "slug": "10-2-附录",
+        "text": "10.2 附录"
+      }
+    ],
+    "detailPath": "articles/md_f2a7eeed0c84.json"
+  }
+}

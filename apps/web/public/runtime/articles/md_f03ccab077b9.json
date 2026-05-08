@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_f03ccab077b9",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-stack.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/obsidian-ide-stack.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-stack.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-stack.md",
+    "slug": "codex-knowledge-obsidian-ide-stack",
+    "title": "Obsidian IDE Stack",
+    "summary": "Obsidian IDE Stack 这页记录当前 vault 已安装并整合的“更像 VS Code”的插件栈。 已安装插件 code files obsidian custom file extensions plugin obsidian shellcommands obsidian git o...",
+    "description": "Obsidian IDE Stack 这页记录当前 vault 已安装并整合的“更像 VS Code”的插件栈。 已安装插件 code files obsidian custom file extensions plugin obsidian shellcommands obsidian git o...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge",
+      "obsidian-ide-home"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags",
+        "obsidian.wikilinks"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/obsidian-ide-stack.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-stack.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-stack.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "obsidian ide stack",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [
+        "obsidian-ide-home"
+      ],
+      "backlinks": [
+        "md_d92d19fbfb47",
+        "md_b6b5013cd4ae"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "OBSIDIAN IDE HOME",
+        "OBSIDIAN IDE STACK"
+      ],
+      "subtitle": "Obsidian IDE Stack 这页记录当前 vault 已安装并整合的“更像 VS Code”的插件栈。 已安装插件 code files obsidian custom file extensions plugin obsidian shellcommands obsidian git o..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Obsidian IDE Stack\n\n这页记录当前 vault 已安装并整合的“更像 VS Code”的插件栈。\n\n## 已安装插件\n\n- `code-files`\n- `obsidian-custom-file-extensions-plugin`\n- `obsidian-shellcommands`\n- `obsidian-git`\n- `obsidian-local-rest-api`\n\n## 当前整合策略\n\n### 1. Code Files\n\n用于直接在 Obsidian 里打开和编辑代码/配置类文件。\n\n当前已预配扩展名：\n\n- `json`\n- `yaml` / `yml`\n- `js` / `jsx`\n- `ts` / `tsx`\n- `css` / `scss`\n- `html`\n- `xml`\n- `sql`\n- `py`\n- `ps1` / `psm1` / `psd1`\n- `bat` / `cmd`\n- `sh`\n- `toml`\n- `ini` / `cfg` / `conf`\n- `env`\n- `log`\n\n### 2. Custom File Extensions and Types\n\n只做补位，不和 `Code Files` 抢 `json/js/ts/yaml` 这些扩展名。\n\n当前仅保留：\n\n- `markdown`: `\"\"`, `md`, `txt`, `csv`\n\n### 3. Shell Commands\n\n当前已预置 11 个命令：\n\n- `Open vault in VS Code`\n- `Open current file in VS Code`\n- `Open current folder in VS Code`\n- `Open current folder in PowerShell`\n- `Open current file folder in PowerShell`\n- `Open current folder in Explorer`\n- `Open current file in default app`\n- `Git status for current folder`\n- `Validate current JSON file`\n- `Validate document writing registry JSON`\n- `Open document writing system index in VS Code`\n\n### 4. Obsidian Git\n\n当前已预开：\n\n- Source Control 刷新\n- split diff 风格\n- 行级 signs\n- hunk commands\n\n### 5. Local REST API\n\n已安装，但保留默认安全初始化路径。\n\n首次启用后请到插件设置中查看：\n\n- API Key\n- 证书\n- 绑定端口\n\n## 使用建议\n\n- 轻量代码 / JSON / YAML / 配置编辑：直接在 Obsidian 中打开\n- 重型工程开发：继续交给 VS Code\n- 需要快速跳转：用 Shell Commands 打开 VS Code\n- 需要自动化对接：后续使用 Local REST API\n\n## 下一步\n\n如果插件已经写入但界面里还没出现，请重启 Obsidian 或重新加载社区插件。\n\n\n## 本地入口\n\n- [obsidian-ide-home](#obsidian-ide-home)",
+    "html": "<h1 id=\"obsidian-ide-stack\">Obsidian IDE Stack</h1>\n<p>这页记录当前 vault 已安装并整合的“更像 VS Code”的插件栈。</p>\n<h2 id=\"已安装插件\">已安装插件</h2>\n<ul>\n<li><code>code-files</code></li>\n<li><code>obsidian-custom-file-extensions-plugin</code></li>\n<li><code>obsidian-shellcommands</code></li>\n<li><code>obsidian-git</code></li>\n<li><code>obsidian-local-rest-api</code></li>\n</ul>\n<h2 id=\"当前整合策略\">当前整合策略</h2>\n<h3 id=\"1-code-files\">1. Code Files</h3>\n<p>用于直接在 Obsidian 里打开和编辑代码/配置类文件。</p>\n<p>当前已预配扩展名：</p>\n<ul>\n<li><code>json</code></li>\n<li><code>yaml</code> / <code>yml</code></li>\n<li><code>js</code> / <code>jsx</code></li>\n<li><code>ts</code> / <code>tsx</code></li>\n<li><code>css</code> / <code>scss</code></li>\n<li><code>html</code></li>\n<li><code>xml</code></li>\n<li><code>sql</code></li>\n<li><code>py</code></li>\n<li><code>ps1</code> / <code>psm1</code> / <code>psd1</code></li>\n<li><code>bat</code> / <code>cmd</code></li>\n<li><code>sh</code></li>\n<li><code>toml</code></li>\n<li><code>ini</code> / <code>cfg</code> / <code>conf</code></li>\n<li><code>env</code></li>\n<li><code>log</code></li>\n</ul>\n<h3 id=\"2-custom-file-extensions-and-types\">2. Custom File Extensions and Types</h3>\n<p>只做补位，不和 <code>Code Files</code> 抢 <code>json/js/ts/yaml</code> 这些扩展名。</p>\n<p>当前仅保留：</p>\n<ul>\n<li><code>markdown</code>: <code>\"\"</code>, <code>md</code>, <code>txt</code>, <code>csv</code></li>\n</ul>\n<h3 id=\"3-shell-commands\">3. Shell Commands</h3>\n<p>当前已预置 11 个命令：</p>\n<ul>\n<li><code>Open vault in VS Code</code></li>\n<li><code>Open current file in VS Code</code></li>\n<li><code>Open current folder in VS Code</code></li>\n<li><code>Open current folder in PowerShell</code></li>\n<li><code>Open current file folder in PowerShell</code></li>\n<li><code>Open current folder in Explorer</code></li>\n<li><code>Open current file in default app</code></li>\n<li><code>Git status for current folder</code></li>\n<li><code>Validate current JSON file</code></li>\n<li><code>Validate document writing registry JSON</code></li>\n<li><code>Open document writing system index in VS Code</code></li>\n</ul>\n<h3 id=\"4-obsidian-git\">4. Obsidian Git</h3>\n<p>当前已预开：</p>\n<ul>\n<li>Source Control 刷新</li>\n<li>split diff 风格</li>\n<li>行级 signs</li>\n<li>hunk commands</li>\n</ul>\n<h3 id=\"5-local-rest-api\">5. Local REST API</h3>\n<p>已安装，但保留默认安全初始化路径。</p>\n<p>首次启用后请到插件设置中查看：</p>\n<ul>\n<li>API Key</li>\n<li>证书</li>\n<li>绑定端口</li>\n</ul>\n<h2 id=\"使用建议\">使用建议</h2>\n<ul>\n<li>轻量代码 / JSON / YAML / 配置编辑：直接在 Obsidian 中打开</li>\n<li>重型工程开发：继续交给 VS Code</li>\n<li>需要快速跳转：用 Shell Commands 打开 VS Code</li>\n<li>需要自动化对接：后续使用 Local REST API</li>\n</ul>\n<h2 id=\"下一步\">下一步</h2>\n<p>如果插件已经写入但界面里还没出现，请重启 Obsidian 或重新加载社区插件。</p>\n<h2 id=\"本地入口\">本地入口</h2>\n<ul>\n<li><a href=\"#obsidian-ide-home\">obsidian-ide-home</a></li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "obsidian-ide-stack",
+        "text": "Obsidian IDE Stack"
+      },
+      {
+        "depth": 2,
+        "slug": "已安装插件",
+        "text": "已安装插件"
+      },
+      {
+        "depth": 2,
+        "slug": "当前整合策略",
+        "text": "当前整合策略"
+      },
+      {
+        "depth": 3,
+        "slug": "1-code-files",
+        "text": "1. Code Files"
+      },
+      {
+        "depth": 3,
+        "slug": "2-custom-file-extensions-and-types",
+        "text": "2. Custom File Extensions and Types"
+      },
+      {
+        "depth": 3,
+        "slug": "3-shell-commands",
+        "text": "3. Shell Commands"
+      },
+      {
+        "depth": 3,
+        "slug": "4-obsidian-git",
+        "text": "4. Obsidian Git"
+      },
+      {
+        "depth": 3,
+        "slug": "5-local-rest-api",
+        "text": "5. Local REST API"
+      },
+      {
+        "depth": 2,
+        "slug": "使用建议",
+        "text": "使用建议"
+      },
+      {
+        "depth": 2,
+        "slug": "下一步",
+        "text": "下一步"
+      },
+      {
+        "depth": 2,
+        "slug": "本地入口",
+        "text": "本地入口"
+      }
+    ],
+    "detailPath": "articles/md_f03ccab077b9.json"
+  }
+}

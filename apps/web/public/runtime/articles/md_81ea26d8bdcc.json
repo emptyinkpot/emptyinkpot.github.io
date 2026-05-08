@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_81ea26d8bdcc",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/%E7%BD%91%E7%AB%99.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/网站.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/网站.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/%E7%BD%91%E7%AB%99.md",
+    "slug": "agent-网站",
+    "title": "网站",
+    "summary": "词元流动 https://tokenflux.dev",
+    "description": "词元流动 https://tokenflux.dev",
+    "date": "2026-04-30",
+    "updated": "2026-04-30",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/网站.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/网站.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/%E7%BD%91%E7%AB%99.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "网站",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "网站"
+      ],
+      "subtitle": "词元流动 https://tokenflux.dev"
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "词元流动\nhttps://tokenflux.dev",
+    "html": "<p>词元流动\n<a href=\"https://tokenflux.dev\">https://tokenflux.dev</a></p>",
+    "toc": [],
+    "detailPath": "articles/md_81ea26d8bdcc.json"
+  }
+}

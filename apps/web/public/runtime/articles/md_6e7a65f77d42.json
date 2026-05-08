@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_6e7a65f77d42",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/token-pool-readme-projectjson-writing-pattern.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/token-pool-readme-projectjson-writing-pattern.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/token-pool-readme-projectjson-writing-pattern.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/token-pool-readme-projectjson-writing-pattern.md",
+    "slug": "codex-knowledge-token-pool-readme-projectjson-writing-pattern",
+    "title": "Token Pool README 与 project.json 写作模式拆解",
+    "summary": "Token Pool README 与 project.json 写作模式拆解 说明：本文保留为 README.md + project.json 配对写法的专项拆解。更上位的全局规范见 engineering document writing standard.md。 1. 目标 这份规范不是复述...",
+    "description": "Token Pool README 与 project.json 写作模式拆解 说明：本文保留为 README.md + project.json 配对写法的专项拆解。更上位的全局规范见 engineering document writing standard.md。 1. 目标 这份规范不是复述...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/token-pool-readme-projectjson-writing-pattern.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/token-pool-readme-projectjson-writing-pattern.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/token-pool-readme-projectjson-writing-pattern.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "token pool readme projectjson writing pattern",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [
+        "md_d92d19fbfb47"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "TOKEN POOL README PROJECTJSON WRITING PATTERN"
+      ],
+      "subtitle": "Token Pool README 与 project.json 写作模式拆解 说明：本文保留为 README.md + project.json 配对写法的专项拆解。更上位的全局规范见 engineering document writing standard.md。 1. 目标 这份规范不是复述..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Token Pool README 与 project.json 写作模式拆解\n\n> 说明：本文保留为 `README.md + project.json` 配对写法的专项拆解。更上位的全局规范见 `engineering-document-writing-standard.md`。\n\n## 1. 目标\n\n这份规范不是复述 `Token Pool` 的业务内容，而是拆解它的文档写法，沉淀为我后续在其他项目里也能复用的写作模板。\n\n核心结论只有一句：\n\n- `README.md` 写给人看，是控制平面手册、唯一真源和工程运行说明。\n- `project.json` 写给机器看，是最小机器可读合同、路径索引和自动化入口表。\n- 两者必须互相映射，但不能互相复制粘贴成两份松散文本。\n\n## 2. 总体写法模型\n\n以后遇到中大型工程仓库，默认采用这套双文件模型：\n\n```text\nREADME.md\n  -> 面向人类\n  -> 解释当前真相、边界、禁止事项、验证顺序、路线图、附录\n  -> 承担唯一真源职责\n\nproject.json\n  -> 面向机器\n  -> 给出固定键名、路径、URL、脚本、工作流、服务名、兼容入口\n  -> 承担自动化发现与索引职责\n```\n\n这套模式的关键不是“一个长一个短”，而是：\n\n- 人类文档负责语义、上下文、边界和解释。\n- 机器文档负责稳定字段、工具读取和程序化索引。\n- 机器字段在 README 顶部必须能找到人类解释。\n- README 里的 canonical 入口、runtime 根、public URL、health/debug 契约，必须与 `project.json` 一致。\n\n## 3. README.md 写法规范\n\n### 3.1 角色定位\n\n以后我写这类 README，默认把它写成下面三种身份叠加：\n\n- 项目说明入口\n- 工程实施手册\n- 控制平面真源文档\n\n不要把它写成营销介绍，也不要写成零散开发笔记。\n\n### 3.2 开头固定结构\n\n推荐固定为下面顺序：\n\n1. frontmatter\n2. 一级标题\n3. 文档定位 blockquote\n4. `0. 项目说明入口`\n5. `0.1 对外简介`\n6. `0.2 快速开始`\n7. `0.3 仓库信息卡`\n8. `0.4 仓库卫生与运行入口`\n9. `0.5 Truth Layer`\n10. `0.6 Constraint Layer`\n11. `0.7 Strategy Layer`\n12. 目录\n13. 深层设计、结构、验收、路线图、附录\n\n也就是说，最重要的运行真相必须顶在最前面，不能埋在文档中后段。\n\n### 3.3 顶部 blockquote 的写法\n\nREADME 标题下面先给三句定性信息：\n\n- 版本定位：这个文件在项目里是什么\n- 文档策略：先写什么，后写什么\n- 冲突处理：和派生文档冲突时谁为准\n\n这三句的作用是先定义文档治理规则，再开始正文。\n\n### 3.4 `0. 项目说明入口` 的写法\n\n这个区块是整个 README 的压缩控制面板，必须用一个短 `yaml` 代码块承载最关键事实，常见字段包括：\n\n- `projectName`\n- `canonicalDoc`\n- `machineReadableEntry`\n- `localSourceRoot`\n- `serverRuntimeRoot`\n- `publicBaseUrl`\n- `publicHealthContractPath`\n- `public...DebugContractPath`\n- `consoleDomain`\n- `consoleUrl`\n- `githubRepo`\n- `defaultBranch`\n- `serverHost`\n- `runtimeHealthUrl`\n- `runtimeApiBaseUrl`\n- `managementUrl`\n- `runtimeServiceName`\n- `deploymentMode`\n- `deploymentRunner`\n\n写法要求：\n\n- 只放当前有效事实\n- 名称稳定，值精确\n- 不混入建议语气\n- 不塞历史解释\n\n### 3.5 信息层次写法\n\n`Token Pool` 的 README 好用，不是因为长，而是因为层次很清楚。以后继续复用这套分层：\n\n- `Truth Layer`：只写当前真实运行状态\n- `Constraint Layer`：只写禁止行为和系统不变量\n- `Strategy Layer`：只写验证顺序、执行协议、未来路线和实施策略\n\n硬规则：\n\n- 真相不能和策略混写\n- 历史兼容信息要显式标成 legacy\n- 目标态、路线图、未落地能力不能伪装成当前现实\n\n### 3.6 区块的最佳表达形式\n\n以后按下面规则挑表达形式：\n\n- 稳定键值集合：用 `yaml` 或表格\n- 请求链路、拓扑、层级映射：用 `text` 代码块箭头图\n- 明确事实和限制：用短 bullet\n- 同类静态字段对照：用表格\n- 结构目录、路由归属、职责映射：用分节标题 + 表格\n\n不要把所有东西都堆成大段 prose。\n\n### 3.7 语气与句式\n\n以后默认沿用这套语气：\n\n- 中文为主\n- 当前真相用完成态、事实态\n- 禁止事项用硬限制语气\n- 路线图和目标态单独分区\n- 对架构、入口、端点、服务名的描述必须绝对具体\n\n推荐句式：\n\n- “`X` 是唯一对外 canonical API 入口”\n- “`Y` 当前仅保留为 legacy alias，不再是 canonical 命名”\n- “本层只写当前真实运行状态；不写理想态，不写客户端本地配置”\n\n避免句式：\n\n- “建议将来可以考虑”\n- “可能是”\n- “大概在”\n- “通常应该”\n\n除非本节本来就是 roadmap 或 open questions。\n\n### 3.8 内容排序原则\n\n以后 README 内容排序遵守这个优先级：\n\n1. 当前入口与真相\n2. 当前边界与禁令\n3. 当前验证与排障顺序\n4. 当前结构与职责映射\n5. 目标态与路线图\n6. 附录与参考\n\n也就是先让陌生人搞清楚“系统现在是什么”，再讲“将来要变成什么”。\n\n### 3.9 README 必备章节模板\n\n以后可直接套下面骨架：\n\n```md\n---\ntitle: <Project Name>\nstatus: canonical\n---\n\n# <Project Name>\n## 总体设计与实施手册\n\n> 版本定位：本文件是...\n> 文档策略：正文先给出...\n> 冲突处理：若本文件与任何派生文档冲突...\n\n## 0. 项目说明入口\n\n```yaml\nprojectName: <Project Name>\ncanonicalDoc: README.md\nmachineReadableEntry: project.json\n...\n```\n\n### 0.1 对外简介\n### 0.2 快速开始\n### 0.3 仓库信息卡\n### 0.4 仓库卫生与运行入口\n### 0.5 Truth Layer\n### 0.6 Constraint Layer\n### 0.7 Strategy Layer\n\n## 目录\n\n## 1. 摘要\n## 2. 关键词\n## 3. 阅读指南\n...\n```\n\n## 4. project.json 写法规范\n\n### 4.1 角色定位\n\n以后我把 `project.json` 当成“项目机器合同”，不是随手堆字段的配置垃圾桶。\n\n它要解决的是：\n\n- 自动化工具第一跳该读什么\n- 仓库的 canonical 文档和机器入口是谁\n- 源码根、运行根、服务名、域名、脚本、工作流分别是什么\n- 哪些是兼容入口，哪些是正式入口\n\n### 4.2 字段分组顺序\n\n推荐按这个顺序组织字段，和 `Token Pool` 保持同型：\n\n1. schema 与身份\n2. 仓库与源码真相\n3. 公开入口与控制台入口\n4. 本地/服务器运行路径\n5. 安装与包管理策略\n6. 配置入口\n7. 部署脚本\n8. 验证脚本\n9. 部署工作流\n10. runner 信息\n11. legacy 路径\n12. secrets / artifacts\n13. compatibility 入口\n14. 其他稳定标签\n\n### 4.3 project.json 常用字段模板\n\n```json\n{\n  \"$schema\": \"./templates/project-contract/project.schema.json\",\n  \"projectName\": \"<Project Name>\",\n  \"canonicalDoc\": \"README.md\",\n  \"machineReadableEntry\": \"project.json\",\n  \"githubRepo\": \"<repo-url>\",\n  \"defaultBranch\": \"main\",\n  \"localSourceRoot\": \"<local-root>\",\n  \"serverRuntimeRoot\": \"<runtime-root>\",\n  \"serverHost\": \"<host-or-ip>\",\n  \"runtimeServiceName\": \"<service-name>\",\n  \"deploymentMode\": \"<deploy-mode>\",\n  \"publicBaseUrl\": \"<public-api-base>\",\n  \"publicConsoleUrl\": \"<public-console-url>\",\n  \"healthUrl\": \"<internal-health-url>\",\n  \"managementUrl\": \"<internal-management-url>\",\n  \"installEntry\": {\n    \"windows\": \"install-and-run.ps1\",\n    \"batch\": \"install-and-run.bat\",\n    \"unix\": \"install-and-run.sh\"\n  },\n  \"deploymentScripts\": {},\n  \"verificationScripts\": {},\n  \"deploymentWorkflows\": {},\n  \"compatibilityEntrypoints\": {},\n  \"status\": \"active\"\n}\n```\n\n### 4.4 project.json 写法规则\n\n- 键名稳定、语义清楚、尽量显式\n- URL、路径、服务名、脚本名必须写完整\n- 同一概念不要起两个近义字段\n- 正式入口和兼容入口分开写\n- 部署脚本、验证脚本、workflow、secrets、artifacts 要分组\n- 不把解释性长 prose 塞进字段值\n\n也就是说：\n\n- `README.md` 负责解释“为什么”\n- `project.json` 负责告诉工具“在哪里”\n\n### 4.5 project.json 不该怎么写\n\n以后避免这些坏味道：\n\n- 把临时值、调试值、实验值直接混进正式字段\n- 把历史路径继续写成当前默认路径\n- 用模糊字段名，比如 `path1`、`serverPath`、`misc`\n- 既没有 `canonicalDoc` 也没有 `machineReadableEntry`\n- 没把 `verificationScripts` 和 `deploymentScripts` 分开\n\n## 5. README 与 project.json 的映射规则\n\n以后两者要满足下面映射：\n\n- `README 0. 项目说明入口` <- 对应 `project.json` 的核心身份字段\n- `README Truth Layer` <- 对应 `project.json` 的 URL / 路径 / service / host 字段\n- `README 仓库卫生与运行入口` <- 对应 `installEntry`、`deploymentScripts`、`verificationScripts`\n- `README 兼容入口与历史边界` <- 对应 `compatibilityEntrypoints`、`deploymentLegacyPaths`\n\n判断是否写对，可以问四个问题：\n\n1. 机器能不能只靠 `project.json` 找到主入口、脚本和运行根？\n2. 人能不能只靠 README 快速理解当前真相和禁止事项？\n3. README 顶部事实和 `project.json` 是否逐项一致？\n4. legacy 是否被明确隔离，而不是伪装成当前真相？\n\n## 6. 我以后复用时的默认落地规则\n\n以后只要用户要我给一个项目写“详细、有条理、可当真源”的文档，默认采用：\n\n- 一个 canonical `README.md`\n- 一个机器合同 `project.json`\n- README 顶部固定有“项目说明入口 + Truth / Constraint / Strategy”\n- project.json 固定有“身份 / 路径 / 入口 / 脚本 / workflow / compatibility”\n- 先写当前真相，再写目标态\n- 先把人和机器入口固定，再扩写后续章节\n\n## 7. 快速检查清单\n\n以后写完后，用这份清单自查：\n\n- README 开头是否先给出项目说明入口，而不是先讲背景故事\n- README 是否把真相、约束、策略分层\n- 是否明确唯一 public API 入口、唯一 console 入口、唯一 runtime root\n- 是否显式写出 legacy / compatibility，而不是混在现状里\n- project.json 是否能单独被工具读取并找到脚本、路径、工作流\n- README 和 project.json 是否对齐而非互相打架\n- 文档是否主要使用事实态，而不是建议态\n- 表格、yaml、拓扑图是否用在最合适的位置\n\n## 8. 最终记忆锚点\n\n以后跨项目写这类文档时，优先复用下面这句话：\n\n```text\nREADME 写成人类控制平面手册，project.json 写成机器可读合同；\nREADME 顶部先固化项目说明入口，再分 Truth / Constraint / Strategy；\nproject.json 只保留稳定入口、路径、脚本、工作流、兼容项；\n两者镜像对齐，但绝不把历史、计划、临时值伪装成当前真相。\n```",
+    "html": "<h1 id=\"token-pool-readme-与-projectjson-写作模式拆解\">Token Pool README 与 project.json 写作模式拆解</h1>\n<blockquote>\n<p>说明：本文保留为 <code>README.md + project.json</code> 配对写法的专项拆解。更上位的全局规范见 <code>engineering-document-writing-standard.md</code>。</p>\n</blockquote>\n<h2 id=\"1-目标\">1. 目标</h2>\n<p>这份规范不是复述 <code>Token Pool</code> 的业务内容，而是拆解它的文档写法，沉淀为我后续在其他项目里也能复用的写作模板。</p>\n<p>核心结论只有一句：</p>\n<ul>\n<li><code>README.md</code> 写给人看，是控制平面手册、唯一真源和工程运行说明。</li>\n<li><code>project.json</code> 写给机器看，是最小机器可读合同、路径索引和自动化入口表。</li>\n<li>两者必须互相映射，但不能互相复制粘贴成两份松散文本。</li>\n</ul>\n<h2 id=\"2-总体写法模型\">2. 总体写法模型</h2>\n<p>以后遇到中大型工程仓库，默认采用这套双文件模型：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>README.md</span></span>\n<span data-line=\"\"><span>  -> 面向人类</span></span>\n<span data-line=\"\"><span>  -> 解释当前真相、边界、禁止事项、验证顺序、路线图、附录</span></span>\n<span data-line=\"\"><span>  -> 承担唯一真源职责</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>project.json</span></span>\n<span data-line=\"\"><span>  -> 面向机器</span></span>\n<span data-line=\"\"><span>  -> 给出固定键名、路径、URL、脚本、工作流、服务名、兼容入口</span></span>\n<span data-line=\"\"><span>  -> 承担自动化发现与索引职责</span></span></code></pre></figure>\n<p>这套模式的关键不是“一个长一个短”，而是：</p>\n<ul>\n<li>人类文档负责语义、上下文、边界和解释。</li>\n<li>机器文档负责稳定字段、工具读取和程序化索引。</li>\n<li>机器字段在 README 顶部必须能找到人类解释。</li>\n<li>README 里的 canonical 入口、runtime 根、public URL、health/debug 契约，必须与 <code>project.json</code> 一致。</li>\n</ul>\n<h2 id=\"3-readmemd-写法规范\">3. README.md 写法规范</h2>\n<h3 id=\"31-角色定位\">3.1 角色定位</h3>\n<p>以后我写这类 README，默认把它写成下面三种身份叠加：</p>\n<ul>\n<li>项目说明入口</li>\n<li>工程实施手册</li>\n<li>控制平面真源文档</li>\n</ul>\n<p>不要把它写成营销介绍，也不要写成零散开发笔记。</p>\n<h3 id=\"32-开头固定结构\">3.2 开头固定结构</h3>\n<p>推荐固定为下面顺序：</p>\n<ol>\n<li>frontmatter</li>\n<li>一级标题</li>\n<li>文档定位 blockquote</li>\n<li><code>0. 项目说明入口</code></li>\n<li><code>0.1 对外简介</code></li>\n<li><code>0.2 快速开始</code></li>\n<li><code>0.3 仓库信息卡</code></li>\n<li><code>0.4 仓库卫生与运行入口</code></li>\n<li><code>0.5 Truth Layer</code></li>\n<li><code>0.6 Constraint Layer</code></li>\n<li><code>0.7 Strategy Layer</code></li>\n<li>目录</li>\n<li>深层设计、结构、验收、路线图、附录</li>\n</ol>\n<p>也就是说，最重要的运行真相必须顶在最前面，不能埋在文档中后段。</p>\n<h3 id=\"33-顶部-blockquote-的写法\">3.3 顶部 blockquote 的写法</h3>\n<p>README 标题下面先给三句定性信息：</p>\n<ul>\n<li>版本定位：这个文件在项目里是什么</li>\n<li>文档策略：先写什么，后写什么</li>\n<li>冲突处理：和派生文档冲突时谁为准</li>\n</ul>\n<p>这三句的作用是先定义文档治理规则，再开始正文。</p>\n<h3 id=\"34-0-项目说明入口-的写法\">3.4 <code>0. 项目说明入口</code> 的写法</h3>\n<p>这个区块是整个 README 的压缩控制面板，必须用一个短 <code>yaml</code> 代码块承载最关键事实，常见字段包括：</p>\n<ul>\n<li><code>projectName</code></li>\n<li><code>canonicalDoc</code></li>\n<li><code>machineReadableEntry</code></li>\n<li><code>localSourceRoot</code></li>\n<li><code>serverRuntimeRoot</code></li>\n<li><code>publicBaseUrl</code></li>\n<li><code>publicHealthContractPath</code></li>\n<li><code>public...DebugContractPath</code></li>\n<li><code>consoleDomain</code></li>\n<li><code>consoleUrl</code></li>\n<li><code>githubRepo</code></li>\n<li><code>defaultBranch</code></li>\n<li><code>serverHost</code></li>\n<li><code>runtimeHealthUrl</code></li>\n<li><code>runtimeApiBaseUrl</code></li>\n<li><code>managementUrl</code></li>\n<li><code>runtimeServiceName</code></li>\n<li><code>deploymentMode</code></li>\n<li><code>deploymentRunner</code></li>\n</ul>\n<p>写法要求：</p>\n<ul>\n<li>只放当前有效事实</li>\n<li>名称稳定，值精确</li>\n<li>不混入建议语气</li>\n<li>不塞历史解释</li>\n</ul>\n<h3 id=\"35-信息层次写法\">3.5 信息层次写法</h3>\n<p><code>Token Pool</code> 的 README 好用，不是因为长，而是因为层次很清楚。以后继续复用这套分层：</p>\n<ul>\n<li><code>Truth Layer</code>：只写当前真实运行状态</li>\n<li><code>Constraint Layer</code>：只写禁止行为和系统不变量</li>\n<li><code>Strategy Layer</code>：只写验证顺序、执行协议、未来路线和实施策略</li>\n</ul>\n<p>硬规则：</p>\n<ul>\n<li>真相不能和策略混写</li>\n<li>历史兼容信息要显式标成 legacy</li>\n<li>目标态、路线图、未落地能力不能伪装成当前现实</li>\n</ul>\n<h3 id=\"36-区块的最佳表达形式\">3.6 区块的最佳表达形式</h3>\n<p>以后按下面规则挑表达形式：</p>\n<ul>\n<li>稳定键值集合：用 <code>yaml</code> 或表格</li>\n<li>请求链路、拓扑、层级映射：用 <code>text</code> 代码块箭头图</li>\n<li>明确事实和限制：用短 bullet</li>\n<li>同类静态字段对照：用表格</li>\n<li>结构目录、路由归属、职责映射：用分节标题 + 表格</li>\n</ul>\n<p>不要把所有东西都堆成大段 prose。</p>\n<h3 id=\"37-语气与句式\">3.7 语气与句式</h3>\n<p>以后默认沿用这套语气：</p>\n<ul>\n<li>中文为主</li>\n<li>当前真相用完成态、事实态</li>\n<li>禁止事项用硬限制语气</li>\n<li>路线图和目标态单独分区</li>\n<li>对架构、入口、端点、服务名的描述必须绝对具体</li>\n</ul>\n<p>推荐句式：</p>\n<ul>\n<li>“<code>X</code> 是唯一对外 canonical API 入口”</li>\n<li>“<code>Y</code> 当前仅保留为 legacy alias，不再是 canonical 命名”</li>\n<li>“本层只写当前真实运行状态；不写理想态，不写客户端本地配置”</li>\n</ul>\n<p>避免句式：</p>\n<ul>\n<li>“建议将来可以考虑”</li>\n<li>“可能是”</li>\n<li>“大概在”</li>\n<li>“通常应该”</li>\n</ul>\n<p>除非本节本来就是 roadmap 或 open questions。</p>\n<h3 id=\"38-内容排序原则\">3.8 内容排序原则</h3>\n<p>以后 README 内容排序遵守这个优先级：</p>\n<ol>\n<li>当前入口与真相</li>\n<li>当前边界与禁令</li>\n<li>当前验证与排障顺序</li>\n<li>当前结构与职责映射</li>\n<li>目标态与路线图</li>\n<li>附录与参考</li>\n</ol>\n<p>也就是先让陌生人搞清楚“系统现在是什么”，再讲“将来要变成什么”。</p>\n<h3 id=\"39-readme-必备章节模板\">3.9 README 必备章节模板</h3>\n<p>以后可直接套下面骨架：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">---</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">title</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">&#x3C;Project Name></span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">status</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">canonical</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">---</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># &#x3C;Project Name></span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 总体设计与实施手册</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#85E89D\">> 版本定位：本文件是...</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">> 文档策略：正文先给出...</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">> 冲突处理：若本文件与任何派生文档冲突...</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 0. 项目说明入口</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">```yaml</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">projectName</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">&#x3C;Project Name></span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">canonicalDoc</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">README.md</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">machineReadableEntry</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">project.json</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">...</span></span></code></pre></figure>\n<h3 id=\"01-对外简介\">0.1 对外简介</h3>\n<h3 id=\"02-快速开始\">0.2 快速开始</h3>\n<h3 id=\"03-仓库信息卡\">0.3 仓库信息卡</h3>\n<h3 id=\"04-仓库卫生与运行入口\">0.4 仓库卫生与运行入口</h3>\n<h3 id=\"05-truth-layer\">0.5 Truth Layer</h3>\n<h3 id=\"06-constraint-layer\">0.6 Constraint Layer</h3>\n<h3 id=\"07-strategy-layer\">0.7 Strategy Layer</h3>\n<h2 id=\"目录\">目录</h2>\n<h2 id=\"1-摘要\">1. 摘要</h2>\n<h2 id=\"2-关键词\">2. 关键词</h2>\n<h2 id=\"3-阅读指南\">3. 阅读指南</h2>\n<p>...</p>\n<pre><code>\n## 4. project.json 写法规范\n\n### 4.1 角色定位\n\n以后我把 `project.json` 当成“项目机器合同”，不是随手堆字段的配置垃圾桶。\n\n它要解决的是：\n\n- 自动化工具第一跳该读什么\n- 仓库的 canonical 文档和机器入口是谁\n- 源码根、运行根、服务名、域名、脚本、工作流分别是什么\n- 哪些是兼容入口，哪些是正式入口\n\n### 4.2 字段分组顺序\n\n推荐按这个顺序组织字段，和 `Token Pool` 保持同型：\n\n1. schema 与身份\n2. 仓库与源码真相\n3. 公开入口与控制台入口\n4. 本地/服务器运行路径\n5. 安装与包管理策略\n6. 配置入口\n7. 部署脚本\n8. 验证脚本\n9. 部署工作流\n10. runner 信息\n11. legacy 路径\n12. secrets / artifacts\n13. compatibility 入口\n14. 其他稳定标签\n\n### 4.3 project.json 常用字段模板\n\n```json\n{\n  \"$schema\": \"./templates/project-contract/project.schema.json\",\n  \"projectName\": \"&#x3C;Project Name>\",\n  \"canonicalDoc\": \"README.md\",\n  \"machineReadableEntry\": \"project.json\",\n  \"githubRepo\": \"&#x3C;repo-url>\",\n  \"defaultBranch\": \"main\",\n  \"localSourceRoot\": \"&#x3C;local-root>\",\n  \"serverRuntimeRoot\": \"&#x3C;runtime-root>\",\n  \"serverHost\": \"&#x3C;host-or-ip>\",\n  \"runtimeServiceName\": \"&#x3C;service-name>\",\n  \"deploymentMode\": \"&#x3C;deploy-mode>\",\n  \"publicBaseUrl\": \"&#x3C;public-api-base>\",\n  \"publicConsoleUrl\": \"&#x3C;public-console-url>\",\n  \"healthUrl\": \"&#x3C;internal-health-url>\",\n  \"managementUrl\": \"&#x3C;internal-management-url>\",\n  \"installEntry\": {\n    \"windows\": \"install-and-run.ps1\",\n    \"batch\": \"install-and-run.bat\",\n    \"unix\": \"install-and-run.sh\"\n  },\n  \"deploymentScripts\": {},\n  \"verificationScripts\": {},\n  \"deploymentWorkflows\": {},\n  \"compatibilityEntrypoints\": {},\n  \"status\": \"active\"\n}\n</code></pre>\n<h3 id=\"44-projectjson-写法规则\">4.4 project.json 写法规则</h3>\n<ul>\n<li>键名稳定、语义清楚、尽量显式</li>\n<li>URL、路径、服务名、脚本名必须写完整</li>\n<li>同一概念不要起两个近义字段</li>\n<li>正式入口和兼容入口分开写</li>\n<li>部署脚本、验证脚本、workflow、secrets、artifacts 要分组</li>\n<li>不把解释性长 prose 塞进字段值</li>\n</ul>\n<p>也就是说：</p>\n<ul>\n<li><code>README.md</code> 负责解释“为什么”</li>\n<li><code>project.json</code> 负责告诉工具“在哪里”</li>\n</ul>\n<h3 id=\"45-projectjson-不该怎么写\">4.5 project.json 不该怎么写</h3>\n<p>以后避免这些坏味道：</p>\n<ul>\n<li>把临时值、调试值、实验值直接混进正式字段</li>\n<li>把历史路径继续写成当前默认路径</li>\n<li>用模糊字段名，比如 <code>path1</code>、<code>serverPath</code>、<code>misc</code></li>\n<li>既没有 <code>canonicalDoc</code> 也没有 <code>machineReadableEntry</code></li>\n<li>没把 <code>verificationScripts</code> 和 <code>deploymentScripts</code> 分开</li>\n</ul>\n<h2 id=\"5-readme-与-projectjson-的映射规则\">5. README 与 project.json 的映射规则</h2>\n<p>以后两者要满足下面映射：</p>\n<ul>\n<li><code>README 0. 项目说明入口</code> &#x3C;- 对应 <code>project.json</code> 的核心身份字段</li>\n<li><code>README Truth Layer</code> &#x3C;- 对应 <code>project.json</code> 的 URL / 路径 / service / host 字段</li>\n<li><code>README 仓库卫生与运行入口</code> &#x3C;- 对应 <code>installEntry</code>、<code>deploymentScripts</code>、<code>verificationScripts</code></li>\n<li><code>README 兼容入口与历史边界</code> &#x3C;- 对应 <code>compatibilityEntrypoints</code>、<code>deploymentLegacyPaths</code></li>\n</ul>\n<p>判断是否写对，可以问四个问题：</p>\n<ol>\n<li>机器能不能只靠 <code>project.json</code> 找到主入口、脚本和运行根？</li>\n<li>人能不能只靠 README 快速理解当前真相和禁止事项？</li>\n<li>README 顶部事实和 <code>project.json</code> 是否逐项一致？</li>\n<li>legacy 是否被明确隔离，而不是伪装成当前真相？</li>\n</ol>\n<h2 id=\"6-我以后复用时的默认落地规则\">6. 我以后复用时的默认落地规则</h2>\n<p>以后只要用户要我给一个项目写“详细、有条理、可当真源”的文档，默认采用：</p>\n<ul>\n<li>一个 canonical <code>README.md</code></li>\n<li>一个机器合同 <code>project.json</code></li>\n<li>README 顶部固定有“项目说明入口 + Truth / Constraint / Strategy”</li>\n<li>project.json 固定有“身份 / 路径 / 入口 / 脚本 / workflow / compatibility”</li>\n<li>先写当前真相，再写目标态</li>\n<li>先把人和机器入口固定，再扩写后续章节</li>\n</ul>\n<h2 id=\"7-快速检查清单\">7. 快速检查清单</h2>\n<p>以后写完后，用这份清单自查：</p>\n<ul>\n<li>README 开头是否先给出项目说明入口，而不是先讲背景故事</li>\n<li>README 是否把真相、约束、策略分层</li>\n<li>是否明确唯一 public API 入口、唯一 console 入口、唯一 runtime root</li>\n<li>是否显式写出 legacy / compatibility，而不是混在现状里</li>\n<li>project.json 是否能单独被工具读取并找到脚本、路径、工作流</li>\n<li>README 和 project.json 是否对齐而非互相打架</li>\n<li>文档是否主要使用事实态，而不是建议态</li>\n<li>表格、yaml、拓扑图是否用在最合适的位置</li>\n</ul>\n<h2 id=\"8-最终记忆锚点\">8. 最终记忆锚点</h2>\n<p>以后跨项目写这类文档时，优先复用下面这句话：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>README 写成人类控制平面手册，project.json 写成机器可读合同；</span></span>\n<span data-line=\"\"><span>README 顶部先固化项目说明入口，再分 Truth / Constraint / Strategy；</span></span>\n<span data-line=\"\"><span>project.json 只保留稳定入口、路径、脚本、工作流、兼容项；</span></span>\n<span data-line=\"\"><span>两者镜像对齐，但绝不把历史、计划、临时值伪装成当前真相。</span></span></code></pre></figure>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "token-pool-readme-与-project-json-写作模式拆解",
+        "text": "Token Pool README 与 project.json 写作模式拆解"
+      },
+      {
+        "depth": 2,
+        "slug": "1-目标",
+        "text": "1. 目标"
+      },
+      {
+        "depth": 2,
+        "slug": "2-总体写法模型",
+        "text": "2. 总体写法模型"
+      },
+      {
+        "depth": 2,
+        "slug": "3-readme-md-写法规范",
+        "text": "3. README.md 写法规范"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-角色定位",
+        "text": "3.1 角色定位"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-开头固定结构",
+        "text": "3.2 开头固定结构"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-顶部-blockquote-的写法",
+        "text": "3.3 顶部 blockquote 的写法"
+      },
+      {
+        "depth": 3,
+        "slug": "3-4-0-项目说明入口-的写法",
+        "text": "3.4 `0. 项目说明入口` 的写法"
+      },
+      {
+        "depth": 3,
+        "slug": "3-5-信息层次写法",
+        "text": "3.5 信息层次写法"
+      },
+      {
+        "depth": 3,
+        "slug": "3-6-区块的最佳表达形式",
+        "text": "3.6 区块的最佳表达形式"
+      },
+      {
+        "depth": 3,
+        "slug": "3-7-语气与句式",
+        "text": "3.7 语气与句式"
+      },
+      {
+        "depth": 3,
+        "slug": "3-8-内容排序原则",
+        "text": "3.8 内容排序原则"
+      },
+      {
+        "depth": 3,
+        "slug": "3-9-readme-必备章节模板",
+        "text": "3.9 README 必备章节模板"
+      },
+      {
+        "depth": 1,
+        "slug": "project-name",
+        "text": "<Project Name>"
+      },
+      {
+        "depth": 2,
+        "slug": "总体设计与实施手册",
+        "text": "总体设计与实施手册"
+      },
+      {
+        "depth": 2,
+        "slug": "0-项目说明入口",
+        "text": "0. 项目说明入口"
+      },
+      {
+        "depth": 3,
+        "slug": "0-1-对外简介",
+        "text": "0.1 对外简介"
+      },
+      {
+        "depth": 3,
+        "slug": "0-2-快速开始",
+        "text": "0.2 快速开始"
+      },
+      {
+        "depth": 3,
+        "slug": "0-3-仓库信息卡",
+        "text": "0.3 仓库信息卡"
+      },
+      {
+        "depth": 3,
+        "slug": "0-4-仓库卫生与运行入口",
+        "text": "0.4 仓库卫生与运行入口"
+      },
+      {
+        "depth": 3,
+        "slug": "0-5-truth-layer",
+        "text": "0.5 Truth Layer"
+      },
+      {
+        "depth": 3,
+        "slug": "0-6-constraint-layer",
+        "text": "0.6 Constraint Layer"
+      },
+      {
+        "depth": 3,
+        "slug": "0-7-strategy-layer",
+        "text": "0.7 Strategy Layer"
+      },
+      {
+        "depth": 2,
+        "slug": "目录",
+        "text": "目录"
+      },
+      {
+        "depth": 2,
+        "slug": "1-摘要",
+        "text": "1. 摘要"
+      },
+      {
+        "depth": 2,
+        "slug": "2-关键词",
+        "text": "2. 关键词"
+      },
+      {
+        "depth": 2,
+        "slug": "3-阅读指南",
+        "text": "3. 阅读指南"
+      },
+      {
+        "depth": 2,
+        "slug": "4-project-json-写法规范",
+        "text": "4. project.json 写法规范"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-角色定位",
+        "text": "4.1 角色定位"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-字段分组顺序",
+        "text": "4.2 字段分组顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-project-json-常用字段模板",
+        "text": "4.3 project.json 常用字段模板"
+      },
+      {
+        "depth": 3,
+        "slug": "4-4-project-json-写法规则",
+        "text": "4.4 project.json 写法规则"
+      },
+      {
+        "depth": 3,
+        "slug": "4-5-project-json-不该怎么写",
+        "text": "4.5 project.json 不该怎么写"
+      },
+      {
+        "depth": 2,
+        "slug": "5-readme-与-project-json-的映射规则",
+        "text": "5. README 与 project.json 的映射规则"
+      },
+      {
+        "depth": 2,
+        "slug": "6-我以后复用时的默认落地规则",
+        "text": "6. 我以后复用时的默认落地规则"
+      },
+      {
+        "depth": 2,
+        "slug": "7-快速检查清单",
+        "text": "7. 快速检查清单"
+      },
+      {
+        "depth": 2,
+        "slug": "8-最终记忆锚点",
+        "text": "8. 最终记忆锚点"
+      }
+    ],
+    "detailPath": "articles/md_6e7a65f77d42.json"
+  }
+}

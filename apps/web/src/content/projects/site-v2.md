@@ -11,6 +11,9 @@ stack:
   - MDX
   - GitHub Pages
 repo: https://github.com/emptyinkpot/emptyinkpot.github.io
+collaborationRuntime: github-workbench
+collaborationStatus: interim-active
+appflowyWorkspace: target:project.tengokukk.com/site-v2
 modules:
   - id: content-os
     name: 内容操作系统
@@ -32,7 +35,7 @@ wiki:
   - title: 内容模型
     path: apps/web/src/content
     type: system
-    summary: posts / notes / projects / pages 四个正式集合。
+    summary: runtime MarkdownObject 文章索引 + notes / projects / pages 三个 Astro 内容集合。
   - title: 前端设计系统
     path: README.md
     type: doc
@@ -46,7 +49,7 @@ milestones:
     summary: 高亮、批注、Graph、Search 开始共享 Knowledge Index。
   - title: Project Studio
     date: 2026-05-05
-    summary: 项目入口升级为可扩展项目空间。
+    summary: 项目入口升级为 GitHub Workbench fallback；AppFlowy 协作 runtime 仍是外置目标，未接入当前生产页。
 ---
 
 这是当前博客的统一站点工程说明。

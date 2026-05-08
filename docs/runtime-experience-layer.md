@@ -62,15 +62,14 @@ Do not optimize for generic blog polish. Optimize for runtime surfaces:
 
 Installed libraries do not count as active experience owners until a migrated surface has browser evidence.
 
-## Authority Cutover Contract
+## Current Authority Boundary
 
-The Runtime Experience Layer now follows the Runtime Migration Sprint manifest:
+The Runtime Experience Layer currently has no separate cutover manifest. The
+active overlay/drawer owner remains the legacy inline runtime plus existing
+React islands. Radix, Vaul, Zustand and React Flow are installed history, not
+active surface owners.
 
-```text
-runtime-migration.json
-```
-
-This manifest prevents the common failure mode:
+The boundary prevents the common failure mode:
 
 ```text
 dependency installed
@@ -78,16 +77,9 @@ dependency installed
 fake migration
 ```
 
-The first real visual/runtime migration should be the Book Drawer shell:
-
-```text
-Book Drawer
--> packages/runtime-overlay
--> Vaul
-```
-
-That cutover must keep Reader Runtime, MySQL reader memory and highlight truth
-unchanged. The overlay shell may move first; data authority must not move.
+The first real visual/runtime migration may still be the Book Drawer shell, but
+only after the active owner, browser evidence and rollback path are implemented
+in code. Until then, the legacy drawer runtime is the truth.
 
 ## Reference Systems
 

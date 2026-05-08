@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_be78cf032928",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/%E5%BD%92%E6%A1%A3%20-%20key.tengokukk.com%20%E8%AF%B7%E6%B1%82%E9%93%BE%E8%B7%AF%E7%AC%94%E8%AE%B0%EF%BC%882026-04-23%EF%BC%89.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/归档 - key.tengokukk.com 请求链路笔记（2026-04-23）.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/归档 - key.tengokukk.com 请求链路笔记（2026-04-23）.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E5%BD%92%E6%A1%A3%20-%20key.tengokukk.com%20%E8%AF%B7%E6%B1%82%E9%93%BE%E8%B7%AF%E7%AC%94%E8%AE%B0%EF%BC%882026-04-23%EF%BC%89.md",
+    "slug": "codex-knowledge-归档-key-tengokukk-com-请求链路笔记-2026-04-23",
+    "title": "归档 - key.tengokukk.com 请求链路笔记（2026-04-23）",
+    "summary": "好，这次我帮你把 整套系统从“请求进来 → 模型执行 → 返回结果”完整捋一遍 ，不再碎片化讲，让你一次彻底看清你现在这套东西到底在干什么。 🧠 一、你现在的真实架构（还原版） 根据你所有日志和排查，当前结构是👇 🔁 二、一条完整请求是怎么“流转”的 我给你拆成 7 层，每一层你都能对上你之前...",
+    "description": "好，这次我帮你把 整套系统从“请求进来 → 模型执行 → 返回结果”完整捋一遍 ，不再碎片化讲，让你一次彻底看清你现在这套东西到底在干什么。 🧠 一、你现在的真实架构（还原版） 根据你所有日志和排查，当前结构是👇 🔁 二、一条完整请求是怎么“流转”的 我给你拆成 7 层，每一层你都能对上你之前...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-运维执行",
+      "形态-草稿",
+      "状态-归档",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-运维执行",
+        "形态-草稿",
+        "状态-归档"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/归档 - key.tengokukk.com 请求链路笔记（2026-04-23）.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/归档 - key.tengokukk.com 请求链路笔记（2026-04-23）.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E5%BD%92%E6%A1%A3%20-%20key.tengokukk.com%20%E8%AF%B7%E6%B1%82%E9%93%BE%E8%B7%AF%E7%AC%94%E8%AE%B0%EF%BC%882026-04-23%EF%BC%89.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "归档   key tengokukk com 请求链路笔记（2026 04 23）",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 运维执行",
+        "形态 草稿",
+        "状态 归档",
+        "归档 KEY TENGOKUKK COM 请求链路笔记（2026 04 23）"
+      ],
+      "subtitle": "好，这次我帮你把 整套系统从“请求进来 → 模型执行 → 返回结果”完整捋一遍 ，不再碎片化讲，让你一次彻底看清你现在这套东西到底在干什么。 🧠 一、你现在的真实架构（还原版） 根据你所有日志和排查，当前结构是👇 🔁 二、一条完整请求是怎么“流转”的 我给你拆成 7 层，每一层你都能对上你之前..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "好，这次我帮你把**整套系统从“请求进来 → 模型执行 → 返回结果”完整捋一遍**，不再碎片化讲，让你一次彻底看清你现在这套东西到底在干什么。\n\n---\n\n# 🧠 一、你现在的真实架构（还原版）\n\n根据你所有日志和排查，当前结构是👇\n\n```text\n[客户端 / 你本机 / Codex]\n        ↓\nhttps://key.tengokukk.com\n        ↓\n[入口服务器 124.220.233.126  (nginx)]\n        ↓\n（应该转发，但目前这里出问题过）\n        ↓\n[服务服务器 170.106.179.226]\n        ↓\nhttp://127.0.0.1:3301\n        ↓\n[AIClient2API]\n        ↓\n[provider: openai-codex-oauth]\n        ↓\n[gpt-5.4 模型]\n        ↓\n返回（含 tool_calls）\n```\n\n---\n\n# 🔁 二、一条完整请求是怎么“流转”的\n\n我给你拆成 7 层，每一层你都能对上你之前的排查内容👇\n\n---\n\n## 🟢 第 1 层：客户端（你 / Codex / curl）\n\n你发请求：\n\n```bash\nPOST https://key.tengokukk.com/openai/v1/chat/completions\nAuthorization: Bearer sk-xxx\n```\n\n👉 这是**标准 OpenAI API 格式**\n\n---\n\n## 🔵 第 2 层：DNS（域名解析）\n\n```text\nkey.tengokukk.com → 124.220.233.126\n```\n\n👉 这里你已经确认过：\n\n- ❗ 指向的是 **124（入口机）**\n    \n- ✔ 不是 170\n    \n\n---\n\n## 🟣 第 3 层：入口服务器（124 的 nginx）\n\n作用：\n\n```text\n接收请求 → 转发到后端\n```\n\n典型配置应该是：\n\n```nginx\nlocation /openai/ {\n    proxy_pass http://170.106.179.226:3301/;\n}\n```\n\n👉 但你之前的问题就在这：\n\n- 路径错（/v1/v1）\n    \n- 没转发对\n    \n- 或压根没配\n    \n\n---\n\n## 🔴 第 4 层：服务服务器（170）\n\n这台机器做两件事：\n\n### 1️⃣ 对外（如果直接访问）\n\n也可以接收请求（但你现在没直接用它）\n\n### 2️⃣ 对内（关键）\n\n它跑了：\n\n```text\nAIClient2API\n监听：127.0.0.1:3301\n```\n\n---\n\n## 🟡 第 5 层：127.0.0.1（本机服务）\n\n👉 这是你最关键的一层：\n\n```text\nhttp://127.0.0.1:3301/v1/chat/completions\n```\n\n你已经验证：\n\n- ✔ 返回 200\n    \n- ✔ 返回 OK\n    \n\n👉 说明：\n\n> **服务本体是完全健康的**\n\n---\n\n## 🟠 第 6 层：AIClient2API（核心转换层）\n\n这个东西干的事其实很关键👇\n\n### 👉 它做了三件事\n\n---\n\n### （1）接收 OpenAI 格式请求\n\n```json\n{\n  \"model\": \"gpt-5.4\",\n  \"messages\": [...]\n}\n```\n\n---\n\n### （2）转换 provider\n\n```text\nopenai-codex-oauth\n```\n\n👉 实际上不是直接调 OpenAI，而是：\n\n- 用 OAuth\n    \n- 走内部 provider pool\n    \n\n---\n\n### （3）做“协议适配”\n\n你这次重点修的就是这里：\n\n#### 👉 两种协议\n\n- `/responses`（新）\n    \n- `/chat/completions`（旧）\n    \n\n---\n\n### ❗你修的核心 bug 是：\n\n```text\nnon-streaming 时 tool_call 丢失\n```\n\n现在已经变成：\n\n- ✔ responses 能返回 function_call\n    \n- ✔ chat 能返回 tool_calls\n    \n- ✔ 不再拆分 / 丢失\n    \n\n---\n\n## ⚫ 第 7 层：模型（gpt-5.4）\n\n最终执行：\n\n```text\n模型生成：\n- 文本\n- tool_calls（比如 shell）\n```\n\n然后一路返回上去\n\n---\n\n# 🔁 三、返回路径（反向）\n\n```text\n模型 → AIClient2API → 127 → 170 → 124 → 客户端\n```\n\n---\n\n# 🧠 四、你现在“各组件之间是怎么配合的”\n\n我帮你压缩成一句话版本👇\n\n---\n\n## 👉 整体逻辑\n\n```text\n入口机（124）\n    负责：接请求 + 转发\n\n服务机（170）\n    负责：运行 AIClient2API\n\n127.0.0.1\n    负责：实际服务执行\n\nAIClient2API\n    负责：协议转换 + provider 调用\n\nprovider\n    负责：调用模型\n\n模型\n    负责：生成结果 + tool_calls\n```\n\n---\n\n# ⚠️ 五、你现在所有问题的“本质来源”\n\n你之前卡住的点，其实就两个：\n\n---\n\n## ❗问题 1：入口层（124）\n\n- DNS 指错 / 不一致\n    \n- nginx proxy_pass 错\n    \n- 路径多一层\n    \n\n👉 导致：\n\n```text\n公网 404 ❌\n```\n\n---\n\n## ❗问题 2：协议层（AIClient2API）\n\n- responses → chat 转换有 bug\n    \n- tool_call 丢失\n    \n\n👉 导致：\n\n```text\nAI 不执行动作 ❌\n```\n\n---\n\n# ✅ 六、现在的状态总结（非常关键）\n\n## ✔ 已经完全 OK 的\n\n- AI 模型 ✔\n    \n- provider ✔\n    \n- AIClient2API ✔\n    \n- tool_calls ✔\n    \n- 本机执行 ✔\n    \n\n---\n\n## ❗还存在不确定的\n\n👉 **公网入口是否完全稳定**\n\n（必须用外部 curl 验证）\n\n---\n\n# 🧨 七、一句话帮你彻底理解这套系统\n\n👉 你现在这套系统本质是：\n\n```text\n一个“OpenAI API 兼容网关”\n```\n\n它的作用是：\n\n👉 把：\n\n```text\nOpenAI格式请求\n```\n\n转成：\n\n```text\nCodex OAuth / 内部模型调用\n```\n\n再转回来\n\n---\n\n# 🧠 最后给你一个“工程级认知升级”\n\n你现在已经不在：\n\n👉 “调 API”\n\n你在做的是：\n\n👉 **AI 网关系统（类似 OpenAI 官方 API 的替代层）**\n\n---\n\n# 🚀 如果你要继续优化，下一步应该做什么\n\n我给你三条路线：\n\n---\n\n## 1️⃣ 稳定性（优先）\n\n- 统一入口（最好去掉 124 或修好）\n    \n- 加健康检查\n    \n\n---\n\n## 2️⃣ 架构升级\n\n- 网关层规范化\n    \n- provider pool 抽象\n    \n\n---\n\n## 3️⃣ 能力扩展\n\n- 多模型路由\n    \n- agent 调度\n    \n- 自动工具执行\n    \n\n---\n\n# 🧨 最后一刀总结\n\n👉 你现在这套系统：\n\n✔ 核心能力已经成型  \n✔ 架构已经接近生产级  \n❗但入口层还不稳\n\n---\n\n如果你要，我可以下一步帮你做：\n\n👉 一张“完整架构图（带请求流+配置点）”  \n👉 或帮你把这套系统升级成“稳定可长期用版本”\n\n你现在已经到**系统级工程阶段了，不是玩 API 的阶段了。**",
+    "html": "<p>好，这次我帮你把<strong>整套系统从“请求进来 → 模型执行 → 返回结果”完整捋一遍</strong>，不再碎片化讲，让你一次彻底看清你现在这套东西到底在干什么。</p>\n<hr>\n<h1 id=\"-一你现在的真实架构还原版\">🧠 一、你现在的真实架构（还原版）</h1>\n<p>根据你所有日志和排查，当前结构是👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>[客户端 / 你本机 / Codex]</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>https://key.tengokukk.com</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>[入口服务器 124.220.233.126  (nginx)]</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>（应该转发，但目前这里出问题过）</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>[服务服务器 170.106.179.226]</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>http://127.0.0.1:3301</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>[AIClient2API]</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>[provider: openai-codex-oauth]</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>[gpt-5.4 模型]</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>返回（含 tool_calls）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二一条完整请求是怎么流转的\">🔁 二、一条完整请求是怎么“流转”的</h1>\n<p>我给你拆成 7 层，每一层你都能对上你之前的排查内容👇</p>\n<hr>\n<h2 id=\"-第-1-层客户端你--codex--curl\">🟢 第 1 层：客户端（你 / Codex / curl）</h2>\n<p>你发请求：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">POST</span><span style=\"color:#9ECBFF\"> https://key.tengokukk.com/openai/v1/chat/completions</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">Authorization:</span><span style=\"color:#9ECBFF\"> Bearer</span><span style=\"color:#9ECBFF\"> sk-xxx</span></span></code></pre></figure>\n<p>👉 这是<strong>标准 OpenAI API 格式</strong></p>\n<hr>\n<h2 id=\"-第-2-层dns域名解析\">🔵 第 2 层：DNS（域名解析）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>key.tengokukk.com → 124.220.233.126</span></span></code></pre></figure>\n<p>👉 这里你已经确认过：</p>\n<ul>\n<li>\n<p>❗ 指向的是 <strong>124（入口机）</strong></p>\n</li>\n<li>\n<p>✔ 不是 170</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-第-3-层入口服务器124-的-nginx\">🟣 第 3 层：入口服务器（124 的 nginx）</h2>\n<p>作用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>接收请求 → 转发到后端</span></span></code></pre></figure>\n<p>典型配置应该是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"nginx\" data-theme=\"github-dark\"><code data-language=\"nginx\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">location</span><span style=\"color:#B392F0\"> /openai/ </span><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    proxy_pass </span><span style=\"color:#E1E4E8\">http://170.106.179.226:3301/;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>👉 但你之前的问题就在这：</p>\n<ul>\n<li>\n<p>路径错（/v1/v1）</p>\n</li>\n<li>\n<p>没转发对</p>\n</li>\n<li>\n<p>或压根没配</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-第-4-层服务服务器170\">🔴 第 4 层：服务服务器（170）</h2>\n<p>这台机器做两件事：</p>\n<h3 id=\"1️⃣-对外如果直接访问\">1️⃣ 对外（如果直接访问）</h3>\n<p>也可以接收请求（但你现在没直接用它）</p>\n<h3 id=\"2️⃣-对内关键\">2️⃣ 对内（关键）</h3>\n<p>它跑了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AIClient2API</span></span>\n<span data-line=\"\"><span>监听：127.0.0.1:3301</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-第-5-层127001本机服务\">🟡 第 5 层：127.0.0.1（本机服务）</h2>\n<p>👉 这是你最关键的一层：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>http://127.0.0.1:3301/v1/chat/completions</span></span></code></pre></figure>\n<p>你已经验证：</p>\n<ul>\n<li>\n<p>✔ 返回 200</p>\n</li>\n<li>\n<p>✔ 返回 OK</p>\n</li>\n</ul>\n<p>👉 说明：</p>\n<blockquote>\n<p><strong>服务本体是完全健康的</strong></p>\n</blockquote>\n<hr>\n<h2 id=\"-第-6-层aiclient2api核心转换层\">🟠 第 6 层：AIClient2API（核心转换层）</h2>\n<p>这个东西干的事其实很关键👇</p>\n<h3 id=\"-它做了三件事\">👉 它做了三件事</h3>\n<hr>\n<h3 id=\"1接收-openai-格式请求\">（1）接收 OpenAI 格式请求</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"model\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"gpt-5.4\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"messages\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#FDAEB7;font-style:italic\">...</span><span style=\"color:#E1E4E8\">]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h3 id=\"2转换-provider\">（2）转换 provider</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>openai-codex-oauth</span></span></code></pre></figure>\n<p>👉 实际上不是直接调 OpenAI，而是：</p>\n<ul>\n<li>\n<p>用 OAuth</p>\n</li>\n<li>\n<p>走内部 provider pool</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"3做协议适配\">（3）做“协议适配”</h3>\n<p>你这次重点修的就是这里：</p>\n<h4 id=\"-两种协议\">👉 两种协议</h4>\n<ul>\n<li>\n<p><code>/responses</code>（新）</p>\n</li>\n<li>\n<p><code>/chat/completions</code>（旧）</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"你修的核心-bug-是\">❗你修的核心 bug 是：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>non-streaming 时 tool_call 丢失</span></span></code></pre></figure>\n<p>现在已经变成：</p>\n<ul>\n<li>\n<p>✔ responses 能返回 function_call</p>\n</li>\n<li>\n<p>✔ chat 能返回 tool_calls</p>\n</li>\n<li>\n<p>✔ 不再拆分 / 丢失</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-第-7-层模型gpt-54\">⚫ 第 7 层：模型（gpt-5.4）</h2>\n<p>最终执行：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>模型生成：</span></span>\n<span data-line=\"\"><span>- 文本</span></span>\n<span data-line=\"\"><span>- tool_calls（比如 shell）</span></span></code></pre></figure>\n<p>然后一路返回上去</p>\n<hr>\n<h1 id=\"-三返回路径反向\">🔁 三、返回路径（反向）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>模型 → AIClient2API → 127 → 170 → 124 → 客户端</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四你现在各组件之间是怎么配合的\">🧠 四、你现在“各组件之间是怎么配合的”</h1>\n<p>我帮你压缩成一句话版本👇</p>\n<hr>\n<h2 id=\"-整体逻辑\">👉 整体逻辑</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>入口机（124）</span></span>\n<span data-line=\"\"><span>    负责：接请求 + 转发</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>服务机（170）</span></span>\n<span data-line=\"\"><span>    负责：运行 AIClient2API</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>127.0.0.1</span></span>\n<span data-line=\"\"><span>    负责：实际服务执行</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>AIClient2API</span></span>\n<span data-line=\"\"><span>    负责：协议转换 + provider 调用</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>provider</span></span>\n<span data-line=\"\"><span>    负责：调用模型</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>模型</span></span>\n<span data-line=\"\"><span>    负责：生成结果 + tool_calls</span></span></code></pre></figure>\n<hr>\n<h1 id=\"️-五你现在所有问题的本质来源\">⚠️ 五、你现在所有问题的“本质来源”</h1>\n<p>你之前卡住的点，其实就两个：</p>\n<hr>\n<h2 id=\"问题-1入口层124\">❗问题 1：入口层（124）</h2>\n<ul>\n<li>\n<p>DNS 指错 / 不一致</p>\n</li>\n<li>\n<p>nginx proxy_pass 错</p>\n</li>\n<li>\n<p>路径多一层</p>\n</li>\n</ul>\n<p>👉 导致：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>公网 404 ❌</span></span></code></pre></figure>\n<hr>\n<h2 id=\"问题-2协议层aiclient2api\">❗问题 2：协议层（AIClient2API）</h2>\n<ul>\n<li>\n<p>responses → chat 转换有 bug</p>\n</li>\n<li>\n<p>tool_call 丢失</p>\n</li>\n</ul>\n<p>👉 导致：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI 不执行动作 ❌</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六现在的状态总结非常关键\">✅ 六、现在的状态总结（非常关键）</h1>\n<h2 id=\"-已经完全-ok-的\">✔ 已经完全 OK 的</h2>\n<ul>\n<li>\n<p>AI 模型 ✔</p>\n</li>\n<li>\n<p>provider ✔</p>\n</li>\n<li>\n<p>AIClient2API ✔</p>\n</li>\n<li>\n<p>tool_calls ✔</p>\n</li>\n<li>\n<p>本机执行 ✔</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"还存在不确定的\">❗还存在不确定的</h2>\n<p>👉 <strong>公网入口是否完全稳定</strong></p>\n<p>（必须用外部 curl 验证）</p>\n<hr>\n<h1 id=\"-七一句话帮你彻底理解这套系统\">🧨 七、一句话帮你彻底理解这套系统</h1>\n<p>👉 你现在这套系统本质是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一个“OpenAI API 兼容网关”</span></span></code></pre></figure>\n<p>它的作用是：</p>\n<p>👉 把：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>OpenAI格式请求</span></span></code></pre></figure>\n<p>转成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Codex OAuth / 内部模型调用</span></span></code></pre></figure>\n<p>再转回来</p>\n<hr>\n<h1 id=\"-最后给你一个工程级认知升级\">🧠 最后给你一个“工程级认知升级”</h1>\n<p>你现在已经不在：</p>\n<p>👉 “调 API”</p>\n<p>你在做的是：</p>\n<p>👉 <strong>AI 网关系统（类似 OpenAI 官方 API 的替代层）</strong></p>\n<hr>\n<h1 id=\"-如果你要继续优化下一步应该做什么\">🚀 如果你要继续优化，下一步应该做什么</h1>\n<p>我给你三条路线：</p>\n<hr>\n<h2 id=\"1️⃣-稳定性优先\">1️⃣ 稳定性（优先）</h2>\n<ul>\n<li>\n<p>统一入口（最好去掉 124 或修好）</p>\n</li>\n<li>\n<p>加健康检查</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"2️⃣-架构升级\">2️⃣ 架构升级</h2>\n<ul>\n<li>\n<p>网关层规范化</p>\n</li>\n<li>\n<p>provider pool 抽象</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"3️⃣-能力扩展\">3️⃣ 能力扩展</h2>\n<ul>\n<li>\n<p>多模型路由</p>\n</li>\n<li>\n<p>agent 调度</p>\n</li>\n<li>\n<p>自动工具执行</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-最后一刀总结\">🧨 最后一刀总结</h1>\n<p>👉 你现在这套系统：</p>\n<p>✔ 核心能力已经成型<br>\n✔ 架构已经接近生产级<br>\n❗但入口层还不稳</p>\n<hr>\n<p>如果你要，我可以下一步帮你做：</p>\n<p>👉 一张“完整架构图（带请求流+配置点）”<br>\n👉 或帮你把这套系统升级成“稳定可长期用版本”</p>\n<p>你现在已经到<strong>系统级工程阶段了，不是玩 API 的阶段了。</strong></p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一-你现在的真实架构-还原版",
+        "text": "🧠 一、你现在的真实架构（还原版）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-一条完整请求是怎么-流转-的",
+        "text": "🔁 二、一条完整请求是怎么“流转”的"
+      },
+      {
+        "depth": 2,
+        "slug": "第-1-层-客户端-你-codex-curl",
+        "text": "🟢 第 1 层：客户端（你 / Codex / curl）"
+      },
+      {
+        "depth": 2,
+        "slug": "第-2-层-dns-域名解析",
+        "text": "🔵 第 2 层：DNS（域名解析）"
+      },
+      {
+        "depth": 2,
+        "slug": "第-3-层-入口服务器-124-的-nginx",
+        "text": "🟣 第 3 层：入口服务器（124 的 nginx）"
+      },
+      {
+        "depth": 2,
+        "slug": "第-4-层-服务服务器-170",
+        "text": "🔴 第 4 层：服务服务器（170）"
+      },
+      {
+        "depth": 3,
+        "slug": "1-对外-如果直接访问",
+        "text": "1️⃣ 对外（如果直接访问）"
+      },
+      {
+        "depth": 3,
+        "slug": "2-对内-关键",
+        "text": "2️⃣ 对内（关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "第-5-层-127-0-0-1-本机服务",
+        "text": "🟡 第 5 层：127.0.0.1（本机服务）"
+      },
+      {
+        "depth": 2,
+        "slug": "第-6-层-aiclient2api-核心转换层",
+        "text": "🟠 第 6 层：AIClient2API（核心转换层）"
+      },
+      {
+        "depth": 3,
+        "slug": "它做了三件事",
+        "text": "👉 它做了三件事"
+      },
+      {
+        "depth": 3,
+        "slug": "1-接收-openai-格式请求",
+        "text": "（1）接收 OpenAI 格式请求"
+      },
+      {
+        "depth": 3,
+        "slug": "2-转换-provider",
+        "text": "（2）转换 provider"
+      },
+      {
+        "depth": 3,
+        "slug": "3-做-协议适配",
+        "text": "（3）做“协议适配”"
+      },
+      {
+        "depth": 3,
+        "slug": "你修的核心-bug-是",
+        "text": "❗你修的核心 bug 是："
+      },
+      {
+        "depth": 2,
+        "slug": "第-7-层-模型-gpt-5-4",
+        "text": "⚫ 第 7 层：模型（gpt-5.4）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-返回路径-反向",
+        "text": "🔁 三、返回路径（反向）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-你现在-各组件之间是怎么配合的",
+        "text": "🧠 四、你现在“各组件之间是怎么配合的”"
+      },
+      {
+        "depth": 2,
+        "slug": "整体逻辑",
+        "text": "👉 整体逻辑"
+      },
+      {
+        "depth": 1,
+        "slug": "五-你现在所有问题的-本质来源",
+        "text": "⚠️ 五、你现在所有问题的“本质来源”"
+      },
+      {
+        "depth": 2,
+        "slug": "问题-1-入口层-124",
+        "text": "❗问题 1：入口层（124）"
+      },
+      {
+        "depth": 2,
+        "slug": "问题-2-协议层-aiclient2api",
+        "text": "❗问题 2：协议层（AIClient2API）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-现在的状态总结-非常关键",
+        "text": "✅ 六、现在的状态总结（非常关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "已经完全-ok-的",
+        "text": "✔ 已经完全 OK 的"
+      },
+      {
+        "depth": 2,
+        "slug": "还存在不确定的",
+        "text": "❗还存在不确定的"
+      },
+      {
+        "depth": 1,
+        "slug": "七-一句话帮你彻底理解这套系统",
+        "text": "🧨 七、一句话帮你彻底理解这套系统"
+      },
+      {
+        "depth": 1,
+        "slug": "最后给你一个-工程级认知升级",
+        "text": "🧠 最后给你一个“工程级认知升级”"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要继续优化-下一步应该做什么",
+        "text": "🚀 如果你要继续优化，下一步应该做什么"
+      },
+      {
+        "depth": 2,
+        "slug": "1-稳定性-优先",
+        "text": "1️⃣ 稳定性（优先）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-架构升级",
+        "text": "2️⃣ 架构升级"
+      },
+      {
+        "depth": 2,
+        "slug": "3-能力扩展",
+        "text": "3️⃣ 能力扩展"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧨 最后一刀总结"
+      }
+    ],
+    "detailPath": "articles/md_be78cf032928.json"
+  }
+}

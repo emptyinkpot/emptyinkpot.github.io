@@ -35,6 +35,10 @@ export interface ProjectStudioView {
   owner?: string;
   repoName?: string;
   repo?: GitHubRepoSnapshot;
+  collaborationRuntime: string;
+  collaborationStatus: string;
+  appflowyUrl?: string;
+  appflowyWorkspace?: string;
   type: string;
   status: string;
   progress: number;
@@ -143,6 +147,10 @@ export function buildProjectStudioView(project: CollectionEntry<'projects'>, git
     owner,
     repoName,
     repo,
+    collaborationRuntime: project.data.collaborationRuntime,
+    collaborationStatus: project.data.collaborationStatus,
+    appflowyUrl: project.data.appflowyUrl,
+    appflowyWorkspace: project.data.appflowyWorkspace,
     type: project.data.type,
     status: project.data.status,
     progress: project.data.progress,

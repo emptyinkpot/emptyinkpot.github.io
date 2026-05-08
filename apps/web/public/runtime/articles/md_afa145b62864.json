@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_afa145b62864",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20%E6%9C%AC%E6%9C%BA%20%2B%20GitHub%20%2B%20%E6%9C%8D%E5%8A%A1%E5%99%A8%20%2B%20%E6%B1%A0%E5%AD%90.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/自动部署 本机 + GitHub + 服务器 + 池子.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/自动部署 本机 + GitHub + 服务器 + 池子.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20%E6%9C%AC%E6%9C%BA%20%2B%20GitHub%20%2B%20%E6%9C%8D%E5%8A%A1%E5%99%A8%20%2B%20%E6%B1%A0%E5%AD%90.md",
+    "slug": "blog-编程规范-自动部署-本机-github-服务器-池子",
+    "title": "自动部署 本机 + GitHub + 服务器 + 池子",
+    "summary": "好，这一步我给你直接升级到 工程级自动部署（不会再乱） ，而且是你这种“本机 + GitHub + 服务器 + 池子”的最适配方案。 我不给你花里胡哨的，给你一套 能用、稳定、可复用 的。 🧠 一句话目标 🧱 一、最终架构（升级版） 🔥 二、你要新增的核心文件 在本地项目里加这个： 📄 三、...",
+    "description": "好，这一步我给你直接升级到 工程级自动部署（不会再乱） ，而且是你这种“本机 + GitHub + 服务器 + 池子”的最适配方案。 我不给你花里胡哨的，给你一套 能用、稳定、可复用 的。 🧠 一句话目标 🧱 一、最终架构（升级版） 🔥 二、你要新增的核心文件 在本地项目里加这个： 📄 三、...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/自动部署 本机 + GitHub + 服务器 + 池子.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/自动部署 本机 + GitHub + 服务器 + 池子.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20%E6%9C%AC%E6%9C%BA%20%2B%20GitHub%20%2B%20%E6%9C%8D%E5%8A%A1%E5%99%A8%20%2B%20%E6%B1%A0%E5%AD%90.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "自动部署 本机 + GitHub + 服务器 + 池子",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "自动部署 本机 + GITHUB + 服务器 + 池子"
+      ],
+      "subtitle": "好，这一步我给你直接升级到 工程级自动部署（不会再乱） ，而且是你这种“本机 + GitHub + 服务器 + 池子”的最适配方案。 我不给你花里胡哨的，给你一套 能用、稳定、可复用 的。 🧠 一句话目标 🧱 一、最终架构（升级版） 🔥 二、你要新增的核心文件 在本地项目里加这个： 📄 三、..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "好，这一步我给你直接升级到**工程级自动部署（不会再乱）**，而且是你这种“本机 + GitHub + 服务器 + 池子”的最适配方案。\n\n我不给你花里胡哨的，给你一套**能用、稳定、可复用**的。\n\n---\n\n# 🧠 一句话目标\n\n```text\ngit push → 自动部署到服务器 → 自动重启服务\n```\n\n---\n\n# 🧱 一、最终架构（升级版）\n\n```text\n本机（开发）\n   ↓ git push\nGitHub（触发 CI）\n   ↓\nGitHub Actions\n   ↓ SSH\n服务器（170）\n   ↓\ndocker restart / 重建容器\n```\n\n---\n\n# 🔥 二、你要新增的核心文件\n\n在本地项目里加这个：\n\n```text\n.github/workflows/deploy.yml\n```\n\n---\n\n# 📄 三、deploy.yml（直接可用模板）\n\n```yaml\nname: Deploy AI Gateway\n\non:\n  push:\n    branches:\n      - main\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v4\n\n      - name: Copy files to server\n        uses: appleboy/scp-action@v0.1.7\n        with:\n          host: ${{ secrets.SERVER_HOST }}\n          username: ubuntu\n          key: ${{ secrets.SERVER_SSH_KEY }}\n          source: \".\"\n          target: \"/srv/aiclient-2-api-mock\"\n\n      - name: Restart service\n        uses: appleboy/ssh-action@v1.0.3\n        with:\n          host: ${{ secrets.SERVER_HOST }}\n          username: ubuntu\n          key: ${{ secrets.SERVER_SSH_KEY }}\n          script: |\n            cd /srv/aiclient-2-api-mock\n            docker build -t aiclient2api .\n            docker stop aiclient2api || true\n            docker rm aiclient2api || true\n            docker run -d -p 3301:3001 --name aiclient2api aiclient2api\n```\n\n---\n\n# 🔐 四、GitHub Secrets（必须设置）\n\n去 GitHub → Settings → Secrets 添加：\n\n---\n\n## 1️⃣ 服务器IP\n\n```text\nSERVER_HOST = 170.106.179.226\n```\n\n---\n\n## 2️⃣ SSH私钥（重点）\n\n你本机执行：\n\n```bash\ncat ~/.ssh/id_rsa\n```\n\n复制全部 → 填进去：\n\n```text\nSERVER_SSH_KEY = （你的私钥）\n```\n\n---\n\n👉 同时服务器要有公钥：\n\n```bash\n~/.ssh/authorized_keys\n```\n\n---\n\n# 🧠 五、服务器准备（只做一次）\n\n---\n\n## 安装 docker\n\n```bash\nsudo apt update\nsudo apt install docker.io -y\n```\n\n---\n\n## 创建目录\n\n```bash\nmkdir -p /srv/aiclient-2-api-mock\n```\n\n---\n\n---\n\n# 🚀 六、你以后流程（极简）\n\n---\n\n## 开发流程\n\n```text\n本机改代码\n↓\ngit add .\ngit commit -m \"fix pool\"\ngit push\n```\n\n---\n\n## 自动发生\n\n```text\nGitHub → 自动部署\n→ 覆盖服务器\n→ 重建容器\n→ 服务更新完成\n```\n\n---\n\n👉 你不再需要：\n\n```text\n❌ ssh 改代码\n❌ 手动 docker restart\n❌ 手动上传文件\n```\n\n---\n\n# 🔥 七、升级优化（建议你加）\n\n---\n\n## 🥇 忽略敏感配置\n\n在 `.gitignore`：\n\n```text\nconfig/provider_pools.json\n.env\n```\n\n---\n\n## 🥈 服务器单独配置真实 key\n\n```text\n/srv/aiclient-2-api-mock/config/provider_pools.json\n```\n\n---\n\n👉 CI 不覆盖它（关键）\n\n---\n\n## 🥉 加 health check（可选）\n\n```bash\ncurl http://localhost:3301/health\n```\n\n---\n\n# 🧠 八、为什么这套不会再炸\n\n---\n\n## ✔ 原因\n\n```text\n✔ 本机是唯一真源\n✔ GitHub是中间层\n✔ 服务器永远是“被覆盖”\n✔ 不存在“远端乱改”\n```\n\n---\n\n## ❌ 你之前的问题\n\n```text\n服务器被当开发环境用\n→ 配置被污染\n→ 状态不可控\n```\n\n---\n\n👉 现在：\n\n```text\n服务器 = 无状态\n```\n\n---\n\n# 💥 九、你现在达到了什么水平（实话）\n\n你现在已经进入：\n\n```text\n👉 DevOps 基础工程能力\n```\n\n而不是：\n\n```text\n❌ 单纯写代码\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\n以前：你在“修一个项目”\n现在：你在“控制一套系统”\n```\n\n---\n\n# 🚀 如果你要再往上走（下一步）\n\n我可以帮你继续升级到：\n\n```text\n✔ 多服务器部署\n✔ 多环境（dev / prod）\n✔ 自动回滚\n✔ 灰度发布\n✔ Key池自动检测（避免402）\n```\n\n---",
+    "html": "<p>好，这一步我给你直接升级到<strong>工程级自动部署（不会再乱）</strong>，而且是你这种“本机 + GitHub + 服务器 + 池子”的最适配方案。</p>\n<p>我不给你花里胡哨的，给你一套<strong>能用、稳定、可复用</strong>的。</p>\n<hr>\n<h1 id=\"-一句话目标\">🧠 一句话目标</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>git push → 自动部署到服务器 → 自动重启服务</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一最终架构升级版\">🧱 一、最终架构（升级版）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本机（开发）</span></span>\n<span data-line=\"\"><span>   ↓ git push</span></span>\n<span data-line=\"\"><span>GitHub（触发 CI）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>GitHub Actions</span></span>\n<span data-line=\"\"><span>   ↓ SSH</span></span>\n<span data-line=\"\"><span>服务器（170）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>docker restart / 重建容器</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二你要新增的核心文件\">🔥 二、你要新增的核心文件</h1>\n<p>在本地项目里加这个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>.github/workflows/deploy.yml</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三deployyml直接可用模板\">📄 三、deploy.yml（直接可用模板）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#85E89D\">name</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">Deploy AI Gateway</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">on</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">  push</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">    branches</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      - </span><span style=\"color:#9ECBFF\">main</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#85E89D\">jobs</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">  deploy</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">    runs-on</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">ubuntu-latest</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#85E89D\">    steps</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      - </span><span style=\"color:#85E89D\">name</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">Checkout</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">        uses</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">actions/checkout@v4</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      - </span><span style=\"color:#85E89D\">name</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">Copy files to server</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">        uses</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">appleboy/scp-action@v0.1.7</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">        with</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          host</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">${{ secrets.SERVER_HOST }}</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          username</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">ubuntu</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          key</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">${{ secrets.SERVER_SSH_KEY }}</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          source</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\".\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          target</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"/srv/aiclient-2-api-mock\"</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      - </span><span style=\"color:#85E89D\">name</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">Restart service</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">        uses</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">appleboy/ssh-action@v1.0.3</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">        with</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          host</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">${{ secrets.SERVER_HOST }}</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          username</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">ubuntu</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          key</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">${{ secrets.SERVER_SSH_KEY }}</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">          script</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#F97583\">|</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">            cd /srv/aiclient-2-api-mock</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">            docker build -t aiclient2api .</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">            docker stop aiclient2api || true</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">            docker rm aiclient2api || true</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">            docker run -d -p 3301:3001 --name aiclient2api aiclient2api</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四github-secrets必须设置\">🔐 四、GitHub Secrets（必须设置）</h1>\n<p>去 GitHub → Settings → Secrets 添加：</p>\n<hr>\n<h2 id=\"1️⃣-服务器ip\">1️⃣ 服务器IP</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>SERVER_HOST = 170.106.179.226</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2️⃣-ssh私钥重点\">2️⃣ SSH私钥（重点）</h2>\n<p>你本机执行：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">cat</span><span style=\"color:#9ECBFF\"> ~/.ssh/id_rsa</span></span></code></pre></figure>\n<p>复制全部 → 填进去：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>SERVER_SSH_KEY = （你的私钥）</span></span></code></pre></figure>\n<hr>\n<p>👉 同时服务器要有公钥：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">~</span><span style=\"color:#E1E4E8\">/.ssh/authorized_keys</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五服务器准备只做一次\">🧠 五、服务器准备（只做一次）</h1>\n<hr>\n<h2 id=\"安装-docker\">安装 docker</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">sudo</span><span style=\"color:#9ECBFF\"> apt</span><span style=\"color:#9ECBFF\"> update</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">sudo</span><span style=\"color:#9ECBFF\"> apt</span><span style=\"color:#9ECBFF\"> install</span><span style=\"color:#9ECBFF\"> docker.io</span><span style=\"color:#79B8FF\"> -y</span></span></code></pre></figure>\n<hr>\n<h2 id=\"创建目录\">创建目录</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">mkdir</span><span style=\"color:#79B8FF\"> -p</span><span style=\"color:#9ECBFF\"> /srv/aiclient-2-api-mock</span></span></code></pre></figure>\n<hr>\n<hr>\n<h1 id=\"-六你以后流程极简\">🚀 六、你以后流程（极简）</h1>\n<hr>\n<h2 id=\"开发流程\">开发流程</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本机改代码</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>git add .</span></span>\n<span data-line=\"\"><span>git commit -m \"fix pool\"</span></span>\n<span data-line=\"\"><span>git push</span></span></code></pre></figure>\n<hr>\n<h2 id=\"自动发生\">自动发生</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GitHub → 自动部署</span></span>\n<span data-line=\"\"><span>→ 覆盖服务器</span></span>\n<span data-line=\"\"><span>→ 重建容器</span></span>\n<span data-line=\"\"><span>→ 服务更新完成</span></span></code></pre></figure>\n<hr>\n<p>👉 你不再需要：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ ssh 改代码</span></span>\n<span data-line=\"\"><span>❌ 手动 docker restart</span></span>\n<span data-line=\"\"><span>❌ 手动上传文件</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七升级优化建议你加\">🔥 七、升级优化（建议你加）</h1>\n<hr>\n<h2 id=\"-忽略敏感配置\">🥇 忽略敏感配置</h2>\n<p>在 <code>.gitignore</code>：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>config/provider_pools.json</span></span>\n<span data-line=\"\"><span>.env</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-服务器单独配置真实-key\">🥈 服务器单独配置真实 key</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/srv/aiclient-2-api-mock/config/provider_pools.json</span></span></code></pre></figure>\n<hr>\n<p>👉 CI 不覆盖它（关键）</p>\n<hr>\n<h2 id=\"-加-health-check可选\">🥉 加 health check（可选）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">curl</span><span style=\"color:#9ECBFF\"> http://localhost:3301/health</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-八为什么这套不会再炸\">🧠 八、为什么这套不会再炸</h1>\n<hr>\n<h2 id=\"-原因\">✔ 原因</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 本机是唯一真源</span></span>\n<span data-line=\"\"><span>✔ GitHub是中间层</span></span>\n<span data-line=\"\"><span>✔ 服务器永远是“被覆盖”</span></span>\n<span data-line=\"\"><span>✔ 不存在“远端乱改”</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-你之前的问题\">❌ 你之前的问题</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>服务器被当开发环境用</span></span>\n<span data-line=\"\"><span>→ 配置被污染</span></span>\n<span data-line=\"\"><span>→ 状态不可控</span></span></code></pre></figure>\n<hr>\n<p>👉 现在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>服务器 = 无状态</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-九你现在达到了什么水平实话\">💥 九、你现在达到了什么水平（实话）</h1>\n<p>你现在已经进入：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 DevOps 基础工程能力</span></span></code></pre></figure>\n<p>而不是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 单纯写代码</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>以前：你在“修一个项目”</span></span>\n<span data-line=\"\"><span>现在：你在“控制一套系统”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你要再往上走下一步\">🚀 如果你要再往上走（下一步）</h1>\n<p>我可以帮你继续升级到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 多服务器部署</span></span>\n<span data-line=\"\"><span>✔ 多环境（dev / prod）</span></span>\n<span data-line=\"\"><span>✔ 自动回滚</span></span>\n<span data-line=\"\"><span>✔ 灰度发布</span></span>\n<span data-line=\"\"><span>✔ Key池自动检测（避免402）</span></span></code></pre></figure>\n<hr>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话目标",
+        "text": "🧠 一句话目标"
+      },
+      {
+        "depth": 1,
+        "slug": "一-最终架构-升级版",
+        "text": "🧱 一、最终架构（升级版）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-你要新增的核心文件",
+        "text": "🔥 二、你要新增的核心文件"
+      },
+      {
+        "depth": 1,
+        "slug": "三-deploy-yml-直接可用模板",
+        "text": "📄 三、deploy.yml（直接可用模板）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-github-secrets-必须设置",
+        "text": "🔐 四、GitHub Secrets（必须设置）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-服务器ip",
+        "text": "1️⃣ 服务器IP"
+      },
+      {
+        "depth": 2,
+        "slug": "2-ssh私钥-重点",
+        "text": "2️⃣ SSH私钥（重点）"
+      },
+      {
+        "depth": 1,
+        "slug": "五-服务器准备-只做一次",
+        "text": "🧠 五、服务器准备（只做一次）"
+      },
+      {
+        "depth": 2,
+        "slug": "安装-docker",
+        "text": "安装 docker"
+      },
+      {
+        "depth": 2,
+        "slug": "创建目录",
+        "text": "创建目录"
+      },
+      {
+        "depth": 1,
+        "slug": "六-你以后流程-极简",
+        "text": "🚀 六、你以后流程（极简）"
+      },
+      {
+        "depth": 2,
+        "slug": "开发流程",
+        "text": "开发流程"
+      },
+      {
+        "depth": 2,
+        "slug": "自动发生",
+        "text": "自动发生"
+      },
+      {
+        "depth": 1,
+        "slug": "七-升级优化-建议你加",
+        "text": "🔥 七、升级优化（建议你加）"
+      },
+      {
+        "depth": 2,
+        "slug": "忽略敏感配置",
+        "text": "🥇 忽略敏感配置"
+      },
+      {
+        "depth": 2,
+        "slug": "服务器单独配置真实-key",
+        "text": "🥈 服务器单独配置真实 key"
+      },
+      {
+        "depth": 2,
+        "slug": "加-health-check-可选",
+        "text": "🥉 加 health check（可选）"
+      },
+      {
+        "depth": 1,
+        "slug": "八-为什么这套不会再炸",
+        "text": "🧠 八、为什么这套不会再炸"
+      },
+      {
+        "depth": 2,
+        "slug": "原因",
+        "text": "✔ 原因"
+      },
+      {
+        "depth": 2,
+        "slug": "你之前的问题",
+        "text": "❌ 你之前的问题"
+      },
+      {
+        "depth": 1,
+        "slug": "九-你现在达到了什么水平-实话",
+        "text": "💥 九、你现在达到了什么水平（实话）"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要再往上走-下一步",
+        "text": "🚀 如果你要再往上走（下一步）"
+      }
+    ],
+    "detailPath": "articles/md_afa145b62864.json"
+  }
+}

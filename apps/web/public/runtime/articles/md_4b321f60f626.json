@@ -1,0 +1,516 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_4b321f60f626",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/门禁系统.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/门禁系统.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F.md",
+    "slug": "blog-门禁系统",
+    "title": "门禁系统",
+    "summary": "open policy agent/gatekeeper: 🐊 Policy Controller for Kubernetes 开源的门禁框架 门禁系统计划文档 本文档从“解释性材料”重构为“计划文档”，用于指导门禁系统的下一阶段落地。 1. 目标 把当前分散在 policy、gate、hook...",
+    "description": "open policy agent/gatekeeper: 🐊 Policy Controller for Kubernetes 开源的门禁框架 门禁系统计划文档 本文档从“解释性材料”重构为“计划文档”，用于指导门禁系统的下一阶段落地。 1. 目标 把当前分散在 policy、gate、hook...",
+    "date": "2026-04-30",
+    "updated": "2026-04-30",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/门禁系统.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/门禁系统.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "门禁系统",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "门禁系统"
+      ],
+      "subtitle": "open policy agent/gatekeeper: 🐊 Policy Controller for Kubernetes 开源的门禁框架 门禁系统计划文档 本文档从“解释性材料”重构为“计划文档”，用于指导门禁系统的下一阶段落地。 1. 目标 把当前分散在 policy、gate、hook..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "[open-policy-agent/gatekeeper: 🐊 Policy Controller for Kubernetes](https://github.com/open-policy-agent/gatekeeper)\n开源的门禁框架\n\n# 门禁系统计划文档\n\n本文档从“解释性材料”重构为“计划文档”，用于指导门禁系统的下一阶段落地。\n\n## 1. 目标\n\n把当前分散在 `policy`、`gate`、`hook`、`CI`、`output-guard` 里的规则与执行链，收敛成一套可对标行业标准的门禁系统：\n\n```text\nContext Builder → Policy Engine → Decision → Enforcement → Observability\n```\n\n最终要求：\n\n```text\n有规则\n有注册\n有路由\n有执行\n有拦截\n有审计\n```\n\n## 2. 现状\n\n当前系统已经具备以下能力：\n\n- 文档层 policy：`instructions.md`、`hard-gates.md`、`defaults.md`、`annotated.md`\n- 注册层：`gate-registry.json`\n- 行为门禁：`check-ai-behavior.mjs`\n- 任务编译链：`tools/task-pipeline/*`\n- 本地 hook：`githooks/pre-commit`\n- CI 门禁：`.github/workflows/contract-guard.yml`\n- 输出门禁：`output-guard`\n\n当前缺口主要在：\n\n- `Context Builder` 没有单独分层\n- `Decision` schema 不统一\n- `Runtime Enforcement` 还不够完整\n- `Observability` 还没有系统化\n\n## 3. 目标架构\n\n```text\n                ┌──────────────────────────┐\n                │        Client / Input     │\n                │ (code / request / prompt)│\n                └────────────┬─────────────┘\n                             ↓\n        ┌──────────────────────────────────────┐\n        │         Pipeline / Entry Layer       │\n        │ (CI / Gateway / Agent / CLI / Hook)  │\n        └────────────┬─────────────────────────┘\n                     ↓\n        ┌──────────────────────────────────────┐\n        │        Context Builder Layer         │\n        │ (extract / normalize / enrich input) │\n        └────────────┬─────────────────────────┘\n                     ↓\n        ┌──────────────────────────────────────┐\n        │        Policy Engine Layer           │\n        │ (OPA / Rego / rules / constraints)   │\n        └────────────┬─────────────────────────┘\n                     ↓\n        ┌──────────────────────────────────────┐\n        │        Decision Layer                │\n        │ (allow / deny / review / score)      │\n        └────────────┬─────────────────────────┘\n                     ↓\n        ┌──────────────────────────────────────┐\n        │      Enforcement / Runtime Hook      │\n        │ (block / retry / fallback / reject)  │\n        └────────────┬─────────────────────────┘\n                     ↓\n        ┌──────────────────────────────────────┐\n        │        Execution Layer               │\n        │ (deploy / API call / AI output)      │\n        └────────────┬─────────────────────────┘\n                     ↓\n        ┌──────────────────────────────────────┐\n        │      Observability / Feedback        │\n        │ (logs / audit / metrics / tracing)   │\n        └──────────────────────────────────────┘\n```\n\n## 4. 现有系统映射\n\n### 4.1 已有层\n\n```text\nPolicy Layer\n├── .codex/policy/*\n├── gate-registry.json\n└── unified-gates/config/execution-gates.json\n\nGate Layer\n├── guards/ai-behavior/core/check-ai-behavior.mjs\n├── guards/ai-behavior/core/check-frontend-design-closeout.mjs\n└── unified-gates/gates/*\n\nPipeline Layer\n├── githooks/pre-commit\n├── .github/workflows/contract-guard.yml\n└── output-guard\n```\n\n### 4.2 缺失层\n\n```text\nContext Builder\n├── 输入解析从 gate 中拆出\n└── 形成可复用 JSON context\n\nUnified Decision\n├── 统一 decision schema\n└── 统一 allow / review / block 输出\n\nRuntime Enforcement\n├── 输出前强制拦截\n├── 提交前强制拦截\n└── CI 失败即阻断\n\nObservability\n├── gate decision log\n├── audit trail\n└── 命中统计\n```\n\n## 5. 生命周期门禁链\n\n```text\nchange requested\n   ↓\nproject contract / behavior policy\n   ↓\nplan gate\n   ↓\npre-commit gate\n   ↓\ngit commit\n   ↓\npre-push gate\n   ↓\ngit push\n   ↓\npost-push gate\n   ↓\nCI / workflow verdict\n   ↓\npre-deploy gate\n   ↓\ndeploy decision\n```\n\n对应到 `unified-gates/config/execution-gates.json` 的顺序是：\n\n```text\npre_commit → pre_push → post_push → pre_deploy\n```\n\n## 6. 门禁树状图\n\n```text\nC:\\Users\\ASUS-KL\n├── .codex  [全局控制面 / canonical policy root]\n│   ├── instructions.md\n│   ├── MEMORY.md\n│   ├── orchestrator\\\n│   ├── policy\\\n│   │   ├── index.md\n│   │   ├── hard-gates.md\n│   │   ├── defaults.md\n│   │   ├── annotated.md\n│   │   ├── gate-registry.json\n│   │   └── remote-execution-anti-drift.md\n│   ├── rules\\\n│   ├── automations\\\n│   │   ├── gateway.ps1\n│   │   ├── set-contractguard-gateway-root.ps1\n│   │   ├── toggle-contractguard-gateway.ps1\n│   │   └── get-contractguard-gateway-status.ps1\n│   └── gateway.ps1\n│\n├── ContractGuard  [可复用门禁 / 规则系统 / 执行器仓]\n│   ├── README.md\n│   ├── project.json\n│   ├── docs\\\n│   ├── templates\\project-contract\\\n│   ├── tools\\\n│   │   ├── validate-project-contract.mjs\n│   │   └── task-pipeline\\\n│   ├── guards\\\n│   │   └── ai-behavior\\\n│   │       ├── core\\\n│   │       │   ├── check-ai-behavior.mjs\n│   │       │   └── check-frontend-design-closeout.mjs\n│   │       ├── hooks\\\n│   │       │   ├── invoke-plan-gate.ps1\n│   │       │   └── invoke-diff-gate.ps1\n│   │       └── policy\\\n│   │           └── ai-behavior-guard.json\n│   ├── unified-gates\\\n│   │   ├── README.md\n│   │   ├── config\\\n│   │   │   └── execution-gates.json\n│   │   ├── gates\\\n│   │   │   ├── pre-commit.mjs\n│   │   │   ├── pre-push.mjs\n│   │   │   ├── post-push.mjs\n│   │   │   ├── pre-deploy.mjs\n│   │   │   ├── verify-gate.mjs\n│   │   │   ├── deploy-decision-check.mjs\n│   │   │   ├── architecture-boundary-gate.mjs\n│   │   │   └── self-verification-handoff-gate.mjs\n│   │   ├── kernel\\\n│   │   └── tools\\\n│   ├── githooks\\\n│   │   └── pre-commit\n│   ├── .github\\\n│   │   └── workflows\\\n│   │       └── contract-guard.yml\n│   └── scripts\\\n│       └── install-git-hooks.mjs\n│\n├── Atramenti-Console  [消费方 / 接入方 / 运行壳]\n│   └── codex\\\n│       ├── plugins\\obsidian\\data\\docs\\blog\\门禁系统.md\n│       ├── mcps\\output-guard\\\n│       │   ├── start.cmd\n│       │   └── README.md\n│       ├── guards\\ai-behavior\\\n│       │   └── core\\check-ai-behavior.mjs\n│       └── PROJECT-CONTEXT.md\n│\n└── 门禁执行链\n    ├── 文档层\n    │   ├── instructions.md\n    │   ├── hard-gates.md\n    │   ├── defaults.md\n    │   ├── annotated.md\n    │   └── remote-execution-anti-drift.md\n    ├── 注册层\n    │   └── gate-registry.json\n    ├── 执行层\n    │   ├── check-ai-behavior.mjs\n    │   ├── pre-commit.mjs\n    │   ├── pre-push.mjs\n    │   ├── post-push.mjs\n    │   ├── pre-deploy.mjs\n    │   ├── verify-gate.mjs\n    │   ├── deploy-decision-check.mjs\n    │   └── architecture-boundary-gate.mjs\n    ├── 接入层\n    │   ├── githooks\\\n    │   ├── .github\\workflows\\\n    │   ├── output-guard\\\n    │   └── gateway.ps1\n    └── 决策层\n        ├── allow\n        ├── review\n        └── block\n```\n\n## 7. 门禁类型分层图\n\n```text\ngate-registry.json\n├── hard gates\n│   ├── GATE-FORMAT-001          [enforced]\n│   ├── GATE-PROGRESS-001        [enforced]\n│   ├── GATE-PLAN-001            [enforced]\n│   ├── GATE-VERIFY-001          [enforced]\n│   ├── GATE-DEPLOY-001          [enforced]\n│   ├── GATE-LIVE-001            [enforced]\n│   └── GATE-ARCH-001            [enforced]\n├── advisory hard gates\n│   ├── GATE-FIDELITY-001\n│   ├── GATE-DOC-001\n│   ├── GATE-README-001\n│   ├── GATE-RUNTIME-003\n│   ├── GATE-RUNTIME-004\n│   ├── GATE-RUNTIME-005\n│   └── GATE-RUNTIME-006\n└── default gates\n    ├── DEFAULT-MEMORY-001\n    ├── DEFAULT-DOC-004\n    └── ...\n```\n\n## 8. 迁移蓝图\n\n### Phase 0: 冻结现状\n\n先记录当前所有 gate 的：\n\n- 名称\n- 入口\n- 输入\n- 输出\n- 是否 enforced\n\n### Phase 1: 统一 Decision Schema\n\n所有 gate 输出统一成：\n\n```json\n{\n  \"decision\": \"allow | review | block\",\n  \"gateId\": \"GATE-PROGRESS-001\",\n  \"reason\": \"missing [ACTION]\",\n  \"violations\": [\n    {\n      \"code\": \"MISSING_TAG\",\n      \"severity\": \"block\",\n      \"detail\": \"missing [ACTION]\"\n    }\n  ]\n}\n```\n\n### Phase 2: 拆 Context Builder\n\n把输入解析从 gate 内部拆出去，形成可复用上下文构建层。\n\n### Phase 3: 引入 OPA\n\n优先只迁移 `GATE-PROGRESS-001`，先证明策略引擎可替换、可接管。\n\n### Phase 4: 加 Policy Adapter\n\n新增统一调用层，把 JSON context 转成统一 decision。\n\n### Phase 5: 让 registry 变成路由表\n\n让 `gate-registry.json` 不只是说明，而是能驱动执行链。\n\n### Phase 6: 实现 output-guard wrapper\n\n让输出强制经过拦截器，再决定 allow / review / block。\n\n### Phase 7: 接入 Codex / Atramenti-Console\n\n把 wrapper 接进现有输出链和 UI/console 路径。\n\n### Phase 8: 迁移其他 gate\n\n按低风险到高风险迁移：\n\n```text\nGATE-FORMAT-001\nGATE-PROGRESS-001\nGATE-PLAN-001\nGATE-VERIFY-001\nGATE-DEPLOY-001\nGATE-ARCH-001\n```\n\n### Phase 9: 补 Observability\n\n新增 gate decision 日志、审计日志和命中统计。\n\n## 9. 执行级计划\n\n下面这部分是把上面的 Phase 直接落到可执行颗粒度。原则是：\n\n- 每个阶段都能独立交付\n- 每个阶段都能独立验证\n- 每个阶段失败时可以保留现状，不影响前一阶段\n\n### Milestone 1: 统一决策格式\n\n目标：所有 gate 输出统一到一个 decision schema。\n\n任务：\n\n- 新建 `schemas/decision.schema.json`\n- 修改 `guards/ai-behavior/core/check-ai-behavior.mjs`\n- 修改 `guards/ai-behavior/core/check-frontend-design-closeout.mjs`\n- 为输出格式门禁补自测\n\n文件：\n\n- `E:\\My Project\\ContractGuard\\schemas\\decision.schema.json`\n- `E:\\My Project\\ContractGuard\\guards\\ai-behavior\\core\\check-ai-behavior.mjs`\n- `E:\\My Project\\ContractGuard\\guards\\ai-behavior\\core\\check-frontend-design-closeout.mjs`\n- `E:\\My Project\\ContractGuard\\tests\\`\n\n验证：\n\n- 所有 gate 返回同一组字段\n- `allow / review / block` 的语义一致\n- 自测覆盖缺 tag、乱序、空输出三类情况\n\n风险控制：\n\n- 先保留旧输出兼容层\n- 不一次性改所有 gate\n\n### Milestone 2: 拆 Context Builder\n\n目标：把输入解析从 gate 逻辑中剥离出来。\n\n任务：\n\n- 新建 `guards/context/`\n- 提取输出文本、标签、来源、上下文元数据\n- 让 gate 只消费标准化 context\n\n文件：\n\n- `E:\\My Project\\ContractGuard\\guards\\context\\build-output-context.mjs`\n- `E:\\My Project\\ContractGuard\\guards\\context\\build-diff-context.mjs`\n- `E:\\My Project\\ContractGuard\\guards\\context\\build-frontend-closeout-context.mjs`\n\n验证：\n\n- context 结构稳定\n- 同一输入总能生成同一输出\n- gate 不再直接解析原始字符串\n\n风险控制：\n\n- 先做输出门禁的 context builder\n- diff / frontend context 后续再拆\n\n### Milestone 3: 接入 OPA\n\n目标：只让一个 gate 先接 OPA，证明链路可用。\n\n优先级：\n\n- 先做 `GATE-PROGRESS-001`\n- 不要一开始迁移全部 gate\n\n任务：\n\n- 新建 `policies/rego/progress.rego`\n- 新建 `guards/policy-engine/opa-adapter.mjs`\n- 让 `check-ai-behavior.mjs` 通过 adapter 调 OPA\n\n文件：\n\n- `E:\\My Project\\ContractGuard\\policies\\rego\\progress.rego`\n- `E:\\My Project\\ContractGuard\\guards\\policy-engine\\opa-adapter.mjs`\n- `E:\\My Project\\ContractGuard\\guards\\ai-behavior\\core\\check-ai-behavior.mjs`\n\n验证：\n\n- 同一 context 在 JS 规则和 OPA 规则下输出一致\n- OPA 失败时能 fallback 到 JS 规则或明确 block\n- 规则文件变更后能独立测试\n\n风险控制：\n\n- 保留 JS fallback\n- OPA 只负责判断，不负责上下文拼装\n\n### Milestone 4: 统一 registry 路由\n\n目标：让 gate registry 从说明文档变成执行路由。\n\n任务：\n\n- 给每个 enforced gate 加上执行器路径\n- 给 registry 增加 `engine`、`contextBuilder`、`policy` 字段\n- 明确每个 gate 的默认 fallback 行为\n\n文件：\n\n- `C:\\Users\\ASUS-KL\\.codex\\policy\\gate-registry.json`\n- `C:\\Users\\ASUS-KL\\.codex\\policy\\policy-map.json`\n\n验证：\n\n- registry 能反查每个 gate 的执行入口\n- enforced gate 都能定位到真实文件\n- advisory gate 保持不阻断\n\n风险控制：\n\n- 不删除旧字段\n- 只做增量扩展\n\n### Milestone 5: output-guard runtime enforcement\n\n目标：让输出门禁真正“拦得住”。\n\n任务：\n\n- 新建 `guards/runtime/output-guard.mjs`\n- 在 output-guard 层接 registry\n- 把 gate verdict 转成 runtime block / review / allow\n\n文件：\n\n- `E:\\My Project\\ContractGuard\\guards\\runtime\\output-guard.mjs`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\start.cmd`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\README.md`\n\n验证：\n\n- 缺 `[ACTION]` 时直接 block\n- 合规输出允许通过\n- 运行时日志能记录每次决策\n\n风险控制：\n\n- 先只接输出门禁\n- 不把所有 gate 一次性塞进 runtime wrapper\n\n### Milestone 6: 接入 Codex / Console\n\n目标：把门禁接到实际使用链路。\n\n任务：\n\n- 确保 `Atramenti-Console` 的 output-guard 走统一 gate\n- 确保 `Codex` / `Claude` 共享同一套 policy core\n- 补入口文档和接线说明\n\n文件：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\PROJECT-CONTEXT.md`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\start.cmd`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\README.md`\n\n验证：\n\n- 真实调用链经过 gate\n- 触发 block 时不会继续输出\n- 文档和 machine-readable 配置一致\n\n风险控制：\n\n- 先在单一入口验证\n- 再扩展到其他入口\n\n### Milestone 7: 生命周期门禁齐备\n\n目标：把 `pre-commit / pre-push / post-push / pre-deploy` 真正做成一条链。\n\n任务：\n\n- 维护 `unified-gates/config/execution-gates.json`\n- 完成 `pre-push.mjs`\n- 完成 `post-push.mjs`\n- 完成 `pre-deploy.mjs`\n\n文件：\n\n- `E:\\My Project\\ContractGuard\\unified-gates\\config\\execution-gates.json`\n- `E:\\My Project\\ContractGuard\\unified-gates\\gates\\pre-commit.mjs`\n- `E:\\My Project\\ContractGuard\\unified-gates\\gates\\pre-push.mjs`\n- `E:\\My Project\\ContractGuard\\unified-gates\\gates\\post-push.mjs`\n- `E:\\My Project\\ContractGuard\\unified-gates\\gates\\pre-deploy.mjs`\n\n验证：\n\n- 四个阶段顺序正确\n- 每个阶段都有明确 on_failure 行为\n- 失败阶段不会继续向后执行\n\n风险控制：\n\n- 先让 pre-commit 稳定\n- 再补 push / deploy\n\n### Milestone 8: Observability\n\n目标：让门禁有审计、可回放、可统计。\n\n任务：\n\n- 新增 gate decision log\n- 记录命中规则、输入摘要、决策结果\n- 形成最小 audit trail\n\n文件：\n\n- `E:\\My Project\\ContractGuard\\logs\\`\n- `E:\\My Project\\ContractGuard\\unified-gates\\logs\\`\n\n验证：\n\n- 每次 block 都有可读原因\n- 每次 allow 也有记录\n- 后续可统计失败最多的 gate\n\n风险控制：\n\n- 先写 JSONL\n- 不先做复杂可视化\n\n### Milestone 9: 回归测试与验收\n\n目标：确保迁移后系统行为不漂移。\n\n任务：\n\n- 追加 gate 回归测试\n- 追加 OPA fallback 测试\n- 追加 runtime block 测试\n\n文件：\n\n- `E:\\My Project\\ContractGuard\\tests\\`\n- `E:\\My Project\\ContractGuard\\unified-gates\\tests\\`\n\n验证：\n\n- 每个 milestone 都有对应测试\n- 本地和 CI 结果一致\n- 回归时可精确定位失败阶段\n\n风险控制：\n\n- 每次只推进一个 milestone\n- 不在同一轮做大规模重构\n\n## 10. 交付物\n\n- `decision.schema.json`\n- `context builder` 目录\n- `opa-adapter`\n- `output-guard wrapper`\n- `gate decision audit log`\n- 更新后的 registry / workflow / hook 文档\n\n## 11. 完成标准\n\n以下结果同时满足时，认为该计划完成：\n\n- 本地提交前会拦\n- 推送前会拦\n- 推送后能检查 CI/CD\n- 部署前有独立决策\n- 所有 gate 输出统一 schema\n- 所有决策可审计\n\n## 12. 备注\n\n这篇文档的定位已经从“门禁科普”变成“门禁计划”，后续新增内容优先写进：\n\n- 目标\n- 现状\n- 迁移阶段\n- 交付物\n- 完成标准\n\n原来的说明性正文如果继续保留，可以作为附录，但不再是主结构。\n\n---\n\n# 🧠 一句话本质\n\n```text\n门禁系统 = 请求入口 + 规则判断 + 决策放行/拒绝\n```\n\n---\n\n# 🧱 一、传统门禁（现实世界）\n\n## 结构\n\n```text\n人\n ↓\n门禁设备（刷卡/人脸）\n ↓\n控制器\n ↓\n数据库（权限）\n ↓\n门锁\n```\n\n---\n\n## 对应逻辑\n\n```text\n刷卡\n→ 验证身份\n→ 查权限\n→ 决定开门 or 拒绝\n```\n\n---\n\n👉 核心：\n\n```text\n身份 + 权限 + 决策\n```\n\n---\n\n# 🌐 二、互联网“门禁系统”（标准架构）\n\n你现在用的所有网站，其实都有门禁。\n\n---\n\n## 结构图\n\n```text\nClient（浏览器）\n   ↓\nGateway / API入口\n   ↓\n认证（Authentication）\n   ↓\n权限判断（Authorization）\n   ↓\n业务服务\n```\n\n---\n\n## 拆开讲\n\n---\n\n## 🟢 1. 入口（Gateway）\n\n```text\nNginx / API Gateway\n```\n\n作用：\n\n```text\n接收所有请求\n```\n\n---\n\n## 🟡 2. 身份认证（Authentication）\n\n```text\n你是谁？\n```\n\n方式：\n\n```text\ntoken / session / cookie / apiKey\n```\n\n---\n\n## 🟠 3. 权限控制（Authorization）\n\n```text\n你能不能做这件事？\n```\n\n比如：\n\n```text\n普通用户 ❌ 不能调 admin API\nVIP ✔ 可以用更强模型\n```\n\n---\n\n## 🔴 4. 决策\n\n```text\n通过 → 继续执行\n拒绝 → 返回 403 / 401\n```\n\n---\n\n# 🧠 三、经典门禁模型（你必须知道）\n\n---\n\n## 🥇 RBAC（最常见）\n\n```text\nRole-Based Access Control\n```\n\n---\n\n结构：\n\n```text\n用户 → 角色 → 权限\n```\n\n---\n\n例子：\n\n```text\nuser → 普通用户 → 只能用基础功能\nadmin → 管理员 → 可以所有操作\n```\n\n---\n\n## 🥈 ABAC（高级）\n\n```text\nAttribute-Based Access Control\n```\n\n---\n\n不是看角色，而是：\n\n```text\n属性 + 条件\n```\n\n---\n\n例子：\n\n```text\n时间 < 22:00\nIP 在白名单\n请求频率 < 限制\n```\n\n---\n\n👉 你现在的 AI 系统其实更像 ABAC\n\n---\n\n# 🔥 四、你现在系统里的“门禁”\n\n你其实已经在做一个门禁系统了，只是你没意识到👇\n\n---\n\n## 你的结构\n\n```text\nClient（Next.js）\n   ↓\nNode Gateway（你写的）\n   ↓\nKey Pool\n   ↓\nAI\n```\n\n---\n\n## 实际发生的“门禁判断”\n\n比如一个请求进来：\n\n---\n\n```text\n请求进入（Node 5101）\n ↓\n判断：\n- 用哪个 key？\n- 是否超限？\n- 是否允许？\n ↓\n决定：\n- 放行（调用AI）\n- 拒绝（返回错误）\n```\n\n---\n\n👉 这就是：\n\n```text\nAI 访问控制系统（门禁）\n```\n\n---\n\n# 🧱 五、你可以这样升级你的门禁（非常关键）\n\n---\n\n## 🟢 1. 身份层\n\n```text\nAPI Key / 用户ID / Token\n```\n\n---\n\n## 🟡 2. 限流层\n\n```text\n每个 key：\n- 每分钟多少请求\n- 并发多少\n```\n\n---\n\n## 🟠 3. 权限层\n\n```text\n不同用户：\n- 能用哪些模型\n- 上下文长度限制\n```\n\n---\n\n## 🔴 4. 风险控制\n\n```text\n异常请求 → 拒绝\n连续失败 → 熔断\n```\n\n---\n\n## 🔵 5. 审计（你现在没有）\n\n```text\n谁调用了什么\n用了多少 token\n```\n\n---\n\n# 🧠 六、工业级门禁架构（你未来会做到）\n\n```text\nClient\n  ↓\nAPI Gateway（入口）\n  ↓\nAuth（身份认证）\n  ↓\nPolicy Engine（权限规则）\n  ↓\nRate Limiter（限流）\n  ↓\nService（业务）\n  ↓\nAudit Log（日志）\n```\n\n---\n\n# 🧠 七、你现在在哪个阶段\n\n你现在已经：\n\n```text\n✔ 有 Gateway（Node）\n✔ 有资源池（key pool）\n✔ 有简单调度\n```\n\n但还缺：\n\n```text\n❌ 明确认证（谁在用）\n❌ 权限系统\n❌ 限流系统\n❌ 审计日志\n```\n\n---\n\n# 🔥 八、最关键一句话\n\n```text\n你现在不是在“调用 AI”\n\n👉 你在做一个“AI门禁系统”\n```\n\n---\n\n# 🚀 如果你继续往上走\n\n下一步就是：\n\n```text\n✔ 用户系统\n✔ API key管理\n✔ 限流（Redis）\n✔ 权限策略\n✔ 计费系统\n```\n\n---\n\n如果你愿意，我可以帮你把你现在这套：\n\n```text\nAI Gateway + Key Pool\n```\n\n升级成一个完整的：\n\n```text\n👉 “带门禁的 AI 平台架构图”\n```\n\n包括：\n\n```text\n✔ 用户体系\n✔ 权限\n✔ 限流\n✔ 计费\n✔ 日志\n```\n\n你只要说：\n\n```text\n门禁升级\n```\n\n我给你一版真正“能商用”的结构。\n\n\n\n\n在没有清楚原理的情况下的优化是灾难\n\n“截获每次模\n  型输出”的运行时拦截器。\n\n你一直以为这条门禁是 runtime 强制，但其实它只是 flow 内强制\n\n**low 内强制 = 本流程内强制执行、不可跳过、不可绕过**。\n\n\n\n\n[WHY] 你现在缺的是一个真正执行器：之前记录里已经确认 `GATE-FORMAT-001 / GATE-PROGRESS-001` 没有绑定 `enforcedBy`，`check-ai-behavior.mjs` 也没有校验 `[STEP]/[WHY]/[ACTION]/[RESULT]`。\n\n先把话说直：  \n你现在这套已经不是“有没有门禁”，而是**门禁分层没理清**。我给你一个当今工程里最标准、也最清晰的一版模型。\n\n---\n\n# 🧠 一、现代门禁系统 = 5 层模块\n\n不是一坨东西，而是分层的👇\n\n---\n\n## ① Policy 层（规则定义）\n\n👉 定义“什么是对/错”\n\n包括：\n\n- hard-gates.md\n    \n- instructions.md\n    \n- gate-registry.json\n    \n\n特点：\n\n- 可读\n    \n- 可讨论\n    \n- ❌ 不执行\n    \n\n---\n\n## ② Mapping 层（规则 → 执行器绑定）\n\n👉 定义“谁来执行这些规则”\n\n包括：\n\n- policy-map.json\n    \n- MASTER-CONTROL.json\n    \n\n特点：\n\n- 把 rule → script / gate\n    \n- 决定执行入口\n    \n- ❗ 很容易漏（你现在的问题就在这）\n    \n\n---\n\n## ③ Gate 层（执行器）\n\n👉 真正“判断是否通过”的代码\n\n包括：\n\n- check-ai-behavior.mjs\n    \n- check-frontend-design-closeout.mjs\n    \n- 你刚加的 check-progress-format.mjs\n    \n\n特点：\n\n- 可执行\n    \n- 有 PASS / BLOCK\n    \n- 是唯一有“强制性”的层\n    \n\n---\n\n## ④ Orchestrator 层（调度执行）\n\n👉 决定“什么时候跑 gate”\n\n包括：\n\n- CLI / agent / workflow\n    \n- /verify / /gsd-ui-phase\n    \n- CI pipeline\n    \n\n特点：\n\n- 控制执行时机\n    \n- ❗ 不同路径执行不同 gate\n    \n\n---\n\n## ⑤ Runtime Hook（最关键）\n\n👉 拦截“每一次输出 / 每一次提交”\n\n包括：\n\n- PR CI\n    \n- response validator\n    \n- pre-send hook\n    \n\n特点：\n\n- 真正实现“强制”\n    \n- ❗ 你现在缺的就是这层（对话场景）\n    \n\n---\n\n# 🧩 二、完整流程图（标准版）\n\n我给你一个“工业级正确结构”👇\n\n```text\n          ┌──────────────┐\n          │   Policy     │\n          │ (rules/spec) │\n          └──────┬───────┘\n                 ↓\n          ┌──────────────┐\n          │   Mapping    │\n          │ (bind rules) │\n          └──────┬───────┘\n                 ↓\n          ┌──────────────┐\n          │    Gates     │\n          │ (executors)  │\n          └──────┬───────┘\n                 ↓\n        ┌──────────────────┐\n        │  Orchestrator    │\n        │ (when to run)    │\n        └──────┬───────────┘\n               ↓\n      ┌──────────────────────┐\n      │   Runtime Hook       │\n      │ (BLOCK / ALLOW)      │\n      └─────────┬────────────┘\n                ↓\n         ┌──────────────┐\n         │  Final Action │\n         │  (reply/merge)│\n         └──────────────┘\n```\n\n---\n\n# 🔥 三、你当前系统的问题（精准定位）\n\n你现在是这样👇\n\n```text\nPolicy ✔\nMapping ⚠️（部分）\nGate ✔\nOrchestrator ✔（部分 flow）\nRuntime Hook ❌（缺）\n```\n\n---\n\n## 具体断点\n\n### ❌ 1. Mapping 没接完整\n\n- FORMAT / PROGRESS 没有 enforcedBy\n    \n- 没挂到执行器\n    \n\n---\n\n### ❌ 2. Runtime Hook 不存在\n\n- 对话输出没有 validator\n    \n- assistant 可以直接绕过\n    \n\n---\n\n### ❌ 3. Orchestrator 不统一\n\n- flow 里有 gate\n    \n- 普通对话没有\n    \n\n---\n\n# 🧠 四、三种“强制等级”（这是关键认知）\n\n---\n\n## Level 1：文档级（你原来很多规则）\n\n```text\n写在 md 里 → 靠人遵守\n```\n\n👉 ❌ 不强制\n\n---\n\n## Level 2：流程级（你之前“感觉强制”的）\n\n```text\n进入 workflow → 自动跑 gate\n```\n\n👉 ⚠️ 半强制\n\n---\n\n## Level 3：运行时级（真正强制）\n\n```text\n任何输出 → 必须经过 gate → 不通过就拦\n```\n\n👉 ✅ 真强制\n\n---\n\n# 🧩 五、不同场景的门禁流程（对比）\n\n---\n\n## 1️⃣ 前端 CI（你已经做对了）\n\n```text\ncode → lint → screenshot → gate → BLOCK\n```\n\n👉 ✔ 完整闭环\n\n---\n\n## 2️⃣ AI 对话（你现在的问题）\n\n```text\nprompt → assistant → 输出\n```\n\n👉 ❌ 没 gate\n\n---\n\n## 3️⃣ AI + gate（正确形态）\n\n```text\nprompt\n   ↓\nassistant draft\n   ↓\ngate check (format / behavior)\n   ↓\nPASS → 输出\nBLOCK → 拦截 / 重写\n```\n\n---\n\n# 🎯 六、真正标准的“门禁系统定义”\n\n一句话总结：\n\n> **门禁系统 = 规则 + 执行器 + 拦截点**\n\n缺任何一个都不叫门禁。\n\n---\n\n# 🪓 七、你现在最关键的一刀\n\n不是再加规则，而是：\n\n> 👉 **把 Gate 接到 Runtime Hook**\n\n---\n\n# 💬 最后一句话（非常重要）\n\n你现在的问题不是：\n\n> “门禁有哪些模块”\n\n而是：\n\n> ❗ **你的系统停在“能判断”，但还没到“能阻止”**\n\n---\n\n如果你要，我下一步可以直接帮你画你这套系统的**当前 vs 目标架构图（带具体文件路径）**，甚至给你一版：\n\n👉 **“一键把所有 gate 接到 runtime”的最小实现**\n\n那才是真正完成这套系统。",
+    "html": "<p><a href=\"https://github.com/open-policy-agent/gatekeeper\">open-policy-agent/gatekeeper: 🐊 Policy Controller for Kubernetes</a>\n开源的门禁框架</p>\n<h1 id=\"门禁系统计划文档\">门禁系统计划文档</h1>\n<p>本文档从“解释性材料”重构为“计划文档”，用于指导门禁系统的下一阶段落地。</p>\n<h2 id=\"1-目标\">1. 目标</h2>\n<p>把当前分散在 <code>policy</code>、<code>gate</code>、<code>hook</code>、<code>CI</code>、<code>output-guard</code> 里的规则与执行链，收敛成一套可对标行业标准的门禁系统：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Context Builder → Policy Engine → Decision → Enforcement → Observability</span></span></code></pre></figure>\n<p>最终要求：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>有规则</span></span>\n<span data-line=\"\"><span>有注册</span></span>\n<span data-line=\"\"><span>有路由</span></span>\n<span data-line=\"\"><span>有执行</span></span>\n<span data-line=\"\"><span>有拦截</span></span>\n<span data-line=\"\"><span>有审计</span></span></code></pre></figure>\n<h2 id=\"2-现状\">2. 现状</h2>\n<p>当前系统已经具备以下能力：</p>\n<ul>\n<li>文档层 policy：<code>instructions.md</code>、<code>hard-gates.md</code>、<code>defaults.md</code>、<code>annotated.md</code></li>\n<li>注册层：<code>gate-registry.json</code></li>\n<li>行为门禁：<code>check-ai-behavior.mjs</code></li>\n<li>任务编译链：<code>tools/task-pipeline/*</code></li>\n<li>本地 hook：<code>githooks/pre-commit</code></li>\n<li>CI 门禁：<code>.github/workflows/contract-guard.yml</code></li>\n<li>输出门禁：<code>output-guard</code></li>\n</ul>\n<p>当前缺口主要在：</p>\n<ul>\n<li><code>Context Builder</code> 没有单独分层</li>\n<li><code>Decision</code> schema 不统一</li>\n<li><code>Runtime Enforcement</code> 还不够完整</li>\n<li><code>Observability</code> 还没有系统化</li>\n</ul>\n<h2 id=\"3-目标架构\">3. 目标架构</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>                ┌──────────────────────────┐</span></span>\n<span data-line=\"\"><span>                │        Client / Input     │</span></span>\n<span data-line=\"\"><span>                │ (code / request / prompt)│</span></span>\n<span data-line=\"\"><span>                └────────────┬─────────────┘</span></span>\n<span data-line=\"\"><span>                             ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────────────────────────┐</span></span>\n<span data-line=\"\"><span>        │         Pipeline / Entry Layer       │</span></span>\n<span data-line=\"\"><span>        │ (CI / Gateway / Agent / CLI / Hook)  │</span></span>\n<span data-line=\"\"><span>        └────────────┬─────────────────────────┘</span></span>\n<span data-line=\"\"><span>                     ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────────────────────────┐</span></span>\n<span data-line=\"\"><span>        │        Context Builder Layer         │</span></span>\n<span data-line=\"\"><span>        │ (extract / normalize / enrich input) │</span></span>\n<span data-line=\"\"><span>        └────────────┬─────────────────────────┘</span></span>\n<span data-line=\"\"><span>                     ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────────────────────────┐</span></span>\n<span data-line=\"\"><span>        │        Policy Engine Layer           │</span></span>\n<span data-line=\"\"><span>        │ (OPA / Rego / rules / constraints)   │</span></span>\n<span data-line=\"\"><span>        └────────────┬─────────────────────────┘</span></span>\n<span data-line=\"\"><span>                     ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────────────────────────┐</span></span>\n<span data-line=\"\"><span>        │        Decision Layer                │</span></span>\n<span data-line=\"\"><span>        │ (allow / deny / review / score)      │</span></span>\n<span data-line=\"\"><span>        └────────────┬─────────────────────────┘</span></span>\n<span data-line=\"\"><span>                     ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────────────────────────┐</span></span>\n<span data-line=\"\"><span>        │      Enforcement / Runtime Hook      │</span></span>\n<span data-line=\"\"><span>        │ (block / retry / fallback / reject)  │</span></span>\n<span data-line=\"\"><span>        └────────────┬─────────────────────────┘</span></span>\n<span data-line=\"\"><span>                     ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────────────────────────┐</span></span>\n<span data-line=\"\"><span>        │        Execution Layer               │</span></span>\n<span data-line=\"\"><span>        │ (deploy / API call / AI output)      │</span></span>\n<span data-line=\"\"><span>        └────────────┬─────────────────────────┘</span></span>\n<span data-line=\"\"><span>                     ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────────────────────────┐</span></span>\n<span data-line=\"\"><span>        │      Observability / Feedback        │</span></span>\n<span data-line=\"\"><span>        │ (logs / audit / metrics / tracing)   │</span></span>\n<span data-line=\"\"><span>        └──────────────────────────────────────┘</span></span></code></pre></figure>\n<h2 id=\"4-现有系统映射\">4. 现有系统映射</h2>\n<h3 id=\"41-已有层\">4.1 已有层</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Policy Layer</span></span>\n<span data-line=\"\"><span>├── .codex/policy/*</span></span>\n<span data-line=\"\"><span>├── gate-registry.json</span></span>\n<span data-line=\"\"><span>└── unified-gates/config/execution-gates.json</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Gate Layer</span></span>\n<span data-line=\"\"><span>├── guards/ai-behavior/core/check-ai-behavior.mjs</span></span>\n<span data-line=\"\"><span>├── guards/ai-behavior/core/check-frontend-design-closeout.mjs</span></span>\n<span data-line=\"\"><span>└── unified-gates/gates/*</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Pipeline Layer</span></span>\n<span data-line=\"\"><span>├── githooks/pre-commit</span></span>\n<span data-line=\"\"><span>├── .github/workflows/contract-guard.yml</span></span>\n<span data-line=\"\"><span>└── output-guard</span></span></code></pre></figure>\n<h3 id=\"42-缺失层\">4.2 缺失层</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Context Builder</span></span>\n<span data-line=\"\"><span>├── 输入解析从 gate 中拆出</span></span>\n<span data-line=\"\"><span>└── 形成可复用 JSON context</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Unified Decision</span></span>\n<span data-line=\"\"><span>├── 统一 decision schema</span></span>\n<span data-line=\"\"><span>└── 统一 allow / review / block 输出</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Runtime Enforcement</span></span>\n<span data-line=\"\"><span>├── 输出前强制拦截</span></span>\n<span data-line=\"\"><span>├── 提交前强制拦截</span></span>\n<span data-line=\"\"><span>└── CI 失败即阻断</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Observability</span></span>\n<span data-line=\"\"><span>├── gate decision log</span></span>\n<span data-line=\"\"><span>├── audit trail</span></span>\n<span data-line=\"\"><span>└── 命中统计</span></span></code></pre></figure>\n<h2 id=\"5-生命周期门禁链\">5. 生命周期门禁链</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>change requested</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>project contract / behavior policy</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>plan gate</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>pre-commit gate</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>git commit</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>pre-push gate</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>git push</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>post-push gate</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>CI / workflow verdict</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>pre-deploy gate</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>deploy decision</span></span></code></pre></figure>\n<p>对应到 <code>unified-gates/config/execution-gates.json</code> 的顺序是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>pre_commit → pre_push → post_push → pre_deploy</span></span></code></pre></figure>\n<h2 id=\"6-门禁树状图\">6. 门禁树状图</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>C:\\Users\\ASUS-KL</span></span>\n<span data-line=\"\"><span>├── .codex  [全局控制面 / canonical policy root]</span></span>\n<span data-line=\"\"><span>│   ├── instructions.md</span></span>\n<span data-line=\"\"><span>│   ├── MEMORY.md</span></span>\n<span data-line=\"\"><span>│   ├── orchestrator\\</span></span>\n<span data-line=\"\"><span>│   ├── policy\\</span></span>\n<span data-line=\"\"><span>│   │   ├── index.md</span></span>\n<span data-line=\"\"><span>│   │   ├── hard-gates.md</span></span>\n<span data-line=\"\"><span>│   │   ├── defaults.md</span></span>\n<span data-line=\"\"><span>│   │   ├── annotated.md</span></span>\n<span data-line=\"\"><span>│   │   ├── gate-registry.json</span></span>\n<span data-line=\"\"><span>│   │   └── remote-execution-anti-drift.md</span></span>\n<span data-line=\"\"><span>│   ├── rules\\</span></span>\n<span data-line=\"\"><span>│   ├── automations\\</span></span>\n<span data-line=\"\"><span>│   │   ├── gateway.ps1</span></span>\n<span data-line=\"\"><span>│   │   ├── set-contractguard-gateway-root.ps1</span></span>\n<span data-line=\"\"><span>│   │   ├── toggle-contractguard-gateway.ps1</span></span>\n<span data-line=\"\"><span>│   │   └── get-contractguard-gateway-status.ps1</span></span>\n<span data-line=\"\"><span>│   └── gateway.ps1</span></span>\n<span data-line=\"\"><span>│</span></span>\n<span data-line=\"\"><span>├── ContractGuard  [可复用门禁 / 规则系统 / 执行器仓]</span></span>\n<span data-line=\"\"><span>│   ├── README.md</span></span>\n<span data-line=\"\"><span>│   ├── project.json</span></span>\n<span data-line=\"\"><span>│   ├── docs\\</span></span>\n<span data-line=\"\"><span>│   ├── templates\\project-contract\\</span></span>\n<span data-line=\"\"><span>│   ├── tools\\</span></span>\n<span data-line=\"\"><span>│   │   ├── validate-project-contract.mjs</span></span>\n<span data-line=\"\"><span>│   │   └── task-pipeline\\</span></span>\n<span data-line=\"\"><span>│   ├── guards\\</span></span>\n<span data-line=\"\"><span>│   │   └── ai-behavior\\</span></span>\n<span data-line=\"\"><span>│   │       ├── core\\</span></span>\n<span data-line=\"\"><span>│   │       │   ├── check-ai-behavior.mjs</span></span>\n<span data-line=\"\"><span>│   │       │   └── check-frontend-design-closeout.mjs</span></span>\n<span data-line=\"\"><span>│   │       ├── hooks\\</span></span>\n<span data-line=\"\"><span>│   │       │   ├── invoke-plan-gate.ps1</span></span>\n<span data-line=\"\"><span>│   │       │   └── invoke-diff-gate.ps1</span></span>\n<span data-line=\"\"><span>│   │       └── policy\\</span></span>\n<span data-line=\"\"><span>│   │           └── ai-behavior-guard.json</span></span>\n<span data-line=\"\"><span>│   ├── unified-gates\\</span></span>\n<span data-line=\"\"><span>│   │   ├── README.md</span></span>\n<span data-line=\"\"><span>│   │   ├── config\\</span></span>\n<span data-line=\"\"><span>│   │   │   └── execution-gates.json</span></span>\n<span data-line=\"\"><span>│   │   ├── gates\\</span></span>\n<span data-line=\"\"><span>│   │   │   ├── pre-commit.mjs</span></span>\n<span data-line=\"\"><span>│   │   │   ├── pre-push.mjs</span></span>\n<span data-line=\"\"><span>│   │   │   ├── post-push.mjs</span></span>\n<span data-line=\"\"><span>│   │   │   ├── pre-deploy.mjs</span></span>\n<span data-line=\"\"><span>│   │   │   ├── verify-gate.mjs</span></span>\n<span data-line=\"\"><span>│   │   │   ├── deploy-decision-check.mjs</span></span>\n<span data-line=\"\"><span>│   │   │   ├── architecture-boundary-gate.mjs</span></span>\n<span data-line=\"\"><span>│   │   │   └── self-verification-handoff-gate.mjs</span></span>\n<span data-line=\"\"><span>│   │   ├── kernel\\</span></span>\n<span data-line=\"\"><span>│   │   └── tools\\</span></span>\n<span data-line=\"\"><span>│   ├── githooks\\</span></span>\n<span data-line=\"\"><span>│   │   └── pre-commit</span></span>\n<span data-line=\"\"><span>│   ├── .github\\</span></span>\n<span data-line=\"\"><span>│   │   └── workflows\\</span></span>\n<span data-line=\"\"><span>│   │       └── contract-guard.yml</span></span>\n<span data-line=\"\"><span>│   └── scripts\\</span></span>\n<span data-line=\"\"><span>│       └── install-git-hooks.mjs</span></span>\n<span data-line=\"\"><span>│</span></span>\n<span data-line=\"\"><span>├── Atramenti-Console  [消费方 / 接入方 / 运行壳]</span></span>\n<span data-line=\"\"><span>│   └── codex\\</span></span>\n<span data-line=\"\"><span>│       ├── plugins\\obsidian\\data\\docs\\blog\\门禁系统.md</span></span>\n<span data-line=\"\"><span>│       ├── mcps\\output-guard\\</span></span>\n<span data-line=\"\"><span>│       │   ├── start.cmd</span></span>\n<span data-line=\"\"><span>│       │   └── README.md</span></span>\n<span data-line=\"\"><span>│       ├── guards\\ai-behavior\\</span></span>\n<span data-line=\"\"><span>│       │   └── core\\check-ai-behavior.mjs</span></span>\n<span data-line=\"\"><span>│       └── PROJECT-CONTEXT.md</span></span>\n<span data-line=\"\"><span>│</span></span>\n<span data-line=\"\"><span>└── 门禁执行链</span></span>\n<span data-line=\"\"><span>    ├── 文档层</span></span>\n<span data-line=\"\"><span>    │   ├── instructions.md</span></span>\n<span data-line=\"\"><span>    │   ├── hard-gates.md</span></span>\n<span data-line=\"\"><span>    │   ├── defaults.md</span></span>\n<span data-line=\"\"><span>    │   ├── annotated.md</span></span>\n<span data-line=\"\"><span>    │   └── remote-execution-anti-drift.md</span></span>\n<span data-line=\"\"><span>    ├── 注册层</span></span>\n<span data-line=\"\"><span>    │   └── gate-registry.json</span></span>\n<span data-line=\"\"><span>    ├── 执行层</span></span>\n<span data-line=\"\"><span>    │   ├── check-ai-behavior.mjs</span></span>\n<span data-line=\"\"><span>    │   ├── pre-commit.mjs</span></span>\n<span data-line=\"\"><span>    │   ├── pre-push.mjs</span></span>\n<span data-line=\"\"><span>    │   ├── post-push.mjs</span></span>\n<span data-line=\"\"><span>    │   ├── pre-deploy.mjs</span></span>\n<span data-line=\"\"><span>    │   ├── verify-gate.mjs</span></span>\n<span data-line=\"\"><span>    │   ├── deploy-decision-check.mjs</span></span>\n<span data-line=\"\"><span>    │   └── architecture-boundary-gate.mjs</span></span>\n<span data-line=\"\"><span>    ├── 接入层</span></span>\n<span data-line=\"\"><span>    │   ├── githooks\\</span></span>\n<span data-line=\"\"><span>    │   ├── .github\\workflows\\</span></span>\n<span data-line=\"\"><span>    │   ├── output-guard\\</span></span>\n<span data-line=\"\"><span>    │   └── gateway.ps1</span></span>\n<span data-line=\"\"><span>    └── 决策层</span></span>\n<span data-line=\"\"><span>        ├── allow</span></span>\n<span data-line=\"\"><span>        ├── review</span></span>\n<span data-line=\"\"><span>        └── block</span></span></code></pre></figure>\n<h2 id=\"7-门禁类型分层图\">7. 门禁类型分层图</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>gate-registry.json</span></span>\n<span data-line=\"\"><span>├── hard gates</span></span>\n<span data-line=\"\"><span>│   ├── GATE-FORMAT-001          [enforced]</span></span>\n<span data-line=\"\"><span>│   ├── GATE-PROGRESS-001        [enforced]</span></span>\n<span data-line=\"\"><span>│   ├── GATE-PLAN-001            [enforced]</span></span>\n<span data-line=\"\"><span>│   ├── GATE-VERIFY-001          [enforced]</span></span>\n<span data-line=\"\"><span>│   ├── GATE-DEPLOY-001          [enforced]</span></span>\n<span data-line=\"\"><span>│   ├── GATE-LIVE-001            [enforced]</span></span>\n<span data-line=\"\"><span>│   └── GATE-ARCH-001            [enforced]</span></span>\n<span data-line=\"\"><span>├── advisory hard gates</span></span>\n<span data-line=\"\"><span>│   ├── GATE-FIDELITY-001</span></span>\n<span data-line=\"\"><span>│   ├── GATE-DOC-001</span></span>\n<span data-line=\"\"><span>│   ├── GATE-README-001</span></span>\n<span data-line=\"\"><span>│   ├── GATE-RUNTIME-003</span></span>\n<span data-line=\"\"><span>│   ├── GATE-RUNTIME-004</span></span>\n<span data-line=\"\"><span>│   ├── GATE-RUNTIME-005</span></span>\n<span data-line=\"\"><span>│   └── GATE-RUNTIME-006</span></span>\n<span data-line=\"\"><span>└── default gates</span></span>\n<span data-line=\"\"><span>    ├── DEFAULT-MEMORY-001</span></span>\n<span data-line=\"\"><span>    ├── DEFAULT-DOC-004</span></span>\n<span data-line=\"\"><span>    └── ...</span></span></code></pre></figure>\n<h2 id=\"8-迁移蓝图\">8. 迁移蓝图</h2>\n<h3 id=\"phase-0-冻结现状\">Phase 0: 冻结现状</h3>\n<p>先记录当前所有 gate 的：</p>\n<ul>\n<li>名称</li>\n<li>入口</li>\n<li>输入</li>\n<li>输出</li>\n<li>是否 enforced</li>\n</ul>\n<h3 id=\"phase-1-统一-decision-schema\">Phase 1: 统一 Decision Schema</h3>\n<p>所有 gate 输出统一成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"decision\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"allow | review | block\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"gateId\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"GATE-PROGRESS-001\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"reason\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"missing [ACTION]\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"violations\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"code\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"MISSING_TAG\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"severity\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"block\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"detail\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"missing [ACTION]\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<h3 id=\"phase-2-拆-context-builder\">Phase 2: 拆 Context Builder</h3>\n<p>把输入解析从 gate 内部拆出去，形成可复用上下文构建层。</p>\n<h3 id=\"phase-3-引入-opa\">Phase 3: 引入 OPA</h3>\n<p>优先只迁移 <code>GATE-PROGRESS-001</code>，先证明策略引擎可替换、可接管。</p>\n<h3 id=\"phase-4-加-policy-adapter\">Phase 4: 加 Policy Adapter</h3>\n<p>新增统一调用层，把 JSON context 转成统一 decision。</p>\n<h3 id=\"phase-5-让-registry-变成路由表\">Phase 5: 让 registry 变成路由表</h3>\n<p>让 <code>gate-registry.json</code> 不只是说明，而是能驱动执行链。</p>\n<h3 id=\"phase-6-实现-output-guard-wrapper\">Phase 6: 实现 output-guard wrapper</h3>\n<p>让输出强制经过拦截器，再决定 allow / review / block。</p>\n<h3 id=\"phase-7-接入-codex--atramenti-console\">Phase 7: 接入 Codex / Atramenti-Console</h3>\n<p>把 wrapper 接进现有输出链和 UI/console 路径。</p>\n<h3 id=\"phase-8-迁移其他-gate\">Phase 8: 迁移其他 gate</h3>\n<p>按低风险到高风险迁移：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GATE-FORMAT-001</span></span>\n<span data-line=\"\"><span>GATE-PROGRESS-001</span></span>\n<span data-line=\"\"><span>GATE-PLAN-001</span></span>\n<span data-line=\"\"><span>GATE-VERIFY-001</span></span>\n<span data-line=\"\"><span>GATE-DEPLOY-001</span></span>\n<span data-line=\"\"><span>GATE-ARCH-001</span></span></code></pre></figure>\n<h3 id=\"phase-9-补-observability\">Phase 9: 补 Observability</h3>\n<p>新增 gate decision 日志、审计日志和命中统计。</p>\n<h2 id=\"9-执行级计划\">9. 执行级计划</h2>\n<p>下面这部分是把上面的 Phase 直接落到可执行颗粒度。原则是：</p>\n<ul>\n<li>每个阶段都能独立交付</li>\n<li>每个阶段都能独立验证</li>\n<li>每个阶段失败时可以保留现状，不影响前一阶段</li>\n</ul>\n<h3 id=\"milestone-1-统一决策格式\">Milestone 1: 统一决策格式</h3>\n<p>目标：所有 gate 输出统一到一个 decision schema。</p>\n<p>任务：</p>\n<ul>\n<li>新建 <code>schemas/decision.schema.json</code></li>\n<li>修改 <code>guards/ai-behavior/core/check-ai-behavior.mjs</code></li>\n<li>修改 <code>guards/ai-behavior/core/check-frontend-design-closeout.mjs</code></li>\n<li>为输出格式门禁补自测</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\ContractGuard\\schemas\\decision.schema.json</code></li>\n<li><code>E:\\My Project\\ContractGuard\\guards\\ai-behavior\\core\\check-ai-behavior.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\guards\\ai-behavior\\core\\check-frontend-design-closeout.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\tests\\</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>所有 gate 返回同一组字段</li>\n<li><code>allow / review / block</code> 的语义一致</li>\n<li>自测覆盖缺 tag、乱序、空输出三类情况</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>先保留旧输出兼容层</li>\n<li>不一次性改所有 gate</li>\n</ul>\n<h3 id=\"milestone-2-拆-context-builder\">Milestone 2: 拆 Context Builder</h3>\n<p>目标：把输入解析从 gate 逻辑中剥离出来。</p>\n<p>任务：</p>\n<ul>\n<li>新建 <code>guards/context/</code></li>\n<li>提取输出文本、标签、来源、上下文元数据</li>\n<li>让 gate 只消费标准化 context</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\ContractGuard\\guards\\context\\build-output-context.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\guards\\context\\build-diff-context.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\guards\\context\\build-frontend-closeout-context.mjs</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>context 结构稳定</li>\n<li>同一输入总能生成同一输出</li>\n<li>gate 不再直接解析原始字符串</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>先做输出门禁的 context builder</li>\n<li>diff / frontend context 后续再拆</li>\n</ul>\n<h3 id=\"milestone-3-接入-opa\">Milestone 3: 接入 OPA</h3>\n<p>目标：只让一个 gate 先接 OPA，证明链路可用。</p>\n<p>优先级：</p>\n<ul>\n<li>先做 <code>GATE-PROGRESS-001</code></li>\n<li>不要一开始迁移全部 gate</li>\n</ul>\n<p>任务：</p>\n<ul>\n<li>新建 <code>policies/rego/progress.rego</code></li>\n<li>新建 <code>guards/policy-engine/opa-adapter.mjs</code></li>\n<li>让 <code>check-ai-behavior.mjs</code> 通过 adapter 调 OPA</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\ContractGuard\\policies\\rego\\progress.rego</code></li>\n<li><code>E:\\My Project\\ContractGuard\\guards\\policy-engine\\opa-adapter.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\guards\\ai-behavior\\core\\check-ai-behavior.mjs</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>同一 context 在 JS 规则和 OPA 规则下输出一致</li>\n<li>OPA 失败时能 fallback 到 JS 规则或明确 block</li>\n<li>规则文件变更后能独立测试</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>保留 JS fallback</li>\n<li>OPA 只负责判断，不负责上下文拼装</li>\n</ul>\n<h3 id=\"milestone-4-统一-registry-路由\">Milestone 4: 统一 registry 路由</h3>\n<p>目标：让 gate registry 从说明文档变成执行路由。</p>\n<p>任务：</p>\n<ul>\n<li>给每个 enforced gate 加上执行器路径</li>\n<li>给 registry 增加 <code>engine</code>、<code>contextBuilder</code>、<code>policy</code> 字段</li>\n<li>明确每个 gate 的默认 fallback 行为</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\policy\\gate-registry.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\policy\\policy-map.json</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>registry 能反查每个 gate 的执行入口</li>\n<li>enforced gate 都能定位到真实文件</li>\n<li>advisory gate 保持不阻断</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>不删除旧字段</li>\n<li>只做增量扩展</li>\n</ul>\n<h3 id=\"milestone-5-output-guard-runtime-enforcement\">Milestone 5: output-guard runtime enforcement</h3>\n<p>目标：让输出门禁真正“拦得住”。</p>\n<p>任务：</p>\n<ul>\n<li>新建 <code>guards/runtime/output-guard.mjs</code></li>\n<li>在 output-guard 层接 registry</li>\n<li>把 gate verdict 转成 runtime block / review / allow</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\ContractGuard\\guards\\runtime\\output-guard.mjs</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\start.cmd</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\README.md</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>缺 <code>[ACTION]</code> 时直接 block</li>\n<li>合规输出允许通过</li>\n<li>运行时日志能记录每次决策</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>先只接输出门禁</li>\n<li>不把所有 gate 一次性塞进 runtime wrapper</li>\n</ul>\n<h3 id=\"milestone-6-接入-codex--console\">Milestone 6: 接入 Codex / Console</h3>\n<p>目标：把门禁接到实际使用链路。</p>\n<p>任务：</p>\n<ul>\n<li>确保 <code>Atramenti-Console</code> 的 output-guard 走统一 gate</li>\n<li>确保 <code>Codex</code> / <code>Claude</code> 共享同一套 policy core</li>\n<li>补入口文档和接线说明</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\PROJECT-CONTEXT.md</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\start.cmd</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\README.md</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>真实调用链经过 gate</li>\n<li>触发 block 时不会继续输出</li>\n<li>文档和 machine-readable 配置一致</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>先在单一入口验证</li>\n<li>再扩展到其他入口</li>\n</ul>\n<h3 id=\"milestone-7-生命周期门禁齐备\">Milestone 7: 生命周期门禁齐备</h3>\n<p>目标：把 <code>pre-commit / pre-push / post-push / pre-deploy</code> 真正做成一条链。</p>\n<p>任务：</p>\n<ul>\n<li>维护 <code>unified-gates/config/execution-gates.json</code></li>\n<li>完成 <code>pre-push.mjs</code></li>\n<li>完成 <code>post-push.mjs</code></li>\n<li>完成 <code>pre-deploy.mjs</code></li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\ContractGuard\\unified-gates\\config\\execution-gates.json</code></li>\n<li><code>E:\\My Project\\ContractGuard\\unified-gates\\gates\\pre-commit.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\unified-gates\\gates\\pre-push.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\unified-gates\\gates\\post-push.mjs</code></li>\n<li><code>E:\\My Project\\ContractGuard\\unified-gates\\gates\\pre-deploy.mjs</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>四个阶段顺序正确</li>\n<li>每个阶段都有明确 on_failure 行为</li>\n<li>失败阶段不会继续向后执行</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>先让 pre-commit 稳定</li>\n<li>再补 push / deploy</li>\n</ul>\n<h3 id=\"milestone-8-observability\">Milestone 8: Observability</h3>\n<p>目标：让门禁有审计、可回放、可统计。</p>\n<p>任务：</p>\n<ul>\n<li>新增 gate decision log</li>\n<li>记录命中规则、输入摘要、决策结果</li>\n<li>形成最小 audit trail</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\ContractGuard\\logs\\</code></li>\n<li><code>E:\\My Project\\ContractGuard\\unified-gates\\logs\\</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>每次 block 都有可读原因</li>\n<li>每次 allow 也有记录</li>\n<li>后续可统计失败最多的 gate</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>先写 JSONL</li>\n<li>不先做复杂可视化</li>\n</ul>\n<h3 id=\"milestone-9-回归测试与验收\">Milestone 9: 回归测试与验收</h3>\n<p>目标：确保迁移后系统行为不漂移。</p>\n<p>任务：</p>\n<ul>\n<li>追加 gate 回归测试</li>\n<li>追加 OPA fallback 测试</li>\n<li>追加 runtime block 测试</li>\n</ul>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\ContractGuard\\tests\\</code></li>\n<li><code>E:\\My Project\\ContractGuard\\unified-gates\\tests\\</code></li>\n</ul>\n<p>验证：</p>\n<ul>\n<li>每个 milestone 都有对应测试</li>\n<li>本地和 CI 结果一致</li>\n<li>回归时可精确定位失败阶段</li>\n</ul>\n<p>风险控制：</p>\n<ul>\n<li>每次只推进一个 milestone</li>\n<li>不在同一轮做大规模重构</li>\n</ul>\n<h2 id=\"10-交付物\">10. 交付物</h2>\n<ul>\n<li><code>decision.schema.json</code></li>\n<li><code>context builder</code> 目录</li>\n<li><code>opa-adapter</code></li>\n<li><code>output-guard wrapper</code></li>\n<li><code>gate decision audit log</code></li>\n<li>更新后的 registry / workflow / hook 文档</li>\n</ul>\n<h2 id=\"11-完成标准\">11. 完成标准</h2>\n<p>以下结果同时满足时，认为该计划完成：</p>\n<ul>\n<li>本地提交前会拦</li>\n<li>推送前会拦</li>\n<li>推送后能检查 CI/CD</li>\n<li>部署前有独立决策</li>\n<li>所有 gate 输出统一 schema</li>\n<li>所有决策可审计</li>\n</ul>\n<h2 id=\"12-备注\">12. 备注</h2>\n<p>这篇文档的定位已经从“门禁科普”变成“门禁计划”，后续新增内容优先写进：</p>\n<ul>\n<li>目标</li>\n<li>现状</li>\n<li>迁移阶段</li>\n<li>交付物</li>\n<li>完成标准</li>\n</ul>\n<p>原来的说明性正文如果继续保留，可以作为附录，但不再是主结构。</p>\n<hr>\n<h1 id=\"-一句话本质\">🧠 一句话本质</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>门禁系统 = 请求入口 + 规则判断 + 决策放行/拒绝</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一传统门禁现实世界\">🧱 一、传统门禁（现实世界）</h1>\n<h2 id=\"结构\">结构</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>人</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>门禁设备（刷卡/人脸）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>控制器</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>数据库（权限）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>门锁</span></span></code></pre></figure>\n<hr>\n<h2 id=\"对应逻辑\">对应逻辑</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>刷卡</span></span>\n<span data-line=\"\"><span>→ 验证身份</span></span>\n<span data-line=\"\"><span>→ 查权限</span></span>\n<span data-line=\"\"><span>→ 决定开门 or 拒绝</span></span></code></pre></figure>\n<hr>\n<p>👉 核心：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>身份 + 权限 + 决策</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二互联网门禁系统标准架构\">🌐 二、互联网“门禁系统”（标准架构）</h1>\n<p>你现在用的所有网站，其实都有门禁。</p>\n<hr>\n<h2 id=\"结构图\">结构图</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client（浏览器）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Gateway / API入口</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>认证（Authentication）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>权限判断（Authorization）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>业务服务</span></span></code></pre></figure>\n<hr>\n<h2 id=\"拆开讲\">拆开讲</h2>\n<hr>\n<h2 id=\"-1-入口gateway\">🟢 1. 入口（Gateway）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Nginx / API Gateway</span></span></code></pre></figure>\n<p>作用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>接收所有请求</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-2-身份认证authentication\">🟡 2. 身份认证（Authentication）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你是谁？</span></span></code></pre></figure>\n<p>方式：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>token / session / cookie / apiKey</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-3-权限控制authorization\">🟠 3. 权限控制（Authorization）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你能不能做这件事？</span></span></code></pre></figure>\n<p>比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>普通用户 ❌ 不能调 admin API</span></span>\n<span data-line=\"\"><span>VIP ✔ 可以用更强模型</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-4-决策\">🔴 4. 决策</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>通过 → 继续执行</span></span>\n<span data-line=\"\"><span>拒绝 → 返回 403 / 401</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三经典门禁模型你必须知道\">🧠 三、经典门禁模型（你必须知道）</h1>\n<hr>\n<h2 id=\"-rbac最常见\">🥇 RBAC（最常见）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Role-Based Access Control</span></span></code></pre></figure>\n<hr>\n<p>结构：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户 → 角色 → 权限</span></span></code></pre></figure>\n<hr>\n<p>例子：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>user → 普通用户 → 只能用基础功能</span></span>\n<span data-line=\"\"><span>admin → 管理员 → 可以所有操作</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-abac高级\">🥈 ABAC（高级）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Attribute-Based Access Control</span></span></code></pre></figure>\n<hr>\n<p>不是看角色，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>属性 + 条件</span></span></code></pre></figure>\n<hr>\n<p>例子：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>时间 &#x3C; 22:00</span></span>\n<span data-line=\"\"><span>IP 在白名单</span></span>\n<span data-line=\"\"><span>请求频率 &#x3C; 限制</span></span></code></pre></figure>\n<hr>\n<p>👉 你现在的 AI 系统其实更像 ABAC</p>\n<hr>\n<h1 id=\"-四你现在系统里的门禁\">🔥 四、你现在系统里的“门禁”</h1>\n<p>你其实已经在做一个门禁系统了，只是你没意识到👇</p>\n<hr>\n<h2 id=\"你的结构\">你的结构</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client（Next.js）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Node Gateway（你写的）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Key Pool</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>AI</span></span></code></pre></figure>\n<hr>\n<h2 id=\"实际发生的门禁判断\">实际发生的“门禁判断”</h2>\n<p>比如一个请求进来：</p>\n<hr>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>请求进入（Node 5101）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>判断：</span></span>\n<span data-line=\"\"><span>- 用哪个 key？</span></span>\n<span data-line=\"\"><span>- 是否超限？</span></span>\n<span data-line=\"\"><span>- 是否允许？</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>决定：</span></span>\n<span data-line=\"\"><span>- 放行（调用AI）</span></span>\n<span data-line=\"\"><span>- 拒绝（返回错误）</span></span></code></pre></figure>\n<hr>\n<p>👉 这就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI 访问控制系统（门禁）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五你可以这样升级你的门禁非常关键\">🧱 五、你可以这样升级你的门禁（非常关键）</h1>\n<hr>\n<h2 id=\"-1-身份层\">🟢 1. 身份层</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>API Key / 用户ID / Token</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-2-限流层\">🟡 2. 限流层</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>每个 key：</span></span>\n<span data-line=\"\"><span>- 每分钟多少请求</span></span>\n<span data-line=\"\"><span>- 并发多少</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-3-权限层\">🟠 3. 权限层</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>不同用户：</span></span>\n<span data-line=\"\"><span>- 能用哪些模型</span></span>\n<span data-line=\"\"><span>- 上下文长度限制</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-4-风险控制\">🔴 4. 风险控制</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>异常请求 → 拒绝</span></span>\n<span data-line=\"\"><span>连续失败 → 熔断</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-5-审计你现在没有\">🔵 5. 审计（你现在没有）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>谁调用了什么</span></span>\n<span data-line=\"\"><span>用了多少 token</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六工业级门禁架构你未来会做到\">🧠 六、工业级门禁架构（你未来会做到）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>API Gateway（入口）</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Auth（身份认证）</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Policy Engine（权限规则）</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Rate Limiter（限流）</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Service（业务）</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Audit Log（日志）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七你现在在哪个阶段\">🧠 七、你现在在哪个阶段</h1>\n<p>你现在已经：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 有 Gateway（Node）</span></span>\n<span data-line=\"\"><span>✔ 有资源池（key pool）</span></span>\n<span data-line=\"\"><span>✔ 有简单调度</span></span></code></pre></figure>\n<p>但还缺：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 明确认证（谁在用）</span></span>\n<span data-line=\"\"><span>❌ 权限系统</span></span>\n<span data-line=\"\"><span>❌ 限流系统</span></span>\n<span data-line=\"\"><span>❌ 审计日志</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-八最关键一句话\">🔥 八、最关键一句话</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你现在不是在“调用 AI”</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>👉 你在做一个“AI门禁系统”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你继续往上走\">🚀 如果你继续往上走</h1>\n<p>下一步就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 用户系统</span></span>\n<span data-line=\"\"><span>✔ API key管理</span></span>\n<span data-line=\"\"><span>✔ 限流（Redis）</span></span>\n<span data-line=\"\"><span>✔ 权限策略</span></span>\n<span data-line=\"\"><span>✔ 计费系统</span></span></code></pre></figure>\n<hr>\n<p>如果你愿意，我可以帮你把你现在这套：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI Gateway + Key Pool</span></span></code></pre></figure>\n<p>升级成一个完整的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 “带门禁的 AI 平台架构图”</span></span></code></pre></figure>\n<p>包括：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 用户体系</span></span>\n<span data-line=\"\"><span>✔ 权限</span></span>\n<span data-line=\"\"><span>✔ 限流</span></span>\n<span data-line=\"\"><span>✔ 计费</span></span>\n<span data-line=\"\"><span>✔ 日志</span></span></code></pre></figure>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>门禁升级</span></span></code></pre></figure>\n<p>我给你一版真正“能商用”的结构。</p>\n<p>在没有清楚原理的情况下的优化是灾难</p>\n<p>“截获每次模\n型输出”的运行时拦截器。</p>\n<p>你一直以为这条门禁是 runtime 强制，但其实它只是 flow 内强制</p>\n<p><strong>low 内强制 = 本流程内强制执行、不可跳过、不可绕过</strong>。</p>\n<p>[WHY] 你现在缺的是一个真正执行器：之前记录里已经确认 <code>GATE-FORMAT-001 / GATE-PROGRESS-001</code> 没有绑定 <code>enforcedBy</code>，<code>check-ai-behavior.mjs</code> 也没有校验 <code>[STEP]/[WHY]/[ACTION]/[RESULT]</code>。</p>\n<p>先把话说直：<br>\n你现在这套已经不是“有没有门禁”，而是<strong>门禁分层没理清</strong>。我给你一个当今工程里最标准、也最清晰的一版模型。</p>\n<hr>\n<h1 id=\"-一现代门禁系统--5-层模块\">🧠 一、现代门禁系统 = 5 层模块</h1>\n<p>不是一坨东西，而是分层的👇</p>\n<hr>\n<h2 id=\"-policy-层规则定义\">① Policy 层（规则定义）</h2>\n<p>👉 定义“什么是对/错”</p>\n<p>包括：</p>\n<ul>\n<li>\n<p>hard-gates.md</p>\n</li>\n<li>\n<p>instructions.md</p>\n</li>\n<li>\n<p>gate-registry.json</p>\n</li>\n</ul>\n<p>特点：</p>\n<ul>\n<li>\n<p>可读</p>\n</li>\n<li>\n<p>可讨论</p>\n</li>\n<li>\n<p>❌ 不执行</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-mapping-层规则--执行器绑定\">② Mapping 层（规则 → 执行器绑定）</h2>\n<p>👉 定义“谁来执行这些规则”</p>\n<p>包括：</p>\n<ul>\n<li>\n<p>policy-map.json</p>\n</li>\n<li>\n<p>MASTER-CONTROL.json</p>\n</li>\n</ul>\n<p>特点：</p>\n<ul>\n<li>\n<p>把 rule → script / gate</p>\n</li>\n<li>\n<p>决定执行入口</p>\n</li>\n<li>\n<p>❗ 很容易漏（你现在的问题就在这）</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-gate-层执行器\">③ Gate 层（执行器）</h2>\n<p>👉 真正“判断是否通过”的代码</p>\n<p>包括：</p>\n<ul>\n<li>\n<p>check-ai-behavior.mjs</p>\n</li>\n<li>\n<p>check-frontend-design-closeout.mjs</p>\n</li>\n<li>\n<p>你刚加的 check-progress-format.mjs</p>\n</li>\n</ul>\n<p>特点：</p>\n<ul>\n<li>\n<p>可执行</p>\n</li>\n<li>\n<p>有 PASS / BLOCK</p>\n</li>\n<li>\n<p>是唯一有“强制性”的层</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-orchestrator-层调度执行\">④ Orchestrator 层（调度执行）</h2>\n<p>👉 决定“什么时候跑 gate”</p>\n<p>包括：</p>\n<ul>\n<li>\n<p>CLI / agent / workflow</p>\n</li>\n<li>\n<p>/verify / /gsd-ui-phase</p>\n</li>\n<li>\n<p>CI pipeline</p>\n</li>\n</ul>\n<p>特点：</p>\n<ul>\n<li>\n<p>控制执行时机</p>\n</li>\n<li>\n<p>❗ 不同路径执行不同 gate</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-runtime-hook最关键\">⑤ Runtime Hook（最关键）</h2>\n<p>👉 拦截“每一次输出 / 每一次提交”</p>\n<p>包括：</p>\n<ul>\n<li>\n<p>PR CI</p>\n</li>\n<li>\n<p>response validator</p>\n</li>\n<li>\n<p>pre-send hook</p>\n</li>\n</ul>\n<p>特点：</p>\n<ul>\n<li>\n<p>真正实现“强制”</p>\n</li>\n<li>\n<p>❗ 你现在缺的就是这层（对话场景）</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-二完整流程图标准版\">🧩 二、完整流程图（标准版）</h1>\n<p>我给你一个“工业级正确结构”👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>          ┌──────────────┐</span></span>\n<span data-line=\"\"><span>          │   Policy     │</span></span>\n<span data-line=\"\"><span>          │ (rules/spec) │</span></span>\n<span data-line=\"\"><span>          └──────┬───────┘</span></span>\n<span data-line=\"\"><span>                 ↓</span></span>\n<span data-line=\"\"><span>          ┌──────────────┐</span></span>\n<span data-line=\"\"><span>          │   Mapping    │</span></span>\n<span data-line=\"\"><span>          │ (bind rules) │</span></span>\n<span data-line=\"\"><span>          └──────┬───────┘</span></span>\n<span data-line=\"\"><span>                 ↓</span></span>\n<span data-line=\"\"><span>          ┌──────────────┐</span></span>\n<span data-line=\"\"><span>          │    Gates     │</span></span>\n<span data-line=\"\"><span>          │ (executors)  │</span></span>\n<span data-line=\"\"><span>          └──────┬───────┘</span></span>\n<span data-line=\"\"><span>                 ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────────────┐</span></span>\n<span data-line=\"\"><span>        │  Orchestrator    │</span></span>\n<span data-line=\"\"><span>        │ (when to run)    │</span></span>\n<span data-line=\"\"><span>        └──────┬───────────┘</span></span>\n<span data-line=\"\"><span>               ↓</span></span>\n<span data-line=\"\"><span>      ┌──────────────────────┐</span></span>\n<span data-line=\"\"><span>      │   Runtime Hook       │</span></span>\n<span data-line=\"\"><span>      │ (BLOCK / ALLOW)      │</span></span>\n<span data-line=\"\"><span>      └─────────┬────────────┘</span></span>\n<span data-line=\"\"><span>                ↓</span></span>\n<span data-line=\"\"><span>         ┌──────────────┐</span></span>\n<span data-line=\"\"><span>         │  Final Action │</span></span>\n<span data-line=\"\"><span>         │  (reply/merge)│</span></span>\n<span data-line=\"\"><span>         └──────────────┘</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三你当前系统的问题精准定位\">🔥 三、你当前系统的问题（精准定位）</h1>\n<p>你现在是这样👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Policy ✔</span></span>\n<span data-line=\"\"><span>Mapping ⚠️（部分）</span></span>\n<span data-line=\"\"><span>Gate ✔</span></span>\n<span data-line=\"\"><span>Orchestrator ✔（部分 flow）</span></span>\n<span data-line=\"\"><span>Runtime Hook ❌（缺）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"具体断点\">具体断点</h2>\n<h3 id=\"-1-mapping-没接完整\">❌ 1. Mapping 没接完整</h3>\n<ul>\n<li>\n<p>FORMAT / PROGRESS 没有 enforcedBy</p>\n</li>\n<li>\n<p>没挂到执行器</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"-2-runtime-hook-不存在\">❌ 2. Runtime Hook 不存在</h3>\n<ul>\n<li>\n<p>对话输出没有 validator</p>\n</li>\n<li>\n<p>assistant 可以直接绕过</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"-3-orchestrator-不统一\">❌ 3. Orchestrator 不统一</h3>\n<ul>\n<li>\n<p>flow 里有 gate</p>\n</li>\n<li>\n<p>普通对话没有</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-四三种强制等级这是关键认知\">🧠 四、三种“强制等级”（这是关键认知）</h1>\n<hr>\n<h2 id=\"level-1文档级你原来很多规则\">Level 1：文档级（你原来很多规则）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>写在 md 里 → 靠人遵守</span></span></code></pre></figure>\n<p>👉 ❌ 不强制</p>\n<hr>\n<h2 id=\"level-2流程级你之前感觉强制的\">Level 2：流程级（你之前“感觉强制”的）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>进入 workflow → 自动跑 gate</span></span></code></pre></figure>\n<p>👉 ⚠️ 半强制</p>\n<hr>\n<h2 id=\"level-3运行时级真正强制\">Level 3：运行时级（真正强制）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>任何输出 → 必须经过 gate → 不通过就拦</span></span></code></pre></figure>\n<p>👉 ✅ 真强制</p>\n<hr>\n<h1 id=\"-五不同场景的门禁流程对比\">🧩 五、不同场景的门禁流程（对比）</h1>\n<hr>\n<h2 id=\"1️⃣-前端-ci你已经做对了\">1️⃣ 前端 CI（你已经做对了）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>code → lint → screenshot → gate → BLOCK</span></span></code></pre></figure>\n<p>👉 ✔ 完整闭环</p>\n<hr>\n<h2 id=\"2️⃣-ai-对话你现在的问题\">2️⃣ AI 对话（你现在的问题）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>prompt → assistant → 输出</span></span></code></pre></figure>\n<p>👉 ❌ 没 gate</p>\n<hr>\n<h2 id=\"3️⃣-ai--gate正确形态\">3️⃣ AI + gate（正确形态）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>prompt</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>assistant draft</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>gate check (format / behavior)</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>PASS → 输出</span></span>\n<span data-line=\"\"><span>BLOCK → 拦截 / 重写</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六真正标准的门禁系统定义\">🎯 六、真正标准的“门禁系统定义”</h1>\n<p>一句话总结：</p>\n<blockquote>\n<p><strong>门禁系统 = 规则 + 执行器 + 拦截点</strong></p>\n</blockquote>\n<p>缺任何一个都不叫门禁。</p>\n<hr>\n<h1 id=\"-七你现在最关键的一刀\">🪓 七、你现在最关键的一刀</h1>\n<p>不是再加规则，而是：</p>\n<blockquote>\n<p>👉 <strong>把 Gate 接到 Runtime Hook</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-最后一句话非常重要\">💬 最后一句话（非常重要）</h1>\n<p>你现在的问题不是：</p>\n<blockquote>\n<p>“门禁有哪些模块”</p>\n</blockquote>\n<p>而是：</p>\n<blockquote>\n<p>❗ <strong>你的系统停在“能判断”，但还没到“能阻止”</strong></p>\n</blockquote>\n<hr>\n<p>如果你要，我下一步可以直接帮你画你这套系统的<strong>当前 vs 目标架构图（带具体文件路径）</strong>，甚至给你一版：</p>\n<p>👉 <strong>“一键把所有 gate 接到 runtime”的最小实现</strong></p>\n<p>那才是真正完成这套系统。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "门禁系统计划文档",
+        "text": "门禁系统计划文档"
+      },
+      {
+        "depth": 2,
+        "slug": "1-目标",
+        "text": "1. 目标"
+      },
+      {
+        "depth": 2,
+        "slug": "2-现状",
+        "text": "2. 现状"
+      },
+      {
+        "depth": 2,
+        "slug": "3-目标架构",
+        "text": "3. 目标架构"
+      },
+      {
+        "depth": 2,
+        "slug": "4-现有系统映射",
+        "text": "4. 现有系统映射"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-已有层",
+        "text": "4.1 已有层"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-缺失层",
+        "text": "4.2 缺失层"
+      },
+      {
+        "depth": 2,
+        "slug": "5-生命周期门禁链",
+        "text": "5. 生命周期门禁链"
+      },
+      {
+        "depth": 2,
+        "slug": "6-门禁树状图",
+        "text": "6. 门禁树状图"
+      },
+      {
+        "depth": 2,
+        "slug": "7-门禁类型分层图",
+        "text": "7. 门禁类型分层图"
+      },
+      {
+        "depth": 2,
+        "slug": "8-迁移蓝图",
+        "text": "8. 迁移蓝图"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-0-冻结现状",
+        "text": "Phase 0: 冻结现状"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-1-统一-decision-schema",
+        "text": "Phase 1: 统一 Decision Schema"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-2-拆-context-builder",
+        "text": "Phase 2: 拆 Context Builder"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-3-引入-opa",
+        "text": "Phase 3: 引入 OPA"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-4-加-policy-adapter",
+        "text": "Phase 4: 加 Policy Adapter"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-5-让-registry-变成路由表",
+        "text": "Phase 5: 让 registry 变成路由表"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-6-实现-output-guard-wrapper",
+        "text": "Phase 6: 实现 output-guard wrapper"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-7-接入-codex-atramenti-console",
+        "text": "Phase 7: 接入 Codex / Atramenti-Console"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-8-迁移其他-gate",
+        "text": "Phase 8: 迁移其他 gate"
+      },
+      {
+        "depth": 3,
+        "slug": "phase-9-补-observability",
+        "text": "Phase 9: 补 Observability"
+      },
+      {
+        "depth": 2,
+        "slug": "9-执行级计划",
+        "text": "9. 执行级计划"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-1-统一决策格式",
+        "text": "Milestone 1: 统一决策格式"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-2-拆-context-builder",
+        "text": "Milestone 2: 拆 Context Builder"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-3-接入-opa",
+        "text": "Milestone 3: 接入 OPA"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-4-统一-registry-路由",
+        "text": "Milestone 4: 统一 registry 路由"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-5-output-guard-runtime-enforcement",
+        "text": "Milestone 5: output-guard runtime enforcement"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-6-接入-codex-console",
+        "text": "Milestone 6: 接入 Codex / Console"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-7-生命周期门禁齐备",
+        "text": "Milestone 7: 生命周期门禁齐备"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-8-observability",
+        "text": "Milestone 8: Observability"
+      },
+      {
+        "depth": 3,
+        "slug": "milestone-9-回归测试与验收",
+        "text": "Milestone 9: 回归测试与验收"
+      },
+      {
+        "depth": 2,
+        "slug": "10-交付物",
+        "text": "10. 交付物"
+      },
+      {
+        "depth": 2,
+        "slug": "11-完成标准",
+        "text": "11. 完成标准"
+      },
+      {
+        "depth": 2,
+        "slug": "12-备注",
+        "text": "12. 备注"
+      },
+      {
+        "depth": 1,
+        "slug": "一句话本质",
+        "text": "🧠 一句话本质"
+      },
+      {
+        "depth": 1,
+        "slug": "一-传统门禁-现实世界",
+        "text": "🧱 一、传统门禁（现实世界）"
+      },
+      {
+        "depth": 2,
+        "slug": "结构",
+        "text": "结构"
+      },
+      {
+        "depth": 2,
+        "slug": "对应逻辑",
+        "text": "对应逻辑"
+      },
+      {
+        "depth": 1,
+        "slug": "二-互联网-门禁系统-标准架构",
+        "text": "🌐 二、互联网“门禁系统”（标准架构）"
+      },
+      {
+        "depth": 2,
+        "slug": "结构图",
+        "text": "结构图"
+      },
+      {
+        "depth": 2,
+        "slug": "拆开讲",
+        "text": "拆开讲"
+      },
+      {
+        "depth": 2,
+        "slug": "1-入口-gateway",
+        "text": "🟢 1. 入口（Gateway）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-身份认证-authentication",
+        "text": "🟡 2. 身份认证（Authentication）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-权限控制-authorization",
+        "text": "🟠 3. 权限控制（Authorization）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-决策",
+        "text": "🔴 4. 决策"
+      },
+      {
+        "depth": 1,
+        "slug": "三-经典门禁模型-你必须知道",
+        "text": "🧠 三、经典门禁模型（你必须知道）"
+      },
+      {
+        "depth": 2,
+        "slug": "rbac-最常见",
+        "text": "🥇 RBAC（最常见）"
+      },
+      {
+        "depth": 2,
+        "slug": "abac-高级",
+        "text": "🥈 ABAC（高级）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-你现在系统里的-门禁",
+        "text": "🔥 四、你现在系统里的“门禁”"
+      },
+      {
+        "depth": 2,
+        "slug": "你的结构",
+        "text": "你的结构"
+      },
+      {
+        "depth": 2,
+        "slug": "实际发生的-门禁判断",
+        "text": "实际发生的“门禁判断”"
+      },
+      {
+        "depth": 1,
+        "slug": "五-你可以这样升级你的门禁-非常关键",
+        "text": "🧱 五、你可以这样升级你的门禁（非常关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-身份层",
+        "text": "🟢 1. 身份层"
+      },
+      {
+        "depth": 2,
+        "slug": "2-限流层",
+        "text": "🟡 2. 限流层"
+      },
+      {
+        "depth": 2,
+        "slug": "3-权限层",
+        "text": "🟠 3. 权限层"
+      },
+      {
+        "depth": 2,
+        "slug": "4-风险控制",
+        "text": "🔴 4. 风险控制"
+      },
+      {
+        "depth": 2,
+        "slug": "5-审计-你现在没有",
+        "text": "🔵 5. 审计（你现在没有）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-工业级门禁架构-你未来会做到",
+        "text": "🧠 六、工业级门禁架构（你未来会做到）"
+      },
+      {
+        "depth": 1,
+        "slug": "七-你现在在哪个阶段",
+        "text": "🧠 七、你现在在哪个阶段"
+      },
+      {
+        "depth": 1,
+        "slug": "八-最关键一句话",
+        "text": "🔥 八、最关键一句话"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你继续往上走",
+        "text": "🚀 如果你继续往上走"
+      },
+      {
+        "depth": 1,
+        "slug": "一-现代门禁系统-5-层模块",
+        "text": "🧠 一、现代门禁系统 = 5 层模块"
+      },
+      {
+        "depth": 2,
+        "slug": "1-policy-层-规则定义",
+        "text": "① Policy 层（规则定义）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-mapping-层-规则-执行器绑定",
+        "text": "② Mapping 层（规则 → 执行器绑定）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-gate-层-执行器",
+        "text": "③ Gate 层（执行器）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-orchestrator-层-调度执行",
+        "text": "④ Orchestrator 层（调度执行）"
+      },
+      {
+        "depth": 2,
+        "slug": "5-runtime-hook-最关键",
+        "text": "⑤ Runtime Hook（最关键）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-完整流程图-标准版",
+        "text": "🧩 二、完整流程图（标准版）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-你当前系统的问题-精准定位",
+        "text": "🔥 三、你当前系统的问题（精准定位）"
+      },
+      {
+        "depth": 2,
+        "slug": "具体断点",
+        "text": "具体断点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-mapping-没接完整",
+        "text": "❌ 1. Mapping 没接完整"
+      },
+      {
+        "depth": 3,
+        "slug": "2-runtime-hook-不存在",
+        "text": "❌ 2. Runtime Hook 不存在"
+      },
+      {
+        "depth": 3,
+        "slug": "3-orchestrator-不统一",
+        "text": "❌ 3. Orchestrator 不统一"
+      },
+      {
+        "depth": 1,
+        "slug": "四-三种-强制等级-这是关键认知",
+        "text": "🧠 四、三种“强制等级”（这是关键认知）"
+      },
+      {
+        "depth": 2,
+        "slug": "level-1-文档级-你原来很多规则",
+        "text": "Level 1：文档级（你原来很多规则）"
+      },
+      {
+        "depth": 2,
+        "slug": "level-2-流程级-你之前-感觉强制-的",
+        "text": "Level 2：流程级（你之前“感觉强制”的）"
+      },
+      {
+        "depth": 2,
+        "slug": "level-3-运行时级-真正强制",
+        "text": "Level 3：运行时级（真正强制）"
+      },
+      {
+        "depth": 1,
+        "slug": "五-不同场景的门禁流程-对比",
+        "text": "🧩 五、不同场景的门禁流程（对比）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-前端-ci-你已经做对了",
+        "text": "1️⃣ 前端 CI（你已经做对了）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-ai-对话-你现在的问题",
+        "text": "2️⃣ AI 对话（你现在的问题）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-ai-gate-正确形态",
+        "text": "3️⃣ AI + gate（正确形态）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-真正标准的-门禁系统定义",
+        "text": "🎯 六、真正标准的“门禁系统定义”"
+      },
+      {
+        "depth": 1,
+        "slug": "七-你现在最关键的一刀",
+        "text": "🪓 七、你现在最关键的一刀"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一句话-非常重要",
+        "text": "💬 最后一句话（非常重要）"
+      }
+    ],
+    "detailPath": "articles/md_4b321f60f626.json"
+  }
+}

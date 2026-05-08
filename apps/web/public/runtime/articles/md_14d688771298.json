@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_14d688771298",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E6%B1%A0%E5%AD%90/%E6%B5%81%E5%BC%8F%E8%BD%AC%E5%8F%91.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/池子/流式转发.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/池子/流式转发.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%B1%A0%E5%AD%90/%E6%B5%81%E5%BC%8F%E8%BD%AC%E5%8F%91.md",
+    "slug": "blog-池子-流式转发",
+    "title": "流式转发",
+    "summary": "流失转发是不能随意中断的 客户端（Codex） ↓ common.js ↓ provider（openai / codex / responses） ↓ 把流再转回客户端 流进行中 → upstream 出一点问题（timeout / chunk error / idle） → routing ru...",
+    "description": "流失转发是不能随意中断的 客户端（Codex） ↓ common.js ↓ provider（openai / codex / responses） ↓ 把流再转回客户端 流进行中 → upstream 出一点问题（timeout / chunk error / idle） → routing ru...",
+    "date": "2026-04-29",
+    "updated": "2026-04-29",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "池子"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "池子"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "池子"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/池子/流式转发.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/池子/流式转发.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%B1%A0%E5%AD%90/%E6%B5%81%E5%BC%8F%E8%BD%AC%E5%8F%91.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "流式转发",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "池子",
+        "流式转发"
+      ],
+      "subtitle": "流失转发是不能随意中断的 客户端（Codex） ↓ common.js ↓ provider（openai / codex / responses） ↓ 把流再转回客户端 流进行中 → upstream 出一点问题（timeout / chunk error / idle） → routing ru..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "流失转发是不能随意中断的\n\n\n\n\n客户端（Codex）  \n↓  \ncommon.js  \n↓  \nprovider（openai / codex / responses）  \n↓  \n把流再转回客户端\n\n\n\n\n\n\n\n---\n流进行中  \n→ upstream 出一点问题（timeout / chunk error / idle）  \n→ routing-runner 判断：retryable ✔  \n→ 进入 retry 分支  \n→ throw / 重调 provider  \n→ 原连接被关闭  \n→ 客户端：stream disconnected\n\n为什么 routing-runner 一定会把流杀掉\n## ✅ 加一个“流锁”（最重要）\n\n在 routing-runner 里：\n\nconst streamStarted =  \n    requestContext?.streamStarted ||  \n    res?.headersSent\n\n# 🧠 一句话定义\n\n流锁 = 一个状态标记，用来告诉系统：  \n“这条请求已经开始向客户端写数据了，后面不能再乱动（不能 retry / throw / 切 provider）”\n# 🔍 一、为什么需要“流锁”\n\n你现在系统的问题就是：\n\n请求开始 → 已经 write 一部分 → 某处触发 retry → 重启流程 → 原连接被杀\n\n👉 因为系统**不知道自己已经进入“不可回头阶段”**\n\n---\n重连机制 是重新建立流且自动上下文\n\n\n\n# 🔍 五、为什么“流内续写是安全的”\n\n因为它：\n\n✔ 不切 provider  \n✔ 不重开整个请求  \n✔ 只是在同一生成上下文里继续",
+    "html": "<p>流失转发是不能随意中断的</p>\n<p>客户端（Codex）<br>\n↓<br>\ncommon.js<br>\n↓<br>\nprovider（openai / codex / responses）<br>\n↓<br>\n把流再转回客户端</p>\n<hr>\n<p>流进行中<br>\n→ upstream 出一点问题（timeout / chunk error / idle）<br>\n→ routing-runner 判断：retryable ✔<br>\n→ 进入 retry 分支<br>\n→ throw / 重调 provider<br>\n→ 原连接被关闭<br>\n→ 客户端：stream disconnected</p>\n<p>为什么 routing-runner 一定会把流杀掉</p>\n<h2 id=\"-加一个流锁最重要\">✅ 加一个“流锁”（最重要）</h2>\n<p>在 routing-runner 里：</p>\n<p>const streamStarted =<br>\nrequestContext?.streamStarted ||<br>\nres?.headersSent</p>\n<h1 id=\"-一句话定义\">🧠 一句话定义</h1>\n<p>流锁 = 一个状态标记，用来告诉系统：<br>\n“这条请求已经开始向客户端写数据了，后面不能再乱动（不能 retry / throw / 切 provider）”</p>\n<h1 id=\"-一为什么需要流锁\">🔍 一、为什么需要“流锁”</h1>\n<p>你现在系统的问题就是：</p>\n<p>请求开始 → 已经 write 一部分 → 某处触发 retry → 重启流程 → 原连接被杀</p>\n<p>👉 因为系统<strong>不知道自己已经进入“不可回头阶段”</strong></p>\n<hr>\n<p>重连机制 是重新建立流且自动上下文</p>\n<h1 id=\"-五为什么流内续写是安全的\">🔍 五、为什么“流内续写是安全的”</h1>\n<p>因为它：</p>\n<p>✔ 不切 provider<br>\n✔ 不重开整个请求<br>\n✔ 只是在同一生成上下文里继续</p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "加一个-流锁-最重要",
+        "text": "✅ 加一个“流锁”（最重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "一句话定义",
+        "text": "🧠 一句话定义"
+      },
+      {
+        "depth": 1,
+        "slug": "一-为什么需要-流锁",
+        "text": "🔍 一、为什么需要“流锁”"
+      },
+      {
+        "depth": 1,
+        "slug": "五-为什么-流内续写是安全的",
+        "text": "🔍 五、为什么“流内续写是安全的”"
+      }
+    ],
+    "detailPath": "articles/md_14d688771298.json"
+  }
+}

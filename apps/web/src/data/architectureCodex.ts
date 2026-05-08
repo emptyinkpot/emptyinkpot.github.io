@@ -17,6 +17,43 @@ export type ArchitectureCodexEntry = {
 
 export const architectureCodexEntries: ArchitectureCodexEntry[] = [
   {
+    slug: 'content-infrastructure-reduction',
+    title: 'Content Infrastructure Reduction',
+    subtitle: '不要把博客继续扩成自研 CMS 内核。',
+    thesis:
+      'MyBlog 已经触碰到 content-index、RSS prerender、OpenList projection、atomic write、watcher、search 和 deploy glue 等 Content Infrastructure 问题。下一阶段的正确方向不是继续扩大自研 runtime，而是用 Quartz、Contentlayer、Meilisearch 和 Coolify 等成熟底座削减维护面。',
+    status: 'forming',
+    systems: ['Runtime MarkdownObject Index', 'Quartz', 'Contentlayer', 'Meilisearch', 'Coolify', 'Pagefind', 'OpenList Cold Layer', 'Astro Presentation Shell'],
+    inspiration: ['Quartz digital garden substrate', 'Contentlayer typed content pipeline', 'Meilisearch object search', 'Coolify deployment platform', 'Astro Paper as content-layer reference'],
+    rejected: [
+      '继续把 content-index.json 膨胀成 JSON database，因为它已经承担了 projection、RSS、search 和 runtime payload 的过多责任。',
+      '继续新增 watcher、RSS 竞态补丁、build sync、deploy wrapper 或 runtime governance 文件来掩盖成熟系统本该接管的问题。',
+      '把 OpenList 当 runtime build 或 projection authority，因为它只能承担 public browse、blob backend、cold archive 和 content address space。',
+      '把 Quartz、Contentlayer、Meilisearch 或 Coolify 写成 active 能力；没有 clone/install/start/readiness evidence 时，它们只能是 candidate 或 target。'
+    ],
+    runtime: [
+      '当前 active 线仍是 Runtime MarkdownObject：public-data/runtime/content-index.json 与 /srv/myblog/site/runtime/content-index.json 是公开文章投影索引，但只允许作为过渡 projection。',
+      'Quartz 是第一 substrate candidate：优先研究 jackyzha0/quartz 的 Obsidian Markdown pipeline、wikilink、backlink、graph、RSS、search、SPA/incremental 和 content index 思路。',
+      'Contentlayer 是 Astro-native candidate：如果保留 Astro UI shell，应优先评估 typed content schema、parsing、watch 和 projection 能否替换自写 build-runtime-content-index glue。',
+      'Meilisearch 是 target-not-deployed search runtime：动态对象、OpenList 文件索引、KnowledgeObject snapshot、Directus metadata 和 Immich import 不得继续塞进 giant runtime JSON；Pagefind 在上线前只叫静态 archive 搜索。',
+      'Coolify 是 candidate-not-deployed deployment platform：当前仍用 npm run deploy:site；后续评估 Git deploy、env、healthcheck、rollback、cron 和 compose 接管手写 SSH / PowerShell quoting / smoke glue。',
+      'OpenList 边界保持不变：/Obsidian 是 Linux hot mirror 的 public access identity，/腾讯云COS 与 /夸克网盘 是 cold/blob backend，不参与数据库、Pagefind、Astro dist、Syncthing hot mirror、node_modules 或 runtime build。'
+    ],
+    tradeoffs: [
+      '评估成熟底座会暂时慢于继续 patch 当前脚本，但能避免长期陷入 build race、cache invalidation、projection consistency 和 deploy drift。',
+      'Quartz / Contentlayer 可能要求调整现有 MarkdownObject schema，但比继续维护自研 Markdown compiler、graph、RSS 和 search glue 更可控。',
+      'Meilisearch 会引入服务运维，但能把搜索从 34MB+ runtime JSON 和 Pagefind 静态边界中拆出来。',
+      'Coolify 会改变部署流程，因此必须先保留 npm run deploy:site 作为 active fallback，等 readiness evidence 充足再切换。'
+    ],
+    future: [
+      '写 Quartz/Contentlayer 对比 spike：输入 /home/vault/Obsidian/docs，输出 MarkdownObject 或等价 typed document，验证 wikilink、backlink、RSS、graph 和 search 能力。',
+      '写 Meilisearch readiness plan：schema、index source、secret、backup、healthcheck、rollback 和 Pagefind fallback。',
+      '写 Coolify readiness plan：GitHub deploy、env、healthcheck、rollback、cron、compose 和当前 Nginx / systemd 边界。',
+      '把 runtime index 限定为 projection snapshot；搜索、部署、媒体库、CMS 和文件同步优先交给成熟服务。'
+    ],
+    related: ['content-pipeline', 'runtime-architecture', 'composable-service-stack', 'runtime-federation']
+  },
+  {
     slug: 'frontend-runtime-archaeology',
     title: 'Frontend Runtime Archaeology',
     subtitle: '前端不是组件树，而是运行时系统。',
@@ -60,7 +97,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     thesis:
       'Frontend Runtime Convergence 把 MyBlog 当前的 Astro SSR、React islands、inline scripts、custom events、Pagefind、OpenList shell、Pinterest shell、localStorage cache 和 Runtime APIs 收束到一个显式的前端 Runtime Kernel 合同里，先统一 command、keyboard、overlay、drawer、focus 和 storage classification，再逐步迁移具体 owner。',
     status: 'forming',
-    systems: ['Runtime Kernel', 'Runtime Migration Manifest', 'Runtime Overlay', 'Runtime Store', 'Command Bus', 'Keyboard Layer', 'Overlay Stack', 'Drawer Intents', 'Focus Restore', 'Storage Classification', 'cmdk', 'Motion', 'Floating UI'],
+    systems: ['Runtime Kernel', 'Legacy Inline Runtime', 'React Islands', 'Command Bus', 'Keyboard Layer', 'Overlay Stack', 'Drawer Intents', 'Focus Restore', 'Storage Classification', 'cmdk', 'Motion', 'Floating UI'],
     inspiration: ['Linear runtime discipline', 'Raycast command model', 'AFFiNE workspace runtime', 'Arc Browser layering', 'React Aria focus semantics'],
     rejected: [
       '继续新增自由 inline script，因为首页已经有大型 Inline Script Empire，局部补丁会扩大 hidden coupling。',
@@ -72,8 +109,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     runtime: [
       '规范文档是 docs/frontend-runtime-convergence.md；它是前端运行时收束入口。',
       'P0 合同包是 packages/runtime-kernel，当前 dependency-free，只定义 command、overlay、drawer、keyboard、authority 和 storage classification，不改变生产行为。',
-      'Runtime Migration Sprint 的机器真源是 runtime-migration.json；它按 overlay、bookDrawer、command、store、graph、motion 记录 currentOwner、targetOwner、migrated、evidence 和 rollback。',
-      'packages/runtime-overlay 是 overlay / drawer / popover / tooltip / context menu 的 authority cutover 合同；packages/runtime-store 是 overlayStore、commandStore、readerStore、graphStore、visualStore 的 store authority 合同。',
+      '当前没有 active runtime-migration.json、packages/runtime-overlay 或 packages/runtime-store；overlay、drawer、focus 和 Escape 的真源仍是 legacy inline runtime + React islands。',
       'packages/runtime-kernel 不替代 packages/runtime-contract；前者管前端交互意图，后者管 API transport envelope。',
       'packages/runtime-kernel 不替代 packages/object-model；前者管 runtime intent，后者管 KnowledgeObject identity 和 relation。',
       '当前 active libraries 是 cmdk、motion 和 @floating-ui/react；Zustand、Radix UI primitives、Vaul、React Flow 已安装但尚未迁移任何 runtime owner。',
@@ -91,7 +127,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     future: [
       'P1 让 HomeCommandPalette 成为唯一 Ctrl/Cmd+K owner，把 fallback search 改成 runtime command。',
       'P2 把 OpenList shell、Pinterest shell、Article Drawer 和 Book Drawer 纳入统一 overlay stack 与 focus restore 规则。',
-      '下一次真实 cutover 应优先迁 Book Drawer shell -> Vaul through packages/runtime-overlay，但 Reader memory / highlights 仍由 MySQL Runtime Truth 拥有。',
+      '下一次真实 cutover 可以评估 Book Drawer shell -> Vaul，但必须先在代码里实现 owner 切换、浏览器证据和回滚路径；Reader memory / highlights 仍由 MySQL Runtime Truth 拥有。',
       'P3 在第一个 owner 迁移时引入 Zustand 或同级 store；优先迁移 overlay stack、command state 和 reader shell state。',
       'Graph 只有在 KnowledgeObject contract、search authority 和 drawer navigation 稳定后才迁移到 React Flow。',
       '生成 machine listener inventory，按 source file、event type、selector 和 owner 输出运行时清单。'
@@ -186,17 +222,20 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     thesis:
       'MyBlog 的数据层不是单一数据库，也不是网盘目录展示，而是 GitHub、OpenList、MySQL 和浏览器缓存各司其职的混合运行时。',
     status: 'active',
-    systems: ['OpenList Storage Layer', 'Obsidian Remotely Save', 'GitHub Content Layer', 'MySQL Runtime Layer', 'Static Astro Frontend'],
-    inspiration: ['Obsidian vault', 'Remotely Save', 'Readwise Reader', 'GitHub history', 'Plex media library'],
+    systems: ['OpenList Content Control Plane', 'Syncthing Hot Mirror', 'GitHub Content Layer', 'MySQL Runtime Layer', 'Static Astro Frontend'],
+    inspiration: ['Obsidian vault', 'Syncthing', 'Readwise Reader', 'GitHub history', 'Plex media library'],
     rejected: [
       '把 EPUB/PDF/图片塞进 MySQL BLOB，因为文件系统和对象存储更适合大文件。',
       '把高亮和阅读进度放在 OpenList，因为文件层不能表达动态关系和查询。',
       '继续让 localStorage 做真源，因为多设备、搜索、Graph 和统计都需要服务端状态层。',
-      '让 MyBlog 自己手工同步 Obsidian data/image，因为 Vault 文件同步应由成熟的 Remotely Save + WebDAV/S3 层负责。'
+      '让 MyBlog 自己手工同步 Obsidian data/image，因为 Vault 文件同步应由成熟的 Syncthing / Obsidian Sync 层负责。'
     ],
     runtime: [
-      'Obsidian Remotely Save 负责完整 Vault 文件同步：docs、image、.obsidian、canvas、PDF 和附件作为同一个 Vault 对待。',
-      'OpenList WebDAV 入口是 /openlist/dav/；同步目标根是 /夸克网盘/obsidian/data 或后续迁移后的 /腾讯云COS/obsidian/data。',
+      'Syncthing 当前负责完整 Vault 文件同步：E:\\Vaults\\Obsidian 是唯一可编辑 authoring truth，/home/vault/Obsidian 是 Linux runtime hot mirror，docs、image、.obsidian、canvas、PDF 和附件作为同一个 Vault 对待。',
+      'OpenList 不再作为 Obsidian 写作同步入口；/夸克网盘/obsidian 是 retired legacy。当前热路径是 E:\\Vaults\\Obsidian -> Syncthing -> /home/vault/Obsidian；公开内容入口是 /openlist/Obsidian/...。',
+      '服务器 OpenList 本地挂载必须保持 /Obsidian -> /home/vault/Obsidian；admin-next OPENLIST_PUBLIC_ROOTS 必须保持 /Obsidian,/腾讯云COS,/夸克网盘。禁止重新引入 /Vault 作为 active mount 或兼容根。',
+      'OpenList 不能当服务器系统盘或热运行盘：数据库、node_modules、Astro dist、Pagefind、Syncthing hot mirror、/srv/myblog runtime、OpenList DB 和 systemd 服务都必须留在服务器本地文件系统。',
+      'OpenList/COS/Quark 只能承担 public access、blob backend、cold archive 和 content address space；/srv/myblog/public-data/openlist-files 是可再生 reader 原件缓存，可用 npm run server:openlist-storage 显式审计和清理。',
       'GitHub 管 Markdown、项目 Wiki、静态 metadata 和可版本化内容。',
       'OpenList 管 EPUB、PDF、MOBI、图片、视频等原始文件。',
       'MySQL 管 reader_memory、reader_highlights，后续承接 annotations、stickers、seals、graph links。',
@@ -204,7 +243,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     tradeoffs: [
       '混合架构比单体 CMS 复杂，但长期更适合个人知识基础设施。',
-      'Remotely Save 会让 Vault 同步独立于 MyBlog 发布节奏，但也要求把同步冲突、删除和附件路径交给 Obsidian 生态处理。',
+      'Syncthing 会让 Vault 同步独立于 MyBlog 发布节奏，但也要求把同步冲突、删除和附件路径交给成熟文件同步层处理。',
       '静态前台部署简单稳定，动态状态通过 admin-next API 补足。',
       '缓存必须基于 path + modified + size 失效，否则 OpenList 文件更新后会产生陈旧 reader asset。'
     ],
@@ -212,51 +251,68 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '统一 Knowledge Object 表，把书、文章、项目、视觉素材、高亮都纳入同一对象模型。',
       '把 Runtime API 合同写成可测试 schema，避免后续 UI 和数据层漂移。',
       '让导入任务成为显式 pipeline：scan -> index -> cover prewarm -> file prewarm -> normalize。',
-      '把 Vault 文件真源从夸克迁到 COS 时保持同一 WebDAV/S3 同步合同，MyBlog 只改 OpenList 根路径和索引配置。'
+      '把冷归档后端从夸克迁到 COS 时保持同一 OpenList content control plane identity，MyBlog 只改归档目标和索引配置，不改 authoring truth。'
     ],
     related: ['reader-system', 'content-pipeline', 'composable-service-stack', 'knowledge-runtime', 'collection-stack']
   },
   {
     slug: 'content-pipeline',
     title: 'Content Pipeline',
-    subtitle: 'Obsidian 是写作母库，Git-backed CMS 是编辑面，Astro collection 是公开发布面。',
+    subtitle: 'Obsidian 是写作母库，Runtime MarkdownObject 是唯一公开文章线。',
     thesis:
-      'Content Pipeline 把 Vault 同步、写作、网页编辑、发布、运行时和文件层拆开：Obsidian Remotely Save 负责完整 Vault 文件同步，Git mirror / CMS 回写唯一 Vault 文件，Publish Pipeline 负责规范化，Astro Content Collections 承担公开文章真源，MySQL 和 OpenList 分别保存运行状态与大文件。',
+      'Content Pipeline 把 Vault 同步、写作、网页编辑、发布、运行时和文件层拆开：Syncthing / Obsidian Sync 负责把本机 Obsidian Vault 同步到 Linux /home/vault，OpenList 是统一公开内容入口，Runtime MarkdownObject Index 负责把可公开的 Obsidian Markdown 投影到 Feed / Reader / Search / Graph。Astro posts 不再作为公开文章系统。当前 Content Source Base 明确为 E:\\Vaults\\Obsidian = authoring truth，/home/vault/Obsidian = server hot mirror，OpenList /openlist/Obsidian/docs = public content access layer，content-index.json = frontend projection index，Astro = UI shell。',
     status: 'forming',
-    systems: ['Obsidian Vault File Truth', 'Remotely Save', 'Obsidian Authoring Truth', 'Git Mirror', 'TinaCMS / Decap CMS', 'Publish Pipeline', 'Normalize Layer', 'Astro Content Collections', 'Pagefind Index'],
-    inspiration: ['Remotely Save', 'TinaCMS', 'Decap CMS', 'Quartz 4', 'Flowershow', 'Logseq Publish', 'Obsidian Publish'],
+    systems: ['Obsidian Authoring Truth', 'Syncthing', 'Linux /home/vault/Obsidian Hot Mirror', 'OpenList Content Control Plane', 'Runtime Content Index', 'MarkdownObject', 'Projection Layer', 'Git Mirror', 'Astro Content Collections', 'Pagefind Index'],
+    inspiration: ['Syncthing', 'Obsidian Sync', 'TinaCMS', 'Decap CMS', 'Quartz 4', 'Flowershow', 'Logseq Publish', 'Obsidian Publish'],
     rejected: [
       '把 Obsidian Vault 直接当网站源，因为私人笔记、草稿、附件和碎片会混入公开站点。',
       '把 OpenList 当 CMS，因为它是文件层，不负责 slug、draft、SEO、RSS、标签和构建校验。',
       '把 MySQL 当文章正文真源，因为正文更适合 Git 版本控制，数据库应该承担运行时状态。',
       '用 MyBlog API 上传 data/image 来补 Obsidian 附件同步，因为这会制造第二套文件真源和删除冲突。',
+      '从零重写 Quartz / Flowershow 已经覆盖的 Markdown compiler、wikilink、backlink、graph publish 和基础 digital garden search。',
       '同时接入 TinaCMS 和 Decap CMS，因为两个编辑面会制造并行写入路径和权限模型漂移。'
     ],
     runtime: [
-      'Vault File Truth 是 OpenList 路径 /夸克网盘/obsidian/data，对应完整 Obsidian Vault：docs、image、.obsidian、canvas、PDF 和附件必须一起同步。',
-      'Vault 同步由 Obsidian Remotely Save 通过 OpenList WebDAV/S3 完成；MyBlog 不承担双向文件同步器职责。',
-      'Authoring Truth 是 Vault 内的 /夸克网盘/obsidian/data/docs 子树，对应长期原稿与资料库。',
+      'Authoring Truth 是 Windows E:\\Vaults\\Obsidian；Linux /home/vault/Obsidian 只是 runtime hot mirror，对应完整 Obsidian Vault：docs、image、.obsidian、canvas、PDF 和附件必须一起同步。',
+      'Vault 同步已进入 active 状态：Windows E:\\Vaults\\Obsidian 通过 Syncthing folder obsidian-vault 双向同步到 Linux /home/vault/Obsidian，两端 idle 且 needBytes=0。',
+      'OpenList 是 content control plane / 统一公开内容入口和文件访问层，不是 CMS，不决定文章 existence；文章对象仍由 Runtime MarkdownObject projection 决定，公开来源链接必须使用 /openlist/Obsidian/docs/...。',
+      'Authoring Truth 是本机 E:\\Vaults\\Obsidian；服务器 /home/vault/Obsidian 是 Syncthing 热镜像和 projector 扫描输入；前端公开 source identity 必须走 OpenList /openlist/Obsidian/docs/...，不得展示 /home/vault 裸路径。',
       '网页编辑目标是 Git-backed / Vault-backed CMS：编辑提交必须回写同一个 Vault working copy，而不是创建数据库文章副本。',
-      'Publishing Truth 是 apps/web/src/content/posts/，首页、文章页、RSS、标签、分类、搜索和 Graph 都只消费发布稿。',
-      '目标链路是 Obsidian Remotely Save -> OpenList WebDAV/S3 Vault -> OpenList / Obsidian docs -> Git mirror -> TinaCMS 或 Decap CMS -> Publish Pipeline -> Astro Content Collections。',
-      'Publish Pipeline 的核心链路是 scan -> published filter -> normalize -> write Astro collection -> build search / graph。',
+      '文章真源已收束：public-data/runtime/content-index.json 是唯一公开文章 Runtime Projection Truth；旧 Astro posts collection 已移除，不再参与文章路由、RSS、Pagefind、分类、标签、专题或 Knowledge Graph。',
+      'Quartz 4 / Flowershow 是 Markdown 与 Digital Garden 底座候选：MyBlog 可以吸收或接入它们的 transform / backlink / graph / search / publish 能力，但当前不整体替换 Astro Presentation Shell。',
+      'Runtime Content Index 当前由 tools/build-runtime-content-index.mjs 生成：public-data/runtime/content-index.json 保留完整投影，apps/web/public/runtime/content-index.json 是前端构建 metadata index；正文、预渲染 html 和 toc 进入 apps/web/public/runtime/articles/*.json 单篇 detail payload。通用列表、首页、标签、分类、RSS 和 Graph 只能读 metadata；Reader Drawer 和 /posts/[slug]/ 才按 detailPath 读取单篇正文。',
+      '当前进入 Stabilization Sprint：先稳定 Syncthing / Linux Vault、MarkdownObject schema 和 Quartz Runtime Layer；AppFlowy、Immich、Directus、Meilisearch 都保持 target / skeleton，不启动新 runtime。',
+      'Runtime Feature Registry 当前由 public-data/runtime/features.json 和 apps/web/public/runtime/features.json 承载，只声明当前 active runtime surface 的 authority、truth、producer 与 consumers，不登记旧文章兼容系统。',
+      '当前已实跑链路是 Obsidian local vault E:\\Vaults\\Obsidian -> Syncthing -> Linux /home/vault/Obsidian hot mirror -> OpenList /openlist/Obsidian public file access -> server-side chokidar -> Runtime MarkdownObject Index -> /srv/myblog/site/runtime/content-index.json -> SSE -> Feed / Reader refresh；Git mirror / TinaCMS / Decap CMS 仍是后续编辑面。',
+      'Runtime projection 的核心链路是 scan /home/vault/Obsidian/docs -> default include all public Markdown -> filter draft/private/published:false -> normalize -> MarkdownObject -> content-index.json -> /posts/[slug] -> Feed / Reader / Search / Graph projection。当前临时策略是“都显示”，后续再加细规则；kind 从 frontmatter 或路径派生，visibility 从 frontmatter/private/drafts 派生，wikilinks/assets/backlinks 进入 relations。Obsidian 内容变更不得触发 Astro build、Pagefind、scp 或全站 deploy。',
+      'Frontend card contract：ArticleCard、首页 Runtime Feed、/posts/ 和 /posts/[slug]/ 的展示标签只读 MarkdownObject.card.chips；tags/categories 是搜索、分类、RSS 和 Graph metadata，不再由卡片组件临时派生展示标签。',
+      'Markdown Presentation Truth 是 apps/web/src/lib/markdown/pipeline.ts 与 .prose-shell：Runtime MarkdownObject 使用 GFM table、Obsidian callout、table wrapper、rehype-pretty-code/Shiki、heading slug 和 prose typography。',
+      '首页 / 是 Runtime MarkdownObject 的主发现面：所有当前 active runtime articles 必须进入 .home-feed-grid，作为和原首页一致的 .home-feed-card 小卡片，而不是只取前几篇、只生成详情页或只放到 /posts/。',
+      '首页 runtime 抽屉只读取 metadata index 建立入口，打开阅读器后按 /runtime/articles/*.json 读取 article.html；浏览器端简易 Markdown renderer 不是 authority，不能重新引入为第二套正文渲染系统。',
+      '/posts/[slug]/ 是唯一公开文章详情路由；它由 Runtime MarkdownObject metadata 生成，并按 detailPath 读取单篇正文 payload。',
+      '/posts/ 页面只展示 Runtime MarkdownObject。',
+      'Runtime 文章页的 metadata 采用 Editorial Metadata Line：日期 / 阅读时间 / 分类 / 标签以小字宽字距文本呈现，不使用 badge、chip 或按钮式标签。',
       'Normalize Layer 必须处理 frontmatter、slug、draft、Obsidian 双链、附件路径、标签归一化和公开资源迁移。',
       '文件夹路径生成 folderTags 与 collectionId；frontmatter tags 生成 explicitTags；finalTags 是两者去重合并。',
       'README 是项目合同真源；architectureCodex.ts 记录这套分层为什么存在以及后续维护边界。'
     ],
     tradeoffs: [
       '多一层 Publish Pipeline 会比直接同步慢一步，但换来公开边界、构建稳定性和隐私隔离。',
-      '把 Vault 同步交给 Remotely Save 会减少自研成本，但 MyBlog 需要清楚区分“文件已同步”和“内容已发布”。',
-      '保留 Astro Content Collections 会让内容发布仍然依赖 Git，但这正好提供版本历史和可审查 diff。',
+      '把 Vault 同步交给 Syncthing / Obsidian Sync 会减少自研成本，但 MyBlog 需要清楚区分“文件已同步”和“内容已发布”。',
+      'Runtime Index 能让 Obsidian 同步内容更快进入 Feed，但必须继续过滤 draft/private/embed，避免把整个 Vault 裸露为公开站点。',
+      '移除 Astro posts 公开入口会让新增文章 slug 需要下一次 Astro build 才产生静态页面，但换来唯一公开文章路由。',
       'TinaCMS 更适合现代可视化编辑，Decap CMS 更轻；P1 必须二选一，不能同时接入。',
-      'Quartz / Flowershow 等系统可以作为 Obsidian 编译参考，但整体替换前端会破坏当前首页、Reader、OpenList 和视觉系统。'
+      'Quartz / Flowershow 作为 substrate 比继续自研 Markdown/Graph 基础更稳，但本轮只吸收 Markdown rendering system，不整体替换前端、首页、Reader、OpenList 或视觉系统。'
     ],
     future: [
-      '先配置 Remotely Save，把完整本地 Vault 同步到 OpenList /夸克网盘/obsidian/data，确保 image 和 docs 同步一致。',
-      '建立 content-vault Git mirror，把 /夸克网盘/obsidian/data/docs 变成可审查、可回滚的 working copy。',
+      'Syncthing / Linux Vault 文件真源层已完成首轮实跑验收；下一步不是启动 AppFlowy、Immich、Directus 或 Meilisearch，而是固化 MarkdownObject schema 与 Quartz Runtime Layer。',
+      '固化 MarkdownObject schema：id、slug、sourcePath、visibility、relations、attachments、html、toc、projection 必须有稳定校验。',
+      '建立 content-vault Git mirror 时必须以 E:\\Vaults\\Obsidian 或 /home/vault/Obsidian 热镜像为源，不能从 retired legacy /夸克网盘/obsidian 回流。',
       '优先评估 TinaCMS 管理 content-vault 的 Markdown / MDX / JSON；Decap CMS 作为低成本备选。',
-      '新增 tools/publish-obsidian-note.mjs，从 OpenList / Obsidian docs 读取 published 文件并写入 posts。',
-      '增加内容发布校验：缺 slug、缺 summary、私有附件引用和未解析双链直接阻断。',
+      '做 Markdown、backlink、graph 或 digital garden search 升级前，先评估 Quartz / Flowershow 能否作为底座或 transform provider。',
+      '把 Runtime Content Index 接入 RSS、Pagefind、Knowledge Index 和 Graph 的统一对象读取层。',
+      '让 features.json 成为文章、Store Runtime、Command Runtime、Graph Runtime 后续接入前的显式开关和 authority registry。',
+      '增加内容发布校验：私有附件引用、未迁移 embed、敏感路径和重复 slug 直接阻断 runtime projection。',
       '让 Publish Pipeline 产出 Knowledge Object manifest，供 Graph、Search、Timeline 复用。',
       '把 folderTags 映射为 Collection / Topic，让 history/korea 这类路径自动生成稳定知识合集。'
     ],
@@ -273,13 +329,14 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     inspiration: ['NAS storage stack', 'Google Photos / Immich', 'Headless CMS', 'Meilisearch', 'Plex media library', 'Digital asset management'],
     rejected: [
       '把 MyBlog 写成全能后端，因为媒体库、CMS、搜索引擎和对象存储都有成熟系统。',
-      '把 OpenList 当 CMS，因为它只适合文件真源，不负责 metadata overlay、工作流、Graph 和搜索权威。',
+      '把 OpenList 当 CMS 或 Obsidian 写作真源，因为它只适合 content control plane、文件访问、metadata/API/URL 抽象和大文件后端，不负责文章编辑 authority、metadata overlay、工作流、Graph 和搜索权威。',
       '继续让 Pagefind 承担动态实体搜索权威，因为 Pagefind 更适合构建期静态文档。',
       '把 Directus 或 Meilisearch 写成已部署事实，因为当前它们仍是 target runtime。',
       '把大文件放入 Directus / MySQL，因为 EPUB、PDF、图片和视频应留在 OpenList / COS。'
     ],
     runtime: [
-      'OpenList + 腾讯云 COS 当前已作为文件真源 / 大文件层验证：bucket myblog-media-1410041307，region ap-shanghai，挂载点 /腾讯云COS，验证对象 _verify/openlist-cos.txt。',
+      'OpenList + 腾讯云 COS 当前已作为 content control plane 下的大文件 / blob 后端验证：bucket myblog-media-1410041307，region ap-shanghai，挂载点 /腾讯云COS，验证对象 _verify/openlist-cos.txt。',
+      'OpenList + server storage integration 当前 active：/Obsidian 是 Local driver，root=/home/vault/Obsidian，只作为 Linux hot mirror 的 public access identity；/腾讯云COS 与 /夸克网盘 是冷层和 blob backend；root disk 维护入口是 npm run server:openlist-storage。',
       'Immich 当前是 skeleton-installed-not-started：/srv/immich、.env、docker-compose.yml、check-readiness.sh 和 Nginx vhost 已存在，但 DNS、独立存储和 root disk 空间未满足启动条件。',
       'Directus 是 target-not-deployed metadata overlay，后续管理 books、visuals、collections、knowledge_objects 的人工策展字段，不保存大文件原件。',
       'Meilisearch 是 target-not-deployed search runtime，后续索引 KnowledgeObject snapshot、OpenList file index、Directus metadata 和 Immich import snapshot；上线前 Pagefind 继续承担静态文章搜索。',
@@ -309,12 +366,13 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     title: 'Runtime Federation',
     subtitle: '克隆成熟系统角色，而不是重写底层引擎。',
     thesis:
-      'Runtime Federation 把 MyBlog 定义为 Object Layer Glue 和 Projection Shell：Obsidian / Remotely Save / OpenList / Immich / Directus / Meilisearch 等成熟系统各自拥有权威，MyBlog 只做对象投影、关系语义、阅读空间和多客户端 Runtime 合同。同一原则也约束本地 workspace：多个 worktree 可以并存，但 build、deploy、PWA、runtime schema 和 OpenList authority 必须由 workspace capability 决定。',
+      'Runtime Federation 把 MyBlog 定义为 Object Layer Glue 和 Projection Shell：Obsidian / Syncthing / OpenList / Quartz / Immich / Payload 或 Directus / Meilisearch 等成熟系统各自拥有权威，MyBlog 只做对象投影、关系语义、阅读空间和多客户端 Runtime 合同。同一原则也约束本地 workspace：多个 worktree 可以并存，但 build、deploy、PWA、runtime schema 和 OpenList authority 必须由 workspace capability 决定。',
     status: 'forming',
-    systems: ['Obsidian', 'Remotely Save', 'OpenList + COS', 'Workspace Capability System', 'Deploy Guard', 'AFFiNE', 'Anytype', 'Immich', 'Paperless-ngx', 'Mihon', 'Read You', 'Directus', 'Meilisearch', 'MyBlog Object Layer Glue'],
-    inspiration: ['AFFiNE workspace runtime', 'Anytype object graph', 'Kubernetes namespace capability', 'Android permission manifest', 'AWS IAM', 'GitHub Actions environment protection', 'Immich media runtime', 'Paperless-ngx document objects', 'Mihon Android runtime', 'Read You feed runtime', 'Obsidian Remotely Save'],
+    systems: ['Obsidian', 'Syncthing', 'OpenList + COS / Quark', 'Quartz 4', 'Flowershow', 'Payload CMS', 'AppFlowy', 'Workspace Capability System', 'Deploy Guard', 'AFFiNE', 'Anytype', 'Immich', 'Paperless-ngx', 'Mihon', 'Read You', 'Directus', 'Meilisearch', 'MyBlog Object Layer Glue'],
+    inspiration: ['Syncthing file truth sync', 'Quartz digital garden substrate', 'Flowershow Obsidian publish pipeline', 'Payload object and media admin', 'AppFlowy block runtime and collaboration', 'AFFiNE workspace runtime', 'Anytype object graph', 'Kubernetes namespace capability', 'Android permission manifest', 'AWS IAM', 'GitHub Actions environment protection', 'Immich media runtime', 'Paperless-ngx document objects', 'Mihon Android runtime', 'Read You feed runtime', 'Obsidian Remotely Save'],
     rejected: [
-      '自写 Vault sync，因为成熟 WebDAV / S3 同步和冲突处理应该交给 Remotely Save 这类系统。',
+      '自写 Vault sync，因为实时文件同步和冲突处理应该交给 Syncthing / Obsidian Sync；OpenList / Quark / COS 只能承担 control plane、浏览和冷归档后端。',
+      '自写 Markdown compiler、backlink、graph publish 和 Digital Garden 基础，因为 Quartz / Flowershow 已经是成熟底座候选。',
       '自写媒体服务器、缩略图、EXIF、AI tagging 和 embedding，因为 Immich 已经覆盖媒体 runtime 的主体职责。',
       '自写 CMS、搜索引擎、WebDAV、PDF engine、Android source/download/update runtime，因为这些都不是 MyBlog 的差异化价值。',
       '复制 AFFiNE / Anytype / Mihon / Read You 的 UI，因为 MyBlog 要学习系统边界和 authority，不是复制外观。',
@@ -323,8 +381,14 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '继续手工从任意目录 scp 到 /srv/myblog/site，因为这绕过了 workspace authority 和 deploy capability。'
     ],
     runtime: [
-      '目标链路是 Obsidian -> Remotely Save -> OpenList WebDAV / S3-compatible endpoint -> OpenList + COS -> MyBlog Runtime API / Object Layer Glue -> Web / PWA-TWA / Android / Search / CLI / AI Agent。',
-      'Obsidian 拥有 authoring truth；Remotely Save 拥有 Vault sync；OpenList + COS 拥有 blob / file truth。',
+      '当前 active 链路是 Obsidian E:\\Vaults\\Obsidian -> Syncthing -> Linux /home/vault/Obsidian hot mirror -> OpenList /openlist/Obsidian content control plane -> server-side Runtime MarkdownObject projection -> MyBlog Runtime API / Object Layer Glue -> Astro UI Shell / PWA-TWA / Android / Search / CLI / AI Agent。',
+      '成熟替换优先级是 Syncthing、Quartz 4 / Flowershow、Meilisearch、Immich、Payload / Directus；新增功能前先判断能否由这些层接管，不再新增 watcher / scp / build-sync glue。',
+      'Obsidian 拥有唯一 authoring truth；Syncthing 当前拥有 hot mirror sync；OpenList /openlist/Obsidian 拥有 content control plane identity，OpenList + COS / Quark 继续拥有 blob / cold archive backend。OpenList 不拥有文章写作 authority。',
+      'Quartz 4 与 Flowershow 是 Obsidian Digital Garden substrate candidate：优先学习 / 复用 Markdown transform、wikilink、backlink、graph、folder/tag publish 和基础 search。',
+      'Payload CMS 是 object / media admin reference：学习 object modeling、media layer、relation layer 和 admin architecture；AppFlowy / AppFlowy Cloud 是 Project Studio collaboration runtime target，不是当前运行依赖。',
+      'Project Studio 的当前页面只允许作为 GitHub Workbench fallback：repo、issues、PR、commits、contributors、Wiki / Timeline write-back。AppFlowy 未部署前，不继续把 block editor、kanban、comments、presence 和权限系统手搓进 MyBlog。',
+      'AppFlowy 的推荐部署边界是独立 `project.tengokukk.com`，MyBlog `/projects/[slug]/` 只在项目 frontmatter 配置 `appflowyUrl` 后嵌入 workspace；否则必须显示 target-not-deployed 状态。',
+      '当前收束期不启动 AppFlowy：先完成 Linux Vault、MarkdownObject schema、Runtime Content Index 和 Quartz Runtime Layer。AppFlowy skeleton 只保留路线，不拥有当前 runtime authority。',
       'AFFiNE 与 Anytype 是 workspace runtime 和 object graph 的 reference only，不是当前运行依赖。',
       'Immich 是 Media Runtime 目标服务：当前 skeleton-not-started，不能写成已上线媒体库。',
       'Paperless-ngx 是 Document Object reference，核心启发是 file != document，文件只是载体，文档对象才拥有 metadata lifecycle。',
@@ -337,6 +401,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     tradeoffs: [
       'Runtime federation 增加部署、监控和接口治理成本，但避免把个人项目拖进自研同步器、媒体库、搜索引擎和移动端运行时的长期维护泥潭。',
+      '成熟 Digital Garden 底座会限制局部定制，但能减少 Markdown/Graph/Search 基础设施维护，把精力留给 Runtime Feed、Reader、Visual 和对象投影。',
       '学习成熟项目的系统角色比直接 clone 代码慢一点，但能保护 MyBlog 的 authority 边界和视觉身份。',
       '多系统组合会有同步延迟和 failure mode，但每个系统拥有清楚 authority 后，比一个全能后端更容易排障和替换。',
       'reference-only 系统必须明确标注，否则文档会把“应该学习”误写成“已经依赖”。',
@@ -350,6 +415,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '把 Runtime API schema 从 README 推进到 packages/runtime-contract，让 Web、PWA/TWA、Android、Search、CLI 和 AI Agent 共用同一 envelope。',
       '为 KnowledgeObject 增加 source provenance 字段，记录对象来自 OpenList、Directus、Immich、MySQL runtime 还是 Astro content collection。',
       '部署 Directus / Meilisearch 前先完成 disk readiness、secret boundary 和 rollback contract。',
+      '评估 Quartz 4 的 transform / graph / backlink / hover preview 能力，优先替换自研 Markdown runtime 缺口而不是继续扩写本地 compiler。',
+      '评估 Payload / Directus 在 metadata overlay 上的边界，二选一承担对象和媒体 admin，避免 MyBlog 继续扩成 full CMS。',
       'Native Android 只在 Runtime API 稳定后启动，且只实现 projection 与 local mirror，不实现第二套业务逻辑。'
     ],
     related: ['composable-service-stack', 'runtime-architecture', 'object-layer', 'projection-clients', 'visual-system', 'reader-system']
@@ -371,6 +438,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       'KnowledgeObject 是统一协议：id、type、title、summary、sources、relations、tags、createdAt、updatedAt、snapshotVersion。',
+      'KnowledgeCollection 是对象进入 Surface 前的阅读上下文层：Object -> Collection -> ReadingSession -> View。当前 Runtime Content Index 会生成 folder collection、series collection 和共享 topic collection；首页优先展示 folder / series collection card，但 card 只打开 Reader Drawer。/collections/ 与 /collections/[slug]/ 只为 folder / series 生成 Reading Session；topic collection 只作为 metadata / search / Graph 维度保留在 runtime index，默认不得批量预渲染成静态集合页。',
       'BookObject 连接 openlist:// EPUB/PDF/MOBI、cover asset、author、topic、reader memory、highlight 和 collection。',
       'VisualObject 连接 OpenList/COS/Immich/Pinterest preview、palette、mood、source URL、related books、related posts 和 graph node。',
       'PersonObject、TimelineObject、PlaceObject 和 TopicObject 是后续扩展的实体类型，不能被临时 tag 完全替代。',
@@ -381,10 +449,10 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     tradeoffs: [
       '对象层会增加 schema 和同步成本，但能避免 books.ts、visuals.ts、OpenList index、MySQL runtime 各自生成一套不可合并的 ID。',
       'Markdown 退回 serialization format 会降低“文件即一切”的简单感，但换来跨书籍、图片、项目、人物和阅读痕迹的稳定关系。',
-      '早期可以先用 JSON manifest 表达 KnowledgeObject snapshot，等 Directus / Meilisearch 就绪后再升级为服务化对象索引。'
+      '早期可以先用 JSON manifest 表达 KnowledgeObject / KnowledgeCollection snapshot，等 Directus / Meilisearch 就绪后再升级为服务化对象索引。'
     ],
     future: [
-      '定义 public-data/knowledge/knowledge-objects.schema.json，覆盖 BookObject、VisualObject、PostObject、ProjectObject 和 HighlightObject。',
+      '定义 public-data/knowledge/knowledge-objects.schema.json，覆盖 BookObject、VisualObject、PostObject、ProjectObject、HighlightObject 和 KnowledgeCollection。',
       '从 books.ts、visualCollections、OpenList index、reader_highlights 和 posts frontmatter 生成 KnowledgeObject snapshot。',
       '把 Graph、Search、Timeline 和 Drawer 的数据入口统一到 KnowledgeObject projection。',
       '用 Directus 管人工 metadata overlay，用 Meilisearch 管 object-first search，用 MySQL 管动态事件和关系。'
@@ -411,7 +479,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'Runtime API 只能有一套：/api/feed、/api/books、/api/visuals、/api/search、/api/graph、/api/runtime/*。Web 和 Android 都消费同一套合同。',
       'Web 当前是 Astro Projection Shell；Android 未来只能是另一个 Projection Surface，不得拥有 book existence、metadata authority、OpenList parsing 或 search ranking authority。',
       'Phase 1 已建立 apps/android-shell skeleton，并在 apps/web/public/manifest.webmanifest 与 apps/web/public/sw.js 提供 Web PWA surface：目标是 PWA + Bubblewrap / Trusted Web Activity，快速得到可安装 Android 包，更新仍随 Web Runtime 发布。',
-      'Android TWA 现在由 tools/generate-android-twa.mjs 自动生成：npm run android:twa:validate 校验本地和线上 PWA，npm run android:twa:generate 生成 .runtime/android-twa，npm run android:twa:build 生成未签名 APK/AAB，npm run android:twa:build:test-signed 生成本机测试签名 APK。',
+      'Android TWA 现在由 tools/generate-android-twa.mjs 自动生成：npm run android:twa:validate 校验本地和线上 PWA、service worker 与 Digital Asset Links，npm run android:twa:generate 生成 .runtime/android-twa，npm run android:twa:build 生成未签名 APK/AAB，npm run android:twa:build:test-signed 生成本机测试签名 APK。',
+      'apps/web/public/.well-known/assetlinks.json 是 TWA 信任声明；它必须匹配 apps/android-shell/twa.contract.json 的 packageId 和 SHA256 指纹，否则 Android 不能把 blog.tengokukk.com 交给可信 Web Activity。',
       'Phase 2 是 Runtime API 化：把 Feed、Books、Visuals、Search、Graph 明确成稳定 API 和 schema。',
       'Phase 3 才是 Kotlin + Compose Native Runtime Client：Compose UI、ViewModel + Flow、Ktor/Retrofit、Coil、Room、PdfRenderer / EPUB runtime、AppUpdater。',
       'packages/runtime-contract 和 packages/object-model 是 Web、Android、Search、CLI 和 AI Agent 的共享合同入口；它们不是数据真源。',
@@ -603,7 +672,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
 export const architectureCodexGlossary = [
   {
     term: 'Runtime Migration Sprint',
-    definition: '从 installed / not migrated 进入 authority cutover 的执行模式；机器真源是 runtime-migration.json，每个 surface 必须记录 owner、target、evidence 和 rollback。'
+    definition: '历史阶段名；当前已从主架构下线，不再有 runtime-migration.json 机器真源。后续真实 cutover 必须由具体 surface 代码和浏览器证据证明。'
   },
   {
     term: 'Authority Cutover',
@@ -659,11 +728,15 @@ export const architectureCodexGlossary = [
   },
   {
     term: 'Authoring Truth',
-    definition: '写作母库真源；当前指 OpenList /夸克网盘/obsidian/data/docs 下的 Obsidian Vault，不直接公开发布。'
+    definition: '写作母库真源；当前唯一真源是 E:\\Vaults\\Obsidian，服务器 /home/vault/Obsidian 只是 Syncthing 热镜像。'
+  },
+  {
+    term: 'OpenList Public Content Access',
+    definition: '公开内容访问层；Runtime MarkdownObject 的 openlistPath/openlistUrl 必须指向 /openlist/Obsidian/...，前端不得把 /home/vault 热镜像裸路径展示为 source。'
   },
   {
     term: 'Publishing Truth',
-    definition: '公开发布真源；当前指 apps/web/src/content/posts/，所有公开文章路由、RSS、搜索和 Graph 从这里构建。'
+    definition: '历史术语；当前公开文章只以 public-data/runtime/content-index.json 的 Runtime MarkdownObject 为 active article truth。'
   },
   {
     term: 'Publish Pipeline',
@@ -688,6 +761,10 @@ export const architectureCodexGlossary = [
   {
     term: 'Search Runtime',
     definition: '负责动态对象、OpenList 文件索引、Directus metadata 和 Immich 导入结果检索的搜索服务；目标服务是 Meilisearch。'
+  },
+  {
+    term: 'Content Infrastructure Reduction',
+    definition: '将自研 content-index、watcher、RSS/build race、search 和 deploy glue 收束到 Quartz、Contentlayer、Meilisearch、Coolify 等成熟底座候选上的减法路线；候选系统未接入前不得写成 active。'
   },
   {
     term: 'folderTags',

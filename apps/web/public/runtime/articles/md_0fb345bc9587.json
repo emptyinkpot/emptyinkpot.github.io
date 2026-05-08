@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_0fb345bc9587",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/auth/token-pool-worker-crash-observability-2026-04-28.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/auth/token-pool-worker-crash-observability-2026-04-28.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/auth/token-pool-worker-crash-observability-2026-04-28.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/auth/token-pool-worker-crash-observability-2026-04-28.md",
+    "slug": "agent-auth-token-pool-worker-crash-observability-2026-04-28",
+    "title": "token-pool-worker-crash-observability-2026-04-28",
+    "summary": "Token Pool worker crash 观测补强记录（2026 04 28） 当前结论 这轮已经完成的是： master / worker supervisor 问题已修，worker 不会再“退出后无人拉起” worker 启动链、崩溃链、最近一次 crash 快照已经可观测 live r...",
+    "description": "Token Pool worker crash 观测补强记录（2026 04 28） 当前结论 这轮已经完成的是： master / worker supervisor 问题已修，worker 不会再“退出后无人拉起” worker 启动链、崩溃链、最近一次 crash 快照已经可观测 live r...",
+    "date": "2026-04-28",
+    "updated": "2026-04-28",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent",
+      "auth"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent",
+      "auth"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "active",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent",
+        "auth"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "active",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/auth/token-pool-worker-crash-observability-2026-04-28.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/auth/token-pool-worker-crash-observability-2026-04-28.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/auth/token-pool-worker-crash-observability-2026-04-28.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:25:24.625Z",
+      "model": "coze-shell",
+      "entities": [
+        "Token Pool",
+        "Token Pool Master Service",
+        "Token Pool Worker Service",
+        "API Server (Token Pool)",
+        "Codex",
+        "last-worker-crash.json",
+        "worker-fatal.log",
+        "/master/diagnose",
+        "/openai/debug/requests"
+      ],
+      "topics": [
+        "Service Reliability",
+        "System Observability",
+        "Process Crash Diagnosis",
+        "Error Suppression",
+        "Root Cause Analysis",
+        "Service Monitoring"
+      ],
+      "relations": [
+        {
+          "type": "fixed",
+          "target": "Token Pool Master/Worker Supervisor",
+          "label": "worker exit without restart issue",
+          "confidence": 1
+        },
+        {
+          "type": "enhanced",
+          "target": "Token Pool Worker Service",
+          "label": "crash observability capabilities",
+          "confidence": 1
+        },
+        {
+          "type": "suppressed",
+          "target": "EPIPE/ECONNRESET Errors",
+          "label": "fatal crash triggers",
+          "confidence": 1
+        },
+        {
+          "type": "extended",
+          "target": "/master/diagnose Endpoint",
+          "label": "returns structured crash snapshot",
+          "confidence": 1
+        },
+        {
+          "type": "records",
+          "target": "last-worker-crash.json",
+          "label": "worker boot stage and crash metadata",
+          "confidence": 1
+        },
+        {
+          "type": "validated",
+          "target": "Token Pool Live Runtime",
+          "label": "new observability code deployment",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Token Pool Incident Response & Enhancement Records"
+      ],
+      "clusters": [
+        "Service Crash Diagnostics",
+        "Observability Tooling Improvements",
+        "Worker Reliability Engineering"
+      ]
+    },
+    "series": "",
+    "project": "token pool worker crash observability",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "AUTH",
+        "TOKEN POOL WORKER CRASH OBSERVABILITY"
+      ],
+      "subtitle": "Token Pool worker crash 观测补强记录（2026 04 28） 当前结论 这轮已经完成的是： master / worker supervisor 问题已修，worker 不会再“退出后无人拉起” worker 启动链、崩溃链、最近一次 crash 快照已经可观测 live r..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Token Pool worker crash 观测补强记录（2026-04-28）\n\n## 当前结论\n\n这轮已经完成的是：\n\n- `master` / `worker` supervisor 问题已修，worker 不会再“退出后无人拉起”\n- worker 启动链、崩溃链、最近一次 crash 快照已经可观测\n- live runtime 已重启到新代码，`3100` 与 `3301` 当前健康\n\n这轮还没完成的是：\n\n- **真正打挂 worker 的业务请求路径还没有锁死**\n- 现在属于“已经拿到抓现场工具”，下一次复现时可以直接看 crash 快照，而不是继续黑盒猜\n\n一句话区分：\n\n- “系统不会再一直死着” -> 已修\n- “为什么 worker 会死” -> 还在继续定位\n\n## 这轮为什么继续改代码\n\n不是为了继续兜底，也不是为了绕过根因，而是为了补 deterministic tracing：\n\n- 之前 `/master/diagnose` 只能告诉我们 `workerAlive`、`lastExit`\n- 但 worker 如果在启动中途或请求中途炸掉，仍然缺：\n  - 炸在 boot 哪一段\n  - 当时有没有活跃请求\n  - 最后一个 requestId / model / provider / stopReason 是什么\n\n所以这轮改动目标只有一个：\n\n- **把“worker 怎么死的”从日志猜测，变成结构化证据**\n\n## 本轮代码改动\n\n### 1. `src/observability/worker-crash.js`\n\n新增能力：\n\n- `bootStage`\n- `bootTimeline`\n- `setWorkerBootStage(stage, extra)`\n- `readLastWorkerCrashSnapshot()`\n\n现在 `last-worker-crash.json` 会带上：\n\n- `bootStage`\n- `bootTimeline`\n- `requestId`\n- `path`\n- `model`\n- `providerType`\n- `selectedProviderId`\n- `stopReason`\n- `lastEvent`\n- `lastErrorMessage`\n\n也就是说，worker 就算还没进正式请求处理，也能知道死在：\n\n- `config_loaded`\n- `plugins_initialized`\n- `services_initialized`\n- `http_server_created`\n- `listen_pending`\n- `ready_to_serve`\n\n中的哪一段。\n\n### 2. `src/services/api-server.js`\n\n新增 worker boot stage 标记：\n\n- `api_server_module_loaded`\n- `config_init_start`\n- `config_loaded`\n- `plugins_discovery_start`\n- `plugins_initialized`\n- `services_init_start`\n- `services_initialized`\n- `request_handler_created`\n- `http_server_created`\n- `listen_pending`\n- `listening`\n- `ready_to_serve`\n- `ready_sent_to_master`\n\n同时补了几类 fatal capture：\n\n- `startup_failure`\n- `http_server_error`\n- `uncaught_exception`\n- `unhandled_rejection`\n- `process_exit`\n\n并保留 broken pipe 抑制：\n\n- `EPIPE`\n- `ECONNRESET` client socket 噪音不会再污染 fatal 结论\n\n### 3. `src/core/master.js`\n\n`GET /master/diagnose` 现在不只返回文件是否存在，还会直接带：\n\n- `lastWorkerCrashSnapshot`\n\n这样下一次 worker 再挂，不用先 SSH/翻文件，直接打：\n\n- `GET /master/diagnose`\n\n就能先看到最近一次 crash 的结构化摘要。\n\n### 4. `README.md`\n\n已同步补充：\n\n- `logs/last-worker-crash.json`\n- `logs/worker-fatal.log`\n- `/master/diagnose` 现在会返回最近 crash 摘要\n\n## 本轮自测与证据\n\n## 隔离端口自测\n\n用隔离实例验证了新 boot-stage 日志链：\n\n- master: `3112`\n- worker: `3312`\n\n结果：\n\n- `GET http://127.0.0.1:3112/master/status` 返回正常\n- master stdout 中能看到完整 boot stage：\n  - `config_loaded`\n  - `plugins_initialized`\n  - `services_initialized`\n  - `listen_pending`\n  - `listening`\n  - `ready_to_serve`\n  - `ready_sent_to_master`\n\n说明：\n\n- 新观测链已真实落盘，不是只写了代码没走到\n\n## 受控 crash 验证\n\n随后故意制造一个可重复 crash：\n\n- 直接起第二个 `api-server`\n- 端口仍用 `3312`\n- 结果触发 `EADDRINUSE`\n\n新快照成功写出：\n\n- `E:\\My Project\\Token Pool\\logs\\isolated-crash\\last-worker-crash.json`\n- `E:\\My Project\\Token Pool\\logs\\isolated-crash\\worker-fatal.log`\n\n快照关键字段：\n\n- `reason = \"http_server_error\"`\n- `bootStage = \"listen_pending\"`\n- `lastErrorMessage = \"listen EADDRINUSE: address already in use 0.0.0.0:3312\"`\n- `bootTimeline` 明确停在 listen 前\n\n这证明：\n\n- 不是只有 request 内 crash 能记录\n- **启动期 crash 也已经能被结构化抓住**\n\n## live runtime 已切到新代码\n\n本地 live runtime 已重启：\n\n- 新 master pid: `18700`\n- 新 worker pid: `30156`\n\nlive 验证：\n\n- `GET http://127.0.0.1:3100/master/status` -> `200`\n- `GET http://127.0.0.1:3100/master/diagnose` -> `200`\n- `GET http://127.0.0.1:3301/health` -> `200`\n\n同时 live master stdout 已看到新的 worker boot 日志：\n\n- `stage=api_server_module_loaded`\n- `stage=config_loaded`\n- `stage=plugins_initialized`\n- `stage=services_initialized`\n- `stage=listen_pending`\n- `stage=listening`\n- `stage=ready_to_serve`\n- `stage=ready_sent_to_master`\n\n说明：\n\n- 不是只在隔离实例生效\n- live `3301` 已经跑在这版 observability 代码上\n\n## 现在怎么用这套观测\n\n下次如果再出现“Codex 跑着跑着突然断，然后 worker 重启”：\n\n第一步先打：\n\n- `GET http://127.0.0.1:3100/master/diagnose`\n\n重点看：\n\n- `lastExit`\n- `lastWorkerCrashSnapshot.reason`\n- `lastWorkerCrashSnapshot.bootStage`\n- `lastWorkerCrashSnapshot.requestId`\n- `lastWorkerCrashSnapshot.pathName`\n- `lastWorkerCrashSnapshot.model`\n- `lastWorkerCrashSnapshot.providerType`\n- `lastWorkerCrashSnapshot.stopReason`\n- `lastWorkerCrashSnapshot.lastErrorMessage`\n\n如果需要再下钻文件：\n\n- `E:\\My Project\\Token Pool\\logs\\last-worker-crash.json`\n- `E:\\My Project\\Token Pool\\logs\\worker-fatal.log`\n- `E:\\My Project\\Token Pool\\logs\\app-2026-04-28.log`\n\n## 还没修的部分\n\n目前还没有宣称“根因已锁定”，因为缺最后一跳证据：\n\n- 哪个真实请求\n- 哪个 provider / stream path\n- 在哪个 handler / common.js / adapter 里抛错\n\n也就是说，这一轮的成果是：\n\n- **把下一次 crash 从黑盒变成可定位事件**\n\n而不是：\n\n- **已经修掉导致 crash 的业务 bug**\n\n## 当前已看到的历史线索\n\n翻 `E:\\My Project\\Token Pool\\logs\\app-2026-04-28.log` 时，已经看到一条非常可疑的历史错误链：\n\n- 时间：`2026-04-28 10:54:29`\n- 请求 logger id：`127.0.0.1:a22030ae`\n- 现象：大量重复\n  - `[Server] Uncaught exception`\n  - `code = EPIPE`\n  - 紧接着又被判为 `Network error detected, continuing operation...`\n\n这说明旧版本里至少存在一条：\n\n- **客户端已经断开**\n- **worker 还在继续写**\n- **EPIPE 被重复打成 uncaught exception**\n\n的路径。\n\n本轮 live 代码已经把 `EPIPE` / broken pipe 从 worker 全局 fatal 路径里单独抑制掉，所以后续如果再复现：\n\n- 若 crash 快照仍出现，说明已经不是这条旧 `EPIPE` 链\n- 若不再出现 worker crash，只剩 request abort，则说明这个历史 `EPIPE` storm 很可能就是先前“看起来像服务挂掉”的一条主因\n\n## 新一轮 live 受控复现结果\n\n这轮我又对当前 live `3301` 做了一次更接近历史症状的本地受控复现：\n\n- 直接向 `GET /openai/debug/requests` 发请求\n- 客户端在发出请求后立刻用 reset 方式断开 socket\n- 连续复现 `80` 次\n\n目的不是测业务正确性，而是验证：\n\n- 当前 worker 遇到“客户端突然断开”时\n- 会不会再次进入旧版本那种 `EPIPE` / uncaught storm\n- 甚至把 worker 打崩\n\n### 结果\n\n`/master/diagnose` 结果仍然是：\n\n- `workerAlive = true`\n- `lastExit = null`\n- `lastWorkerCrashSnapshot = null`\n\n同时日志里已经不再出现旧版那种：\n\n- `[Server] Uncaught exception`\n- `code = EPIPE`\n- 无限刷屏\n\n而是变成了可控的抑制日志：\n\n- `Suppressed client socket error: ECONNRESET`\n\n并且这些日志已经带 request 关联，例如：\n\n- `path=/openai/debug/requests`\n- `status=200`\n- 随后记录 `Suppressed client socket error: ECONNRESET`\n\n### 这一步说明什么\n\n它说明：\n\n- **历史上那条“客户端断开 -> worker 继续写 -> EPIPE storm”链，在当前 live 代码上已经被成功摘掉了 fatal 属性**\n\n换句话说：\n\n- 现在就算客户端粗暴中断\n- live worker 也不会像旧版本那样进入 crash 候选态\n\n### 这一步还不能说明什么\n\n它还不能单独证明：\n\n- 所有 Codex “说到一半停住”的历史问题都只由 EPIPE 引起\n\n因为：\n\n- 这次复现打的是 debug 路径\n- 不是完整的 provider stream / Codex 长输出链\n\n但它已经足以证明两件事：\n\n1. 历史日志里的 `EPIPE` 风暴是真问题，不是噪音\n2. 当前 live runtime 对这类 client-abort 已经不再会被打崩\n\n## 下一步\n\n下一次只要再复现一次 worker crash，就应该按这个顺序收证据：\n\n1. `GET /master/diagnose`\n2. 取 `lastWorkerCrashSnapshot.requestId`\n3. 去 `/openai/debug/requests` 对应 requestId 对照\n4. 再回 `app-*.log` 找这个 requestId 的最后一条 `[Request] START/ABORT/END/FATAL`\n\n如果这条链完整，下一步就能把 root cause 压到具体模块和具体异常，而不是继续只停在 “worker 会 crash” 这个层级。",
+    "html": "<h1 id=\"token-pool-worker-crash-观测补强记录2026-04-28\">Token Pool worker crash 观测补强记录（2026-04-28）</h1>\n<h2 id=\"当前结论\">当前结论</h2>\n<p>这轮已经完成的是：</p>\n<ul>\n<li><code>master</code> / <code>worker</code> supervisor 问题已修，worker 不会再“退出后无人拉起”</li>\n<li>worker 启动链、崩溃链、最近一次 crash 快照已经可观测</li>\n<li>live runtime 已重启到新代码，<code>3100</code> 与 <code>3301</code> 当前健康</li>\n</ul>\n<p>这轮还没完成的是：</p>\n<ul>\n<li><strong>真正打挂 worker 的业务请求路径还没有锁死</strong></li>\n<li>现在属于“已经拿到抓现场工具”，下一次复现时可以直接看 crash 快照，而不是继续黑盒猜</li>\n</ul>\n<p>一句话区分：</p>\n<ul>\n<li>“系统不会再一直死着” -> 已修</li>\n<li>“为什么 worker 会死” -> 还在继续定位</li>\n</ul>\n<h2 id=\"这轮为什么继续改代码\">这轮为什么继续改代码</h2>\n<p>不是为了继续兜底，也不是为了绕过根因，而是为了补 deterministic tracing：</p>\n<ul>\n<li>之前 <code>/master/diagnose</code> 只能告诉我们 <code>workerAlive</code>、<code>lastExit</code></li>\n<li>但 worker 如果在启动中途或请求中途炸掉，仍然缺：\n<ul>\n<li>炸在 boot 哪一段</li>\n<li>当时有没有活跃请求</li>\n<li>最后一个 requestId / model / provider / stopReason 是什么</li>\n</ul>\n</li>\n</ul>\n<p>所以这轮改动目标只有一个：</p>\n<ul>\n<li><strong>把“worker 怎么死的”从日志猜测，变成结构化证据</strong></li>\n</ul>\n<h2 id=\"本轮代码改动\">本轮代码改动</h2>\n<h3 id=\"1-srcobservabilityworker-crashjs\">1. <code>src/observability/worker-crash.js</code></h3>\n<p>新增能力：</p>\n<ul>\n<li><code>bootStage</code></li>\n<li><code>bootTimeline</code></li>\n<li><code>setWorkerBootStage(stage, extra)</code></li>\n<li><code>readLastWorkerCrashSnapshot()</code></li>\n</ul>\n<p>现在 <code>last-worker-crash.json</code> 会带上：</p>\n<ul>\n<li><code>bootStage</code></li>\n<li><code>bootTimeline</code></li>\n<li><code>requestId</code></li>\n<li><code>path</code></li>\n<li><code>model</code></li>\n<li><code>providerType</code></li>\n<li><code>selectedProviderId</code></li>\n<li><code>stopReason</code></li>\n<li><code>lastEvent</code></li>\n<li><code>lastErrorMessage</code></li>\n</ul>\n<p>也就是说，worker 就算还没进正式请求处理，也能知道死在：</p>\n<ul>\n<li><code>config_loaded</code></li>\n<li><code>plugins_initialized</code></li>\n<li><code>services_initialized</code></li>\n<li><code>http_server_created</code></li>\n<li><code>listen_pending</code></li>\n<li><code>ready_to_serve</code></li>\n</ul>\n<p>中的哪一段。</p>\n<h3 id=\"2-srcservicesapi-serverjs\">2. <code>src/services/api-server.js</code></h3>\n<p>新增 worker boot stage 标记：</p>\n<ul>\n<li><code>api_server_module_loaded</code></li>\n<li><code>config_init_start</code></li>\n<li><code>config_loaded</code></li>\n<li><code>plugins_discovery_start</code></li>\n<li><code>plugins_initialized</code></li>\n<li><code>services_init_start</code></li>\n<li><code>services_initialized</code></li>\n<li><code>request_handler_created</code></li>\n<li><code>http_server_created</code></li>\n<li><code>listen_pending</code></li>\n<li><code>listening</code></li>\n<li><code>ready_to_serve</code></li>\n<li><code>ready_sent_to_master</code></li>\n</ul>\n<p>同时补了几类 fatal capture：</p>\n<ul>\n<li><code>startup_failure</code></li>\n<li><code>http_server_error</code></li>\n<li><code>uncaught_exception</code></li>\n<li><code>unhandled_rejection</code></li>\n<li><code>process_exit</code></li>\n</ul>\n<p>并保留 broken pipe 抑制：</p>\n<ul>\n<li><code>EPIPE</code></li>\n<li><code>ECONNRESET</code> client socket 噪音不会再污染 fatal 结论</li>\n</ul>\n<h3 id=\"3-srccoremasterjs\">3. <code>src/core/master.js</code></h3>\n<p><code>GET /master/diagnose</code> 现在不只返回文件是否存在，还会直接带：</p>\n<ul>\n<li><code>lastWorkerCrashSnapshot</code></li>\n</ul>\n<p>这样下一次 worker 再挂，不用先 SSH/翻文件，直接打：</p>\n<ul>\n<li><code>GET /master/diagnose</code></li>\n</ul>\n<p>就能先看到最近一次 crash 的结构化摘要。</p>\n<h3 id=\"4-readmemd\">4. <code>README.md</code></h3>\n<p>已同步补充：</p>\n<ul>\n<li><code>logs/last-worker-crash.json</code></li>\n<li><code>logs/worker-fatal.log</code></li>\n<li><code>/master/diagnose</code> 现在会返回最近 crash 摘要</li>\n</ul>\n<h2 id=\"本轮自测与证据\">本轮自测与证据</h2>\n<h2 id=\"隔离端口自测\">隔离端口自测</h2>\n<p>用隔离实例验证了新 boot-stage 日志链：</p>\n<ul>\n<li>master: <code>3112</code></li>\n<li>worker: <code>3312</code></li>\n</ul>\n<p>结果：</p>\n<ul>\n<li><code>GET http://127.0.0.1:3112/master/status</code> 返回正常</li>\n<li>master stdout 中能看到完整 boot stage：\n<ul>\n<li><code>config_loaded</code></li>\n<li><code>plugins_initialized</code></li>\n<li><code>services_initialized</code></li>\n<li><code>listen_pending</code></li>\n<li><code>listening</code></li>\n<li><code>ready_to_serve</code></li>\n<li><code>ready_sent_to_master</code></li>\n</ul>\n</li>\n</ul>\n<p>说明：</p>\n<ul>\n<li>新观测链已真实落盘，不是只写了代码没走到</li>\n</ul>\n<h2 id=\"受控-crash-验证\">受控 crash 验证</h2>\n<p>随后故意制造一个可重复 crash：</p>\n<ul>\n<li>直接起第二个 <code>api-server</code></li>\n<li>端口仍用 <code>3312</code></li>\n<li>结果触发 <code>EADDRINUSE</code></li>\n</ul>\n<p>新快照成功写出：</p>\n<ul>\n<li><code>E:\\My Project\\Token Pool\\logs\\isolated-crash\\last-worker-crash.json</code></li>\n<li><code>E:\\My Project\\Token Pool\\logs\\isolated-crash\\worker-fatal.log</code></li>\n</ul>\n<p>快照关键字段：</p>\n<ul>\n<li><code>reason = \"http_server_error\"</code></li>\n<li><code>bootStage = \"listen_pending\"</code></li>\n<li><code>lastErrorMessage = \"listen EADDRINUSE: address already in use 0.0.0.0:3312\"</code></li>\n<li><code>bootTimeline</code> 明确停在 listen 前</li>\n</ul>\n<p>这证明：</p>\n<ul>\n<li>不是只有 request 内 crash 能记录</li>\n<li><strong>启动期 crash 也已经能被结构化抓住</strong></li>\n</ul>\n<h2 id=\"live-runtime-已切到新代码\">live runtime 已切到新代码</h2>\n<p>本地 live runtime 已重启：</p>\n<ul>\n<li>新 master pid: <code>18700</code></li>\n<li>新 worker pid: <code>30156</code></li>\n</ul>\n<p>live 验证：</p>\n<ul>\n<li><code>GET http://127.0.0.1:3100/master/status</code> -> <code>200</code></li>\n<li><code>GET http://127.0.0.1:3100/master/diagnose</code> -> <code>200</code></li>\n<li><code>GET http://127.0.0.1:3301/health</code> -> <code>200</code></li>\n</ul>\n<p>同时 live master stdout 已看到新的 worker boot 日志：</p>\n<ul>\n<li><code>stage=api_server_module_loaded</code></li>\n<li><code>stage=config_loaded</code></li>\n<li><code>stage=plugins_initialized</code></li>\n<li><code>stage=services_initialized</code></li>\n<li><code>stage=listen_pending</code></li>\n<li><code>stage=listening</code></li>\n<li><code>stage=ready_to_serve</code></li>\n<li><code>stage=ready_sent_to_master</code></li>\n</ul>\n<p>说明：</p>\n<ul>\n<li>不是只在隔离实例生效</li>\n<li>live <code>3301</code> 已经跑在这版 observability 代码上</li>\n</ul>\n<h2 id=\"现在怎么用这套观测\">现在怎么用这套观测</h2>\n<p>下次如果再出现“Codex 跑着跑着突然断，然后 worker 重启”：</p>\n<p>第一步先打：</p>\n<ul>\n<li><code>GET http://127.0.0.1:3100/master/diagnose</code></li>\n</ul>\n<p>重点看：</p>\n<ul>\n<li><code>lastExit</code></li>\n<li><code>lastWorkerCrashSnapshot.reason</code></li>\n<li><code>lastWorkerCrashSnapshot.bootStage</code></li>\n<li><code>lastWorkerCrashSnapshot.requestId</code></li>\n<li><code>lastWorkerCrashSnapshot.pathName</code></li>\n<li><code>lastWorkerCrashSnapshot.model</code></li>\n<li><code>lastWorkerCrashSnapshot.providerType</code></li>\n<li><code>lastWorkerCrashSnapshot.stopReason</code></li>\n<li><code>lastWorkerCrashSnapshot.lastErrorMessage</code></li>\n</ul>\n<p>如果需要再下钻文件：</p>\n<ul>\n<li><code>E:\\My Project\\Token Pool\\logs\\last-worker-crash.json</code></li>\n<li><code>E:\\My Project\\Token Pool\\logs\\worker-fatal.log</code></li>\n<li><code>E:\\My Project\\Token Pool\\logs\\app-2026-04-28.log</code></li>\n</ul>\n<h2 id=\"还没修的部分\">还没修的部分</h2>\n<p>目前还没有宣称“根因已锁定”，因为缺最后一跳证据：</p>\n<ul>\n<li>哪个真实请求</li>\n<li>哪个 provider / stream path</li>\n<li>在哪个 handler / common.js / adapter 里抛错</li>\n</ul>\n<p>也就是说，这一轮的成果是：</p>\n<ul>\n<li><strong>把下一次 crash 从黑盒变成可定位事件</strong></li>\n</ul>\n<p>而不是：</p>\n<ul>\n<li><strong>已经修掉导致 crash 的业务 bug</strong></li>\n</ul>\n<h2 id=\"当前已看到的历史线索\">当前已看到的历史线索</h2>\n<p>翻 <code>E:\\My Project\\Token Pool\\logs\\app-2026-04-28.log</code> 时，已经看到一条非常可疑的历史错误链：</p>\n<ul>\n<li>时间：<code>2026-04-28 10:54:29</code></li>\n<li>请求 logger id：<code>127.0.0.1:a22030ae</code></li>\n<li>现象：大量重复\n<ul>\n<li><code>[Server] Uncaught exception</code></li>\n<li><code>code = EPIPE</code></li>\n<li>紧接着又被判为 <code>Network error detected, continuing operation...</code></li>\n</ul>\n</li>\n</ul>\n<p>这说明旧版本里至少存在一条：</p>\n<ul>\n<li><strong>客户端已经断开</strong></li>\n<li><strong>worker 还在继续写</strong></li>\n<li><strong>EPIPE 被重复打成 uncaught exception</strong></li>\n</ul>\n<p>的路径。</p>\n<p>本轮 live 代码已经把 <code>EPIPE</code> / broken pipe 从 worker 全局 fatal 路径里单独抑制掉，所以后续如果再复现：</p>\n<ul>\n<li>若 crash 快照仍出现，说明已经不是这条旧 <code>EPIPE</code> 链</li>\n<li>若不再出现 worker crash，只剩 request abort，则说明这个历史 <code>EPIPE</code> storm 很可能就是先前“看起来像服务挂掉”的一条主因</li>\n</ul>\n<h2 id=\"新一轮-live-受控复现结果\">新一轮 live 受控复现结果</h2>\n<p>这轮我又对当前 live <code>3301</code> 做了一次更接近历史症状的本地受控复现：</p>\n<ul>\n<li>直接向 <code>GET /openai/debug/requests</code> 发请求</li>\n<li>客户端在发出请求后立刻用 reset 方式断开 socket</li>\n<li>连续复现 <code>80</code> 次</li>\n</ul>\n<p>目的不是测业务正确性，而是验证：</p>\n<ul>\n<li>当前 worker 遇到“客户端突然断开”时</li>\n<li>会不会再次进入旧版本那种 <code>EPIPE</code> / uncaught storm</li>\n<li>甚至把 worker 打崩</li>\n</ul>\n<h3 id=\"结果\">结果</h3>\n<p><code>/master/diagnose</code> 结果仍然是：</p>\n<ul>\n<li><code>workerAlive = true</code></li>\n<li><code>lastExit = null</code></li>\n<li><code>lastWorkerCrashSnapshot = null</code></li>\n</ul>\n<p>同时日志里已经不再出现旧版那种：</p>\n<ul>\n<li><code>[Server] Uncaught exception</code></li>\n<li><code>code = EPIPE</code></li>\n<li>无限刷屏</li>\n</ul>\n<p>而是变成了可控的抑制日志：</p>\n<ul>\n<li><code>Suppressed client socket error: ECONNRESET</code></li>\n</ul>\n<p>并且这些日志已经带 request 关联，例如：</p>\n<ul>\n<li><code>path=/openai/debug/requests</code></li>\n<li><code>status=200</code></li>\n<li>随后记录 <code>Suppressed client socket error: ECONNRESET</code></li>\n</ul>\n<h3 id=\"这一步说明什么\">这一步说明什么</h3>\n<p>它说明：</p>\n<ul>\n<li><strong>历史上那条“客户端断开 -> worker 继续写 -> EPIPE storm”链，在当前 live 代码上已经被成功摘掉了 fatal 属性</strong></li>\n</ul>\n<p>换句话说：</p>\n<ul>\n<li>现在就算客户端粗暴中断</li>\n<li>live worker 也不会像旧版本那样进入 crash 候选态</li>\n</ul>\n<h3 id=\"这一步还不能说明什么\">这一步还不能说明什么</h3>\n<p>它还不能单独证明：</p>\n<ul>\n<li>所有 Codex “说到一半停住”的历史问题都只由 EPIPE 引起</li>\n</ul>\n<p>因为：</p>\n<ul>\n<li>这次复现打的是 debug 路径</li>\n<li>不是完整的 provider stream / Codex 长输出链</li>\n</ul>\n<p>但它已经足以证明两件事：</p>\n<ol>\n<li>历史日志里的 <code>EPIPE</code> 风暴是真问题，不是噪音</li>\n<li>当前 live runtime 对这类 client-abort 已经不再会被打崩</li>\n</ol>\n<h2 id=\"下一步\">下一步</h2>\n<p>下一次只要再复现一次 worker crash，就应该按这个顺序收证据：</p>\n<ol>\n<li><code>GET /master/diagnose</code></li>\n<li>取 <code>lastWorkerCrashSnapshot.requestId</code></li>\n<li>去 <code>/openai/debug/requests</code> 对应 requestId 对照</li>\n<li>再回 <code>app-*.log</code> 找这个 requestId 的最后一条 <code>[Request] START/ABORT/END/FATAL</code></li>\n</ol>\n<p>如果这条链完整，下一步就能把 root cause 压到具体模块和具体异常，而不是继续只停在 “worker 会 crash” 这个层级。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "token-pool-worker-crash-观测补强记录-2026-04-28",
+        "text": "Token Pool worker crash 观测补强记录（2026-04-28）"
+      },
+      {
+        "depth": 2,
+        "slug": "当前结论",
+        "text": "当前结论"
+      },
+      {
+        "depth": 2,
+        "slug": "这轮为什么继续改代码",
+        "text": "这轮为什么继续改代码"
+      },
+      {
+        "depth": 2,
+        "slug": "本轮代码改动",
+        "text": "本轮代码改动"
+      },
+      {
+        "depth": 3,
+        "slug": "1-src-observability-worker-crash-js",
+        "text": "1. `src/observability/worker-crash.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "2-src-services-api-server-js",
+        "text": "2. `src/services/api-server.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "3-src-core-master-js",
+        "text": "3. `src/core/master.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "4-readme-md",
+        "text": "4. `README.md`"
+      },
+      {
+        "depth": 2,
+        "slug": "本轮自测与证据",
+        "text": "本轮自测与证据"
+      },
+      {
+        "depth": 2,
+        "slug": "隔离端口自测",
+        "text": "隔离端口自测"
+      },
+      {
+        "depth": 2,
+        "slug": "受控-crash-验证",
+        "text": "受控 crash 验证"
+      },
+      {
+        "depth": 2,
+        "slug": "live-runtime-已切到新代码",
+        "text": "live runtime 已切到新代码"
+      },
+      {
+        "depth": 2,
+        "slug": "现在怎么用这套观测",
+        "text": "现在怎么用这套观测"
+      },
+      {
+        "depth": 2,
+        "slug": "还没修的部分",
+        "text": "还没修的部分"
+      },
+      {
+        "depth": 2,
+        "slug": "当前已看到的历史线索",
+        "text": "当前已看到的历史线索"
+      },
+      {
+        "depth": 2,
+        "slug": "新一轮-live-受控复现结果",
+        "text": "新一轮 live 受控复现结果"
+      },
+      {
+        "depth": 3,
+        "slug": "结果",
+        "text": "结果"
+      },
+      {
+        "depth": 3,
+        "slug": "这一步说明什么",
+        "text": "这一步说明什么"
+      },
+      {
+        "depth": 3,
+        "slug": "这一步还不能说明什么",
+        "text": "这一步还不能说明什么"
+      },
+      {
+        "depth": 2,
+        "slug": "下一步",
+        "text": "下一步"
+      }
+    ],
+    "detailPath": "articles/md_0fb345bc9587.json"
+  }
+}

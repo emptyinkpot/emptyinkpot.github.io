@@ -83,6 +83,7 @@ const useFullBleedWrap = hideSiteChrome && !barePage;
     <script is:inline define:vars={{ defaultHomeBackground }}>
       (() => {
         const storageKey = 'emptyinkpot-visual-settings';
+        const runtimeFolderStorageKey = 'emptyinkpot-runtime-folder-settings';
         const defaults = {
           theme: 'heritage',
           cardTopAlpha: 0.92,
@@ -391,6 +392,7 @@ const useFullBleedWrap = hideSiteChrome && !barePage;
             setHeroVar('--hero-front-image', banner.frontImage, 'data-content-original-hero-front');
           }
 
+          applyRuntimeFolderVisibility();
           window.dispatchEvent(new CustomEvent('emptyinkpot-content-settings-applied', { detail: settings }));
         };
 
@@ -469,8 +471,43 @@ const useFullBleedWrap = hideSiteChrome && !barePage;
         };
 
         window.emptyinkpotVisualSettings = { storageKey, defaults, apply, load, save, reset, exportContentPorts };
+        const loadRuntimeFolderSettings = () => {
+          try {
+            const parsed = JSON.parse(localStorage.getItem(runtimeFolderStorageKey) || '{}');
+            return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+          } catch {
+            return {};
+          }
+        };
+        const saveRuntimeFolderSettings = (settings = {}) => {
+          try {
+            localStorage.setItem(runtimeFolderStorageKey, JSON.stringify(settings));
+          } catch {
+            // Folder visibility is a local preference; ignore storage failures.
+          }
+          applyRuntimeFolderVisibility(settings);
+          window.dispatchEvent(new CustomEvent('emptyinkpot-runtime-folders-applied', { detail: settings }));
+          return settings;
+        };
+        const isRuntimeFolderVisible = (folderKey, settings = loadRuntimeFolderSettings()) => settings[String(folderKey || '')] !== false;
+        function applyRuntimeFolderVisibility(settings = loadRuntimeFolderSettings()) {
+          document.querySelectorAll('[data-runtime-folder]').forEach((element) => {
+            const key = element.getAttribute('data-runtime-folder') || '';
+            element.hidden = !isRuntimeFolderVisible(key, settings);
+          });
+        }
+        window.emptyinkpotRuntimeFolders = {
+          storageKey: runtimeFolderStorageKey,
+          load: loadRuntimeFolderSettings,
+          save: saveRuntimeFolderSettings,
+          apply: applyRuntimeFolderVisibility,
+          isVisible: isRuntimeFolderVisible
+        };
         apply(load());
-        document.addEventListener('DOMContentLoaded', () => apply(load()), { once: true });
+        document.addEventListener('DOMContentLoaded', () => {
+          apply(load());
+          applyRuntimeFolderVisibility();
+        }, { once: true });
       })();
     </script>
     <slot name="head" />

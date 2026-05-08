@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_4d5e16200ac4",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/PaddleOCR-MarkItDown%20%E6%9C%80%E5%B0%8F%E9%9B%86%E6%88%90%E8%AE%BE%E8%AE%A1.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/PaddleOCR-MarkItDown 最小集成设计.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/PaddleOCR-MarkItDown 最小集成设计.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/PaddleOCR-MarkItDown%20%E6%9C%80%E5%B0%8F%E9%9B%86%E6%88%90%E8%AE%BE%E8%AE%A1.md",
+    "slug": "codex-knowledge-paddleocr-markitdown-最小集成设计",
+    "title": "PaddleOCR-MarkItDown 最小集成设计",
+    "summary": "PaddleOCR MarkItDown 最小集成设计 结论 本轮建议的高质量 PDF 转 Markdown 最小方案是： PaddleOCR 负责扫描件 / 模糊件 / 拍照件 / 重布局理解 MarkItDown 负责文本型 PDF、Office、HTML、URL 与 fallback 在两者之...",
+    "description": "PaddleOCR MarkItDown 最小集成设计 结论 本轮建议的高质量 PDF 转 Markdown 最小方案是： PaddleOCR 负责扫描件 / 模糊件 / 拍照件 / 重布局理解 MarkItDown 负责文本型 PDF、Office、HTML、URL 与 fallback 在两者之...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-能力设计",
+      "项目-Atramenti-Console",
+      "形态-方案",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-能力设计",
+        "项目-Atramenti-Console",
+        "形态-方案"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/PaddleOCR-MarkItDown 最小集成设计.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/PaddleOCR-MarkItDown 最小集成设计.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/PaddleOCR-MarkItDown%20%E6%9C%80%E5%B0%8F%E9%9B%86%E6%88%90%E8%AE%BE%E8%AE%A1.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "PaddleOCR MarkItDown 最小集成设计",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 能力设计",
+        "项目 ATRAMENTI CONSOLE",
+        "形态 方案",
+        "PADDLEOCR MARKITDOWN 最小集成设计"
+      ],
+      "subtitle": "PaddleOCR MarkItDown 最小集成设计 结论 本轮建议的高质量 PDF 转 Markdown 最小方案是： PaddleOCR 负责扫描件 / 模糊件 / 拍照件 / 重布局理解 MarkItDown 负责文本型 PDF、Office、HTML、URL 与 fallback 在两者之..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# PaddleOCR-MarkItDown 最小集成设计\n\n## 结论\n\n本轮建议的高质量 PDF 转 Markdown 最小方案是：\n\n- `PaddleOCR` 负责扫描件 / 模糊件 / 拍照件 / 重布局理解\n- `MarkItDown` 负责文本型 PDF、Office、HTML、URL 与 fallback\n- 在两者之上增加一个 repo-managed `router`，统一做输入判断、命令编排和输出契约\n\n本轮不建议把两者串成“所有文件都先 OCR 再 Markdown”的重链路，也不建议把\n`MarkItDown` 当作 `PaddleOCR` 输出 Markdown 的二次转换器。\n\n## 为什么主方案先选 PaddleOCR + MarkItDown\n\n### 1. 许可证更稳\n\n- `PaddleOCR` 官方仓库是 `Apache-2.0`\n- `MarkItDown` 官方仓库是 `MIT`\n- 相比之下，`MinerU` 当前使用的是自定义 `MinerU Open Source License`\n\n因此在长期整合、二次分发、公司内落地、后续开源边界审查上，`PaddleOCR + MarkItDown`\n的风险更低。\n\n### 2. 中文与脏扫描场景证据更直接\n\nPaddleOCR 官方 README 当前直接强调：\n\n- 处理中英日拼音等多语言混排\n- 面向 `Warping / Scanning / Screen Photography / Illumination / Skewed` 真实脏输入\n- 输出 `Markdown / JSON`\n\n对“比较模糊的 PDF”这个目标，证据链比只强调通用 OCR 更对题。\n\n### 3. 与仓内现有能力更互补\n\n仓内当前已经有：\n\n- `codex/mcps/integrations/documents/markitdown`\n- `codex/mcps/markitdown-mcp`\n- `codex/skills/markitdown`\n\n因此本轮真正缺的不是另一个 Markdown 转换器，而是一个：\n\n- 决定何时走 `MarkItDown`\n- 决定何时走 `PaddleOCR`\n- 统一输出与 fallback\n\n的决策层。\n\n## 最小架构\n\n### 输入层\n\n- 输入文件路径\n- 输出 Markdown 路径\n- 可选 engine 偏好\n- 可选运行配置\n\n### 路由层\n\n当前阶段已经加入轻量 probe + 规则：\n\n- 图片输入：优先 `PaddleOCR`\n- `doc/docx/ppt/pptx/xls/xlsx/html/htm/csv/xml/json/txt/md/epub`：走 `MarkItDown`\n- `pdf`：\n  - 先跑 `PDF text-layer probe`\n  - 判定 `text` 时走 `MarkItDown`\n  - 判定 `scan` 时走 `PaddleOCR`\n  - 判定 `unknown` 时回退到默认引擎\n  - 用户显式 `prefer-ocr` 时走 `PaddleOCR`\n\n下一阶段再补：\n\n- 页数 / 图片占比 / 可复制文本量探测\n- 失败后自动 fallback\n\n### PDF text-layer probe\n\n当前 `router` 已实现一个轻量启发式 probe：\n\n- 读取 PDF 原始 bytes\n- 尝试解压 `FlateDecode` streams\n- 统计 `BT / Tf / Tj / TJ` 等文本操作符\n- 统计图片标记\n- 抽取 literal text 片段\n\nprobe 只输出三类：\n\n- `text`\n- `scan`\n- `unknown`\n\n这不是严格 PDF 解析器，但已经足以承担当前“自动区分文本 PDF 与扫描 PDF”的最小决策层角色。\n\n### adapter 层\n\n#### MarkItDown adapter\n\n负责：\n\n- 文本型 PDF\n- Office / HTML / 文本类输入\n- fallback\n\n当前默认使用官方 CLI 模板：\n\n```powershell\nuvx --from git+https://github.com/microsoft/markitdown.git@604bba13da2f43b756b49122cb65bdedb85b1dff#subdirectory=packages/markitdown markitdown {input} -o {output}\n```\n\n#### PaddleOCR adapter\n\n负责：\n\n- 扫描 PDF\n- 模糊 PDF\n- 拍照件\n- 图片输入\n\n本轮只固定 adapter 接口，不在仓内写死运行命令。原因是 PaddleOCR 当前有多种落地形态：\n\n- pipeline\n- VLM\n- CPU / GPU / NPU\n- 本地 Python 环境\n- 独立服务\n\n如果在没有现场验证的情况下把某条命令写死进仓，会把 router 变成脆弱的 host-bound 脚本。\n\n### 输出层\n\n统一输出：\n\n- `Markdown`\n- 可选 `JSON` 决策结果\n\n当前最小 evidence 包括：\n\n- selected engine\n- fallback engine\n- planned command\n- route reasons\n\n## Canonical 落点\n\n### 设计文档\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent\\PaddleOCR-MarkItDown 最小集成设计.md`\n\n### capability 原型\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\integrations\\documents\\pdf-markdown-router`\n\n### 现有依赖能力\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\integrations\\documents\\markitdown`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp`\n\n## 当前 router 原型包含什么\n\n### `tools/router.mjs`\n\n支持：\n\n- `--input`\n- `--output`\n- `--engine auto|markitdown|paddleocr`\n- `--config`\n- `--prefer-ocr`\n- `--probe-only`\n- `--json`\n- `--execute`\n\n默认推荐使用：\n\n- 先 `plan`\n- 再在配置补齐后 `execute`\n\n### `tools/router.config.example.json`\n\n作用：\n\n- 固定 MarkItDown 的命令模板\n- 给 PaddleOCR 预留本机绑定位\n- 不把未经验证的 Paddle 命令写死进仓\n\n## 本轮边界\n\n本轮明确不做：\n\n- 真正把 router 注册成新的全局 MCP\n- 安装 / 绑定 PaddleOCR 的完整本机运行时\n- 做 PDF 内容级 text-layer 探测\n- 做跨页表格质量对比基准\n\n## 下一阶段建议\n\n### 阶段 1：把 Paddle 本机命令绑定跑通\n\n目标：\n\n- 选定你机器上的 Paddle backend\n- 用你自己的 3 到 5 份样本跑通\n- 把经过验证的命令写入非示例配置\n\n### 阶段 2：补更强自动探测与 fallback\n\n补：\n\n- 更强的 PDF text-layer / image density / page probe\n- 简单扫描件判定\n- execute 失败后的 fallback\n\n### 阶段 3：再决定是否 MCP 化\n\n当前判断：**先不要升级成真正 MCP**。\n\n理由：\n\n- `PaddleOCR` 的本机执行命令还没有完成现场绑定\n- 当前 capability 的稳定部分是“路由与决策”，不是“完整执行链”\n- 如果现在就 MCP 化，会把一个尚未固定 backend 的原型接口过早承诺成稳定外部能力\n\n只有当下面三件事都稳定后，再把它升级成真正的 MCP：\n\n- route rule 稳定\n- PDF probe 稳定\n- Paddle command 稳定\n- 输出契约稳定\n\n否则先把它留在 repo-managed local router 层，成本更低，也更容易迭代。",
+    "html": "<h1 id=\"paddleocr-markitdown-最小集成设计\">PaddleOCR-MarkItDown 最小集成设计</h1>\n<h2 id=\"结论\">结论</h2>\n<p>本轮建议的高质量 PDF 转 Markdown 最小方案是：</p>\n<ul>\n<li><code>PaddleOCR</code> 负责扫描件 / 模糊件 / 拍照件 / 重布局理解</li>\n<li><code>MarkItDown</code> 负责文本型 PDF、Office、HTML、URL 与 fallback</li>\n<li>在两者之上增加一个 repo-managed <code>router</code>，统一做输入判断、命令编排和输出契约</li>\n</ul>\n<p>本轮不建议把两者串成“所有文件都先 OCR 再 Markdown”的重链路，也不建议把\n<code>MarkItDown</code> 当作 <code>PaddleOCR</code> 输出 Markdown 的二次转换器。</p>\n<h2 id=\"为什么主方案先选-paddleocr--markitdown\">为什么主方案先选 PaddleOCR + MarkItDown</h2>\n<h3 id=\"1-许可证更稳\">1. 许可证更稳</h3>\n<ul>\n<li><code>PaddleOCR</code> 官方仓库是 <code>Apache-2.0</code></li>\n<li><code>MarkItDown</code> 官方仓库是 <code>MIT</code></li>\n<li>相比之下，<code>MinerU</code> 当前使用的是自定义 <code>MinerU Open Source License</code></li>\n</ul>\n<p>因此在长期整合、二次分发、公司内落地、后续开源边界审查上，<code>PaddleOCR + MarkItDown</code>\n的风险更低。</p>\n<h3 id=\"2-中文与脏扫描场景证据更直接\">2. 中文与脏扫描场景证据更直接</h3>\n<p>PaddleOCR 官方 README 当前直接强调：</p>\n<ul>\n<li>处理中英日拼音等多语言混排</li>\n<li>面向 <code>Warping / Scanning / Screen Photography / Illumination / Skewed</code> 真实脏输入</li>\n<li>输出 <code>Markdown / JSON</code></li>\n</ul>\n<p>对“比较模糊的 PDF”这个目标，证据链比只强调通用 OCR 更对题。</p>\n<h3 id=\"3-与仓内现有能力更互补\">3. 与仓内现有能力更互补</h3>\n<p>仓内当前已经有：</p>\n<ul>\n<li><code>codex/mcps/integrations/documents/markitdown</code></li>\n<li><code>codex/mcps/markitdown-mcp</code></li>\n<li><code>codex/skills/markitdown</code></li>\n</ul>\n<p>因此本轮真正缺的不是另一个 Markdown 转换器，而是一个：</p>\n<ul>\n<li>决定何时走 <code>MarkItDown</code></li>\n<li>决定何时走 <code>PaddleOCR</code></li>\n<li>统一输出与 fallback</li>\n</ul>\n<p>的决策层。</p>\n<h2 id=\"最小架构\">最小架构</h2>\n<h3 id=\"输入层\">输入层</h3>\n<ul>\n<li>输入文件路径</li>\n<li>输出 Markdown 路径</li>\n<li>可选 engine 偏好</li>\n<li>可选运行配置</li>\n</ul>\n<h3 id=\"路由层\">路由层</h3>\n<p>当前阶段已经加入轻量 probe + 规则：</p>\n<ul>\n<li>图片输入：优先 <code>PaddleOCR</code></li>\n<li><code>doc/docx/ppt/pptx/xls/xlsx/html/htm/csv/xml/json/txt/md/epub</code>：走 <code>MarkItDown</code></li>\n<li><code>pdf</code>：\n<ul>\n<li>先跑 <code>PDF text-layer probe</code></li>\n<li>判定 <code>text</code> 时走 <code>MarkItDown</code></li>\n<li>判定 <code>scan</code> 时走 <code>PaddleOCR</code></li>\n<li>判定 <code>unknown</code> 时回退到默认引擎</li>\n<li>用户显式 <code>prefer-ocr</code> 时走 <code>PaddleOCR</code></li>\n</ul>\n</li>\n</ul>\n<p>下一阶段再补：</p>\n<ul>\n<li>页数 / 图片占比 / 可复制文本量探测</li>\n<li>失败后自动 fallback</li>\n</ul>\n<h3 id=\"pdf-text-layer-probe\">PDF text-layer probe</h3>\n<p>当前 <code>router</code> 已实现一个轻量启发式 probe：</p>\n<ul>\n<li>读取 PDF 原始 bytes</li>\n<li>尝试解压 <code>FlateDecode</code> streams</li>\n<li>统计 <code>BT / Tf / Tj / TJ</code> 等文本操作符</li>\n<li>统计图片标记</li>\n<li>抽取 literal text 片段</li>\n</ul>\n<p>probe 只输出三类：</p>\n<ul>\n<li><code>text</code></li>\n<li><code>scan</code></li>\n<li><code>unknown</code></li>\n</ul>\n<p>这不是严格 PDF 解析器，但已经足以承担当前“自动区分文本 PDF 与扫描 PDF”的最小决策层角色。</p>\n<h3 id=\"adapter-层\">adapter 层</h3>\n<h4 id=\"markitdown-adapter\">MarkItDown adapter</h4>\n<p>负责：</p>\n<ul>\n<li>文本型 PDF</li>\n<li>Office / HTML / 文本类输入</li>\n<li>fallback</li>\n</ul>\n<p>当前默认使用官方 CLI 模板：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">uvx </span><span style=\"color:#F97583\">--</span><span style=\"color:#E1E4E8\">from git</span><span style=\"color:#F97583\">+</span><span style=\"color:#E1E4E8\">https:</span><span style=\"color:#F97583\">//</span><span style=\"color:#79B8FF\">github.com</span><span style=\"color:#F97583\">/</span><span style=\"color:#E1E4E8\">microsoft</span><span style=\"color:#F97583\">/</span><span style=\"color:#E1E4E8\">markitdown.git@604bba13da2f43b756b49122cb65bdedb85b1dff</span><span style=\"color:#6A737D\">#subdirectory=packages/markitdown markitdown {input} -o {output}</span></span></code></pre></figure>\n<h4 id=\"paddleocr-adapter\">PaddleOCR adapter</h4>\n<p>负责：</p>\n<ul>\n<li>扫描 PDF</li>\n<li>模糊 PDF</li>\n<li>拍照件</li>\n<li>图片输入</li>\n</ul>\n<p>本轮只固定 adapter 接口，不在仓内写死运行命令。原因是 PaddleOCR 当前有多种落地形态：</p>\n<ul>\n<li>pipeline</li>\n<li>VLM</li>\n<li>CPU / GPU / NPU</li>\n<li>本地 Python 环境</li>\n<li>独立服务</li>\n</ul>\n<p>如果在没有现场验证的情况下把某条命令写死进仓，会把 router 变成脆弱的 host-bound 脚本。</p>\n<h3 id=\"输出层\">输出层</h3>\n<p>统一输出：</p>\n<ul>\n<li><code>Markdown</code></li>\n<li>可选 <code>JSON</code> 决策结果</li>\n</ul>\n<p>当前最小 evidence 包括：</p>\n<ul>\n<li>selected engine</li>\n<li>fallback engine</li>\n<li>planned command</li>\n<li>route reasons</li>\n</ul>\n<h2 id=\"canonical-落点\">Canonical 落点</h2>\n<h3 id=\"设计文档\">设计文档</h3>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent\\PaddleOCR-MarkItDown 最小集成设计.md</code></li>\n</ul>\n<h3 id=\"capability-原型\">capability 原型</h3>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\integrations\\documents\\pdf-markdown-router</code></li>\n</ul>\n<h3 id=\"现有依赖能力\">现有依赖能力</h3>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\integrations\\documents\\markitdown</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp</code></li>\n</ul>\n<h2 id=\"当前-router-原型包含什么\">当前 router 原型包含什么</h2>\n<h3 id=\"toolsroutermjs\"><code>tools/router.mjs</code></h3>\n<p>支持：</p>\n<ul>\n<li><code>--input</code></li>\n<li><code>--output</code></li>\n<li><code>--engine auto|markitdown|paddleocr</code></li>\n<li><code>--config</code></li>\n<li><code>--prefer-ocr</code></li>\n<li><code>--probe-only</code></li>\n<li><code>--json</code></li>\n<li><code>--execute</code></li>\n</ul>\n<p>默认推荐使用：</p>\n<ul>\n<li>先 <code>plan</code></li>\n<li>再在配置补齐后 <code>execute</code></li>\n</ul>\n<h3 id=\"toolsrouterconfigexamplejson\"><code>tools/router.config.example.json</code></h3>\n<p>作用：</p>\n<ul>\n<li>固定 MarkItDown 的命令模板</li>\n<li>给 PaddleOCR 预留本机绑定位</li>\n<li>不把未经验证的 Paddle 命令写死进仓</li>\n</ul>\n<h2 id=\"本轮边界\">本轮边界</h2>\n<p>本轮明确不做：</p>\n<ul>\n<li>真正把 router 注册成新的全局 MCP</li>\n<li>安装 / 绑定 PaddleOCR 的完整本机运行时</li>\n<li>做 PDF 内容级 text-layer 探测</li>\n<li>做跨页表格质量对比基准</li>\n</ul>\n<h2 id=\"下一阶段建议\">下一阶段建议</h2>\n<h3 id=\"阶段-1把-paddle-本机命令绑定跑通\">阶段 1：把 Paddle 本机命令绑定跑通</h3>\n<p>目标：</p>\n<ul>\n<li>选定你机器上的 Paddle backend</li>\n<li>用你自己的 3 到 5 份样本跑通</li>\n<li>把经过验证的命令写入非示例配置</li>\n</ul>\n<h3 id=\"阶段-2补更强自动探测与-fallback\">阶段 2：补更强自动探测与 fallback</h3>\n<p>补：</p>\n<ul>\n<li>更强的 PDF text-layer / image density / page probe</li>\n<li>简单扫描件判定</li>\n<li>execute 失败后的 fallback</li>\n</ul>\n<h3 id=\"阶段-3再决定是否-mcp-化\">阶段 3：再决定是否 MCP 化</h3>\n<p>当前判断：<strong>先不要升级成真正 MCP</strong>。</p>\n<p>理由：</p>\n<ul>\n<li><code>PaddleOCR</code> 的本机执行命令还没有完成现场绑定</li>\n<li>当前 capability 的稳定部分是“路由与决策”，不是“完整执行链”</li>\n<li>如果现在就 MCP 化，会把一个尚未固定 backend 的原型接口过早承诺成稳定外部能力</li>\n</ul>\n<p>只有当下面三件事都稳定后，再把它升级成真正的 MCP：</p>\n<ul>\n<li>route rule 稳定</li>\n<li>PDF probe 稳定</li>\n<li>Paddle command 稳定</li>\n<li>输出契约稳定</li>\n</ul>\n<p>否则先把它留在 repo-managed local router 层，成本更低，也更容易迭代。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "paddleocr-markitdown-最小集成设计",
+        "text": "PaddleOCR-MarkItDown 最小集成设计"
+      },
+      {
+        "depth": 2,
+        "slug": "结论",
+        "text": "结论"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么主方案先选-paddleocr-markitdown",
+        "text": "为什么主方案先选 PaddleOCR + MarkItDown"
+      },
+      {
+        "depth": 3,
+        "slug": "1-许可证更稳",
+        "text": "1. 许可证更稳"
+      },
+      {
+        "depth": 3,
+        "slug": "2-中文与脏扫描场景证据更直接",
+        "text": "2. 中文与脏扫描场景证据更直接"
+      },
+      {
+        "depth": 3,
+        "slug": "3-与仓内现有能力更互补",
+        "text": "3. 与仓内现有能力更互补"
+      },
+      {
+        "depth": 2,
+        "slug": "最小架构",
+        "text": "最小架构"
+      },
+      {
+        "depth": 3,
+        "slug": "输入层",
+        "text": "输入层"
+      },
+      {
+        "depth": 3,
+        "slug": "路由层",
+        "text": "路由层"
+      },
+      {
+        "depth": 3,
+        "slug": "pdf-text-layer-probe",
+        "text": "PDF text-layer probe"
+      },
+      {
+        "depth": 3,
+        "slug": "adapter-层",
+        "text": "adapter 层"
+      },
+      {
+        "depth": 3,
+        "slug": "输出层",
+        "text": "输出层"
+      },
+      {
+        "depth": 2,
+        "slug": "canonical-落点",
+        "text": "Canonical 落点"
+      },
+      {
+        "depth": 3,
+        "slug": "设计文档",
+        "text": "设计文档"
+      },
+      {
+        "depth": 3,
+        "slug": "capability-原型",
+        "text": "capability 原型"
+      },
+      {
+        "depth": 3,
+        "slug": "现有依赖能力",
+        "text": "现有依赖能力"
+      },
+      {
+        "depth": 2,
+        "slug": "当前-router-原型包含什么",
+        "text": "当前 router 原型包含什么"
+      },
+      {
+        "depth": 3,
+        "slug": "tools-router-mjs",
+        "text": "`tools/router.mjs`"
+      },
+      {
+        "depth": 3,
+        "slug": "tools-router-config-example-json",
+        "text": "`tools/router.config.example.json`"
+      },
+      {
+        "depth": 2,
+        "slug": "本轮边界",
+        "text": "本轮边界"
+      },
+      {
+        "depth": 2,
+        "slug": "下一阶段建议",
+        "text": "下一阶段建议"
+      },
+      {
+        "depth": 3,
+        "slug": "阶段-1-把-paddle-本机命令绑定跑通",
+        "text": "阶段 1：把 Paddle 本机命令绑定跑通"
+      },
+      {
+        "depth": 3,
+        "slug": "阶段-2-补更强自动探测与-fallback",
+        "text": "阶段 2：补更强自动探测与 fallback"
+      },
+      {
+        "depth": 3,
+        "slug": "阶段-3-再决定是否-mcp-化",
+        "text": "阶段 3：再决定是否 MCP 化"
+      }
+    ],
+    "detailPath": "articles/md_4d5e16200ac4.json"
+  }
+}

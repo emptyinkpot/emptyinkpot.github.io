@@ -11,18 +11,35 @@
   "runtimeContractRoot": "packages/runtime-contract",
   "objectModelRoot": "packages/object-model",
   "runtimeKernelRoot": "packages/runtime-kernel",
-  "runtimeMigrationRoot": "runtime-migration.json",
-  "runtimeOverlayRoot": "packages/runtime-overlay",
-  "runtimeStoreRoot": "packages/runtime-store",
   "designSystemRoot": "packages/design-system",
-  "sourcePostsRoot": "apps/web/src/content/posts",
-  "vaultFileTruthRoot": "OpenList:/夸克网盘/obsidian/data",
-  "authoringTruthRoot": "OpenList:/夸克网盘/obsidian/data/docs",
-  "publishingTruthRoot": "apps/web/src/content/posts",
+  "activeArticleTruthRoot": "public-data/runtime/content-index.json",
+  "vaultFileTruthRoot": "Windows:E:\\Vaults\\Obsidian",
+  "authoringTruthRoot": "Windows:E:\\Vaults\\Obsidian",
+  "serverHotMirrorRoot": "Linux:/home/vault/Obsidian",
+  "publicContentAccessRoot": "/openlist/Obsidian",
+  "contentControlPlaneRoot": "OpenList:/openlist/Obsidian",
+  "openListLocalMount": "OpenList:/Obsidian -> Linux:/home/vault/Obsidian",
+  "openListPublicRoots": [
+    "/Obsidian",
+    "/腾讯云COS",
+    "/夸克网盘"
+  ],
+  "serverStorageBoundary": {
+    "status": "active",
+    "hotLayerRule": "Keep runtime, databases, Syncthing hot mirror, Astro dist, Pagefind, OpenList DB and /srv/myblog on the server local filesystem.",
+    "coldLayerRule": "OpenList/COS/Quark are public access, blob backend, cold archive and content address space only; they are not an ext4/system disk replacement.",
+    "maintenanceCommand": "npm run server:openlist-storage",
+    "pruneCommand": "npm run server:openlist-storage -- --prune-openlist-file-cache --apply"
+  },
+  "coldArchiveBackends": [
+    "Quark:/夸克网盘/ObsidianArchive",
+    "Tencent COS:/腾讯云COS",
+    "S3/WebDAV backends mounted through OpenList"
+  ],
+  "generatedRuntimeRoot": "/srv/myblog/site/runtime/content-index.json",
   "runtimeTruth": "MySQL via apps/admin-next",
-  "fileTruth": "OpenList",
+  "fileTruth": "Windows Vault synced to Linux hot mirror and exposed through OpenList",
   "contentRoots": [
-    "apps/web/src/content/posts",
     "apps/web/src/content/notes",
     "apps/web/src/content/projects",
     "apps/web/src/content/pages",
@@ -43,22 +60,134 @@
   "sourceOfTruthMap": {
     "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
     "localActiveSourceRoot": "E:\\My Project\\MyBlog",
-    "vaultFileTruthRoot": "OpenList:/夸克网盘/obsidian/data",
-    "authoringTruthRoot": "OpenList:/夸克网盘/obsidian/data/docs",
-    "publicPostsRoot": "apps/web/src/content/posts",
-    "publishingTruthRoot": "apps/web/src/content/posts",
+    "vaultFileTruthRoot": "Windows:E:\\Vaults\\Obsidian",
+    "authoringTruthRoot": "Windows:E:\\Vaults\\Obsidian",
+    "serverHotMirrorRoot": "Linux:/home/vault/Obsidian",
+    "publicContentAccessRoot": "/openlist/Obsidian",
+    "contentControlPlaneRoot": "OpenList:/openlist/Obsidian",
+    "openListLocalMount": "OpenList:/Obsidian -> Linux:/home/vault/Obsidian",
+    "openListPublicRoots": [
+      "/Obsidian",
+      "/腾讯云COS",
+      "/夸克网盘"
+    ],
+    "serverStorageBoundary": {
+      "status": "active",
+      "hotLayerRule": "Keep runtime, databases, Syncthing hot mirror, Astro dist, Pagefind, OpenList DB and /srv/myblog on the server local filesystem.",
+      "coldLayerRule": "OpenList/COS/Quark are public access, blob backend, cold archive and content address space only; they are not an ext4/system disk replacement.",
+      "maintenanceCommand": "npm run server:openlist-storage",
+      "pruneCommand": "npm run server:openlist-storage -- --prune-openlist-file-cache --apply"
+    },
+    "coldArchiveBackendRoots": [
+      "Quark:/夸克网盘/ObsidianArchive",
+      "Tencent COS:/腾讯云COS"
+    ],
+    "generatedRuntimeRoot": "/srv/myblog/site/runtime/content-index.json",
+    "activeArticleTruthRoot": "public-data/runtime/content-index.json",
     "runtimeTruth": "MySQL via apps/admin-next",
-    "fileTruth": "OpenList",
+    "fileTruth": "Windows Vault synced to Linux hot mirror and exposed through OpenList",
     "runtimeContractRoot": "packages/runtime-contract",
     "objectModelRoot": "packages/object-model",
     "runtimeKernelRoot": "packages/runtime-kernel",
-    "runtimeMigrationRoot": "runtime-migration.json",
-    "runtimeOverlayRoot": "packages/runtime-overlay",
-    "runtimeStoreRoot": "packages/runtime-store",
     "designSystemRoot": "packages/design-system",
     "objectStorageTruth": "Tencent COS bucket myblog-media-1410041307 mounted in OpenList at /腾讯云COS",
     "buildOutputRoot": "apps/web/dist",
     "serverRuntimeRoot": "/srv/myblog/site"
+  },
+  "stabilizationSprint": {
+    "status": "active",
+    "mode": "reduction-not-feature-sprint",
+    "thesis": "Stabilize the base before activating more runtimes. AppFlowy, Immich, Directus and Meilisearch remain target/skeleton services until file truth, MarkdownObject schema and Quartz runtime layer are stable.",
+    "priorityOrder": [
+      "Syncthing or Obsidian Sync of complete vault into Linux:/home/vault/Obsidian hot mirror",
+      "Linux Vault hot mirror layout stability: /home/vault/Obsidian/docs, /home/vault/Obsidian/image, .obsidian and attachments",
+      "MarkdownObject schema freeze and validation",
+      "tools/build-runtime-content-index.mjs refactor as the CMS kernel",
+      "Quartz 4 / Flowershow runtime layer evaluation for wikilink, backlink, graph, callout and semantic markdown",
+      "AppFlowy collaboration runtime evaluation after the above are stable"
+    ],
+    "matureSubstratePolicy": [
+      "Syncthing",
+      "Quartz 4 / Flowershow",
+      "Meilisearch",
+      "Immich",
+      "Payload / Directus"
+    ],
+    "glueOnlyRule": "MyBlog only writes glue, projection, and runtime contracts; it does not reimplement sync, markdown compiler, graph engine, search engine, media runtime, or CMS backends.",
+    "frozenTargetRuntimes": {
+      "appflowyCloud": {
+        "status": "skeleton-installed-target-not-deployed",
+        "serverRoot": "/srv/myblog/services/appflowy-cloud",
+        "allowStart": false
+      },
+      "immich": {
+        "status": "skeleton-installed-not-started",
+        "allowStart": false
+      },
+      "directus": {
+        "status": "target-not-deployed",
+        "allowStart": false
+      },
+      "meilisearch": {
+        "status": "target-not-deployed",
+        "allowStart": false
+      }
+    },
+    "forbidden": [
+      "start AppFlowy Cloud containers during this sprint",
+      "start Immich, Directus or Meilisearch during this sprint",
+      "add new pages, overlays, feeds, graphs or AI runtimes",
+      "continue expanding Project Workbench into a bespoke collaboration suite",
+      "claim a target/skeleton service is active before readiness gate and source alignment"
+    ],
+    "allowedWork": [
+      "Syncthing/Linux Vault readiness and docs",
+      "MarkdownObject schema and validation",
+      "runtime content index refactor",
+      "Quartz/Flowershow capability evaluation",
+      "documentation and machine-readable authority cleanup"
+    ]
+  },
+  "contentInfrastructureReduction": {
+    "status": "target-policy-active",
+    "displayName": "Content Infrastructure Reduction",
+    "mode": "reduce-bespoke-content-infrastructure",
+    "thesis": "MyBlog has crossed from blog code into content infrastructure. Do not expand bespoke runtime JSON, giant runtime JSON, watcher, RSS, projection, search or deploy glue when mature substrates can own those jobs.",
+    "activeNow": {
+      "articleProjection": "Runtime MarkdownObject index at public-data/runtime/content-index.json and /srv/myblog/site/runtime/content-index.json",
+      "search": "Pagefind static archive search plus runtime feed filtering; not unified full-site dynamic search",
+      "deploy": "npm run deploy:site",
+      "storage": "Linux hot mirror plus OpenList/COS/Quark cold/blob/public browse boundary",
+      "openListBoundary": "OpenList exposes /Obsidian and cold/blob mounts; it does not own runtime build, projection, search, database, Pagefind, Astro dist, Syncthing hot mirror or node_modules"
+    },
+    "targetCandidates": {
+      "quartz": {
+        "status": "candidate-not-integrated",
+        "role": "Obsidian digital garden substrate for Markdown pipeline, wikilinks, backlinks, graph, RSS, search and content index ideas",
+        "mustNotClaim": "active site engine"
+      },
+      "contentlayer": {
+        "status": "candidate-not-installed",
+        "role": "Astro-native typed content schema, parsing, watch and projection replacement candidate",
+        "mustNotClaim": "active content pipeline"
+      },
+      "meilisearch": {
+        "status": "target-not-deployed",
+        "role": "dynamic object, OpenList file, metadata and semantic search runtime",
+        "currentFallback": "Pagefind remains static archive search"
+      },
+      "coolify": {
+        "status": "candidate-not-deployed",
+        "role": "deployment platform candidate for Git deploy, env, healthcheck, rollback, cron and compose",
+        "currentFallback": "npm run deploy:site"
+      }
+    },
+    "forbidden": [
+      "grow content-index.json into a database or search engine",
+      "add new bespoke watcher, RSS race workaround, build sync, deploy wrapper or projection governance layer before evaluating Quartz/Contentlayer/Meilisearch/Coolify",
+      "claim Quartz, Contentlayer, Meilisearch or Coolify are active before integration or service readiness evidence",
+      "let OpenList participate in runtime build, projection authority or hot storage"
+    ]
   },
   "workspaceFederation": {
     "status": "active",
@@ -80,20 +209,56 @@
         "profile": "workspaces/canonical.json",
         "defaultRoot": "E:\\My Project\\MyBlog",
         "deploymentAuthority": true,
-        "capabilities": ["build", "deploy", "runtime", "schema", "pwa", "openlist-authority", "search-index"]
+        "capabilities": [
+          "build",
+          "deploy",
+          "runtime",
+          "schema",
+          "pwa",
+          "openlist-authority",
+          "search-index"
+        ]
       },
       "experimental": {
         "profile": "workspaces/experimental.json",
         "defaultRootPattern": "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*",
         "deploymentAuthority": false,
-        "capabilities": ["build", "preview", "frontend-ui", "feed-ui", "drawer-ui", "animations", "visual-prototype", "codex-draft"],
-        "forbidden": ["deployment", "pwa", "runtime-books", "runtime-schema", "openlist-authority", "server-runtime"]
+        "capabilities": [
+          "build",
+          "preview",
+          "frontend-ui",
+          "feed-ui",
+          "drawer-ui",
+          "animations",
+          "visual-prototype",
+          "codex-draft"
+        ],
+        "forbidden": [
+          "deployment",
+          "pwa",
+          "runtime-books",
+          "runtime-schema",
+          "openlist-authority",
+          "server-runtime"
+        ]
       },
       "sandbox": {
         "profile": "workspaces/sandbox.json",
         "deploymentAuthority": false,
-        "capabilities": ["prototype", "research", "throwaway-demo"],
-        "forbidden": ["deployment", "pwa", "runtime-books", "runtime-schema", "openlist-authority", "server-runtime", "production-content"]
+        "capabilities": [
+          "prototype",
+          "research",
+          "throwaway-demo"
+        ],
+        "forbidden": [
+          "deployment",
+          "pwa",
+          "runtime-books",
+          "runtime-schema",
+          "openlist-authority",
+          "server-runtime",
+          "production-content"
+        ]
       }
     },
     "rules": [
@@ -106,36 +271,220 @@
     "incidentReference": "2026-05-07 stale .codex-runtime worktree deploy regression"
   },
   "contentPipeline": {
-    "status": "Vault-backed / Git-backed CMS target documented; Vault file sync belongs to Remotely Save + OpenList WebDAV/S3; direct Obsidian-to-public sync is forbidden",
-    "vaultFileTruth": "OpenList:/夸克网盘/obsidian/data",
+    "status": "Runtime MarkdownObject projection active; Syncthing syncs the complete Windows E:\\Vaults\\Obsidian vault to Linux /home/vault/Obsidian, OpenList exposes public content at /openlist/Obsidian, and Windows watcher/scp content sync is disabled",
+    "contentSourceBase": {
+      "fileTruth": "Windows:E:\\Vaults\\Obsidian",
+      "serverHotMirror": "Linux:/home/vault/Obsidian",
+      "publicContentAccess": "/openlist/Obsidian",
+      "fileMapping": "OpenList public access layer",
+      "frontendIndex": "public-data/runtime/content-index.json",
+      "presentationShell": "Astro apps/web",
+      "rule": "Vault decides files; Runtime MarkdownObject projection decides public article objects; current tags/categories are filesystem/frontmatter/wikilink derived taxonomy, not AI semantic ontology; KnowledgeCollection buffers objects as Reading Sessions before homepage surfaces; frontend cards only read generated card metadata"
+    },
+    "vaultFileTruth": "Windows:E:\\Vaults\\Obsidian",
     "vaultSync": {
-      "owner": "Obsidian Remotely Save",
-      "transport": ["OpenList WebDAV", "S3-compatible endpoint"],
-      "targetRoot": "OpenList:/夸克网盘/obsidian/data",
-      "syncScope": ["docs", "image", ".obsidian", "canvas", "pdf", "attachments"],
-      "forbidden": ["MyBlog one-off image upload as vault sync", "visual-manifest as vault attachment truth", "storing WebDAV credentials in source, README, logs or frontend bundle"]
+      "status": "active",
+      "currentObsidianSideOwner": "Syncthing",
+      "localVaultRoot": "Windows:E:\\Vaults\\Obsidian",
+      "serverOwner": "Syncthing",
+      "serverService": "syncthing@ubuntu.service",
+      "transport": [
+        "file-system sync",
+        "server-local Linux Vault"
+      ],
+      "targetRoot": "Linux:/home/vault/Obsidian",
+      "folders": [
+        {
+          "id": "obsidian-vault",
+          "localPath": "E:\\Vaults\\Obsidian",
+          "serverPath": "/home/vault/Obsidian",
+          "type": "sendreceive",
+          "lastVerified": "2026-05-07",
+          "verification": "idle on both peers; needBytes=0; create/modify/delete acceptance passed"
+        }
+      ],
+      "syncScope": [
+        "docs",
+        "image",
+        ".obsidian",
+        "canvas",
+        "pdf",
+        "attachments"
+      ],
+      "forbidden": [
+        "MyBlog one-off image upload as vault sync",
+        "visual-manifest as vault attachment truth",
+        "storing WebDAV credentials in source, README, logs or frontend bundle"
+      ]
     },
-    "authoringTruth": "OpenList:/夸克网盘/obsidian/data/docs",
+    "authoringTruth": "Windows:E:\\Vaults\\Obsidian",
+    "projectorInput": "Linux:/home/vault/Obsidian/docs",
+    "publicContentAccess": "/openlist/Obsidian/docs",
     "gitMirror": "content-vault working copy target; path not created as active source yet",
-    "cmsPriority": ["TinaCMS", "Decap CMS"],
+    "cmsPriority": [
+      "TinaCMS",
+      "Decap CMS"
+    ],
     "cmsRule": "choose one CMS in P1; CMS edits must commit/write back to the vault working copy, not to MySQL or dist",
-    "publishingTruth": "apps/web/src/content/posts",
-    "script": "tools/publish-vault-docs.mjs",
+    "activeArticleTruth": "public-data/runtime/content-index.json",
+    "runtimeProjectionTruth": "public-data/runtime/content-index.json",
+    "runtimeFeatureRegistry": "public-data/runtime/features.json",
+    "runtimeScript": "tools/build-runtime-content-index.mjs",
     "commands": {
-      "dryRun": "npm run publish:vault -- --vault <path>",
-      "write": "npm run publish:vault:write -- --vault <path>",
-      "check": "npm run check:vault-publish"
+      "runtimeIndex": "npm run runtime:content -- --vault <path>",
+      "vaultSyncCheck": "npm run check:vault-sync",
+      "serverRuntimeProjector": "npm run runtime:content:server",
+      "deprecatedWindowsSync": "removed from package scripts; old tools/watch-obsidian-home-sync.mjs and tools/sync-runtime-content-index.mjs must not be used"
     },
-    "validationScript": "tools/validate-vault-publish-pipeline.mjs",
-    "pipeline": ["Obsidian Remotely Save", "OpenList WebDAV/S3 vault file truth", "OpenList/Obsidian docs subtree", "Git mirror", "TinaCMS or Decap CMS", "scan", "filter published:true draft:false", "normalize frontmatter slug wikilinks assets folderTags tags", "write Astro content collection", "Astro build", "Pagefind/search/Graph generation"],
+    "pipeline": [
+      "Obsidian local vault",
+      "Syncthing",
+      "Linux /home/vault/Obsidian runtime hot mirror",
+      "OpenList /openlist/Obsidian content control plane and public identity",
+      "server-side Runtime MarkdownObject projector",
+      "Feed/Reader/Search/Graph projection",
+      "optional Git mirror",
+      "optional TinaCMS or Decap CMS"
+    ],
+    "runtimeProjection": {
+      "objectType": "MarkdownObject",
+      "collectionType": "KnowledgeCollection",
+      "taxonomyMode": {
+        "status": "active",
+        "mode": "filesystem-frontmatter-wikilink-derived",
+        "semanticAuthority": false,
+        "sources": [
+          "frontmatter.tags",
+          "frontmatter.categories",
+          "frontmatter.keywords",
+          "frontmatter.topics",
+          "filesystem.folderTags",
+          "obsidian.wikilinks"
+        ],
+        "rule": "Do not describe current tags/categories as AI semantic tagging, ontology, embeddings, clusters or knowledge graph truth."
+      },
+      "semanticPipeline": {
+        "status": "active-sidecar-generator",
+        "runtime": "mortis-glm-openai-compatible",
+        "lastProviderCheck": "2026-05-08 cloud sub2api coze-glm-shell key generated one valid sidecar and runtime projection read it as semantic.status=active",
+        "command": "npm run semantic:sidecars -- --limit 1",
+        "sidecarPattern": "*.semantic.json",
+        "allowedFields": [
+          "entities",
+          "topics",
+          "relations",
+          "collections",
+          "clusters",
+          "model",
+          "generatedAt"
+        ],
+        "writePolicy": "semantic pipeline may write sidecar projection only; it must never rewrite Markdown body or frontmatter and must never override explicit tags/categories",
+        "candidateReferences": [
+          "Atomic",
+          "Blinko",
+          "NoteGen"
+        ]
+      },
+      "schema": {
+        "required": [
+          "id",
+          "slug",
+          "title",
+          "sourcePath",
+          "openlistPath",
+          "openlistUrl",
+          "sourceRoot",
+          "kind",
+          "categories",
+          "tags",
+          "folderTags",
+          "derivedTaxonomy",
+          "semantic",
+          "visibility",
+          "published",
+          "runtimeFeed",
+          "relations",
+          "card"
+        ],
+        "sourceRoot": "vault",
+        "kindDerivation": "frontmatter.kind, then docs folder mapping: blog/post, notes/note, papers or 论文/paper, projects/project, books/book-note, codex/codex",
+        "visibilityDerivation": "frontmatter.visibility/private/draft plus private and drafts path guards",
+        "relations": "wikilinks, backlinks and assets normalized during content-index compile",
+        "card": "card.eyebrow, card.chips and card.subtitle are generated by the index compiler from categories, tags, project and series"
+      },
+      "collectionSchema": {
+        "basis": [
+          "folder",
+          "series",
+          "topic"
+        ],
+        "required": [
+          "id",
+          "type",
+          "title",
+          "description",
+          "basis",
+          "objects",
+          "relations",
+          "tags",
+          "layout",
+          "projections",
+          "card",
+          "stats"
+        ],
+        "generation": "tools/build-runtime-content-index.mjs groups MarkdownObject into folder collections, frontmatter series collections and shared topic collections",
+        "surfaceRule": "homepage consumes folder/series KnowledgeCollection cards before direct object cards, but a collection card only opens a Reading Session; /collections/ lists folder/series collection entry points; /collections/[slug]/ is only generated for folder/series Reading Session surfaces with article reader plus collection TOC; topic collections remain metadata/search/Graph dimensions in the runtime index and must not be batch prerendered into static collection pages; object switching inside a collection must not full reload or degrade into an object card grid"
+      },
+      "filter": [
+        "draft != true",
+        "published != false",
+        "visibility is public",
+        "default include all Markdown under /home/vault/Obsidian/docs unless blocked by draft/private rules"
+      ],
+      "route": "/posts/[slug]/",
+      "feedConsumer": [
+        "apps/web/src/pages/index.astro",
+        "apps/web/src/pages/posts/index.astro"
+      ],
+      "indexFiles": [
+        "public-data/runtime/content-index.json",
+        "apps/web/public/runtime/content-index.json"
+      ],
+      "featureRegistryFiles": [
+        "public-data/runtime/features.json",
+        "apps/web/public/runtime/features.json"
+      ],
+      "homepageFeedUi": "Homepage displays KnowledgeCollection projection cards first, then mixed object cards. Collection drawer templates are Reading Sessions: current article html is the reading center and collection TOC is the context rail; clicking another object swaps drawer article content from /runtime/articles/*.json without page navigation. Runtime MarkdownObject drawer templates are created from /runtime/content-index.json metadata and hydrate drawer bodies from per-article /runtime/articles/*.json detail payloads, not a browser-side Markdown renderer. /runtime/events SSE is preferred and 30 second polling is only used when EventSource is unavailable",
+      "runtimeReaderUi": "/posts/[slug]/ is the only public article detail route. It is generated from Runtime MarkdownObject metadata and reads the matching /runtime/articles/*.json detail payload for body/html/toc.",
+      "cardUiRule": "ArticleCard, homepage runtime feed, /posts/ and /posts/[slug]/ display chips only from MarkdownObject.card.chips; tags/categories remain indexing metadata, not ad hoc card labels",
+      "autoSyncWatcher": "deprecated: Windows watcher/scp content sync is disabled",
+      "serverRuntimeProjector": "tools/server-runtime-content-projector.mjs runs as systemd myblog-runtime-content-projector.service on Linux, watches and scans /home/vault/Obsidian/docs, writes /srv/myblog/site/runtime/content-index.json with /openlist/Obsidian/docs public identity, and never runs Astro build/Pagefind/deploy/scp",
+      "runtimeEvents": "tools/runtime-content-sse-server.mjs runs as systemd myblog-runtime-sse.service on 127.0.0.1:4121; nginx proxies /runtime/events; it only emits content-index events when the live JSON file changes",
+      "syncOnlyRule": "Obsidian markdown edits sync as files into /home/vault/Obsidian; Linux projection updates only /srv/myblog/site/runtime/content-index.json and OpenList identity fields. Astro build, Pagefind, scp and deploy are reserved for shell code, route or static asset changes",
+      "postsPageUi": "Runtime MarkdownObject articles are the only /posts/ listing source",
+      "metadataUi": "Editorial metadata line; no badge/chip controls on runtime article metadata"
+    },
     "folderMapping": {
       "folderTags": "path segments",
       "explicitTags": "frontmatter tags",
       "finalTags": "deduped folderTags + explicitTags",
       "collectionId": "parent folder path"
     },
-    "inspirations": ["TinaCMS", "Decap CMS", "Quartz 4", "Flowershow", "Logseq Publish", "Obsidian Publish"],
-    "forbidden": ["treat Obsidian Vault as public site source", "treat OpenList as CMS", "treat MySQL as article body source", "run TinaCMS and Decap CMS as parallel editors", "edit apps/web/dist or /srv/myblog/site as content source"]
+    "inspirations": [
+      "TinaCMS",
+      "Decap CMS",
+      "Quartz 4",
+      "Flowershow",
+      "Logseq Publish",
+      "Obsidian Publish"
+    ],
+    "forbidden": [
+      "treat Obsidian Vault as public site source",
+      "treat OpenList as CMS",
+      "treat MySQL as article body source",
+      "run TinaCMS and Decap CMS as parallel editors",
+      "edit apps/web/dist or /srv/myblog/site as content source"
+    ]
   },
   "composableServiceStack": {
     "status": "target architecture documented; OpenList+COS is active, Immich skeleton is installed but not started, Directus and Meilisearch are not deployed",
@@ -160,7 +509,11 @@
       "publicUrl": "https://photos.blog.tengokukk.com/",
       "serverRoot": "/srv/immich",
       "role": "photo/video ingest, thumbnails, EXIF, face/object recognition, CLIP embeddings and semantic search",
-      "blockedBy": ["photos.blog.tengokukk.com DNS NXDOMAIN", "root disk below readiness threshold", "dedicated media volume not configured"]
+      "blockedBy": [
+        "photos.blog.tengokukk.com DNS NXDOMAIN",
+        "root disk below readiness threshold",
+        "dedicated media volume not configured"
+      ]
     },
     "metadataOverlay": {
       "service": "Directus",
@@ -192,13 +545,34 @@
       "visitor page loads must read snapshots and caches, not run AI inference or re-index large files",
       "do not describe Directus or Meilisearch as active before deployment and verification"
     ],
-    "targetPipeline": ["COS/OpenList canonical file index", "Directus metadata overlay", "Meilisearch search index", "Astro/MyBlog frontend", "Immich API snapshot", "VisualCollection and KnowledgeObject projection"]
+    "targetPipeline": [
+      "COS/OpenList canonical file index",
+      "Directus metadata overlay",
+      "Meilisearch search index",
+      "Astro/MyBlog frontend",
+      "Immich API snapshot",
+      "VisualCollection and KnowledgeObject projection"
+    ]
   },
   "projectionClients": {
     "status": "target architecture documented; PWA/TWA first, native Android only after Runtime API schema stabilizes",
     "thesis": "One Runtime and Object Graph, multiple projection surfaces. Web and Android may have different UI, but must not duplicate authority or business logic.",
-    "runtimeAuthority": ["OpenList/COS file truth", "MySQL runtime state", "Directus metadata overlay target", "Meilisearch search target", "Immich media runtime target", "KnowledgeObject graph"],
-    "runtimeApiTarget": ["/api/feed", "/api/books", "/api/visuals", "/api/search", "/api/graph", "/api/runtime/*"],
+    "runtimeAuthority": [
+      "OpenList/COS blob backend and content access",
+      "MySQL runtime state",
+      "Directus metadata overlay target",
+      "Meilisearch search target",
+      "Immich media runtime target",
+      "KnowledgeObject graph"
+    ],
+    "runtimeApiTarget": [
+      "/api/feed",
+      "/api/books",
+      "/api/visuals",
+      "/api/search",
+      "/api/graph",
+      "/api/runtime/*"
+    ],
     "surfaces": {
       "web": {
         "status": "active",
@@ -212,6 +586,10 @@
         "role": "installable Android shell that follows Web Runtime updates",
         "manifestSource": "apps/web/public/manifest.webmanifest",
         "serviceWorkerSource": "apps/web/public/sw.js",
+        "assetLinksSource": "apps/web/public/.well-known/assetlinks.json",
+        "sha256CertFingerprints": [
+          "1C:64:9F:75:41:AE:39:B7:A7:D7:E3:4D:EE:41:CB:EA:BC:1F:13:7F:27:39:6A:F4:19:F0:76:B6:FE:A3:11:BD"
+        ],
         "serviceWorkerBoundary": [
           "do not intercept /api/*",
           "do not intercept /openlist/*",
@@ -257,78 +635,350 @@
     "thesis": "Clone mature system roles, not UI or duplicate engines. MyBlog owns Object Layer Glue, Runtime Schema, Projection Logic and Knowledge Semantics.",
     "targetPipeline": [
       "Obsidian",
-      "Remotely Save",
-      "OpenList WebDAV or S3-compatible endpoint",
-      "OpenList + COS",
+      "Syncthing",
+      "Linux /home/vault/Obsidian hot mirror",
+      "OpenList /openlist/Obsidian content control plane",
+      "Quartz-compatible Markdown runtime layer",
       "MyBlog Runtime API and Object Layer Glue",
-      "Web / PWA-TWA / Android / Search / CLI / AI Agent"
+      "Astro UI Shell / PWA-TWA / Android / Search / CLI / AI Agent"
+    ],
+    "matureReplacementPriority": [
+      {
+        "rank": 1,
+        "service": "Syncthing",
+        "replace": "Windows watcher, scp content sync, Obsidian in-process projection and custom Vault sync"
+      },
+      {
+        "rank": 2,
+        "service": "Runtime MarkdownObject",
+        "replace": "parallel article systems, Astro posts authority, ad-hoc runtime article projections and browser-side markdown rendering"
+      },
+      {
+        "rank": 3,
+        "service": "Quartz 4",
+        "replace": "custom Markdown compiler, wikilink/backlink/graph basics, TOC, LaTeX, callout and table rendering"
+      },
+      {
+        "rank": 4,
+        "service": "Meilisearch",
+        "replace": "runtime object search gaps left by Pagefind/local search"
+      },
+      {
+        "rank": 5,
+        "service": "Immich",
+        "replace": "custom visual snapshot, thumbnail manifest, AI tagging, embedding and gallery runtime"
+      },
+      {
+        "rank": 6,
+        "service": "Payload or Directus",
+        "replace": "custom object/media admin and metadata relation editor"
+      },
+      {
+        "rank": 7,
+        "service": "AppFlowy Cloud",
+        "replace": "custom Project Studio collaboration runtime, block editor, kanban/database, comments, realtime presence and workspace permissions"
+      }
     ],
     "referenceSystems": {
       "obsidian": {
         "url": "https://obsidian.md/",
         "role": "Authoring Truth",
         "status": "active upstream",
-        "learn": ["vault writing", "wikilinks", "attachments", "long-form knowledge authoring"]
+        "learn": [
+          "vault writing",
+          "wikilinks",
+          "attachments",
+          "long-form knowledge authoring"
+        ]
       },
       "remotelySave": {
         "url": "https://github.com/remotely-save/remotely-save",
         "role": "Vault Sync",
         "status": "target workflow",
-        "learn": ["WebDAV sync", "S3 sync", "conflict handling", "vault-level file sync"]
+        "learn": [
+          "WebDAV sync",
+          "S3 sync",
+          "conflict handling",
+          "vault-level file sync"
+        ]
+      },
+      "syncthing": {
+        "url": "https://github.com/syncthing/syncthing",
+        "role": "Hot Mirror Sync",
+        "status": "active for complete Obsidian vault",
+        "learn": [
+          "real-time file sync",
+          "incremental transfer",
+          "automatic recovery",
+          "conflict handling",
+          "Linux server hot mirror"
+        ]
       },
       "openListCos": {
         "url": "https://github.com/OpenListTeam/OpenList",
-        "role": "Blob / WebDAV / File Truth",
+        "role": "Content Control Plane / Blob Backend",
         "status": "active",
-        "learn": ["file listing", "raw file access", "WebDAV bridge", "object storage mount"]
+        "activeMounts": [
+          {
+            "mountPath": "/Obsidian",
+            "driver": "Local via OpenList public route",
+            "root": "/home/vault/Obsidian",
+            "publicRoute": "/openlist/Obsidian",
+            "verified": "2026-05-08"
+          },
+          {
+            "mountPath": "/腾讯云COS",
+            "driver": "S3",
+            "root": "/",
+            "verified": "2026-05-07"
+          },
+          {
+            "mountPath": "/夸克网盘",
+            "driver": "Quark",
+            "root": "provider-root",
+            "verified": "existing legacy mount"
+          }
+        ],
+        "learn": [
+          "file listing",
+          "raw file access",
+          "WebDAV bridge",
+          "object storage mount"
+        ]
+      },
+      "serverStorageIntegration": {
+        "status": "active",
+        "serverRootDisk": "/dev/vda2 40GB root filesystem",
+        "hotLayer": [
+          "/home/vault/Obsidian",
+          "/srv/myblog/site",
+          "/srv/myblog/site/runtime",
+          "/srv/myblog/site/pagefind",
+          "/srv/myblog/public-data/openlist-covers",
+          "/srv/myblog/public-data/openlist-pages",
+          "/srv/openlist/data"
+        ],
+        "coldLayer": [
+          "OpenList:/腾讯云COS",
+          "OpenList:/夸克网盘",
+          "future S3/WebDAV backends",
+          "manual archive candidates under /home/vault/*.legacy-disabled-*"
+        ],
+        "activeOpenListMounts": [
+          {
+            "mountPath": "/Obsidian",
+            "driver": "Local",
+            "root": "/home/vault/Obsidian",
+            "role": "public content access and OpenList identity for the Linux hot mirror"
+          },
+          {
+            "mountPath": "/腾讯云COS",
+            "driver": "S3",
+            "bucket": "myblog-media-1410041307",
+            "region": "ap-shanghai",
+            "role": "large original files, media, books and archive backend"
+          },
+          {
+            "mountPath": "/夸克网盘",
+            "driver": "Quark",
+            "role": "legacy/cold netdisk backend"
+          }
+        ],
+        "adminNextPublicRoots": [
+          "/Obsidian",
+          "/腾讯云COS",
+          "/夸克网盘"
+        ],
+        "maintenanceCommand": "npm run server:openlist-storage",
+        "pruneCommand": "npm run server:openlist-storage -- --prune-openlist-file-cache --apply",
+        "lastAction": "2026-05-08 pruned re-generable /srv/myblog/public-data/openlist-files cache, reducing root disk from 94% used to 91% used",
+        "rules": [
+          "OpenList is not an ext4/system disk replacement",
+          "do not place databases, node_modules, Astro dist, Pagefind, Syncthing hot mirror or /srv/myblog runtime roots on OpenList mounts",
+          "OpenList file cache is re-generable and may be pruned under explicit apply mode",
+          "legacy-disabled Vault folders are manual cold-archive candidates, not automatic deletion targets"
+        ]
+      },
+      "quartz": {
+        "url": "https://github.com/jackyzha0/quartz",
+        "role": "Obsidian Digital Garden substrate",
+        "status": "reference / substrate candidate",
+        "learn": [
+          "Markdown transform",
+          "wikilinks",
+          "backlinks",
+          "graph",
+          "search",
+          "folder and tag publish"
+        ]
+      },
+      "flowershow": {
+        "url": "https://github.com/flowershow/flowershow",
+        "role": "Obsidian Publish / CMS-like substrate",
+        "status": "reference / substrate candidate",
+        "learn": [
+          "Obsidian to website pipeline",
+          "Markdown site publish",
+          "hosted publish model"
+        ]
+      },
+      "payload": {
+        "url": "https://github.com/payloadcms/payload",
+        "role": "Object / Media Admin reference",
+        "status": "reference / metadata candidate",
+        "learn": [
+          "object modeling",
+          "media layer",
+          "relation layer",
+          "admin architecture"
+        ]
+      },
+      "appflowy": {
+        "url": "https://github.com/AppFlowy-IO/AppFlowy",
+        "cloudUrl": "https://github.com/AppFlowy-IO/AppFlowy-Cloud",
+        "role": "Project Studio Collaboration Runtime target",
+        "status": "target-not-deployed",
+        "recommendedPublicUrl": "https://project.tengokukk.com/",
+        "skeletonRoot": "infra/appflowy-cloud",
+        "serverTargetRoot": "/srv/myblog/services/appflowy-cloud",
+        "readinessScript": "infra/appflowy-cloud/check-readiness.sh",
+        "serverReadinessCommand": "cd /srv/myblog/services/appflowy-cloud && ./check-readiness.sh",
+        "upstreamInstallScript": "infra/appflowy-cloud/install-upstream.sh",
+        "currentMyBlogIntegration": "apps/web/src/pages/projects/[slug].astro exposes an AppFlowy target panel and falls back to GitHub Workbench until appflowyUrl is configured per project.",
+        "learn": [
+          "block runtime",
+          "object graph",
+          "CRDT",
+          "collaboration",
+          "local-first sync",
+          "database workspace",
+          "kanban",
+          "comments"
+        ],
+        "authorityBoundary": "AppFlowy owns collaborative editing, realtime workspace, block documents, kanban/database and comments after deployment. MyBlog owns only public projection, feed/graph references and GitHub signal fallback.",
+        "blockedBy": [
+          "AppFlowy Cloud not deployed on project.tengokukk.com",
+          "project.tengokukk.com DNS does not currently resolve to 124.220.233.126",
+          "server /srv/myblog/services/appflowy-cloud has about 6GB free, below the 40GB AppFlowy readiness gate",
+          "server .env currently contains placeholder values only",
+          "project content entries do not yet have production appflowyUrl values",
+          "no AppFlowy snapshot importer/API contract exists yet"
+        ]
       },
       "affine": {
         "url": "https://github.com/toeverything/AFFiNE",
         "role": "Workspace Runtime reference",
         "status": "reference only",
-        "learn": ["workspace runtime", "blocks", "local-first", "projection", "object runtime"]
+        "learn": [
+          "workspace runtime",
+          "blocks",
+          "local-first",
+          "projection",
+          "object runtime"
+        ]
       },
       "anytype": {
         "url": "https://github.com/anyproto/anytype-ts",
         "role": "Object Graph reference",
         "status": "reference only",
-        "learn": ["object identity", "relation graph", "schema", "projection"]
+        "learn": [
+          "object identity",
+          "relation graph",
+          "schema",
+          "projection"
+        ]
       },
       "immich": {
         "url": "https://github.com/immich-app/immich",
         "role": "Media Runtime",
         "status": "skeleton-not-started",
-        "learn": ["media ingest", "thumbnails", "EXIF", "AI tagging", "embeddings", "timeline"]
+        "learn": [
+          "media ingest",
+          "thumbnails",
+          "EXIF",
+          "AI tagging",
+          "embeddings",
+          "timeline"
+        ]
       },
       "paperlessNgx": {
         "url": "https://github.com/paperless-ngx/paperless-ngx",
         "role": "Document Object reference",
         "status": "reference only",
-        "learn": ["file is not document", "metadata runtime", "document object lifecycle"]
+        "learn": [
+          "file is not document",
+          "metadata runtime",
+          "document object lifecycle"
+        ]
       },
       "mihon": {
         "url": "https://github.com/mihonapp/mihon",
         "role": "Android Runtime reference",
         "status": "reference only",
-        "learn": ["source abstraction", "reader runtime", "cache", "downloads", "updates", "extensions"]
+        "learn": [
+          "source abstraction",
+          "reader runtime",
+          "cache",
+          "downloads",
+          "updates",
+          "extensions"
+        ]
       },
       "readYou": {
         "url": "https://github.com/Ashinch/ReadYou",
         "role": "Feed Runtime reference",
         "status": "reference only",
-        "learn": ["feed sync", "offline cache", "reading state", "projection"]
+        "learn": [
+          "feed sync",
+          "offline cache",
+          "reading state",
+          "projection"
+        ]
       },
       "directus": {
         "url": "https://github.com/directus/directus",
         "role": "Metadata Overlay",
         "status": "target-not-deployed",
-        "learn": ["curation metadata", "relations", "admin editing", "structured overlay"]
+        "learn": [
+          "curation metadata",
+          "relations",
+          "admin editing",
+          "structured overlay"
+        ]
       },
       "meilisearch": {
         "url": "https://github.com/meilisearch/meilisearch",
         "role": "Search Runtime",
         "status": "target-not-deployed",
-        "learn": ["dynamic object search", "file index search", "metadata search"]
+        "learn": [
+          "dynamic object search",
+          "file index search",
+          "metadata search"
+        ]
+      },
+      "contentlayer": {
+        "url": "https://github.com/contentlayerdev/contentlayer",
+        "role": "Astro-native typed content pipeline candidate",
+        "status": "candidate-not-installed",
+        "learn": [
+          "typed Markdown schema",
+          "parsing",
+          "watch",
+          "projection"
+        ]
+      },
+      "coolify": {
+        "url": "https://github.com/coollabsio/coolify",
+        "role": "Deployment platform candidate",
+        "status": "candidate-not-deployed",
+        "learn": [
+          "Git deploy",
+          "environment management",
+          "healthcheck",
+          "rollback",
+          "Docker Compose",
+          "cron"
+        ]
       }
     },
     "ownOnly": [
@@ -343,6 +993,8 @@
       "sync engine",
       "media server",
       "WebDAV or object storage",
+      "Markdown compiler or Digital Garden base",
+      "backlink or graph publish engine",
       "PDF engine",
       "image cache or thumbnail pipeline",
       "auth system",
@@ -352,35 +1004,156 @@
     ],
     "rules": [
       "clone roles, not UI",
+      "reuse Quartz or Flowershow style garden substrate before inventing Markdown, backlink, graph or publish basics",
+      "replace custom runtime with mature layers before adding new runtime abstraction",
       "files are carriers and objects are identity",
       "MyBlog writes glue, not engines",
       "Android is a runtime projection, not a second app universe",
       "every federation member must declare authority, status, integration path, secret boundary and failure mode"
     ]
   },
+  "projectCollaborationRuntime": {
+    "status": "reduction-mode; AppFlowy is target-not-deployed and GitHub Workbench is interim-active fallback",
+    "principle": "Do not keep growing a full collaboration system inside the blog runtime.",
+    "activeFallback": {
+      "name": "GitHub Workbench",
+      "status": "interim-active",
+      "route": "apps/web/src/pages/projects/[slug].astro",
+      "contentModel": "apps/web/src/content/projects/*.md",
+      "apiOwner": "apps/admin-next/app/api/github/** and apps/admin-next/app/api/projects/[slug]/timeline/route.js",
+      "capabilities": [
+        "repo status projection",
+        "issues/pulls/commits/contributors runtime read",
+        "service-side GitHub file save",
+        "timeline.json write-back"
+      ],
+      "notAuthorityFor": [
+        "realtime collaboration",
+        "block editor runtime",
+        "workspace comments",
+        "kanban/database authority",
+        "presence or permissions"
+      ]
+    },
+    "targetRuntime": {
+      "name": "AppFlowy Cloud",
+      "status": "target-not-deployed",
+      "source": "https://github.com/AppFlowy-IO/AppFlowy-Cloud",
+      "recommendedPublicUrl": "https://project.tengokukk.com/",
+      "skeletonRoot": "infra/appflowy-cloud",
+      "serverTargetRoot": "/srv/myblog/services/appflowy-cloud",
+      "embedField": "projects frontmatter appflowyUrl",
+      "workspaceField": "projects frontmatter appflowyWorkspace",
+      "responsibilities": [
+        "workspace runtime",
+        "block documents",
+        "realtime editing",
+        "database/kanban",
+        "comments",
+        "collaboration permissions"
+      ]
+    },
+    "myBlogResponsibilities": [
+      "Project Studio entry and public projection shell",
+      "GitHub code signals",
+      "Feed and Knowledge Graph references",
+      "Reader/project cross-links",
+      "clear pending/connected state"
+    ],
+    "forbidden": [
+      "claim AppFlowy is active before project.tengokukk.com is deployed and appflowyUrl is configured",
+      "continue adding custom wiki/timeline/kanban/comments as the primary collaboration runtime",
+      "read secrets or tokens from the browser",
+      "scrape AppFlowy iframe DOM for data"
+    ]
+  },
   "frontendRuntimeAudit": {
     "status": "first-pass documented",
     "canonicalDoc": "docs/frontend-runtime-audit.md",
     "method": "trace user behavior through DOM, event, state, render, hydration, network, animation, authority and fallback",
-    "mustCover": ["pages", "interactions", "hover", "click", "drag", "scroll", "keyboard", "hydration islands", "localStorage", "sessionStorage", "runtime fetch", "lazy load", "modal drawer dialog", "command palette", "search runtime", "iframe embed shell", "third-party runtime", "hidden fallback"],
-    "knownRuntimeOwners": ["apps/web/src/layouts/BaseLayout.astro", "apps/web/src/pages/index.astro", "apps/web/src/pages/visuals/index.astro", "apps/web/src/pages/knowledge/index.astro", "apps/web/src/pages/projects/[slug].astro", "apps/web/src/components/react/HomeCommandPalette.tsx", "apps/web/src/components/react/HoverPreviewSystem.tsx", "apps/web/src/components/books/BookDrawerReader.tsx", "apps/web/src/components/books/BookReader.tsx"],
+    "mustCover": [
+      "pages",
+      "interactions",
+      "hover",
+      "click",
+      "drag",
+      "scroll",
+      "keyboard",
+      "hydration islands",
+      "localStorage",
+      "sessionStorage",
+      "runtime fetch",
+      "lazy load",
+      "modal drawer dialog",
+      "command palette",
+      "search runtime",
+      "iframe embed shell",
+      "third-party runtime",
+      "hidden fallback"
+    ],
+    "knownRuntimeOwners": [
+      "apps/web/src/layouts/BaseLayout.astro",
+      "apps/web/src/pages/index.astro",
+      "apps/web/src/pages/visuals/index.astro",
+      "apps/web/src/pages/knowledge/index.astro",
+      "apps/web/src/pages/projects/[slug].astro",
+      "apps/web/src/components/react/HomeCommandPalette.tsx",
+      "apps/web/src/components/react/HoverPreviewSystem.tsx",
+      "apps/web/src/components/books/BookDrawerReader.tsx",
+      "apps/web/src/components/books/BookReader.tsx"
+    ],
     "rule": "frontend runtime changes must update docs/frontend-runtime-audit.md or explicitly state why the audit map is unaffected"
   },
   "frontendRuntimeConvergence": {
-    "status": "Runtime Migration Sprint contract active; P1 command/search convergence partially implemented",
+    "status": "reduction mode; legacy inline runtime and React islands remain current overlay/drawer authority",
     "canonicalDoc": "docs/frontend-runtime-convergence.md",
     "runtimeKernelRoot": "packages/runtime-kernel",
-    "runtimeMigrationManifest": "runtime-migration.json",
-    "runtimeOverlayRoot": "packages/runtime-overlay",
-    "runtimeStoreRoot": "packages/runtime-store",
     "thesis": "MyBlog must converge command, keyboard, overlays, drawers, focus, navigation and client cache behavior into one frontend runtime kernel before adding more independent runtime layers.",
-    "currentRisk": ["Inline Script Empire in apps/web/src/pages/index.astro", "Ctrl/Cmd+K split authority between HomeCommandPalette and fallback search", "custom window events as integration layer", "localStorage behaving as mixed preference/cache/migration/local-authority store"],
-    "kernelResponsibilities": ["command bus", "keyboard layer", "overlay stack", "drawer intents", "focus restore", "typed runtime events", "navigation/history intents", "storage classification"],
-    "activeLibraries": ["cmdk", "motion", "@floating-ui/react"],
-    "installedButUnmigratedLibraries": ["zustand", "Radix UI primitives", "Vaul", "React Flow"],
-    "targetConventionsNotInitialized": ["shadcn/ui component directory"],
-    "legacyBridgeEvents": ["home-search-open", "openlist-embed-open", "pinterest-embed-open", "reader-command", "emptyinkpot:book-drawer-open", "emptyinkpot:book-drawer-close"],
-    "storageClasses": ["preference", "cache", "legacy-migration", "temporary-local-authority", "forbidden-authority"],
+    "currentRisk": [
+      "Inline Script Empire in apps/web/src/pages/index.astro",
+      "Ctrl/Cmd+K split authority between HomeCommandPalette and fallback search",
+      "custom window events as integration layer",
+      "localStorage behaving as mixed preference/cache/migration/local-authority store"
+    ],
+    "kernelResponsibilities": [
+      "command bus",
+      "keyboard layer",
+      "overlay stack",
+      "drawer intents",
+      "focus restore",
+      "typed runtime events",
+      "navigation/history intents",
+      "storage classification"
+    ],
+    "activeLibraries": [
+      "cmdk",
+      "motion",
+      "@floating-ui/react"
+    ],
+    "installedButNotActiveOwners": [
+      "zustand",
+      "Radix UI primitives",
+      "Vaul",
+      "React Flow"
+    ],
+    "targetConventionsNotInitialized": [
+      "shadcn/ui component directory"
+    ],
+    "legacyBridgeEvents": [
+      "home-search-open",
+      "openlist-embed-open",
+      "pinterest-embed-open",
+      "reader-command",
+      "emptyinkpot:book-drawer-open",
+      "emptyinkpot:book-drawer-close"
+    ],
+    "storageClasses": [
+      "preference",
+      "cache",
+      "legacy-migration",
+      "temporary-local-authority",
+      "forbidden-authority"
+    ],
     "p1Implemented": [
       "HomeCommandPalette sets html[data-home-command-ready=true] after hydration",
       "home inline Ctrl/Cmd+K fallback only runs before command palette ready marker exists",
@@ -396,26 +1169,18 @@
       "installed runtime libraries only become active owners after a concrete migrated surface and browser evidence"
     ]
   },
-  "runtimeMigration": {
-    "status": "authority-cutover-contract-active",
-    "manifest": "runtime-migration.json",
-    "checkCommand": "npm run check:runtime-migration",
-    "priorityOrder": ["overlay", "bookDrawer", "command", "store", "graph", "motion"],
-    "contractPackages": {
-      "overlay": "packages/runtime-overlay",
-      "store": "packages/runtime-store",
-      "kernel": "packages/runtime-kernel",
-      "experienceTokens": "packages/design-system"
-    },
-    "nextCutover": "Book Drawer shell -> Vaul through packages/runtime-overlay",
-    "currentRule": "installed dependency is not migration; migrated=true requires browser evidence and rollback path"
-  },
   "runtimeExperienceLayer": {
     "status": "P1 command/search surfaces use runtime tokens; broader surfaces still pending",
     "canonicalDoc": "docs/runtime-experience-layer.md",
     "designSystemRoot": "packages/design-system",
     "thesis": "MyBlog needs interaction quality and runtime coherence across surfaces, not more isolated components.",
-    "targetFeel": ["Linear discipline", "Arc spatial layers", "Cosmos visual browsing", "Immich gallery runtime", "MyBlog reading atmosphere"],
+    "targetFeel": [
+      "Linear discipline",
+      "Arc spatial layers",
+      "Cosmos visual browsing",
+      "Immich gallery runtime",
+      "MyBlog reading atmosphere"
+    ],
     "surfaceVocabulary": {
       "drawer": "Spatial Layer",
       "modal": "Runtime Overlay",
@@ -424,12 +1189,47 @@
       "reader": "Continuous Surface",
       "visuals": "Infinite Semantic Canvas"
     },
-    "activeLibraries": ["cmdk", "motion", "@floating-ui/react", "lucide-react"],
-    "installedButUnmigratedLibraries": ["zustand", "Radix UI primitives", "Vaul", "React Flow"],
-    "targetConventionsNotInitialized": ["shadcn/ui component directory"],
-    "referenceOnly": ["Aceternity UI", "Magic UI", "React Bits", "tldraw", "AFFiNE", "Linear", "Arc Browser", "Cosmos", "Immich Web"],
-    "tokenGroups": ["motion", "depth", "elevation", "focus", "surface"],
-    "cssVariables": ["--runtime-motion-*", "--runtime-ease-*", "--runtime-depth-*", "--runtime-elevation-*", "--runtime-focus-*", "--runtime-surface-*"],
+    "activeLibraries": [
+      "cmdk",
+      "motion",
+      "@floating-ui/react",
+      "lucide-react"
+    ],
+    "installedButNotActiveOwners": [
+      "zustand",
+      "Radix UI primitives",
+      "Vaul",
+      "React Flow"
+    ],
+    "targetConventionsNotInitialized": [
+      "shadcn/ui component directory"
+    ],
+    "referenceOnly": [
+      "Aceternity UI",
+      "Magic UI",
+      "React Bits",
+      "tldraw",
+      "AFFiNE",
+      "Linear",
+      "Arc Browser",
+      "Cosmos",
+      "Immich Web"
+    ],
+    "tokenGroups": [
+      "motion",
+      "depth",
+      "elevation",
+      "focus",
+      "surface"
+    ],
+    "cssVariables": [
+      "--runtime-motion-*",
+      "--runtime-ease-*",
+      "--runtime-depth-*",
+      "--runtime-elevation-*",
+      "--runtime-focus-*",
+      "--runtime-surface-*"
+    ],
     "p1Implemented": [
       "home command layer uses runtime depth/surface/elevation tokens",
       "fallback knowledge search layer uses runtime overlay depth/backdrop/elevation/motion tokens",
@@ -469,12 +1269,51 @@
     "errorTracking": "not-configured"
   },
   "contentModel": {
-    "posts": ["title", "date", "tags", "categories", "summary", "slug"],
-    "notes": ["title", "date", "summary", "slug"],
-    "projects": ["title", "summary", "slug"],
-    "pages": ["title", "slug"],
-    "books": ["id", "title", "author", "category", "tags", "sourceType", "openlistPath"],
-    "visualCollections": ["id", "title", "source", "sourceLabel", "summary", "mood", "tags", "palette", "coverImages", "images", "curationNote"],
+    "posts": [
+      "title",
+      "date",
+      "tags",
+      "categories",
+      "summary",
+      "slug"
+    ],
+    "notes": [
+      "title",
+      "date",
+      "summary",
+      "slug"
+    ],
+    "projects": [
+      "title",
+      "summary",
+      "slug"
+    ],
+    "pages": [
+      "title",
+      "slug"
+    ],
+    "books": [
+      "id",
+      "title",
+      "author",
+      "category",
+      "tags",
+      "sourceType",
+      "openlistPath"
+    ],
+    "visualCollections": [
+      "id",
+      "title",
+      "source",
+      "sourceLabel",
+      "summary",
+      "mood",
+      "tags",
+      "palette",
+      "coverImages",
+      "images",
+      "curationNote"
+    ],
     "evidenceLibrary": [
       "asset",
       "clip",
@@ -508,9 +1347,17 @@
       "syncOwner": "apps/admin-next/lib/visual-runtime.js",
       "snapshotApi": "/api/runtime/visuals/snapshot",
       "syncApi": "/api/runtime/visuals/sync",
-      "providers": ["pinterest_api", "apify_dataset"],
+      "providers": [
+        "pinterest_api",
+        "apify_dataset"
+      ],
       "secretPolicy": "provider tokens stay in server env or provider secret store, never in source json or README",
-      "partitionPattern": [6, 4, 9, 12]
+      "partitionPattern": [
+        6,
+        4,
+        9,
+        12
+      ]
     },
     "mediaRuntime": {
       "chosenService": "Immich",
@@ -525,14 +1372,55 @@
       "deploymentMode": "independent Docker Compose service behind its own root subdomain",
       "subpathPolicy": "do not serve Immich from /immich or /openlist; use photos.blog.tengokukk.com root",
       "storagePolicy": "do not place Immich uploads, thumbnails, database or ML cache on the current nearly-full root filesystem",
-      "responsibilities": ["photo video ingest", "timeline", "faces", "object recognition", "CLIP embeddings", "semantic search", "EXIF", "video thumbnails"],
-      "myBlogResponsibilities": ["VisualCollection curation", "Knowledge Object projection", "Graph links", "article/project references", "drawer/feed entry"],
-      "integrationPipeline": ["Immich API", "admin-next import", "MySQL runtime snapshot", "VisualCollection partition", "Search and Graph projection"],
-      "blockedBy": ["photos.blog.tengokukk.com DNS currently returns NXDOMAIN", "/srv/immich has about 7GB free, below the 30GB startup gate", "dedicated media storage volume not attached or configured"],
-      "forbidden": ["train custom image tagging model before using Immich", "run Immich inside Astro", "iframe a subpath deployment as the primary integration", "trigger AI inference during visitor page load"]
+      "responsibilities": [
+        "photo video ingest",
+        "timeline",
+        "faces",
+        "object recognition",
+        "CLIP embeddings",
+        "semantic search",
+        "EXIF",
+        "video thumbnails"
+      ],
+      "myBlogResponsibilities": [
+        "VisualCollection curation",
+        "Knowledge Object projection",
+        "Graph links",
+        "article/project references",
+        "drawer/feed entry"
+      ],
+      "integrationPipeline": [
+        "Immich API",
+        "admin-next import",
+        "MySQL runtime snapshot",
+        "VisualCollection partition",
+        "Search and Graph projection"
+      ],
+      "blockedBy": [
+        "photos.blog.tengokukk.com DNS currently returns NXDOMAIN",
+        "/srv/immich has about 7GB free, below the 30GB startup gate",
+        "dedicated media storage volume not attached or configured"
+      ],
+      "forbidden": [
+        "train custom image tagging model before using Immich",
+        "run Immich inside Astro",
+        "iframe a subpath deployment as the primary integration",
+        "trigger AI inference during visitor page load"
+      ]
     },
-    "currentPipeline": ["bookmark sync fallback", "runtime mirror sync", "MySQL upsert visual_pins", "deterministic partition", "frontend runtime snapshot"],
-    "futurePipeline": ["optional thumbnail mirror after explicit approval", "palette extraction", "collection intelligence", "graph integration"]
+    "currentPipeline": [
+      "bookmark sync fallback",
+      "runtime mirror sync",
+      "MySQL upsert visual_pins",
+      "deterministic partition",
+      "frontend runtime snapshot"
+    ],
+    "futurePipeline": [
+      "optional thumbnail mirror after explicit approval",
+      "palette extraction",
+      "collection intelligence",
+      "graph integration"
+    ]
   },
   "serverHost": "124.220.233.126",
   "serverRuntimeRoot": "/srv/myblog/site",
@@ -541,6 +1429,7 @@
   "adminServerPort": 4117,
   "adminServerEnvFile": "/etc/myblog-admin-next.env",
   "nginxSiteConfig": "/etc/nginx/sites-available/myblog.conf",
+  "nginxStaticRouteRule": "Astro static site only: location / must use try_files $uri $uri/index.html =404; unknown routes must not fall back to /index.html.",
   "publishMode": "local-build-then-upload-dist",
   "publishArtifactRoots": [
     "apps/web/dist"
@@ -652,7 +1541,10 @@
         "className": "home-feed-shell",
         "maxWidthPx": 1480,
         "viewportGutterPx": 40,
-        "columns": ["280px", "minmax(0, 1fr)"],
+        "columns": [
+          "280px",
+          "minmax(0, 1fr)"
+        ],
         "gapPx": 20,
         "paddingBlockPx": 20
       },
@@ -668,8 +1560,14 @@
       "feedColumnCount": 3,
       "feedColumnGapPx": 16,
       "primaryGrids": {
-        "homeFeedShell": ["280px", "minmax(0, 1fr)"],
-        "articleReader": ["180px", "minmax(0, 1fr)"]
+        "homeFeedShell": [
+          "280px",
+          "minmax(0, 1fr)"
+        ],
+        "articleReader": [
+          "180px",
+          "minmax(0, 1fr)"
+        ]
       },
       "keyComponentSizesPx": {
         "feedProfilePadding": 16,
@@ -700,7 +1598,10 @@
       "styleSource": "apps/web/src/styles/global.css",
       "scope": "browser-local homepage display preferences",
       "defaultTheme": "heritage",
-      "themeOptions": ["heritage", "glass"],
+      "themeOptions": [
+        "heritage",
+        "glass"
+      ],
       "heritageTheme": {
         "status": "default",
         "intent": "Cultural OS visual language: paper background, pure color panels, semantic color strips, low shadow, no glass blur",
@@ -763,7 +1664,10 @@
         "defaultBaseUrl": "http://127.0.0.1:5244",
         "publicEmbedRoute": "https://blog.tengokukk.com/openlist/",
         "apiPrefix": "/openlist",
-        "verifiedMounts": ["/夸克网盘", "/腾讯云COS"],
+        "verifiedMounts": [
+          "/夸克网盘",
+          "/腾讯云COS"
+        ],
         "objectStorage": {
           "provider": "Tencent COS",
           "bucket": "myblog-media-1410041307",
@@ -781,7 +1685,15 @@
           },
           "role": "large original files and archives; not a database disk and not a direct replacement for Immich/Postgres local volumes"
         },
-        "verifiedApis": ["POST /api/fs/list", "POST /api/fs/get", "POST /api/fs/mkdir", "PUT /api/fs/put", "GET /api/admin/storage/list", "POST /api/admin/storage/create", "POST /api/admin/storage/load_all"],
+        "verifiedApis": [
+          "POST /api/fs/list",
+          "POST /api/fs/get",
+          "POST /api/fs/mkdir",
+          "PUT /api/fs/put",
+          "GET /api/admin/storage/list",
+          "POST /api/admin/storage/create",
+          "POST /api/admin/storage/load_all"
+        ],
         "rawUrlField": "raw_url",
         "frontendSecretPolicy": "do not store OpenList tokens or netdisk cookies in static frontend source"
       },
@@ -792,7 +1704,10 @@
         "emptyinkpot-book-recent",
         "emptyinkpot-reader-theme"
       ],
-      "readerLibraries": ["react-reader", "react-pdf"],
+      "readerLibraries": [
+        "react-reader",
+        "react-pdf"
+      ],
       "pdfWorker": "https://unpkg.com/pdfjs-dist@<react-pdf pdfjs.version>/build/pdf.worker.min.mjs"
     },
     "githubVisualizationAssets": {
@@ -800,7 +1715,6 @@
       "dataSource": "apps/web/src/data/github-overview.emptyinkpot.json",
       "loader": "apps/web/src/lib/github.ts",
       "analyticsLayer": "apps/web/src/lib/analytics.ts",
-      "legacyPayloadBuilder": "apps/web/src/lib/home.ts",
       "components": [
         "apps/web/src/components/visualizations/ChartCard.astro",
         "apps/web/src/components/visualizations/GitHubHeatmap.astro",
@@ -813,23 +1727,46 @@
       "visualSurfaces": [
         {
           "name": "GitHub contribution heatmap",
-          "data": ["overview.months", "overview.weeks", "overview.totalContributions"],
-          "legacyTypes": ["HomeCheckInData", "HomeCheckInWeek", "HomeCheckInCell"]
+          "data": [
+            "overview.months",
+            "overview.weeks",
+            "overview.totalContributions"
+          ],
+          "legacyTypes": [
+            "HomeCheckInData",
+            "HomeCheckInWeek",
+            "HomeCheckInCell"
+          ]
         },
         {
           "name": "GitHub monthly contribution line chart",
-          "data": ["overview.monthly"],
-          "legacyTypes": ["HomeGitHubMonthlyPoint"]
+          "data": [
+            "overview.monthly"
+          ],
+          "legacyTypes": [
+            "HomeGitHubMonthlyPoint"
+          ]
         },
         {
           "name": "GitHub language donut chart",
-          "data": ["overview.languages"],
-          "legacyTypes": ["HomeGitHubLanguageSlice"]
+          "data": [
+            "overview.languages"
+          ],
+          "legacyTypes": [
+            "HomeGitHubLanguageSlice"
+          ]
         },
         {
           "name": "Team and repository signal panels",
-          "data": ["overview.profile", "overview.repos"],
-          "legacyTypes": ["HomeTeamSignal", "HomeRepoSignal", "HomeAutomationSignal"]
+          "data": [
+            "overview.profile",
+            "overview.repos"
+          ],
+          "legacyTypes": [
+            "HomeTeamSignal",
+            "HomeRepoSignal",
+            "HomeAutomationSignal"
+          ]
         }
       ],
       "legacyCssClasses": [
@@ -896,7 +1833,11 @@
         "emptyinkpot-reader-highlights",
         "emptyinkpot-reader-theme"
       ],
-      "readerThemes": ["light", "sepia", "dark"],
+      "readerThemes": [
+        "light",
+        "sepia",
+        "dark"
+      ],
       "bookmarkObjectSystem": {
         "className": "bookmark",
         "rules": [
@@ -947,8 +1888,13 @@
         ],
         "wrapperMaxWidthPx": 1180,
         "viewportGutterPx": 24,
-        "gridColumns": ["repeat(2, minmax(0, 1fr))"],
-        "postCardColumns": ["176px", "minmax(0, 1fr)"],
+        "gridColumns": [
+          "repeat(2, minmax(0, 1fr))"
+        ],
+        "postCardColumns": [
+          "176px",
+          "minmax(0, 1fr)"
+        ],
         "postCoverMinHeightPx": 176,
         "collapseBreakpointPx": 1100
       },
@@ -977,35 +1923,62 @@
       }
     },
     "publicEvidenceLibrary": {
-      "heroColumns": ["minmax(0, 1.5fr)", "minmax(256px, 0.75fr)"],
+      "heroColumns": [
+        "minmax(0, 1.5fr)",
+        "minmax(256px, 0.75fr)"
+      ],
       "heroGapPx": 24,
       "heroPaddingPx": 24,
       "heroPreMinHeightPx": 144,
-      "gridColumns": ["repeat(3, minmax(0, 1fr))"],
+      "gridColumns": [
+        "repeat(3, minmax(0, 1fr))"
+      ],
       "gridGapPx": 16,
       "cardPaddingPx": 21.6,
-      "sourceGridColumns": ["160px", "minmax(0, 1fr)"],
+      "sourceGridColumns": [
+        "160px",
+        "minmax(0, 1fr)"
+      ],
       "collapseBreakpointPx": 860,
       "longTextRule": "evidence-library__mono and source code must use overflow-wrap:anywhere"
     },
     "adminPrototype": {
       "source": "apps/admin-next/app/globals.css",
-      "shellColumns": ["240px", "1fr"],
+      "shellColumns": [
+        "240px",
+        "1fr"
+      ],
       "sidebarPaddingPx": 24,
       "mainPaddingPx": 24,
       "mainScrollContainer": "console-main",
       "cardPaddingPx": 20,
       "cardRadiusPx": 24,
       "pageStackGapPx": 24,
-      "metricGridColumns": ["repeat(3, minmax(0, 1fr))"],
-      "twoColumnGridColumns": ["repeat(2, minmax(0, 1fr))"],
+      "metricGridColumns": [
+        "repeat(3, minmax(0, 1fr))"
+      ],
+      "twoColumnGridColumns": [
+        "repeat(2, minmax(0, 1fr))"
+      ],
       "metricCardMinHeightPx": 128,
-      "metaGridColumns": ["120px", "minmax(0, 1fr)"],
-      "timelineGridColumns": ["repeat(6, minmax(0, 1fr))"],
-      "aiLayoutColumns": ["220px", "minmax(0, 1fr)", "280px"],
+      "metaGridColumns": [
+        "120px",
+        "minmax(0, 1fr)"
+      ],
+      "timelineGridColumns": [
+        "repeat(6, minmax(0, 1fr))"
+      ],
+      "aiLayoutColumns": [
+        "220px",
+        "minmax(0, 1fr)",
+        "280px"
+      ],
       "aiLayoutMinHeight": "calc(100vh - 48px)",
       "chatBubbleMaxWidth": "80%",
-      "tableCellPaddingPx": [14, 16],
+      "tableCellPaddingPx": [
+        14,
+        16
+      ],
       "collapseBreakpointPx": 1100,
       "overlapRules": [
         "console-main is the only admin main scroll container",
@@ -1029,7 +2002,7 @@
     "source": "apps/web/src/pages/index.astro",
     "styleSource": "apps/web/src/styles/global.css",
     "dataSources": [
-      "apps/web/src/content/posts",
+      "public-data/runtime/content-index.json",
       "apps/web/src/content/notes",
       "apps/web/src/content/projects",
       "apps/web/src/data/books.ts",
@@ -1037,9 +2010,33 @@
       "apps/web/src/lib/profile.ts",
       "apps/web/src/data/github-overview.emptyinkpot.json"
     ],
-    "feedItemTypes": ["post", "note", "project", "book", "music", "github", "bilibili", "update"],
-    "githubFeedVariants": ["repo", "heatmap", "line", "language", "team"],
-    "drawerTypes": ["post", "note", "project", "book", "music", "github", "bilibili", "update"],
+    "feedItemTypes": [
+      "post",
+      "note",
+      "project",
+      "book",
+      "music",
+      "github",
+      "bilibili",
+      "update"
+    ],
+    "githubFeedVariants": [
+      "repo",
+      "heatmap",
+      "line",
+      "language",
+      "team"
+    ],
+    "drawerTypes": [
+      "post",
+      "note",
+      "project",
+      "book",
+      "music",
+      "github",
+      "bilibili",
+      "update"
+    ],
     "implementation": {
       "masonry": "css-columns",
       "drawer": "astro-rendered hidden reader nodes cloned by vanilla js",
@@ -1159,5 +2156,25 @@
     "npm run check",
     "npm run build"
   ],
-  "status": "active"
+  "status": "active",
+  "markdownRenderingSystem": {
+    "status": "active",
+    "owner": "apps/web/src/lib/markdown/pipeline.ts",
+    "styleOwner": "apps/web/src/styles/global.css:.prose-shell",
+    "appliesTo": [
+      "Astro content posts",
+      "Runtime MarkdownObject articles"
+    ],
+    "stack": [
+      "remark-parse",
+      "remark-gfm",
+      "remark-rehype",
+      "rehype-slug",
+      "rehype-pretty-code",
+      "Shiki",
+      "custom Obsidian callout transform",
+      "custom table wrapper transform"
+    ],
+    "rule": "Quartz is a Markdown rendering reference only; MyBlog keeps its Astro presentation shell and shared prose system."
+  }
 }

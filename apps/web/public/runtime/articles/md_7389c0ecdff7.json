@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_7389c0ecdff7",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E5%85%9C%E5%BA%95%20fallback.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/兜底 fallback.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/兜底 fallback.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E5%85%9C%E5%BA%95%20fallback.md",
+    "slug": "blog-编程规范-兜底-fallback",
+    "title": "兜底 fallback",
+    "summary": "先讲核心结论： Fallback 本身不 low，「烂写法的 fallback」才被程序员嫌弃、认为掉价。 结合你日常写的自动化、接口、风控、服务开发，人话讲透： 一、先搞懂：正常优雅的 Fallback 是什么 正规设计里： 主链路故障 可控预判 降级逻辑 单独封装 有日志、有告警、有熔断、有恢复...",
+    "description": "先讲核心结论： Fallback 本身不 low，「烂写法的 fallback」才被程序员嫌弃、认为掉价。 结合你日常写的自动化、接口、风控、服务开发，人话讲透： 一、先搞懂：正常优雅的 Fallback 是什么 正规设计里： 主链路故障 可控预判 降级逻辑 单独封装 有日志、有告警、有熔断、有恢复...",
+    "date": "2026-04-27",
+    "updated": "2026-04-27",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/兜底 fallback.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/兜底 fallback.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E5%85%9C%E5%BA%95%20fallback.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "兜底 fallback",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "兜底 FALLBACK"
+      ],
+      "subtitle": "先讲核心结论： Fallback 本身不 low，「烂写法的 fallback」才被程序员嫌弃、认为掉价。 结合你日常写的自动化、接口、风控、服务开发，人话讲透： 一、先搞懂：正常优雅的 Fallback 是什么 正规设计里： 主链路故障 可控预判 降级逻辑 单独封装 有日志、有告警、有熔断、有恢复..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "先讲核心结论：\n\n**Fallback 本身不 low，「烂写法的 fallback」才被程序员嫌弃、认为掉价。**\n\n结合你日常写的自动化、接口、风控、服务开发，人话讲透：\n\n---\n\n## 一、先搞懂：正常优雅的 Fallback 是什么\n\n正规设计里：\n\n- 主链路故障**可控预判**\n- 降级逻辑**单独封装**\n- 有日志、有告警、有熔断、有恢复机制\n- 只是**优雅让步，保证服务不挂**\n\n✅ 这种：**高级、稳健、架构必备**，大厂微服务全都在用。\n\n---\n\n## 二、为什么大部分人眼里「fallback = 很 low」？\n\n因为**90% 程序员写的 fallback 都是摆烂式兜底**：\n\n### 1. 本质：用「粗暴容错」掩盖架构烂\n\n典型烂代码逻辑：\n\n> 主流程炸了？\n> \n> 不管什么错、不问原因、不分类异常\n> \n> 直接 try-catch 一把抓，随便塞一个默认值、空数据、假响应糊弄过去\n\n问题：\n\n- 不查根因\n- 不修复 BUG\n- 用兜底掩盖设计缺陷\n    \n    👉 **治标不治本，属于偷懒摆烂**\n\n### 2. 模糊错误，隐藏 Bug\n\n正常报错：\n\n直接抛异常 → 立刻发现问题 → 修复\n\n烂 fallback：\n\n报错被吞掉，静默降级 → 程序看似没崩，结果**数据错、逻辑乱、风控炸、业务异常**\n\n你做注册 / OTP 最懂：\n\n接口 429、代理断连、session 初始化失败，无脑 fallback 糊弄过去，后面全是隐形大坑。\n\n### 3. 沦为「不写严谨逻辑的借口」\n\n很多新手：\n\n不想处理边界条件\n\n不想做参数校验\n\n不想处理网络异常\n\n不想做状态机流转\n\n直接一句：\n\n> 出事就 fallback 兜底就行\n\n等于：**放弃严谨，靠摆烂运行**，在工程里非常掉价。\n\n### 4. 降级无边界，越降越敷衍\n\n优秀降级：\n\n只关非核心功能，核心链路强一致\n\nlow 降级：\n\n一降到底，核心业务直接阉割、返回假数据、空数据、硬编码默认值\n\n完全丧失业务准确性。\n\n---\n\n## 三、程序员鄙视链里的潜台词\n\n老开发看到一坨无脑 fallback 代码，潜台词是：\n\n1. 架构设计烂，没有熔断、限流、状态机\n2. 懒得排查异常、懒得分类错误\n3. 用兜底掩盖技术债务\n4. 代码脆弱，全靠 “容错苟活”\n\n所以圈内会觉得：\n\n**动不动就无脑 fallback = 技术能力不行的表现**\n\n---\n\n## 四、帮你区分：高级降级 vs low 兜底\n\n表格\n\n|高级正规 Fallback|Low 摆烂式兜底|\n|---|---|\n|异常分类：网络 / 限流 / 参数 / 服务崩溃分开处理|全局大 try-except 全包|\n|有告警、日志、监控，知道哪里炸了|静默吞错，完全无记录|\n|只降级非核心，保证核心闭环|乱返默认值、空数据、假结果|\n|配合状态机、熔断、重试策略|单纯 `try:xxx except:pass`|\n|为了**稳定性**|为了**不报错、省事**|\n\n---\n\n## 五、结合你当前业务总结\n\n你写：\n\nsession、bootstrap、probe loop、OTP 429、代理池、状态机\n\n✅ 正确用法：\n\n给 **429 限流、代理超时、连接失败** 做**定向 fallback**：冷却、切代理、切换接口、退出本轮任务闭环。\n\n❌ 不要用烂兜底：\n\n不要所有报错一把抓，不分类、不记录、盲目重试、糊弄跳过。\n\n---\n\n## 一句终极总结\n\n**合理设计的降级兜底是高阶架构能力；\n\n不加约束、无脑吞错、掩盖 BUG 的万能 fallback，才是程序员眼里最 low 的偷懒写法。**\n\n需要我给你写一段：\n\n「工业级优雅 fallback」vs「新手 low 摆烂兜底」的对照代码，你直接就能套用？",
+    "html": "<p>先讲核心结论：</p>\n<p><strong>Fallback 本身不 low，「烂写法的 fallback」才被程序员嫌弃、认为掉价。</strong></p>\n<p>结合你日常写的自动化、接口、风控、服务开发，人话讲透：</p>\n<hr>\n<h2 id=\"一先搞懂正常优雅的-fallback-是什么\">一、先搞懂：正常优雅的 Fallback 是什么</h2>\n<p>正规设计里：</p>\n<ul>\n<li>主链路故障<strong>可控预判</strong></li>\n<li>降级逻辑<strong>单独封装</strong></li>\n<li>有日志、有告警、有熔断、有恢复机制</li>\n<li>只是<strong>优雅让步，保证服务不挂</strong></li>\n</ul>\n<p>✅ 这种：<strong>高级、稳健、架构必备</strong>，大厂微服务全都在用。</p>\n<hr>\n<h2 id=\"二为什么大部分人眼里fallback--很-low\">二、为什么大部分人眼里「fallback = 很 low」？</h2>\n<p>因为<strong>90% 程序员写的 fallback 都是摆烂式兜底</strong>：</p>\n<h3 id=\"1-本质用粗暴容错掩盖架构烂\">1. 本质：用「粗暴容错」掩盖架构烂</h3>\n<p>典型烂代码逻辑：</p>\n<blockquote>\n<p>主流程炸了？</p>\n<p>不管什么错、不问原因、不分类异常</p>\n<p>直接 try-catch 一把抓，随便塞一个默认值、空数据、假响应糊弄过去</p>\n</blockquote>\n<p>问题：</p>\n<ul>\n<li>\n<p>不查根因</p>\n</li>\n<li>\n<p>不修复 BUG</p>\n</li>\n<li>\n<p>用兜底掩盖设计缺陷</p>\n<p>👉 <strong>治标不治本，属于偷懒摆烂</strong></p>\n</li>\n</ul>\n<h3 id=\"2-模糊错误隐藏-bug\">2. 模糊错误，隐藏 Bug</h3>\n<p>正常报错：</p>\n<p>直接抛异常 → 立刻发现问题 → 修复</p>\n<p>烂 fallback：</p>\n<p>报错被吞掉，静默降级 → 程序看似没崩，结果<strong>数据错、逻辑乱、风控炸、业务异常</strong></p>\n<p>你做注册 / OTP 最懂：</p>\n<p>接口 429、代理断连、session 初始化失败，无脑 fallback 糊弄过去，后面全是隐形大坑。</p>\n<h3 id=\"3-沦为不写严谨逻辑的借口\">3. 沦为「不写严谨逻辑的借口」</h3>\n<p>很多新手：</p>\n<p>不想处理边界条件</p>\n<p>不想做参数校验</p>\n<p>不想处理网络异常</p>\n<p>不想做状态机流转</p>\n<p>直接一句：</p>\n<blockquote>\n<p>出事就 fallback 兜底就行</p>\n</blockquote>\n<p>等于：<strong>放弃严谨，靠摆烂运行</strong>，在工程里非常掉价。</p>\n<h3 id=\"4-降级无边界越降越敷衍\">4. 降级无边界，越降越敷衍</h3>\n<p>优秀降级：</p>\n<p>只关非核心功能，核心链路强一致</p>\n<p>low 降级：</p>\n<p>一降到底，核心业务直接阉割、返回假数据、空数据、硬编码默认值</p>\n<p>完全丧失业务准确性。</p>\n<hr>\n<h2 id=\"三程序员鄙视链里的潜台词\">三、程序员鄙视链里的潜台词</h2>\n<p>老开发看到一坨无脑 fallback 代码，潜台词是：</p>\n<ol>\n<li>架构设计烂，没有熔断、限流、状态机</li>\n<li>懒得排查异常、懒得分类错误</li>\n<li>用兜底掩盖技术债务</li>\n<li>代码脆弱，全靠 “容错苟活”</li>\n</ol>\n<p>所以圈内会觉得：</p>\n<p><strong>动不动就无脑 fallback = 技术能力不行的表现</strong></p>\n<hr>\n<h2 id=\"四帮你区分高级降级-vs-low-兜底\">四、帮你区分：高级降级 vs low 兜底</h2>\n<p>表格</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>高级正规 Fallback</th>\n<th>Low 摆烂式兜底</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>异常分类：网络 / 限流 / 参数 / 服务崩溃分开处理</td>\n<td>全局大 try-except 全包</td>\n</tr>\n<tr>\n<td>有告警、日志、监控，知道哪里炸了</td>\n<td>静默吞错，完全无记录</td>\n</tr>\n<tr>\n<td>只降级非核心，保证核心闭环</td>\n<td>乱返默认值、空数据、假结果</td>\n</tr>\n<tr>\n<td>配合状态机、熔断、重试策略</td>\n<td>单纯 <code>try:xxx except:pass</code></td>\n</tr>\n<tr>\n<td>为了<strong>稳定性</strong></td>\n<td>为了<strong>不报错、省事</strong></td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h2 id=\"五结合你当前业务总结\">五、结合你当前业务总结</h2>\n<p>你写：</p>\n<p>session、bootstrap、probe loop、OTP 429、代理池、状态机</p>\n<p>✅ 正确用法：</p>\n<p>给 <strong>429 限流、代理超时、连接失败</strong> 做<strong>定向 fallback</strong>：冷却、切代理、切换接口、退出本轮任务闭环。</p>\n<p>❌ 不要用烂兜底：</p>\n<p>不要所有报错一把抓，不分类、不记录、盲目重试、糊弄跳过。</p>\n<hr>\n<h2 id=\"一句终极总结\">一句终极总结</h2>\n<p>**合理设计的降级兜底是高阶架构能力；</p>\n<p>不加约束、无脑吞错、掩盖 BUG 的万能 fallback，才是程序员眼里最 low 的偷懒写法。**</p>\n<p>需要我给你写一段：</p>\n<p>「工业级优雅 fallback」vs「新手 low 摆烂兜底」的对照代码，你直接就能套用？</p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "一-先搞懂-正常优雅的-fallback-是什么",
+        "text": "一、先搞懂：正常优雅的 Fallback 是什么"
+      },
+      {
+        "depth": 2,
+        "slug": "二-为什么大部分人眼里-fallback-很-low",
+        "text": "二、为什么大部分人眼里「fallback = 很 low」？"
+      },
+      {
+        "depth": 3,
+        "slug": "1-本质-用-粗暴容错-掩盖架构烂",
+        "text": "1. 本质：用「粗暴容错」掩盖架构烂"
+      },
+      {
+        "depth": 3,
+        "slug": "2-模糊错误-隐藏-bug",
+        "text": "2. 模糊错误，隐藏 Bug"
+      },
+      {
+        "depth": 3,
+        "slug": "3-沦为-不写严谨逻辑的借口",
+        "text": "3. 沦为「不写严谨逻辑的借口」"
+      },
+      {
+        "depth": 3,
+        "slug": "4-降级无边界-越降越敷衍",
+        "text": "4. 降级无边界，越降越敷衍"
+      },
+      {
+        "depth": 2,
+        "slug": "三-程序员鄙视链里的潜台词",
+        "text": "三、程序员鄙视链里的潜台词"
+      },
+      {
+        "depth": 2,
+        "slug": "四-帮你区分-高级降级-vs-low-兜底",
+        "text": "四、帮你区分：高级降级 vs low 兜底"
+      },
+      {
+        "depth": 2,
+        "slug": "五-结合你当前业务总结",
+        "text": "五、结合你当前业务总结"
+      },
+      {
+        "depth": 2,
+        "slug": "一句终极总结",
+        "text": "一句终极总结"
+      }
+    ],
+    "detailPath": "articles/md_7389c0ecdff7.json"
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_2e77e892c258",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/Obsidian%20EPUB%20%E9%98%85%E8%AF%BB%E6%96%B9%E6%A1%88%E6%B1%87%E6%80%BB.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/Obsidian EPUB 阅读方案汇总.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Obsidian EPUB 阅读方案汇总.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Obsidian%20EPUB%20%E9%98%85%E8%AF%BB%E6%96%B9%E6%A1%88%E6%B1%87%E6%80%BB.md",
+    "slug": "codex-knowledge-obsidian-epub-阅读方案汇总",
+    "title": "Obsidian EPUB 阅读方案汇总",
+    "summary": "Obsidian EPUB 阅读方案汇总 更新时间：2026 04 18 结论 如果你的目标是： 在 Obsidian 里直接打开 .epub 支持目录、阅读位置记忆、字体大小调节 支持上下连续滚动 那么现在已经恢复并重新安装了 obsidian epub plugin。 如果你的目标更偏向： 上下...",
+    "description": "Obsidian EPUB 阅读方案汇总 更新时间：2026 04 18 结论 如果你的目标是： 在 Obsidian 里直接打开 .epub 支持目录、阅读位置记忆、字体大小调节 支持上下连续滚动 那么现在已经恢复并重新安装了 obsidian epub plugin。 如果你的目标更偏向： 上下...",
+    "date": "2026-04-23",
+    "updated": "2026-04-23",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-阅读书库",
+      "项目-书库",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-阅读书库",
+        "项目-书库"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/Obsidian EPUB 阅读方案汇总.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Obsidian EPUB 阅读方案汇总.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Obsidian%20EPUB%20%E9%98%85%E8%AF%BB%E6%96%B9%E6%A1%88%E6%B1%87%E6%80%BB.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "书库",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 阅读书库",
+        "项目 书库",
+        "书库"
+      ],
+      "subtitle": "Obsidian EPUB 阅读方案汇总 更新时间：2026 04 18 结论 如果你的目标是： 在 Obsidian 里直接打开 .epub 支持目录、阅读位置记忆、字体大小调节 支持上下连续滚动 那么现在已经恢复并重新安装了 obsidian epub plugin。 如果你的目标更偏向： 上下..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Obsidian EPUB 阅读方案汇总\n\n更新时间：2026-04-18\n\n## 结论\n\n如果你的目标是：\n\n- 在 Obsidian 里直接打开 `.epub`\n- 支持目录、阅读位置记忆、字体大小调节\n- 支持上下连续滚动\n\n那么现在已经恢复并重新安装了 `obsidian-epub-plugin`。\n\n如果你的目标更偏向：\n\n- 上下滚动式长文阅读\n- 更稳定的中文排版\n- 后续做高亮、双链、批注、摘录、搜索\n\n那么更适合长期使用的是：先用 `epub-importer` 把 EPUB 导入成 Markdown，再在 Obsidian 里阅读。\n\n也就是说，现在保留了两套方案：\n\n1. `obsidian-epub-plugin`：适合“直接读 EPUB 原书”\n2. `epub-importer`：适合“导入成 Markdown 后长期阅读和知识管理”\n\n## 已汇总到的目录\n\n当前生效的 Vault 路径：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data`\n\n其中包含：\n\n- `.obsidian\\plugins`：当前已安装插件\n- `.obsidian\\snippets`：阅读样式片段\n- `docs\\books`：当前书库与导入结果\n- `importer-backups`：EPUB 导入时的备份目录\n\n## 当前已安装插件\n\n### 1. ePub Reader\n\n安装位置：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\obsidian-epub-plugin`\n\n来源：\n\n- 官方仓库：<https://github.com/caronchen/obsidian-epub-plugin>\n- 本地恢复源码：历史恢复阶段目录，当前未保留在仓库内\n- 本地编译产物：当前以已安装插件目录为准，不再单独保留 `plugin-recovery` 构建目录\n\n已确认功能（来自源码和已编译文件）：\n\n- 直接打开 `.epub`\n- 显示 TOC 目录\n- 记忆阅读位置\n- 字体大小调节\n- 跟随亮/暗主题\n- 支持连续滚动阅读（`flow: \"scrolled\"` + `manager: \"continuous\"`）\n- 支持从面板菜单创建对应笔记（Create new epub note）\n\n当前设置：\n\n- `scrolledView: true`\n- `notePath: /`\n- `useSameFolder: true`\n- `tags: notes/booknotes`\n\n设置文件：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\obsidian-epub-plugin\\data.json`\n\n### 2. Epub Importer\n\n安装位置：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\epub-importer`\n\n来源：\n\n- 官方仓库：<https://github.com/aoout/obsidian-epub-importer>\n- 本地恢复源码：历史恢复阶段目录，当前未保留在仓库内\n- 本地编译产物：当前以已安装插件目录为准，不再单独保留 `plugin-recovery` 构建目录\n\n已确认能力（来自 README / 设置项 / 编译产物）：\n\n- 把 EPUB 导入为一组 Markdown 笔记\n- 可配置书库目录 `libraries`\n- 可配置保存目录 `savePath`\n- 支持图片资源拆分存放\n- 支持导入重排版 `reformatting`\n- 支持阅读进度管理 `enableReadProgressManager`\n- 适合后续进行 Obsidian 原生检索、双链、标签、摘录和批注\n\n当前设置：\n\n- 书库目录：`E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\books`\n- 导入目录：`docs/books/imported_markdown`\n- 图片目录模板：`{{savePath}}/{{bookName}}/images`\n- 备份目录：历史恢复阶段目录，当前未保留在仓库内\n- 已开启 `reformatting`\n- 已开启阅读进度管理\n\n设置文件：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\epub-importer\\data.json`\n\n## 中文排版增强\n\n为了让导入后的 Markdown 书籍更适合中文长文阅读，已经额外添加了一个只作用于导入书目录的 CSS 片段。\n\n文件位置：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\snippets\\epub-reading-enhanced.css`\n\n启用记录：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\appearance.json`\n\n主要增强内容：\n\n- 中文衬线字体优先\n- 正文字号放大\n- 行高增大\n- 段首缩进\n- 图片居中\n- 表格横向滚动\n- 代码块自动换行\n- 列表/引用/表格/代码区域取消段首缩进\n\n注意：这个增强主要作用于：\n\n- `docs/books/imported_markdown/`\n\n也就是说，它重点优化的是“导入成 Markdown 后的阅读体验”，不是直接改 EPUB 原始排版引擎。\n\n## 我推荐的使用方式\n\n### 方案 A：直接读 EPUB 原文件\n\n适合：\n\n- 想尽量保持原书结构\n- 想快速打开就看\n- 需要目录、位置记忆、字体调节\n\n使用插件：\n\n- `obsidian-epub-plugin`\n\n优点：\n\n- 打开快\n- 保留 EPUB 原内容结构\n- 已确认支持连续滚动\n\n局限：\n\n- 中文排版强化能力有限\n- 原书 CSS 比较脏时，显示质量受源文件影响更大\n\n### 方案 B：导入成 Markdown 再读\n\n适合：\n\n- 想要真正上下滚动长文阅读\n- 想强化中文排版稳定性\n- 想做摘录、批注、链接、知识库整理\n\n使用插件：\n\n- `epub-importer`\n- `epub-reading-enhanced.css`\n\n优点：\n\n- 阅读行为完全走 Obsidian 原生 Markdown 流\n- 更适合连续滚动\n- 更容易统一中文排版\n- 更容易二次整理和长期维护\n\n局限：\n\n- 导入后不再是原始 EPUB 单文件模式\n- 个别复杂图文书仍可能需要专项清理\n\n## 当前社区插件登记\n\n文件：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\community-plugins.json`\n\n当前已登记：\n\n- `obsidian-epub-plugin`\n- `obsidian-annotator`\n- `epub-importer`\n\n## 当前状态判定\n\n文件级恢复与安装状态：**已完成**\n\n已完成内容：\n\n- 官方源码找回\n- 本地编译成功\n- 安装到当前 Vault\n- 配置文件写入\n- 中文排版片段添加并启用\n- 历史恢复阶段曾使用独立 `plugin-recovery` 目录；当前仓库只保留已安装插件与现行配置\n\n可见界面验证状态：**未完成 / unverified**\n\n原因：\n\n- 目前只完成了源码、编译产物、安装目录、配置文件和功能标记的核验\n- 还没有拿到 Obsidian 界面中的实际截图证据来证明“插件面板已正常加载、书籍已可见、滚动效果已在界面中展示”\n\n## 后续最值得做的两步\n\n1. 在 Obsidian 里实际打开一个 `.epub`，确认 `obsidian-epub-plugin` 的滚动阅读是否正常\n2. 任选一本 `.epub` 用 `epub-importer` 导入到 `docs/books/imported_markdown`，看中文排版效果是否已经达到你的预期\n\n## 本次验证证据\n\n截图证据：\n\n- 历史恢复阶段截图路径未在当前仓库保留\n\n验证结果分级：\n\n- `unverified`\n\n说明：\n\n- 已实际拉起 `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\app\\obsidian\\Obsidian.exe`\n- 已拿到桌面截图，能看到 Obsidian 窗口出现\n- 但截图里还停留在 Vault 选择/启动界面，未进入到“插件列表 / EPUB 阅读页 / 导入后正文页”\n- 因此不能把这次结果算作“已可见验证通过”\n- 另外当前便携版 Obsidian 启动日志里还能看到 `resources.pak`、`chrome_100_percent.pak` 缺失提示，这也会影响进一步界面验证的可信度",
+    "html": "<h1 id=\"obsidian-epub-阅读方案汇总\">Obsidian EPUB 阅读方案汇总</h1>\n<p>更新时间：2026-04-18</p>\n<h2 id=\"结论\">结论</h2>\n<p>如果你的目标是：</p>\n<ul>\n<li>在 Obsidian 里直接打开 <code>.epub</code></li>\n<li>支持目录、阅读位置记忆、字体大小调节</li>\n<li>支持上下连续滚动</li>\n</ul>\n<p>那么现在已经恢复并重新安装了 <code>obsidian-epub-plugin</code>。</p>\n<p>如果你的目标更偏向：</p>\n<ul>\n<li>上下滚动式长文阅读</li>\n<li>更稳定的中文排版</li>\n<li>后续做高亮、双链、批注、摘录、搜索</li>\n</ul>\n<p>那么更适合长期使用的是：先用 <code>epub-importer</code> 把 EPUB 导入成 Markdown，再在 Obsidian 里阅读。</p>\n<p>也就是说，现在保留了两套方案：</p>\n<ol>\n<li><code>obsidian-epub-plugin</code>：适合“直接读 EPUB 原书”</li>\n<li><code>epub-importer</code>：适合“导入成 Markdown 后长期阅读和知识管理”</li>\n</ol>\n<h2 id=\"已汇总到的目录\">已汇总到的目录</h2>\n<p>当前生效的 Vault 路径：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data</code></li>\n</ul>\n<p>其中包含：</p>\n<ul>\n<li><code>.obsidian\\plugins</code>：当前已安装插件</li>\n<li><code>.obsidian\\snippets</code>：阅读样式片段</li>\n<li><code>docs\\books</code>：当前书库与导入结果</li>\n<li><code>importer-backups</code>：EPUB 导入时的备份目录</li>\n</ul>\n<h2 id=\"当前已安装插件\">当前已安装插件</h2>\n<h3 id=\"1-epub-reader\">1. ePub Reader</h3>\n<p>安装位置：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\obsidian-epub-plugin</code></li>\n</ul>\n<p>来源：</p>\n<ul>\n<li>官方仓库：<a href=\"https://github.com/caronchen/obsidian-epub-plugin\">https://github.com/caronchen/obsidian-epub-plugin</a></li>\n<li>本地恢复源码：历史恢复阶段目录，当前未保留在仓库内</li>\n<li>本地编译产物：当前以已安装插件目录为准，不再单独保留 <code>plugin-recovery</code> 构建目录</li>\n</ul>\n<p>已确认功能（来自源码和已编译文件）：</p>\n<ul>\n<li>直接打开 <code>.epub</code></li>\n<li>显示 TOC 目录</li>\n<li>记忆阅读位置</li>\n<li>字体大小调节</li>\n<li>跟随亮/暗主题</li>\n<li>支持连续滚动阅读（<code>flow: \"scrolled\"</code> + <code>manager: \"continuous\"</code>）</li>\n<li>支持从面板菜单创建对应笔记（Create new epub note）</li>\n</ul>\n<p>当前设置：</p>\n<ul>\n<li><code>scrolledView: true</code></li>\n<li><code>notePath: /</code></li>\n<li><code>useSameFolder: true</code></li>\n<li><code>tags: notes/booknotes</code></li>\n</ul>\n<p>设置文件：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\obsidian-epub-plugin\\data.json</code></li>\n</ul>\n<h3 id=\"2-epub-importer\">2. Epub Importer</h3>\n<p>安装位置：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\epub-importer</code></li>\n</ul>\n<p>来源：</p>\n<ul>\n<li>官方仓库：<a href=\"https://github.com/aoout/obsidian-epub-importer\">https://github.com/aoout/obsidian-epub-importer</a></li>\n<li>本地恢复源码：历史恢复阶段目录，当前未保留在仓库内</li>\n<li>本地编译产物：当前以已安装插件目录为准，不再单独保留 <code>plugin-recovery</code> 构建目录</li>\n</ul>\n<p>已确认能力（来自 README / 设置项 / 编译产物）：</p>\n<ul>\n<li>把 EPUB 导入为一组 Markdown 笔记</li>\n<li>可配置书库目录 <code>libraries</code></li>\n<li>可配置保存目录 <code>savePath</code></li>\n<li>支持图片资源拆分存放</li>\n<li>支持导入重排版 <code>reformatting</code></li>\n<li>支持阅读进度管理 <code>enableReadProgressManager</code></li>\n<li>适合后续进行 Obsidian 原生检索、双链、标签、摘录和批注</li>\n</ul>\n<p>当前设置：</p>\n<ul>\n<li>书库目录：<code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\books</code></li>\n<li>导入目录：<code>docs/books/imported_markdown</code></li>\n<li>图片目录模板：<code>{{savePath}}/{{bookName}}/images</code></li>\n<li>备份目录：历史恢复阶段目录，当前未保留在仓库内</li>\n<li>已开启 <code>reformatting</code></li>\n<li>已开启阅读进度管理</li>\n</ul>\n<p>设置文件：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\plugins\\epub-importer\\data.json</code></li>\n</ul>\n<h2 id=\"中文排版增强\">中文排版增强</h2>\n<p>为了让导入后的 Markdown 书籍更适合中文长文阅读，已经额外添加了一个只作用于导入书目录的 CSS 片段。</p>\n<p>文件位置：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\snippets\\epub-reading-enhanced.css</code></li>\n</ul>\n<p>启用记录：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\appearance.json</code></li>\n</ul>\n<p>主要增强内容：</p>\n<ul>\n<li>中文衬线字体优先</li>\n<li>正文字号放大</li>\n<li>行高增大</li>\n<li>段首缩进</li>\n<li>图片居中</li>\n<li>表格横向滚动</li>\n<li>代码块自动换行</li>\n<li>列表/引用/表格/代码区域取消段首缩进</li>\n</ul>\n<p>注意：这个增强主要作用于：</p>\n<ul>\n<li><code>docs/books/imported_markdown/</code></li>\n</ul>\n<p>也就是说，它重点优化的是“导入成 Markdown 后的阅读体验”，不是直接改 EPUB 原始排版引擎。</p>\n<h2 id=\"我推荐的使用方式\">我推荐的使用方式</h2>\n<h3 id=\"方案-a直接读-epub-原文件\">方案 A：直接读 EPUB 原文件</h3>\n<p>适合：</p>\n<ul>\n<li>想尽量保持原书结构</li>\n<li>想快速打开就看</li>\n<li>需要目录、位置记忆、字体调节</li>\n</ul>\n<p>使用插件：</p>\n<ul>\n<li><code>obsidian-epub-plugin</code></li>\n</ul>\n<p>优点：</p>\n<ul>\n<li>打开快</li>\n<li>保留 EPUB 原内容结构</li>\n<li>已确认支持连续滚动</li>\n</ul>\n<p>局限：</p>\n<ul>\n<li>中文排版强化能力有限</li>\n<li>原书 CSS 比较脏时，显示质量受源文件影响更大</li>\n</ul>\n<h3 id=\"方案-b导入成-markdown-再读\">方案 B：导入成 Markdown 再读</h3>\n<p>适合：</p>\n<ul>\n<li>想要真正上下滚动长文阅读</li>\n<li>想强化中文排版稳定性</li>\n<li>想做摘录、批注、链接、知识库整理</li>\n</ul>\n<p>使用插件：</p>\n<ul>\n<li><code>epub-importer</code></li>\n<li><code>epub-reading-enhanced.css</code></li>\n</ul>\n<p>优点：</p>\n<ul>\n<li>阅读行为完全走 Obsidian 原生 Markdown 流</li>\n<li>更适合连续滚动</li>\n<li>更容易统一中文排版</li>\n<li>更容易二次整理和长期维护</li>\n</ul>\n<p>局限：</p>\n<ul>\n<li>导入后不再是原始 EPUB 单文件模式</li>\n<li>个别复杂图文书仍可能需要专项清理</li>\n</ul>\n<h2 id=\"当前社区插件登记\">当前社区插件登记</h2>\n<p>文件：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\.obsidian\\community-plugins.json</code></li>\n</ul>\n<p>当前已登记：</p>\n<ul>\n<li><code>obsidian-epub-plugin</code></li>\n<li><code>obsidian-annotator</code></li>\n<li><code>epub-importer</code></li>\n</ul>\n<h2 id=\"当前状态判定\">当前状态判定</h2>\n<p>文件级恢复与安装状态：<strong>已完成</strong></p>\n<p>已完成内容：</p>\n<ul>\n<li>官方源码找回</li>\n<li>本地编译成功</li>\n<li>安装到当前 Vault</li>\n<li>配置文件写入</li>\n<li>中文排版片段添加并启用</li>\n<li>历史恢复阶段曾使用独立 <code>plugin-recovery</code> 目录；当前仓库只保留已安装插件与现行配置</li>\n</ul>\n<p>可见界面验证状态：<strong>未完成 / unverified</strong></p>\n<p>原因：</p>\n<ul>\n<li>目前只完成了源码、编译产物、安装目录、配置文件和功能标记的核验</li>\n<li>还没有拿到 Obsidian 界面中的实际截图证据来证明“插件面板已正常加载、书籍已可见、滚动效果已在界面中展示”</li>\n</ul>\n<h2 id=\"后续最值得做的两步\">后续最值得做的两步</h2>\n<ol>\n<li>在 Obsidian 里实际打开一个 <code>.epub</code>，确认 <code>obsidian-epub-plugin</code> 的滚动阅读是否正常</li>\n<li>任选一本 <code>.epub</code> 用 <code>epub-importer</code> 导入到 <code>docs/books/imported_markdown</code>，看中文排版效果是否已经达到你的预期</li>\n</ol>\n<h2 id=\"本次验证证据\">本次验证证据</h2>\n<p>截图证据：</p>\n<ul>\n<li>历史恢复阶段截图路径未在当前仓库保留</li>\n</ul>\n<p>验证结果分级：</p>\n<ul>\n<li><code>unverified</code></li>\n</ul>\n<p>说明：</p>\n<ul>\n<li>已实际拉起 <code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\app\\obsidian\\Obsidian.exe</code></li>\n<li>已拿到桌面截图，能看到 Obsidian 窗口出现</li>\n<li>但截图里还停留在 Vault 选择/启动界面，未进入到“插件列表 / EPUB 阅读页 / 导入后正文页”</li>\n<li>因此不能把这次结果算作“已可见验证通过”</li>\n<li>另外当前便携版 Obsidian 启动日志里还能看到 <code>resources.pak</code>、<code>chrome_100_percent.pak</code> 缺失提示，这也会影响进一步界面验证的可信度</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "obsidian-epub-阅读方案汇总",
+        "text": "Obsidian EPUB 阅读方案汇总"
+      },
+      {
+        "depth": 2,
+        "slug": "结论",
+        "text": "结论"
+      },
+      {
+        "depth": 2,
+        "slug": "已汇总到的目录",
+        "text": "已汇总到的目录"
+      },
+      {
+        "depth": 2,
+        "slug": "当前已安装插件",
+        "text": "当前已安装插件"
+      },
+      {
+        "depth": 3,
+        "slug": "1-epub-reader",
+        "text": "1. ePub Reader"
+      },
+      {
+        "depth": 3,
+        "slug": "2-epub-importer",
+        "text": "2. Epub Importer"
+      },
+      {
+        "depth": 2,
+        "slug": "中文排版增强",
+        "text": "中文排版增强"
+      },
+      {
+        "depth": 2,
+        "slug": "我推荐的使用方式",
+        "text": "我推荐的使用方式"
+      },
+      {
+        "depth": 3,
+        "slug": "方案-a-直接读-epub-原文件",
+        "text": "方案 A：直接读 EPUB 原文件"
+      },
+      {
+        "depth": 3,
+        "slug": "方案-b-导入成-markdown-再读",
+        "text": "方案 B：导入成 Markdown 再读"
+      },
+      {
+        "depth": 2,
+        "slug": "当前社区插件登记",
+        "text": "当前社区插件登记"
+      },
+      {
+        "depth": 2,
+        "slug": "当前状态判定",
+        "text": "当前状态判定"
+      },
+      {
+        "depth": 2,
+        "slug": "后续最值得做的两步",
+        "text": "后续最值得做的两步"
+      },
+      {
+        "depth": 2,
+        "slug": "本次验证证据",
+        "text": "本次验证证据"
+      }
+    ],
+    "detailPath": "articles/md_2e77e892c258.json"
+  }
+}

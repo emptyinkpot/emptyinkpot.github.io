@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_48d378b238d3",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/systemd%20%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF.md",
+    "sourcePath": "/home/vault/Obsidian/docs/systemd 是什么东西.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/systemd 是什么东西.md",
+    "openlistUrl": "/openlist/Obsidian/docs/systemd%20%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF.md",
+    "slug": "systemd-是什么东西",
+    "title": "systemd 是什么东西",
+    "summary": "systemd 是什么东西 这份内容已经并入：agent/多服务器智能体体系技术手册.md 优先阅读： agent/多服务器智能体体系技术手册.md 附录 F / 十四、systemd 与服务托管整理 这里保留为概念索引页，避免旧链接失效。",
+    "description": "systemd 是什么东西 这份内容已经并入：agent/多服务器智能体体系技术手册.md 优先阅读： agent/多服务器智能体体系技术手册.md 附录 F / 十四、systemd 与服务托管整理 这里保留为概念索引页，避免旧链接失效。",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-系统运维",
+      "systemd"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-系统运维"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/systemd 是什么东西.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/systemd 是什么东西.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/systemd%20%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Atramenti-Console",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 系统运维",
+        "SYSTEMD",
+        "ATRAMENTI CONSOLE"
+      ],
+      "subtitle": "systemd 是什么东西 这份内容已经并入：agent/多服务器智能体体系技术手册.md 优先阅读： agent/多服务器智能体体系技术手册.md 附录 F / 十四、systemd 与服务托管整理 这里保留为概念索引页，避免旧链接失效。"
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## systemd 是什么东西\n\n这份内容已经并入：`agent/多服务器智能体体系技术手册.md`\n\n优先阅读：\n\n- `agent/多服务器智能体体系技术手册.md` -> `附录 F / 十四、systemd 与服务托管整理`\n\n这里保留为概念索引页，避免旧链接失效。",
+    "html": "<h2 id=\"systemd-是什么东西\">systemd 是什么东西</h2>\n<p>这份内容已经并入：<code>agent/多服务器智能体体系技术手册.md</code></p>\n<p>优先阅读：</p>\n<ul>\n<li><code>agent/多服务器智能体体系技术手册.md</code> -> <code>附录 F / 十四、systemd 与服务托管整理</code></li>\n</ul>\n<p>这里保留为概念索引页，避免旧链接失效。</p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "systemd-是什么东西",
+        "text": "systemd 是什么东西"
+      }
+    ],
+    "detailPath": "articles/md_48d378b238d3.json"
+  }
+}

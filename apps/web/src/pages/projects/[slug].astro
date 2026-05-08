@@ -27,8 +27,21 @@ const repoLabel = projectView.owner && projectView.repoName ? `${projectView.own
 const initialBranch = 'main';
 const primaryWiki = projectView.wiki[0];
 const initialWikiContent = project.body?.trim() || project.data.description;
-const githubRuntimeMode = 'GitHub API';
+const appflowyConnected = projectView.collaborationRuntime === 'appflowy-embed' && Boolean(projectView.appflowyUrl);
+const collaborationLabel = appflowyConnected ? 'AppFlowy workspace' : 'GitHub Workbench fallback';
 const commandItems = [
+  ...(appflowyConnected && projectView.appflowyUrl
+    ? [
+        {
+          id: 'appflowy',
+          label: 'AppFlowy 工作区',
+          description: projectView.appflowyWorkspace ?? '协作 runtime',
+          href: '#appflowy',
+          kind: 'internal',
+          icon: 'modules'
+        }
+      ]
+    : []),
   {
     id: 'wiki',
     label: 'Wiki 文档',
@@ -100,8 +113,16 @@ const commandItems = [
 ] as const;
 ---
 
-<BaseLayout title={`${project.data.title} / GitHub Workbench`} description={project.data.description} hideSiteChrome={true} appMode={true}>
-  <main class="project-workbench" data-pagefind-body data-project-slug={project.id} data-project-repo={repoLabel} data-github-api-ready="true">
+<BaseLayout title={`${project.data.title} / Project Studio`} description={project.data.description} hideSiteChrome={true} appMode={true}>
+  <main
+    class="project-workbench"
+    data-pagefind-body
+    data-project-slug={project.id}
+    data-project-repo={repoLabel}
+    data-github-api-ready="true"
+    data-collaboration-runtime={projectView.collaborationRuntime}
+    data-collaboration-status={projectView.collaborationStatus}
+  >
     <aside class="project-workbench__sidebar" aria-label="Project workbench navigation">
       <a class="project-workbench__brand" href={withBase('/projects/')}>
         <i aria-hidden="true"></i>
@@ -122,16 +143,18 @@ const commandItems = [
 
       <div class="project-workbench__sidebar-note">
         <span>{getProjectTypeLabel(projectView.type)} / {projectView.status}</span>
-        <p>写入与同步都经过服务端 GitHub API；前台不暴露 token，失败时保留当前构建期兜底。</p>
+        <p>协作 runtime 目标是外置 AppFlowy。当前未配置 AppFlowy embed 时，本页只保留 GitHub Workbench fallback；前台不暴露 token。</p>
       </div>
     </aside>
 
     <section class="project-workbench__main">
       <header class="project-workbench__statusbar">
         <div class="project-workbench__repo">
-          <span>项目工坊 / {repoLabel} / {githubRuntimeMode}</span>
+          <span>项目工坊 / {repoLabel} / {collaborationLabel}</span>
           <strong>{project.data.title}</strong>
-          <small data-project-live-summary>正在连接 GitHub API；失败时保留构建期兜底。</small>
+          <small data-project-live-summary>
+            {appflowyConnected ? 'AppFlowy workspace 已配置；GitHub 信号继续作为项目代码投影。' : 'AppFlowy workspace 未接入；当前 GitHub API 只是 fallback，不是最终协作内核。'}
+          </small>
         </div>
 
         <dl class="project-workbench__status">
@@ -166,10 +189,43 @@ const commandItems = [
         </div>
       </header>
 
+      <section id="appflowy" class={`project-work-panel project-work-panel--runtime ${appflowyConnected ? 'is-connected' : 'is-pending'}`}>
+        <header class="project-work-panel__header">
+          <div>
+            <span>COLLABORATION RUNTIME</span>
+            <h2>AppFlowy Workspace</h2>
+          </div>
+          <strong>{appflowyConnected ? 'connected' : 'target'}</strong>
+        </header>
+
+        {
+          appflowyConnected && projectView.appflowyUrl ? (
+            <div class="project-workbench__appflowy-frame">
+              <iframe
+                src={projectView.appflowyUrl}
+                title={`${project.data.title} AppFlowy workspace`}
+                loading="lazy"
+                referrerpolicy="no-referrer"
+              ></iframe>
+            </div>
+          ) : (
+            <div class="project-workbench__runtime-note">
+              <p>
+                目标架构是把协作 runtime 拆到独立 AppFlowy Cloud，由 `project.tengokukk.com` 承载 block editor、database、kanban、comments 与 realtime workspace。
+              </p>
+              <p>
+                当前生产页没有 AppFlowy URL，因此 Wiki、Timeline、Issues、PR、Commits 仍是 GitHub Workbench fallback。它可以记录项目状态，但不再被当作最终协作系统继续扩张。
+              </p>
+              <a href="https://github.com/AppFlowy-IO/AppFlowy-Cloud" target="_blank" rel="noreferrer">AppFlowy Cloud</a>
+            </div>
+          )
+        }
+      </section>
+
       <section id="wiki" class="project-work-panel project-work-panel--editor" data-wiki-editor>
         <header class="project-work-panel__header">
           <div>
-            <span>WIKI EDITOR</span>
+            <span>GITHUB FALLBACK WIKI</span>
             <h1>{primaryWiki?.title ?? '项目 Wiki'}</h1>
           </div>
           <div class="project-work-panel__tools">
@@ -187,14 +243,14 @@ const commandItems = [
         >{initialWikiContent}</textarea>
 
         <p class="project-workbench__message" data-wiki-message>
-          当前静态站不会暴露 GitHub token。点击提交会调用服务端 `/api/github/file/save` 写入 GitHub。
+          当前静态站不会暴露 GitHub token。点击提交会调用服务端 `/api/github/file/save` 写入 GitHub；AppFlowy 接入后，协作文档应迁到外置 workspace。
         </p>
       </section>
 
       <section id="timeline" class="project-work-panel" data-timeline-editor>
         <header class="project-work-panel__header">
           <div>
-            <span>TIMELINE</span>
+            <span>GITHUB FALLBACK TIMELINE</span>
             <h2>项目时间线</h2>
           </div>
           <button type="button" data-save-timeline>提交 timeline.json</button>

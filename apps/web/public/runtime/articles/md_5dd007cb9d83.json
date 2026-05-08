@@ -1,0 +1,495 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_5dd007cb9d83",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%89%8B%E5%86%8C.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/手册.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/手册.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%89%8B%E5%86%8C.md",
+    "slug": "blog-编程规范-手册",
+    "title": "手册",
+    "summary": "好，我帮你直接整理成一份 可以直接放仓库用的 README（带目录 + 文内跳转 + 架构图） ，结构已经优化过，适合长期维护 👇 📄 README.md（完整版） text 本地端口 ≠ 云端端口 它们是两套完全独立的运行实例 text [Codex 本地 Agent] │ │ HTTP（ba...",
+    "description": "好，我帮你直接整理成一份 可以直接放仓库用的 README（带目录 + 文内跳转 + 架构图） ，结构已经优化过，适合长期维护 👇 📄 README.md（完整版） text 本地端口 ≠ 云端端口 它们是两套完全独立的运行实例 text [Codex 本地 Agent] │ │ HTTP（ba...",
+    "date": "2026-04-28",
+    "updated": "2026-04-28",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/手册.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/手册.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%89%8B%E5%86%8C.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "手册",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "手册"
+      ],
+      "subtitle": "好，我帮你直接整理成一份 可以直接放仓库用的 README（带目录 + 文内跳转 + 架构图） ，结构已经优化过，适合长期维护 👇 📄 README.md（完整版） text 本地端口 ≠ 云端端口 它们是两套完全独立的运行实例 text [Codex 本地 Agent] │ │ HTTP（ba..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "好，我帮你直接整理成一份**可以直接放仓库用的 README（带目录 + 文内跳转 + 架构图）**，结构已经优化过，适合长期维护 👇\n\n---\n\n# 📄 README.md（完整版）\n\n````markdown\n# 📚 Token Pool & Codex 调试体系\n\n---\n\n## 📖 目录\n\n- [一、核心结论](#核心结论)\n- [二、系统架构](#系统架构)\n- [三、本地 vs 云端](#本地-vs-云端)\n- [四、端口说明](#端口说明)\n- [五、Nginx 转发机制](#nginx-转发机制)\n- [六、Codex 本地调试本质](#codex-本地调试本质)\n- [七、常见问题（重要）](#常见问题重要)\n- [八、调试最佳实践](#调试最佳实践)\n- [九、总结](#总结)\n\n---\n\n## 🧠 核心结论\n\n```text\n本地端口 ≠ 云端端口\n它们是两套完全独立的运行实例\n````\n\n👉 不是一个服务两个入口  \n👉 而是两个环境：\n\n- 本地（开发环境）\n    \n- 云端（生产环境）\n    \n\n---\n\n## 🏗 系统架构\n\n```text\n[Codex 本地 Agent]\n        │\n        │ HTTP（base_url 可切换）\n        ▼\n[Token Pool（本地 or 云端）]\n        │\n        ▼\n[上游模型]\n```\n\n---\n\n## 🧩 本地 vs 云端\n\n---\n\n### 🟢 本地 Token Pool（开发）\n\n```text\nhttp://127.0.0.1:3100  → master\nhttp://127.0.0.1:3301  → worker（API）\n```\nhttp://127.0.0.1:3100\n\n\n\n\n\n\n\n**特点：**\n\n- 本机运行\n    \n- 可调试 / 可修改代码\n    \n- 会 crash / restart\n    \n\n---\n\n### 🔵 云端 Token Pool（生产）\n\n```text\nhttps://key.tengokukk.com/openai/v1\n```\n\n**特点：**\n\n- 部署在服务器（170.x.x.x）\n    \n- nginx + systemd 管理\n    \n- 稳定运行\n    \n\n---\n\n## 🔥 为什么会“混乱”\n\n```text\nCodex → 云端\n你调试 → 本地\n```\n\n👉 结果：\n\n- 本地挂了但还能用\n    \n- 修了但没效果\n    \n\n---\n\n## 🧭 如何判断当前用的是哪一套\n\n### ✅ 方法 1：看 base_url\n\n```text\nhttps://key.tengokukk.com  → 云端\nhttp://127.0.0.1:3301      → 本地\n```\n\n---\n\n### ✅ 方法 2：接口测试\n\n```bash\ncurl http://127.0.0.1:3301/openai/v1/models\ncurl https://key.tengokukk.com/openai/v1/models\n```\n\n---\n\n### ✅ 方法 3：关闭本地\n\n```bash\nkill node\n```\n\n👉 如果还能用 → 说明在用云端\n\n---\n\n## ⚙️ 端口说明\n\n|端口|用途|\n|---|---|\n|127.0.0.1|本机回环地址|\n|3100|Token Pool master|\n|3301|Token Pool worker|\n|80|HTTP|\n|443|HTTPS|\n\n---\n\n## 🌐 Nginx 转发机制\n\n```text\n用户请求\n   ↓\nhttps://key.tengokukk.com\n   ↓\nNginx (443)\n   ↓\nToken Pool (Node)\n   ↓\nProvider\n```\n\n👉 本质：\n\n```text\nNginx = 反向代理\n```\n\n---\n\n## 🧠 Codex 本地调试本质\n\n### ✔ Codex 本地 Agent\n\n- 本地运行\n    \n- 可执行命令（shell / 文件）\n    \n- 管理上下文\n    \n- 不属于 Token Pool\n    \n\n---\n\n### ✔ Token Pool\n\n- 只是 API 网关\n    \n- 不负责本地执行\n    \n\n---\n\n## 🧩 核心关系\n\n```text\nCodex ≠ Token Pool\nCodex 使用 Token Pool\n```\n\n---\n\n## ⚠️ 常见问题（重要）\n\n### ❌ 错误用法\n\n```text\n本地 debug + 云端调用\n```\n\n👉 会导致：\n\n- 判断错误\n    \n- 修复无效\n    \n- 排查困难\n    \n\n---\n\n### ✅ 正确方式\n\n#### 🟢 方式 A（推荐）\n\n```text\nCodex → 本地 Token Pool\n```\n\n#### 🔵 方式 B\n\n```text\nCodex → 云端 Token Pool\n```\n\n---\n\n## 🧭 调试最佳实践\n\n```text\n先确认环境（本地 / 云端）\n再看端口（3100 / 3301）\n再看请求路径\n最后看日志\n```\n\n---\n\n## 🎯 总结\n\n```text\n你看到两个端口，不是一个系统有两个入口\n而是你同时在使用“本地实例”和“云端实例”\n```\n\n---\n\n# 🚀 扩展方向\n\n- 自动环境切换（local / prod）\n    \n- Codex + Token Pool 自动调度\n    \n- crash 根因分析系统\n    \n- provider 智能优化\n    \n\n```\n\n---\n\n# ✅ 这个版本已经帮你做好了\n\n✔ 目录  \n✔ 文内跳转（全部可点）  \n✔ 架构图（ASCII）  \n✔ 层级清晰（适合团队）  \n✔ 可直接放 GitHub  \n\n---\n\n# 🚀 如果你要再进阶一点\n\n我可以帮你再升级一版：\n\n👉 加 **Mermaid 架构图（更专业）**  \n👉 自动生成 **API 调用流程图**  \n👉 或做一个 **开发 / 生产切换指南**\n\n直接说 👍\n```\n\n\n\n\n\n很好，这三个问题是**从“本地开发”到“能给别人用”**的关键，我给你一套**从原理 → 实现 → 实战**的完整讲解👇\n\n---\n\n# 🧠 一、为什么别人访问不了你本地？\n\n---\n\n## 🎯 核心原因\n\n```text\n127.0.0.1 = 只在你自己电脑内部有效\n```\n\n---\n\n## 🧩 举个真实例子\n\n你访问：\n\n```text\nhttp://127.0.0.1:3301\n```\n\n👉 实际发生：\n\n```text\n请求 → 直接回到你自己电脑 → 不走互联网\n```\n\n---\n\n## ❌ 别人访问会发生什么？\n\n别人访问：\n\n```text\nhttp://你的IP:3301\n```\n\n但：\n\n👉 你的电脑通常：\n\n- 没开放公网端口\n    \n- 在路由器/NAT后面\n    \n- 被防火墙拦住\n    \n\n---\n\n## 🔥 所以结论\n\n```text\n本地服务默认是“私有的”，只能自己访问\n```\n\n---\n\n# 🌐 二、怎么把本地服务变成公网？\n\n有三种主流方式👇\n\n---\n\n# 🟢 方案 1：内网穿透（最简单）\n\n👉 推荐新手用\n\n---\n\n## 常见工具：\n\n- ngrok\n    \n- frp\n    \n- cloudflare tunnel\n    \n\n---\n\n## 🎯 原理\n\n```text\n你电脑 → 连接一个公网服务器 → 生成一个公网地址\n```\n\n---\n\n## 🧪 示例（ngrok）\n\n```bash\nngrok http 3301\n```\n\n输出：\n\n```text\nhttps://abc123.ngrok.io\n```\n\n👉 现在别人访问：\n\n```text\nhttps://abc123.ngrok.io\n```\n\n👉 就能访问你本地服务了\n\n---\n\n## 🧠 本质\n\n```text\n你主动“打洞”连接外网服务器\n```\n\n---\n\n# 🔵 方案 2：服务器中转（生产常用）\n\n👉 你现在用的就是这个\n\n---\n\n## 架构\n\n```text\n公网用户\n   ↓\nNginx（服务器）\n   ↓\nToken Pool（服务器）\n```\n\n👉 本地不参与\n\n---\n\n## 优点\n\n- 稳定\n    \n- 可控\n    \n- 安全\n    \n\n---\n\n# 🟡 方案 3：直接开放端口（不推荐）\n\n---\n\n## 需要：\n\n- 公网 IP\n    \n- 路由器端口转发\n    \n- 关闭防火墙限制\n    \n\n---\n\n## 风险：\n\n```text\n❌ 非常不安全\n❌ 容易被扫描攻击\n```\n\n---\n\n# 🧠 推荐结论\n\n```text\n开发 → 内网穿透\n生产 → 云服务器 + nginx\n```\n\n---\n\n# ⚙️ 三、nginx / 端口转发怎么打通？\n\n---\n\n# 🧱 nginx 是干嘛的？\n\n```text\nNginx = 流量入口（反向代理）\n```\n\n---\n\n# 🧩 基本结构\n\n```text\n用户请求\n   ↓\nhttps://你的域名\n   ↓\nNginx\n   ↓\nNode服务（127.0.0.1:3301）\n```\n\n---\n\n# ✍️ 最简单 nginx 配置\n\n```nginx\nserver {\n    listen 80;\n    server_name yourdomain.com;\n\n    location / {\n        proxy_pass http://127.0.0.1:3301;\n\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n    }\n}\n```\n\n---\n\n# 🔥 如果是 HTTPS（你现在的）\n\n```nginx\nserver {\n    listen 443 ssl;\n    server_name key.tengokukk.com;\n\n    ssl_certificate /path/fullchain.pem;\n    ssl_certificate_key /path/privkey.pem;\n\n    location / {\n        proxy_pass http://127.0.0.1:3301;\n    }\n}\n```\n\n---\n\n# 🧠 nginx 做了什么？\n\n```text\n公网请求 → 转发到本地 Node 服务\n```\n\n---\n\n# 🔌 四、端口转发（补充理解）\n\n---\n\n## 📌 路由器端口转发\n\n```text\n公网IP:80\n   ↓\n路由器\n   ↓\n你的电脑:3301\n```\n\n👉 但这个：\n\n❌ 家用网络复杂  \n❌ IP 会变  \n❌ 不稳定\n\n---\n\n# 🧠 五、你当前项目的真实结构（结合你）\n\n---\n\n## 🔵 云端（你现在用的）\n\n```text\nhttps://key.tengokukk.com\n   ↓\nNginx (443)\n   ↓\n127.0.0.1:3301（服务器上的 Node）\n```\n\n---\n\n## 🟢 本地（你调试）\n\n```text\nhttp://127.0.0.1:3301\n```\n\n---\n\n👉 两者完全独立\n\n---\n\n# 🎯 六、最实用总结\n\n---\n\n## ❓ 为什么别人访问不了你本地？\n\n```text\n因为 127.0.0.1 只代表“他自己”\n```\n\n---\n\n## ❓ 怎么变公网？\n\n```text\n✔ 内网穿透（开发）\n✔ 云服务器（生产）\n```\n\n---\n\n## ❓ nginx 在干嘛？\n\n```text\n把公网请求转发给本地服务\n```\n\n---\n\n# 🧠 最后一张总图（建议记住）\n\n```text\n开发模式：\n你 → 127.0.0.1:3301\n\n内网穿透：\n你 → ngrok → 你电脑\n\n生产模式：\n用户 → nginx → Node服务\n```\n\n---\n\n# 🚀 如果你下一步想更狠一点\n\n我可以帮你：\n\n👉 手把手搭一个：\n\n- 本地 Token Pool → ngrok 公网访问\n    \n- 或你自己的 nginx + 域名部署\n    \n\n甚至：\n\n👉 把你现在这个 Token Pool 做成真正 SaaS 👍\n\n\n这个问题问得很好，而且是你现在整个系统（本地 → 云端 → nginx）里**最关键的一块基础认知**。\n\n我给你讲清楚，不讲虚的👇\n\n---\n\n# 🧠 一句话理解\n\n```text\n域名 = 给服务器起的“好记的名字”\n```\n\n👉 用来代替难记的 IP 地址\n\n---\n\n# 🧩 举个最直观的例子\n\n没有域名：\n\n```text\nhttps://170.12.34.56\n```\n\n有域名：\n\n```text\nhttps://key.tengokukk.com\n```\n\n👉 明显：\n\n- 域名 ✔ 好记\n    \n- IP ❌ 很难记\n    \n\n---\n\n# 🔥 域名真正的作用（不止是好看）\n\n---\n\n## ① 📛 人类可读（最基础）\n\n```text\nIP → 给机器看的\n域名 → 给人看的\n```\n\n---\n\n## ② 🌐 通过 DNS 找到服务器\n\n当你访问：\n\n```text\nhttps://key.tengokukk.com\n```\n\n实际过程：\n\n```text\n域名 → DNS 查询 → IP 地址 → 连接服务器\n```\n\n👉 就像：\n\n```text\n通讯录名字 → 查电话 → 打过去\n```\n\n---\n\n## ③ 🔒 支持 HTTPS（非常重要）\n\n没有域名：\n\n❌ 很难用 HTTPS  \n❌ 浏览器会警告\n\n有域名：\n\n✔ 可以申请 SSL 证书（https）  \n✔ 数据加密  \n✔ 浏览器信任\n\n👉 你现在这个：\n\n```text\nhttps://key.tengokukk.com\n```\n\n就是：\n\n```text\n域名 + SSL = 安全访问\n```\n\n---\n\n## ④ 🚪 配合 nginx 做“统一入口”\n\n```text\n用户 → 域名 → nginx → Node服务\n```\n\n👉 作用：\n\n- 不暴露真实端口（3301）\n    \n- 可以转发多个服务\n    \n- 可以做权限控制\n    \n\n---\n\n## ⑤ 🧭 支持多服务分发（高级）\n\n同一个服务器：\n\n```text\napi.xxx.com     → API服务\nadmin.xxx.com   → 后台\nkey.xxx.com     → Token Pool\n```\n\n👉 一个 IP → 多个系统\n\n---\n\n## ⑥ 📈 可扩展 / 可迁移\n\n你换服务器：\n\n```text\n旧IP → 新IP\n```\n\n👉 只需要改：\n\n```text\n域名解析（DNS）\n```\n\n用户完全无感\n\n---\n\n# 🧠 回到你现在这个项目\n\n---\n\n## 🔵 云端访问\n\n```text\nhttps://key.tengokukk.com/openai/v1\n```\n\n👉 实际发生：\n\n```text\n域名 → IP（170.x.x.x）\n→ nginx\n→ 127.0.0.1:3301\n→ Token Pool\n```\n\n---\n\n## 🟢 本地访问\n\n```text\nhttp://127.0.0.1:3301\n```\n\n👉 没有域名：\n\n- 只能你自己用\n    \n- 不能 HTTPS\n    \n- 不能公网访问\n    \n\n---\n\n# 🧨 如果没有域名会怎样？\n\n```text\n❌ 只能用 IP\n❌ 不方便\n❌ HTTPS 很麻烦\n❌ 不专业\n❌ 无法做多服务分发\n```\n\n---\n\n# 🎯 最关键一句总结\n\n```text\n域名 = 用户访问入口 + 安全基础 + 系统扩展能力\n```\n\n---\n\n# 🧠 再给你一个工程级理解（重要）\n\n你现在的系统其实是：\n\n```text\n域名（key.tengokukk.com）\n        ↓\nNginx（入口网关）\n        ↓\nToken Pool（3301）\n        ↓\nProvider\n```\n\n👉 域名就是：\n\n# 👉 **整个系统的“入口门牌号”**\n\n---\n\n# 🚀 如果你下一步想继续深入\n\n我可以帮你搞这些👇\n\n👉 域名是怎么注册的（阿里云 / Cloudflare）  \n👉 DNS 是怎么配置的（A记录 / CNAME）  \n👉 怎么给你这个项目绑定域名  \n👉 怎么自动申请 HTTPS（Let’s Encrypt）\n\n甚至：\n\n👉 手把手帮你把本地 Token Pool 变成一个公网域名服务 👍",
+    "html": "<p>好，我帮你直接整理成一份<strong>可以直接放仓库用的 README（带目录 + 文内跳转 + 架构图）</strong>，结构已经优化过，适合长期维护 👇</p>\n<hr>\n<h1 id=\"-readmemd完整版\">📄 README.md（完整版）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"markdown\" data-theme=\"github-dark\"><code data-language=\"markdown\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># 📚 Token Pool &#x26; Codex 调试体系</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">---</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 📖 目录</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">一、核心结论</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#核心结论</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">二、系统架构</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#系统架构</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">三、本地 vs 云端</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#本地-vs-云端</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">四、端口说明</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#端口说明</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">五、Nginx 转发机制</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#nginx-转发机制</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">六、Codex 本地调试本质</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#codex-本地调试本质</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">七、常见问题（重要）</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#常见问题重要</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">八、调试最佳实践</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#调试最佳实践</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> [</span><span style=\"color:#DBEDFF;text-decoration:underline\">九、总结</span><span style=\"color:#E1E4E8\">](</span><span style=\"color:#E1E4E8;text-decoration:underline\">#总结</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">---</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 🧠 核心结论</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">```text</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">本地端口 ≠ 云端端口</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">它们是两套完全独立的运行实例</span></span></code></pre></figure>\n<p>👉 不是一个服务两个入口<br>\n👉 而是两个环境：</p>\n<ul>\n<li>\n<p>本地（开发环境）</p>\n</li>\n<li>\n<p>云端（生产环境）</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-系统架构\">🏗 系统架构</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>[Codex 本地 Agent]</span></span>\n<span data-line=\"\"><span>        │</span></span>\n<span data-line=\"\"><span>        │ HTTP（base_url 可切换）</span></span>\n<span data-line=\"\"><span>        ▼</span></span>\n<span data-line=\"\"><span>[Token Pool（本地 or 云端）]</span></span>\n<span data-line=\"\"><span>        │</span></span>\n<span data-line=\"\"><span>        ▼</span></span>\n<span data-line=\"\"><span>[上游模型]</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-本地-vs-云端\">🧩 本地 vs 云端</h2>\n<hr>\n<h3 id=\"-本地-token-pool开发\">🟢 本地 Token Pool（开发）</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>http://127.0.0.1:3100  → master</span></span>\n<span data-line=\"\"><span>http://127.0.0.1:3301  → worker（API）</span></span></code></pre></figure>\n<p><a href=\"http://127.0.0.1:3100\">http://127.0.0.1:3100</a></p>\n<p><strong>特点：</strong></p>\n<ul>\n<li>\n<p>本机运行</p>\n</li>\n<li>\n<p>可调试 / 可修改代码</p>\n</li>\n<li>\n<p>会 crash / restart</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"-云端-token-pool生产\">🔵 云端 Token Pool（生产）</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://key.tengokukk.com/openai/v1</span></span></code></pre></figure>\n<p><strong>特点：</strong></p>\n<ul>\n<li>\n<p>部署在服务器（170.x.x.x）</p>\n</li>\n<li>\n<p>nginx + systemd 管理</p>\n</li>\n<li>\n<p>稳定运行</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-为什么会混乱\">🔥 为什么会“混乱”</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Codex → 云端</span></span>\n<span data-line=\"\"><span>你调试 → 本地</span></span></code></pre></figure>\n<p>👉 结果：</p>\n<ul>\n<li>\n<p>本地挂了但还能用</p>\n</li>\n<li>\n<p>修了但没效果</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-如何判断当前用的是哪一套\">🧭 如何判断当前用的是哪一套</h2>\n<h3 id=\"-方法-1看-base_url\">✅ 方法 1：看 base_url</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://key.tengokukk.com  → 云端</span></span>\n<span data-line=\"\"><span>http://127.0.0.1:3301      → 本地</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-方法-2接口测试\">✅ 方法 2：接口测试</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">curl</span><span style=\"color:#9ECBFF\"> http://127.0.0.1:3301/openai/v1/models</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">curl</span><span style=\"color:#9ECBFF\"> https://key.tengokukk.com/openai/v1/models</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-方法-3关闭本地\">✅ 方法 3：关闭本地</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF\">kill</span><span style=\"color:#9ECBFF\"> node</span></span></code></pre></figure>\n<p>👉 如果还能用 → 说明在用云端</p>\n<hr>\n<h2 id=\"️-端口说明\">⚙️ 端口说明</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>端口</th>\n<th>用途</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>127.0.0.1</td>\n<td>本机回环地址</td>\n</tr>\n<tr>\n<td>3100</td>\n<td>Token Pool master</td>\n</tr>\n<tr>\n<td>3301</td>\n<td>Token Pool worker</td>\n</tr>\n<tr>\n<td>80</td>\n<td>HTTP</td>\n</tr>\n<tr>\n<td>443</td>\n<td>HTTPS</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h2 id=\"-nginx-转发机制\">🌐 Nginx 转发机制</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户请求</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>https://key.tengokukk.com</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Nginx (443)</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Token Pool (Node)</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Provider</span></span></code></pre></figure>\n<p>👉 本质：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Nginx = 反向代理</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-codex-本地调试本质\">🧠 Codex 本地调试本质</h2>\n<h3 id=\"-codex-本地-agent\">✔ Codex 本地 Agent</h3>\n<ul>\n<li>\n<p>本地运行</p>\n</li>\n<li>\n<p>可执行命令（shell / 文件）</p>\n</li>\n<li>\n<p>管理上下文</p>\n</li>\n<li>\n<p>不属于 Token Pool</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"-token-pool\">✔ Token Pool</h3>\n<ul>\n<li>\n<p>只是 API 网关</p>\n</li>\n<li>\n<p>不负责本地执行</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-核心关系\">🧩 核心关系</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Codex ≠ Token Pool</span></span>\n<span data-line=\"\"><span>Codex 使用 Token Pool</span></span></code></pre></figure>\n<hr>\n<h2 id=\"️-常见问题重要\">⚠️ 常见问题（重要）</h2>\n<h3 id=\"-错误用法\">❌ 错误用法</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本地 debug + 云端调用</span></span></code></pre></figure>\n<p>👉 会导致：</p>\n<ul>\n<li>\n<p>判断错误</p>\n</li>\n<li>\n<p>修复无效</p>\n</li>\n<li>\n<p>排查困难</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"-正确方式\">✅ 正确方式</h3>\n<h4 id=\"-方式-a推荐\">🟢 方式 A（推荐）</h4>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Codex → 本地 Token Pool</span></span></code></pre></figure>\n<h4 id=\"-方式-b\">🔵 方式 B</h4>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Codex → 云端 Token Pool</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-调试最佳实践\">🧭 调试最佳实践</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>先确认环境（本地 / 云端）</span></span>\n<span data-line=\"\"><span>再看端口（3100 / 3301）</span></span>\n<span data-line=\"\"><span>再看请求路径</span></span>\n<span data-line=\"\"><span>最后看日志</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-总结\">🎯 总结</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你看到两个端口，不是一个系统有两个入口</span></span>\n<span data-line=\"\"><span>而是你同时在使用“本地实例”和“云端实例”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-扩展方向\">🚀 扩展方向</h1>\n<ul>\n<li>\n<p>自动环境切换（local / prod）</p>\n</li>\n<li>\n<p>Codex + Token Pool 自动调度</p>\n</li>\n<li>\n<p>crash 根因分析系统</p>\n</li>\n<li>\n<p>provider 智能优化</p>\n</li>\n</ul>\n<pre><code>\n---\n\n# ✅ 这个版本已经帮你做好了\n\n✔ 目录  \n✔ 文内跳转（全部可点）  \n✔ 架构图（ASCII）  \n✔ 层级清晰（适合团队）  \n✔ 可直接放 GitHub  \n\n---\n\n# 🚀 如果你要再进阶一点\n\n我可以帮你再升级一版：\n\n👉 加 **Mermaid 架构图（更专业）**  \n👉 自动生成 **API 调用流程图**  \n👉 或做一个 **开发 / 生产切换指南**\n\n直接说 👍\n</code></pre>\n<p>很好，这三个问题是<strong>从“本地开发”到“能给别人用”<strong>的关键，我给你一套</strong>从原理 → 实现 → 实战</strong>的完整讲解👇</p>\n<hr>\n<h1 id=\"-一为什么别人访问不了你本地\">🧠 一、为什么别人访问不了你本地？</h1>\n<hr>\n<h2 id=\"-核心原因\">🎯 核心原因</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>127.0.0.1 = 只在你自己电脑内部有效</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-举个真实例子\">🧩 举个真实例子</h2>\n<p>你访问：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>http://127.0.0.1:3301</span></span></code></pre></figure>\n<p>👉 实际发生：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>请求 → 直接回到你自己电脑 → 不走互联网</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-别人访问会发生什么\">❌ 别人访问会发生什么？</h2>\n<p>别人访问：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>http://你的IP:3301</span></span></code></pre></figure>\n<p>但：</p>\n<p>👉 你的电脑通常：</p>\n<ul>\n<li>\n<p>没开放公网端口</p>\n</li>\n<li>\n<p>在路由器/NAT后面</p>\n</li>\n<li>\n<p>被防火墙拦住</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-所以结论\">🔥 所以结论</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本地服务默认是“私有的”，只能自己访问</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二怎么把本地服务变成公网\">🌐 二、怎么把本地服务变成公网？</h1>\n<p>有三种主流方式👇</p>\n<hr>\n<h1 id=\"-方案-1内网穿透最简单\">🟢 方案 1：内网穿透（最简单）</h1>\n<p>👉 推荐新手用</p>\n<hr>\n<h2 id=\"常见工具\">常见工具：</h2>\n<ul>\n<li>\n<p>ngrok</p>\n</li>\n<li>\n<p>frp</p>\n</li>\n<li>\n<p>cloudflare tunnel</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-原理\">🎯 原理</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你电脑 → 连接一个公网服务器 → 生成一个公网地址</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-示例ngrok\">🧪 示例（ngrok）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">ngrok</span><span style=\"color:#9ECBFF\"> http</span><span style=\"color:#79B8FF\"> 3301</span></span></code></pre></figure>\n<p>输出：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://abc123.ngrok.io</span></span></code></pre></figure>\n<p>👉 现在别人访问：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://abc123.ngrok.io</span></span></code></pre></figure>\n<p>👉 就能访问你本地服务了</p>\n<hr>\n<h2 id=\"-本质\">🧠 本质</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你主动“打洞”连接外网服务器</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-方案-2服务器中转生产常用\">🔵 方案 2：服务器中转（生产常用）</h1>\n<p>👉 你现在用的就是这个</p>\n<hr>\n<h2 id=\"架构\">架构</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>公网用户</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Nginx（服务器）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Token Pool（服务器）</span></span></code></pre></figure>\n<p>👉 本地不参与</p>\n<hr>\n<h2 id=\"优点\">优点</h2>\n<ul>\n<li>\n<p>稳定</p>\n</li>\n<li>\n<p>可控</p>\n</li>\n<li>\n<p>安全</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-方案-3直接开放端口不推荐\">🟡 方案 3：直接开放端口（不推荐）</h1>\n<hr>\n<h2 id=\"需要\">需要：</h2>\n<ul>\n<li>\n<p>公网 IP</p>\n</li>\n<li>\n<p>路由器端口转发</p>\n</li>\n<li>\n<p>关闭防火墙限制</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"风险\">风险：</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 非常不安全</span></span>\n<span data-line=\"\"><span>❌ 容易被扫描攻击</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-推荐结论\">🧠 推荐结论</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>开发 → 内网穿透</span></span>\n<span data-line=\"\"><span>生产 → 云服务器 + nginx</span></span></code></pre></figure>\n<hr>\n<h1 id=\"️-三nginx--端口转发怎么打通\">⚙️ 三、nginx / 端口转发怎么打通？</h1>\n<hr>\n<h1 id=\"-nginx-是干嘛的\">🧱 nginx 是干嘛的？</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Nginx = 流量入口（反向代理）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-基本结构\">🧩 基本结构</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户请求</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>https://你的域名</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Nginx</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Node服务（127.0.0.1:3301）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"️-最简单-nginx-配置\">✍️ 最简单 nginx 配置</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"nginx\" data-theme=\"github-dark\"><code data-language=\"nginx\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">server</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    listen </span><span style=\"color:#79B8FF\">80</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    server_name </span><span style=\"color:#E1E4E8\">yourdomain.com;</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">    location</span><span style=\"color:#B392F0\"> / </span><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">        proxy_pass </span><span style=\"color:#E1E4E8\">http://127.0.0.1:3301;</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">        proxy_set_header </span><span style=\"color:#E1E4E8\">Host $host;</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">        proxy_set_header </span><span style=\"color:#E1E4E8\">X-Real-IP $remote_addr;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果是-https你现在的\">🔥 如果是 HTTPS（你现在的）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"nginx\" data-theme=\"github-dark\"><code data-language=\"nginx\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">server</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    listen </span><span style=\"color:#79B8FF\">443</span><span style=\"color:#E1E4E8\"> ssl;</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    server_name </span><span style=\"color:#E1E4E8\">key.tengokukk.com;</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">    ssl_certificate </span><span style=\"color:#E1E4E8\">/path/fullchain.pem;</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    ssl_certificate_key </span><span style=\"color:#E1E4E8\">/path/privkey.pem;</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">    location</span><span style=\"color:#B392F0\"> / </span><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">        proxy_pass </span><span style=\"color:#E1E4E8\">http://127.0.0.1:3301;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-nginx-做了什么\">🧠 nginx 做了什么？</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>公网请求 → 转发到本地 Node 服务</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四端口转发补充理解\">🔌 四、端口转发（补充理解）</h1>\n<hr>\n<h2 id=\"-路由器端口转发\">📌 路由器端口转发</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>公网IP:80</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>路由器</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>你的电脑:3301</span></span></code></pre></figure>\n<p>👉 但这个：</p>\n<p>❌ 家用网络复杂<br>\n❌ IP 会变<br>\n❌ 不稳定</p>\n<hr>\n<h1 id=\"-五你当前项目的真实结构结合你\">🧠 五、你当前项目的真实结构（结合你）</h1>\n<hr>\n<h2 id=\"-云端你现在用的\">🔵 云端（你现在用的）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://key.tengokukk.com</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Nginx (443)</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>127.0.0.1:3301（服务器上的 Node）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-本地你调试\">🟢 本地（你调试）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>http://127.0.0.1:3301</span></span></code></pre></figure>\n<hr>\n<p>👉 两者完全独立</p>\n<hr>\n<h1 id=\"-六最实用总结\">🎯 六、最实用总结</h1>\n<hr>\n<h2 id=\"-为什么别人访问不了你本地\">❓ 为什么别人访问不了你本地？</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>因为 127.0.0.1 只代表“他自己”</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-怎么变公网\">❓ 怎么变公网？</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 内网穿透（开发）</span></span>\n<span data-line=\"\"><span>✔ 云服务器（生产）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-nginx-在干嘛\">❓ nginx 在干嘛？</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>把公网请求转发给本地服务</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一张总图建议记住\">🧠 最后一张总图（建议记住）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>开发模式：</span></span>\n<span data-line=\"\"><span>你 → 127.0.0.1:3301</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>内网穿透：</span></span>\n<span data-line=\"\"><span>你 → ngrok → 你电脑</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>生产模式：</span></span>\n<span data-line=\"\"><span>用户 → nginx → Node服务</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你下一步想更狠一点\">🚀 如果你下一步想更狠一点</h1>\n<p>我可以帮你：</p>\n<p>👉 手把手搭一个：</p>\n<ul>\n<li>\n<p>本地 Token Pool → ngrok 公网访问</p>\n</li>\n<li>\n<p>或你自己的 nginx + 域名部署</p>\n</li>\n</ul>\n<p>甚至：</p>\n<p>👉 把你现在这个 Token Pool 做成真正 SaaS 👍</p>\n<p>这个问题问得很好，而且是你现在整个系统（本地 → 云端 → nginx）里<strong>最关键的一块基础认知</strong>。</p>\n<p>我给你讲清楚，不讲虚的👇</p>\n<hr>\n<h1 id=\"-一句话理解\">🧠 一句话理解</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>域名 = 给服务器起的“好记的名字”</span></span></code></pre></figure>\n<p>👉 用来代替难记的 IP 地址</p>\n<hr>\n<h1 id=\"-举个最直观的例子\">🧩 举个最直观的例子</h1>\n<p>没有域名：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://170.12.34.56</span></span></code></pre></figure>\n<p>有域名：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://key.tengokukk.com</span></span></code></pre></figure>\n<p>👉 明显：</p>\n<ul>\n<li>\n<p>域名 ✔ 好记</p>\n</li>\n<li>\n<p>IP ❌ 很难记</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-域名真正的作用不止是好看\">🔥 域名真正的作用（不止是好看）</h1>\n<hr>\n<h2 id=\"--人类可读最基础\">① 📛 人类可读（最基础）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>IP → 给机器看的</span></span>\n<span data-line=\"\"><span>域名 → 给人看的</span></span></code></pre></figure>\n<hr>\n<h2 id=\"--通过-dns-找到服务器\">② 🌐 通过 DNS 找到服务器</h2>\n<p>当你访问：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://key.tengokukk.com</span></span></code></pre></figure>\n<p>实际过程：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>域名 → DNS 查询 → IP 地址 → 连接服务器</span></span></code></pre></figure>\n<p>👉 就像：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>通讯录名字 → 查电话 → 打过去</span></span></code></pre></figure>\n<hr>\n<h2 id=\"--支持-https非常重要\">③ 🔒 支持 HTTPS（非常重要）</h2>\n<p>没有域名：</p>\n<p>❌ 很难用 HTTPS<br>\n❌ 浏览器会警告</p>\n<p>有域名：</p>\n<p>✔ 可以申请 SSL 证书（https）<br>\n✔ 数据加密<br>\n✔ 浏览器信任</p>\n<p>👉 你现在这个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://key.tengokukk.com</span></span></code></pre></figure>\n<p>就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>域名 + SSL = 安全访问</span></span></code></pre></figure>\n<hr>\n<h2 id=\"--配合-nginx-做统一入口\">④ 🚪 配合 nginx 做“统一入口”</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户 → 域名 → nginx → Node服务</span></span></code></pre></figure>\n<p>👉 作用：</p>\n<ul>\n<li>\n<p>不暴露真实端口（3301）</p>\n</li>\n<li>\n<p>可以转发多个服务</p>\n</li>\n<li>\n<p>可以做权限控制</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"--支持多服务分发高级\">⑤ 🧭 支持多服务分发（高级）</h2>\n<p>同一个服务器：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>api.xxx.com     → API服务</span></span>\n<span data-line=\"\"><span>admin.xxx.com   → 后台</span></span>\n<span data-line=\"\"><span>key.xxx.com     → Token Pool</span></span></code></pre></figure>\n<p>👉 一个 IP → 多个系统</p>\n<hr>\n<h2 id=\"--可扩展--可迁移\">⑥ 📈 可扩展 / 可迁移</h2>\n<p>你换服务器：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>旧IP → 新IP</span></span></code></pre></figure>\n<p>👉 只需要改：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>域名解析（DNS）</span></span></code></pre></figure>\n<p>用户完全无感</p>\n<hr>\n<h1 id=\"-回到你现在这个项目\">🧠 回到你现在这个项目</h1>\n<hr>\n<h2 id=\"-云端访问\">🔵 云端访问</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://key.tengokukk.com/openai/v1</span></span></code></pre></figure>\n<p>👉 实际发生：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>域名 → IP（170.x.x.x）</span></span>\n<span data-line=\"\"><span>→ nginx</span></span>\n<span data-line=\"\"><span>→ 127.0.0.1:3301</span></span>\n<span data-line=\"\"><span>→ Token Pool</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-本地访问\">🟢 本地访问</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>http://127.0.0.1:3301</span></span></code></pre></figure>\n<p>👉 没有域名：</p>\n<ul>\n<li>\n<p>只能你自己用</p>\n</li>\n<li>\n<p>不能 HTTPS</p>\n</li>\n<li>\n<p>不能公网访问</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-如果没有域名会怎样\">🧨 如果没有域名会怎样？</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 只能用 IP</span></span>\n<span data-line=\"\"><span>❌ 不方便</span></span>\n<span data-line=\"\"><span>❌ HTTPS 很麻烦</span></span>\n<span data-line=\"\"><span>❌ 不专业</span></span>\n<span data-line=\"\"><span>❌ 无法做多服务分发</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最关键一句总结\">🎯 最关键一句总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>域名 = 用户访问入口 + 安全基础 + 系统扩展能力</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-再给你一个工程级理解重要\">🧠 再给你一个工程级理解（重要）</h1>\n<p>你现在的系统其实是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>域名（key.tengokukk.com）</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>Nginx（入口网关）</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>Token Pool（3301）</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>Provider</span></span></code></pre></figure>\n<p>👉 域名就是：</p>\n<h1 id=\"-整个系统的入口门牌号\">👉 <strong>整个系统的“入口门牌号”</strong></h1>\n<hr>\n<h1 id=\"-如果你下一步想继续深入\">🚀 如果你下一步想继续深入</h1>\n<p>我可以帮你搞这些👇</p>\n<p>👉 域名是怎么注册的（阿里云 / Cloudflare）<br>\n👉 DNS 是怎么配置的（A记录 / CNAME）<br>\n👉 怎么给你这个项目绑定域名<br>\n👉 怎么自动申请 HTTPS（Let’s Encrypt）</p>\n<p>甚至：</p>\n<p>👉 手把手帮你把本地 Token Pool 变成一个公网域名服务 👍</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "readme-md-完整版",
+        "text": "📄 README.md（完整版）"
+      },
+      {
+        "depth": 1,
+        "slug": "token-pool-codex-调试体系",
+        "text": "📚 Token Pool & Codex 调试体系"
+      },
+      {
+        "depth": 2,
+        "slug": "目录",
+        "text": "📖 目录"
+      },
+      {
+        "depth": 2,
+        "slug": "核心结论",
+        "text": "🧠 核心结论"
+      },
+      {
+        "depth": 2,
+        "slug": "系统架构",
+        "text": "🏗 系统架构"
+      },
+      {
+        "depth": 2,
+        "slug": "本地-vs-云端",
+        "text": "🧩 本地 vs 云端"
+      },
+      {
+        "depth": 3,
+        "slug": "本地-token-pool-开发",
+        "text": "🟢 本地 Token Pool（开发）"
+      },
+      {
+        "depth": 3,
+        "slug": "云端-token-pool-生产",
+        "text": "🔵 云端 Token Pool（生产）"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么会-混乱",
+        "text": "🔥 为什么会“混乱”"
+      },
+      {
+        "depth": 2,
+        "slug": "如何判断当前用的是哪一套",
+        "text": "🧭 如何判断当前用的是哪一套"
+      },
+      {
+        "depth": 3,
+        "slug": "方法-1-看-base-url",
+        "text": "✅ 方法 1：看 base_url"
+      },
+      {
+        "depth": 3,
+        "slug": "方法-2-接口测试",
+        "text": "✅ 方法 2：接口测试"
+      },
+      {
+        "depth": 3,
+        "slug": "方法-3-关闭本地",
+        "text": "✅ 方法 3：关闭本地"
+      },
+      {
+        "depth": 2,
+        "slug": "端口说明",
+        "text": "⚙️ 端口说明"
+      },
+      {
+        "depth": 2,
+        "slug": "nginx-转发机制",
+        "text": "🌐 Nginx 转发机制"
+      },
+      {
+        "depth": 2,
+        "slug": "codex-本地调试本质",
+        "text": "🧠 Codex 本地调试本质"
+      },
+      {
+        "depth": 3,
+        "slug": "codex-本地-agent",
+        "text": "✔ Codex 本地 Agent"
+      },
+      {
+        "depth": 3,
+        "slug": "token-pool",
+        "text": "✔ Token Pool"
+      },
+      {
+        "depth": 2,
+        "slug": "核心关系",
+        "text": "🧩 核心关系"
+      },
+      {
+        "depth": 2,
+        "slug": "常见问题-重要",
+        "text": "⚠️ 常见问题（重要）"
+      },
+      {
+        "depth": 3,
+        "slug": "错误用法",
+        "text": "❌ 错误用法"
+      },
+      {
+        "depth": 3,
+        "slug": "正确方式",
+        "text": "✅ 正确方式"
+      },
+      {
+        "depth": 2,
+        "slug": "调试最佳实践",
+        "text": "🧭 调试最佳实践"
+      },
+      {
+        "depth": 2,
+        "slug": "总结",
+        "text": "🎯 总结"
+      },
+      {
+        "depth": 1,
+        "slug": "扩展方向",
+        "text": "🚀 扩展方向"
+      },
+      {
+        "depth": 1,
+        "slug": "这个版本已经帮你做好了",
+        "text": "✅ 这个版本已经帮你做好了"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要再进阶一点",
+        "text": "🚀 如果你要再进阶一点"
+      },
+      {
+        "depth": 1,
+        "slug": "一-为什么别人访问不了你本地",
+        "text": "🧠 一、为什么别人访问不了你本地？"
+      },
+      {
+        "depth": 2,
+        "slug": "核心原因",
+        "text": "🎯 核心原因"
+      },
+      {
+        "depth": 2,
+        "slug": "举个真实例子",
+        "text": "🧩 举个真实例子"
+      },
+      {
+        "depth": 2,
+        "slug": "别人访问会发生什么",
+        "text": "❌ 别人访问会发生什么？"
+      },
+      {
+        "depth": 2,
+        "slug": "所以结论",
+        "text": "🔥 所以结论"
+      },
+      {
+        "depth": 1,
+        "slug": "二-怎么把本地服务变成公网",
+        "text": "🌐 二、怎么把本地服务变成公网？"
+      },
+      {
+        "depth": 1,
+        "slug": "方案-1-内网穿透-最简单",
+        "text": "🟢 方案 1：内网穿透（最简单）"
+      },
+      {
+        "depth": 2,
+        "slug": "常见工具",
+        "text": "常见工具："
+      },
+      {
+        "depth": 2,
+        "slug": "原理",
+        "text": "🎯 原理"
+      },
+      {
+        "depth": 2,
+        "slug": "示例-ngrok",
+        "text": "🧪 示例（ngrok）"
+      },
+      {
+        "depth": 2,
+        "slug": "本质",
+        "text": "🧠 本质"
+      },
+      {
+        "depth": 1,
+        "slug": "方案-2-服务器中转-生产常用",
+        "text": "🔵 方案 2：服务器中转（生产常用）"
+      },
+      {
+        "depth": 2,
+        "slug": "架构",
+        "text": "架构"
+      },
+      {
+        "depth": 2,
+        "slug": "优点",
+        "text": "优点"
+      },
+      {
+        "depth": 1,
+        "slug": "方案-3-直接开放端口-不推荐",
+        "text": "🟡 方案 3：直接开放端口（不推荐）"
+      },
+      {
+        "depth": 2,
+        "slug": "需要",
+        "text": "需要："
+      },
+      {
+        "depth": 2,
+        "slug": "风险",
+        "text": "风险："
+      },
+      {
+        "depth": 1,
+        "slug": "推荐结论",
+        "text": "🧠 推荐结论"
+      },
+      {
+        "depth": 1,
+        "slug": "三-nginx-端口转发怎么打通",
+        "text": "⚙️ 三、nginx / 端口转发怎么打通？"
+      },
+      {
+        "depth": 1,
+        "slug": "nginx-是干嘛的",
+        "text": "🧱 nginx 是干嘛的？"
+      },
+      {
+        "depth": 1,
+        "slug": "基本结构",
+        "text": "🧩 基本结构"
+      },
+      {
+        "depth": 1,
+        "slug": "最简单-nginx-配置",
+        "text": "✍️ 最简单 nginx 配置"
+      },
+      {
+        "depth": 1,
+        "slug": "如果是-https-你现在的",
+        "text": "🔥 如果是 HTTPS（你现在的）"
+      },
+      {
+        "depth": 1,
+        "slug": "nginx-做了什么",
+        "text": "🧠 nginx 做了什么？"
+      },
+      {
+        "depth": 1,
+        "slug": "四-端口转发-补充理解",
+        "text": "🔌 四、端口转发（补充理解）"
+      },
+      {
+        "depth": 2,
+        "slug": "路由器端口转发",
+        "text": "📌 路由器端口转发"
+      },
+      {
+        "depth": 1,
+        "slug": "五-你当前项目的真实结构-结合你",
+        "text": "🧠 五、你当前项目的真实结构（结合你）"
+      },
+      {
+        "depth": 2,
+        "slug": "云端-你现在用的",
+        "text": "🔵 云端（你现在用的）"
+      },
+      {
+        "depth": 2,
+        "slug": "本地-你调试",
+        "text": "🟢 本地（你调试）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-最实用总结",
+        "text": "🎯 六、最实用总结"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么别人访问不了你本地",
+        "text": "❓ 为什么别人访问不了你本地？"
+      },
+      {
+        "depth": 2,
+        "slug": "怎么变公网",
+        "text": "❓ 怎么变公网？"
+      },
+      {
+        "depth": 2,
+        "slug": "nginx-在干嘛",
+        "text": "❓ nginx 在干嘛？"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一张总图-建议记住",
+        "text": "🧠 最后一张总图（建议记住）"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你下一步想更狠一点",
+        "text": "🚀 如果你下一步想更狠一点"
+      },
+      {
+        "depth": 1,
+        "slug": "一句话理解",
+        "text": "🧠 一句话理解"
+      },
+      {
+        "depth": 1,
+        "slug": "举个最直观的例子",
+        "text": "🧩 举个最直观的例子"
+      },
+      {
+        "depth": 1,
+        "slug": "域名真正的作用-不止是好看",
+        "text": "🔥 域名真正的作用（不止是好看）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-人类可读-最基础",
+        "text": "① 📛 人类可读（最基础）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-通过-dns-找到服务器",
+        "text": "② 🌐 通过 DNS 找到服务器"
+      },
+      {
+        "depth": 2,
+        "slug": "3-支持-https-非常重要",
+        "text": "③ 🔒 支持 HTTPS（非常重要）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-配合-nginx-做-统一入口",
+        "text": "④ 🚪 配合 nginx 做“统一入口”"
+      },
+      {
+        "depth": 2,
+        "slug": "5-支持多服务分发-高级",
+        "text": "⑤ 🧭 支持多服务分发（高级）"
+      },
+      {
+        "depth": 2,
+        "slug": "6-可扩展-可迁移",
+        "text": "⑥ 📈 可扩展 / 可迁移"
+      },
+      {
+        "depth": 1,
+        "slug": "回到你现在这个项目",
+        "text": "🧠 回到你现在这个项目"
+      },
+      {
+        "depth": 2,
+        "slug": "云端访问",
+        "text": "🔵 云端访问"
+      },
+      {
+        "depth": 2,
+        "slug": "本地访问",
+        "text": "🟢 本地访问"
+      },
+      {
+        "depth": 1,
+        "slug": "如果没有域名会怎样",
+        "text": "🧨 如果没有域名会怎样？"
+      },
+      {
+        "depth": 1,
+        "slug": "最关键一句总结",
+        "text": "🎯 最关键一句总结"
+      },
+      {
+        "depth": 1,
+        "slug": "再给你一个工程级理解-重要",
+        "text": "🧠 再给你一个工程级理解（重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "整个系统的-入口门牌号",
+        "text": "👉 **整个系统的“入口门牌号”**"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你下一步想继续深入",
+        "text": "🚀 如果你下一步想继续深入"
+      }
+    ],
+    "detailPath": "articles/md_5dd007cb9d83.json"
+  }
+}

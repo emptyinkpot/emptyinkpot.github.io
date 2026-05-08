@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_8f91771c0ddd",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E5%A6%82%E4%BD%95%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程学习之路/如何了解一个项目.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/如何了解一个项目.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E5%A6%82%E4%BD%95%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE.md",
+    "slug": "blog-编程学习之路-如何了解一个项目",
+    "title": "如何了解一个项目",
+    "summary": "（1）了解骨架 普通 config vs 注册表（核心区别） ✅ 注册表本质上是一种“特殊的 config” ❗ 但： 只有“控制规则生效状态”的 config，才叫注册表 🟦 普通 config 👉 用来“配置行为参数” 特点： 改的是“怎么运行” 不涉及规则系统 不控制“对/错” 🟥 注册...",
+    "description": "（1）了解骨架 普通 config vs 注册表（核心区别） ✅ 注册表本质上是一种“特殊的 config” ❗ 但： 只有“控制规则生效状态”的 config，才叫注册表 🟦 普通 config 👉 用来“配置行为参数” 特点： 改的是“怎么运行” 不涉及规则系统 不控制“对/错” 🟥 注册...",
+    "date": "2026-04-30",
+    "updated": "2026-04-30",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程学习之路"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程学习之路/如何了解一个项目.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/如何了解一个项目.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E5%A6%82%E4%BD%95%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "如何了解一个项目",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程学习之路",
+        "如何了解一个项目"
+      ],
+      "subtitle": "（1）了解骨架 普通 config vs 注册表（核心区别） ✅ 注册表本质上是一种“特殊的 config” ❗ 但： 只有“控制规则生效状态”的 config，才叫注册表 🟦 普通 config 👉 用来“配置行为参数” 特点： 改的是“怎么运行” 不涉及规则系统 不控制“对/错” 🟥 注册..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "（1）了解骨架\n\n\n---\n\n# 普通 config vs 注册表（核心区别）\n\n---\n\n---\n> ✅ **注册表本质上是一种“特殊的 config”**  \n> ❗ 但：**只有“控制规则生效状态”的 config，才叫注册表**\n\n## 🟦 普通 config\n\n👉 用来“配置行为参数”\n\n```\n{  \"port\": 3000,  \"theme\": \"dark\",  \"enableCache\": true}\n```\n\n特点：\n\n- 改的是“怎么运行”\n- 不涉及规则系统\n- 不控制“对/错”\n\n---\n\n## 🟥 注册表（Registry）\n\n👉 用来“控制规则体系”\n\n```\n{  \"GATE-PROGRESS-001\": {    \"status\": \"enforced\",    \"enforcedBy\": \"check-progress-format.mjs\"  }}\n```\n\n特点：\n\n- 改的是“哪些规则生效”\n- 控制系统行为边界\n- 决定是否 BLOCK\n\n---\n\n| 类型       | 控制什么 |     |\n| -------- | ---- | --- |\n| config   | 系统参数 |     |\n| registry | 系统约束 |     |\n\n\n这个问题问得很好，但你现在问的“参数”其实有点偏了。\n\n先把方向纠正一下：\n\n> ❌ 架构不是靠“参数列表”理解的  \n> ✅ 架构是靠**几个关键维度信息拼出来的**\n\n我给你一套**工程里真的够用的最小信息集**，你拿到这些，就能基本还原一个项目的架构。\n\n---\n\n# 🧠 一句话版本\n\n> 想理解架构，本质是回答 5 个问题：\n> \n> **系统做什么 / 分几层 / 数据怎么流 / 谁控制谁 / 怎么部署**\n\n---\n\n# 🧩 一、必须掌握的 6 类信息（核心）\n\n---\n\n## ① 系统边界（System Boundary）\n\n👉 项目“到底管什么”\n\n你要知道：\n\n- 是前端应用？后端服务？CLI？平台？\n    \n- 输入是什么？输出是什么？\n    \n\n---\n\n### 举例\n\n```text\n输入：用户请求 / prompt / HTTP\n输出：页面 / JSON / AI response\n```\n\n---\n\n## ② 模块划分（Modules）\n\n👉 项目分成几块\n\n你要找：\n\n```text\nsrc/\n  api/\n  core/\n  services/\n  guards/\n```\n\n---\n\n### 你现在这个系统其实是：\n\n```text\nPolicy\nGate\nWrapper\nOrchestrator\n```\n\n👉 这已经是架构了\n\n---\n\n## ③ 依赖关系（Dependency）\n\n👉 谁调用谁\n\n关键问题：\n\n```text\n谁是入口？\n谁是核心？\n谁是工具？\n```\n\n---\n\n### 典型结构\n\n```text\nCLI → Orchestrator → Gate → Utils\n```\n\n---\n\n## ④ 数据流（Data Flow）🔥最重要\n\n👉 数据是怎么走的\n\n比如你现在的门禁系统：\n\n```text\nprompt\n↓\nassistant output\n↓\ngate check\n↓\nPASS / BLOCK\n```\n\n---\n\n如果你搞不清数据流，就理解不了架构。\n\n---\n\n## ⑤ 控制流（Control Flow）\n\n👉 谁在“控制执行顺序”\n\n例如：\n\n- CI pipeline\n    \n- Hook system\n    \n- workflow\n    \n\n---\n\n区别：\n\n```text\n数据流 = 信息怎么走\n控制流 = 谁决定什么时候执行\n```\n\n---\n\n## ⑥ 运行时位置（Runtime Placement）\n\n👉 每一块在哪跑\n\n```text\n本地 CLI？\n服务器？\nCI？\n浏览器？\n```\n\n---\n\n# 🔥 二、最小架构图（通用模板）\n\n拿到这些信息后，你可以画出👇\n\n```text\n         用户 / 输入\n              ↓\n        ┌──────────┐\n        │ 入口层    │\n        └────┬─────┘\n             ↓\n        ┌──────────┐\n        │ 核心逻辑  │\n        └────┬─────┘\n             ↓\n        ┌──────────┐\n        │ 子模块    │\n        └────┬─────┘\n             ↓\n        输出 / 副作用\n```\n\n---\n\n# 🧠 三、如果你非要“参数化”，可以这么抽\n\n给你一个“架构参数表”（工程里可用）\n\n---\n\n## 🧩 架构参数模型\n\n```json\n{\n  \"entrypoints\": [\"cli\", \"http\", \"hook\"],\n  \"modules\": [\"policy\", \"gate\", \"wrapper\"],\n  \"dataFlow\": \"input → process → validate → output\",\n  \"controlFlow\": \"orchestrator / hook / CI\",\n  \"runtime\": [\"local\", \"ci\", \"server\"],\n  \"enforcement\": [\"none\", \"advisory\", \"block\"]\n}\n```\n\n---\n\n👉 这就是你想要的“参数版架构描述”\n\n---\n\n# ⚠️ 四、很多人会犯的错误\n\n---\n\n## ❌ 只看文件结构\n\n```text\nsrc/\n  utils/\n  helpers/\n```\n\n👉 这不是架构\n\n---\n\n## ❌ 只看技术栈\n\n```text\nReact + Node + MongoDB\n```\n\n👉 这也不是架构\n\n---\n\n## ❌ 只看 config\n\n👉 更不是\n\n---\n\n# 🎯 五、真正有用的提问方式\n\n你以后要理解一个项目，直接问这 6 个：\n\n---\n\n### 1️⃣ 入口在哪里？\n\n### 2️⃣ 核心逻辑在哪？\n\n### 3️⃣ 数据怎么流？\n\n### 4️⃣ 谁控制执行？\n\n### 5️⃣ 哪些是可替换模块？\n\n### 6️⃣ 哪些是强制边界（gate）？\n\n---\n\n# 💬 最后一句话\n\n> 架构不是“有哪些文件”，而是：\n> \n> ❗ **“系统是怎么被驱动运行的”**\n\n---\n\n如果你愿意，我可以帮你把你现在这套：\n\n👉 ContractGuard / Codex / Gate 系统\n\n画成一张**完整架构图（带真实文件路径）**\n\n那会比这些抽象概念更有用。",
+    "html": "<p>（1）了解骨架</p>\n<hr>\n<h1 id=\"普通-config-vs-注册表核心区别\">普通 config vs 注册表（核心区别）</h1>\n<hr>\n<hr>\n<blockquote>\n<p>✅ <strong>注册表本质上是一种“特殊的 config”</strong><br>\n❗ 但：<strong>只有“控制规则生效状态”的 config，才叫注册表</strong></p>\n</blockquote>\n<h2 id=\"-普通-config\">🟦 普通 config</h2>\n<p>👉 用来“配置行为参数”</p>\n<pre><code>{  \"port\": 3000,  \"theme\": \"dark\",  \"enableCache\": true}\n</code></pre>\n<p>特点：</p>\n<ul>\n<li>改的是“怎么运行”</li>\n<li>不涉及规则系统</li>\n<li>不控制“对/错”</li>\n</ul>\n<hr>\n<h2 id=\"-注册表registry\">🟥 注册表（Registry）</h2>\n<p>👉 用来“控制规则体系”</p>\n<pre><code>{  \"GATE-PROGRESS-001\": {    \"status\": \"enforced\",    \"enforcedBy\": \"check-progress-format.mjs\"  }}\n</code></pre>\n<p>特点：</p>\n<ul>\n<li>改的是“哪些规则生效”</li>\n<li>控制系统行为边界</li>\n<li>决定是否 BLOCK</li>\n</ul>\n<hr>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>类型</th>\n<th>控制什么</th>\n<th></th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>config</td>\n<td>系统参数</td>\n<td></td>\n</tr>\n<tr>\n<td>registry</td>\n<td>系统约束</td>\n<td></td>\n</tr>\n</tbody>\n</table></div>\n<p>这个问题问得很好，但你现在问的“参数”其实有点偏了。</p>\n<p>先把方向纠正一下：</p>\n<blockquote>\n<p>❌ 架构不是靠“参数列表”理解的<br>\n✅ 架构是靠<strong>几个关键维度信息拼出来的</strong></p>\n</blockquote>\n<p>我给你一套<strong>工程里真的够用的最小信息集</strong>，你拿到这些，就能基本还原一个项目的架构。</p>\n<hr>\n<h1 id=\"-一句话版本\">🧠 一句话版本</h1>\n<blockquote>\n<p>想理解架构，本质是回答 5 个问题：</p>\n<p><strong>系统做什么 / 分几层 / 数据怎么流 / 谁控制谁 / 怎么部署</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-一必须掌握的-6-类信息核心\">🧩 一、必须掌握的 6 类信息（核心）</h1>\n<hr>\n<h2 id=\"-系统边界system-boundary\">① 系统边界（System Boundary）</h2>\n<p>👉 项目“到底管什么”</p>\n<p>你要知道：</p>\n<ul>\n<li>\n<p>是前端应用？后端服务？CLI？平台？</p>\n</li>\n<li>\n<p>输入是什么？输出是什么？</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"举例\">举例</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>输入：用户请求 / prompt / HTTP</span></span>\n<span data-line=\"\"><span>输出：页面 / JSON / AI response</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-模块划分modules\">② 模块划分（Modules）</h2>\n<p>👉 项目分成几块</p>\n<p>你要找：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>src/</span></span>\n<span data-line=\"\"><span>  api/</span></span>\n<span data-line=\"\"><span>  core/</span></span>\n<span data-line=\"\"><span>  services/</span></span>\n<span data-line=\"\"><span>  guards/</span></span></code></pre></figure>\n<hr>\n<h3 id=\"你现在这个系统其实是\">你现在这个系统其实是：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Policy</span></span>\n<span data-line=\"\"><span>Gate</span></span>\n<span data-line=\"\"><span>Wrapper</span></span>\n<span data-line=\"\"><span>Orchestrator</span></span></code></pre></figure>\n<p>👉 这已经是架构了</p>\n<hr>\n<h2 id=\"-依赖关系dependency\">③ 依赖关系（Dependency）</h2>\n<p>👉 谁调用谁</p>\n<p>关键问题：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>谁是入口？</span></span>\n<span data-line=\"\"><span>谁是核心？</span></span>\n<span data-line=\"\"><span>谁是工具？</span></span></code></pre></figure>\n<hr>\n<h3 id=\"典型结构\">典型结构</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>CLI → Orchestrator → Gate → Utils</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-数据流data-flow最重要\">④ 数据流（Data Flow）🔥最重要</h2>\n<p>👉 数据是怎么走的</p>\n<p>比如你现在的门禁系统：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>prompt</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>assistant output</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>gate check</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>PASS / BLOCK</span></span></code></pre></figure>\n<hr>\n<p>如果你搞不清数据流，就理解不了架构。</p>\n<hr>\n<h2 id=\"-控制流control-flow\">⑤ 控制流（Control Flow）</h2>\n<p>👉 谁在“控制执行顺序”</p>\n<p>例如：</p>\n<ul>\n<li>\n<p>CI pipeline</p>\n</li>\n<li>\n<p>Hook system</p>\n</li>\n<li>\n<p>workflow</p>\n</li>\n</ul>\n<hr>\n<p>区别：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据流 = 信息怎么走</span></span>\n<span data-line=\"\"><span>控制流 = 谁决定什么时候执行</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-运行时位置runtime-placement\">⑥ 运行时位置（Runtime Placement）</h2>\n<p>👉 每一块在哪跑</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本地 CLI？</span></span>\n<span data-line=\"\"><span>服务器？</span></span>\n<span data-line=\"\"><span>CI？</span></span>\n<span data-line=\"\"><span>浏览器？</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二最小架构图通用模板\">🔥 二、最小架构图（通用模板）</h1>\n<p>拿到这些信息后，你可以画出👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>         用户 / 输入</span></span>\n<span data-line=\"\"><span>              ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────┐</span></span>\n<span data-line=\"\"><span>        │ 入口层    │</span></span>\n<span data-line=\"\"><span>        └────┬─────┘</span></span>\n<span data-line=\"\"><span>             ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────┐</span></span>\n<span data-line=\"\"><span>        │ 核心逻辑  │</span></span>\n<span data-line=\"\"><span>        └────┬─────┘</span></span>\n<span data-line=\"\"><span>             ↓</span></span>\n<span data-line=\"\"><span>        ┌──────────┐</span></span>\n<span data-line=\"\"><span>        │ 子模块    │</span></span>\n<span data-line=\"\"><span>        └────┬─────┘</span></span>\n<span data-line=\"\"><span>             ↓</span></span>\n<span data-line=\"\"><span>        输出 / 副作用</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三如果你非要参数化可以这么抽\">🧠 三、如果你非要“参数化”，可以这么抽</h1>\n<p>给你一个“架构参数表”（工程里可用）</p>\n<hr>\n<h2 id=\"-架构参数模型\">🧩 架构参数模型</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"entrypoints\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#9ECBFF\">\"cli\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"http\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"hook\"</span><span style=\"color:#E1E4E8\">],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"modules\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#9ECBFF\">\"policy\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"gate\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"wrapper\"</span><span style=\"color:#E1E4E8\">],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"dataFlow\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"input → process → validate → output\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"controlFlow\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"orchestrator / hook / CI\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"runtime\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#9ECBFF\">\"local\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"ci\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"server\"</span><span style=\"color:#E1E4E8\">],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"enforcement\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#9ECBFF\">\"none\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"advisory\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"block\"</span><span style=\"color:#E1E4E8\">]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<p>👉 这就是你想要的“参数版架构描述”</p>\n<hr>\n<h1 id=\"️-四很多人会犯的错误\">⚠️ 四、很多人会犯的错误</h1>\n<hr>\n<h2 id=\"-只看文件结构\">❌ 只看文件结构</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>src/</span></span>\n<span data-line=\"\"><span>  utils/</span></span>\n<span data-line=\"\"><span>  helpers/</span></span></code></pre></figure>\n<p>👉 这不是架构</p>\n<hr>\n<h2 id=\"-只看技术栈\">❌ 只看技术栈</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>React + Node + MongoDB</span></span></code></pre></figure>\n<p>👉 这也不是架构</p>\n<hr>\n<h2 id=\"-只看-config\">❌ 只看 config</h2>\n<p>👉 更不是</p>\n<hr>\n<h1 id=\"-五真正有用的提问方式\">🎯 五、真正有用的提问方式</h1>\n<p>你以后要理解一个项目，直接问这 6 个：</p>\n<hr>\n<h3 id=\"1️⃣-入口在哪里\">1️⃣ 入口在哪里？</h3>\n<h3 id=\"2️⃣-核心逻辑在哪\">2️⃣ 核心逻辑在哪？</h3>\n<h3 id=\"3️⃣-数据怎么流\">3️⃣ 数据怎么流？</h3>\n<h3 id=\"4️⃣-谁控制执行\">4️⃣ 谁控制执行？</h3>\n<h3 id=\"5️⃣-哪些是可替换模块\">5️⃣ 哪些是可替换模块？</h3>\n<h3 id=\"6️⃣-哪些是强制边界gate\">6️⃣ 哪些是强制边界（gate）？</h3>\n<hr>\n<h1 id=\"-最后一句话\">💬 最后一句话</h1>\n<blockquote>\n<p>架构不是“有哪些文件”，而是：</p>\n<p>❗ <strong>“系统是怎么被驱动运行的”</strong></p>\n</blockquote>\n<hr>\n<p>如果你愿意，我可以帮你把你现在这套：</p>\n<p>👉 ContractGuard / Codex / Gate 系统</p>\n<p>画成一张<strong>完整架构图（带真实文件路径）</strong></p>\n<p>那会比这些抽象概念更有用。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "普通-config-vs-注册表-核心区别",
+        "text": "普通 config vs 注册表（核心区别）"
+      },
+      {
+        "depth": 2,
+        "slug": "普通-config",
+        "text": "🟦 普通 config"
+      },
+      {
+        "depth": 2,
+        "slug": "注册表-registry",
+        "text": "🟥 注册表（Registry）"
+      },
+      {
+        "depth": 1,
+        "slug": "一句话版本",
+        "text": "🧠 一句话版本"
+      },
+      {
+        "depth": 1,
+        "slug": "一-必须掌握的-6-类信息-核心",
+        "text": "🧩 一、必须掌握的 6 类信息（核心）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-系统边界-system-boundary",
+        "text": "① 系统边界（System Boundary）"
+      },
+      {
+        "depth": 3,
+        "slug": "举例",
+        "text": "举例"
+      },
+      {
+        "depth": 2,
+        "slug": "2-模块划分-modules",
+        "text": "② 模块划分（Modules）"
+      },
+      {
+        "depth": 3,
+        "slug": "你现在这个系统其实是",
+        "text": "你现在这个系统其实是："
+      },
+      {
+        "depth": 2,
+        "slug": "3-依赖关系-dependency",
+        "text": "③ 依赖关系（Dependency）"
+      },
+      {
+        "depth": 3,
+        "slug": "典型结构",
+        "text": "典型结构"
+      },
+      {
+        "depth": 2,
+        "slug": "4-数据流-data-flow-最重要",
+        "text": "④ 数据流（Data Flow）🔥最重要"
+      },
+      {
+        "depth": 2,
+        "slug": "5-控制流-control-flow",
+        "text": "⑤ 控制流（Control Flow）"
+      },
+      {
+        "depth": 2,
+        "slug": "6-运行时位置-runtime-placement",
+        "text": "⑥ 运行时位置（Runtime Placement）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-最小架构图-通用模板",
+        "text": "🔥 二、最小架构图（通用模板）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-如果你非要-参数化-可以这么抽",
+        "text": "🧠 三、如果你非要“参数化”，可以这么抽"
+      },
+      {
+        "depth": 2,
+        "slug": "架构参数模型",
+        "text": "🧩 架构参数模型"
+      },
+      {
+        "depth": 1,
+        "slug": "四-很多人会犯的错误",
+        "text": "⚠️ 四、很多人会犯的错误"
+      },
+      {
+        "depth": 2,
+        "slug": "只看文件结构",
+        "text": "❌ 只看文件结构"
+      },
+      {
+        "depth": 2,
+        "slug": "只看技术栈",
+        "text": "❌ 只看技术栈"
+      },
+      {
+        "depth": 2,
+        "slug": "只看-config",
+        "text": "❌ 只看 config"
+      },
+      {
+        "depth": 1,
+        "slug": "五-真正有用的提问方式",
+        "text": "🎯 五、真正有用的提问方式"
+      },
+      {
+        "depth": 3,
+        "slug": "1-入口在哪里",
+        "text": "1️⃣ 入口在哪里？"
+      },
+      {
+        "depth": 3,
+        "slug": "2-核心逻辑在哪",
+        "text": "2️⃣ 核心逻辑在哪？"
+      },
+      {
+        "depth": 3,
+        "slug": "3-数据怎么流",
+        "text": "3️⃣ 数据怎么流？"
+      },
+      {
+        "depth": 3,
+        "slug": "4-谁控制执行",
+        "text": "4️⃣ 谁控制执行？"
+      },
+      {
+        "depth": 3,
+        "slug": "5-哪些是可替换模块",
+        "text": "5️⃣ 哪些是可替换模块？"
+      },
+      {
+        "depth": 3,
+        "slug": "6-哪些是强制边界-gate",
+        "text": "6️⃣ 哪些是强制边界（gate）？"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一句话",
+        "text": "💬 最后一句话"
+      }
+    ],
+    "detailPath": "articles/md_8f91771c0ddd.json"
+  }
+}

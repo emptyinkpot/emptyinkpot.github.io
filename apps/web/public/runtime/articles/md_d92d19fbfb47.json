@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_d92d19fbfb47",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/document-writing-system-index.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/document-writing-system-index.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/document-writing-system-index.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/document-writing-system-index.md",
+    "slug": "codex-knowledge-document-writing-system-index",
+    "title": "文档写作系统入口",
+    "summary": "文档写作系统入口 这页是给 Obsidian 直接看的人工导航页；程序请优先读取 document writing registry.json。 1. 机器入口 Registry：document writing registry.json Schema：document writing regis...",
+    "description": "文档写作系统入口 这页是给 Obsidian 直接看的人工导航页；程序请优先读取 document writing registry.json。 1. 机器入口 Registry：document writing registry.json Schema：document writing regis...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge",
+      "document-writing-registry",
+      "document-writing-registry-schema",
+      "obsidian-ide-home",
+      "obsidian-ide-stack",
+      "obsidian-performance-mode",
+      "obsidian-json-memory-system",
+      "engineering-document-writing-standard",
+      "document-writing-checklist",
+      "canonical-readme-template",
+      "project-json-contract-template",
+      "architecture-design-document-template",
+      "research-survey-template",
+      "technical-blog-template",
+      "token-pool-readme-projectjson-writing-pattern",
+      "obsidian-workspace-registry",
+      "local-tooling-registry",
+      "obsidian-performance-state"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags",
+        "obsidian.wikilinks"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/document-writing-system-index.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/document-writing-system-index.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/document-writing-system-index.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "document writing system index",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [
+        "document-writing-registry.json",
+        "document-writing-registry.schema.json",
+        "obsidian-ide-home",
+        "obsidian-ide-stack",
+        "obsidian-performance-mode",
+        "obsidian-json-memory-system",
+        "engineering-document-writing-standard",
+        "document-writing-checklist",
+        "canonical-readme-template",
+        "project-json-contract-template.json",
+        "architecture-design-document-template",
+        "research-survey-template",
+        "technical-blog-template",
+        "token-pool-readme-projectjson-writing-pattern",
+        "obsidian-workspace-registry.json",
+        "local-tooling-registry.json",
+        "obsidian-performance-state.json"
+      ],
+      "backlinks": [
+        "md_b6b5013cd4ae",
+        "md_f9749be0b94a"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "DOCUMENT WRITING REGISTRY",
+        "DOCUMENT WRITING REGISTRY SCHEMA",
+        "OBSIDIAN IDE HOME",
+        "OBSIDIAN IDE STACK",
+        "OBSIDIAN PERFORMANCE MODE"
+      ],
+      "subtitle": "文档写作系统入口 这页是给 Obsidian 直接看的人工导航页；程序请优先读取 document writing registry.json。 1. 机器入口 Registry：document writing registry.json Schema：document writing regis..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# 文档写作系统入口\r\n\r\n这页是给 Obsidian 直接看的人工导航页；程序请优先读取 `document-writing-registry.json`。\r\n\r\n## 1. 机器入口\r\n\r\n- Registry：[document-writing-registry.json](#document-writing-registry)\r\n- Schema：[document-writing-registry.schema.json](#document-writing-registry-schema)\r\n\r\n## 2. 人类入口\r\n\r\n- IDE 首页：[obsidian-ide-home](#obsidian-ide-home)\r\n- IDE 栈说明：[obsidian-ide-stack](#obsidian-ide-stack)\r\n- 性能模式：[obsidian-performance-mode](#obsidian-performance-mode)\r\n- JSON 记忆系统：[obsidian-json-memory-system](#obsidian-json-memory-system)\r\n\r\n- 总规范：[engineering-document-writing-standard](#engineering-document-writing-standard)\r\n- 检查清单：[document-writing-checklist](#document-writing-checklist)\r\n- README 模板：[canonical-readme-template](#canonical-readme-template)\r\n- `project.json` 模板：[project-json-contract-template.json](#project-json-contract-template)\r\n- 架构设计模板：[architecture-design-document-template](#architecture-design-document-template)\r\n- 调研 / 论文式综述模板：[research-survey-template](#research-survey-template)\r\n- 技术博客 / 深度长文模板：[technical-blog-template](#technical-blog-template)\r\n- README / `project.json` 配对专项拆解：[token-pool-readme-projectjson-writing-pattern](#token-pool-readme-projectjson-writing-pattern)\r\n\r\n## 3. 按用途跳转\r\n\r\n### 3.1 我想先看总规则\r\n\r\n- [engineering-document-writing-standard](#engineering-document-writing-standard)\r\n- [document-writing-checklist](#document-writing-checklist)\r\n\r\n### 3.2 我想直接开始写项目 README / 合同\r\n\r\n- [canonical-readme-template](#canonical-readme-template)\r\n- [project-json-contract-template.json](#project-json-contract-template)\r\n- [token-pool-readme-projectjson-writing-pattern](#token-pool-readme-projectjson-writing-pattern)\r\n\r\n### 3.3 我想写架构文档\r\n\r\n- [architecture-design-document-template](#architecture-design-document-template)\r\n\r\n### 3.4 我想写调研 / 综述\r\n\r\n- [research-survey-template](#research-survey-template)\r\n\r\n### 3.5 我想写博客 / 长文\r\n\r\n- [technical-blog-template](#technical-blog-template)\r\n\r\n## 4. 在 Obsidian 里怎么看 JSON\r\n\r\n这套 vault 当前本身就包含多个 `json` 文件，说明 Obsidian 没有禁用 JSON 可见性。\r\n\r\n建议查看顺序：\r\n\r\n1. 在文件列表中直接打开 [document-writing-registry.json](#document-writing-registry)\r\n2. 再打开 [document-writing-registry.schema.json](#document-writing-registry-schema)\r\n3. 如果想先看解释，再回到 JSON，看本页和总规范\r\n\r\n## 5. 建议使用方式\r\n\r\n- 人工阅读：从本页或 [engineering-document-writing-standard](#engineering-document-writing-standard) 开始\r\n- 程序读取：从 [document-writing-registry.json](#document-writing-registry) 开始\r\n- 校验 registry：用 [document-writing-registry.schema.json](#document-writing-registry-schema)\r\n\r\n### 3.6 我想看本地结构化 JSON 事实层\r\n\r\n- [obsidian-json-memory-system](#obsidian-json-memory-system)\r\n- [obsidian-workspace-registry.json](#obsidian-workspace-registry)\r\n- [local-tooling-registry.json](#local-tooling-registry)\r\n- [obsidian-performance-state.json](#obsidian-performance-state)",
+    "html": "<h1 id=\"文档写作系统入口\">文档写作系统入口</h1>\n<p>这页是给 Obsidian 直接看的人工导航页；程序请优先读取 <code>document-writing-registry.json</code>。</p>\n<h2 id=\"1-机器入口\">1. 机器入口</h2>\n<ul>\n<li>Registry：<a href=\"#document-writing-registry\">document-writing-registry.json</a></li>\n<li>Schema：<a href=\"#document-writing-registry-schema\">document-writing-registry.schema.json</a></li>\n</ul>\n<h2 id=\"2-人类入口\">2. 人类入口</h2>\n<ul>\n<li>\n<p>IDE 首页：<a href=\"#obsidian-ide-home\">obsidian-ide-home</a></p>\n</li>\n<li>\n<p>IDE 栈说明：<a href=\"#obsidian-ide-stack\">obsidian-ide-stack</a></p>\n</li>\n<li>\n<p>性能模式：<a href=\"#obsidian-performance-mode\">obsidian-performance-mode</a></p>\n</li>\n<li>\n<p>JSON 记忆系统：<a href=\"#obsidian-json-memory-system\">obsidian-json-memory-system</a></p>\n</li>\n<li>\n<p>总规范：<a href=\"#engineering-document-writing-standard\">engineering-document-writing-standard</a></p>\n</li>\n<li>\n<p>检查清单：<a href=\"#document-writing-checklist\">document-writing-checklist</a></p>\n</li>\n<li>\n<p>README 模板：<a href=\"#canonical-readme-template\">canonical-readme-template</a></p>\n</li>\n<li>\n<p><code>project.json</code> 模板：<a href=\"#project-json-contract-template\">project-json-contract-template.json</a></p>\n</li>\n<li>\n<p>架构设计模板：<a href=\"#architecture-design-document-template\">architecture-design-document-template</a></p>\n</li>\n<li>\n<p>调研 / 论文式综述模板：<a href=\"#research-survey-template\">research-survey-template</a></p>\n</li>\n<li>\n<p>技术博客 / 深度长文模板：<a href=\"#technical-blog-template\">technical-blog-template</a></p>\n</li>\n<li>\n<p>README / <code>project.json</code> 配对专项拆解：<a href=\"#token-pool-readme-projectjson-writing-pattern\">token-pool-readme-projectjson-writing-pattern</a></p>\n</li>\n</ul>\n<h2 id=\"3-按用途跳转\">3. 按用途跳转</h2>\n<h3 id=\"31-我想先看总规则\">3.1 我想先看总规则</h3>\n<ul>\n<li><a href=\"#engineering-document-writing-standard\">engineering-document-writing-standard</a></li>\n<li><a href=\"#document-writing-checklist\">document-writing-checklist</a></li>\n</ul>\n<h3 id=\"32-我想直接开始写项目-readme--合同\">3.2 我想直接开始写项目 README / 合同</h3>\n<ul>\n<li><a href=\"#canonical-readme-template\">canonical-readme-template</a></li>\n<li><a href=\"#project-json-contract-template\">project-json-contract-template.json</a></li>\n<li><a href=\"#token-pool-readme-projectjson-writing-pattern\">token-pool-readme-projectjson-writing-pattern</a></li>\n</ul>\n<h3 id=\"33-我想写架构文档\">3.3 我想写架构文档</h3>\n<ul>\n<li><a href=\"#architecture-design-document-template\">architecture-design-document-template</a></li>\n</ul>\n<h3 id=\"34-我想写调研--综述\">3.4 我想写调研 / 综述</h3>\n<ul>\n<li><a href=\"#research-survey-template\">research-survey-template</a></li>\n</ul>\n<h3 id=\"35-我想写博客--长文\">3.5 我想写博客 / 长文</h3>\n<ul>\n<li><a href=\"#technical-blog-template\">technical-blog-template</a></li>\n</ul>\n<h2 id=\"4-在-obsidian-里怎么看-json\">4. 在 Obsidian 里怎么看 JSON</h2>\n<p>这套 vault 当前本身就包含多个 <code>json</code> 文件，说明 Obsidian 没有禁用 JSON 可见性。</p>\n<p>建议查看顺序：</p>\n<ol>\n<li>在文件列表中直接打开 <a href=\"#document-writing-registry\">document-writing-registry.json</a></li>\n<li>再打开 <a href=\"#document-writing-registry-schema\">document-writing-registry.schema.json</a></li>\n<li>如果想先看解释，再回到 JSON，看本页和总规范</li>\n</ol>\n<h2 id=\"5-建议使用方式\">5. 建议使用方式</h2>\n<ul>\n<li>人工阅读：从本页或 <a href=\"#engineering-document-writing-standard\">engineering-document-writing-standard</a> 开始</li>\n<li>程序读取：从 <a href=\"#document-writing-registry\">document-writing-registry.json</a> 开始</li>\n<li>校验 registry：用 <a href=\"#document-writing-registry-schema\">document-writing-registry.schema.json</a></li>\n</ul>\n<h3 id=\"36-我想看本地结构化-json-事实层\">3.6 我想看本地结构化 JSON 事实层</h3>\n<ul>\n<li><a href=\"#obsidian-json-memory-system\">obsidian-json-memory-system</a></li>\n<li><a href=\"#obsidian-workspace-registry\">obsidian-workspace-registry.json</a></li>\n<li><a href=\"#local-tooling-registry\">local-tooling-registry.json</a></li>\n<li><a href=\"#obsidian-performance-state\">obsidian-performance-state.json</a></li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "文档写作系统入口",
+        "text": "文档写作系统入口"
+      },
+      {
+        "depth": 2,
+        "slug": "1-机器入口",
+        "text": "1. 机器入口"
+      },
+      {
+        "depth": 2,
+        "slug": "2-人类入口",
+        "text": "2. 人类入口"
+      },
+      {
+        "depth": 2,
+        "slug": "3-按用途跳转",
+        "text": "3. 按用途跳转"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-我想先看总规则",
+        "text": "3.1 我想先看总规则"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-我想直接开始写项目-readme-合同",
+        "text": "3.2 我想直接开始写项目 README / 合同"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-我想写架构文档",
+        "text": "3.3 我想写架构文档"
+      },
+      {
+        "depth": 3,
+        "slug": "3-4-我想写调研-综述",
+        "text": "3.4 我想写调研 / 综述"
+      },
+      {
+        "depth": 3,
+        "slug": "3-5-我想写博客-长文",
+        "text": "3.5 我想写博客 / 长文"
+      },
+      {
+        "depth": 2,
+        "slug": "4-在-obsidian-里怎么看-json",
+        "text": "4. 在 Obsidian 里怎么看 JSON"
+      },
+      {
+        "depth": 2,
+        "slug": "5-建议使用方式",
+        "text": "5. 建议使用方式"
+      },
+      {
+        "depth": 3,
+        "slug": "3-6-我想看本地结构化-json-事实层",
+        "text": "3.6 我想看本地结构化 JSON 事实层"
+      }
+    ],
+    "detailPath": "articles/md_d92d19fbfb47.json"
+  }
+}

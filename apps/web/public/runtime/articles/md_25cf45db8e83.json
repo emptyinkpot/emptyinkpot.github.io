@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_25cf45db8e83",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/Frontend%20System%20DSL%EF%BC%88%E9%A2%86%E5%9F%9F%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80%EF%BC%89.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程学习之路/Frontend System DSL（领域描述语言）.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/Frontend System DSL（领域描述语言）.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/Frontend%20System%20DSL%EF%BC%88%E9%A2%86%E5%9F%9F%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80%EF%BC%89.md",
+    "slug": "blog-编程学习之路-frontend-system-dsl-领域描述语言",
+    "title": "Frontend System DSL（领域描述语言）",
+    "summary": "有，但先说一个关键现实： 不存在一种“单一文档格式”可以完美描述前端的一切（UI + 状态 + 交互 + 依赖 + 副作用） 。 如果你试图用一种文档全包，最后一定会变成——要么太抽象没用，要么太细碎没人维护。 但确实存在一套 “组合式描述体系” ，已经被业界验证是可行的，而且 对 AI 也非常友好...",
+    "description": "有，但先说一个关键现实： 不存在一种“单一文档格式”可以完美描述前端的一切（UI + 状态 + 交互 + 依赖 + 副作用） 。 如果你试图用一种文档全包，最后一定会变成——要么太抽象没用，要么太细碎没人维护。 但确实存在一套 “组合式描述体系” ，已经被业界验证是可行的，而且 对 AI 也非常友好...",
+    "date": "2026-04-28",
+    "updated": "2026-04-28",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程学习之路"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程学习之路/Frontend System DSL（领域描述语言）.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/Frontend System DSL（领域描述语言）.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/Frontend%20System%20DSL%EF%BC%88%E9%A2%86%E5%9F%9F%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80%EF%BC%89.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Frontend System DSL（领域描述语言）",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程学习之路",
+        "FRONTEND SYSTEM DSL（领域描述语言）"
+      ],
+      "subtitle": "有，但先说一个关键现实： 不存在一种“单一文档格式”可以完美描述前端的一切（UI + 状态 + 交互 + 依赖 + 副作用） 。 如果你试图用一种文档全包，最后一定会变成——要么太抽象没用，要么太细碎没人维护。 但确实存在一套 “组合式描述体系” ，已经被业界验证是可行的，而且 对 AI 也非常友好..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "有，但先说一个关键现实：  \n**不存在一种“单一文档格式”可以完美描述前端的一切（UI + 状态 + 交互 + 依赖 + 副作用）**。  \n如果你试图用一种文档全包，最后一定会变成——要么太抽象没用，要么太细碎没人维护。\n\n但确实存在一套**“组合式描述体系”**，已经被业界验证是可行的，而且**对 AI 也非常友好**。\n\n我给你一个更工程化、可落地的答案👇\n\n---\n\n# ✅ 一、核心思路：不是一个文档，而是“四层描述模型”\n\n你可以把前端系统拆成 4 个维度，每个维度用最适合的表达方式：\n\n### 1️⃣ 结构层（页面 / 组件）\n\n👉 描述“长什么样”\n\n- 页面结构\n    \n- 组件树\n    \n- 布局关系\n    \n\n**推荐表达：**\n\n- Markdown + 组件树\n    \n- 或类似 Storybook 的组件文档体系\n    \n\n示例：\n\n```md\nPage: Dashboard\n- Header\n- Sidebar\n- Main\n  - ChartPanel\n  - TablePanel\n```\n\n---\n\n### 2️⃣ 状态层（State Model）\n\n👉 描述“数据怎么流动”\n\n这是最关键的（很多人没写这个）\n\n**推荐表达：状态机 / 状态图**\n\n👉 用：\n\n- XState 思想\n    \n- 或 JSON State 描述\n    \n\n示例：\n\n```json\n{\n  \"state\": \"loading\",\n  \"transitions\": {\n    \"success\": \"loaded\",\n    \"error\": \"error\"\n  }\n}\n```\n\n---\n\n### 3️⃣ 行为层（交互 / 逻辑）\n\n👉 描述“用户操作会发生什么”\n\n这个是 AI 最需要的\n\n**推荐表达：事件驱动表**\n\n示例：\n\n```md\nEvent: 点击“提交”\n- 校验表单\n- 调用 API\n- 成功 → 跳转 success 页面\n- 失败 → 显示错误\n```\n\n---\n\n### 4️⃣ 依赖层（API / 外部系统）\n\n👉 描述“系统和谁交互”\n\n**推荐表达：接口契约**\n\n👉 标准就是：\n\n- OpenAPI Specification\n    \n\n示例：\n\n```yaml\nPOST /api/login\nreq:\n  username: string\n  password: string\nres:\n  token: string\n```\n\n---\n\n# ✅ 二、真正关键：让 AI 能读懂的结构\n\n你真正想要的是：\n\n> “AI 能理解整个前端系统”\n\n那就要满足三个条件：\n\n---\n\n## 1️⃣ 可分块（Chunkable）\n\n每个模块必须：\n\n- 独立\n    \n- 可引用\n    \n- 可组合\n    \n\n👉 不要写一坨 README\n\n---\n\n## 2️⃣ 可索引（Indexable）\n\n你需要一个“入口索引”\n\n```md\n# Frontend System Index\n\n## Pages\n- dashboard.md\n- login.md\n\n## Components\n- Button.md\n- Table.md\n\n## State\n- auth.state.json\n```\n\n---\n\n## 3️⃣ 可查询（Queryable）\n\n关键来了👇\n\n你要让 AI 可以问：\n\n- “登录流程是怎么走的？”\n    \n- “点击按钮会触发什么？”\n    \n- “这个组件依赖哪些 API？”\n    \n\n👉 所以你的文档必须：\n\n**结构化 + 标准字段**\n\n---\n\n# ✅ 三、最接近“统一语言”的方案（推荐）\n\n如果你非要找“统一表达方式”，目前最接近的是：\n\n---\n\n## 🧠 方案1：DSL（领域特定语言）\n\n你可以自己定义一种：\n\n```yaml\ncomponent: LoginForm\nstate:\n  - idle\n  - loading\n  - error\nactions:\n  submit:\n    - validate\n    - call: POST /login\n    - success: redirect:/home\n```\n\n👉 这个非常适合 AI（比 React 代码更清晰）\n\n---\n\n## 🧠 方案2：状态机 + 组件组合（最推荐）\n\n组合：\n\n- 状态：XState 思想\n    \n- UI：组件树\n    \n- API：OpenAPI\n    \n\n👉 这是目前最“工程正确”的方案\n\n---\n\n## 🧠 方案3：直接让代码成为文档（进阶）\n\n用：\n\n- 类型系统（TypeScript）\n    \n- schema（Zod）\n    \n- 注释约定\n    \n\n👉 让 AI 直接读代码\n\n但问题是：  \n👉 **代码对 AI 不够“语义清晰”**\n\n---\n\n# ✅ 四、你这个场景的最优解（结合你之前架构）\n\n你现在做的是：\n\n👉 AI 调度系统 / Token Pool / 工程平台\n\n我建议你这样搞👇\n\n---\n\n# 🚀 推荐你的“工程母模板”（前端版）\n\n## 结构：\n\n```\nfrontend/\n├── index.md              # 总入口\n├── pages/\n├── components/\n├── state/\n├── flows/               # ⭐关键（用户流程）\n├── api/\n```\n\n---\n\n## ⭐ flows（最重要）\n\n```md\n# login.flow.md\n\n1. 用户打开页面\n2. 输入账号密码\n3. 点击登录\n4. 调用 POST /login\n5. 成功 → dashboard\n6. 失败 → error toast\n```\n\n👉 这个是 AI 最喜欢的\n\n---\n\n# ✅ 五、说人话总结\n\n你问的本质其实是：\n\n> 有没有“前端系统的可计算说明书”\n\n答案是：\n\n✔ 有思路  \n❌ 没有单一标准  \n✅ 最优解是组合：\n\n---\n\n# 🧠 最终结论\n\n👉 不要找“一个文档格式”  \n👉 要做“结构化知识系统”\n\n---\n\n# 🧩 最推荐组合\n\n- 组件 → Storybook 思想\n    \n- 状态 → 状态机\n    \n- 行为 → flow 文档\n    \n- API → OpenAPI\n    \n- 总入口 → index\n    \n\n---\n\n如果你愿意，我可以帮你做一件更狠的事👇\n\n👉 给你设计一套：  \n**“AI 可读前端系统 DSL + 自动生成文档 + 可查询接口”**\n\n甚至可以直接接入你现在的 Token Pool 做：\n\n👉 “AI 自动理解前端并回答问题”\n\n你这个方向，其实已经在往：\n\n**“前端知识操作系统”** 走了。",
+    "html": "<p>有，但先说一个关键现实：<br>\n<strong>不存在一种“单一文档格式”可以完美描述前端的一切（UI + 状态 + 交互 + 依赖 + 副作用）</strong>。<br>\n如果你试图用一种文档全包，最后一定会变成——要么太抽象没用，要么太细碎没人维护。</p>\n<p>但确实存在一套**“组合式描述体系”<strong>，已经被业界验证是可行的，而且</strong>对 AI 也非常友好**。</p>\n<p>我给你一个更工程化、可落地的答案👇</p>\n<hr>\n<h1 id=\"-一核心思路不是一个文档而是四层描述模型\">✅ 一、核心思路：不是一个文档，而是“四层描述模型”</h1>\n<p>你可以把前端系统拆成 4 个维度，每个维度用最适合的表达方式：</p>\n<h3 id=\"1️⃣-结构层页面--组件\">1️⃣ 结构层（页面 / 组件）</h3>\n<p>👉 描述“长什么样”</p>\n<ul>\n<li>\n<p>页面结构</p>\n</li>\n<li>\n<p>组件树</p>\n</li>\n<li>\n<p>布局关系</p>\n</li>\n</ul>\n<p><strong>推荐表达：</strong></p>\n<ul>\n<li>\n<p>Markdown + 组件树</p>\n</li>\n<li>\n<p>或类似 Storybook 的组件文档体系</p>\n</li>\n</ul>\n<p>示例：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">Page: Dashboard</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Header</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Sidebar</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Main</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  -</span><span style=\"color:#E1E4E8\"> ChartPanel</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  -</span><span style=\"color:#E1E4E8\"> TablePanel</span></span></code></pre></figure>\n<hr>\n<h3 id=\"2️⃣-状态层state-model\">2️⃣ 状态层（State Model）</h3>\n<p>👉 描述“数据怎么流动”</p>\n<p>这是最关键的（很多人没写这个）</p>\n<p><strong>推荐表达：状态机 / 状态图</strong></p>\n<p>👉 用：</p>\n<ul>\n<li>\n<p>XState 思想</p>\n</li>\n<li>\n<p>或 JSON State 描述</p>\n</li>\n</ul>\n<p>示例：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"state\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"loading\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"transitions\"</span><span style=\"color:#E1E4E8\">: {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"success\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"loaded\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"error\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"error\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h3 id=\"3️⃣-行为层交互--逻辑\">3️⃣ 行为层（交互 / 逻辑）</h3>\n<p>👉 描述“用户操作会发生什么”</p>\n<p>这个是 AI 最需要的</p>\n<p><strong>推荐表达：事件驱动表</strong></p>\n<p>示例：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">Event: 点击“提交”</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> 校验表单</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> 调用 API</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> 成功 → 跳转 success 页面</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> 失败 → 显示错误</span></span></code></pre></figure>\n<hr>\n<h3 id=\"4️⃣-依赖层api--外部系统\">4️⃣ 依赖层（API / 外部系统）</h3>\n<p>👉 描述“系统和谁交互”</p>\n<p><strong>推荐表达：接口契约</strong></p>\n<p>👉 标准就是：</p>\n<ul>\n<li>OpenAPI Specification</li>\n</ul>\n<p>示例：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#9ECBFF\">POST /api/login</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">req</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">  username</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">string</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">  password</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">string</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">res</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">  token</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">string</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二真正关键让-ai-能读懂的结构\">✅ 二、真正关键：让 AI 能读懂的结构</h1>\n<p>你真正想要的是：</p>\n<blockquote>\n<p>“AI 能理解整个前端系统”</p>\n</blockquote>\n<p>那就要满足三个条件：</p>\n<hr>\n<h2 id=\"1️⃣-可分块chunkable\">1️⃣ 可分块（Chunkable）</h2>\n<p>每个模块必须：</p>\n<ul>\n<li>\n<p>独立</p>\n</li>\n<li>\n<p>可引用</p>\n</li>\n<li>\n<p>可组合</p>\n</li>\n</ul>\n<p>👉 不要写一坨 README</p>\n<hr>\n<h2 id=\"2️⃣-可索引indexable\">2️⃣ 可索引（Indexable）</h2>\n<p>你需要一个“入口索引”</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># Frontend System Index</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Pages</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> dashboard.md</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> login.md</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Components</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Button.md</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Table.md</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## State</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> auth.state.json</span></span></code></pre></figure>\n<hr>\n<h2 id=\"3️⃣-可查询queryable\">3️⃣ 可查询（Queryable）</h2>\n<p>关键来了👇</p>\n<p>你要让 AI 可以问：</p>\n<ul>\n<li>\n<p>“登录流程是怎么走的？”</p>\n</li>\n<li>\n<p>“点击按钮会触发什么？”</p>\n</li>\n<li>\n<p>“这个组件依赖哪些 API？”</p>\n</li>\n</ul>\n<p>👉 所以你的文档必须：</p>\n<p><strong>结构化 + 标准字段</strong></p>\n<hr>\n<h1 id=\"-三最接近统一语言的方案推荐\">✅ 三、最接近“统一语言”的方案（推荐）</h1>\n<p>如果你非要找“统一表达方式”，目前最接近的是：</p>\n<hr>\n<h2 id=\"-方案1dsl领域特定语言\">🧠 方案1：DSL（领域特定语言）</h2>\n<p>你可以自己定义一种：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#85E89D\">component</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">LoginForm</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">state</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">idle</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">loading</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">error</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">actions</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">  submit</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    - </span><span style=\"color:#9ECBFF\">validate</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    - </span><span style=\"color:#85E89D\">call</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">POST /login</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    - </span><span style=\"color:#85E89D\">success</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">redirect:/home</span></span></code></pre></figure>\n<p>👉 这个非常适合 AI（比 React 代码更清晰）</p>\n<hr>\n<h2 id=\"-方案2状态机--组件组合最推荐\">🧠 方案2：状态机 + 组件组合（最推荐）</h2>\n<p>组合：</p>\n<ul>\n<li>\n<p>状态：XState 思想</p>\n</li>\n<li>\n<p>UI：组件树</p>\n</li>\n<li>\n<p>API：OpenAPI</p>\n</li>\n</ul>\n<p>👉 这是目前最“工程正确”的方案</p>\n<hr>\n<h2 id=\"-方案3直接让代码成为文档进阶\">🧠 方案3：直接让代码成为文档（进阶）</h2>\n<p>用：</p>\n<ul>\n<li>\n<p>类型系统（TypeScript）</p>\n</li>\n<li>\n<p>schema（Zod）</p>\n</li>\n<li>\n<p>注释约定</p>\n</li>\n</ul>\n<p>👉 让 AI 直接读代码</p>\n<p>但问题是：<br>\n👉 <strong>代码对 AI 不够“语义清晰”</strong></p>\n<hr>\n<h1 id=\"-四你这个场景的最优解结合你之前架构\">✅ 四、你这个场景的最优解（结合你之前架构）</h1>\n<p>你现在做的是：</p>\n<p>👉 AI 调度系统 / Token Pool / 工程平台</p>\n<p>我建议你这样搞👇</p>\n<hr>\n<h1 id=\"-推荐你的工程母模板前端版\">🚀 推荐你的“工程母模板”（前端版）</h1>\n<h2 id=\"结构\">结构：</h2>\n<pre><code>frontend/\n├── index.md              # 总入口\n├── pages/\n├── components/\n├── state/\n├── flows/               # ⭐关键（用户流程）\n├── api/\n</code></pre>\n<hr>\n<h2 id=\"-flows最重要\">⭐ flows（最重要）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># login.flow.md</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">1.</span><span style=\"color:#E1E4E8\"> 用户打开页面</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">2.</span><span style=\"color:#E1E4E8\"> 输入账号密码</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">3.</span><span style=\"color:#E1E4E8\"> 点击登录</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">4.</span><span style=\"color:#E1E4E8\"> 调用 POST /login</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">5.</span><span style=\"color:#E1E4E8\"> 成功 → dashboard</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">6.</span><span style=\"color:#E1E4E8\"> 失败 → error toast</span></span></code></pre></figure>\n<p>👉 这个是 AI 最喜欢的</p>\n<hr>\n<h1 id=\"-五说人话总结\">✅ 五、说人话总结</h1>\n<p>你问的本质其实是：</p>\n<blockquote>\n<p>有没有“前端系统的可计算说明书”</p>\n</blockquote>\n<p>答案是：</p>\n<p>✔ 有思路<br>\n❌ 没有单一标准<br>\n✅ 最优解是组合：</p>\n<hr>\n<h1 id=\"-最终结论\">🧠 最终结论</h1>\n<p>👉 不要找“一个文档格式”<br>\n👉 要做“结构化知识系统”</p>\n<hr>\n<h1 id=\"-最推荐组合\">🧩 最推荐组合</h1>\n<ul>\n<li>\n<p>组件 → Storybook 思想</p>\n</li>\n<li>\n<p>状态 → 状态机</p>\n</li>\n<li>\n<p>行为 → flow 文档</p>\n</li>\n<li>\n<p>API → OpenAPI</p>\n</li>\n<li>\n<p>总入口 → index</p>\n</li>\n</ul>\n<hr>\n<p>如果你愿意，我可以帮你做一件更狠的事👇</p>\n<p>👉 给你设计一套：<br>\n<strong>“AI 可读前端系统 DSL + 自动生成文档 + 可查询接口”</strong></p>\n<p>甚至可以直接接入你现在的 Token Pool 做：</p>\n<p>👉 “AI 自动理解前端并回答问题”</p>\n<p>你这个方向，其实已经在往：</p>\n<p><strong>“前端知识操作系统”</strong> 走了。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一-核心思路-不是一个文档-而是-四层描述模型",
+        "text": "✅ 一、核心思路：不是一个文档，而是“四层描述模型”"
+      },
+      {
+        "depth": 3,
+        "slug": "1-结构层-页面-组件",
+        "text": "1️⃣ 结构层（页面 / 组件）"
+      },
+      {
+        "depth": 3,
+        "slug": "2-状态层-state-model",
+        "text": "2️⃣ 状态层（State Model）"
+      },
+      {
+        "depth": 3,
+        "slug": "3-行为层-交互-逻辑",
+        "text": "3️⃣ 行为层（交互 / 逻辑）"
+      },
+      {
+        "depth": 3,
+        "slug": "4-依赖层-api-外部系统",
+        "text": "4️⃣ 依赖层（API / 外部系统）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-真正关键-让-ai-能读懂的结构",
+        "text": "✅ 二、真正关键：让 AI 能读懂的结构"
+      },
+      {
+        "depth": 2,
+        "slug": "1-可分块-chunkable",
+        "text": "1️⃣ 可分块（Chunkable）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-可索引-indexable",
+        "text": "2️⃣ 可索引（Indexable）"
+      },
+      {
+        "depth": 1,
+        "slug": "frontend-system-index",
+        "text": "Frontend System Index"
+      },
+      {
+        "depth": 2,
+        "slug": "pages",
+        "text": "Pages"
+      },
+      {
+        "depth": 2,
+        "slug": "components",
+        "text": "Components"
+      },
+      {
+        "depth": 2,
+        "slug": "state",
+        "text": "State"
+      },
+      {
+        "depth": 2,
+        "slug": "3-可查询-queryable",
+        "text": "3️⃣ 可查询（Queryable）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-最接近-统一语言-的方案-推荐",
+        "text": "✅ 三、最接近“统一语言”的方案（推荐）"
+      },
+      {
+        "depth": 2,
+        "slug": "方案1-dsl-领域特定语言",
+        "text": "🧠 方案1：DSL（领域特定语言）"
+      },
+      {
+        "depth": 2,
+        "slug": "方案2-状态机-组件组合-最推荐",
+        "text": "🧠 方案2：状态机 + 组件组合（最推荐）"
+      },
+      {
+        "depth": 2,
+        "slug": "方案3-直接让代码成为文档-进阶",
+        "text": "🧠 方案3：直接让代码成为文档（进阶）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-你这个场景的最优解-结合你之前架构",
+        "text": "✅ 四、你这个场景的最优解（结合你之前架构）"
+      },
+      {
+        "depth": 1,
+        "slug": "推荐你的-工程母模板-前端版",
+        "text": "🚀 推荐你的“工程母模板”（前端版）"
+      },
+      {
+        "depth": 2,
+        "slug": "结构",
+        "text": "结构："
+      },
+      {
+        "depth": 2,
+        "slug": "flows-最重要",
+        "text": "⭐ flows（最重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "login-flow",
+        "text": "login.flow.md"
+      },
+      {
+        "depth": 1,
+        "slug": "五-说人话总结",
+        "text": "✅ 五、说人话总结"
+      },
+      {
+        "depth": 1,
+        "slug": "最终结论",
+        "text": "🧠 最终结论"
+      },
+      {
+        "depth": 1,
+        "slug": "最推荐组合",
+        "text": "🧩 最推荐组合"
+      }
+    ],
+    "detailPath": "articles/md_25cf45db8e83.json"
+  }
+}

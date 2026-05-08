@@ -75,10 +75,11 @@ async function verifyLocalPwaSurface() {
 }
 
 async function verifyOnlinePwaSurface(twaContract) {
-  const [manifestResponse, serviceWorkerResponse, homeResponse] = await Promise.all([
+  const [manifestResponse, serviceWorkerResponse, homeResponse, assetLinksResponse] = await Promise.all([
     fetch(twaContract.manifestUrl),
     fetch(new URL('/sw.js', twaContract.runtimeUrl)),
-    fetch(twaContract.runtimeUrl)
+    fetch(twaContract.runtimeUrl),
+    fetch(new URL('/.well-known/assetlinks.json', twaContract.runtimeUrl))
   ]);
 
   if (manifestResponse.status !== 200) {
@@ -94,9 +95,17 @@ async function verifyOnlinePwaSurface(twaContract) {
     throw new Error(`/sw.js request failed: ${serviceWorkerResponse.status}`);
   }
 
+  if (assetLinksResponse.status !== 200) {
+    throw new Error(`assetlinks.json request failed: ${assetLinksResponse.status}`);
+  }
+
   const manifest = await manifestResponse.json();
   const serviceWorkerSource = await serviceWorkerResponse.text();
   const html = await homeResponse.text();
+  const assetLinksContentType = assetLinksResponse.headers.get('content-type') || '';
+  const assetLinks = await assetLinksResponse.json().catch(() => {
+    throw new Error(`assetlinks.json is not valid JSON; content-type was ${assetLinksContentType}`);
+  });
 
   assertEqual(manifest.start_url, '/', 'online manifest start_url');
   assertEqual(manifest.scope, '/', 'online manifest scope');
@@ -124,6 +133,8 @@ async function verifyOnlinePwaSurface(twaContract) {
   if (!html.includes("serviceWorker.register('/sw.js'")) {
     throw new Error('home page is missing service worker registration');
   }
+
+  assertAssetLinks(twaContract, assetLinks);
 
   return { manifest, icon512 };
 }
@@ -170,7 +181,7 @@ function createTwaManifest(twaContract, webManifest) {
     })),
     generatorApp: 'myblog-android-twa-generator',
     webManifestUrl: twaContract.manifestUrl,
-    fallbackType: 'customtabs',
+    fallbackType: twaContract.fallbackType || 'customtabs',
     features: {},
     alphaDependencies: {
       enabled: false
@@ -180,7 +191,7 @@ function createTwaManifest(twaContract, webManifest) {
     fullScopeUrl: new URL('/', twaContract.runtimeUrl).toString(),
     minSdkVersion: 23,
     orientation: webManifest.orientation || 'default',
-    fingerprints: [],
+    fingerprints: twaContract.sha256CertFingerprints || [],
     additionalTrustedOrigins: [],
     retainedBundles: [],
     displayOverride: Array.isArray(webManifest.display_override) ? webManifest.display_override : []
@@ -237,6 +248,151 @@ function patchGeneratedGradleProject() {
         .replace(/^networkTimeout=.*$/m, 'networkTimeout=60000')
     );
   }
+
+  const androidManifestPath = path.join(outputDir, 'app/src/main/AndroidManifest.xml');
+  if (fs.existsSync(androidManifestPath)) {
+    let source = fs.readFileSync(androidManifestPath, 'utf8');
+      if (!source.includes('android.support.customtabs.action.CustomTabsService')) {
+        source = source.replace(
+        /(<manifest\b[^>]*>\s*)/,
+        `$1
+    <queries>
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
+`
+      );
+    }
+
+    source = patchLauncherActivityBrowserMetadata(source);
+    source = patchLauncherActivityTheme(source);
+    fs.writeFileSync(androidManifestPath, source);
+  }
+
+  patchWebViewShellLauncherActivity();
+}
+
+function patchLauncherActivityBrowserMetadata(source) {
+  const providerPackage = contract.preferredTwaProviderPackage;
+  if (!providerPackage || source.includes('android.support.customtabs.trusted.START_CHROME_BEFORE_ANIMATION_COMPLETE')) {
+    return source;
+  }
+
+  return source.replace(
+    /(<activity android:name="LauncherActivity"[\s\S]*?<meta-data android:name="android\.support\.customtabs\.trusted\.DEFAULT_URL"[\s\S]*?\/>)/,
+    `$1
+
+            <meta-data
+                android:name="android.support.customtabs.trusted.START_CHROME_BEFORE_ANIMATION_COMPLETE"
+                android:value="true" />`
+  );
+}
+
+function patchLauncherActivityTheme(source) {
+  if (contract.launcherMode !== 'webview-shell') {
+    return source;
+  }
+
+  return source.replace(
+    'android:theme="@android:style/Theme.Translucent.NoTitleBar"',
+    'android:theme="@android:style/Theme.Material.NoActionBar"'
+  );
+}
+
+function patchWebViewShellLauncherActivity() {
+  if (contract.launcherMode !== 'webview-shell') {
+    return;
+  }
+
+  const launcherActivityPath = path.join(
+    outputDir,
+    'app/src/main/java',
+    ...(twaManifest.packageId || contract.packageId).split('.'),
+    'LauncherActivity.java'
+  );
+
+  if (!fs.existsSync(launcherActivityPath)) {
+    return;
+  }
+
+  const launchUrl = new URL('/', contract.runtimeUrl).toString();
+  fs.writeFileSync(launcherActivityPath, `package ${twaManifest.packageId || contract.packageId};
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+public class LauncherActivity extends Activity {
+    private static final String LAUNCH_URL = "${launchUrl}";
+    private WebView webView;
+
+    @Override
+    @SuppressLint("SetJavaScriptEnabled")
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setStatusBarColor(Color.rgb(30, 27, 24));
+        getWindow().setNavigationBarColor(Color.BLACK);
+
+        webView = new WebView(this);
+        webView.setBackgroundColor(Color.rgb(245, 241, 232));
+        webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setMediaPlaybackRequiresUserGesture(false);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                Uri uri = request.getUrl();
+                if ("blog.tengokukk.com".equals(uri.getHost())) {
+                    return false;
+                }
+                return false;
+            }
+        });
+
+        setContentView(webView);
+        webView.loadUrl(LAUNCH_URL);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (webView != null) {
+            webView.destroy();
+            webView = null;
+        }
+        super.onDestroy();
+    }
+}
+`);
 }
 
 function ensureTestSigningKey() {
@@ -449,6 +605,32 @@ function writeJson(filePath, value) {
 function assertEqual(actual, expected, label) {
   if (actual !== expected) {
     throw new Error(`${label} expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
+  }
+}
+
+function assertAssetLinks(twaContract, assetLinks) {
+  if (!Array.isArray(assetLinks)) {
+    throw new Error('assetlinks.json must be a JSON array');
+  }
+
+  const fingerprints = twaContract.sha256CertFingerprints || [];
+  if (!fingerprints.length) {
+    throw new Error('TWA contract must declare sha256CertFingerprints');
+  }
+
+  const expectedPackage = twaContract.packageId || 'com.tengokukk.myblog';
+  const matched = assetLinks.some((statement) => {
+    const target = statement?.target || {};
+    const relations = statement?.relation || [];
+    const actualFingerprints = target.sha256_cert_fingerprints || [];
+    return target.namespace === 'android_app' &&
+      target.package_name === expectedPackage &&
+      relations.includes('delegate_permission/common.handle_all_urls') &&
+      fingerprints.every((fingerprint) => actualFingerprints.includes(fingerprint));
+  });
+
+  if (!matched) {
+    throw new Error(`assetlinks.json does not trust ${expectedPackage} with the configured SHA256 fingerprint`);
   }
 }
 

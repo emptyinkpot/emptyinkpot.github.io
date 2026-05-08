@@ -1,19 +1,53 @@
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+
 const rootDir = process.cwd();
 const remote = 'ubuntu@124.220.233.126';
 const remoteTemp = '/tmp/myblog-dist-upload';
+const remoteArchive = '/tmp/myblog-dist-upload.tgz';
 const remoteSite = '/srv/myblog/site';
-const distDot = 'apps/web/dist/.';
+const distDir = 'apps/web/dist';
+const localArchive = path.join(os.tmpdir(), `myblog-dist-${Date.now()}.tgz`);
 
 run('node', ['tools/deploy-guard.mjs']);
-run('npm', ['run', 'build']);
-run('ssh', [remote, `rm -rf ${remoteTemp} && mkdir -p ${remoteTemp}`]);
-run('scp', ['-r', distDot, `${remote}:${remoteTemp}`]);
+if (process.env.MYBLOG_DEPLOY_SKIP_BUILD === '1') {
+  const indexPath = path.join(rootDir, distDir, 'index.html');
+  const collectionsPath = path.join(rootDir, distDir, 'collections', 'index.html');
+  if (!fs.existsSync(indexPath) || !fs.existsSync(collectionsPath)) {
+    console.error(`MYBLOG_DEPLOY_SKIP_BUILD=1 but ${distDir} is missing required files.`);
+    process.exit(1);
+  }
+} else {
+  fs.rmSync(path.join(rootDir, distDir), { recursive: true, force: true });
+  run('npm', ['run', 'build']);
+}
+run('tar', ['-czf', localArchive, '-C', distDir, '.']);
+run('ssh', [remote, `rm -rf ${remoteTemp} ${remoteArchive} && mkdir -p ${remoteTemp}`]);
+run('scp', [localArchive, `${remote}:${remoteArchive}`]);
 run('ssh', [
   remote,
-  `sudo rm -rf ${remoteSite}/* && sudo cp -r ${remoteTemp}/. ${remoteSite}/ && sudo chown -R www-data:www-data ${remoteSite} && rm -rf ${remoteTemp}`
+  [
+    `tar -xzf ${remoteArchive} -C ${remoteTemp}`,
+    `rm -f ${remoteArchive}`,
+    `test -f ${remoteTemp}/index.html`,
+    `test -f ${remoteTemp}/collections/index.html`,
+    `rm -rf ${remoteTemp}/runtime`,
+    `sudo mkdir -p ${remoteSite}/runtime`,
+    `sudo find ${remoteSite} -mindepth 1 -maxdepth 1 ! -name runtime -exec rm -rf {} +`,
+    `sudo rsync -a ${remoteTemp}/ ${remoteSite}/`,
+    `test -f ${remoteSite}/index.html`,
+    `test -f ${remoteSite}/collections/index.html`,
+    `sudo chown -R www-data:www-data ${remoteSite}`,
+    `sudo chown -R ubuntu:www-data ${remoteSite}/runtime`,
+    `sudo chmod 775 ${remoteSite}/runtime`,
+    `sudo find ${remoteSite}/runtime -type f -exec chmod 664 {} +`,
+    `rm -rf ${remoteTemp}`
+  ].join(' && ')
 ]);
 
+fs.rmSync(localArchive, { force: true });
 console.log(`Deployed MyBlog static site to ${remote}:${remoteSite}`);
 
 function run(command, args) {

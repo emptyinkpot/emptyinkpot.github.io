@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_d3368c796e44",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/%E6%93%8D%E4%BD%9C%E6%9C%AF%E8%AF%AD%E5%8D%8F%E8%AE%AE.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/操作术语协议.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/操作术语协议.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%93%8D%E4%BD%9C%E6%9C%AF%E8%AF%AD%E5%8D%8F%E8%AE%AE.md",
+    "slug": "agent-操作术语协议",
+    "title": "操作术语协议",
+    "summary": "操作术语协议 0. 目的与适用范围 这份文档是当前 docs/agent 下唯一的“操作术语协议”真源，用来约束我在面对“仓库整合 / 接入 / 迁入 / 并入 / 保留独立仓 / GitHub 归属 / 前端以谁为基础”这类请求时的默认理解方式。 当前版本先覆盖： 1. 仓库整合与跨仓接入 2....",
+    "description": "操作术语协议 0. 目的与适用范围 这份文档是当前 docs/agent 下唯一的“操作术语协议”真源，用来约束我在面对“仓库整合 / 接入 / 迁入 / 并入 / 保留独立仓 / GitHub 归属 / 前端以谁为基础”这类请求时的默认理解方式。 当前版本先覆盖： 1. 仓库整合与跨仓接入 2....",
+    "date": "2026-04-21",
+    "updated": "2026-04-21",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "类-知识库治理",
+      "形态-规范",
+      "agent"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [
+        "类-知识库治理",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/操作术语协议.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/操作术语协议.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%93%8D%E4%BD%9C%E6%9C%AF%E8%AF%AD%E5%8D%8F%E8%AE%AE.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "操作术语协议",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "类 知识库治理",
+        "形态 规范",
+        "操作术语协议"
+      ],
+      "subtitle": "操作术语协议 0. 目的与适用范围 这份文档是当前 docs/agent 下唯一的“操作术语协议”真源，用来约束我在面对“仓库整合 / 接入 / 迁入 / 并入 / 保留独立仓 / GitHub 归属 / 前端以谁为基础”这类请求时的默认理解方式。 当前版本先覆盖： 1. 仓库整合与跨仓接入 2...."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 操作术语协议\n\n### 0. 目的与适用范围\n\n这份文档是当前 `docs/agent` 下唯一的“操作术语协议”真源，用来约束我在面对“仓库整合 / 接入 / 迁入 / 并入 / 保留独立仓 / GitHub 归属 / 前端以谁为基础”这类请求时的默认理解方式。\n\n当前版本先覆盖：\n\n1. 仓库整合与跨仓接入\n2. 前端基底判定\n3. GitHub 远端与源码真源归属\n4. 后续扩写操作术语时的稳定入口规则\n\n后续如果还要新增别的高频操作术语，默认继续追加到这一个 canonical 文件中，不再在 `docs/agent` 下新建平行“术语说明 / 术语协议 / 口径约定”文档。\n\n当前 canonical 路径：`docs/agent/操作术语协议.md`。\n\n### 1. 核心对象定义\n\n#### 1.1 宿主仓\n\n“宿主仓”是指本轮整合动作最终要落进去、继续扩展、继续部署、继续交付的那个仓库。\n\n只要用户说“把 A 整合进 B”，默认 `B` 就是宿主仓。\n\n#### 1.2 来源仓\n\n“来源仓”是指被接入、被吸收、被迁移、被参考的那个仓库。\n\n在“把 A 整合进 B”里，默认 `A` 是来源仓。\n\n#### 1.3 前端基底\n\n“前端基底”是指导航、路由、页面壳、布局层、视觉语言、组件系统、页面组织方式主要归属的那一套前端体系。\n\n默认不是看“哪边页面更多”，而是看“整合后页面长在哪个产品壳里”。\n\n#### 1.4 owning repo\n\n“owning repo”是这轮改动边界真正应该接收第一手 commit / push 的仓库。\n\n默认情况下：\n\n- 宿主仓 = owning repo\n\n除非用户明确要求：\n\n- 双仓并行维护\n- 先改来源仓再由宿主仓消费\n- 或者 live 边界明确不在宿主仓\n\n#### 1.5 canonical source\n\n“canonical source”是后续继续迭代时默认应该优先修改的源码真源。\n\n默认情况下：\n\n- 被整合进去之后，宿主仓成为该整合范围内的 canonical source\n\n#### 1.6 source donor role\n\n来源仓在整合完成后默认有三种角色：\n\n1. `independent source`：继续独立演进，但本轮只是被宿主仓消费\n2. `reference / mirror`：保留历史与参考价值，但不再是该功能范围的第一开发真源\n3. `archive`：只保留归档意义，不再承担后续活开发\n\n#### 1.7 working copy\n\n“working copy”是指为当前任务临时创建的本地 clone / worktree，用来编辑、验证、\n构建、截图和提交，但默认不作为长期源码镜像保存。\n\n在 GitHub 单真源模式下，默认口径是：\n\n- `canonical source` 负责长期源码真源\n- `working copy` 只是 task-scoped disposable 本地副本\n- push / deploy 完成后，如无明确保留理由，默认应回收该副本\n\n#### 1.8 repo manifest\n\n“repo manifest”是指为某个会反复出现的 canonical repo 预先记录的一份轻量默认值文件，\n用来给 working-copy 生命周期提供稳定元数据，而不是每次都靠聊天临时重述。\n\n在当前 GitHub 单真源模式下，默认 repo manifest：\n\n- 一仓一文件\n- 只记录 clone / branch / folder / deploy target 等默认值\n- 不承担新的 registry、计划台账或第二真源职责\n- 默认放在 `github-delivery-mcp` 的 `manifests/` 目录下\n\n### 2. 默认术语判定\n\n| 用户说法 | 默认宿主仓 | 默认前端基底 | 默认 GitHub 主交付 | 默认源码处理 |\n| --- | --- | --- | --- | --- |\n| `把 A 接入 B` | `B` | `B` | 推 `B` | 默认优先接能力，不整仓搬源码 |\n| `把 A 整合进 B` | `B` | `B` | 推 `B` | 默认允许吸收 `A` 的部分模块、数据源或逻辑，但壳层归 `B` |\n| `把 A 迁入 B` | `B` | `B` | 推 `B` | 默认表示这部分源码以后主要在 `B` 继续演进 |\n| `把 A 并入 B` | `B` | `B` | 推 `B` | 默认表示 `B` 成为该范围唯一活真源，`A` 降级为 reference / archive |\n| `把 A 接到 B，但保留 A 独立仓` | `B` | `B` | 推 `B`，`A` 保持独立 | 默认是消费式整合，不做长期双活源码合并 |\n| `B 只消费 A 的 API / SDK / 数据` | `B` | `B` | 推 `B` | 默认不迁源码，只做桥接或集成 |\n| `保留 A 的视觉风格` | 仍需显式确认 | 不再自动按 `B` 风格处理 | 视宿主仓而定 | 这是覆盖默认值的显式指令 |\n\n如果用户没有补充说明，默认不要把“整合进”理解成“两边混合重组出第三套平行实现”。\n\n### 3. 前端以谁为基础扩展的默认判断规则\n\n当用户说“把 A 仓库整合进 B 仓库”时，默认按下面顺序判断前端基底：\n\n1. 用户是否明确说“前端保留 A 风格 / 以 A 为基础”\n2. 最终页面是否长在 `B` 的导航、路由、layout、workspace 壳层里\n3. live 站点是否跟着 `B` 的域名、容器、运行目录、部署链走\n4. 后续迭代是否默认在 `B` 里继续写\n5. 第一手 Git 提交是否应该先落到 `B`\n\n只要 2-5 没被用户显式覆盖，默认前端基底就是 `B`。\n\n更直接地说：\n\n- `A 整合进 B`\n- 默认不是“把 A 的页面皮肤搬到 B”\n- 而是“把 A 的能力、数据源、领域结构收进 B 的产品壳”\n\n默认实现方式：\n\n1. 路由注册在宿主仓\n2. 导航入口挂在宿主仓\n3. 页面壳、布局、卡片、tab、视觉层级沿用宿主仓\n4. 复用来源仓的数据源、领域结构、已有逻辑时，优先做桥接或模块迁移\n5. 不默认使用 iframe 薄嵌入\n6. 不默认整页复制来源仓 CSS / token / 页面骨架\n\n### 4. GitHub 远端与源码真源的默认处理\n\n#### 4.1 单一第一真源原则\n\n一条整合任务默认只允许有一个第一开发真源。\n\n默认口径：\n\n- 宿主仓的 GitHub 远端 = 本轮主交付远端\n- 宿主仓 = 该整合范围内的 canonical source\n\n除非用户明确要求“双仓长期并行维护”，否则不要把宿主仓和来源仓同时维持为同一功能范围的双活真源。\n\n#### 4.2 默认远端交付顺序\n\n默认交付顺序是：\n\n1. 先在 owning repo 完成 `status -> commit -> push`\n2. 如果还有 umbrella / mirror / backup repo 需要吸收结果，再做第二层同步\n3. 不要反过来先推镜像仓、再补宿主仓\n\n#### 4.3 来源仓的默认处理方式\n\n来源仓默认按三种整合模式之一处理：\n\n##### a. 消费式整合\n\n- 宿主仓只消费来源仓的 API、MCP、数据、SDK 或运行输出\n- 来源仓继续独立存在\n- 默认不搬整块源码\n\n##### b. 吸收式整合\n\n- 只把来源仓里真正需要的源码、模块、资源、配置迁进宿主仓\n- 迁入范围后续默认在宿主仓继续开发\n- 来源仓保留历史，但不再是该范围的第一开发真源\n\n##### c. 迁移式整合\n\n- 某一整块能力整体迁到宿主仓\n- 宿主仓成为唯一活真源\n- 来源仓默认降级为 `reference / mirror / archive`\n\n如果用户没有明确说“保留来源仓继续作为主要开发面”，默认优先按 `消费式` 或 `吸收式` 理解，而不是长期双边维护。\n\n### 5. 源码处理的默认顺序\n\n默认不要把“整合”理解成“先整仓复制再慢慢收拾”。\n\n更稳的默认顺序是：\n\n1. 先判断宿主仓是谁\n2. 先判断前端基底是谁\n3. 先判断 live deploy target 跟谁走\n4. 先判断来源仓是 `independent source`、`reference` 还是 `archive`\n5. 再决定源码是桥接、局部迁移，还是整块吸收\n\n默认源码处理优先级：\n\n1. 先接能力\n2. 再接结构\n3. 最后才考虑是否搬完整源码\n\n默认做法：\n\n- 页面：在宿主仓里重建页面入口、路由和壳层\n- 数据：桥接来源仓的数据源或 API\n- 逻辑：迁最小必要模块，或按宿主仓风格重写\n- 样式：默认沿用宿主仓，不直接照搬来源仓整页视觉\n- 资源：只迁当前功能真正需要的部分\n- 文档：补清楚 source-map，说明“哪些来自来源仓，现在哪里继续维护”\n\n默认不做的事情：\n\n- 不把整个来源仓连同 `.git` 一起塞进宿主仓\n- 不把来源仓的 README、脚手架、历史布局、旧 CSS 全量复制进宿主仓\n- 不把双边路由、双边页面、双边导航长期并存\n\n### 6. 扩展术语定义\n\n#### 6.1 接管 / 收口 / 归档 / 镜像\n\n##### 接管\n\n- 默认含义：某个宿主仓、宿主系统或宿主团队开始承担该边界的主交付责任、主维护责任和第一手变更责任。\n- 默认不含义：不自动等于“所有源码已经整块迁完”；如果只是先接运行、接导航、接交付，但源码还在别处，需要显式说明。\n- 默认执行后果：\n  - owning repo 默认切到接管方\n  - 后续默认以接管方作为 canonical source 或至少作为主交付面\n  - 原边界如果不再承担第一手开发，默认进入 `降级` 判断\n- 与相近术语区别：\n  - `接管` 强调责任与控制权转移\n  - `迁移` 强调边界/源码/流量从哪里移到哪里\n  - `替换` 强调旧实现被新实现换掉\n\n##### 收口\n\n- 默认含义：把原本分散、并行、容易歧义的路径、口径、入口、真源或命名压回一个 canonical 面。\n- 默认不含义：不自动等于删库、删目录、删历史；如果只是统一解释权，也可以先不做物理删除。\n- 默认执行后果：\n  - 要明确唯一 canonical 路径、唯一 live 入口或唯一默认说法\n  - 并行说明、并行入口、并行命名默认要被移除、改写或降级为兼容说明\n- 与相近术语区别：\n  - `收口` 强调“减少歧义、压成一口径”\n  - `接管` 强调“谁负责”\n  - `归档` 强调“退出活开发”\n\n##### 归档\n\n- 默认含义：某个仓、目录、页面、文档或能力退出 live 主线，只保留历史、审计、追溯或应急恢复价值。\n- 默认不含义：不自动等于删除；也不自动等于仍然参与日常迭代。\n- 默认执行后果：\n  - 默认不再接第一手写入\n  - 默认不再作为 live 导航入口、默认读取入口或默认开发入口\n  - 如仍保留文件，应明确标成 archive / historical / snapshot\n- 与相近术语区别：\n  - `归档` 是冻结后的保留\n  - `镜像` 仍可能持续跟随 canonical source 同步\n  - `降级` 只是角色下降，未必已经冻结到 archive\n\n##### 镜像\n\n- 默认含义：从 canonical source 派生出来的复制面、同步面或备份面，用于备份、分发、消费层展示或灾备。\n- 默认不含义：不自动等于第一开发真源；也不自动等于可以先在镜像上做第一手修改。\n- 默认执行后果：\n  - 默认 `canonical source -> mirror` 单向或主从同步\n  - 默认先推 canonical source，再同步 mirror\n  - mirror 若接受修改，也应视为例外流程而不是默认工作面\n- 与相近术语区别：\n  - `镜像` 强调“复制与同步”\n  - `归档` 强调“冻结与保留”\n  - `双活` 则意味着镜像侧也成了第一手活写入面，这是默认不允许的\n\n#### 6.2 单写 / 双写 / 双活 / 降级\n\n##### 单写\n\n- 默认含义：同一边界只有一个第一手写入真源，其它位置要么只读、要么镜像、要么由它生成。\n- 默认不含义：不代表没有备份、没有镜像、没有消费层；只是这些面不承担第一手变更。\n- 默认执行后果：\n  - 这是本协议的默认目标态\n  - 汇报时应能明确指出唯一 owning repo / canonical source\n\n##### 双写\n\n- 默认含义：出于过渡、兼容、迁移窗口或风险控制，同一批变更需要同时落到两个写入面。\n- 默认不含义：不等于长期双活；也不等于两个面都拥有独立解释权。\n- 默认执行后果：\n  - 必须说明哪一边是主写入源，哪一边是跟随写入面\n  - 必须说明双写的结束条件，避免永久化\n  - 默认只作为阶段性策略，而不是常态架构\n\n##### 双活\n\n- 默认含义：两个仓、两个系统或两个运行面在同一边界上都可接受第一手活写入，并都可能成为事实真源。\n- 默认不含义：不等于普通镜像、备份、消费层接入，也不等于短期双写。\n- 默认执行后果：\n  - 这是高成本例外态，不是默认值\n  - 若用户明确要求双活，必须补清冲突解决规则、同步顺序和退场条件\n  - 如果没有这些条件，默认不按双活执行\n\n##### 降级\n\n- 默认含义：某个仓、系统、页面、文档或能力从主角色退到次角色，例如从 canonical source 退到 mirror / reference / compat / archive。\n- 默认不含义：不自动等于删除；也不自动等于完全失效。\n- 默认执行后果：\n  - 默认不再承担第一手 commit / push / 文档解释权 / live 入口\n  - 必要时保留 compatibility note、legacy wrapper 或历史说明\n- 与相近术语区别：\n  - `降级` 是角色变化动作\n  - `归档` 是更靠后的冻结状态\n  - `收口` 常常会导致某些对象被降级，但两者不是同义词\n\n#### 6.3 替换 / 迁移 / 吸收 / 消费式整合\n\n##### 替换\n\n- 默认含义：在同一交付边界内，用新的实现、页面、入口、能力或路径取代旧的那一个。\n- 默认不含义：不自动等于源码真源也一起迁走；有时只是同仓内实现替换。\n- 默认执行后果：\n  - 旧实现默认退出主路径\n  - 新实现默认接 live 流量、主导航或主调用入口\n  - 需要同步清理旧入口、旧说明和旧默认口径\n- 与相近术语区别：\n  - `替换` 更关注“谁上谁下”\n  - `迁移` 更关注“边界搬到哪里”\n  - `接管` 更关注“谁开始负责”\n\n##### 迁移\n\n- 默认含义：把源码真源、运行边界、部署边界、配置归属或数据流从原位置转移到新位置。\n- 默认不含义：不自动要求新旧实现长得完全不同；也不自动等于宿主仓已经吸收了所有历史内容。\n- 默认执行后果：\n  - 要明确迁移前后的位置、边界、角色和完成判据\n  - 迁移完成后，旧位置默认进入 `降级`、`镜像` 或 `归档`\n- 与相近术语区别：\n  - `迁移` 强调位置和归属转换\n  - `替换` 强调旧实现被新实现换掉\n  - `吸收` 强调宿主仓把所需部分纳入自身继续开发\n\n##### 吸收\n\n- 默认含义：宿主仓把来源仓中的某部分源码、模块、资源、配置或知识吸进自己，后续在宿主仓继续维护。\n- 默认不含义：不自动等于整仓搬迁；默认是按边界、按模块、按必要范围吸收。\n- 默认执行后果：\n  - 被吸收范围内，宿主仓成为 canonical source\n  - 来源仓在该范围内默认降级为 reference / mirror / archive\n- 与相近术语区别：\n  - `吸收` 是源码/结构层面被宿主仓内化\n  - `消费式整合` 则是不接管源码真源，只消费输出\n\n##### 消费式整合\n\n- 默认含义：宿主仓接入来源仓的 API、MCP、SDK、数据、静态产物或运行输出，但不拿走其源码真源地位。\n- 默认不含义：不自动等于源码迁移，也不自动等于接管。\n- 默认执行后果：\n  - 宿主仓负责自己的接入层、桥接层、导航层和展示层\n  - 来源仓仍可保持 `independent source`\n  - 双方默认不是双活，而是“宿主消费、来源供给”\n\n#### 6.4 易混淆术语对照\n\n| 术语对 | 默认区别 |\n| --- | --- |\n| `接管` vs `收口` | `接管` 是责任/控制权转移；`收口` 是把多入口、多说法、多真源压回单一口径 |\n| `镜像` vs `归档` | `镜像` 默认仍可持续同步；`归档` 默认冻结、不再参与活开发 |\n| `单写` vs `双写` | `单写` 是唯一第一手写入；`双写` 是过渡期同时落两处，但仍应有主写入源 |\n| `双写` vs `双活` | `双写` 是受控过渡；`双活` 是两个面都能接第一手活写入，成本更高 |\n| `替换` vs `迁移` | `替换` 强调旧实现被新实现换下；`迁移` 强调真源/边界/流量从旧位置转到新位置 |\n| `吸收` vs `消费式整合` | `吸收` 是把来源内容纳入宿主并继续在宿主开发；`消费式整合` 是宿主只消费来源输出，不拿走源码真源 |\n\n### 7. 我在执行前必须先明确的 8 个判断\n\n以后只要任务命中下面这些说法之一：\n\n- `整合进`\n- `接入到`\n- `迁入`\n- `并入`\n- `保留独立仓`\n- `双活维护`\n- `前端以谁为基础`\n- `GitHub 推哪个仓`\n- `源码归谁`\n- `接管`\n- `收口`\n- `归档`\n- `镜像`\n- `单写`\n- `双写`\n- `双活`\n- `降级`\n- `替换`\n- `迁移`\n- `吸收`\n- `消费式整合`\n\n默认在真正开改前先明确下面这 8 个判断：\n\n1. 宿主仓是谁\n2. 前端基底是谁\n3. owning repo 是谁\n4. canonical source 是谁\n5. live deploy target 跟谁走\n6. 来源仓后续扮演什么角色\n7. 写入模式是 `单写`、`双写` 还是 `双活`\n8. 当前是否发生 `接管 / 收口 / 替换 / 迁移 / 降级 / 镜像 / 归档`\n\n如果用户没额外覆盖，默认值按本协议执行。\n\n### 8. 默认输出口径\n\n以后我在汇报这类任务时，默认要把结论压成下面这组固定字段：\n\n- `宿主仓`\n- `前端基底`\n- `owning repo`\n- `canonical source`\n- `live deploy target`\n- `source donor role`\n- `整合模式`：消费式 / 吸收式 / 迁移式\n- `working copy`\n- `repo manifest`\n- `写入模式`：单写 / 双写 / 双活\n- `角色动作`：接管 / 收口 / 替换 / 迁移 / 降级 / 镜像 / 归档\n- `是否需要回收本地副本`\n\n这套字段是为了减少语义歧义，不代表必须每次都长篇解释，但至少内部判断必须完整。\n\n### 9. 扩展规则\n\n这份文档以后承担 `docs/agent` 下“高频操作术语协议”的唯一 canonical 入口。\n\n后续若再新增其他操作术语，例如：\n\n- `接管`\n- `收口`\n- `镜像`\n- `归档`\n- `替换`\n- `迁移`\n- `吸收`\n- `消费式整合`\n- `双写`\n- `单写`\n- `双活`\n- `降级`\n\n默认执行下面这组规则：\n\n1. 继续追加到 `操作术语协议.md`\n2. 不另建并行“术语说明 / 术语补充 / 口径约定”文档\n3. 如果新术语会改变实际执行规则，要在同一工作周期同步更新：\n   - 本文\n   - `第一库文档管理规范.md`\n   - `.gitignore`（若 tracked whitelist 有变化）\n   - `PROJECT-CONTEXT.md`\n   - `C:\\Users\\ASUS-KL\\.codex\\AGENTS.md`\n   - `C:\\Users\\ASUS-KL\\.codex\\AGENTS.annotated.md`\n4. 如果新术语影响 repo 角色或同步顺序，再同步 `REPO-OWNERSHIP-MAP.md`\n\n目标不是“积累很多术语页”，而是持续维护一个稳定、可触发、可扩展的操作语义真源。",
+    "html": "<h2 id=\"操作术语协议\">操作术语协议</h2>\n<h3 id=\"0-目的与适用范围\">0. 目的与适用范围</h3>\n<p>这份文档是当前 <code>docs/agent</code> 下唯一的“操作术语协议”真源，用来约束我在面对“仓库整合 / 接入 / 迁入 / 并入 / 保留独立仓 / GitHub 归属 / 前端以谁为基础”这类请求时的默认理解方式。</p>\n<p>当前版本先覆盖：</p>\n<ol>\n<li>仓库整合与跨仓接入</li>\n<li>前端基底判定</li>\n<li>GitHub 远端与源码真源归属</li>\n<li>后续扩写操作术语时的稳定入口规则</li>\n</ol>\n<p>后续如果还要新增别的高频操作术语，默认继续追加到这一个 canonical 文件中，不再在 <code>docs/agent</code> 下新建平行“术语说明 / 术语协议 / 口径约定”文档。</p>\n<p>当前 canonical 路径：<code>docs/agent/操作术语协议.md</code>。</p>\n<h3 id=\"1-核心对象定义\">1. 核心对象定义</h3>\n<h4 id=\"11-宿主仓\">1.1 宿主仓</h4>\n<p>“宿主仓”是指本轮整合动作最终要落进去、继续扩展、继续部署、继续交付的那个仓库。</p>\n<p>只要用户说“把 A 整合进 B”，默认 <code>B</code> 就是宿主仓。</p>\n<h4 id=\"12-来源仓\">1.2 来源仓</h4>\n<p>“来源仓”是指被接入、被吸收、被迁移、被参考的那个仓库。</p>\n<p>在“把 A 整合进 B”里，默认 <code>A</code> 是来源仓。</p>\n<h4 id=\"13-前端基底\">1.3 前端基底</h4>\n<p>“前端基底”是指导航、路由、页面壳、布局层、视觉语言、组件系统、页面组织方式主要归属的那一套前端体系。</p>\n<p>默认不是看“哪边页面更多”，而是看“整合后页面长在哪个产品壳里”。</p>\n<h4 id=\"14-owning-repo\">1.4 owning repo</h4>\n<p>“owning repo”是这轮改动边界真正应该接收第一手 commit / push 的仓库。</p>\n<p>默认情况下：</p>\n<ul>\n<li>宿主仓 = owning repo</li>\n</ul>\n<p>除非用户明确要求：</p>\n<ul>\n<li>双仓并行维护</li>\n<li>先改来源仓再由宿主仓消费</li>\n<li>或者 live 边界明确不在宿主仓</li>\n</ul>\n<h4 id=\"15-canonical-source\">1.5 canonical source</h4>\n<p>“canonical source”是后续继续迭代时默认应该优先修改的源码真源。</p>\n<p>默认情况下：</p>\n<ul>\n<li>被整合进去之后，宿主仓成为该整合范围内的 canonical source</li>\n</ul>\n<h4 id=\"16-source-donor-role\">1.6 source donor role</h4>\n<p>来源仓在整合完成后默认有三种角色：</p>\n<ol>\n<li><code>independent source</code>：继续独立演进，但本轮只是被宿主仓消费</li>\n<li><code>reference / mirror</code>：保留历史与参考价值，但不再是该功能范围的第一开发真源</li>\n<li><code>archive</code>：只保留归档意义，不再承担后续活开发</li>\n</ol>\n<h4 id=\"17-working-copy\">1.7 working copy</h4>\n<p>“working copy”是指为当前任务临时创建的本地 clone / worktree，用来编辑、验证、\n构建、截图和提交，但默认不作为长期源码镜像保存。</p>\n<p>在 GitHub 单真源模式下，默认口径是：</p>\n<ul>\n<li><code>canonical source</code> 负责长期源码真源</li>\n<li><code>working copy</code> 只是 task-scoped disposable 本地副本</li>\n<li>push / deploy 完成后，如无明确保留理由，默认应回收该副本</li>\n</ul>\n<h4 id=\"18-repo-manifest\">1.8 repo manifest</h4>\n<p>“repo manifest”是指为某个会反复出现的 canonical repo 预先记录的一份轻量默认值文件，\n用来给 working-copy 生命周期提供稳定元数据，而不是每次都靠聊天临时重述。</p>\n<p>在当前 GitHub 单真源模式下，默认 repo manifest：</p>\n<ul>\n<li>一仓一文件</li>\n<li>只记录 clone / branch / folder / deploy target 等默认值</li>\n<li>不承担新的 registry、计划台账或第二真源职责</li>\n<li>默认放在 <code>github-delivery-mcp</code> 的 <code>manifests/</code> 目录下</li>\n</ul>\n<h3 id=\"2-默认术语判定\">2. 默认术语判定</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>用户说法</th>\n<th>默认宿主仓</th>\n<th>默认前端基底</th>\n<th>默认 GitHub 主交付</th>\n<th>默认源码处理</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>把 A 接入 B</code></td>\n<td><code>B</code></td>\n<td><code>B</code></td>\n<td>推 <code>B</code></td>\n<td>默认优先接能力，不整仓搬源码</td>\n</tr>\n<tr>\n<td><code>把 A 整合进 B</code></td>\n<td><code>B</code></td>\n<td><code>B</code></td>\n<td>推 <code>B</code></td>\n<td>默认允许吸收 <code>A</code> 的部分模块、数据源或逻辑，但壳层归 <code>B</code></td>\n</tr>\n<tr>\n<td><code>把 A 迁入 B</code></td>\n<td><code>B</code></td>\n<td><code>B</code></td>\n<td>推 <code>B</code></td>\n<td>默认表示这部分源码以后主要在 <code>B</code> 继续演进</td>\n</tr>\n<tr>\n<td><code>把 A 并入 B</code></td>\n<td><code>B</code></td>\n<td><code>B</code></td>\n<td>推 <code>B</code></td>\n<td>默认表示 <code>B</code> 成为该范围唯一活真源，<code>A</code> 降级为 reference / archive</td>\n</tr>\n<tr>\n<td><code>把 A 接到 B，但保留 A 独立仓</code></td>\n<td><code>B</code></td>\n<td><code>B</code></td>\n<td>推 <code>B</code>，<code>A</code> 保持独立</td>\n<td>默认是消费式整合，不做长期双活源码合并</td>\n</tr>\n<tr>\n<td><code>B 只消费 A 的 API / SDK / 数据</code></td>\n<td><code>B</code></td>\n<td><code>B</code></td>\n<td>推 <code>B</code></td>\n<td>默认不迁源码，只做桥接或集成</td>\n</tr>\n<tr>\n<td><code>保留 A 的视觉风格</code></td>\n<td>仍需显式确认</td>\n<td>不再自动按 <code>B</code> 风格处理</td>\n<td>视宿主仓而定</td>\n<td>这是覆盖默认值的显式指令</td>\n</tr>\n</tbody>\n</table></div>\n<p>如果用户没有补充说明，默认不要把“整合进”理解成“两边混合重组出第三套平行实现”。</p>\n<h3 id=\"3-前端以谁为基础扩展的默认判断规则\">3. 前端以谁为基础扩展的默认判断规则</h3>\n<p>当用户说“把 A 仓库整合进 B 仓库”时，默认按下面顺序判断前端基底：</p>\n<ol>\n<li>用户是否明确说“前端保留 A 风格 / 以 A 为基础”</li>\n<li>最终页面是否长在 <code>B</code> 的导航、路由、layout、workspace 壳层里</li>\n<li>live 站点是否跟着 <code>B</code> 的域名、容器、运行目录、部署链走</li>\n<li>后续迭代是否默认在 <code>B</code> 里继续写</li>\n<li>第一手 Git 提交是否应该先落到 <code>B</code></li>\n</ol>\n<p>只要 2-5 没被用户显式覆盖，默认前端基底就是 <code>B</code>。</p>\n<p>更直接地说：</p>\n<ul>\n<li><code>A 整合进 B</code></li>\n<li>默认不是“把 A 的页面皮肤搬到 B”</li>\n<li>而是“把 A 的能力、数据源、领域结构收进 B 的产品壳”</li>\n</ul>\n<p>默认实现方式：</p>\n<ol>\n<li>路由注册在宿主仓</li>\n<li>导航入口挂在宿主仓</li>\n<li>页面壳、布局、卡片、tab、视觉层级沿用宿主仓</li>\n<li>复用来源仓的数据源、领域结构、已有逻辑时，优先做桥接或模块迁移</li>\n<li>不默认使用 iframe 薄嵌入</li>\n<li>不默认整页复制来源仓 CSS / token / 页面骨架</li>\n</ol>\n<h3 id=\"4-github-远端与源码真源的默认处理\">4. GitHub 远端与源码真源的默认处理</h3>\n<h4 id=\"41-单一第一真源原则\">4.1 单一第一真源原则</h4>\n<p>一条整合任务默认只允许有一个第一开发真源。</p>\n<p>默认口径：</p>\n<ul>\n<li>宿主仓的 GitHub 远端 = 本轮主交付远端</li>\n<li>宿主仓 = 该整合范围内的 canonical source</li>\n</ul>\n<p>除非用户明确要求“双仓长期并行维护”，否则不要把宿主仓和来源仓同时维持为同一功能范围的双活真源。</p>\n<h4 id=\"42-默认远端交付顺序\">4.2 默认远端交付顺序</h4>\n<p>默认交付顺序是：</p>\n<ol>\n<li>先在 owning repo 完成 <code>status -> commit -> push</code></li>\n<li>如果还有 umbrella / mirror / backup repo 需要吸收结果，再做第二层同步</li>\n<li>不要反过来先推镜像仓、再补宿主仓</li>\n</ol>\n<h4 id=\"43-来源仓的默认处理方式\">4.3 来源仓的默认处理方式</h4>\n<p>来源仓默认按三种整合模式之一处理：</p>\n<h5 id=\"a-消费式整合\">a. 消费式整合</h5>\n<ul>\n<li>宿主仓只消费来源仓的 API、MCP、数据、SDK 或运行输出</li>\n<li>来源仓继续独立存在</li>\n<li>默认不搬整块源码</li>\n</ul>\n<h5 id=\"b-吸收式整合\">b. 吸收式整合</h5>\n<ul>\n<li>只把来源仓里真正需要的源码、模块、资源、配置迁进宿主仓</li>\n<li>迁入范围后续默认在宿主仓继续开发</li>\n<li>来源仓保留历史，但不再是该范围的第一开发真源</li>\n</ul>\n<h5 id=\"c-迁移式整合\">c. 迁移式整合</h5>\n<ul>\n<li>某一整块能力整体迁到宿主仓</li>\n<li>宿主仓成为唯一活真源</li>\n<li>来源仓默认降级为 <code>reference / mirror / archive</code></li>\n</ul>\n<p>如果用户没有明确说“保留来源仓继续作为主要开发面”，默认优先按 <code>消费式</code> 或 <code>吸收式</code> 理解，而不是长期双边维护。</p>\n<h3 id=\"5-源码处理的默认顺序\">5. 源码处理的默认顺序</h3>\n<p>默认不要把“整合”理解成“先整仓复制再慢慢收拾”。</p>\n<p>更稳的默认顺序是：</p>\n<ol>\n<li>先判断宿主仓是谁</li>\n<li>先判断前端基底是谁</li>\n<li>先判断 live deploy target 跟谁走</li>\n<li>先判断来源仓是 <code>independent source</code>、<code>reference</code> 还是 <code>archive</code></li>\n<li>再决定源码是桥接、局部迁移，还是整块吸收</li>\n</ol>\n<p>默认源码处理优先级：</p>\n<ol>\n<li>先接能力</li>\n<li>再接结构</li>\n<li>最后才考虑是否搬完整源码</li>\n</ol>\n<p>默认做法：</p>\n<ul>\n<li>页面：在宿主仓里重建页面入口、路由和壳层</li>\n<li>数据：桥接来源仓的数据源或 API</li>\n<li>逻辑：迁最小必要模块，或按宿主仓风格重写</li>\n<li>样式：默认沿用宿主仓，不直接照搬来源仓整页视觉</li>\n<li>资源：只迁当前功能真正需要的部分</li>\n<li>文档：补清楚 source-map，说明“哪些来自来源仓，现在哪里继续维护”</li>\n</ul>\n<p>默认不做的事情：</p>\n<ul>\n<li>不把整个来源仓连同 <code>.git</code> 一起塞进宿主仓</li>\n<li>不把来源仓的 README、脚手架、历史布局、旧 CSS 全量复制进宿主仓</li>\n<li>不把双边路由、双边页面、双边导航长期并存</li>\n</ul>\n<h3 id=\"6-扩展术语定义\">6. 扩展术语定义</h3>\n<h4 id=\"61-接管--收口--归档--镜像\">6.1 接管 / 收口 / 归档 / 镜像</h4>\n<h5 id=\"接管\">接管</h5>\n<ul>\n<li>默认含义：某个宿主仓、宿主系统或宿主团队开始承担该边界的主交付责任、主维护责任和第一手变更责任。</li>\n<li>默认不含义：不自动等于“所有源码已经整块迁完”；如果只是先接运行、接导航、接交付，但源码还在别处，需要显式说明。</li>\n<li>默认执行后果：\n<ul>\n<li>owning repo 默认切到接管方</li>\n<li>后续默认以接管方作为 canonical source 或至少作为主交付面</li>\n<li>原边界如果不再承担第一手开发，默认进入 <code>降级</code> 判断</li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>接管</code> 强调责任与控制权转移</li>\n<li><code>迁移</code> 强调边界/源码/流量从哪里移到哪里</li>\n<li><code>替换</code> 强调旧实现被新实现换掉</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"收口\">收口</h5>\n<ul>\n<li>默认含义：把原本分散、并行、容易歧义的路径、口径、入口、真源或命名压回一个 canonical 面。</li>\n<li>默认不含义：不自动等于删库、删目录、删历史；如果只是统一解释权，也可以先不做物理删除。</li>\n<li>默认执行后果：\n<ul>\n<li>要明确唯一 canonical 路径、唯一 live 入口或唯一默认说法</li>\n<li>并行说明、并行入口、并行命名默认要被移除、改写或降级为兼容说明</li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>收口</code> 强调“减少歧义、压成一口径”</li>\n<li><code>接管</code> 强调“谁负责”</li>\n<li><code>归档</code> 强调“退出活开发”</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"归档\">归档</h5>\n<ul>\n<li>默认含义：某个仓、目录、页面、文档或能力退出 live 主线，只保留历史、审计、追溯或应急恢复价值。</li>\n<li>默认不含义：不自动等于删除；也不自动等于仍然参与日常迭代。</li>\n<li>默认执行后果：\n<ul>\n<li>默认不再接第一手写入</li>\n<li>默认不再作为 live 导航入口、默认读取入口或默认开发入口</li>\n<li>如仍保留文件，应明确标成 archive / historical / snapshot</li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>归档</code> 是冻结后的保留</li>\n<li><code>镜像</code> 仍可能持续跟随 canonical source 同步</li>\n<li><code>降级</code> 只是角色下降，未必已经冻结到 archive</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"镜像\">镜像</h5>\n<ul>\n<li>默认含义：从 canonical source 派生出来的复制面、同步面或备份面，用于备份、分发、消费层展示或灾备。</li>\n<li>默认不含义：不自动等于第一开发真源；也不自动等于可以先在镜像上做第一手修改。</li>\n<li>默认执行后果：\n<ul>\n<li>默认 <code>canonical source -> mirror</code> 单向或主从同步</li>\n<li>默认先推 canonical source，再同步 mirror</li>\n<li>mirror 若接受修改，也应视为例外流程而不是默认工作面</li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>镜像</code> 强调“复制与同步”</li>\n<li><code>归档</code> 强调“冻结与保留”</li>\n<li><code>双活</code> 则意味着镜像侧也成了第一手活写入面，这是默认不允许的</li>\n</ul>\n</li>\n</ul>\n<h4 id=\"62-单写--双写--双活--降级\">6.2 单写 / 双写 / 双活 / 降级</h4>\n<h5 id=\"单写\">单写</h5>\n<ul>\n<li>默认含义：同一边界只有一个第一手写入真源，其它位置要么只读、要么镜像、要么由它生成。</li>\n<li>默认不含义：不代表没有备份、没有镜像、没有消费层；只是这些面不承担第一手变更。</li>\n<li>默认执行后果：\n<ul>\n<li>这是本协议的默认目标态</li>\n<li>汇报时应能明确指出唯一 owning repo / canonical source</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"双写\">双写</h5>\n<ul>\n<li>默认含义：出于过渡、兼容、迁移窗口或风险控制，同一批变更需要同时落到两个写入面。</li>\n<li>默认不含义：不等于长期双活；也不等于两个面都拥有独立解释权。</li>\n<li>默认执行后果：\n<ul>\n<li>必须说明哪一边是主写入源，哪一边是跟随写入面</li>\n<li>必须说明双写的结束条件，避免永久化</li>\n<li>默认只作为阶段性策略，而不是常态架构</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"双活\">双活</h5>\n<ul>\n<li>默认含义：两个仓、两个系统或两个运行面在同一边界上都可接受第一手活写入，并都可能成为事实真源。</li>\n<li>默认不含义：不等于普通镜像、备份、消费层接入，也不等于短期双写。</li>\n<li>默认执行后果：\n<ul>\n<li>这是高成本例外态，不是默认值</li>\n<li>若用户明确要求双活，必须补清冲突解决规则、同步顺序和退场条件</li>\n<li>如果没有这些条件，默认不按双活执行</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"降级\">降级</h5>\n<ul>\n<li>默认含义：某个仓、系统、页面、文档或能力从主角色退到次角色，例如从 canonical source 退到 mirror / reference / compat / archive。</li>\n<li>默认不含义：不自动等于删除；也不自动等于完全失效。</li>\n<li>默认执行后果：\n<ul>\n<li>默认不再承担第一手 commit / push / 文档解释权 / live 入口</li>\n<li>必要时保留 compatibility note、legacy wrapper 或历史说明</li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>降级</code> 是角色变化动作</li>\n<li><code>归档</code> 是更靠后的冻结状态</li>\n<li><code>收口</code> 常常会导致某些对象被降级，但两者不是同义词</li>\n</ul>\n</li>\n</ul>\n<h4 id=\"63-替换--迁移--吸收--消费式整合\">6.3 替换 / 迁移 / 吸收 / 消费式整合</h4>\n<h5 id=\"替换\">替换</h5>\n<ul>\n<li>默认含义：在同一交付边界内，用新的实现、页面、入口、能力或路径取代旧的那一个。</li>\n<li>默认不含义：不自动等于源码真源也一起迁走；有时只是同仓内实现替换。</li>\n<li>默认执行后果：\n<ul>\n<li>旧实现默认退出主路径</li>\n<li>新实现默认接 live 流量、主导航或主调用入口</li>\n<li>需要同步清理旧入口、旧说明和旧默认口径</li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>替换</code> 更关注“谁上谁下”</li>\n<li><code>迁移</code> 更关注“边界搬到哪里”</li>\n<li><code>接管</code> 更关注“谁开始负责”</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"迁移\">迁移</h5>\n<ul>\n<li>默认含义：把源码真源、运行边界、部署边界、配置归属或数据流从原位置转移到新位置。</li>\n<li>默认不含义：不自动要求新旧实现长得完全不同；也不自动等于宿主仓已经吸收了所有历史内容。</li>\n<li>默认执行后果：\n<ul>\n<li>要明确迁移前后的位置、边界、角色和完成判据</li>\n<li>迁移完成后，旧位置默认进入 <code>降级</code>、<code>镜像</code> 或 <code>归档</code></li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>迁移</code> 强调位置和归属转换</li>\n<li><code>替换</code> 强调旧实现被新实现换掉</li>\n<li><code>吸收</code> 强调宿主仓把所需部分纳入自身继续开发</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"吸收\">吸收</h5>\n<ul>\n<li>默认含义：宿主仓把来源仓中的某部分源码、模块、资源、配置或知识吸进自己，后续在宿主仓继续维护。</li>\n<li>默认不含义：不自动等于整仓搬迁；默认是按边界、按模块、按必要范围吸收。</li>\n<li>默认执行后果：\n<ul>\n<li>被吸收范围内，宿主仓成为 canonical source</li>\n<li>来源仓在该范围内默认降级为 reference / mirror / archive</li>\n</ul>\n</li>\n<li>与相近术语区别：\n<ul>\n<li><code>吸收</code> 是源码/结构层面被宿主仓内化</li>\n<li><code>消费式整合</code> 则是不接管源码真源，只消费输出</li>\n</ul>\n</li>\n</ul>\n<h5 id=\"消费式整合\">消费式整合</h5>\n<ul>\n<li>默认含义：宿主仓接入来源仓的 API、MCP、SDK、数据、静态产物或运行输出，但不拿走其源码真源地位。</li>\n<li>默认不含义：不自动等于源码迁移，也不自动等于接管。</li>\n<li>默认执行后果：\n<ul>\n<li>宿主仓负责自己的接入层、桥接层、导航层和展示层</li>\n<li>来源仓仍可保持 <code>independent source</code></li>\n<li>双方默认不是双活，而是“宿主消费、来源供给”</li>\n</ul>\n</li>\n</ul>\n<h4 id=\"64-易混淆术语对照\">6.4 易混淆术语对照</h4>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>术语对</th>\n<th>默认区别</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>接管</code> vs <code>收口</code></td>\n<td><code>接管</code> 是责任/控制权转移；<code>收口</code> 是把多入口、多说法、多真源压回单一口径</td>\n</tr>\n<tr>\n<td><code>镜像</code> vs <code>归档</code></td>\n<td><code>镜像</code> 默认仍可持续同步；<code>归档</code> 默认冻结、不再参与活开发</td>\n</tr>\n<tr>\n<td><code>单写</code> vs <code>双写</code></td>\n<td><code>单写</code> 是唯一第一手写入；<code>双写</code> 是过渡期同时落两处，但仍应有主写入源</td>\n</tr>\n<tr>\n<td><code>双写</code> vs <code>双活</code></td>\n<td><code>双写</code> 是受控过渡；<code>双活</code> 是两个面都能接第一手活写入，成本更高</td>\n</tr>\n<tr>\n<td><code>替换</code> vs <code>迁移</code></td>\n<td><code>替换</code> 强调旧实现被新实现换下；<code>迁移</code> 强调真源/边界/流量从旧位置转到新位置</td>\n</tr>\n<tr>\n<td><code>吸收</code> vs <code>消费式整合</code></td>\n<td><code>吸收</code> 是把来源内容纳入宿主并继续在宿主开发；<code>消费式整合</code> 是宿主只消费来源输出，不拿走源码真源</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"7-我在执行前必须先明确的-8-个判断\">7. 我在执行前必须先明确的 8 个判断</h3>\n<p>以后只要任务命中下面这些说法之一：</p>\n<ul>\n<li><code>整合进</code></li>\n<li><code>接入到</code></li>\n<li><code>迁入</code></li>\n<li><code>并入</code></li>\n<li><code>保留独立仓</code></li>\n<li><code>双活维护</code></li>\n<li><code>前端以谁为基础</code></li>\n<li><code>GitHub 推哪个仓</code></li>\n<li><code>源码归谁</code></li>\n<li><code>接管</code></li>\n<li><code>收口</code></li>\n<li><code>归档</code></li>\n<li><code>镜像</code></li>\n<li><code>单写</code></li>\n<li><code>双写</code></li>\n<li><code>双活</code></li>\n<li><code>降级</code></li>\n<li><code>替换</code></li>\n<li><code>迁移</code></li>\n<li><code>吸收</code></li>\n<li><code>消费式整合</code></li>\n</ul>\n<p>默认在真正开改前先明确下面这 8 个判断：</p>\n<ol>\n<li>宿主仓是谁</li>\n<li>前端基底是谁</li>\n<li>owning repo 是谁</li>\n<li>canonical source 是谁</li>\n<li>live deploy target 跟谁走</li>\n<li>来源仓后续扮演什么角色</li>\n<li>写入模式是 <code>单写</code>、<code>双写</code> 还是 <code>双活</code></li>\n<li>当前是否发生 <code>接管 / 收口 / 替换 / 迁移 / 降级 / 镜像 / 归档</code></li>\n</ol>\n<p>如果用户没额外覆盖，默认值按本协议执行。</p>\n<h3 id=\"8-默认输出口径\">8. 默认输出口径</h3>\n<p>以后我在汇报这类任务时，默认要把结论压成下面这组固定字段：</p>\n<ul>\n<li><code>宿主仓</code></li>\n<li><code>前端基底</code></li>\n<li><code>owning repo</code></li>\n<li><code>canonical source</code></li>\n<li><code>live deploy target</code></li>\n<li><code>source donor role</code></li>\n<li><code>整合模式</code>：消费式 / 吸收式 / 迁移式</li>\n<li><code>working copy</code></li>\n<li><code>repo manifest</code></li>\n<li><code>写入模式</code>：单写 / 双写 / 双活</li>\n<li><code>角色动作</code>：接管 / 收口 / 替换 / 迁移 / 降级 / 镜像 / 归档</li>\n<li><code>是否需要回收本地副本</code></li>\n</ul>\n<p>这套字段是为了减少语义歧义，不代表必须每次都长篇解释，但至少内部判断必须完整。</p>\n<h3 id=\"9-扩展规则\">9. 扩展规则</h3>\n<p>这份文档以后承担 <code>docs/agent</code> 下“高频操作术语协议”的唯一 canonical 入口。</p>\n<p>后续若再新增其他操作术语，例如：</p>\n<ul>\n<li><code>接管</code></li>\n<li><code>收口</code></li>\n<li><code>镜像</code></li>\n<li><code>归档</code></li>\n<li><code>替换</code></li>\n<li><code>迁移</code></li>\n<li><code>吸收</code></li>\n<li><code>消费式整合</code></li>\n<li><code>双写</code></li>\n<li><code>单写</code></li>\n<li><code>双活</code></li>\n<li><code>降级</code></li>\n</ul>\n<p>默认执行下面这组规则：</p>\n<ol>\n<li>继续追加到 <code>操作术语协议.md</code></li>\n<li>不另建并行“术语说明 / 术语补充 / 口径约定”文档</li>\n<li>如果新术语会改变实际执行规则，要在同一工作周期同步更新：\n<ul>\n<li>本文</li>\n<li><code>第一库文档管理规范.md</code></li>\n<li><code>.gitignore</code>（若 tracked whitelist 有变化）</li>\n<li><code>PROJECT-CONTEXT.md</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\AGENTS.md</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\AGENTS.annotated.md</code></li>\n</ul>\n</li>\n<li>如果新术语影响 repo 角色或同步顺序，再同步 <code>REPO-OWNERSHIP-MAP.md</code></li>\n</ol>\n<p>目标不是“积累很多术语页”，而是持续维护一个稳定、可触发、可扩展的操作语义真源。</p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "操作术语协议",
+        "text": "操作术语协议"
+      },
+      {
+        "depth": 3,
+        "slug": "0-目的与适用范围",
+        "text": "0. 目的与适用范围"
+      },
+      {
+        "depth": 3,
+        "slug": "1-核心对象定义",
+        "text": "1. 核心对象定义"
+      },
+      {
+        "depth": 3,
+        "slug": "2-默认术语判定",
+        "text": "2. 默认术语判定"
+      },
+      {
+        "depth": 3,
+        "slug": "3-前端以谁为基础扩展的默认判断规则",
+        "text": "3. 前端以谁为基础扩展的默认判断规则"
+      },
+      {
+        "depth": 3,
+        "slug": "4-github-远端与源码真源的默认处理",
+        "text": "4. GitHub 远端与源码真源的默认处理"
+      },
+      {
+        "depth": 3,
+        "slug": "5-源码处理的默认顺序",
+        "text": "5. 源码处理的默认顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "6-扩展术语定义",
+        "text": "6. 扩展术语定义"
+      },
+      {
+        "depth": 3,
+        "slug": "7-我在执行前必须先明确的-8-个判断",
+        "text": "7. 我在执行前必须先明确的 8 个判断"
+      },
+      {
+        "depth": 3,
+        "slug": "8-默认输出口径",
+        "text": "8. 默认输出口径"
+      },
+      {
+        "depth": 3,
+        "slug": "9-扩展规则",
+        "text": "9. 扩展规则"
+      }
+    ],
+    "detailPath": "articles/md_d3368c796e44.json"
+  }
+}

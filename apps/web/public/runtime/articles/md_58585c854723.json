@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_58585c854723",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/Codex%20%E7%99%BB%E5%BD%95%E9%A1%B5%E4%B8%8E%20exec%20%E6%95%85%E9%9A%9C%E9%80%9F%E6%9F%A5%E5%8D%A1.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/Codex 登录页与 exec 故障速查卡.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Codex 登录页与 exec 故障速查卡.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Codex%20%E7%99%BB%E5%BD%95%E9%A1%B5%E4%B8%8E%20exec%20%E6%95%85%E9%9A%9C%E9%80%9F%E6%9F%A5%E5%8D%A1.md",
+    "slug": "codex-knowledge-codex-登录页与-exec-故障速查卡",
+    "title": "Codex 登录页与 exec 故障速查卡",
+    "summary": "Codex 登录页与 exec 故障速查卡 1. 看到官方欢迎登录页怎么办 现象 codex 打开后出现： Sign in with ChatGPT Sign in with Device Code Provide your own API key 先看哪一层 live 启动桥：C:\\Program...",
+    "description": "Codex 登录页与 exec 故障速查卡 1. 看到官方欢迎登录页怎么办 现象 codex 打开后出现： Sign in with ChatGPT Sign in with Device Code Provide your own API key 先看哪一层 live 启动桥：C:\\Program...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "类-治理规则",
+      "类-工具工作流",
+      "形态-速查卡",
+      "目录-codex-knowledge",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "类-治理规则",
+        "类-工具工作流",
+        "形态-速查卡",
+        "目录-codex-knowledge"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/Codex 登录页与 exec 故障速查卡.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Codex 登录页与 exec 故障速查卡.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Codex%20%E7%99%BB%E5%BD%95%E9%A1%B5%E4%B8%8E%20exec%20%E6%95%85%E9%9A%9C%E9%80%9F%E6%9F%A5%E5%8D%A1.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Codex 登录页与 exec 故障速查卡",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "类 治理规则",
+        "类 工具工作流",
+        "形态 速查卡",
+        "目录 CODEX KNOWLEDGE",
+        "CODEX 登录页与 EXEC 故障速查卡"
+      ],
+      "subtitle": "Codex 登录页与 exec 故障速查卡 1. 看到官方欢迎登录页怎么办 现象 codex 打开后出现： Sign in with ChatGPT Sign in with Device Code Provide your own API key 先看哪一层 live 启动桥：C:\\Program..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Codex 登录页与 exec 故障速查卡\n\n## 1. 看到官方欢迎登录页怎么办\n\n### 现象\n\n- `codex` 打开后出现：\n  - `Sign in with ChatGPT`\n  - `Sign in with Device Code`\n  - `Provide your own API key`\n\n### 先看哪一层\n\n- live 启动桥：`C:\\ProgramData\\npm-global\\codex-launcher.cjs`\n- live 配置：`C:\\Users\\ASUS-KL\\.codex\\config.toml`\n- live auth 读位：`C:\\Users\\ASUS-KL\\.codex\\auth.json`\n- secrets 真相源：`C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json`\n\n### 这次确认过的真根因\n\n- key 不一定丢了\n- 很可能只是：\n  - `C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json` 里有 key\n  - 但 `C:\\Users\\ASUS-KL\\.codex\\auth.json` 缺失\n- 当前官方 runtime 实际会读 `~\\\\.codex\\\\auth.json`\n\n### 已落地修复\n\n- `C:\\ProgramData\\npm-global\\codex-launcher.cjs` 现在会在启动时自动把：\n  - `C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json`\n  镜像到：\n  - `C:\\Users\\ASUS-KL\\.codex\\auth.json`\n\n## 2. `auth.json` 应该看哪一份\n\n### 当前真相分层\n\n- secrets 真相源：`C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json`\n- runtime live 读位：`C:\\Users\\ASUS-KL\\.codex\\auth.json`\n\n### 判断原则\n\n- 要改或核对持久真相，先看：\n  - `C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json`\n- 要判断 runtime 当前有没有机会读到 key，必须看：\n  - `C:\\Users\\ASUS-KL\\.codex\\auth.json`\n\n## 3. `codex exec ...` 为什么会掉回 interactive mode\n\n### 现象\n\n- 明明执行的是：\n  - `codex exec --skip-git-repo-check \"Reply with exactly OK\"`\n- 却返回：\n  - `Codex interactive mode`\n  - `Error: stdin is not a terminal`\n\n### 当前唯一 live owner\n\n- `C:\\Users\\ASUS-KL\\.codex\\gateway.ps1`\n\n### 这次确认过的真根因\n\n- gateway 顶部会尝试从 `CODEX_FORWARD_ARGS_JSON` 回填 `$CodexArgs`\n- 但那段逻辑在函数定义之前就调用了 `ConvertFrom-JsonCompat`\n- 于是异常被静默吞掉\n- `$CodexArgs` 留空\n- 最终被误判成 interactive mode\n\n### 已落地修复\n\n- `C:\\Users\\ASUS-KL\\.codex\\gateway.ps1` 顶部回填逻辑改成直接调用内建 `ConvertFrom-Json`\n- 不再依赖脚本后面才定义的 helper\n\n## 4. 启动时 skill frontmatter 报错怎么办\n\n### 现象\n\n- 启动时刷：\n  - `failed to load skill ... SKILL.md: missing YAML frontmatter delimited by ---`\n  - 或 `invalid YAML`\n\n### 先看哪一层\n\n- 真文件：`E:\\My Project\\Atramenti-Console\\codex\\skills\\gsd\\long-horizon-autoplan-debug\\SKILL.md`\n\n### 这次确认过的真根因\n\n- 先是 UTF-8 BOM 污染了第一行 `---`\n- 去掉 BOM 后，又暴露出 `description` 这类带冒号的值需要 YAML 安全引号\n\n### 已落地修复\n\n- 该文件已重写为 UTF-8 无 BOM\n- frontmatter 也已改成合法 YAML\n\n## 5. 一条最小体检链\n\n```powershell\nGet-Content C:\\Users\\ASUS-KL\\.codex\\config.toml -First 12\nGet-Content C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json\nGet-Content C:\\Users\\ASUS-KL\\.codex\\auth.json\npowershell -NoProfile -ExecutionPolicy Bypass -File C:\\Users\\ASUS-KL\\.codex\\gateway.ps1 -CodexArgs @('exec','--skip-git-repo-check','Reply with exactly OK')\n```\n\n## 6. 这轮最终通过的真实验证\n\n```powershell\nC:\\Program Files\\nodejs\\node.exe C:\\ProgramData\\npm-global\\codex-launcher.cjs C:\\Users\\ASUS-KL\\bin\\codex.cmd exec --skip-git-repo-check \"Reply with exactly OK\"\n```\n\n- 期望结果：\n  - `provider: token_pool_public`\n  - 最终输出 `OK`\n  - 退出码 `0`",
+    "html": "<h1 id=\"codex-登录页与-exec-故障速查卡\">Codex 登录页与 exec 故障速查卡</h1>\n<h2 id=\"1-看到官方欢迎登录页怎么办\">1. 看到官方欢迎登录页怎么办</h2>\n<h3 id=\"现象\">现象</h3>\n<ul>\n<li><code>codex</code> 打开后出现：\n<ul>\n<li><code>Sign in with ChatGPT</code></li>\n<li><code>Sign in with Device Code</code></li>\n<li><code>Provide your own API key</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"先看哪一层\">先看哪一层</h3>\n<ul>\n<li>live 启动桥：<code>C:\\ProgramData\\npm-global\\codex-launcher.cjs</code></li>\n<li>live 配置：<code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n<li>live auth 读位：<code>C:\\Users\\ASUS-KL\\.codex\\auth.json</code></li>\n<li>secrets 真相源：<code>C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json</code></li>\n</ul>\n<h3 id=\"这次确认过的真根因\">这次确认过的真根因</h3>\n<ul>\n<li>key 不一定丢了</li>\n<li>很可能只是：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json</code> 里有 key</li>\n<li>但 <code>C:\\Users\\ASUS-KL\\.codex\\auth.json</code> 缺失</li>\n</ul>\n</li>\n<li>当前官方 runtime 实际会读 <code>~\\\\.codex\\\\auth.json</code></li>\n</ul>\n<h3 id=\"已落地修复\">已落地修复</h3>\n<ul>\n<li><code>C:\\ProgramData\\npm-global\\codex-launcher.cjs</code> 现在会在启动时自动把：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json</code>\n镜像到：</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\auth.json</code></li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2-authjson-应该看哪一份\">2. <code>auth.json</code> 应该看哪一份</h2>\n<h3 id=\"当前真相分层\">当前真相分层</h3>\n<ul>\n<li>secrets 真相源：<code>C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json</code></li>\n<li>runtime live 读位：<code>C:\\Users\\ASUS-KL\\.codex\\auth.json</code></li>\n</ul>\n<h3 id=\"判断原则\">判断原则</h3>\n<ul>\n<li>要改或核对持久真相，先看：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json</code></li>\n</ul>\n</li>\n<li>要判断 runtime 当前有没有机会读到 key，必须看：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\auth.json</code></li>\n</ul>\n</li>\n</ul>\n<h2 id=\"3-codex-exec--为什么会掉回-interactive-mode\">3. <code>codex exec ...</code> 为什么会掉回 interactive mode</h2>\n<h3 id=\"现象-1\">现象</h3>\n<ul>\n<li>明明执行的是：\n<ul>\n<li><code>codex exec --skip-git-repo-check \"Reply with exactly OK\"</code></li>\n</ul>\n</li>\n<li>却返回：\n<ul>\n<li><code>Codex interactive mode</code></li>\n<li><code>Error: stdin is not a terminal</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"当前唯一-live-owner\">当前唯一 live owner</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\gateway.ps1</code></li>\n</ul>\n<h3 id=\"这次确认过的真根因-1\">这次确认过的真根因</h3>\n<ul>\n<li>gateway 顶部会尝试从 <code>CODEX_FORWARD_ARGS_JSON</code> 回填 <code>$CodexArgs</code></li>\n<li>但那段逻辑在函数定义之前就调用了 <code>ConvertFrom-JsonCompat</code></li>\n<li>于是异常被静默吞掉</li>\n<li><code>$CodexArgs</code> 留空</li>\n<li>最终被误判成 interactive mode</li>\n</ul>\n<h3 id=\"已落地修复-1\">已落地修复</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\gateway.ps1</code> 顶部回填逻辑改成直接调用内建 <code>ConvertFrom-Json</code></li>\n<li>不再依赖脚本后面才定义的 helper</li>\n</ul>\n<h2 id=\"4-启动时-skill-frontmatter-报错怎么办\">4. 启动时 skill frontmatter 报错怎么办</h2>\n<h3 id=\"现象-2\">现象</h3>\n<ul>\n<li>启动时刷：\n<ul>\n<li><code>failed to load skill ... SKILL.md: missing YAML frontmatter delimited by ---</code></li>\n<li>或 <code>invalid YAML</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"先看哪一层-1\">先看哪一层</h3>\n<ul>\n<li>真文件：<code>E:\\My Project\\Atramenti-Console\\codex\\skills\\gsd\\long-horizon-autoplan-debug\\SKILL.md</code></li>\n</ul>\n<h3 id=\"这次确认过的真根因-2\">这次确认过的真根因</h3>\n<ul>\n<li>先是 UTF-8 BOM 污染了第一行 <code>---</code></li>\n<li>去掉 BOM 后，又暴露出 <code>description</code> 这类带冒号的值需要 YAML 安全引号</li>\n</ul>\n<h3 id=\"已落地修复-2\">已落地修复</h3>\n<ul>\n<li>该文件已重写为 UTF-8 无 BOM</li>\n<li>frontmatter 也已改成合法 YAML</li>\n</ul>\n<h2 id=\"5-一条最小体检链\">5. 一条最小体检链</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF\">Get-Content</span><span style=\"color:#E1E4E8\"> C:\\Users\\ASUS</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">KL\\.codex\\config.toml </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">First </span><span style=\"color:#79B8FF\">12</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">Get-Content</span><span style=\"color:#E1E4E8\"> C:\\Users\\ASUS</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">KL\\.codex</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">secrets\\auth.json</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">Get-Content</span><span style=\"color:#E1E4E8\"> C:\\Users\\ASUS</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">KL\\.codex\\auth.json</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">powershell </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">NoProfile </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">ExecutionPolicy Bypass </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">File C:\\Users\\ASUS</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">KL\\.codex\\gateway.ps1 </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">CodexArgs </span><span style=\"color:#F97583\">@</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#9ECBFF\">'exec'</span><span style=\"color:#F97583\">,</span><span style=\"color:#9ECBFF\">'--skip-git-repo-check'</span><span style=\"color:#F97583\">,</span><span style=\"color:#9ECBFF\">'Reply with exactly OK'</span><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<h2 id=\"6-这轮最终通过的真实验证\">6. 这轮最终通过的真实验证</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">C:\\Program Files\\nodejs\\</span><span style=\"color:#79B8FF\">node.exe</span><span style=\"color:#E1E4E8\"> C:\\ProgramData\\npm</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">global\\codex</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">launcher.cjs C:\\Users\\ASUS</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">KL\\bin\\</span><span style=\"color:#79B8FF\">codex.cmd</span><span style=\"color:#E1E4E8\"> exec </span><span style=\"color:#F97583\">--</span><span style=\"color:#79B8FF\">skip-git</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">repo</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">check </span><span style=\"color:#9ECBFF\">\"Reply with exactly OK\"</span></span></code></pre></figure>\n<ul>\n<li>期望结果：\n<ul>\n<li><code>provider: token_pool_public</code></li>\n<li>最终输出 <code>OK</code></li>\n<li>退出码 <code>0</code></li>\n</ul>\n</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "codex-登录页与-exec-故障速查卡",
+        "text": "Codex 登录页与 exec 故障速查卡"
+      },
+      {
+        "depth": 2,
+        "slug": "1-看到官方欢迎登录页怎么办",
+        "text": "1. 看到官方欢迎登录页怎么办"
+      },
+      {
+        "depth": 3,
+        "slug": "现象",
+        "text": "现象"
+      },
+      {
+        "depth": 3,
+        "slug": "先看哪一层",
+        "text": "先看哪一层"
+      },
+      {
+        "depth": 3,
+        "slug": "这次确认过的真根因",
+        "text": "这次确认过的真根因"
+      },
+      {
+        "depth": 3,
+        "slug": "已落地修复",
+        "text": "已落地修复"
+      },
+      {
+        "depth": 2,
+        "slug": "2-auth-json-应该看哪一份",
+        "text": "2. `auth.json` 应该看哪一份"
+      },
+      {
+        "depth": 3,
+        "slug": "当前真相分层",
+        "text": "当前真相分层"
+      },
+      {
+        "depth": 3,
+        "slug": "判断原则",
+        "text": "判断原则"
+      },
+      {
+        "depth": 2,
+        "slug": "3-codex-exec-为什么会掉回-interactive-mode",
+        "text": "3. `codex exec ...` 为什么会掉回 interactive mode"
+      },
+      {
+        "depth": 3,
+        "slug": "现象",
+        "text": "现象"
+      },
+      {
+        "depth": 3,
+        "slug": "当前唯一-live-owner",
+        "text": "当前唯一 live owner"
+      },
+      {
+        "depth": 3,
+        "slug": "这次确认过的真根因",
+        "text": "这次确认过的真根因"
+      },
+      {
+        "depth": 3,
+        "slug": "已落地修复",
+        "text": "已落地修复"
+      },
+      {
+        "depth": 2,
+        "slug": "4-启动时-skill-frontmatter-报错怎么办",
+        "text": "4. 启动时 skill frontmatter 报错怎么办"
+      },
+      {
+        "depth": 3,
+        "slug": "现象",
+        "text": "现象"
+      },
+      {
+        "depth": 3,
+        "slug": "先看哪一层",
+        "text": "先看哪一层"
+      },
+      {
+        "depth": 3,
+        "slug": "这次确认过的真根因",
+        "text": "这次确认过的真根因"
+      },
+      {
+        "depth": 3,
+        "slug": "已落地修复",
+        "text": "已落地修复"
+      },
+      {
+        "depth": 2,
+        "slug": "5-一条最小体检链",
+        "text": "5. 一条最小体检链"
+      },
+      {
+        "depth": 2,
+        "slug": "6-这轮最终通过的真实验证",
+        "text": "6. 这轮最终通过的真实验证"
+      }
+    ],
+    "detailPath": "articles/md_58585c854723.json"
+  }
+}

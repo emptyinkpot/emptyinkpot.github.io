@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_efa3ffb890eb",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/%E6%9C%AA%E5%91%BD%E5%90%8D.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/ai改造计划/未命名.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/ai改造计划/未命名.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/%E6%9C%AA%E5%91%BD%E5%90%8D.md",
+    "slug": "agent-ai改造计划-未命名",
+    "title": "未命名",
+    "summary": "ai很蠢，他不知道上一次的工程进行到哪里了，只会乱建立。还会建立一堆 \\control plane\\ 简单说： /control plane/ 就是“控制平面”的目录/路径，指系统里负责做决策、发指令、管配置的那部分核心逻辑 ，和真正跑业务数据的“数据平面（data plane）”分开。 ### 一...",
+    "description": "ai很蠢，他不知道上一次的工程进行到哪里了，只会乱建立。还会建立一堆 \\control plane\\ 简单说： /control plane/ 就是“控制平面”的目录/路径，指系统里负责做决策、发指令、管配置的那部分核心逻辑 ，和真正跑业务数据的“数据平面（data plane）”分开。 ### 一...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent",
+      "ai改造计划"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent",
+      "ai改造计划"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "active",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent",
+        "ai改造计划"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "active",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/ai改造计划/未命名.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/ai改造计划/未命名.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/%E6%9C%AA%E5%91%BD%E5%90%8D.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:19:11.563Z",
+      "model": "coze-shell",
+      "entities": [
+        "人工智能（AI）",
+        "控制平面（control-plane）",
+        "数据平面（data-plane）",
+        "Kubernetes（K8s）",
+        "Istio",
+        "Envoy",
+        "kube-apiserver",
+        "etcd",
+        "scheduler",
+        "kube-proxy",
+        "istiod",
+        "Codex",
+        "SYSTEM_MAP.md",
+        "module.json"
+      ],
+      "topics": [
+        "AI工程管控与系统收敛",
+        "云原生架构控制平面设计",
+        "AI生成系统防冗余方案",
+        "系统架构冻结与可持续维护"
+      ],
+      "relations": [
+        {
+          "type": "架构关联",
+          "target": "数据平面（data-plane）",
+          "label": "互补分工的架构组件",
+          "confidence": 1
+        },
+        {
+          "type": "工具隶属",
+          "target": "Codex",
+          "label": "用于AI工程的具体执行工具",
+          "confidence": 1
+        },
+        {
+          "type": "架构组件",
+          "target": "Kubernetes（K8s）",
+          "label": "K8s核心管控组件集合",
+          "confidence": 1
+        },
+        {
+          "type": "管控文档",
+          "target": "SYSTEM_MAP.md",
+          "label": "约束AI行为的架构映射基准文档",
+          "confidence": 1
+        },
+        {
+          "type": "模块配置",
+          "target": "module.json",
+          "label": "定义模块边界与文件归属的配置文件",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "AI改造计划"
+      ],
+      "clusters": [
+        "AI工程治理",
+        "云原生架构管控",
+        "系统收敛方案"
+      ]
+    },
+    "series": "",
+    "project": "未命名",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "AI改造计划",
+        "未命名"
+      ],
+      "subtitle": "ai很蠢，他不知道上一次的工程进行到哪里了，只会乱建立。还会建立一堆 \\control plane\\ 简单说： /control plane/ 就是“控制平面”的目录/路径，指系统里负责做决策、发指令、管配置的那部分核心逻辑 ，和真正跑业务数据的“数据平面（data plane）”分开。 ### 一..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "ai很蠢，他不知道上一次的工程进行到哪里了，只会乱建立。还会建立一堆\n\n\\control-plane\\\n\n简单说：**/control-plane/ 就是“控制平面”的目录/路径，指系统里负责做决策、发指令、管配置的那部分核心逻辑**，和真正跑业务数据的“数据平面（data-plane）”分开。 ### 一、大白话类比 - **控制平面（control-plane）= 大脑/指挥中心** 负责：规划路线、下发规则、管理状态、调度资源。 - **数据平面（data-plane）= 公路/运输队** 负责：按规则高速转发数据包/请求，不思考，只干活。 ### 二、/control-plane/ 路径含义 你看到的 `\\control-plane\\`（Windows 反斜杠）或 `/control-plane/`（Linux/URL 斜杠），一般是： 1. **目录名**：代码/配置里专门放控制平面相关代码、配置、证书的文件夹； 2. **URL 路径**：访问控制平面接口的地址，例如 `https://xxx/control-plane/api/...`； 3. **K8s/云原生语境**：特指集群管控组件（kube-apiserver、etcd、scheduler 等）所在的逻辑/物理分区。 ### 三、核心职责（以 K8s/服务网格为例） - 认证、授权、鉴权； - 集群状态存储（etcd）； - 调度决策（把 Pod 分到哪个节点）； - 下发流量规则、负载均衡、熔断、灰度策略； - 监控、健康检查、自愈控制。 ### 四、和数据平面的区别 | 对比 | 控制平面（control-plane） | 数据平面（data-plane） | |---|---|---| | 角色 | 决策者、管理者 | 执行者、转发者 | | 工作 | 复杂计算、策略管理、状态维护 | 高速转发、低延迟处理 | | 性能 | 可靠性优先，毫秒/秒级 | 速度优先，微秒级 | | 例子 | K8s apiserver、istiod | K8s kube-proxy、Envoy 边车 | ### 五、你遇到的场景 你之前的报错是 AI 会话的技能插件问题，这里的 `/control-plane/` 大概率是： - AI 服务后端的**控制平面接口路径**； - 用于管理插件（skills）、会话配置、权限校验的那部分系统路径。 一句话总结：**/control-plane/ 是系统的“管控入口/核心目录”，管决策和配置，不管实际业务数据转发**。 要不要我结合你用的具体工具（比如 K8s、Istio 或某款 AI 框架），帮你定位这个 `/control-plane/` 对应的具体组件和配置文件？\n\n\n你这个判断是对的，而且不是你一个人的问题——这是**默认用 AI 做工程时几乎必然发生的结构性问题**：  \nAI倾向于“再起一套”而不是“在既有体系里约束修改”，结果就是系统越滚越多、越接不上。\n\n但这不是“AI不行”，而是**缺少约束层（governance）**。你要做的是把它变成**只能在一条轨道上工作的工具**。\n\n下面给你一套**能落地的收敛方案**，不是概念。\n\n---\n\n# 🧠 一句话本质\n\n```text\nAI默认是“生成器”\n你要把它变成“在现有系统内修改的执行器”\n```\n\n---\n\n# 🔥 一、为什么会出现“多套系统 + 屎山”\n\nAI的默认行为：\n\n```text\n问题 → 直接给一套完整方案 → 新建文件 → 新结构\n```\n\n不会主动：\n\n```text\n分析现有系统 → 复用 → 修改\n```\n\n---\n\n👉 所以你现在的情况是：\n\n```text\nA系统（旧）\nB系统（AI新造）\nC系统（再新造）\n\n→ 三套并存 → 无法维护\n```\n\n---\n\n# 🚀 二、解决思路（核心）\n\n你要做的不是“让AI更聪明”，而是：\n\n```text\n👉 限制 AI 的操作空间\n👉 强制它只在“已有结构”里工作\n```\n\n---\n\n# 🧱 三、工程级约束（必须落地）\n\n## 1️⃣ 单一入口（最重要）\n\n你必须有一个：\n\n```text\nPROJECT_ROOT = 唯一工作区\n```\n\n---\n\n👉 AI必须遵守：\n\n```text\n✔ 只能修改 PROJECT_ROOT 内文件\n❌ 禁止创建平行系统\n❌ 禁止新建重复模块\n```\n\n---\n\n## 2️⃣ 模块声明（你之前其实已经做了）\n\n你有：\n\n```text\nmodules/\ncontrol-plane/\ngateway/\n```\n\n👉 继续强化：\n\n```text\n每个模块必须有 module.json\n```\n\n---\n\n例如：\n\n```json\n{\n  \"name\": \"deploy-center\",\n  \"owns\": [\n    \"codex/mcps/deploy-center/**\"\n  ],\n  \"exports\": [\n    \"deploy-openclaw-dev.ps1\"\n  ]\n}\n```\n\n---\n\n👉 AI只能：\n\n```text\n✔ 改这个模块内部\n❌ 不允许复制一个 deploy-center-v2\n```\n\n---\n\n## 3️⃣ 禁止“新系统生成”（关键规则）\n\n你要明确写进规则：\n\n```text\n禁止：\n- 创建新 gateway 实现\n- 创建新 deploy 系统\n- 创建新 key-pool\n```\n\n---\n\n👉 允许：\n\n```text\n只在已有实现上：\n- 修改\n- 修复\n- 扩展\n```\n\n---\n\n# 🔥 四、给你一条“强制执行命令模板”（最关键）\n\n以后你所有任务都这样下👇\n\n---\n\n```text\n任务规则：\n\n1. 必须先分析现有系统结构\n2. 必须复用已有模块\n3. 禁止新建同类系统（gateway / deploy / key-pool）\n4. 修改必须发生在现有文件路径内\n5. 输出必须包含：\n   - 修改的文件路径\n   - 为什么不新建系统\n   - 如何与现有结构对齐\n\n如果发现已有系统冲突：\n优先删除冗余实现，而不是新增\n```\n\n---\n\n👉 这条会直接让 AI 行为改变\n\n---\n\n# 🧠 五、你现在系统的真实问题（帮你点出来）\n\n你现在已经有：\n\n```text\n✔ AI Gateway\n✔ Key Pool\n✔ Deploy Center\n✔ Control Plane\n```\n\n但同时：\n\n```text\n❌ 多套 deploy routing\n❌ 本地池 + 服务器池混用\n❌ 多入口（scripts / config / registry）\n```\n\n---\n\n👉 本质：\n\n```text\n控制平面没有被“锁死”\n```\n\n---\n\n# 🚀 六、你下一步最该做的（不是继续写代码）\n\n## 👉 做一件事：\n\n```text\n收敛架构（Architecture Freeze）\n```\n\n---\n\n### 你要写一份：\n\n```text\nSYSTEM_MAP.md\n```\n\n内容只要这些：\n\n---\n\n```text\n1. 唯一 gateway：谁？\n2. 唯一 key pool：谁？\n3. 唯一 deploy：谁？\n4. control-plane：在哪？\n5. 每个模块负责什么\n```\n\n---\n\n👉 然后加一条规则：\n\n```text\nAI 不得违反 SYSTEM_MAP.md\n```\n\n---\n\n# 🔥 七、最狠的一招（推荐你用）\n\n## 👉 “删优先原则”\n\n你以后要这样命令 AI：\n\n```text\n如果发现重复系统：\n优先删除旧的 / 错的\n而不是新增一个\n```\n\n---\n\n👉 这句话能直接防止屎山\n\n---\n\n# 🧠 八、你现在其实已经到一个分水岭了\n\n你已经不是在：\n\n```text\n写代码\n```\n\n而是在：\n\n```text\n设计一个 AI 能持续维护的系统\n```\n\n---\n\n👉 如果你不加约束：\n\n```text\n3周后 → 彻底不可控\n```\n\n---\n\n👉 如果你加了：\n\n```text\n系统会稳定演进\n```\n\n---\n\n# 🚀 如果你要，我可以帮你做一个完整的\n\n👉 **“AI工程约束规范（可直接给Codex用）”**\n\n包括：\n\n- 禁止生成新系统规则\n    \n- 模块边界\n    \n- 文件归属检查\n    \n- 自动防屎山策略\n    \n\n---\n\n你只要说：\n\n```text\n给我规范\n```\n\n我直接给你一份可以长期用的版本。",
+    "html": "<p>ai很蠢，他不知道上一次的工程进行到哪里了，只会乱建立。还会建立一堆</p>\n<p>\\control-plane\\</p>\n<p>简单说：<strong>/control-plane/ 就是“控制平面”的目录/路径，指系统里负责做决策、发指令、管配置的那部分核心逻辑</strong>，和真正跑业务数据的“数据平面（data-plane）”分开。 ### 一、大白话类比 - <strong>控制平面（control-plane）= 大脑/指挥中心</strong> 负责：规划路线、下发规则、管理状态、调度资源。 - <strong>数据平面（data-plane）= 公路/运输队</strong> 负责：按规则高速转发数据包/请求，不思考，只干活。 ### 二、/control-plane/ 路径含义 你看到的 <code>\\control-plane\\</code>（Windows 反斜杠）或 <code>/control-plane/</code>（Linux/URL 斜杠），一般是： 1. <strong>目录名</strong>：代码/配置里专门放控制平面相关代码、配置、证书的文件夹； 2. <strong>URL 路径</strong>：访问控制平面接口的地址，例如 <code>https://xxx/control-plane/api/...</code>； 3. <strong>K8s/云原生语境</strong>：特指集群管控组件（kube-apiserver、etcd、scheduler 等）所在的逻辑/物理分区。 ### 三、核心职责（以 K8s/服务网格为例） - 认证、授权、鉴权； - 集群状态存储（etcd）； - 调度决策（把 Pod 分到哪个节点）； - 下发流量规则、负载均衡、熔断、灰度策略； - 监控、健康检查、自愈控制。 ### 四、和数据平面的区别 | 对比 | 控制平面（control-plane） | 数据平面（data-plane） | |---|---|---| | 角色 | 决策者、管理者 | 执行者、转发者 | | 工作 | 复杂计算、策略管理、状态维护 | 高速转发、低延迟处理 | | 性能 | 可靠性优先，毫秒/秒级 | 速度优先，微秒级 | | 例子 | K8s apiserver、istiod | K8s kube-proxy、Envoy 边车 | ### 五、你遇到的场景 你之前的报错是 AI 会话的技能插件问题，这里的 <code>/control-plane/</code> 大概率是： - AI 服务后端的<strong>控制平面接口路径</strong>； - 用于管理插件（skills）、会话配置、权限校验的那部分系统路径。 一句话总结：<strong>/control-plane/ 是系统的“管控入口/核心目录”，管决策和配置，不管实际业务数据转发</strong>。 要不要我结合你用的具体工具（比如 K8s、Istio 或某款 AI 框架），帮你定位这个 <code>/control-plane/</code> 对应的具体组件和配置文件？</p>\n<p>你这个判断是对的，而且不是你一个人的问题——这是<strong>默认用 AI 做工程时几乎必然发生的结构性问题</strong>：<br>\nAI倾向于“再起一套”而不是“在既有体系里约束修改”，结果就是系统越滚越多、越接不上。</p>\n<p>但这不是“AI不行”，而是<strong>缺少约束层（governance）</strong>。你要做的是把它变成<strong>只能在一条轨道上工作的工具</strong>。</p>\n<p>下面给你一套<strong>能落地的收敛方案</strong>，不是概念。</p>\n<hr>\n<h1 id=\"-一句话本质\">🧠 一句话本质</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI默认是“生成器”</span></span>\n<span data-line=\"\"><span>你要把它变成“在现有系统内修改的执行器”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一为什么会出现多套系统--屎山\">🔥 一、为什么会出现“多套系统 + 屎山”</h1>\n<p>AI的默认行为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>问题 → 直接给一套完整方案 → 新建文件 → 新结构</span></span></code></pre></figure>\n<p>不会主动：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>分析现有系统 → 复用 → 修改</span></span></code></pre></figure>\n<hr>\n<p>👉 所以你现在的情况是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>A系统（旧）</span></span>\n<span data-line=\"\"><span>B系统（AI新造）</span></span>\n<span data-line=\"\"><span>C系统（再新造）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>→ 三套并存 → 无法维护</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二解决思路核心\">🚀 二、解决思路（核心）</h1>\n<p>你要做的不是“让AI更聪明”，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 限制 AI 的操作空间</span></span>\n<span data-line=\"\"><span>👉 强制它只在“已有结构”里工作</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三工程级约束必须落地\">🧱 三、工程级约束（必须落地）</h1>\n<h2 id=\"1️⃣-单一入口最重要\">1️⃣ 单一入口（最重要）</h2>\n<p>你必须有一个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>PROJECT_ROOT = 唯一工作区</span></span></code></pre></figure>\n<hr>\n<p>👉 AI必须遵守：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 只能修改 PROJECT_ROOT 内文件</span></span>\n<span data-line=\"\"><span>❌ 禁止创建平行系统</span></span>\n<span data-line=\"\"><span>❌ 禁止新建重复模块</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2️⃣-模块声明你之前其实已经做了\">2️⃣ 模块声明（你之前其实已经做了）</h2>\n<p>你有：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>modules/</span></span>\n<span data-line=\"\"><span>control-plane/</span></span>\n<span data-line=\"\"><span>gateway/</span></span></code></pre></figure>\n<p>👉 继续强化：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>每个模块必须有 module.json</span></span></code></pre></figure>\n<hr>\n<p>例如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"name\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"deploy-center\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"owns\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"codex/mcps/deploy-center/**\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"exports\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"deploy-openclaw-dev.ps1\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<p>👉 AI只能：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 改这个模块内部</span></span>\n<span data-line=\"\"><span>❌ 不允许复制一个 deploy-center-v2</span></span></code></pre></figure>\n<hr>\n<h2 id=\"3️⃣-禁止新系统生成关键规则\">3️⃣ 禁止“新系统生成”（关键规则）</h2>\n<p>你要明确写进规则：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>禁止：</span></span>\n<span data-line=\"\"><span>- 创建新 gateway 实现</span></span>\n<span data-line=\"\"><span>- 创建新 deploy 系统</span></span>\n<span data-line=\"\"><span>- 创建新 key-pool</span></span></code></pre></figure>\n<hr>\n<p>👉 允许：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>只在已有实现上：</span></span>\n<span data-line=\"\"><span>- 修改</span></span>\n<span data-line=\"\"><span>- 修复</span></span>\n<span data-line=\"\"><span>- 扩展</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四给你一条强制执行命令模板最关键\">🔥 四、给你一条“强制执行命令模板”（最关键）</h1>\n<p>以后你所有任务都这样下👇</p>\n<hr>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>任务规则：</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>1. 必须先分析现有系统结构</span></span>\n<span data-line=\"\"><span>2. 必须复用已有模块</span></span>\n<span data-line=\"\"><span>3. 禁止新建同类系统（gateway / deploy / key-pool）</span></span>\n<span data-line=\"\"><span>4. 修改必须发生在现有文件路径内</span></span>\n<span data-line=\"\"><span>5. 输出必须包含：</span></span>\n<span data-line=\"\"><span>   - 修改的文件路径</span></span>\n<span data-line=\"\"><span>   - 为什么不新建系统</span></span>\n<span data-line=\"\"><span>   - 如何与现有结构对齐</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>如果发现已有系统冲突：</span></span>\n<span data-line=\"\"><span>优先删除冗余实现，而不是新增</span></span></code></pre></figure>\n<hr>\n<p>👉 这条会直接让 AI 行为改变</p>\n<hr>\n<h1 id=\"-五你现在系统的真实问题帮你点出来\">🧠 五、你现在系统的真实问题（帮你点出来）</h1>\n<p>你现在已经有：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ AI Gateway</span></span>\n<span data-line=\"\"><span>✔ Key Pool</span></span>\n<span data-line=\"\"><span>✔ Deploy Center</span></span>\n<span data-line=\"\"><span>✔ Control Plane</span></span></code></pre></figure>\n<p>但同时：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 多套 deploy routing</span></span>\n<span data-line=\"\"><span>❌ 本地池 + 服务器池混用</span></span>\n<span data-line=\"\"><span>❌ 多入口（scripts / config / registry）</span></span></code></pre></figure>\n<hr>\n<p>👉 本质：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>控制平面没有被“锁死”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六你下一步最该做的不是继续写代码\">🚀 六、你下一步最该做的（不是继续写代码）</h1>\n<h2 id=\"-做一件事\">👉 做一件事：</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>收敛架构（Architecture Freeze）</span></span></code></pre></figure>\n<hr>\n<h3 id=\"你要写一份\">你要写一份：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>SYSTEM_MAP.md</span></span></code></pre></figure>\n<p>内容只要这些：</p>\n<hr>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>1. 唯一 gateway：谁？</span></span>\n<span data-line=\"\"><span>2. 唯一 key pool：谁？</span></span>\n<span data-line=\"\"><span>3. 唯一 deploy：谁？</span></span>\n<span data-line=\"\"><span>4. control-plane：在哪？</span></span>\n<span data-line=\"\"><span>5. 每个模块负责什么</span></span></code></pre></figure>\n<hr>\n<p>👉 然后加一条规则：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI 不得违反 SYSTEM_MAP.md</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七最狠的一招推荐你用\">🔥 七、最狠的一招（推荐你用）</h1>\n<h2 id=\"-删优先原则\">👉 “删优先原则”</h2>\n<p>你以后要这样命令 AI：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>如果发现重复系统：</span></span>\n<span data-line=\"\"><span>优先删除旧的 / 错的</span></span>\n<span data-line=\"\"><span>而不是新增一个</span></span></code></pre></figure>\n<hr>\n<p>👉 这句话能直接防止屎山</p>\n<hr>\n<h1 id=\"-八你现在其实已经到一个分水岭了\">🧠 八、你现在其实已经到一个分水岭了</h1>\n<p>你已经不是在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>写代码</span></span></code></pre></figure>\n<p>而是在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>设计一个 AI 能持续维护的系统</span></span></code></pre></figure>\n<hr>\n<p>👉 如果你不加约束：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>3周后 → 彻底不可控</span></span></code></pre></figure>\n<hr>\n<p>👉 如果你加了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>系统会稳定演进</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你要我可以帮你做一个完整的\">🚀 如果你要，我可以帮你做一个完整的</h1>\n<p>👉 <strong>“AI工程约束规范（可直接给Codex用）”</strong></p>\n<p>包括：</p>\n<ul>\n<li>\n<p>禁止生成新系统规则</p>\n</li>\n<li>\n<p>模块边界</p>\n</li>\n<li>\n<p>文件归属检查</p>\n</li>\n<li>\n<p>自动防屎山策略</p>\n</li>\n</ul>\n<hr>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>给我规范</span></span></code></pre></figure>\n<p>我直接给你一份可以长期用的版本。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话本质",
+        "text": "🧠 一句话本质"
+      },
+      {
+        "depth": 1,
+        "slug": "一-为什么会出现-多套系统-屎山",
+        "text": "🔥 一、为什么会出现“多套系统 + 屎山”"
+      },
+      {
+        "depth": 1,
+        "slug": "二-解决思路-核心",
+        "text": "🚀 二、解决思路（核心）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-工程级约束-必须落地",
+        "text": "🧱 三、工程级约束（必须落地）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-单一入口-最重要",
+        "text": "1️⃣ 单一入口（最重要）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-模块声明-你之前其实已经做了",
+        "text": "2️⃣ 模块声明（你之前其实已经做了）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-禁止-新系统生成-关键规则",
+        "text": "3️⃣ 禁止“新系统生成”（关键规则）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-给你一条-强制执行命令模板-最关键",
+        "text": "🔥 四、给你一条“强制执行命令模板”（最关键）"
+      },
+      {
+        "depth": 1,
+        "slug": "五-你现在系统的真实问题-帮你点出来",
+        "text": "🧠 五、你现在系统的真实问题（帮你点出来）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-你下一步最该做的-不是继续写代码",
+        "text": "🚀 六、你下一步最该做的（不是继续写代码）"
+      },
+      {
+        "depth": 2,
+        "slug": "做一件事",
+        "text": "👉 做一件事："
+      },
+      {
+        "depth": 3,
+        "slug": "你要写一份",
+        "text": "你要写一份："
+      },
+      {
+        "depth": 1,
+        "slug": "七-最狠的一招-推荐你用",
+        "text": "🔥 七、最狠的一招（推荐你用）"
+      },
+      {
+        "depth": 2,
+        "slug": "删优先原则",
+        "text": "👉 “删优先原则”"
+      },
+      {
+        "depth": 1,
+        "slug": "八-你现在其实已经到一个分水岭了",
+        "text": "🧠 八、你现在其实已经到一个分水岭了"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要-我可以帮你做一个完整的",
+        "text": "🚀 如果你要，我可以帮你做一个完整的"
+      }
+    ],
+    "detailPath": "articles/md_efa3ffb890eb.json"
+  }
+}

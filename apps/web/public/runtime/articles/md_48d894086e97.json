@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_48d894086e97",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%20%E8%87%AA%E5%8A%A8%E5%8C%96.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程学习之路/浏览器 自动化.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/浏览器 自动化.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%20%E8%87%AA%E5%8A%A8%E5%8C%96.md",
+    "slug": "blog-编程学习之路-浏览器-自动化",
+    "title": "浏览器 自动化",
+    "summary": "你当时那个问题，其实本质不是“AI不行”，而是： 我给你把 当时的问题 + 为什么 + 是怎么解决的 一次性讲清楚👇 🧠 一句话本质 🔥 一、你当时遇到的现象 你当时是： 👉 但同时： 👉 说明： 🧱 二、为什么会这样（核心原因） 默认架构是： 👉 AI看不到： 👉 这是 安全设计（...",
+    "description": "你当时那个问题，其实本质不是“AI不行”，而是： 我给你把 当时的问题 + 为什么 + 是怎么解决的 一次性讲清楚👇 🧠 一句话本质 🔥 一、你当时遇到的现象 你当时是： 👉 但同时： 👉 说明： 🧱 二、为什么会这样（核心原因） 默认架构是： 👉 AI看不到： 👉 这是 安全设计（...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程学习之路"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程学习之路/浏览器 自动化.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/浏览器 自动化.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E6%B5%8F%E8%A7%88%E5%99%A8%20%E8%87%AA%E5%8A%A8%E5%8C%96.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "浏览器 自动化",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程学习之路",
+        "浏览器 自动化"
+      ],
+      "subtitle": "你当时那个问题，其实本质不是“AI不行”，而是： 我给你把 当时的问题 + 为什么 + 是怎么解决的 一次性讲清楚👇 🧠 一句话本质 🔥 一、你当时遇到的现象 你当时是： 👉 但同时： 👉 说明： 🧱 二、为什么会这样（核心原因） 默认架构是： 👉 AI看不到： 👉 这是 安全设计（..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "你当时那个问题，其实本质不是“AI不行”，而是：\n\n```text\nAI默认没有权限访问你的本机\n```\n\n我给你把**当时的问题 + 为什么 + 是怎么解决的**一次性讲清楚👇\n\n---\n\n# 🧠 一句话本质\n\n```text\nAI（模型）本身是“远程推理程序”\n默认不能访问你的电脑（浏览器 / 文件 / 系统）\n```\n\n---\n\n# 🔥 一、你当时遇到的现象\n\n你当时是：\n\n```text\n❌ AI 不能读取浏览器数据\n❌ 不能操作本机\n❌ 不能点鼠标 / 打字\n```\n\n---\n\n👉 但同时：\n\n```text\n✔ 能聊天\n✔ 能写代码\n```\n\n---\n\n👉 说明：\n\n```text\n推理层 OK\n执行层 ❌\n```\n\n---\n\n# 🧱 二、为什么会这样（核心原因）\n\n默认架构是：\n\n```text\n你的电脑（本地）\n      ❌\n      │（没有连接）\n      ❌\nAI（云端）\n```\n\n---\n\n👉 AI看不到：\n\n```text\n你的浏览器\n你的文件\n你的鼠标键盘\n```\n\n---\n\n👉 这是**安全设计（沙箱）**\n\n---\n\n# 🔥 三、你当时是怎么解决的（关键点）\n\n你其实做了这件事👇\n\n---\n\n## 👉 加了“执行层”（工具层）\n\n也就是：\n\n```text\n让AI不直接操作系统\n而是通过工具间接操作\n```\n\n---\n\n# 🧱 四、解决方案本质（你已经用过）\n\n---\n\n## 🟢 方案1：脚本 / 自动化（你自己写的）\n\n你说过：\n\n```text\n你写了番茄小说发布脚本\n```\n\n👉 本质：\n\n```text\nAI → 生成指令 → 脚本执行\n```\n\n---\n\n## 🟡 方案2：MCP / 工具系统\n\n```text\nAI → MCP → Tool → 本机\n```\n\n---\n\n👉 比如：\n\n```text\n浏览器控制\n文件读写\nSSH执行\n```\n\n---\n\n## 🔴 方案3：Browser Automation（你后来理解到的）\n\n你提到：\n\n```text\nClaude Computer Use\n```\n\n👉 它其实是：\n\n```text\nAI → 控制虚拟浏览器 → 操作网页\n```\n\n---\n\n# 🧠 五、核心变化（最重要）\n\n---\n\n## ❌ 之前\n\n```text\nAI = 只能说话\n```\n\n---\n\n## ✅ 之后\n\n```text\nAI = 会调用工具\n```\n\n---\n\n👉 关键差异：\n\n```text\n有没有“执行器（Executor）”\n```\n\n---\n\n# 🔥 六、你当时真正做对的一步\n\n你做的不是：\n\n```text\n“让AI更强”\n```\n\n而是：\n\n```text\n👉 给AI加了“手脚”\n```\n\n---\n\n# 🧠 七、标准结构（你现在已经理解了）\n\n---\n\n```text\nAI（大脑）\n ↓\n工具调用（指令）\n ↓\n执行器（本地 / 脚本 / 浏览器）\n ↓\n操作你的电脑\n```\n\n---\n\n# 🧱 八、为什么“不能直接操作本机”\n\n原因只有一个：\n\n```text\n安全隔离\n```\n\n---\n\n👉 否则：\n\n```text\nAI可以删你文件 / 操作账户 / 乱发请求\n```\n\n---\n\n👉 所以必须：\n\n```text\n通过工具 + 权限控制\n```\n\n---\n\n# 🧠 九、你现在系统和这个问题的关系\n\n你现在在做：\n\n```text\nAI Gateway + Tool System\n```\n\n---\n\n👉 本质就是：\n\n```text\n你在构建自己的“AI执行层”\n```\n\n---\n\n# 🔥 十、最关键一句话（必须记住）\n\n```text\nAI不能操作本机 ≠ AI能力不够\n\n👉 是因为你没有给它“执行通道”\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\n当时问题：\nAI不能操作本机\n\n解决方式：\n加执行层（脚本 / MCP / 浏览器自动化）\n\n本质变化：\nAI从“聊天工具”\n→ “可执行系统”\n```\n\n---\n\n# 🚀 如果你要更进一步（强烈建议）\n\n我可以帮你设计一套：\n\n```text\n✔ AI → 控制浏览器\n✔ AI → 操作本地文件\n✔ AI → 执行服务器命令\n```\n\n的**完整执行架构（安全 + 可控版）**\n\n---\n\n你只要说：\n\n```text\n本机控制架构\n```\n\n我给你一版**你现在能直接搭的方案**。",
+    "html": "<p>你当时那个问题，其实本质不是“AI不行”，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI默认没有权限访问你的本机</span></span></code></pre></figure>\n<p>我给你把<strong>当时的问题 + 为什么 + 是怎么解决的</strong>一次性讲清楚👇</p>\n<hr>\n<h1 id=\"-一句话本质\">🧠 一句话本质</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI（模型）本身是“远程推理程序”</span></span>\n<span data-line=\"\"><span>默认不能访问你的电脑（浏览器 / 文件 / 系统）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一你当时遇到的现象\">🔥 一、你当时遇到的现象</h1>\n<p>你当时是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ AI 不能读取浏览器数据</span></span>\n<span data-line=\"\"><span>❌ 不能操作本机</span></span>\n<span data-line=\"\"><span>❌ 不能点鼠标 / 打字</span></span></code></pre></figure>\n<hr>\n<p>👉 但同时：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 能聊天</span></span>\n<span data-line=\"\"><span>✔ 能写代码</span></span></code></pre></figure>\n<hr>\n<p>👉 说明：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>推理层 OK</span></span>\n<span data-line=\"\"><span>执行层 ❌</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二为什么会这样核心原因\">🧱 二、为什么会这样（核心原因）</h1>\n<p>默认架构是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你的电脑（本地）</span></span>\n<span data-line=\"\"><span>      ❌</span></span>\n<span data-line=\"\"><span>      │（没有连接）</span></span>\n<span data-line=\"\"><span>      ❌</span></span>\n<span data-line=\"\"><span>AI（云端）</span></span></code></pre></figure>\n<hr>\n<p>👉 AI看不到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你的浏览器</span></span>\n<span data-line=\"\"><span>你的文件</span></span>\n<span data-line=\"\"><span>你的鼠标键盘</span></span></code></pre></figure>\n<hr>\n<p>👉 这是<strong>安全设计（沙箱）</strong></p>\n<hr>\n<h1 id=\"-三你当时是怎么解决的关键点\">🔥 三、你当时是怎么解决的（关键点）</h1>\n<p>你其实做了这件事👇</p>\n<hr>\n<h2 id=\"-加了执行层工具层\">👉 加了“执行层”（工具层）</h2>\n<p>也就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>让AI不直接操作系统</span></span>\n<span data-line=\"\"><span>而是通过工具间接操作</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四解决方案本质你已经用过\">🧱 四、解决方案本质（你已经用过）</h1>\n<hr>\n<h2 id=\"-方案1脚本--自动化你自己写的\">🟢 方案1：脚本 / 自动化（你自己写的）</h2>\n<p>你说过：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你写了番茄小说发布脚本</span></span></code></pre></figure>\n<p>👉 本质：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI → 生成指令 → 脚本执行</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-方案2mcp--工具系统\">🟡 方案2：MCP / 工具系统</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI → MCP → Tool → 本机</span></span></code></pre></figure>\n<hr>\n<p>👉 比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>浏览器控制</span></span>\n<span data-line=\"\"><span>文件读写</span></span>\n<span data-line=\"\"><span>SSH执行</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-方案3browser-automation你后来理解到的\">🔴 方案3：Browser Automation（你后来理解到的）</h2>\n<p>你提到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Claude Computer Use</span></span></code></pre></figure>\n<p>👉 它其实是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI → 控制虚拟浏览器 → 操作网页</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五核心变化最重要\">🧠 五、核心变化（最重要）</h1>\n<hr>\n<h2 id=\"-之前\">❌ 之前</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI = 只能说话</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-之后\">✅ 之后</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI = 会调用工具</span></span></code></pre></figure>\n<hr>\n<p>👉 关键差异：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>有没有“执行器（Executor）”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六你当时真正做对的一步\">🔥 六、你当时真正做对的一步</h1>\n<p>你做的不是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>“让AI更强”</span></span></code></pre></figure>\n<p>而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 给AI加了“手脚”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七标准结构你现在已经理解了\">🧠 七、标准结构（你现在已经理解了）</h1>\n<hr>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI（大脑）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>工具调用（指令）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>执行器（本地 / 脚本 / 浏览器）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>操作你的电脑</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-八为什么不能直接操作本机\">🧱 八、为什么“不能直接操作本机”</h1>\n<p>原因只有一个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>安全隔离</span></span></code></pre></figure>\n<hr>\n<p>👉 否则：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI可以删你文件 / 操作账户 / 乱发请求</span></span></code></pre></figure>\n<hr>\n<p>👉 所以必须：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>通过工具 + 权限控制</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-九你现在系统和这个问题的关系\">🧠 九、你现在系统和这个问题的关系</h1>\n<p>你现在在做：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI Gateway + Tool System</span></span></code></pre></figure>\n<hr>\n<p>👉 本质就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你在构建自己的“AI执行层”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-十最关键一句话必须记住\">🔥 十、最关键一句话（必须记住）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI不能操作本机 ≠ AI能力不够</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>👉 是因为你没有给它“执行通道”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>当时问题：</span></span>\n<span data-line=\"\"><span>AI不能操作本机</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>解决方式：</span></span>\n<span data-line=\"\"><span>加执行层（脚本 / MCP / 浏览器自动化）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>本质变化：</span></span>\n<span data-line=\"\"><span>AI从“聊天工具”</span></span>\n<span data-line=\"\"><span>→ “可执行系统”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你要更进一步强烈建议\">🚀 如果你要更进一步（强烈建议）</h1>\n<p>我可以帮你设计一套：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ AI → 控制浏览器</span></span>\n<span data-line=\"\"><span>✔ AI → 操作本地文件</span></span>\n<span data-line=\"\"><span>✔ AI → 执行服务器命令</span></span></code></pre></figure>\n<p>的<strong>完整执行架构（安全 + 可控版）</strong></p>\n<hr>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本机控制架构</span></span></code></pre></figure>\n<p>我给你一版<strong>你现在能直接搭的方案</strong>。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话本质",
+        "text": "🧠 一句话本质"
+      },
+      {
+        "depth": 1,
+        "slug": "一-你当时遇到的现象",
+        "text": "🔥 一、你当时遇到的现象"
+      },
+      {
+        "depth": 1,
+        "slug": "二-为什么会这样-核心原因",
+        "text": "🧱 二、为什么会这样（核心原因）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-你当时是怎么解决的-关键点",
+        "text": "🔥 三、你当时是怎么解决的（关键点）"
+      },
+      {
+        "depth": 2,
+        "slug": "加了-执行层-工具层",
+        "text": "👉 加了“执行层”（工具层）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-解决方案本质-你已经用过",
+        "text": "🧱 四、解决方案本质（你已经用过）"
+      },
+      {
+        "depth": 2,
+        "slug": "方案1-脚本-自动化-你自己写的",
+        "text": "🟢 方案1：脚本 / 自动化（你自己写的）"
+      },
+      {
+        "depth": 2,
+        "slug": "方案2-mcp-工具系统",
+        "text": "🟡 方案2：MCP / 工具系统"
+      },
+      {
+        "depth": 2,
+        "slug": "方案3-browser-automation-你后来理解到的",
+        "text": "🔴 方案3：Browser Automation（你后来理解到的）"
+      },
+      {
+        "depth": 1,
+        "slug": "五-核心变化-最重要",
+        "text": "🧠 五、核心变化（最重要）"
+      },
+      {
+        "depth": 2,
+        "slug": "之前",
+        "text": "❌ 之前"
+      },
+      {
+        "depth": 2,
+        "slug": "之后",
+        "text": "✅ 之后"
+      },
+      {
+        "depth": 1,
+        "slug": "六-你当时真正做对的一步",
+        "text": "🔥 六、你当时真正做对的一步"
+      },
+      {
+        "depth": 1,
+        "slug": "七-标准结构-你现在已经理解了",
+        "text": "🧠 七、标准结构（你现在已经理解了）"
+      },
+      {
+        "depth": 1,
+        "slug": "八-为什么-不能直接操作本机",
+        "text": "🧱 八、为什么“不能直接操作本机”"
+      },
+      {
+        "depth": 1,
+        "slug": "九-你现在系统和这个问题的关系",
+        "text": "🧠 九、你现在系统和这个问题的关系"
+      },
+      {
+        "depth": 1,
+        "slug": "十-最关键一句话-必须记住",
+        "text": "🔥 十、最关键一句话（必须记住）"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要更进一步-强烈建议",
+        "text": "🚀 如果你要更进一步（强烈建议）"
+      }
+    ],
+    "detailPath": "articles/md_48d894086e97.json"
+  }
+}

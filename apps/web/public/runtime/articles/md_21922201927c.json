@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_21922201927c",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.md",
+    "slug": "agent-auth-token-pool-codex-auth-stream-repair-2026-04-28",
+    "title": "token-pool-codex-auth-stream-repair-2026-04-28",
+    "summary": "Token Pool / Codex OAuth 断流、假健康与首包超时修复记录（2026 04 28） 结论 这次问题不是单一故障，而是三条错误链叠加： 1. openai codex oauth 的真实上游错误是 429 usage limit reached，但网关没有稳定把它转成“带恢复时间...",
+    "description": "Token Pool / Codex OAuth 断流、假健康与首包超时修复记录（2026 04 28） 结论 这次问题不是单一故障，而是三条错误链叠加： 1. openai codex oauth 的真实上游错误是 429 usage limit reached，但网关没有稳定把它转成“带恢复时间...",
+    "date": "2026-04-28",
+    "updated": "2026-04-28",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent",
+      "auth"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent",
+      "auth"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent",
+        "auth"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "token pool codex auth stream repair",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "AUTH",
+        "TOKEN POOL CODEX AUTH STREAM REPAIR"
+      ],
+      "subtitle": "Token Pool / Codex OAuth 断流、假健康与首包超时修复记录（2026 04 28） 结论 这次问题不是单一故障，而是三条错误链叠加： 1. openai codex oauth 的真实上游错误是 429 usage limit reached，但网关没有稳定把它转成“带恢复时间..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Token Pool / Codex OAuth 断流、假健康与首包超时修复记录（2026-04-28）\n\n## 结论\n\n这次问题不是单一故障，而是三条错误链叠加：\n\n1. `openai-codex-oauth` 的真实上游错误是 `429 usage_limit_reached`，但网关没有稳定把它转成“带恢复时间的 unhealthy”。\n2. fallback 到 `openaiResponses-custom` 时，重试路径复用了第一次发给 Codex 的已转换请求体，跨 provider 后 body 形状错了，制造出假 401 / 假协议错误。\n3. 历史上的很多 `504/524` 并不是 Codex 上游真的返回 504，而是网关自己的“首包等待 30000ms”先把流切断了，而且之前没有正确读取当前 provider 的超时覆盖配置。\n\n修复后，`gpt-5.3-codex` 与 `gpt-5.4` 都已经在生产 runtime 上完成 live 验证，返回 `200`。\n\n## 现场症状\n\n用户侧主要现象：\n\n- Codex 经常“看起来 provider 还健康”，但请求一跑就断流。\n- 一旦走 `openai-codex-oauth`，会出现自动断开、重连不上、或 fallback 后继续失败。\n- debug/provider 视图里一些节点仍显示 `isHealthy: true`，与真实可用性不一致。\n- 日志里可见历史 `504/524`，但并不稳定指向同一个上游。\n\n## 已确认的根因\n\n### 1. Codex OAuth 真实失败不是 token 过期，而是 quota 用尽\n\n生产日志在 `2026-04-28 14:16:04 CST` 明确出现：\n\n- provider: `openai-codex-oauth`\n- model: `gpt-5.3-codex`\n- upstream error: `429 usage_limit_reached`\n- reset field: `resets_at`\n\n这说明主因不是 OAuth token 过期，而是当前 Codex 账号额度/计划限制触发了上游拒绝。\n\n### 2. 429 的结构化错误体有时是 stringified JSON，导致恢复时间丢失\n\n原逻辑只稳定处理对象形态的 `error.response.data`。当上游把错误体塞成字符串时：\n\n- `usage_limit_reached` 识别不稳\n- `resets_at` 无法提取\n- 节点不会进入“带恢复时间的冷却态”\n- 结果就是“看起来健康，实际下一跳仍然死”\n\n### 3. 401/403 以前只累计 errorCount，不会立即摘除节点\n\n这会导致：\n\n- 坏 key 仍停留在轮转池里\n- debug 视图仍可能显示 `isHealthy: true`\n- fallback 重试会继续选到同一类已确定坏掉的节点\n\n这次明确确认的坏节点：\n\n- `d0398338-6eb2-4c0d-b0d3-26e7060c68ec`\n- customName: `soxio-responses-v1-b`\n- 远端直测结果：`401 Invalid API key / API key is disabled`\n\n### 4. fallback 重试错误复用了第一次 provider 的 request body\n\n原主链里，第一次请求如果已经从 OpenAI Responses 形态转换到了 Codex 形态：\n\n- 后续 retry/fallback 仍沿用这份已经转换过的 body\n- 当路由切到 `openaiResponses-custom` 时，没有按新 `route.toProvider` 重建 body\n- 于是会把不适合 Responses 上游的 payload 继续发出去\n\n这个 bug 会制造出大量“看上去像 key 坏了/协议坏了”的假象。\n\n### 5. 历史 504/524 的具体超时点在网关首包门，不是 Codex 自身统一返回 504\n\n生产日志明确有多次：\n\n- `Upstream stream did not produce the first chunk within 30000ms.`\n- 随后 routing runner 把节点按 `524` 处理\n\n关键点在于：\n\n- 某些 provider 已经配置了更大的 `STREAM_FIRST_CHUNK_TIMEOUT_MS`\n- 但网关以前读的是全局 `CONFIG`\n- 没正确吃到当前选中 provider 的 `service.config`\n\n结果就是“provider 明明配了 90s，网关还是 30s 先切流”。\n\n## 代码修复摘要\n\n### A. `src/core/routing-runner.js`\n\n修复点：\n\n- 解析 stringified JSON 错误体\n- 识别 `usage_limit_reached`\n- 提取 `resets_at` / `resetsAt` / rate-limit header\n- `401/403` 改为立即 `markProviderUnhealthyImmediately(...)`\n- `429 usage_limit_reached` 改为 `markProviderUnhealthyWithRecoveryTime(...)`\n\n效果：\n\n- quota 型失败不再伪装成普通 transient error\n- hard auth failure 不再继续留在 healthy 池里\n\n### B. `src/providers/provider-pool-manager.js`\n\n修复点：\n\n- 健康检查失败结果补 `failureKind` 与 `failureStatusCode`\n- 健康检查遇到 `AUTH_ERROR` 时立即摘除\n- Codex health check 默认模型固定为 `gpt-5.3-codex`\n- 对 Codex 健康检查使用 first-chunk stream probe，而不是弱 list-model 探测\n- `codex` 与 `openaiResponses` 之间视为协议可兼容 fallback\n\n效果：\n\n- 健康状态与真实可用性更接近\n- Codex fallback 不再因为协议前缀误判被挡住\n\n### C. `src/utils/common.js`\n\n修复点：\n\n- 新增 `buildProcessedRequestBodyForRoute(...)`\n- 每次 retry/fallback 都按当前 `route.toProvider` 重新：\n  - 转换 request body\n  - 附加内部 metadata\n  - 应用 system prompt\n  - 应用 custom model 参数\n- stream 首包等待改为读取 `service.config || CONFIG`\n\n效果：\n\n- 不再复用“上一跳 provider 的旧 payload”\n- provider 自己的 `STREAM_FIRST_CHUNK_TIMEOUT_MS` 终于真正生效\n\n### D. `src/providers/openai/openai-responses-core.js`\n\n修复点：\n\n- 补 401/403 上游 detail 日志\n- 遇到协议/鉴权失败时，不再只打印“可能 key 失效”这种弱日志\n\n效果：\n\n- 后续排障时能更快区分：坏 key、协议不匹配、并发上限、上游规则拒绝\n\n## 生产 runtime 配置修复\n\n### 1. fallback chain\n\n生产 runtime 的 `configs/runtime-overrides.json` 需要包含：\n\n- `openai-codex-oauth -> openaiResponses-custom`\n\n若这一条覆盖缺失，即使 routing 代码已支持，也会再次出现：\n\n- Codex 被 quota 冷却后\n- fallback 不生效\n- 直接报 `No healthy provider found in pool for openai-codex-oauth`\n\n### 2. 清理坏节点\n\n在生产 `provider_pools.json` 中已处理：\n\n- UUID: `d0398338-6eb2-4c0d-b0d3-26e7060c68ec`\n- customName: `soxio-responses-v1-b`\n- 动作：`isDisabled = true`，同时置为 unhealthy\n\n原因：\n\n- 已通过远端直测确认其上游返回 `401`\n- 返回内容明确为 `API key is disabled`\n- 不应继续进入轮转池制造噪音\n\n### 3. 给慢首包节点补显式超时\n\n已给下面这个节点补上：\n\n- UUID: `be1d6074-3a71-4702-ab53-d07d52512559`\n- customName: `soxio-responses-v1`\n- 配置：`STREAM_FIRST_CHUNK_TIMEOUT_MS = 90000`\n\n目的：\n\n- 即便上游首个 token/事件比较慢，也不应再被 30s 默认门误杀\n\n## 验证过程与证据\n\n### 本地测试\n\n已通过的针对性测试包括：\n\n- `tests/routing-runner.unit.test.js`\n- `tests/provider-pool-manager-health.unit.test.js`\n- `tests/stream-midflight-stall.unit.test.js`\n- 以及先前已通过的 fallback / service-manager / overlay 测试集\n\n关键新增覆盖：\n\n- stringified quota payload 也能提取 recovery time\n- 401 auth failure 立即摘除\n- startup health check 能直接打掉 auth-failing provider\n- stream first chunk timeout 会优先读取所选 service 的 provider-level override\n\n### 生产部署时间\n\n- 服务：`token-pool-gateway-prod.service`\n- 一次关键重启：`2026-04-28 14:22:41 CST`\n- 后续 provider pool 调整重启：`2026-04-28 14:26:47 CST`\n\n### live 验证结果\n\n#### A. Codex 路由验证\n\n生产 runtime 直测：\n\n- `POST http://127.0.0.1:3301/openai-codex-oauth/v1/responses`\n- `model = gpt-5.3-codex`\n- 结果：`200`\n\n说明：\n\n- Codex 主链已经不再卡死在“429 后假健康 / 假 dead-end”状态\n\n#### B. Public/main route 验证\n\n生产 runtime 直测：\n\n- `POST http://127.0.0.1:3301/v1/responses`\n- `model = gpt-5.3-codex` -> `200`\n- `model = gpt-5.4` -> `200`\n\n说明：\n\n- Codex 路由、Responses fallback、主入口三者已重新接通\n\n#### C. 慢首包场景验证\n\n针对 `openaiResponses-custom` 直连做了 6 次连续请求压测：\n\n- 路径：`POST http://127.0.0.1:3301/openaiResponses-custom/v1/responses`\n- 模型：`gpt-5.4`\n- 结果：6/6 成功，全部 `200`\n- 单次耗时约：`1.9s ~ 2.7s`\n\n同时检查 journal：\n\n- 6 次请求全部命中 `be1d6074-3a71-4702-ab53-d07d52512559`\n- 没再出现 `d0398338-6eb2-4c0d-b0d3-26e7060c68ec`\n- 没再出现 `Upstream stream did not produce the first chunk within 30000ms.`\n- 没再出现 `524/504` 首包门误杀\n\n## 这次修复最值得记住的经验\n\n1. `429` 不能只看 status code，要看语义字段\n   - `usage_limit_reached` 和普通 burst rate limit 不是一回事\n   - 前者应该进入 cooldown，最好带 recovery time\n\n2. “debug 里 healthy” 不等于真实健康\n   - 如果 401/403 还靠累计 errorCount 才摘除，debug 会长期撒谎\n\n3. retry/fallback 绝不能复用上一个 provider 的已转换 request body\n   - 这类 bug 会伪造出大量跨协议异常\n   - 表面像 key 坏了，本质是 request shape 错了\n\n4. 网关自己的 timeout 门比上游 timeout 更危险\n   - 如果 provider 已经显式配置了更大的首包等待时间\n   - 网关必须读取当前 provider 的 runtime config，而不是只看全局默认值\n\n5. 远端 live 验证不能只看一条 `200`\n   - 至少要同时验证：\n     - direct provider route\n     - main `/v1/responses` route\n     - debug/provider snapshot\n     - journal 中真实选中的 provider 与 error chain\n\n## 后续运维建议\n\n1. 对所有 `openaiResponses-custom` 节点补 machine-readable 能力标签\n   - 明确哪个节点支持 `gpt-5.3-codex`\n   - 明确哪个节点需要大于 30s 的首包窗口\n\n2. 对 hard auth failure 建立自动熔断/自动 disable 策略\n   - 例如连续一次明确 `API key is disabled` 即直接 `isDisabled = true`\n   - 避免重复进入轮转池\n\n3. 对 quota recovery 建立 debug 可见字段\n   - 例如在 provider debug 视图中直接显示 `scheduledRecoveryTime`\n   - 让“冷却中”与“健康”一眼可分\n\n4. 保留这次排障顺序作为固定 SOP\n   - 先确认真实上游状态码与 body\n   - 再看 routing health semantics\n   - 再看 retry/fallback 是否复用了错误请求体\n   - 最后看网关本地 timeout / proxy / first chunk gate\n\n## 本次涉及的关键节点 / 路径\n\n- 生产 host：`170.106.179.226`\n- 生产 runtime：`/srv/token-pool-gateway-prod`\n- 服务：`token-pool-gateway-prod.service`\n- 坏节点（已禁用）：`d0398338-6eb2-4c0d-b0d3-26e7060c68ec`\n- 慢首包节点（已补超时）：`be1d6074-3a71-4702-ab53-d07d52512559`\n- Codex 节点：`c52e1160-02ba-48ee-9ee8-978ffc062164`\n\n## 当前状态\n\n- deploy decision: `deployed`\n- live verification: `passed`\n- 当前结论：这轮 Codex OAuth 断流 / 假健康 / fallback 假异常 / 首包 504 误杀链路已完成治本修复。",
+    "html": "<h1 id=\"token-pool--codex-oauth-断流假健康与首包超时修复记录2026-04-28\">Token Pool / Codex OAuth 断流、假健康与首包超时修复记录（2026-04-28）</h1>\n<h2 id=\"结论\">结论</h2>\n<p>这次问题不是单一故障，而是三条错误链叠加：</p>\n<ol>\n<li><code>openai-codex-oauth</code> 的真实上游错误是 <code>429 usage_limit_reached</code>，但网关没有稳定把它转成“带恢复时间的 unhealthy”。</li>\n<li>fallback 到 <code>openaiResponses-custom</code> 时，重试路径复用了第一次发给 Codex 的已转换请求体，跨 provider 后 body 形状错了，制造出假 401 / 假协议错误。</li>\n<li>历史上的很多 <code>504/524</code> 并不是 Codex 上游真的返回 504，而是网关自己的“首包等待 30000ms”先把流切断了，而且之前没有正确读取当前 provider 的超时覆盖配置。</li>\n</ol>\n<p>修复后，<code>gpt-5.3-codex</code> 与 <code>gpt-5.4</code> 都已经在生产 runtime 上完成 live 验证，返回 <code>200</code>。</p>\n<h2 id=\"现场症状\">现场症状</h2>\n<p>用户侧主要现象：</p>\n<ul>\n<li>Codex 经常“看起来 provider 还健康”，但请求一跑就断流。</li>\n<li>一旦走 <code>openai-codex-oauth</code>，会出现自动断开、重连不上、或 fallback 后继续失败。</li>\n<li>debug/provider 视图里一些节点仍显示 <code>isHealthy: true</code>，与真实可用性不一致。</li>\n<li>日志里可见历史 <code>504/524</code>，但并不稳定指向同一个上游。</li>\n</ul>\n<h2 id=\"已确认的根因\">已确认的根因</h2>\n<h3 id=\"1-codex-oauth-真实失败不是-token-过期而是-quota-用尽\">1. Codex OAuth 真实失败不是 token 过期，而是 quota 用尽</h3>\n<p>生产日志在 <code>2026-04-28 14:16:04 CST</code> 明确出现：</p>\n<ul>\n<li>provider: <code>openai-codex-oauth</code></li>\n<li>model: <code>gpt-5.3-codex</code></li>\n<li>upstream error: <code>429 usage_limit_reached</code></li>\n<li>reset field: <code>resets_at</code></li>\n</ul>\n<p>这说明主因不是 OAuth token 过期，而是当前 Codex 账号额度/计划限制触发了上游拒绝。</p>\n<h3 id=\"2-429-的结构化错误体有时是-stringified-json导致恢复时间丢失\">2. 429 的结构化错误体有时是 stringified JSON，导致恢复时间丢失</h3>\n<p>原逻辑只稳定处理对象形态的 <code>error.response.data</code>。当上游把错误体塞成字符串时：</p>\n<ul>\n<li><code>usage_limit_reached</code> 识别不稳</li>\n<li><code>resets_at</code> 无法提取</li>\n<li>节点不会进入“带恢复时间的冷却态”</li>\n<li>结果就是“看起来健康，实际下一跳仍然死”</li>\n</ul>\n<h3 id=\"3-401403-以前只累计-errorcount不会立即摘除节点\">3. 401/403 以前只累计 errorCount，不会立即摘除节点</h3>\n<p>这会导致：</p>\n<ul>\n<li>坏 key 仍停留在轮转池里</li>\n<li>debug 视图仍可能显示 <code>isHealthy: true</code></li>\n<li>fallback 重试会继续选到同一类已确定坏掉的节点</li>\n</ul>\n<p>这次明确确认的坏节点：</p>\n<ul>\n<li><code>d0398338-6eb2-4c0d-b0d3-26e7060c68ec</code></li>\n<li>customName: <code>soxio-responses-v1-b</code></li>\n<li>远端直测结果：<code>401 Invalid API key / API key is disabled</code></li>\n</ul>\n<h3 id=\"4-fallback-重试错误复用了第一次-provider-的-request-body\">4. fallback 重试错误复用了第一次 provider 的 request body</h3>\n<p>原主链里，第一次请求如果已经从 OpenAI Responses 形态转换到了 Codex 形态：</p>\n<ul>\n<li>后续 retry/fallback 仍沿用这份已经转换过的 body</li>\n<li>当路由切到 <code>openaiResponses-custom</code> 时，没有按新 <code>route.toProvider</code> 重建 body</li>\n<li>于是会把不适合 Responses 上游的 payload 继续发出去</li>\n</ul>\n<p>这个 bug 会制造出大量“看上去像 key 坏了/协议坏了”的假象。</p>\n<h3 id=\"5-历史-504524-的具体超时点在网关首包门不是-codex-自身统一返回-504\">5. 历史 504/524 的具体超时点在网关首包门，不是 Codex 自身统一返回 504</h3>\n<p>生产日志明确有多次：</p>\n<ul>\n<li><code>Upstream stream did not produce the first chunk within 30000ms.</code></li>\n<li>随后 routing runner 把节点按 <code>524</code> 处理</li>\n</ul>\n<p>关键点在于：</p>\n<ul>\n<li>某些 provider 已经配置了更大的 <code>STREAM_FIRST_CHUNK_TIMEOUT_MS</code></li>\n<li>但网关以前读的是全局 <code>CONFIG</code></li>\n<li>没正确吃到当前选中 provider 的 <code>service.config</code></li>\n</ul>\n<p>结果就是“provider 明明配了 90s，网关还是 30s 先切流”。</p>\n<h2 id=\"代码修复摘要\">代码修复摘要</h2>\n<h3 id=\"a-srccorerouting-runnerjs\">A. <code>src/core/routing-runner.js</code></h3>\n<p>修复点：</p>\n<ul>\n<li>解析 stringified JSON 错误体</li>\n<li>识别 <code>usage_limit_reached</code></li>\n<li>提取 <code>resets_at</code> / <code>resetsAt</code> / rate-limit header</li>\n<li><code>401/403</code> 改为立即 <code>markProviderUnhealthyImmediately(...)</code></li>\n<li><code>429 usage_limit_reached</code> 改为 <code>markProviderUnhealthyWithRecoveryTime(...)</code></li>\n</ul>\n<p>效果：</p>\n<ul>\n<li>quota 型失败不再伪装成普通 transient error</li>\n<li>hard auth failure 不再继续留在 healthy 池里</li>\n</ul>\n<h3 id=\"b-srcprovidersprovider-pool-managerjs\">B. <code>src/providers/provider-pool-manager.js</code></h3>\n<p>修复点：</p>\n<ul>\n<li>健康检查失败结果补 <code>failureKind</code> 与 <code>failureStatusCode</code></li>\n<li>健康检查遇到 <code>AUTH_ERROR</code> 时立即摘除</li>\n<li>Codex health check 默认模型固定为 <code>gpt-5.3-codex</code></li>\n<li>对 Codex 健康检查使用 first-chunk stream probe，而不是弱 list-model 探测</li>\n<li><code>codex</code> 与 <code>openaiResponses</code> 之间视为协议可兼容 fallback</li>\n</ul>\n<p>效果：</p>\n<ul>\n<li>健康状态与真实可用性更接近</li>\n<li>Codex fallback 不再因为协议前缀误判被挡住</li>\n</ul>\n<h3 id=\"c-srcutilscommonjs\">C. <code>src/utils/common.js</code></h3>\n<p>修复点：</p>\n<ul>\n<li>新增 <code>buildProcessedRequestBodyForRoute(...)</code></li>\n<li>每次 retry/fallback 都按当前 <code>route.toProvider</code> 重新：\n<ul>\n<li>转换 request body</li>\n<li>附加内部 metadata</li>\n<li>应用 system prompt</li>\n<li>应用 custom model 参数</li>\n</ul>\n</li>\n<li>stream 首包等待改为读取 <code>service.config || CONFIG</code></li>\n</ul>\n<p>效果：</p>\n<ul>\n<li>不再复用“上一跳 provider 的旧 payload”</li>\n<li>provider 自己的 <code>STREAM_FIRST_CHUNK_TIMEOUT_MS</code> 终于真正生效</li>\n</ul>\n<h3 id=\"d-srcprovidersopenaiopenai-responses-corejs\">D. <code>src/providers/openai/openai-responses-core.js</code></h3>\n<p>修复点：</p>\n<ul>\n<li>补 401/403 上游 detail 日志</li>\n<li>遇到协议/鉴权失败时，不再只打印“可能 key 失效”这种弱日志</li>\n</ul>\n<p>效果：</p>\n<ul>\n<li>后续排障时能更快区分：坏 key、协议不匹配、并发上限、上游规则拒绝</li>\n</ul>\n<h2 id=\"生产-runtime-配置修复\">生产 runtime 配置修复</h2>\n<h3 id=\"1-fallback-chain\">1. fallback chain</h3>\n<p>生产 runtime 的 <code>configs/runtime-overrides.json</code> 需要包含：</p>\n<ul>\n<li><code>openai-codex-oauth -> openaiResponses-custom</code></li>\n</ul>\n<p>若这一条覆盖缺失，即使 routing 代码已支持，也会再次出现：</p>\n<ul>\n<li>Codex 被 quota 冷却后</li>\n<li>fallback 不生效</li>\n<li>直接报 <code>No healthy provider found in pool for openai-codex-oauth</code></li>\n</ul>\n<h3 id=\"2-清理坏节点\">2. 清理坏节点</h3>\n<p>在生产 <code>provider_pools.json</code> 中已处理：</p>\n<ul>\n<li>UUID: <code>d0398338-6eb2-4c0d-b0d3-26e7060c68ec</code></li>\n<li>customName: <code>soxio-responses-v1-b</code></li>\n<li>动作：<code>isDisabled = true</code>，同时置为 unhealthy</li>\n</ul>\n<p>原因：</p>\n<ul>\n<li>已通过远端直测确认其上游返回 <code>401</code></li>\n<li>返回内容明确为 <code>API key is disabled</code></li>\n<li>不应继续进入轮转池制造噪音</li>\n</ul>\n<h3 id=\"3-给慢首包节点补显式超时\">3. 给慢首包节点补显式超时</h3>\n<p>已给下面这个节点补上：</p>\n<ul>\n<li>UUID: <code>be1d6074-3a71-4702-ab53-d07d52512559</code></li>\n<li>customName: <code>soxio-responses-v1</code></li>\n<li>配置：<code>STREAM_FIRST_CHUNK_TIMEOUT_MS = 90000</code></li>\n</ul>\n<p>目的：</p>\n<ul>\n<li>即便上游首个 token/事件比较慢，也不应再被 30s 默认门误杀</li>\n</ul>\n<h2 id=\"验证过程与证据\">验证过程与证据</h2>\n<h3 id=\"本地测试\">本地测试</h3>\n<p>已通过的针对性测试包括：</p>\n<ul>\n<li><code>tests/routing-runner.unit.test.js</code></li>\n<li><code>tests/provider-pool-manager-health.unit.test.js</code></li>\n<li><code>tests/stream-midflight-stall.unit.test.js</code></li>\n<li>以及先前已通过的 fallback / service-manager / overlay 测试集</li>\n</ul>\n<p>关键新增覆盖：</p>\n<ul>\n<li>stringified quota payload 也能提取 recovery time</li>\n<li>401 auth failure 立即摘除</li>\n<li>startup health check 能直接打掉 auth-failing provider</li>\n<li>stream first chunk timeout 会优先读取所选 service 的 provider-level override</li>\n</ul>\n<h3 id=\"生产部署时间\">生产部署时间</h3>\n<ul>\n<li>服务：<code>token-pool-gateway-prod.service</code></li>\n<li>一次关键重启：<code>2026-04-28 14:22:41 CST</code></li>\n<li>后续 provider pool 调整重启：<code>2026-04-28 14:26:47 CST</code></li>\n</ul>\n<h3 id=\"live-验证结果\">live 验证结果</h3>\n<h4 id=\"a-codex-路由验证\">A. Codex 路由验证</h4>\n<p>生产 runtime 直测：</p>\n<ul>\n<li><code>POST http://127.0.0.1:3301/openai-codex-oauth/v1/responses</code></li>\n<li><code>model = gpt-5.3-codex</code></li>\n<li>结果：<code>200</code></li>\n</ul>\n<p>说明：</p>\n<ul>\n<li>Codex 主链已经不再卡死在“429 后假健康 / 假 dead-end”状态</li>\n</ul>\n<h4 id=\"b-publicmain-route-验证\">B. Public/main route 验证</h4>\n<p>生产 runtime 直测：</p>\n<ul>\n<li><code>POST http://127.0.0.1:3301/v1/responses</code></li>\n<li><code>model = gpt-5.3-codex</code> -> <code>200</code></li>\n<li><code>model = gpt-5.4</code> -> <code>200</code></li>\n</ul>\n<p>说明：</p>\n<ul>\n<li>Codex 路由、Responses fallback、主入口三者已重新接通</li>\n</ul>\n<h4 id=\"c-慢首包场景验证\">C. 慢首包场景验证</h4>\n<p>针对 <code>openaiResponses-custom</code> 直连做了 6 次连续请求压测：</p>\n<ul>\n<li>路径：<code>POST http://127.0.0.1:3301/openaiResponses-custom/v1/responses</code></li>\n<li>模型：<code>gpt-5.4</code></li>\n<li>结果：6/6 成功，全部 <code>200</code></li>\n<li>单次耗时约：<code>1.9s ~ 2.7s</code></li>\n</ul>\n<p>同时检查 journal：</p>\n<ul>\n<li>6 次请求全部命中 <code>be1d6074-3a71-4702-ab53-d07d52512559</code></li>\n<li>没再出现 <code>d0398338-6eb2-4c0d-b0d3-26e7060c68ec</code></li>\n<li>没再出现 <code>Upstream stream did not produce the first chunk within 30000ms.</code></li>\n<li>没再出现 <code>524/504</code> 首包门误杀</li>\n</ul>\n<h2 id=\"这次修复最值得记住的经验\">这次修复最值得记住的经验</h2>\n<ol>\n<li>\n<p><code>429</code> 不能只看 status code，要看语义字段</p>\n<ul>\n<li><code>usage_limit_reached</code> 和普通 burst rate limit 不是一回事</li>\n<li>前者应该进入 cooldown，最好带 recovery time</li>\n</ul>\n</li>\n<li>\n<p>“debug 里 healthy” 不等于真实健康</p>\n<ul>\n<li>如果 401/403 还靠累计 errorCount 才摘除，debug 会长期撒谎</li>\n</ul>\n</li>\n<li>\n<p>retry/fallback 绝不能复用上一个 provider 的已转换 request body</p>\n<ul>\n<li>这类 bug 会伪造出大量跨协议异常</li>\n<li>表面像 key 坏了，本质是 request shape 错了</li>\n</ul>\n</li>\n<li>\n<p>网关自己的 timeout 门比上游 timeout 更危险</p>\n<ul>\n<li>如果 provider 已经显式配置了更大的首包等待时间</li>\n<li>网关必须读取当前 provider 的 runtime config，而不是只看全局默认值</li>\n</ul>\n</li>\n<li>\n<p>远端 live 验证不能只看一条 <code>200</code></p>\n<ul>\n<li>至少要同时验证：\n<ul>\n<li>direct provider route</li>\n<li>main <code>/v1/responses</code> route</li>\n<li>debug/provider snapshot</li>\n<li>journal 中真实选中的 provider 与 error chain</li>\n</ul>\n</li>\n</ul>\n</li>\n</ol>\n<h2 id=\"后续运维建议\">后续运维建议</h2>\n<ol>\n<li>\n<p>对所有 <code>openaiResponses-custom</code> 节点补 machine-readable 能力标签</p>\n<ul>\n<li>明确哪个节点支持 <code>gpt-5.3-codex</code></li>\n<li>明确哪个节点需要大于 30s 的首包窗口</li>\n</ul>\n</li>\n<li>\n<p>对 hard auth failure 建立自动熔断/自动 disable 策略</p>\n<ul>\n<li>例如连续一次明确 <code>API key is disabled</code> 即直接 <code>isDisabled = true</code></li>\n<li>避免重复进入轮转池</li>\n</ul>\n</li>\n<li>\n<p>对 quota recovery 建立 debug 可见字段</p>\n<ul>\n<li>例如在 provider debug 视图中直接显示 <code>scheduledRecoveryTime</code></li>\n<li>让“冷却中”与“健康”一眼可分</li>\n</ul>\n</li>\n<li>\n<p>保留这次排障顺序作为固定 SOP</p>\n<ul>\n<li>先确认真实上游状态码与 body</li>\n<li>再看 routing health semantics</li>\n<li>再看 retry/fallback 是否复用了错误请求体</li>\n<li>最后看网关本地 timeout / proxy / first chunk gate</li>\n</ul>\n</li>\n</ol>\n<h2 id=\"本次涉及的关键节点--路径\">本次涉及的关键节点 / 路径</h2>\n<ul>\n<li>生产 host：<code>170.106.179.226</code></li>\n<li>生产 runtime：<code>/srv/token-pool-gateway-prod</code></li>\n<li>服务：<code>token-pool-gateway-prod.service</code></li>\n<li>坏节点（已禁用）：<code>d0398338-6eb2-4c0d-b0d3-26e7060c68ec</code></li>\n<li>慢首包节点（已补超时）：<code>be1d6074-3a71-4702-ab53-d07d52512559</code></li>\n<li>Codex 节点：<code>c52e1160-02ba-48ee-9ee8-978ffc062164</code></li>\n</ul>\n<h2 id=\"当前状态\">当前状态</h2>\n<ul>\n<li>deploy decision: <code>deployed</code></li>\n<li>live verification: <code>passed</code></li>\n<li>当前结论：这轮 Codex OAuth 断流 / 假健康 / fallback 假异常 / 首包 504 误杀链路已完成治本修复。</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "token-pool-codex-oauth-断流-假健康与首包超时修复记录-2026-04-28",
+        "text": "Token Pool / Codex OAuth 断流、假健康与首包超时修复记录（2026-04-28）"
+      },
+      {
+        "depth": 2,
+        "slug": "结论",
+        "text": "结论"
+      },
+      {
+        "depth": 2,
+        "slug": "现场症状",
+        "text": "现场症状"
+      },
+      {
+        "depth": 2,
+        "slug": "已确认的根因",
+        "text": "已确认的根因"
+      },
+      {
+        "depth": 3,
+        "slug": "1-codex-oauth-真实失败不是-token-过期-而是-quota-用尽",
+        "text": "1. Codex OAuth 真实失败不是 token 过期，而是 quota 用尽"
+      },
+      {
+        "depth": 3,
+        "slug": "2-429-的结构化错误体有时是-stringified-json-导致恢复时间丢失",
+        "text": "2. 429 的结构化错误体有时是 stringified JSON，导致恢复时间丢失"
+      },
+      {
+        "depth": 3,
+        "slug": "3-401-403-以前只累计-errorcount-不会立即摘除节点",
+        "text": "3. 401/403 以前只累计 errorCount，不会立即摘除节点"
+      },
+      {
+        "depth": 3,
+        "slug": "4-fallback-重试错误复用了第一次-provider-的-request-body",
+        "text": "4. fallback 重试错误复用了第一次 provider 的 request body"
+      },
+      {
+        "depth": 3,
+        "slug": "5-历史-504-524-的具体超时点在网关首包门-不是-codex-自身统一返回-504",
+        "text": "5. 历史 504/524 的具体超时点在网关首包门，不是 Codex 自身统一返回 504"
+      },
+      {
+        "depth": 2,
+        "slug": "代码修复摘要",
+        "text": "代码修复摘要"
+      },
+      {
+        "depth": 3,
+        "slug": "a-src-core-routing-runner-js",
+        "text": "A. `src/core/routing-runner.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "b-src-providers-provider-pool-manager-js",
+        "text": "B. `src/providers/provider-pool-manager.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "c-src-utils-common-js",
+        "text": "C. `src/utils/common.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "d-src-providers-openai-openai-responses-core-js",
+        "text": "D. `src/providers/openai/openai-responses-core.js`"
+      },
+      {
+        "depth": 2,
+        "slug": "生产-runtime-配置修复",
+        "text": "生产 runtime 配置修复"
+      },
+      {
+        "depth": 3,
+        "slug": "1-fallback-chain",
+        "text": "1. fallback chain"
+      },
+      {
+        "depth": 3,
+        "slug": "2-清理坏节点",
+        "text": "2. 清理坏节点"
+      },
+      {
+        "depth": 3,
+        "slug": "3-给慢首包节点补显式超时",
+        "text": "3. 给慢首包节点补显式超时"
+      },
+      {
+        "depth": 2,
+        "slug": "验证过程与证据",
+        "text": "验证过程与证据"
+      },
+      {
+        "depth": 3,
+        "slug": "本地测试",
+        "text": "本地测试"
+      },
+      {
+        "depth": 3,
+        "slug": "生产部署时间",
+        "text": "生产部署时间"
+      },
+      {
+        "depth": 3,
+        "slug": "live-验证结果",
+        "text": "live 验证结果"
+      },
+      {
+        "depth": 2,
+        "slug": "这次修复最值得记住的经验",
+        "text": "这次修复最值得记住的经验"
+      },
+      {
+        "depth": 2,
+        "slug": "后续运维建议",
+        "text": "后续运维建议"
+      },
+      {
+        "depth": 2,
+        "slug": "本次涉及的关键节点-路径",
+        "text": "本次涉及的关键节点 / 路径"
+      },
+      {
+        "depth": 2,
+        "slug": "当前状态",
+        "text": "当前状态"
+      }
+    ],
+    "detailPath": "articles/md_21922201927c.json"
+  }
+}

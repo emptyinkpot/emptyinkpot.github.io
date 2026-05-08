@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_fcbb0591d1df",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82%E6%95%B4%E7%90%86.md",
+    "sourcePath": "/home/vault/Obsidian/docs/格式要求整理.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/格式要求整理.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82%E6%95%B4%E7%90%86.md",
+    "slug": "格式要求整理",
+    "title": "格式要求整理",
+    "summary": "毕业论文格式要求整理 以下内容是从 刘高朋 毕业论文.docx 中提取出的学校模板要求与正文结构线索。 学校模板要求 中文题目：黑体小二号加黑居中 中文“摘要”：黑体三号加黑居中 中文摘要正文：不少于 500 字，宋体小四 关键词：3 到 5 个 英文标题：英文对应标题，要求居中 Abstract：...",
+    "description": "毕业论文格式要求整理 以下内容是从 刘高朋 毕业论文.docx 中提取出的学校模板要求与正文结构线索。 学校模板要求 中文题目：黑体小二号加黑居中 中文“摘要”：黑体三号加黑居中 中文摘要正文：不少于 500 字，宋体小四 关键词：3 到 5 个 英文标题：英文对应标题，要求居中 Abstract：...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "形态-规范"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/格式要求整理.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/格式要求整理.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82%E6%95%B4%E7%90%86.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "格式要求整理",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "形态 规范",
+        "格式要求整理"
+      ],
+      "subtitle": "毕业论文格式要求整理 以下内容是从 刘高朋 毕业论文.docx 中提取出的学校模板要求与正文结构线索。 学校模板要求 中文题目：黑体小二号加黑居中 中文“摘要”：黑体三号加黑居中 中文摘要正文：不少于 500 字，宋体小四 关键词：3 到 5 个 英文标题：英文对应标题，要求居中 Abstract：..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 毕业论文格式要求整理\n\n以下内容是从 `刘高朋_毕业论文.docx` 中提取出的学校模板要求与正文结构线索。\n\n### 学校模板要求\n\n- 中文题目：黑体小二号加黑居中\n- 中文“摘要”：黑体三号加黑居中\n- 中文摘要正文：不少于 500 字，宋体小四\n- 关键词：3 到 5 个\n- 英文标题：英文对应标题，要求居中\n- `Abstract`：Times New Roman 三号加黑居中\n- 英文摘要正文：Times New Roman 小四\n- 页眉：统一使用“华北水利水电大学毕业设计”或“华北水利水电大学毕业论文”，宋体小五号居中\n- 页脚：仅显示页码，宋体小五号居中\n- 正文总字数：不少于 1.5 万字\n- 正文主文字体：宋体小四\n- 行距：1.5 倍行距\n- 每一章另起页\n\n### 标题层级要求\n\n- 一级标题：`第1章`\n  - 三号黑体，标题占 2 行，居中\n- 二级标题：`1.1`\n  - 小三号黑体，段前 6 磅，段后 6 磅\n- 三级标题：`1.1.1`\n  - 四号黑体，段前 3 磅，段后 3 磅\n- 正文最多使用三级标题\n\n### 图表和公式要求\n\n- 图、表、公式按章编号\n- 公式单独成行，编号右对齐\n- 图表标题统一使用五号宋体\n- 图题放在图下方\n- 表题放在表上方\n- 图表应放在正文首次提及处附近\n\n### 当前论文内容结构线索\n\n- 第 1 章：绪论\n- 第 2 章：系统设计\n- 第 3 章：硬件电路设计\n- 第 4 章：软件算法设计\n- 后续还有参考文献、致谢、附录模板要求\n\n### 当前转换结果观察\n\n- 转换出的 Markdown 总行数约 271 行\n- 提取出图片资源 12 个\n- Markdown 中存在 3 处图片引用\n- Markdown 中存在表格结构\n- 原文档中很多“格式要求说明”也保留在正文里，说明这份 docx 更像“模板 + 已填写内容”的混合稿\n\n### 转换注意点\n\n- `Pandoc` 能稳定提取正文、表格和图片\n- Word 中复杂页眉页脚、精确字号、部分下划线和封面排版，转换到 Markdown 后不会完整保真\n- 公式在当前文档里主要被抽成图片引用\n- 反向转回 docx 时，建议始终使用原始论文作为 `reference-doc`",
+    "html": "<h2 id=\"毕业论文格式要求整理\">毕业论文格式要求整理</h2>\n<p>以下内容是从 <code>刘高朋_毕业论文.docx</code> 中提取出的学校模板要求与正文结构线索。</p>\n<h3 id=\"学校模板要求\">学校模板要求</h3>\n<ul>\n<li>中文题目：黑体小二号加黑居中</li>\n<li>中文“摘要”：黑体三号加黑居中</li>\n<li>中文摘要正文：不少于 500 字，宋体小四</li>\n<li>关键词：3 到 5 个</li>\n<li>英文标题：英文对应标题，要求居中</li>\n<li><code>Abstract</code>：Times New Roman 三号加黑居中</li>\n<li>英文摘要正文：Times New Roman 小四</li>\n<li>页眉：统一使用“华北水利水电大学毕业设计”或“华北水利水电大学毕业论文”，宋体小五号居中</li>\n<li>页脚：仅显示页码，宋体小五号居中</li>\n<li>正文总字数：不少于 1.5 万字</li>\n<li>正文主文字体：宋体小四</li>\n<li>行距：1.5 倍行距</li>\n<li>每一章另起页</li>\n</ul>\n<h3 id=\"标题层级要求\">标题层级要求</h3>\n<ul>\n<li>一级标题：<code>第1章</code>\n<ul>\n<li>三号黑体，标题占 2 行，居中</li>\n</ul>\n</li>\n<li>二级标题：<code>1.1</code>\n<ul>\n<li>小三号黑体，段前 6 磅，段后 6 磅</li>\n</ul>\n</li>\n<li>三级标题：<code>1.1.1</code>\n<ul>\n<li>四号黑体，段前 3 磅，段后 3 磅</li>\n</ul>\n</li>\n<li>正文最多使用三级标题</li>\n</ul>\n<h3 id=\"图表和公式要求\">图表和公式要求</h3>\n<ul>\n<li>图、表、公式按章编号</li>\n<li>公式单独成行，编号右对齐</li>\n<li>图表标题统一使用五号宋体</li>\n<li>图题放在图下方</li>\n<li>表题放在表上方</li>\n<li>图表应放在正文首次提及处附近</li>\n</ul>\n<h3 id=\"当前论文内容结构线索\">当前论文内容结构线索</h3>\n<ul>\n<li>第 1 章：绪论</li>\n<li>第 2 章：系统设计</li>\n<li>第 3 章：硬件电路设计</li>\n<li>第 4 章：软件算法设计</li>\n<li>后续还有参考文献、致谢、附录模板要求</li>\n</ul>\n<h3 id=\"当前转换结果观察\">当前转换结果观察</h3>\n<ul>\n<li>转换出的 Markdown 总行数约 271 行</li>\n<li>提取出图片资源 12 个</li>\n<li>Markdown 中存在 3 处图片引用</li>\n<li>Markdown 中存在表格结构</li>\n<li>原文档中很多“格式要求说明”也保留在正文里，说明这份 docx 更像“模板 + 已填写内容”的混合稿</li>\n</ul>\n<h3 id=\"转换注意点\">转换注意点</h3>\n<ul>\n<li><code>Pandoc</code> 能稳定提取正文、表格和图片</li>\n<li>Word 中复杂页眉页脚、精确字号、部分下划线和封面排版，转换到 Markdown 后不会完整保真</li>\n<li>公式在当前文档里主要被抽成图片引用</li>\n<li>反向转回 docx 时，建议始终使用原始论文作为 <code>reference-doc</code></li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "毕业论文格式要求整理",
+        "text": "毕业论文格式要求整理"
+      },
+      {
+        "depth": 3,
+        "slug": "学校模板要求",
+        "text": "学校模板要求"
+      },
+      {
+        "depth": 3,
+        "slug": "标题层级要求",
+        "text": "标题层级要求"
+      },
+      {
+        "depth": 3,
+        "slug": "图表和公式要求",
+        "text": "图表和公式要求"
+      },
+      {
+        "depth": 3,
+        "slug": "当前论文内容结构线索",
+        "text": "当前论文内容结构线索"
+      },
+      {
+        "depth": 3,
+        "slug": "当前转换结果观察",
+        "text": "当前转换结果观察"
+      },
+      {
+        "depth": 3,
+        "slug": "转换注意点",
+        "text": "转换注意点"
+      }
+    ],
+    "detailPath": "articles/md_fcbb0591d1df.json"
+  }
+}

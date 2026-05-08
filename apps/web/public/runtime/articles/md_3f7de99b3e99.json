@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_3f7de99b3e99",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E6%B8%B8%E6%88%8F/Lex%20Universalis%20%E9%A1%B9%E7%9B%AE%E4%BC%81%E5%88%92%E4%B9%A6%EF%BC%88Godot%EF%BC%89_v1_2026_5_3.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/游戏/Lex Universalis 项目企划书（Godot）_v1_2026_5_3.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/游戏/Lex Universalis 项目企划书（Godot）_v1_2026_5_3.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%B8%B8%E6%88%8F/Lex%20Universalis%20%E9%A1%B9%E7%9B%AE%E4%BC%81%E5%88%92%E4%B9%A6%EF%BC%88Godot%EF%BC%89_v1_2026_5_3.md",
+    "slug": "blog-游戏-lex-universalis-项目企划书-godot-v1-2026-5-3",
+    "title": "Lex Universalis 项目企划书（Godot）",
+    "summary": "Lex Universalis 项目企划书（Godot） 这份企划书是我作为 Lex Universalis 项目提出者，对这款 PvE 优先、未来可推导 PvP 的卡牌肉鸽游戏做出的初版规划。它不是外部资料整理，也不是单纯的技术备忘，而是我希望团队后续可以直接围绕它讨论分工、确定 Demo 边界、...",
+    "description": "Lex Universalis 项目企划书（Godot） 这份企划书是我作为 Lex Universalis 项目提出者，对这款 PvE 优先、未来可推导 PvP 的卡牌肉鸽游戏做出的初版规划。它不是外部资料整理，也不是单纯的技术备忘，而是我希望团队后续可以直接围绕它讨论分工、确定 Demo 边界、...",
+    "date": "2026-05-03",
+    "updated": "2026-05-03",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "类-产品方案",
+      "形态-企划书",
+      "Godot",
+      "卡牌肉鸽",
+      "游戏设计",
+      "团队分工",
+      "blog",
+      "游戏"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "游戏"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "游戏"
+      ],
+      "explicitTags": [
+        "类-产品方案",
+        "形态-企划书"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/游戏/Lex Universalis 项目企划书（Godot）_v1_2026_5_3.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/游戏/Lex Universalis 项目企划书（Godot）_v1_2026_5_3.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%B8%B8%E6%88%8F/Lex%20Universalis%20%E9%A1%B9%E7%9B%AE%E4%BC%81%E5%88%92%E4%B9%A6%EF%BC%88Godot%EF%BC%89_v1_2026_5_3.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Lex Universalis 项目企划书（Godot） v1",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "类 产品方案",
+        "形态 企划书",
+        "GODOT",
+        "卡牌肉鸽",
+        "游戏设计"
+      ],
+      "subtitle": "Lex Universalis 项目企划书（Godot） 这份企划书是我作为 Lex Universalis 项目提出者，对这款 PvE 优先、未来可推导 PvP 的卡牌肉鸽游戏做出的初版规划。它不是外部资料整理，也不是单纯的技术备忘，而是我希望团队后续可以直接围绕它讨论分工、确定 Demo 边界、..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Lex Universalis 项目企划书（Godot）\n\n这份企划书是我作为 `Lex Universalis` 项目提出者，对这款 PvE 优先、未来可推导 PvP 的卡牌肉鸽游戏做出的初版规划。它不是外部资料整理，也不是单纯的技术备忘，而是我希望团队后续可以直接围绕它讨论分工、确定 Demo 边界、拆开发任务的项目说明书。\n\n`Lex Universalis` 的当前项目地址是：[https://github.com/emptyinkpot/Lex-Universalis](https://github.com/emptyinkpot/Lex-Universalis)。我把它规划为一款基于 Godot 4.x 开发的卡牌肉鸽。玩法主骨架参考《杀戮尖塔》，但战斗内核会更接近“玩家 vs AI 玩家”：双方都拥有卡组、手牌、能量和出牌流程。我的优先级不是一开始做完整 PvP，而是先做出一套能跑通、能扩展、能验证乐趣的“双方同规则打牌”的 PvE Demo。\n\n一句话定位：\n\n> 我想先做出一套干净的 Actor 统一抽象 + 状态机 + 数据驱动 + 可扩展效果系统，让 PvP 将来可以从 PvE 自然推导出来。\n\n## 目录\n\n1. [人员分配与项目组织](#一人员分配与项目组织)\n2. [项目概述](#二项目概述)\n3. [玩法定位与融合策略](#三玩法定位与融合策略)\n4. [核心系统设计](#四核心系统设计)\n5. [技术路线与工程结构](#五技术路线与工程结构)\n6. [版本边界与 MVP](#六版本边界与-mvp)\n7. [按完成度推进的开发计划](#七按完成度推进的开发计划)\n8. [协作机制与验收节点](#八协作机制与验收节点)\n9. [参考源码与拆解方向](#九参考源码与拆解方向)\n10. [风险控制与避坑清单](#十风险控制与避坑清单)\n11. [结论与后续文档](#十一结论与后续文档)\n\n---\n\n## 一、人员分配与项目组织\n\n### 1.1 组织原则\n\n我不打算把 `Lex Universalis` 按大厂式重型流程来组织。它更适合做成一个高密度小团队项目：人数不多，但每个人都有明确的负责范围。团队成员可以一人多职，但不能所有人都只参与一点边角工作。制作决策、技术架构、战斗系统和视觉方向必须有稳定 owner。\n\n我会按下面几条原则组织团队：\n\n1. 项目主文档以职位为主，不先写死具体人名。\n2. 每个人都要有主职责和副职责。\n3. 每人约 `70%` 时间投入主职责，`30%` 时间承担副职责。\n4. 每个阶段必须有可试玩版本，不能只停留在讨论和材料整理。\n\n在 GDD / TDD / 企划书里，我会写 `Producer / Game Director`、`Tech Lead`、`Combat Systems Engineer`、`UI Designer` 这类职位。真实成员对应哪个职位，可以在下面的人员姓名列或内部映射表里填写。这样后续如果人员调整，项目结构本身不用跟着重写。\n\n### 1.2 计划团队结构（8 人）\n\n| 职务                                       | 负责人员 | 人数  | 主职责                       | 关键产出               |\n| ---------------------------------------- | ---- | --- | ------------------------- | ------------------ |\n| Producer / Game Director / Final Owner   | 刘高朋  | 1   | 项目方向、功能优先级、版本决策、节奏控制、最终拍板 | 版本目标、功能取舍、里程碑验收    |\n| Tech Lead / Core Architect               | 万林炜  | 1   | 技术架构、系统拆分、风险控制、代码主链把关     | 架构骨架、核心接口、技术规范     |\n| Art Director / Visual Owner              | 王元   | 1   | 视觉方向、风格统一、关键资源把关          | UI 风格、关键卡面、视觉基调    |\n| Combat Systems Engineer                  | 申林昊  | 1   | 卡牌系统、战斗流程、效果结算            | 战斗主循环、目标选择、结算链路    |\n| Systems / Framework Engineer             | 殷丹阳  | 1   | 数据驱动、事件系统、存档、工具链          | 资源读取、事件系统、存档和调试工具  |\n| UI / Gameplay Engineer                   | 周桐宇  | 1   | 手牌交互、目标选择、战斗 UI           | 卡牌交互、HUD、基础反馈      |\n| Map / Flow Engineer                      | 刘高朋  | 1   | 地图节点、场景切换、奖励流程            | 地图推进、战后奖励、状态流转     |\n| Systems / Balance Designer               | 秦硕   | 1   | 战斗机制、数值模型、敌人行为、Buff 逻辑    | 数值表、敌人模板、机制说明      |\n| Narrative / Content / UI Visual Designer | 任元丰  | 1   | 世界观、卡牌描述、事件文本、界面视觉执行      | 事件文本、卡牌描述、卡牌模板、图标集 |\n\n如果实际团队严格只有 8 人，我会让 `Producer / Game Director` 兼任 `Art Director / Visual Owner`，或者让 `Narrative / Content Designer` 兼任一部分 UI 视觉执行。我的重点不是把职位数凑得很完整，而是保证每个核心模块都有人真正负责。\n\n程序组我倾向于拆成：\n\n```text\n1 个核心战斗\n+ 1 个框架架构\n+ 2 个功能实现\n```\n\n### 1.3 按职务拆解的 ownership\n\n#### Producer / Game Director\n\n这个角色负责项目方向和最终体验。我会让它承担版本边界、优先级、阶段试玩验收和功能取舍，尤其要负责决定哪些内容暂时不做。\n\n#### Tech Lead\n\n这个角色负责主架构和技术边界。我会让它守住数据驱动、逻辑/UI 解耦、核心模块接口和系统耦合风险。\n\n#### Combat Systems Engineer\n\n这个角色负责战斗主链路，包括卡牌播放、目标选择、结算顺序，以及伤害、防御、抽牌、召唤等效果调用链。\n\n#### Systems / Framework Engineer\n\n这个角色负责底层支撑，包括事件系统、数据读取、存档、调试工具和资源组织。\n\n#### UI / Gameplay Engineer\n\n这个角色负责战斗界面的可用性，包括手牌展示、hover / 拖拽 / 点击交互、目标反馈和基础表现。\n\n#### Map / Flow Engineer\n\n这个角色负责战斗外流程，包括地图生成、节点跳转、战后奖励、场景切换和状态保存。\n\n#### Systems / Balance Designer\n\n这个角色负责卡牌数值表、敌人模板、状态效果规则和难度曲线。\n\n#### Narrative / Content / UI Visual Designer\n\n这个角色负责卡牌描述、事件文本、世界观设定、UI 文案、卡牌排版和玩家反馈语气。\n\n---\n\n## 二、项目概述\n\n### 2.1 项目目标\n\n我希望 `Lex Universalis` 的第一目标是做出一个 3 个月内可展示、可试玩的完整 Demo。这个 Demo 不追求商业版内容量，而是要证明三件事：\n\n- 双方都能按同一套规则抽牌、获得能量、出牌和结算。\n- 敌人不只是脚本怪，而是 AI 控制的规则玩家。\n- 技术骨架足够干净，后续可以扩展到卡组构筑、肉鸽外壳，甚至 PvP，而不是 Demo 做完就推倒重来。\n\n### 2.2 项目类型\n\n我把项目类型定为：\n\n- **游戏名称**：`Lex Universalis`\n- **项目仓库**：[https://github.com/emptyinkpot/Lex-Universalis](https://github.com/emptyinkpot/Lex-Universalis)\n- **类型**：PvE 优先的卡牌肉鸽，后期保留 PvP 推导空间\n- **战斗形式**：回合制\n- **核心循环**：玩家回合出牌、敌人 AI 回合出牌、双方结算、胜负判定\n- **目标体验**：先验证“玩家 vs AI 玩家”的双方打牌是否好玩，再扩展卡组构筑、地图推进和特色机制\n\n### 2.3 技术选择\n\n我计划优先使用 Godot 4.x。\n\n选择 Godot 的原因是：\n\n- GDScript 2.0 适合快速写系统原型。\n- `Resource` 很适合描述卡牌、效果、敌人和遗物。\n- `Control` UI 系统足够支撑手牌、HUD、目标选择和战斗界面。\n- 项目规模适合中小团队，不需要一开始引入更重的商业引擎工作流。\n\n---\n\n## 三、玩法定位与融合策略\n\n### 3.1 基础玩法定位\n\n我会把 `Lex Universalis` 的第一阶段定位成：\n\n- PvE 优先。\n- 回合制战斗。\n- 玩家和敌人都拥有卡组、手牌、能量和出牌流程。\n- 敌人由 AI 控制，但底层结构和玩家一致。\n- 后续再加入卡组构筑、地图推进、Boss 和特色机制。\n\n这里的关键不是“一开始做 PvP”，而是先做“双方都按同一套规则打牌的 PvE”。换句话说，我现在要做的不是完整玩家对战，而是让敌人也打牌。\n\n### 3.2 PvP 的正确位置\n\n我会把 PvP 设计成从 PvE 推导出来的后期形态，而不是和 PvE 同时开工。\n\n项目会按三层推进：\n\n1. **层 1：玩家 vs 规则驱动敌人**  \n   敌人先有卡组、手牌和基础 AI，但决策可以很简单。\n\n2. **层 2：玩家 vs 完整规则玩家**  \n   敌人拥有和玩家一样的卡组结构、能量、抽牌、打牌逻辑，本质是“AI 控制的另一个玩家”。\n\n3. **层 3：真正 PvP**  \n   等前两层稳定后，再考虑联机、异步对战、匹配、同步、回放等问题。\n\n这个顺序能把复杂度控制住。PvP 的本质会变成控制权切换：`Player = Actor（人操作）`，`Enemy = Actor（AI 操作）`，未来的 `RemotePlayer = Actor（远端玩家操作）`。\n\n### 3.3 融合方式\n\n我不会把《杀戮尖塔》《炉石》《邪恶铭刻》平均混在一起。我的融合顺序是：\n\n- **主骨架**：`杀戮尖塔`\n- **战斗扩展**：双方同规则打牌 + 目标选择\n- **风味增强**：`邪恶铭刻` 的献祭、卡牌进化、叙事感\n\n具体执行上，我会先保留《杀戮尖塔》的战斗节奏，但把敌人从“写死行为”升级为“AI 控制的规则玩家”。单位、献祭、进化这些差异化机制后置，等双方打牌的基础战斗成立后再加。\n\n### 3.4 我会保留和后置的元素\n\n《杀戮尖塔》侧，我会保留：\n\n- 能量系统。\n- 抽牌 / 弃牌 / 牌库循环。\n- 回合制节奏。\n- 战后奖励和地图推进，但不进入最小 MVP。\n\n对战结构侧，我会先保留：\n\n- `Actor` 统一抽象。\n- 双方卡组、手牌、能量、出牌。\n- 极简敌人 AI。\n- 目标选择。\n\n这些内容后置：\n\n- 单位系统。\n- 献祭机制。\n- 卡牌进化。\n- 元叙事事件。\n- 永久性卡牌变化。\n\n后置不代表不做，而是不能压过当前第一目标：验证“双方都能打牌”的战斗是否好玩。\n\n---\n\n## 四、核心系统设计\n\n### 4.1 Actor 统一抽象\n\n我会把 `Actor` 作为战斗系统最核心的抽象。玩家和敌人都不是两套系统，而是同一种规则实体，只是控制方式不同。\n\n```gdscript\nclass_name Actor\n\nvar deck: Array[CardData]\nvar hand: Array[CardData]\nvar discard_pile: Array[CardData]\nvar energy: int\nvar hp: int\nvar max_hp: int\n\nfunc draw(amount: int) -> void:\n    pass\n\nfunc can_play(card: CardData) -> bool:\n    return energy >= card.cost\n\nfunc play_card(card: CardData, target: Actor, context) -> void:\n    pass\n```\n\n在这个模型下：\n\n```text\nPlayer = Actor（人操作）\nEnemy = Actor（AI 操作）\nFuture PvP Player = Actor（远端玩家操作）\n```\n\n这一步决定 `Lex Universalis` 后续能不能自然扩展到 PvP、回放、AI 调参和多种对战模式。如果我一开始把 `Player` 和 `Enemy` 写成两套逻辑，后面做 PvP 会变成重写战斗系统。\n\n### 4.2 卡牌数据\n\n我会把卡牌做成资源对象，而不是把卡牌数值和效果写死在代码里。\n\n```gdscript\nextends Resource\nclass_name CardData\n\n@export var id: String\n@export var name: String\n@export var cost: int\n@export var description: String\n@export var effects: Array[EffectData]\n@export var target_type: int\n```\n\n每张卡牌至少要描述：\n\n- `cost`\n- `effect`\n- `target`\n- 关键词 / 标签\n- 稀有度、升级态等扩展字段\n\n### 4.3 效果系统\n\n效果系统是我最优先保证干净的部分。我不打算把卡牌逻辑写成大量 `if/else`，而是让不同效果各自实现 `apply`。\n\n```gdscript\nextends Resource\nclass_name EffectData\n\nfunc apply(source, target, context):\n    pass\n```\n\n例如：\n\n```gdscript\nclass_name DamageEffect\nextends EffectData\n\n@export var amount: int\n\nfunc apply(source, target, context):\n    target.take_damage(amount)\n```\n\n以后无论是伤害、护甲、抽牌、上毒、多段攻击、召唤单位还是献祭触发，都可以沿这个方向继续扩展。\n\n### 4.4 实体系统\n\n`Actor` 负责“谁在打牌”，`Entity` 负责“谁能承受伤害或拥有生命”。第一版里玩家和敌人可以直接作为 `Actor` 参与战斗；如果后面加入单位系统，单位也可以共享实体能力。\n\n```gdscript\nclass_name Entity\n\nvar hp: int\nvar max_hp: int\n\nfunc take_damage(amount: int) -> void:\n    hp -= amount\n```\n\n在此基础上再分：\n\n- `Player`\n- `Enemy`\n- `Unit`\n\n第一版不会优先做复杂 `Unit`，但我会保留这个方向，避免后续引入单位时和当前战斗模型冲突。\n\n### 4.5 战斗状态机\n\n我会尽早建立 `BattleManager`，不把战斗流程散落在 UI 或卡牌脚本里。\n\n```gdscript\nenum BattleState {\n    START,\n    PLAYER_TURN,\n    ENEMY_TURN,\n    RESOLVE,\n    END\n}\n```\n\n`BattleManager` 负责：\n\n- 双方开局抽牌。\n- 当前 Actor 回合控制。\n- 出牌校验。\n- 结束回合。\n- 敌人 AI 行动。\n- 持续效果结算。\n- 胜负判定。\n\n基础循环先定为：\n\n```text\nStart Battle\n→ Player Actor Draw\n→ Player Turn: play cards\n→ End Player Turn\n→ Enemy Actor Draw\n→ Enemy AI Turn: play cards\n→ Resolve Status / Buff\n→ Next Round\n```\n\n这套循环看起来仍是 PvE，但底层已经是“两个 Actor 轮流按同一规则打牌”。这就是后续 PvP 的基础。\n\n### 4.6 敌人 AI\n\n第一版敌人 AI 不做复杂。它只需要证明“敌人也能用卡组打牌”。\n\nMVP AI 规则：\n\n```text\n按手牌顺序扫描\n→ 找到第一张当前能量足够的牌\n→ 选择合法目标\n→ 打出\n→ 重复，直到没有可打牌或选择结束\n```\n\n后续 AI 再逐步增加：\n\n- 低血量优先防御。\n- 玩家低血量优先攻击。\n- 能量利用率更高的出牌顺序。\n- 毒、抽牌、多段攻击等策略权重。\n\n### 4.7 事件系统\n\n我会预留事件系统，因为后续 buff、触发技、连锁效果、抽牌触发、单位死亡触发都会依赖它。\n\n```gdscript\nsignal card_played(actor, card)\nsignal turn_started(actor)\nsignal damage_taken(target, amount)\nsignal actor_defeated(actor)\n```\n\n事件系统的目的，是把卡牌、Buff、Relic 和角色特性解耦开。\n\n### 4.8 后置系统：单位与 Roguelike 循环\n\n单位系统、地图、奖励和 Boss 都是重要内容，但不进入最小 MVP。等双方打牌成立后，地图第一版只做够用的结构：\n\n```text\nStart\n├─ 战斗\n├─ 商店\n├─ 随机事件\n└─ 精英\n```\n\n我先解决三个问题：\n\n- 节点怎么生成。\n- 节点怎么跳转。\n- 战后奖励怎么发。\n\n复杂单位规则、复杂分支图、大量事件文本和超长 meta progression 都不进入第一版 Demo。\n\n---\n\n## 五、技术路线与工程结构\n\n### 5.1 项目结构\n\n我会从一开始拆开逻辑层和表现层。\n\n```text\nres://\n├── core/              # 核心逻辑，不放 UI\n│   ├── battle/\n│   ├── card/\n│   ├── entity/\n│   ├── effect/\n│   └── relic/\n│\n├── data/              # .tres / .res 等数据资源\n│   ├── cards/\n│   ├── enemies/\n│   └── relics/\n│\n├── scenes/\n│   ├── battle/\n│   ├── map/\n│   └── ui/\n│\n├── ui/                # 纯 UI 逻辑\n└── utils/\n```\n\n我会遵守这几个边界：\n\n- `core/` 只负责规则。\n- `ui/` 和 `scenes/` 只负责表现。\n- 卡牌和敌人尽量用资源描述，不把数值写死在场景里。\n- 不把规则逻辑写进 UI，避免后续改规则、测试和扩卡都变困难。\n\n### 5.2 项目主文档体系\n\n我会先维护三类文档，不做过重的文档矩阵。\n\n#### GDD（Game Design Document）\n\nGDD 面向全员，写规则和体验，不写代码实现：\n\n- 游戏概述。\n- 核心玩法。\n- 卡牌系统。\n- 战斗系统。\n- Roguelike 结构。\n- 敌人与 AI。\n- 项目职务与 owner。\n- 开发路线图。\n\n#### TDD（Technical Design Document）\n\nTDD 面向程序组，写技术结构和边界：\n\n- 核心模块划分。\n- 关键类与数据流。\n- 状态机。\n- 资源组织方式。\n- 事件系统。\n- 存档与配置边界。\n\n#### Art Guide / UI Guide\n\n视觉和 UI 规范面向美术与 UI 执行：\n\n- 卡牌尺寸与版式。\n- HUD 结构。\n- 字体与颜色方向。\n- 图标风格。\n- 角色、敌人、卡牌视觉关系。\n\n---\n\n## 六、版本边界与 MVP\n\n### 6.1 第一验收 MVP 目标\n\n我会把第一验收 MVP 锁定为“双方都能打牌的一场战斗”，不把它做成完整商业化版本，也不在第一阶段做完整 PvP。后续 Demo 可以继续向卡组构筑和 Roguelike 外壳扩展，但只有这个 MVP 先成立，后面的地图、Boss 和差异化机制才有意义。\n\n```text\n开始战斗\n→ 玩家抽牌、获得能量、出牌\n→ 敌人抽牌、获得能量、AI 出牌\n→ 双方循环结算\n→ 胜负判定\n```\n\nMVP 必须包含：\n\n- 双方都有卡组。\n- 双方都有手牌、抽牌、能量和出牌。\n- 玩家初始牌组约 10 张。\n- 敌人卡组约 5 到 8 张。\n- 极简敌人 AI：优先打出第一张能打的牌。\n- 5 到 8 张基础卡牌：攻击、防御、抽牌、毒、多段攻击。\n- 一场完整的玩家回合 -> 敌人回合 -> 胜负判定流程。\n\nMVP 暂不包含：\n\n- 完整 PvP。\n- 联机、匹配、同步、回放。\n- 地图。\n- relic。\n- 单位系统。\n- 献祭。\n- UI 美术打磨。\n- 多敌人战斗。\n- 多角色开局。\n- 长剧情分支。\n- 复杂 Meta 成长。\n- 大量可收集外围系统。\n\n我判断 Demo 成功与否，不看内容是否很多，而看“双方同规则打牌”这件事是否成立、是否有基础乐趣。\n\n### 6.2 MVP 分级\n\n#### V1\n\n我先做一场最小“双方打牌”战斗：\n\n- 玩家和敌人各一个 Actor。\n- 玩家 10 张卡组。\n- 敌人 5 到 8 张卡组。\n- 双方都有手牌、能量、抽牌、出牌。\n- 敌人 AI：优先打出第一张能打的牌。\n- 胜负判定。\n\n#### V2\n\n我再把战斗变得可读、可玩，并开始形成构筑感：\n\n- 10 张左右基础卡牌。\n- Buff / Debuff。\n- 敌人卡组模板。\n- 简单敌人 AI 权重。\n- 简单奖励选择。\n\n#### V3\n\n我最后补肉鸽外壳：\n\n- 3 到 5 场连续战斗。\n- 简单地图。\n- 1 个 Boss。\n- 战后加卡。\n\n只要 V1 做扎实，我就能判断 `Lex Universalis` 的核心方向是否值得继续推进。单位、献祭、进化都放在 V3 之后再评估。\n\n### 6.3 开发顺序\n\n我的开发顺序是：\n\n1. 玩家能打牌：出牌、扣血、回合切换、3 到 5 张基础卡牌。\n2. 敌人也能打牌：Enemy 变成 Actor，拥有 deck / hand / energy / AI 出牌。\n3. 战斗可玩化：卡牌扩展、Buff / Debuff、敌人卡组模板。\n4. 卡组构筑：战后加卡、简单卡池、初步平衡。\n5. Roguelike 外壳：3 到 5 场战斗、简单节点地图、一个 Boss。\n6. 差异化机制：单位、献祭、进化。\n7. 未来 PvP：联机或异步对战。\n\n---\n\n## 七、按完成度推进的开发计划\n\n我不按日期或周数安排 `Lex Universalis` 的项目目标。这个项目更适合按“系统完成程度”推进：前一个系统没有达到可试玩标准，就不进入下一个系统。这样可以避免表面上排期推进了，但核心玩法其实没有成立。\n\n每个阶段都必须满足三类条件：\n\n- **可运行**：不是文档完成，而是游戏里能跑。\n- **可试玩**：不是只在调试台通过，而是玩家可以实际操作。\n- **可判断**：完成后能判断这个方向是否值得继续投入。\n\n### 7.1 完成度 1：玩家能打牌\n\n这一阶段只追一个目标：玩家作为 `Actor` 可以完成一轮基础出牌。\n\n#### 核心实现\n\n- 建立 Godot 项目基础结构。\n- 确定 `CardData / EffectData / Actor / BattleManager` 四个核心入口。\n- 玩家拥有 `deck / hand / discard_pile / energy / hp`。\n- 实现抽牌、出牌、扣血、弃牌、结束回合。\n- 做出 3 张最基础卡牌：攻击、防御、抽牌。\n- 放入 1 个临时敌人，先作为可被攻击的目标。\n\n#### 完成标准\n\n- 玩家进入战斗后能抽牌。\n- 玩家能看到手牌和能量。\n- 玩家能打出至少 3 类卡牌。\n- 出牌能正确消耗能量。\n- 攻击牌能造成伤害，防御牌能产生防御，抽牌牌能改变手牌。\n- 战斗能判断胜利或失败。\n\n#### 阶段产出\n\n- 最小战斗场景。\n- 首版 `Actor`。\n- 首版 `BattleManager`。\n- 3 张基础卡牌资源。\n- 一份最小卡牌数据表。\n\n#### 暂不处理\n\n- 敌人卡组。\n- 敌人 AI。\n- 地图。\n- 战后奖励。\n- 美术风格。\n\n### 7.2 完成度 2：敌人也能打牌\n\n这是整个项目最关键的阶段。完成这一阶段后，敌人不再是脚本怪，而是 AI 控制的规则玩家。\n\n#### 核心实现\n\n- 玩家和敌人都统一成 `Actor`。\n- 敌人拥有自己的 `deck / hand / discard_pile / energy / hp`。\n- 敌人回合开始时抽牌并获得能量。\n- 敌人能调用同一套 `play_card()`。\n- 敌人使用和玩家同一套 `CardData` 与 `EffectData`。\n- AI 先只做最小规则：按手牌顺序打出第一张能打的牌。\n\n#### 完成标准\n\n- 敌人不是固定攻击脚本。\n- 敌人可以从自己的卡组抽牌。\n- 敌人可以消耗能量打牌。\n- 敌人能打攻击、防御、抽牌类卡牌。\n- 玩家回合和敌人回合能循环。\n- 一场战斗能以双方同规则出牌的方式结束。\n\n#### 阶段产出\n\n- `EnemyActor` 或等价的 AI 控制 Actor。\n- 极简 AI 决策器。\n- 1 套敌人基础卡组。\n- 敌人出牌日志或战斗内反馈。\n- 一场完整“玩家 vs AI 玩家”战斗。\n\n#### 暂不处理\n\n- 聪明 AI。\n- 多敌人。\n- PvP。\n- 单位系统。\n- 复杂状态连锁。\n\n### 7.3 完成度 3：基础卡池成立\n\n这一阶段的目标是让双方打牌不只是能跑，而是开始有选择和差异。\n\n#### 核心实现\n\n- 把基础卡扩到 8 到 10 张。\n- 覆盖攻击、防御、抽牌、毒、多段攻击、增益或减益。\n- 为每张卡补齐名称、费用、效果、目标类型和描述。\n- 初步建立卡牌稀有度或类型标签。\n- 让玩家卡组和敌人卡组共享同一套卡牌效果系统。\n\n#### 完成标准\n\n- 玩家不再只是在重复打同一种攻击牌。\n- 敌人可以通过卡组表现出不同倾向。\n- 卡牌效果能通过 `EffectData` 组合，而不是写死在单张卡里。\n- 玩家能从战斗中感受到“出牌顺序”和“能量分配”的差异。\n\n#### 阶段产出\n\n- 8 到 10 张基础卡。\n- 首版卡牌平衡表。\n- 2 到 3 套敌人卡组模板。\n- 首版关键词说明。\n\n#### 暂不处理\n\n- 大量卡池。\n- 稀有卡复杂机制。\n- 卡牌升级系统。\n- 献祭、进化等特色机制。\n\n### 7.4 完成度 4：构筑感出现\n\n这一阶段的目标是让玩家不只是在打一场固定战斗，而是开始对卡组产生管理感。\n\n#### 核心实现\n\n- 战斗胜利后出现卡牌奖励。\n- 奖励采用三选一或类似的简单选择。\n- 选择的卡能加入玩家卡组。\n- 下一场战斗使用更新后的卡组。\n- 保留玩家血量或其他基础状态。\n\n#### 完成标准\n\n- 玩家能在战斗后改变自己的卡组。\n- 卡组变化会影响下一场战斗。\n- 奖励选择不是纯装饰，而是能改变打法。\n- 至少能连续完成多场战斗。\n\n#### 阶段产出\n\n- 战后奖励界面。\n- 卡组增删逻辑。\n- 简单卡池抽取规则。\n- 连续战斗流程。\n\n#### 暂不处理\n\n- 商店。\n- 遗物。\n- 复杂事件。\n- 长线 Meta 成长。\n\n### 7.5 完成度 5：Roguelike 外壳成立\n\n这一阶段才开始做地图和一局流程。它不是 MVP 的前置条件，而是 MVP 成立后的外壳。\n\n#### 核心实现\n\n- 3 到 5 场连续战斗。\n- 简单节点地图。\n- 普通战斗节点。\n- 奖励节点。\n- 1 个 Boss 节点。\n- Boss 拥有独立卡组和更明确的战斗节奏。\n\n#### 完成标准\n\n- 玩家能从起点推进到 Boss。\n- 每场战斗之间的卡组状态能保留。\n- Boss 战和普通战斗有明显差异。\n- 一局可以完整结束，而不是只停在单场战斗。\n\n#### 阶段产出\n\n- 首版地图流。\n- 首版 Boss。\n- 3 到 5 个敌人或敌人卡组模板。\n- 一局 Demo 闭环。\n\n#### 暂不处理\n\n- 大地图分支。\n- 商店经济。\n- 大量剧情事件。\n- 复杂 Meta progression。\n\n### 7.6 完成度 6：差异化机制选择\n\n只有当双方打牌、基础卡池、构筑和一局外壳都成立后，我才会考虑差异化机制。这里不能贪多，只能先选一个方向验证。\n\n候选方向：\n\n- **单位系统**：让部分卡牌召唤单位，形成场上持续压力。\n- **献祭机制**：通过消耗单位、卡牌或资源换取更强效果。\n- **卡牌进化**：让卡牌在一局中发生永久或半永久变化。\n\n选择标准：\n\n- 是否能增强“双方打牌”的核心，而不是抢走核心。\n- 是否能用现有 `Actor / CardData / EffectData / BattleManager` 承载。\n- 是否会让敌人 AI 复杂度失控。\n- 是否能用少量内容验证玩法价值。\n\n阶段完成标准：\n\n- 只加入一个差异化机制。\n- 该机制至少有 2 到 3 张卡能体现。\n- 玩家和敌人都能在规则上使用或应对该机制。\n- 如果机制破坏基础战斗节奏，就回退到上一阶段。\n\n### 7.7 完成度 7：体验打磨\n\n这一阶段不扩功能，只把已经成立的 Demo 打磨到能给别人试玩。\n\n#### 核心实现\n\n- 出牌反馈。\n- 受击反馈。\n- 抽牌、弃牌、能量变化反馈。\n- 敌人出牌可读性。\n- 基础音效。\n- 错误提示和不可出牌提示。\n- 战斗结束结算。\n\n#### 完成标准\n\n- 不看代码的人也能理解当前轮到谁、能做什么、发生了什么。\n- 敌人出牌不是“突然扣血”，而是能看到卡牌和效果。\n- 玩家能独立完成一局 Demo。\n- 试玩反馈能集中在玩法问题，而不是“看不懂怎么操作”。\n\n### 7.8 完成度 8：未来 PvP 预留\n\nPvP 不进入当前 Demo 的目标范围。只有当 Actor、BattleManager、卡牌效果、AI 玩家和一局流程都稳定后，我才会考虑 PvP。\n\nPvP 预留方向：\n\n- 异步对战。\n- 联机对战。\n- 匹配。\n- 同步 / 回放。\n- 远端玩家控制的 `Actor`。\n\n我不会为了未来 PvP 现在就做网络层。当前只需要保证战斗内核不是写死的单机脚本，而是能从 `Actor` 控制权自然扩展。\n\n---\n\n## 八、协作机制与验收节点\n\n### 8.1 阶段推进节奏\n\n#### 阶段开始\n\n每进入一个阶段前，我会明确当前唯一目标、负责 owner、完成标准和明确不做项。没有完成标准的阶段不启动。\n\n#### 阶段推进中\n\n同步时只讲三件事：当前阶段完成了什么、下一步要补什么、卡在哪里。讨论不能跳到后续阶段抢跑。\n\n#### 阶段验收\n\n每个阶段结束必须产出一个可试玩版本。全员试玩后，只记录真实问题，不开散会式脑暴。\n\n### 8.2 完成度验收点\n\n#### 验收点 1：玩家必须能打一局\n\n如果玩家抽牌、出牌、扣血、回合切换、胜负判定这条链路还没有完成，就不能进入敌人打牌阶段。\n\n#### 验收点 2：敌人必须能打牌\n\n如果敌人还只是写死行为，而不是拥有卡组、手牌、能量和 AI 出牌，我会暂停外围内容，优先补齐 Actor 统一结构。\n\n#### 验收点 3：构筑必须影响下一场战斗\n\n如果战后加卡不能影响后续战斗，说明卡组构筑还只是界面装饰，不能进入 Roguelike 外壳阶段。\n\n#### 验收点 4：必须有一局流程\n\n如果还不能完成连续战斗、战后加卡、Boss 结算，就不继续扩差异化机制。\n\n#### 验收点 5：Demo 必须可被外部试玩\n\n最终 Demo 的完整标准是“双方同规则打牌”成立，并且玩家能看懂、能操作、能完成一局。它不是 PvP、单位、献祭或复杂地图都完成。\n\n---\n\n## 九、参考源码与拆解方向\n\n我会把参考源码当作拆解对象，而不是寻找一个可以直接照搬的完整成品。`Lex Universalis` 自己的代码仓库是主项目真源，其他仓库只用于学习结构、交互和工程拆法。\n\n### 9.1 Lex Universalis 仓库\n\n#### Lex Universalis\n\n- GitHub：[https://github.com/emptyinkpot/Lex-Universalis](https://github.com/emptyinkpot/Lex-Universalis)\n- 用途：团队实际开发仓库。\n- 当前定位：Godot 4.x 桌面游戏项目。\n\n我会把这个仓库作为唯一项目源码主线。参考源码里的结构、交互和实现方式，只能在理解后吸收进 `Lex Universalis`，不能直接让参考代码反过来主导项目结构。\n\n### 9.2 核心逻辑 / 架构参考\n\n#### Slay the Web\n\n- GitHub：[https://github.com/oskarrough/slaytheweb](https://github.com/oskarrough/slaytheweb)\n\n我主要看它的：\n\n- 卡牌肉鸽核心结构。\n- 地图、战斗、卡组的拆分方式。\n- 逻辑层和 UI 的解耦。\n- 数据驱动组织方式。\n\n重点价值：\n\n- `GameFlowManager` 这类流程控制思路。\n- `Card / Player / Enemy` 分离建模。\n- 事件系统与可复现 RNG。\n\n#### Slay the Spire C++ 复刻 / 同类高校项目\n\n- GitHub：[https://github.com/ShockingMaster/Tongji_University_Slay_the_Spire](https://github.com/ShockingMaster/Tongji_University_Slay_the_Spire)\n\n我主要看它的：\n\n- 面向对象建模方式。\n- Buff / 状态系统。\n- 工厂模式、事件系统、对象生成。\n\n我不会照搬 C++ 实现，而是借它理解卡牌对象怎么抽象、Actor 怎么统一建模、状态叠加怎么避免写成一堆 `if/else`。\n\n#### Godot 官方 Demo 项目\n\n- GitHub：[https://github.com/godotengine/godot-demo-projects](https://github.com/godotengine/godot-demo-projects)\n\n我主要看它的：\n\n- Godot 4.x 项目组织方式。\n- 场景、输入、UI、资源加载的官方写法。\n- `Control` UI 和 gameplay 场景之间的拆分方式。\n\n这个仓库不是卡牌肉鸽源码，但可以作为 Godot 工程习惯和基础写法的参考，避免 `Lex Universalis` 一开始就写出不符合引擎习惯的结构。\n\n### 9.3 卡牌 UI / 交互层参考\n\n#### Card Framework（Godot）\n\n- GitHub：[https://github.com/chun92/card-framework](https://github.com/chun92/card-framework)\n- Godot Asset Library：[https://godotengine.org/asset-library/asset/3616](https://godotengine.org/asset-library/asset/3616)\n\n我主要看它的：\n\n- 手牌展示。\n- 卡牌 hover / 拖拽 / 排列。\n- 目标选择和交互反馈。\n\n这类项目更偏表现层，不是核心玩法框架。我会把它当作 `Lex Universalis` 的卡牌 UI 与交互反馈参考，而不是战斗规则参考。\n\n### 9.4 参考方式\n\n我不会期待找到一个完整成品来改，而是分模块学习：\n\n- 用一个项目学战斗主循环。\n- 用一个项目学 Godot 资源驱动。\n- 用一个项目学卡牌 UI 交互。\n- 用一个项目学 Buff / 事件系统。\n\n最终我要做的是系统拼装 + 自己的玩法选择，不是简单 clone。\n\n---\n\n## 十、风险控制与避坑清单\n\n### 10.1 项目管理风险\n\n#### 没有唯一拍板人\n\n如果没有唯一拍板人，项目会持续讨论但无法收口。所以我会把 Final Owner 写进团队结构。\n\n#### 没有技术 owner\n\n如果没有技术 owner，后期系统很容易越做越乱。所以我会让 Tech Lead 对架构和系统边界负责。\n\n#### 设计和程序脱节\n\n卡牌系统做出来不等于游戏好玩。我会把阶段试玩作为验收方式，避免设计和实现长期分离。\n\n#### 人人都做一点\n\n如果所有人都只做一点边角，核心模块就没人真正负责。所以我会按 owner 拆任务。\n\n#### 一直加功能，不关版本边界\n\n`Lex Universalis` 最大的风险不是做不出来，而是做太多。我会用 3 个月 Demo 边界限制功能扩张。\n\n### 10.2 技术风险\n\n#### 把逻辑写进 UI\n\n如果规则逻辑写进 UI，后续改规则、测试和扩卡都会变困难。所以我会从目录结构上先拆开 `core/` 和 `ui/`。\n\n#### 卡牌逻辑写死成 `if/else`\n\n前几张牌写 `if/else` 能跑，但二十张以后会失控。所以我会优先建立 `EffectData` 和效果派生结构。\n\n#### 没有事件系统\n\n如果没有事件系统，relic、被动、状态触发和连锁效果都会变得难维护。所以我会在早期就预留事件机制。\n\n#### 太早做复杂地图\n\n地图过重会拖慢战斗验证。所以我会先做简单节点推进，复杂地图和大量事件文本后置。\n\n#### 一开始就做完整 PvP\n\n完整 PvP 会立刻引入联机、同步、匹配、回放和公平性问题，复杂度会把 Demo 压垮。所以当前阶段我只做“AI 控制的规则玩家”，让 PvP 以后从 Actor 控制权切换自然长出来。\n\n#### 一开始就完整炉石化\n\n完整炉石化会让站位、单位交换和复杂场面效果同时爆炸。所以我只先做双方卡组、手牌、能量、目标选择和基础出牌，不在 MVP 做单位系统。\n\n---\n\n## 十一、结论与后续文档\n\n### 11.1 决策摘要\n\n我对 `Lex Universalis` 的当前决策是：\n\n- **引擎**：Godot 4.x\n- **类型**：PvE 优先、未来可推导 PvP 的卡牌肉鸽\n- **主骨架**：杀戮尖塔\n- **核心战斗**：玩家 vs AI 玩家，双方都按同一规则打牌\n- **架构重点**：Actor 统一抽象、资源驱动、效果系统、事件系统、战斗状态机\n- **开发顺序**：玩家能打牌 -> 敌人也能打牌 -> 卡组构筑 -> Roguelike 外壳 -> 差异化机制 -> 未来 PvP\n\n一句话版本：\n\n> 我现在要做的不是完整 PvP，而是先做出“双方都按同一规则打牌”的 PvE；未来 PvP 只是 Actor 控制权从 AI 切换到玩家。\n\n### 11.2 后续文档优先级\n\n接下来我会优先补这些文档：\n\n1. 内部职位到真实成员的映射表。\n2. GDD：双方打牌规则、胜利条件、卡牌类型、敌人卡组模板。\n3. TDD：`Actor`、`BattleManager`、AI 决策、数据结构、事件协议。\n4. Art Guide / UI Guide：卡牌模板、HUD、字体、颜色、图标风格。",
+    "html": "<h1 id=\"lex-universalis-项目企划书godot\">Lex Universalis 项目企划书（Godot）</h1>\n<p>这份企划书是我作为 <code>Lex Universalis</code> 项目提出者，对这款 PvE 优先、未来可推导 PvP 的卡牌肉鸽游戏做出的初版规划。它不是外部资料整理，也不是单纯的技术备忘，而是我希望团队后续可以直接围绕它讨论分工、确定 Demo 边界、拆开发任务的项目说明书。</p>\n<p><code>Lex Universalis</code> 的当前项目地址是：<a href=\"https://github.com/emptyinkpot/Lex-Universalis\">https://github.com/emptyinkpot/Lex-Universalis</a>。我把它规划为一款基于 Godot 4.x 开发的卡牌肉鸽。玩法主骨架参考《杀戮尖塔》，但战斗内核会更接近“玩家 vs AI 玩家”：双方都拥有卡组、手牌、能量和出牌流程。我的优先级不是一开始做完整 PvP，而是先做出一套能跑通、能扩展、能验证乐趣的“双方同规则打牌”的 PvE Demo。</p>\n<p>一句话定位：</p>\n<blockquote>\n<p>我想先做出一套干净的 Actor 统一抽象 + 状态机 + 数据驱动 + 可扩展效果系统，让 PvP 将来可以从 PvE 自然推导出来。</p>\n</blockquote>\n<h2 id=\"目录\">目录</h2>\n<ol>\n<li><a href=\"#%E4%B8%80%E4%BA%BA%E5%91%98%E5%88%86%E9%85%8D%E4%B8%8E%E9%A1%B9%E7%9B%AE%E7%BB%84%E7%BB%87\">人员分配与项目组织</a></li>\n<li><a href=\"#%E4%BA%8C%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%BF%B0\">项目概述</a></li>\n<li><a href=\"#%E4%B8%89%E7%8E%A9%E6%B3%95%E5%AE%9A%E4%BD%8D%E4%B8%8E%E8%9E%8D%E5%90%88%E7%AD%96%E7%95%A5\">玩法定位与融合策略</a></li>\n<li><a href=\"#%E5%9B%9B%E6%A0%B8%E5%BF%83%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1\">核心系统设计</a></li>\n<li><a href=\"#%E4%BA%94%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84\">技术路线与工程结构</a></li>\n<li><a href=\"#%E5%85%AD%E7%89%88%E6%9C%AC%E8%BE%B9%E7%95%8C%E4%B8%8E-mvp\">版本边界与 MVP</a></li>\n<li><a href=\"#%E4%B8%83%E6%8C%89%E5%AE%8C%E6%88%90%E5%BA%A6%E6%8E%A8%E8%BF%9B%E7%9A%84%E5%BC%80%E5%8F%91%E8%AE%A1%E5%88%92\">按完成度推进的开发计划</a></li>\n<li><a href=\"#%E5%85%AB%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6%E4%B8%8E%E9%AA%8C%E6%94%B6%E8%8A%82%E7%82%B9\">协作机制与验收节点</a></li>\n<li><a href=\"#%E4%B9%9D%E5%8F%82%E8%80%83%E6%BA%90%E7%A0%81%E4%B8%8E%E6%8B%86%E8%A7%A3%E6%96%B9%E5%90%91\">参考源码与拆解方向</a></li>\n<li><a href=\"#%E5%8D%81%E9%A3%8E%E9%99%A9%E6%8E%A7%E5%88%B6%E4%B8%8E%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95\">风险控制与避坑清单</a></li>\n<li><a href=\"#%E5%8D%81%E4%B8%80%E7%BB%93%E8%AE%BA%E4%B8%8E%E5%90%8E%E7%BB%AD%E6%96%87%E6%A1%A3\">结论与后续文档</a></li>\n</ol>\n<hr>\n<h2 id=\"一人员分配与项目组织\">一、人员分配与项目组织</h2>\n<h3 id=\"11-组织原则\">1.1 组织原则</h3>\n<p>我不打算把 <code>Lex Universalis</code> 按大厂式重型流程来组织。它更适合做成一个高密度小团队项目：人数不多，但每个人都有明确的负责范围。团队成员可以一人多职，但不能所有人都只参与一点边角工作。制作决策、技术架构、战斗系统和视觉方向必须有稳定 owner。</p>\n<p>我会按下面几条原则组织团队：</p>\n<ol>\n<li>项目主文档以职位为主，不先写死具体人名。</li>\n<li>每个人都要有主职责和副职责。</li>\n<li>每人约 <code>70%</code> 时间投入主职责，<code>30%</code> 时间承担副职责。</li>\n<li>每个阶段必须有可试玩版本，不能只停留在讨论和材料整理。</li>\n</ol>\n<p>在 GDD / TDD / 企划书里，我会写 <code>Producer / Game Director</code>、<code>Tech Lead</code>、<code>Combat Systems Engineer</code>、<code>UI Designer</code> 这类职位。真实成员对应哪个职位，可以在下面的人员姓名列或内部映射表里填写。这样后续如果人员调整，项目结构本身不用跟着重写。</p>\n<h3 id=\"12-计划团队结构8-人\">1.2 计划团队结构（8 人）</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>职务</th>\n<th>负责人员</th>\n<th>人数</th>\n<th>主职责</th>\n<th>关键产出</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Producer / Game Director / Final Owner</td>\n<td>刘高朋</td>\n<td>1</td>\n<td>项目方向、功能优先级、版本决策、节奏控制、最终拍板</td>\n<td>版本目标、功能取舍、里程碑验收</td>\n</tr>\n<tr>\n<td>Tech Lead / Core Architect</td>\n<td>万林炜</td>\n<td>1</td>\n<td>技术架构、系统拆分、风险控制、代码主链把关</td>\n<td>架构骨架、核心接口、技术规范</td>\n</tr>\n<tr>\n<td>Art Director / Visual Owner</td>\n<td>王元</td>\n<td>1</td>\n<td>视觉方向、风格统一、关键资源把关</td>\n<td>UI 风格、关键卡面、视觉基调</td>\n</tr>\n<tr>\n<td>Combat Systems Engineer</td>\n<td>申林昊</td>\n<td>1</td>\n<td>卡牌系统、战斗流程、效果结算</td>\n<td>战斗主循环、目标选择、结算链路</td>\n</tr>\n<tr>\n<td>Systems / Framework Engineer</td>\n<td>殷丹阳</td>\n<td>1</td>\n<td>数据驱动、事件系统、存档、工具链</td>\n<td>资源读取、事件系统、存档和调试工具</td>\n</tr>\n<tr>\n<td>UI / Gameplay Engineer</td>\n<td>周桐宇</td>\n<td>1</td>\n<td>手牌交互、目标选择、战斗 UI</td>\n<td>卡牌交互、HUD、基础反馈</td>\n</tr>\n<tr>\n<td>Map / Flow Engineer</td>\n<td>刘高朋</td>\n<td>1</td>\n<td>地图节点、场景切换、奖励流程</td>\n<td>地图推进、战后奖励、状态流转</td>\n</tr>\n<tr>\n<td>Systems / Balance Designer</td>\n<td>秦硕</td>\n<td>1</td>\n<td>战斗机制、数值模型、敌人行为、Buff 逻辑</td>\n<td>数值表、敌人模板、机制说明</td>\n</tr>\n<tr>\n<td>Narrative / Content / UI Visual Designer</td>\n<td>任元丰</td>\n<td>1</td>\n<td>世界观、卡牌描述、事件文本、界面视觉执行</td>\n<td>事件文本、卡牌描述、卡牌模板、图标集</td>\n</tr>\n</tbody>\n</table></div>\n<p>如果实际团队严格只有 8 人，我会让 <code>Producer / Game Director</code> 兼任 <code>Art Director / Visual Owner</code>，或者让 <code>Narrative / Content Designer</code> 兼任一部分 UI 视觉执行。我的重点不是把职位数凑得很完整，而是保证每个核心模块都有人真正负责。</p>\n<p>程序组我倾向于拆成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>1 个核心战斗</span></span>\n<span data-line=\"\"><span>+ 1 个框架架构</span></span>\n<span data-line=\"\"><span>+ 2 个功能实现</span></span></code></pre></figure>\n<h3 id=\"13-按职务拆解的-ownership\">1.3 按职务拆解的 ownership</h3>\n<h4 id=\"producer--game-director\">Producer / Game Director</h4>\n<p>这个角色负责项目方向和最终体验。我会让它承担版本边界、优先级、阶段试玩验收和功能取舍，尤其要负责决定哪些内容暂时不做。</p>\n<h4 id=\"tech-lead\">Tech Lead</h4>\n<p>这个角色负责主架构和技术边界。我会让它守住数据驱动、逻辑/UI 解耦、核心模块接口和系统耦合风险。</p>\n<h4 id=\"combat-systems-engineer\">Combat Systems Engineer</h4>\n<p>这个角色负责战斗主链路，包括卡牌播放、目标选择、结算顺序，以及伤害、防御、抽牌、召唤等效果调用链。</p>\n<h4 id=\"systems--framework-engineer\">Systems / Framework Engineer</h4>\n<p>这个角色负责底层支撑，包括事件系统、数据读取、存档、调试工具和资源组织。</p>\n<h4 id=\"ui--gameplay-engineer\">UI / Gameplay Engineer</h4>\n<p>这个角色负责战斗界面的可用性，包括手牌展示、hover / 拖拽 / 点击交互、目标反馈和基础表现。</p>\n<h4 id=\"map--flow-engineer\">Map / Flow Engineer</h4>\n<p>这个角色负责战斗外流程，包括地图生成、节点跳转、战后奖励、场景切换和状态保存。</p>\n<h4 id=\"systems--balance-designer\">Systems / Balance Designer</h4>\n<p>这个角色负责卡牌数值表、敌人模板、状态效果规则和难度曲线。</p>\n<h4 id=\"narrative--content--ui-visual-designer\">Narrative / Content / UI Visual Designer</h4>\n<p>这个角色负责卡牌描述、事件文本、世界观设定、UI 文案、卡牌排版和玩家反馈语气。</p>\n<hr>\n<h2 id=\"二项目概述\">二、项目概述</h2>\n<h3 id=\"21-项目目标\">2.1 项目目标</h3>\n<p>我希望 <code>Lex Universalis</code> 的第一目标是做出一个 3 个月内可展示、可试玩的完整 Demo。这个 Demo 不追求商业版内容量，而是要证明三件事：</p>\n<ul>\n<li>双方都能按同一套规则抽牌、获得能量、出牌和结算。</li>\n<li>敌人不只是脚本怪，而是 AI 控制的规则玩家。</li>\n<li>技术骨架足够干净，后续可以扩展到卡组构筑、肉鸽外壳，甚至 PvP，而不是 Demo 做完就推倒重来。</li>\n</ul>\n<h3 id=\"22-项目类型\">2.2 项目类型</h3>\n<p>我把项目类型定为：</p>\n<ul>\n<li><strong>游戏名称</strong>：<code>Lex Universalis</code></li>\n<li><strong>项目仓库</strong>：<a href=\"https://github.com/emptyinkpot/Lex-Universalis\">https://github.com/emptyinkpot/Lex-Universalis</a></li>\n<li><strong>类型</strong>：PvE 优先的卡牌肉鸽，后期保留 PvP 推导空间</li>\n<li><strong>战斗形式</strong>：回合制</li>\n<li><strong>核心循环</strong>：玩家回合出牌、敌人 AI 回合出牌、双方结算、胜负判定</li>\n<li><strong>目标体验</strong>：先验证“玩家 vs AI 玩家”的双方打牌是否好玩，再扩展卡组构筑、地图推进和特色机制</li>\n</ul>\n<h3 id=\"23-技术选择\">2.3 技术选择</h3>\n<p>我计划优先使用 Godot 4.x。</p>\n<p>选择 Godot 的原因是：</p>\n<ul>\n<li>GDScript 2.0 适合快速写系统原型。</li>\n<li><code>Resource</code> 很适合描述卡牌、效果、敌人和遗物。</li>\n<li><code>Control</code> UI 系统足够支撑手牌、HUD、目标选择和战斗界面。</li>\n<li>项目规模适合中小团队，不需要一开始引入更重的商业引擎工作流。</li>\n</ul>\n<hr>\n<h2 id=\"三玩法定位与融合策略\">三、玩法定位与融合策略</h2>\n<h3 id=\"31-基础玩法定位\">3.1 基础玩法定位</h3>\n<p>我会把 <code>Lex Universalis</code> 的第一阶段定位成：</p>\n<ul>\n<li>PvE 优先。</li>\n<li>回合制战斗。</li>\n<li>玩家和敌人都拥有卡组、手牌、能量和出牌流程。</li>\n<li>敌人由 AI 控制，但底层结构和玩家一致。</li>\n<li>后续再加入卡组构筑、地图推进、Boss 和特色机制。</li>\n</ul>\n<p>这里的关键不是“一开始做 PvP”，而是先做“双方都按同一套规则打牌的 PvE”。换句话说，我现在要做的不是完整玩家对战，而是让敌人也打牌。</p>\n<h3 id=\"32-pvp-的正确位置\">3.2 PvP 的正确位置</h3>\n<p>我会把 PvP 设计成从 PvE 推导出来的后期形态，而不是和 PvE 同时开工。</p>\n<p>项目会按三层推进：</p>\n<ol>\n<li>\n<p><strong>层 1：玩家 vs 规则驱动敌人</strong><br>\n敌人先有卡组、手牌和基础 AI，但决策可以很简单。</p>\n</li>\n<li>\n<p><strong>层 2：玩家 vs 完整规则玩家</strong><br>\n敌人拥有和玩家一样的卡组结构、能量、抽牌、打牌逻辑，本质是“AI 控制的另一个玩家”。</p>\n</li>\n<li>\n<p><strong>层 3：真正 PvP</strong><br>\n等前两层稳定后，再考虑联机、异步对战、匹配、同步、回放等问题。</p>\n</li>\n</ol>\n<p>这个顺序能把复杂度控制住。PvP 的本质会变成控制权切换：<code>Player = Actor（人操作）</code>，<code>Enemy = Actor（AI 操作）</code>，未来的 <code>RemotePlayer = Actor（远端玩家操作）</code>。</p>\n<h3 id=\"33-融合方式\">3.3 融合方式</h3>\n<p>我不会把《杀戮尖塔》《炉石》《邪恶铭刻》平均混在一起。我的融合顺序是：</p>\n<ul>\n<li><strong>主骨架</strong>：<code>杀戮尖塔</code></li>\n<li><strong>战斗扩展</strong>：双方同规则打牌 + 目标选择</li>\n<li><strong>风味增强</strong>：<code>邪恶铭刻</code> 的献祭、卡牌进化、叙事感</li>\n</ul>\n<p>具体执行上，我会先保留《杀戮尖塔》的战斗节奏，但把敌人从“写死行为”升级为“AI 控制的规则玩家”。单位、献祭、进化这些差异化机制后置，等双方打牌的基础战斗成立后再加。</p>\n<h3 id=\"34-我会保留和后置的元素\">3.4 我会保留和后置的元素</h3>\n<p>《杀戮尖塔》侧，我会保留：</p>\n<ul>\n<li>能量系统。</li>\n<li>抽牌 / 弃牌 / 牌库循环。</li>\n<li>回合制节奏。</li>\n<li>战后奖励和地图推进，但不进入最小 MVP。</li>\n</ul>\n<p>对战结构侧，我会先保留：</p>\n<ul>\n<li><code>Actor</code> 统一抽象。</li>\n<li>双方卡组、手牌、能量、出牌。</li>\n<li>极简敌人 AI。</li>\n<li>目标选择。</li>\n</ul>\n<p>这些内容后置：</p>\n<ul>\n<li>单位系统。</li>\n<li>献祭机制。</li>\n<li>卡牌进化。</li>\n<li>元叙事事件。</li>\n<li>永久性卡牌变化。</li>\n</ul>\n<p>后置不代表不做，而是不能压过当前第一目标：验证“双方都能打牌”的战斗是否好玩。</p>\n<hr>\n<h2 id=\"四核心系统设计\">四、核心系统设计</h2>\n<h3 id=\"41-actor-统一抽象\">4.1 Actor 统一抽象</h3>\n<p>我会把 <code>Actor</code> 作为战斗系统最核心的抽象。玩家和敌人都不是两套系统，而是同一种规则实体，只是控制方式不同。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"gdscript\" data-theme=\"github-dark\"><code data-language=\"gdscript\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">class_name</span><span style=\"color:#B392F0\"> Actor</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> deck: </span><span style=\"color:#B392F0\">Array</span><span style=\"color:#E1E4E8\">[</span><span style=\"color:#B392F0\">CardData</span><span style=\"color:#E1E4E8\">]</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> hand: </span><span style=\"color:#B392F0\">Array</span><span style=\"color:#E1E4E8\">[</span><span style=\"color:#B392F0\">CardData</span><span style=\"color:#E1E4E8\">]</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> discard_pile: </span><span style=\"color:#B392F0\">Array</span><span style=\"color:#E1E4E8\">[</span><span style=\"color:#B392F0\">CardData</span><span style=\"color:#E1E4E8\">]</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> energy: </span><span style=\"color:#B392F0\">int</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> hp: </span><span style=\"color:#B392F0\">int</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> max_hp: </span><span style=\"color:#B392F0\">int</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">func</span><span style=\"color:#B392F0\"> draw</span><span style=\"color:#E1E4E8\">(amount: </span><span style=\"color:#B392F0\">int</span><span style=\"color:#E1E4E8\">) </span><span style=\"color:#F97583\">-></span><span style=\"color:#B392F0\"> void</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    pass</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">func</span><span style=\"color:#B392F0\"> can_play</span><span style=\"color:#E1E4E8\">(card: </span><span style=\"color:#B392F0\">CardData</span><span style=\"color:#E1E4E8\">) </span><span style=\"color:#F97583\">-></span><span style=\"color:#B392F0\"> bool</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    return</span><span style=\"color:#E1E4E8\"> energy </span><span style=\"color:#F97583\">>=</span><span style=\"color:#E1E4E8\"> card.cost</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">func</span><span style=\"color:#B392F0\"> play_card</span><span style=\"color:#E1E4E8\">(card: </span><span style=\"color:#B392F0\">CardData</span><span style=\"color:#E1E4E8\">, target: </span><span style=\"color:#B392F0\">Actor</span><span style=\"color:#E1E4E8\">, context) </span><span style=\"color:#F97583\">-></span><span style=\"color:#B392F0\"> void</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    pass</span></span></code></pre></figure>\n<p>在这个模型下：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Player = Actor（人操作）</span></span>\n<span data-line=\"\"><span>Enemy = Actor（AI 操作）</span></span>\n<span data-line=\"\"><span>Future PvP Player = Actor（远端玩家操作）</span></span></code></pre></figure>\n<p>这一步决定 <code>Lex Universalis</code> 后续能不能自然扩展到 PvP、回放、AI 调参和多种对战模式。如果我一开始把 <code>Player</code> 和 <code>Enemy</code> 写成两套逻辑，后面做 PvP 会变成重写战斗系统。</p>\n<h3 id=\"42-卡牌数据\">4.2 卡牌数据</h3>\n<p>我会把卡牌做成资源对象，而不是把卡牌数值和效果写死在代码里。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"gdscript\" data-theme=\"github-dark\"><code data-language=\"gdscript\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">extends</span><span style=\"color:#B392F0\"> Resource</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">class_name</span><span style=\"color:#B392F0\"> CardData</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#B392F0\">@export</span><span style=\"color:#F97583\"> var</span><span style=\"color:#E1E4E8\"> id: </span><span style=\"color:#B392F0\">String</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">@export</span><span style=\"color:#F97583\"> var</span><span style=\"color:#E1E4E8\"> name: </span><span style=\"color:#B392F0\">String</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">@export</span><span style=\"color:#F97583\"> var</span><span style=\"color:#E1E4E8\"> cost: </span><span style=\"color:#B392F0\">int</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">@export</span><span style=\"color:#F97583\"> var</span><span style=\"color:#E1E4E8\"> description: </span><span style=\"color:#B392F0\">String</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">@export</span><span style=\"color:#F97583\"> var</span><span style=\"color:#E1E4E8\"> effects: </span><span style=\"color:#B392F0\">Array</span><span style=\"color:#E1E4E8\">[</span><span style=\"color:#B392F0\">EffectData</span><span style=\"color:#E1E4E8\">]</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">@export</span><span style=\"color:#F97583\"> var</span><span style=\"color:#E1E4E8\"> target_type: </span><span style=\"color:#B392F0\">int</span></span></code></pre></figure>\n<p>每张卡牌至少要描述：</p>\n<ul>\n<li><code>cost</code></li>\n<li><code>effect</code></li>\n<li><code>target</code></li>\n<li>关键词 / 标签</li>\n<li>稀有度、升级态等扩展字段</li>\n</ul>\n<h3 id=\"43-效果系统\">4.3 效果系统</h3>\n<p>效果系统是我最优先保证干净的部分。我不打算把卡牌逻辑写成大量 <code>if/else</code>，而是让不同效果各自实现 <code>apply</code>。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"gdscript\" data-theme=\"github-dark\"><code data-language=\"gdscript\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">extends</span><span style=\"color:#B392F0\"> Resource</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">class_name</span><span style=\"color:#B392F0\"> EffectData</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">func</span><span style=\"color:#B392F0\"> apply</span><span style=\"color:#E1E4E8\">(source, target, context):</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    pass</span></span></code></pre></figure>\n<p>例如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"gdscript\" data-theme=\"github-dark\"><code data-language=\"gdscript\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">class_name</span><span style=\"color:#B392F0\"> DamageEffect</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">extends</span><span style=\"color:#B392F0\"> EffectData</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#B392F0\">@export</span><span style=\"color:#F97583\"> var</span><span style=\"color:#E1E4E8\"> amount: </span><span style=\"color:#B392F0\">int</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">func</span><span style=\"color:#B392F0\"> apply</span><span style=\"color:#E1E4E8\">(source, target, context):</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    target.</span><span style=\"color:#B392F0\">take_damage</span><span style=\"color:#E1E4E8\">(amount)</span></span></code></pre></figure>\n<p>以后无论是伤害、护甲、抽牌、上毒、多段攻击、召唤单位还是献祭触发，都可以沿这个方向继续扩展。</p>\n<h3 id=\"44-实体系统\">4.4 实体系统</h3>\n<p><code>Actor</code> 负责“谁在打牌”，<code>Entity</code> 负责“谁能承受伤害或拥有生命”。第一版里玩家和敌人可以直接作为 <code>Actor</code> 参与战斗；如果后面加入单位系统，单位也可以共享实体能力。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"gdscript\" data-theme=\"github-dark\"><code data-language=\"gdscript\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">class_name</span><span style=\"color:#B392F0\"> Entity</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> hp: </span><span style=\"color:#B392F0\">int</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">var</span><span style=\"color:#E1E4E8\"> max_hp: </span><span style=\"color:#B392F0\">int</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">func</span><span style=\"color:#B392F0\"> take_damage</span><span style=\"color:#E1E4E8\">(amount: </span><span style=\"color:#B392F0\">int</span><span style=\"color:#E1E4E8\">) </span><span style=\"color:#F97583\">-></span><span style=\"color:#B392F0\"> void</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    hp </span><span style=\"color:#F97583\">-=</span><span style=\"color:#E1E4E8\"> amount</span></span></code></pre></figure>\n<p>在此基础上再分：</p>\n<ul>\n<li><code>Player</code></li>\n<li><code>Enemy</code></li>\n<li><code>Unit</code></li>\n</ul>\n<p>第一版不会优先做复杂 <code>Unit</code>，但我会保留这个方向，避免后续引入单位时和当前战斗模型冲突。</p>\n<h3 id=\"45-战斗状态机\">4.5 战斗状态机</h3>\n<p>我会尽早建立 <code>BattleManager</code>，不把战斗流程散落在 UI 或卡牌脚本里。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"gdscript\" data-theme=\"github-dark\"><code data-language=\"gdscript\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">enum</span><span style=\"color:#B392F0\"> BattleState</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    START</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    PLAYER_TURN</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    ENEMY_TURN</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    RESOLVE</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    END</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p><code>BattleManager</code> 负责：</p>\n<ul>\n<li>双方开局抽牌。</li>\n<li>当前 Actor 回合控制。</li>\n<li>出牌校验。</li>\n<li>结束回合。</li>\n<li>敌人 AI 行动。</li>\n<li>持续效果结算。</li>\n<li>胜负判定。</li>\n</ul>\n<p>基础循环先定为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Start Battle</span></span>\n<span data-line=\"\"><span>→ Player Actor Draw</span></span>\n<span data-line=\"\"><span>→ Player Turn: play cards</span></span>\n<span data-line=\"\"><span>→ End Player Turn</span></span>\n<span data-line=\"\"><span>→ Enemy Actor Draw</span></span>\n<span data-line=\"\"><span>→ Enemy AI Turn: play cards</span></span>\n<span data-line=\"\"><span>→ Resolve Status / Buff</span></span>\n<span data-line=\"\"><span>→ Next Round</span></span></code></pre></figure>\n<p>这套循环看起来仍是 PvE，但底层已经是“两个 Actor 轮流按同一规则打牌”。这就是后续 PvP 的基础。</p>\n<h3 id=\"46-敌人-ai\">4.6 敌人 AI</h3>\n<p>第一版敌人 AI 不做复杂。它只需要证明“敌人也能用卡组打牌”。</p>\n<p>MVP AI 规则：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>按手牌顺序扫描</span></span>\n<span data-line=\"\"><span>→ 找到第一张当前能量足够的牌</span></span>\n<span data-line=\"\"><span>→ 选择合法目标</span></span>\n<span data-line=\"\"><span>→ 打出</span></span>\n<span data-line=\"\"><span>→ 重复，直到没有可打牌或选择结束</span></span></code></pre></figure>\n<p>后续 AI 再逐步增加：</p>\n<ul>\n<li>低血量优先防御。</li>\n<li>玩家低血量优先攻击。</li>\n<li>能量利用率更高的出牌顺序。</li>\n<li>毒、抽牌、多段攻击等策略权重。</li>\n</ul>\n<h3 id=\"47-事件系统\">4.7 事件系统</h3>\n<p>我会预留事件系统，因为后续 buff、触发技、连锁效果、抽牌触发、单位死亡触发都会依赖它。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"gdscript\" data-theme=\"github-dark\"><code data-language=\"gdscript\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">signal</span><span style=\"color:#B392F0\"> card_played</span><span style=\"color:#E1E4E8\">(actor, card)</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">signal</span><span style=\"color:#B392F0\"> turn_started</span><span style=\"color:#E1E4E8\">(actor)</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">signal</span><span style=\"color:#B392F0\"> damage_taken</span><span style=\"color:#E1E4E8\">(target, amount)</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">signal</span><span style=\"color:#B392F0\"> actor_defeated</span><span style=\"color:#E1E4E8\">(actor)</span></span></code></pre></figure>\n<p>事件系统的目的，是把卡牌、Buff、Relic 和角色特性解耦开。</p>\n<h3 id=\"48-后置系统单位与-roguelike-循环\">4.8 后置系统：单位与 Roguelike 循环</h3>\n<p>单位系统、地图、奖励和 Boss 都是重要内容，但不进入最小 MVP。等双方打牌成立后，地图第一版只做够用的结构：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Start</span></span>\n<span data-line=\"\"><span>├─ 战斗</span></span>\n<span data-line=\"\"><span>├─ 商店</span></span>\n<span data-line=\"\"><span>├─ 随机事件</span></span>\n<span data-line=\"\"><span>└─ 精英</span></span></code></pre></figure>\n<p>我先解决三个问题：</p>\n<ul>\n<li>节点怎么生成。</li>\n<li>节点怎么跳转。</li>\n<li>战后奖励怎么发。</li>\n</ul>\n<p>复杂单位规则、复杂分支图、大量事件文本和超长 meta progression 都不进入第一版 Demo。</p>\n<hr>\n<h2 id=\"五技术路线与工程结构\">五、技术路线与工程结构</h2>\n<h3 id=\"51-项目结构\">5.1 项目结构</h3>\n<p>我会从一开始拆开逻辑层和表现层。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>res://</span></span>\n<span data-line=\"\"><span>├── core/              # 核心逻辑，不放 UI</span></span>\n<span data-line=\"\"><span>│   ├── battle/</span></span>\n<span data-line=\"\"><span>│   ├── card/</span></span>\n<span data-line=\"\"><span>│   ├── entity/</span></span>\n<span data-line=\"\"><span>│   ├── effect/</span></span>\n<span data-line=\"\"><span>│   └── relic/</span></span>\n<span data-line=\"\"><span>│</span></span>\n<span data-line=\"\"><span>├── data/              # .tres / .res 等数据资源</span></span>\n<span data-line=\"\"><span>│   ├── cards/</span></span>\n<span data-line=\"\"><span>│   ├── enemies/</span></span>\n<span data-line=\"\"><span>│   └── relics/</span></span>\n<span data-line=\"\"><span>│</span></span>\n<span data-line=\"\"><span>├── scenes/</span></span>\n<span data-line=\"\"><span>│   ├── battle/</span></span>\n<span data-line=\"\"><span>│   ├── map/</span></span>\n<span data-line=\"\"><span>│   └── ui/</span></span>\n<span data-line=\"\"><span>│</span></span>\n<span data-line=\"\"><span>├── ui/                # 纯 UI 逻辑</span></span>\n<span data-line=\"\"><span>└── utils/</span></span></code></pre></figure>\n<p>我会遵守这几个边界：</p>\n<ul>\n<li><code>core/</code> 只负责规则。</li>\n<li><code>ui/</code> 和 <code>scenes/</code> 只负责表现。</li>\n<li>卡牌和敌人尽量用资源描述，不把数值写死在场景里。</li>\n<li>不把规则逻辑写进 UI，避免后续改规则、测试和扩卡都变困难。</li>\n</ul>\n<h3 id=\"52-项目主文档体系\">5.2 项目主文档体系</h3>\n<p>我会先维护三类文档，不做过重的文档矩阵。</p>\n<h4 id=\"gddgame-design-document\">GDD（Game Design Document）</h4>\n<p>GDD 面向全员，写规则和体验，不写代码实现：</p>\n<ul>\n<li>游戏概述。</li>\n<li>核心玩法。</li>\n<li>卡牌系统。</li>\n<li>战斗系统。</li>\n<li>Roguelike 结构。</li>\n<li>敌人与 AI。</li>\n<li>项目职务与 owner。</li>\n<li>开发路线图。</li>\n</ul>\n<h4 id=\"tddtechnical-design-document\">TDD（Technical Design Document）</h4>\n<p>TDD 面向程序组，写技术结构和边界：</p>\n<ul>\n<li>核心模块划分。</li>\n<li>关键类与数据流。</li>\n<li>状态机。</li>\n<li>资源组织方式。</li>\n<li>事件系统。</li>\n<li>存档与配置边界。</li>\n</ul>\n<h4 id=\"art-guide--ui-guide\">Art Guide / UI Guide</h4>\n<p>视觉和 UI 规范面向美术与 UI 执行：</p>\n<ul>\n<li>卡牌尺寸与版式。</li>\n<li>HUD 结构。</li>\n<li>字体与颜色方向。</li>\n<li>图标风格。</li>\n<li>角色、敌人、卡牌视觉关系。</li>\n</ul>\n<hr>\n<h2 id=\"六版本边界与-mvp\">六、版本边界与 MVP</h2>\n<h3 id=\"61-第一验收-mvp-目标\">6.1 第一验收 MVP 目标</h3>\n<p>我会把第一验收 MVP 锁定为“双方都能打牌的一场战斗”，不把它做成完整商业化版本，也不在第一阶段做完整 PvP。后续 Demo 可以继续向卡组构筑和 Roguelike 外壳扩展，但只有这个 MVP 先成立，后面的地图、Boss 和差异化机制才有意义。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>开始战斗</span></span>\n<span data-line=\"\"><span>→ 玩家抽牌、获得能量、出牌</span></span>\n<span data-line=\"\"><span>→ 敌人抽牌、获得能量、AI 出牌</span></span>\n<span data-line=\"\"><span>→ 双方循环结算</span></span>\n<span data-line=\"\"><span>→ 胜负判定</span></span></code></pre></figure>\n<p>MVP 必须包含：</p>\n<ul>\n<li>双方都有卡组。</li>\n<li>双方都有手牌、抽牌、能量和出牌。</li>\n<li>玩家初始牌组约 10 张。</li>\n<li>敌人卡组约 5 到 8 张。</li>\n<li>极简敌人 AI：优先打出第一张能打的牌。</li>\n<li>5 到 8 张基础卡牌：攻击、防御、抽牌、毒、多段攻击。</li>\n<li>一场完整的玩家回合 -> 敌人回合 -> 胜负判定流程。</li>\n</ul>\n<p>MVP 暂不包含：</p>\n<ul>\n<li>完整 PvP。</li>\n<li>联机、匹配、同步、回放。</li>\n<li>地图。</li>\n<li>relic。</li>\n<li>单位系统。</li>\n<li>献祭。</li>\n<li>UI 美术打磨。</li>\n<li>多敌人战斗。</li>\n<li>多角色开局。</li>\n<li>长剧情分支。</li>\n<li>复杂 Meta 成长。</li>\n<li>大量可收集外围系统。</li>\n</ul>\n<p>我判断 Demo 成功与否，不看内容是否很多，而看“双方同规则打牌”这件事是否成立、是否有基础乐趣。</p>\n<h3 id=\"62-mvp-分级\">6.2 MVP 分级</h3>\n<h4 id=\"v1\">V1</h4>\n<p>我先做一场最小“双方打牌”战斗：</p>\n<ul>\n<li>玩家和敌人各一个 Actor。</li>\n<li>玩家 10 张卡组。</li>\n<li>敌人 5 到 8 张卡组。</li>\n<li>双方都有手牌、能量、抽牌、出牌。</li>\n<li>敌人 AI：优先打出第一张能打的牌。</li>\n<li>胜负判定。</li>\n</ul>\n<h4 id=\"v2\">V2</h4>\n<p>我再把战斗变得可读、可玩，并开始形成构筑感：</p>\n<ul>\n<li>10 张左右基础卡牌。</li>\n<li>Buff / Debuff。</li>\n<li>敌人卡组模板。</li>\n<li>简单敌人 AI 权重。</li>\n<li>简单奖励选择。</li>\n</ul>\n<h4 id=\"v3\">V3</h4>\n<p>我最后补肉鸽外壳：</p>\n<ul>\n<li>3 到 5 场连续战斗。</li>\n<li>简单地图。</li>\n<li>1 个 Boss。</li>\n<li>战后加卡。</li>\n</ul>\n<p>只要 V1 做扎实，我就能判断 <code>Lex Universalis</code> 的核心方向是否值得继续推进。单位、献祭、进化都放在 V3 之后再评估。</p>\n<h3 id=\"63-开发顺序\">6.3 开发顺序</h3>\n<p>我的开发顺序是：</p>\n<ol>\n<li>玩家能打牌：出牌、扣血、回合切换、3 到 5 张基础卡牌。</li>\n<li>敌人也能打牌：Enemy 变成 Actor，拥有 deck / hand / energy / AI 出牌。</li>\n<li>战斗可玩化：卡牌扩展、Buff / Debuff、敌人卡组模板。</li>\n<li>卡组构筑：战后加卡、简单卡池、初步平衡。</li>\n<li>Roguelike 外壳：3 到 5 场战斗、简单节点地图、一个 Boss。</li>\n<li>差异化机制：单位、献祭、进化。</li>\n<li>未来 PvP：联机或异步对战。</li>\n</ol>\n<hr>\n<h2 id=\"七按完成度推进的开发计划\">七、按完成度推进的开发计划</h2>\n<p>我不按日期或周数安排 <code>Lex Universalis</code> 的项目目标。这个项目更适合按“系统完成程度”推进：前一个系统没有达到可试玩标准，就不进入下一个系统。这样可以避免表面上排期推进了，但核心玩法其实没有成立。</p>\n<p>每个阶段都必须满足三类条件：</p>\n<ul>\n<li><strong>可运行</strong>：不是文档完成，而是游戏里能跑。</li>\n<li><strong>可试玩</strong>：不是只在调试台通过，而是玩家可以实际操作。</li>\n<li><strong>可判断</strong>：完成后能判断这个方向是否值得继续投入。</li>\n</ul>\n<h3 id=\"71-完成度-1玩家能打牌\">7.1 完成度 1：玩家能打牌</h3>\n<p>这一阶段只追一个目标：玩家作为 <code>Actor</code> 可以完成一轮基础出牌。</p>\n<h4 id=\"核心实现\">核心实现</h4>\n<ul>\n<li>建立 Godot 项目基础结构。</li>\n<li>确定 <code>CardData / EffectData / Actor / BattleManager</code> 四个核心入口。</li>\n<li>玩家拥有 <code>deck / hand / discard_pile / energy / hp</code>。</li>\n<li>实现抽牌、出牌、扣血、弃牌、结束回合。</li>\n<li>做出 3 张最基础卡牌：攻击、防御、抽牌。</li>\n<li>放入 1 个临时敌人，先作为可被攻击的目标。</li>\n</ul>\n<h4 id=\"完成标准\">完成标准</h4>\n<ul>\n<li>玩家进入战斗后能抽牌。</li>\n<li>玩家能看到手牌和能量。</li>\n<li>玩家能打出至少 3 类卡牌。</li>\n<li>出牌能正确消耗能量。</li>\n<li>攻击牌能造成伤害，防御牌能产生防御，抽牌牌能改变手牌。</li>\n<li>战斗能判断胜利或失败。</li>\n</ul>\n<h4 id=\"阶段产出\">阶段产出</h4>\n<ul>\n<li>最小战斗场景。</li>\n<li>首版 <code>Actor</code>。</li>\n<li>首版 <code>BattleManager</code>。</li>\n<li>3 张基础卡牌资源。</li>\n<li>一份最小卡牌数据表。</li>\n</ul>\n<h4 id=\"暂不处理\">暂不处理</h4>\n<ul>\n<li>敌人卡组。</li>\n<li>敌人 AI。</li>\n<li>地图。</li>\n<li>战后奖励。</li>\n<li>美术风格。</li>\n</ul>\n<h3 id=\"72-完成度-2敌人也能打牌\">7.2 完成度 2：敌人也能打牌</h3>\n<p>这是整个项目最关键的阶段。完成这一阶段后，敌人不再是脚本怪，而是 AI 控制的规则玩家。</p>\n<h4 id=\"核心实现-1\">核心实现</h4>\n<ul>\n<li>玩家和敌人都统一成 <code>Actor</code>。</li>\n<li>敌人拥有自己的 <code>deck / hand / discard_pile / energy / hp</code>。</li>\n<li>敌人回合开始时抽牌并获得能量。</li>\n<li>敌人能调用同一套 <code>play_card()</code>。</li>\n<li>敌人使用和玩家同一套 <code>CardData</code> 与 <code>EffectData</code>。</li>\n<li>AI 先只做最小规则：按手牌顺序打出第一张能打的牌。</li>\n</ul>\n<h4 id=\"完成标准-1\">完成标准</h4>\n<ul>\n<li>敌人不是固定攻击脚本。</li>\n<li>敌人可以从自己的卡组抽牌。</li>\n<li>敌人可以消耗能量打牌。</li>\n<li>敌人能打攻击、防御、抽牌类卡牌。</li>\n<li>玩家回合和敌人回合能循环。</li>\n<li>一场战斗能以双方同规则出牌的方式结束。</li>\n</ul>\n<h4 id=\"阶段产出-1\">阶段产出</h4>\n<ul>\n<li><code>EnemyActor</code> 或等价的 AI 控制 Actor。</li>\n<li>极简 AI 决策器。</li>\n<li>1 套敌人基础卡组。</li>\n<li>敌人出牌日志或战斗内反馈。</li>\n<li>一场完整“玩家 vs AI 玩家”战斗。</li>\n</ul>\n<h4 id=\"暂不处理-1\">暂不处理</h4>\n<ul>\n<li>聪明 AI。</li>\n<li>多敌人。</li>\n<li>PvP。</li>\n<li>单位系统。</li>\n<li>复杂状态连锁。</li>\n</ul>\n<h3 id=\"73-完成度-3基础卡池成立\">7.3 完成度 3：基础卡池成立</h3>\n<p>这一阶段的目标是让双方打牌不只是能跑，而是开始有选择和差异。</p>\n<h4 id=\"核心实现-2\">核心实现</h4>\n<ul>\n<li>把基础卡扩到 8 到 10 张。</li>\n<li>覆盖攻击、防御、抽牌、毒、多段攻击、增益或减益。</li>\n<li>为每张卡补齐名称、费用、效果、目标类型和描述。</li>\n<li>初步建立卡牌稀有度或类型标签。</li>\n<li>让玩家卡组和敌人卡组共享同一套卡牌效果系统。</li>\n</ul>\n<h4 id=\"完成标准-2\">完成标准</h4>\n<ul>\n<li>玩家不再只是在重复打同一种攻击牌。</li>\n<li>敌人可以通过卡组表现出不同倾向。</li>\n<li>卡牌效果能通过 <code>EffectData</code> 组合，而不是写死在单张卡里。</li>\n<li>玩家能从战斗中感受到“出牌顺序”和“能量分配”的差异。</li>\n</ul>\n<h4 id=\"阶段产出-2\">阶段产出</h4>\n<ul>\n<li>8 到 10 张基础卡。</li>\n<li>首版卡牌平衡表。</li>\n<li>2 到 3 套敌人卡组模板。</li>\n<li>首版关键词说明。</li>\n</ul>\n<h4 id=\"暂不处理-2\">暂不处理</h4>\n<ul>\n<li>大量卡池。</li>\n<li>稀有卡复杂机制。</li>\n<li>卡牌升级系统。</li>\n<li>献祭、进化等特色机制。</li>\n</ul>\n<h3 id=\"74-完成度-4构筑感出现\">7.4 完成度 4：构筑感出现</h3>\n<p>这一阶段的目标是让玩家不只是在打一场固定战斗，而是开始对卡组产生管理感。</p>\n<h4 id=\"核心实现-3\">核心实现</h4>\n<ul>\n<li>战斗胜利后出现卡牌奖励。</li>\n<li>奖励采用三选一或类似的简单选择。</li>\n<li>选择的卡能加入玩家卡组。</li>\n<li>下一场战斗使用更新后的卡组。</li>\n<li>保留玩家血量或其他基础状态。</li>\n</ul>\n<h4 id=\"完成标准-3\">完成标准</h4>\n<ul>\n<li>玩家能在战斗后改变自己的卡组。</li>\n<li>卡组变化会影响下一场战斗。</li>\n<li>奖励选择不是纯装饰，而是能改变打法。</li>\n<li>至少能连续完成多场战斗。</li>\n</ul>\n<h4 id=\"阶段产出-3\">阶段产出</h4>\n<ul>\n<li>战后奖励界面。</li>\n<li>卡组增删逻辑。</li>\n<li>简单卡池抽取规则。</li>\n<li>连续战斗流程。</li>\n</ul>\n<h4 id=\"暂不处理-3\">暂不处理</h4>\n<ul>\n<li>商店。</li>\n<li>遗物。</li>\n<li>复杂事件。</li>\n<li>长线 Meta 成长。</li>\n</ul>\n<h3 id=\"75-完成度-5roguelike-外壳成立\">7.5 完成度 5：Roguelike 外壳成立</h3>\n<p>这一阶段才开始做地图和一局流程。它不是 MVP 的前置条件，而是 MVP 成立后的外壳。</p>\n<h4 id=\"核心实现-4\">核心实现</h4>\n<ul>\n<li>3 到 5 场连续战斗。</li>\n<li>简单节点地图。</li>\n<li>普通战斗节点。</li>\n<li>奖励节点。</li>\n<li>1 个 Boss 节点。</li>\n<li>Boss 拥有独立卡组和更明确的战斗节奏。</li>\n</ul>\n<h4 id=\"完成标准-4\">完成标准</h4>\n<ul>\n<li>玩家能从起点推进到 Boss。</li>\n<li>每场战斗之间的卡组状态能保留。</li>\n<li>Boss 战和普通战斗有明显差异。</li>\n<li>一局可以完整结束，而不是只停在单场战斗。</li>\n</ul>\n<h4 id=\"阶段产出-4\">阶段产出</h4>\n<ul>\n<li>首版地图流。</li>\n<li>首版 Boss。</li>\n<li>3 到 5 个敌人或敌人卡组模板。</li>\n<li>一局 Demo 闭环。</li>\n</ul>\n<h4 id=\"暂不处理-4\">暂不处理</h4>\n<ul>\n<li>大地图分支。</li>\n<li>商店经济。</li>\n<li>大量剧情事件。</li>\n<li>复杂 Meta progression。</li>\n</ul>\n<h3 id=\"76-完成度-6差异化机制选择\">7.6 完成度 6：差异化机制选择</h3>\n<p>只有当双方打牌、基础卡池、构筑和一局外壳都成立后，我才会考虑差异化机制。这里不能贪多，只能先选一个方向验证。</p>\n<p>候选方向：</p>\n<ul>\n<li><strong>单位系统</strong>：让部分卡牌召唤单位，形成场上持续压力。</li>\n<li><strong>献祭机制</strong>：通过消耗单位、卡牌或资源换取更强效果。</li>\n<li><strong>卡牌进化</strong>：让卡牌在一局中发生永久或半永久变化。</li>\n</ul>\n<p>选择标准：</p>\n<ul>\n<li>是否能增强“双方打牌”的核心，而不是抢走核心。</li>\n<li>是否能用现有 <code>Actor / CardData / EffectData / BattleManager</code> 承载。</li>\n<li>是否会让敌人 AI 复杂度失控。</li>\n<li>是否能用少量内容验证玩法价值。</li>\n</ul>\n<p>阶段完成标准：</p>\n<ul>\n<li>只加入一个差异化机制。</li>\n<li>该机制至少有 2 到 3 张卡能体现。</li>\n<li>玩家和敌人都能在规则上使用或应对该机制。</li>\n<li>如果机制破坏基础战斗节奏，就回退到上一阶段。</li>\n</ul>\n<h3 id=\"77-完成度-7体验打磨\">7.7 完成度 7：体验打磨</h3>\n<p>这一阶段不扩功能，只把已经成立的 Demo 打磨到能给别人试玩。</p>\n<h4 id=\"核心实现-5\">核心实现</h4>\n<ul>\n<li>出牌反馈。</li>\n<li>受击反馈。</li>\n<li>抽牌、弃牌、能量变化反馈。</li>\n<li>敌人出牌可读性。</li>\n<li>基础音效。</li>\n<li>错误提示和不可出牌提示。</li>\n<li>战斗结束结算。</li>\n</ul>\n<h4 id=\"完成标准-5\">完成标准</h4>\n<ul>\n<li>不看代码的人也能理解当前轮到谁、能做什么、发生了什么。</li>\n<li>敌人出牌不是“突然扣血”，而是能看到卡牌和效果。</li>\n<li>玩家能独立完成一局 Demo。</li>\n<li>试玩反馈能集中在玩法问题，而不是“看不懂怎么操作”。</li>\n</ul>\n<h3 id=\"78-完成度-8未来-pvp-预留\">7.8 完成度 8：未来 PvP 预留</h3>\n<p>PvP 不进入当前 Demo 的目标范围。只有当 Actor、BattleManager、卡牌效果、AI 玩家和一局流程都稳定后，我才会考虑 PvP。</p>\n<p>PvP 预留方向：</p>\n<ul>\n<li>异步对战。</li>\n<li>联机对战。</li>\n<li>匹配。</li>\n<li>同步 / 回放。</li>\n<li>远端玩家控制的 <code>Actor</code>。</li>\n</ul>\n<p>我不会为了未来 PvP 现在就做网络层。当前只需要保证战斗内核不是写死的单机脚本，而是能从 <code>Actor</code> 控制权自然扩展。</p>\n<hr>\n<h2 id=\"八协作机制与验收节点\">八、协作机制与验收节点</h2>\n<h3 id=\"81-阶段推进节奏\">8.1 阶段推进节奏</h3>\n<h4 id=\"阶段开始\">阶段开始</h4>\n<p>每进入一个阶段前，我会明确当前唯一目标、负责 owner、完成标准和明确不做项。没有完成标准的阶段不启动。</p>\n<h4 id=\"阶段推进中\">阶段推进中</h4>\n<p>同步时只讲三件事：当前阶段完成了什么、下一步要补什么、卡在哪里。讨论不能跳到后续阶段抢跑。</p>\n<h4 id=\"阶段验收\">阶段验收</h4>\n<p>每个阶段结束必须产出一个可试玩版本。全员试玩后，只记录真实问题，不开散会式脑暴。</p>\n<h3 id=\"82-完成度验收点\">8.2 完成度验收点</h3>\n<h4 id=\"验收点-1玩家必须能打一局\">验收点 1：玩家必须能打一局</h4>\n<p>如果玩家抽牌、出牌、扣血、回合切换、胜负判定这条链路还没有完成，就不能进入敌人打牌阶段。</p>\n<h4 id=\"验收点-2敌人必须能打牌\">验收点 2：敌人必须能打牌</h4>\n<p>如果敌人还只是写死行为，而不是拥有卡组、手牌、能量和 AI 出牌，我会暂停外围内容，优先补齐 Actor 统一结构。</p>\n<h4 id=\"验收点-3构筑必须影响下一场战斗\">验收点 3：构筑必须影响下一场战斗</h4>\n<p>如果战后加卡不能影响后续战斗，说明卡组构筑还只是界面装饰，不能进入 Roguelike 外壳阶段。</p>\n<h4 id=\"验收点-4必须有一局流程\">验收点 4：必须有一局流程</h4>\n<p>如果还不能完成连续战斗、战后加卡、Boss 结算，就不继续扩差异化机制。</p>\n<h4 id=\"验收点-5demo-必须可被外部试玩\">验收点 5：Demo 必须可被外部试玩</h4>\n<p>最终 Demo 的完整标准是“双方同规则打牌”成立，并且玩家能看懂、能操作、能完成一局。它不是 PvP、单位、献祭或复杂地图都完成。</p>\n<hr>\n<h2 id=\"九参考源码与拆解方向\">九、参考源码与拆解方向</h2>\n<p>我会把参考源码当作拆解对象，而不是寻找一个可以直接照搬的完整成品。<code>Lex Universalis</code> 自己的代码仓库是主项目真源，其他仓库只用于学习结构、交互和工程拆法。</p>\n<h3 id=\"91-lex-universalis-仓库\">9.1 Lex Universalis 仓库</h3>\n<h4 id=\"lex-universalis\">Lex Universalis</h4>\n<ul>\n<li>GitHub：<a href=\"https://github.com/emptyinkpot/Lex-Universalis\">https://github.com/emptyinkpot/Lex-Universalis</a></li>\n<li>用途：团队实际开发仓库。</li>\n<li>当前定位：Godot 4.x 桌面游戏项目。</li>\n</ul>\n<p>我会把这个仓库作为唯一项目源码主线。参考源码里的结构、交互和实现方式，只能在理解后吸收进 <code>Lex Universalis</code>，不能直接让参考代码反过来主导项目结构。</p>\n<h3 id=\"92-核心逻辑--架构参考\">9.2 核心逻辑 / 架构参考</h3>\n<h4 id=\"slay-the-web\">Slay the Web</h4>\n<ul>\n<li>GitHub：<a href=\"https://github.com/oskarrough/slaytheweb\">https://github.com/oskarrough/slaytheweb</a></li>\n</ul>\n<p>我主要看它的：</p>\n<ul>\n<li>卡牌肉鸽核心结构。</li>\n<li>地图、战斗、卡组的拆分方式。</li>\n<li>逻辑层和 UI 的解耦。</li>\n<li>数据驱动组织方式。</li>\n</ul>\n<p>重点价值：</p>\n<ul>\n<li><code>GameFlowManager</code> 这类流程控制思路。</li>\n<li><code>Card / Player / Enemy</code> 分离建模。</li>\n<li>事件系统与可复现 RNG。</li>\n</ul>\n<h4 id=\"slay-the-spire-c-复刻--同类高校项目\">Slay the Spire C++ 复刻 / 同类高校项目</h4>\n<ul>\n<li>GitHub：<a href=\"https://github.com/ShockingMaster/Tongji_University_Slay_the_Spire\">https://github.com/ShockingMaster/Tongji_University_Slay_the_Spire</a></li>\n</ul>\n<p>我主要看它的：</p>\n<ul>\n<li>面向对象建模方式。</li>\n<li>Buff / 状态系统。</li>\n<li>工厂模式、事件系统、对象生成。</li>\n</ul>\n<p>我不会照搬 C++ 实现，而是借它理解卡牌对象怎么抽象、Actor 怎么统一建模、状态叠加怎么避免写成一堆 <code>if/else</code>。</p>\n<h4 id=\"godot-官方-demo-项目\">Godot 官方 Demo 项目</h4>\n<ul>\n<li>GitHub：<a href=\"https://github.com/godotengine/godot-demo-projects\">https://github.com/godotengine/godot-demo-projects</a></li>\n</ul>\n<p>我主要看它的：</p>\n<ul>\n<li>Godot 4.x 项目组织方式。</li>\n<li>场景、输入、UI、资源加载的官方写法。</li>\n<li><code>Control</code> UI 和 gameplay 场景之间的拆分方式。</li>\n</ul>\n<p>这个仓库不是卡牌肉鸽源码，但可以作为 Godot 工程习惯和基础写法的参考，避免 <code>Lex Universalis</code> 一开始就写出不符合引擎习惯的结构。</p>\n<h3 id=\"93-卡牌-ui--交互层参考\">9.3 卡牌 UI / 交互层参考</h3>\n<h4 id=\"card-frameworkgodot\">Card Framework（Godot）</h4>\n<ul>\n<li>GitHub：<a href=\"https://github.com/chun92/card-framework\">https://github.com/chun92/card-framework</a></li>\n<li>Godot Asset Library：<a href=\"https://godotengine.org/asset-library/asset/3616\">https://godotengine.org/asset-library/asset/3616</a></li>\n</ul>\n<p>我主要看它的：</p>\n<ul>\n<li>手牌展示。</li>\n<li>卡牌 hover / 拖拽 / 排列。</li>\n<li>目标选择和交互反馈。</li>\n</ul>\n<p>这类项目更偏表现层，不是核心玩法框架。我会把它当作 <code>Lex Universalis</code> 的卡牌 UI 与交互反馈参考，而不是战斗规则参考。</p>\n<h3 id=\"94-参考方式\">9.4 参考方式</h3>\n<p>我不会期待找到一个完整成品来改，而是分模块学习：</p>\n<ul>\n<li>用一个项目学战斗主循环。</li>\n<li>用一个项目学 Godot 资源驱动。</li>\n<li>用一个项目学卡牌 UI 交互。</li>\n<li>用一个项目学 Buff / 事件系统。</li>\n</ul>\n<p>最终我要做的是系统拼装 + 自己的玩法选择，不是简单 clone。</p>\n<hr>\n<h2 id=\"十风险控制与避坑清单\">十、风险控制与避坑清单</h2>\n<h3 id=\"101-项目管理风险\">10.1 项目管理风险</h3>\n<h4 id=\"没有唯一拍板人\">没有唯一拍板人</h4>\n<p>如果没有唯一拍板人，项目会持续讨论但无法收口。所以我会把 Final Owner 写进团队结构。</p>\n<h4 id=\"没有技术-owner\">没有技术 owner</h4>\n<p>如果没有技术 owner，后期系统很容易越做越乱。所以我会让 Tech Lead 对架构和系统边界负责。</p>\n<h4 id=\"设计和程序脱节\">设计和程序脱节</h4>\n<p>卡牌系统做出来不等于游戏好玩。我会把阶段试玩作为验收方式，避免设计和实现长期分离。</p>\n<h4 id=\"人人都做一点\">人人都做一点</h4>\n<p>如果所有人都只做一点边角，核心模块就没人真正负责。所以我会按 owner 拆任务。</p>\n<h4 id=\"一直加功能不关版本边界\">一直加功能，不关版本边界</h4>\n<p><code>Lex Universalis</code> 最大的风险不是做不出来，而是做太多。我会用 3 个月 Demo 边界限制功能扩张。</p>\n<h3 id=\"102-技术风险\">10.2 技术风险</h3>\n<h4 id=\"把逻辑写进-ui\">把逻辑写进 UI</h4>\n<p>如果规则逻辑写进 UI，后续改规则、测试和扩卡都会变困难。所以我会从目录结构上先拆开 <code>core/</code> 和 <code>ui/</code>。</p>\n<h4 id=\"卡牌逻辑写死成-ifelse\">卡牌逻辑写死成 <code>if/else</code></h4>\n<p>前几张牌写 <code>if/else</code> 能跑，但二十张以后会失控。所以我会优先建立 <code>EffectData</code> 和效果派生结构。</p>\n<h4 id=\"没有事件系统\">没有事件系统</h4>\n<p>如果没有事件系统，relic、被动、状态触发和连锁效果都会变得难维护。所以我会在早期就预留事件机制。</p>\n<h4 id=\"太早做复杂地图\">太早做复杂地图</h4>\n<p>地图过重会拖慢战斗验证。所以我会先做简单节点推进，复杂地图和大量事件文本后置。</p>\n<h4 id=\"一开始就做完整-pvp\">一开始就做完整 PvP</h4>\n<p>完整 PvP 会立刻引入联机、同步、匹配、回放和公平性问题，复杂度会把 Demo 压垮。所以当前阶段我只做“AI 控制的规则玩家”，让 PvP 以后从 Actor 控制权切换自然长出来。</p>\n<h4 id=\"一开始就完整炉石化\">一开始就完整炉石化</h4>\n<p>完整炉石化会让站位、单位交换和复杂场面效果同时爆炸。所以我只先做双方卡组、手牌、能量、目标选择和基础出牌，不在 MVP 做单位系统。</p>\n<hr>\n<h2 id=\"十一结论与后续文档\">十一、结论与后续文档</h2>\n<h3 id=\"111-决策摘要\">11.1 决策摘要</h3>\n<p>我对 <code>Lex Universalis</code> 的当前决策是：</p>\n<ul>\n<li><strong>引擎</strong>：Godot 4.x</li>\n<li><strong>类型</strong>：PvE 优先、未来可推导 PvP 的卡牌肉鸽</li>\n<li><strong>主骨架</strong>：杀戮尖塔</li>\n<li><strong>核心战斗</strong>：玩家 vs AI 玩家，双方都按同一规则打牌</li>\n<li><strong>架构重点</strong>：Actor 统一抽象、资源驱动、效果系统、事件系统、战斗状态机</li>\n<li><strong>开发顺序</strong>：玩家能打牌 -> 敌人也能打牌 -> 卡组构筑 -> Roguelike 外壳 -> 差异化机制 -> 未来 PvP</li>\n</ul>\n<p>一句话版本：</p>\n<blockquote>\n<p>我现在要做的不是完整 PvP，而是先做出“双方都按同一规则打牌”的 PvE；未来 PvP 只是 Actor 控制权从 AI 切换到玩家。</p>\n</blockquote>\n<h3 id=\"112-后续文档优先级\">11.2 后续文档优先级</h3>\n<p>接下来我会优先补这些文档：</p>\n<ol>\n<li>内部职位到真实成员的映射表。</li>\n<li>GDD：双方打牌规则、胜利条件、卡牌类型、敌人卡组模板。</li>\n<li>TDD：<code>Actor</code>、<code>BattleManager</code>、AI 决策、数据结构、事件协议。</li>\n<li>Art Guide / UI Guide：卡牌模板、HUD、字体、颜色、图标风格。</li>\n</ol>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "lex-universalis-项目企划书-godot",
+        "text": "Lex Universalis 项目企划书（Godot）"
+      },
+      {
+        "depth": 2,
+        "slug": "目录",
+        "text": "目录"
+      },
+      {
+        "depth": 2,
+        "slug": "一-人员分配与项目组织",
+        "text": "一、人员分配与项目组织"
+      },
+      {
+        "depth": 3,
+        "slug": "1-1-组织原则",
+        "text": "1.1 组织原则"
+      },
+      {
+        "depth": 3,
+        "slug": "1-2-计划团队结构-8-人",
+        "text": "1.2 计划团队结构（8 人）"
+      },
+      {
+        "depth": 3,
+        "slug": "1-3-按职务拆解的-ownership",
+        "text": "1.3 按职务拆解的 ownership"
+      },
+      {
+        "depth": 2,
+        "slug": "二-项目概述",
+        "text": "二、项目概述"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-项目目标",
+        "text": "2.1 项目目标"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-项目类型",
+        "text": "2.2 项目类型"
+      },
+      {
+        "depth": 3,
+        "slug": "2-3-技术选择",
+        "text": "2.3 技术选择"
+      },
+      {
+        "depth": 2,
+        "slug": "三-玩法定位与融合策略",
+        "text": "三、玩法定位与融合策略"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-基础玩法定位",
+        "text": "3.1 基础玩法定位"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-pvp-的正确位置",
+        "text": "3.2 PvP 的正确位置"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-融合方式",
+        "text": "3.3 融合方式"
+      },
+      {
+        "depth": 3,
+        "slug": "3-4-我会保留和后置的元素",
+        "text": "3.4 我会保留和后置的元素"
+      },
+      {
+        "depth": 2,
+        "slug": "四-核心系统设计",
+        "text": "四、核心系统设计"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-actor-统一抽象",
+        "text": "4.1 Actor 统一抽象"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-卡牌数据",
+        "text": "4.2 卡牌数据"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-效果系统",
+        "text": "4.3 效果系统"
+      },
+      {
+        "depth": 3,
+        "slug": "4-4-实体系统",
+        "text": "4.4 实体系统"
+      },
+      {
+        "depth": 3,
+        "slug": "4-5-战斗状态机",
+        "text": "4.5 战斗状态机"
+      },
+      {
+        "depth": 3,
+        "slug": "4-6-敌人-ai",
+        "text": "4.6 敌人 AI"
+      },
+      {
+        "depth": 3,
+        "slug": "4-7-事件系统",
+        "text": "4.7 事件系统"
+      },
+      {
+        "depth": 3,
+        "slug": "4-8-后置系统-单位与-roguelike-循环",
+        "text": "4.8 后置系统：单位与 Roguelike 循环"
+      },
+      {
+        "depth": 2,
+        "slug": "五-技术路线与工程结构",
+        "text": "五、技术路线与工程结构"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-项目结构",
+        "text": "5.1 项目结构"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-项目主文档体系",
+        "text": "5.2 项目主文档体系"
+      },
+      {
+        "depth": 2,
+        "slug": "六-版本边界与-mvp",
+        "text": "六、版本边界与 MVP"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-第一验收-mvp-目标",
+        "text": "6.1 第一验收 MVP 目标"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-mvp-分级",
+        "text": "6.2 MVP 分级"
+      },
+      {
+        "depth": 3,
+        "slug": "6-3-开发顺序",
+        "text": "6.3 开发顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "七-按完成度推进的开发计划",
+        "text": "七、按完成度推进的开发计划"
+      },
+      {
+        "depth": 3,
+        "slug": "7-1-完成度-1-玩家能打牌",
+        "text": "7.1 完成度 1：玩家能打牌"
+      },
+      {
+        "depth": 3,
+        "slug": "7-2-完成度-2-敌人也能打牌",
+        "text": "7.2 完成度 2：敌人也能打牌"
+      },
+      {
+        "depth": 3,
+        "slug": "7-3-完成度-3-基础卡池成立",
+        "text": "7.3 完成度 3：基础卡池成立"
+      },
+      {
+        "depth": 3,
+        "slug": "7-4-完成度-4-构筑感出现",
+        "text": "7.4 完成度 4：构筑感出现"
+      },
+      {
+        "depth": 3,
+        "slug": "7-5-完成度-5-roguelike-外壳成立",
+        "text": "7.5 完成度 5：Roguelike 外壳成立"
+      },
+      {
+        "depth": 3,
+        "slug": "7-6-完成度-6-差异化机制选择",
+        "text": "7.6 完成度 6：差异化机制选择"
+      },
+      {
+        "depth": 3,
+        "slug": "7-7-完成度-7-体验打磨",
+        "text": "7.7 完成度 7：体验打磨"
+      },
+      {
+        "depth": 3,
+        "slug": "7-8-完成度-8-未来-pvp-预留",
+        "text": "7.8 完成度 8：未来 PvP 预留"
+      },
+      {
+        "depth": 2,
+        "slug": "八-协作机制与验收节点",
+        "text": "八、协作机制与验收节点"
+      },
+      {
+        "depth": 3,
+        "slug": "8-1-阶段推进节奏",
+        "text": "8.1 阶段推进节奏"
+      },
+      {
+        "depth": 3,
+        "slug": "8-2-完成度验收点",
+        "text": "8.2 完成度验收点"
+      },
+      {
+        "depth": 2,
+        "slug": "九-参考源码与拆解方向",
+        "text": "九、参考源码与拆解方向"
+      },
+      {
+        "depth": 3,
+        "slug": "9-1-lex-universalis-仓库",
+        "text": "9.1 Lex Universalis 仓库"
+      },
+      {
+        "depth": 3,
+        "slug": "9-2-核心逻辑-架构参考",
+        "text": "9.2 核心逻辑 / 架构参考"
+      },
+      {
+        "depth": 3,
+        "slug": "9-3-卡牌-ui-交互层参考",
+        "text": "9.3 卡牌 UI / 交互层参考"
+      },
+      {
+        "depth": 3,
+        "slug": "9-4-参考方式",
+        "text": "9.4 参考方式"
+      },
+      {
+        "depth": 2,
+        "slug": "十-风险控制与避坑清单",
+        "text": "十、风险控制与避坑清单"
+      },
+      {
+        "depth": 3,
+        "slug": "10-1-项目管理风险",
+        "text": "10.1 项目管理风险"
+      },
+      {
+        "depth": 3,
+        "slug": "10-2-技术风险",
+        "text": "10.2 技术风险"
+      },
+      {
+        "depth": 2,
+        "slug": "十一-结论与后续文档",
+        "text": "十一、结论与后续文档"
+      },
+      {
+        "depth": 3,
+        "slug": "11-1-决策摘要",
+        "text": "11.1 决策摘要"
+      },
+      {
+        "depth": 3,
+        "slug": "11-2-后续文档优先级",
+        "text": "11.2 后续文档优先级"
+      }
+    ],
+    "detailPath": "articles/md_3f7de99b3e99.json"
+  }
+}

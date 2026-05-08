@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_cd6289ee2e0f",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/SSE%20%E6%B5%81%E5%BC%8F%E5%8D%8F%E8%AE%AE%EF%BC%88Server-Sent%20Events%EF%BC%89.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程学习之路/SSE 流式协议（Server-Sent Events）.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/SSE 流式协议（Server-Sent Events）.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/SSE%20%E6%B5%81%E5%BC%8F%E5%8D%8F%E8%AE%AE%EF%BC%88Server-Sent%20Events%EF%BC%89.md",
+    "slug": "blog-编程学习之路-sse-流式协议-server-sent-events",
+    "title": "SSE 流式协议（Server-Sent Events）",
+    "summary": "这个东西跟ai大模型的关系很大 一、先说这套系统在干什么（目的） 你这个 Token Pool / Gateway 系统，本质是在做一件事： 把多个上游 AI key / provider，统一包装成一个 OpenAI API，让客户端随便用，还能自动切换、重试、抗失败。 也就是一个“AI 代理路由...",
+    "description": "这个东西跟ai大模型的关系很大 一、先说这套系统在干什么（目的） 你这个 Token Pool / Gateway 系统，本质是在做一件事： 把多个上游 AI key / provider，统一包装成一个 OpenAI API，让客户端随便用，还能自动切换、重试、抗失败。 也就是一个“AI 代理路由...",
+    "date": "2026-04-25",
+    "updated": "2026-04-25",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程学习之路"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程学习之路/SSE 流式协议（Server-Sent Events）.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/SSE 流式协议（Server-Sent Events）.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/SSE%20%E6%B5%81%E5%BC%8F%E5%8D%8F%E8%AE%AE%EF%BC%88Server-Sent%20Events%EF%BC%89.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "SSE 流式协议（Server Sent Events）",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程学习之路",
+        "SSE 流式协议（SERVER SENT EVENTS）"
+      ],
+      "subtitle": "这个东西跟ai大模型的关系很大 一、先说这套系统在干什么（目的） 你这个 Token Pool / Gateway 系统，本质是在做一件事： 把多个上游 AI key / provider，统一包装成一个 OpenAI API，让客户端随便用，还能自动切换、重试、抗失败。 也就是一个“AI 代理路由..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "这个东西跟ai大模型的关系很大\n\n\n---\n\n# 一、先说这套系统在干什么（目的）\n\n你这个 Token Pool / Gateway 系统，本质是在做一件事：\n\n> **把多个上游 AI key / provider，统一包装成一个 OpenAI API，让客户端随便用，还能自动切换、重试、抗失败。**\n\n也就是一个“AI 代理路由器”：\n\n```text\n客户端（Codex / OpenAI SDK）\n        ↓\n你的 Gateway（key.tengokukk.com）\n        ↓\n多个 provider / key pool\n        ↓\n真正的 OpenAI / Claude / Responses API\n```\n\n---\n\n# 二、你遇到的问题本质是什么（一句话）\n\n> **不是 AI 坏了，是“请求调度系统 + 重试系统 + 流式协议”三者一起错位了。**\n\n---\n\n# 三、拆成 4 个核心知识点（你这次全部踩到了）\n\n## ① SSE 流式协议（Server-Sent Events）\n\n### 它是干嘛的？\n\nAI streaming 的本质：\n\n```text\n不是一次性返回结果\n而是一边生成一边推：\n\ndata: token1\ndata: token2\ndata: token3\n...\ndata: DONE\n```\n\n最后必须有：\n\n```text\nresponse.completed\n```\n\n### 你的问题：\n\n👉 有些请求 **最后这个“结束信号丢了”**\n\n于是客户端就会：\n\n> “我还在等结果，但连接断了？”\n\n表现就是：\n\n- 卡住\n    \n- 或报：`stream closed before response.completed`\n    \n\n---\n\n## ② 请求生命周期（Request Lifecycle）\n\n一个完整 AI 请求不是一条直线，是：\n\n```text\n请求开始\n  ↓\n选择 provider\n  ↓\n发起 stream\n  ↓\n持续输出 tokens\n  ↓\n正常结束 / error\n  ↓\n必须 emit completion\n```\n\n### 你这里的问题：\n\n有些路径变成了：\n\n```text\nstream 断了\n但 completion 没发\n```\n\n👉 客户端以为“被掐线了”\n\n---\n\n## ③ Retry 机制（重试系统）\n\n### 正常设计应该是：\n\n```text\n失败 → 换 provider → 再试 → 再失败 → 再换\n```\n\n---\n\n### 你这里的问题有两个：\n\n#### ❌ 问题1：没有真正换 provider\n\n日志显示：\n\n```text\nretry 1/5 → provider A\nretry 2/5 → provider A\nretry 3/5 → provider A\n```\n\n👉 等于“假装在重试，其实一直打同一个坏节点”\n\n---\n\n## ④ Bug：null 被当成 0（非常关键）\n\n这是你最核心的隐蔽 bug：\n\n### 原始设计意图：\n\n```text\nnull = 没配置 → 用默认值\n```\n\n### 实际代码发生了：\n\n```js\nNumber(null) === 0\n```\n\n### 后果：\n\n```text\nmaxCredentialSwitchRetries = null\n        ↓\n被当成 0\n        ↓\n= 禁止重试\n```\n\n👉 系统直接“不会切 key 了”\n\n---\n\n# 四、为什么症状会“变来变去”\n\n你看到的现象变化，其实是不同层被修复后“漏斗往下掉”：\n\n---\n\n## 第一阶段（协议问题）\n\n```text\nstream断 + completion丢\n```\n\n👉 SSE 层坏\n\n---\n\n## 第二阶段（修完 SSE）\n\n```text\n卡几秒 → 消失\n```\n\n👉 变成 retry + routing 问题\n\n---\n\n## 第三阶段（修 retry）\n\n```text\n开始 retry 但没效果\n```\n\n👉 provider selection bug\n\n---\n\n## 第四阶段（发现根因）\n\n```text\nnull → 0\n= retry 被关闭\n```\n\n👉 控制层逻辑错误\n\n---\n\n# 五、这些模块分别在系统里干什么\n\n你可以这样理解整个架构：\n\n---\n\n## 1️⃣ 协议层（SSE / Responses）\n\n👉 负责“怎么把 AI 输出流给用户”\n\n问题类型：\n\n- token 不流\n    \n- completion 丢\n    \n- 连接断\n    \n\n---\n\n## 2️⃣ 路由层（Provider Selector）\n\n👉 负责“用哪个 AI key”\n\n问题类型：\n\n- 老是选同一个坏节点\n    \n- 没做隔离\n    \n- retry 不生效\n    \n\n---\n\n## 3️⃣ 控制层（Retry / Policy）\n\n👉 负责“失败了要不要换”\n\n问题类型：\n\n- null 被当 0\n    \n- retry 被关闭\n    \n- 策略丢失\n    \n\n---\n\n## 4️⃣ 观测层（Logs / Debug / Health）\n\n👉 负责“你怎么知道发生了什么”\n\n问题类型：\n\n- 看不到真实 provider 切换\n    \n- retry 不透明\n    \n- 请求链不可追踪\n    \n\n---\n\n# 六、为什么会出现这种“工业级复杂 bug”\n\n因为你这个系统其实是：\n\n> **一个 AI 网关 + 负载均衡 + 代理 + 流式协议 + 多 key 调度器**\n\n这类系统天然有 3 个特性：\n\n### ① 状态很多（stateful）\n\n- 请求状态\n    \n- provider 状态\n    \n- retry 状态\n    \n\n---\n\n### ② 时间敏感（streaming）\n\n- token 是实时的\n    \n- 不能补发\n    \n- 不能回滚\n    \n\n---\n\n### ③ 失败模式复杂\n\n- 网络断\n    \n- provider 失败\n    \n- quota 失败\n    \n- SSE 断\n    \n\n---\n\n# 七、最关键的“本质理解”\n\n如果只记一句话：\n\n> 这次不是一个 bug，而是 **“流式协议 + 路由系统 + 重试策略”三层错位导致的级联失败**\n\n---\n\n# 八、给你一个更直觉的比喻\n\n你这个系统其实像：\n\n> 一个外卖调度系统\n\n---\n\n### SSE = 外卖送达通知\n\n（告诉你“送到了/结束了”）\n\n### provider = 外卖员\n\n### retry = 换骑手\n\n### maxCredentialSwitchRetries = 最多能换几次骑手\n\n---\n\n### 你的 bug 就是：\n\n- 外卖员死活送不来（provider坏）\n    \n- 系统还不换人（retry=0）\n    \n- 而且送达通知还丢了（SSE缺 completion）\n    \n\n---\n\n# 九、如果你要继续深入（建议）\n\n你这个系统下一步应该补三件“工程级能力”：\n\n### 1. request trace ID 全链路追踪\n\n👉 每一步都能看到：\n\n```text\nreq → providerA → fail → providerB → success\n```\n\n---\n\n### 2. provider isolation（隔离失败节点）\n\n👉 一个坏节点不能被连续打\n\n---\n\n### 3. 强类型 config（避免 null=0）\n\n👉 所有 policy 必须：\n\n```text\nundefined = default\nnull = default\n0 = explicitly disable\n```\n\n---\n\n如果你愿意，我可以帮你把这一套整理成：\n\n> **“Token Pool / AI Gateway 工业级架构图 + 设计规范（对标 OpenAI / Anthropic）”**\n\n会比现在这个 debug 版本更系统化。",
+    "html": "<p>这个东西跟ai大模型的关系很大</p>\n<hr>\n<h1 id=\"一先说这套系统在干什么目的\">一、先说这套系统在干什么（目的）</h1>\n<p>你这个 Token Pool / Gateway 系统，本质是在做一件事：</p>\n<blockquote>\n<p><strong>把多个上游 AI key / provider，统一包装成一个 OpenAI API，让客户端随便用，还能自动切换、重试、抗失败。</strong></p>\n</blockquote>\n<p>也就是一个“AI 代理路由器”：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>客户端（Codex / OpenAI SDK）</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>你的 Gateway（key.tengokukk.com）</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>多个 provider / key pool</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>真正的 OpenAI / Claude / Responses API</span></span></code></pre></figure>\n<hr>\n<h1 id=\"二你遇到的问题本质是什么一句话\">二、你遇到的问题本质是什么（一句话）</h1>\n<blockquote>\n<p><strong>不是 AI 坏了，是“请求调度系统 + 重试系统 + 流式协议”三者一起错位了。</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"三拆成-4-个核心知识点你这次全部踩到了\">三、拆成 4 个核心知识点（你这次全部踩到了）</h1>\n<h2 id=\"-sse-流式协议server-sent-events\">① SSE 流式协议（Server-Sent Events）</h2>\n<h3 id=\"它是干嘛的\">它是干嘛的？</h3>\n<p>AI streaming 的本质：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>不是一次性返回结果</span></span>\n<span data-line=\"\"><span>而是一边生成一边推：</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>data: token1</span></span>\n<span data-line=\"\"><span>data: token2</span></span>\n<span data-line=\"\"><span>data: token3</span></span>\n<span data-line=\"\"><span>...</span></span>\n<span data-line=\"\"><span>data: DONE</span></span></code></pre></figure>\n<p>最后必须有：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>response.completed</span></span></code></pre></figure>\n<h3 id=\"你的问题\">你的问题：</h3>\n<p>👉 有些请求 <strong>最后这个“结束信号丢了”</strong></p>\n<p>于是客户端就会：</p>\n<blockquote>\n<p>“我还在等结果，但连接断了？”</p>\n</blockquote>\n<p>表现就是：</p>\n<ul>\n<li>\n<p>卡住</p>\n</li>\n<li>\n<p>或报：<code>stream closed before response.completed</code></p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-请求生命周期request-lifecycle\">② 请求生命周期（Request Lifecycle）</h2>\n<p>一个完整 AI 请求不是一条直线，是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>请求开始</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>选择 provider</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>发起 stream</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>持续输出 tokens</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>正常结束 / error</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>必须 emit completion</span></span></code></pre></figure>\n<h3 id=\"你这里的问题\">你这里的问题：</h3>\n<p>有些路径变成了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>stream 断了</span></span>\n<span data-line=\"\"><span>但 completion 没发</span></span></code></pre></figure>\n<p>👉 客户端以为“被掐线了”</p>\n<hr>\n<h2 id=\"-retry-机制重试系统\">③ Retry 机制（重试系统）</h2>\n<h3 id=\"正常设计应该是\">正常设计应该是：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>失败 → 换 provider → 再试 → 再失败 → 再换</span></span></code></pre></figure>\n<hr>\n<h3 id=\"你这里的问题有两个\">你这里的问题有两个：</h3>\n<h4 id=\"-问题1没有真正换-provider\">❌ 问题1：没有真正换 provider</h4>\n<p>日志显示：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>retry 1/5 → provider A</span></span>\n<span data-line=\"\"><span>retry 2/5 → provider A</span></span>\n<span data-line=\"\"><span>retry 3/5 → provider A</span></span></code></pre></figure>\n<p>👉 等于“假装在重试，其实一直打同一个坏节点”</p>\n<hr>\n<h2 id=\"-bugnull-被当成-0非常关键\">④ Bug：null 被当成 0（非常关键）</h2>\n<p>这是你最核心的隐蔽 bug：</p>\n<h3 id=\"原始设计意图\">原始设计意图：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>null = 没配置 → 用默认值</span></span></code></pre></figure>\n<h3 id=\"实际代码发生了\">实际代码发生了：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">Number</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">null</span><span style=\"color:#E1E4E8\">) </span><span style=\"color:#F97583\">===</span><span style=\"color:#79B8FF\"> 0</span></span></code></pre></figure>\n<h3 id=\"后果\">后果：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>maxCredentialSwitchRetries = null</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>被当成 0</span></span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"><span>= 禁止重试</span></span></code></pre></figure>\n<p>👉 系统直接“不会切 key 了”</p>\n<hr>\n<h1 id=\"四为什么症状会变来变去\">四、为什么症状会“变来变去”</h1>\n<p>你看到的现象变化，其实是不同层被修复后“漏斗往下掉”：</p>\n<hr>\n<h2 id=\"第一阶段协议问题\">第一阶段（协议问题）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>stream断 + completion丢</span></span></code></pre></figure>\n<p>👉 SSE 层坏</p>\n<hr>\n<h2 id=\"第二阶段修完-sse\">第二阶段（修完 SSE）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>卡几秒 → 消失</span></span></code></pre></figure>\n<p>👉 变成 retry + routing 问题</p>\n<hr>\n<h2 id=\"第三阶段修-retry\">第三阶段（修 retry）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>开始 retry 但没效果</span></span></code></pre></figure>\n<p>👉 provider selection bug</p>\n<hr>\n<h2 id=\"第四阶段发现根因\">第四阶段（发现根因）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>null → 0</span></span>\n<span data-line=\"\"><span>= retry 被关闭</span></span></code></pre></figure>\n<p>👉 控制层逻辑错误</p>\n<hr>\n<h1 id=\"五这些模块分别在系统里干什么\">五、这些模块分别在系统里干什么</h1>\n<p>你可以这样理解整个架构：</p>\n<hr>\n<h2 id=\"1️⃣-协议层sse--responses\">1️⃣ 协议层（SSE / Responses）</h2>\n<p>👉 负责“怎么把 AI 输出流给用户”</p>\n<p>问题类型：</p>\n<ul>\n<li>\n<p>token 不流</p>\n</li>\n<li>\n<p>completion 丢</p>\n</li>\n<li>\n<p>连接断</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"2️⃣-路由层provider-selector\">2️⃣ 路由层（Provider Selector）</h2>\n<p>👉 负责“用哪个 AI key”</p>\n<p>问题类型：</p>\n<ul>\n<li>\n<p>老是选同一个坏节点</p>\n</li>\n<li>\n<p>没做隔离</p>\n</li>\n<li>\n<p>retry 不生效</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"3️⃣-控制层retry--policy\">3️⃣ 控制层（Retry / Policy）</h2>\n<p>👉 负责“失败了要不要换”</p>\n<p>问题类型：</p>\n<ul>\n<li>\n<p>null 被当 0</p>\n</li>\n<li>\n<p>retry 被关闭</p>\n</li>\n<li>\n<p>策略丢失</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"4️⃣-观测层logs--debug--health\">4️⃣ 观测层（Logs / Debug / Health）</h2>\n<p>👉 负责“你怎么知道发生了什么”</p>\n<p>问题类型：</p>\n<ul>\n<li>\n<p>看不到真实 provider 切换</p>\n</li>\n<li>\n<p>retry 不透明</p>\n</li>\n<li>\n<p>请求链不可追踪</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"六为什么会出现这种工业级复杂-bug\">六、为什么会出现这种“工业级复杂 bug”</h1>\n<p>因为你这个系统其实是：</p>\n<blockquote>\n<p><strong>一个 AI 网关 + 负载均衡 + 代理 + 流式协议 + 多 key 调度器</strong></p>\n</blockquote>\n<p>这类系统天然有 3 个特性：</p>\n<h3 id=\"-状态很多stateful\">① 状态很多（stateful）</h3>\n<ul>\n<li>\n<p>请求状态</p>\n</li>\n<li>\n<p>provider 状态</p>\n</li>\n<li>\n<p>retry 状态</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"-时间敏感streaming\">② 时间敏感（streaming）</h3>\n<ul>\n<li>\n<p>token 是实时的</p>\n</li>\n<li>\n<p>不能补发</p>\n</li>\n<li>\n<p>不能回滚</p>\n</li>\n</ul>\n<hr>\n<h3 id=\"-失败模式复杂\">③ 失败模式复杂</h3>\n<ul>\n<li>\n<p>网络断</p>\n</li>\n<li>\n<p>provider 失败</p>\n</li>\n<li>\n<p>quota 失败</p>\n</li>\n<li>\n<p>SSE 断</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"七最关键的本质理解\">七、最关键的“本质理解”</h1>\n<p>如果只记一句话：</p>\n<blockquote>\n<p>这次不是一个 bug，而是 <strong>“流式协议 + 路由系统 + 重试策略”三层错位导致的级联失败</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"八给你一个更直觉的比喻\">八、给你一个更直觉的比喻</h1>\n<p>你这个系统其实像：</p>\n<blockquote>\n<p>一个外卖调度系统</p>\n</blockquote>\n<hr>\n<h3 id=\"sse--外卖送达通知\">SSE = 外卖送达通知</h3>\n<p>（告诉你“送到了/结束了”）</p>\n<h3 id=\"provider--外卖员\">provider = 外卖员</h3>\n<h3 id=\"retry--换骑手\">retry = 换骑手</h3>\n<h3 id=\"maxcredentialswitchretries--最多能换几次骑手\">maxCredentialSwitchRetries = 最多能换几次骑手</h3>\n<hr>\n<h3 id=\"你的-bug-就是\">你的 bug 就是：</h3>\n<ul>\n<li>\n<p>外卖员死活送不来（provider坏）</p>\n</li>\n<li>\n<p>系统还不换人（retry=0）</p>\n</li>\n<li>\n<p>而且送达通知还丢了（SSE缺 completion）</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"九如果你要继续深入建议\">九、如果你要继续深入（建议）</h1>\n<p>你这个系统下一步应该补三件“工程级能力”：</p>\n<h3 id=\"1-request-trace-id-全链路追踪\">1. request trace ID 全链路追踪</h3>\n<p>👉 每一步都能看到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>req → providerA → fail → providerB → success</span></span></code></pre></figure>\n<hr>\n<h3 id=\"2-provider-isolation隔离失败节点\">2. provider isolation（隔离失败节点）</h3>\n<p>👉 一个坏节点不能被连续打</p>\n<hr>\n<h3 id=\"3-强类型-config避免-null0\">3. 强类型 config（避免 null=0）</h3>\n<p>👉 所有 policy 必须：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>undefined = default</span></span>\n<span data-line=\"\"><span>null = default</span></span>\n<span data-line=\"\"><span>0 = explicitly disable</span></span></code></pre></figure>\n<hr>\n<p>如果你愿意，我可以帮你把这一套整理成：</p>\n<blockquote>\n<p><strong>“Token Pool / AI Gateway 工业级架构图 + 设计规范（对标 OpenAI / Anthropic）”</strong></p>\n</blockquote>\n<p>会比现在这个 debug 版本更系统化。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一-先说这套系统在干什么-目的",
+        "text": "一、先说这套系统在干什么（目的）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-你遇到的问题本质是什么-一句话",
+        "text": "二、你遇到的问题本质是什么（一句话）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-拆成-4-个核心知识点-你这次全部踩到了",
+        "text": "三、拆成 4 个核心知识点（你这次全部踩到了）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-sse-流式协议-server-sent-events",
+        "text": "① SSE 流式协议（Server-Sent Events）"
+      },
+      {
+        "depth": 3,
+        "slug": "它是干嘛的",
+        "text": "它是干嘛的？"
+      },
+      {
+        "depth": 3,
+        "slug": "你的问题",
+        "text": "你的问题："
+      },
+      {
+        "depth": 2,
+        "slug": "2-请求生命周期-request-lifecycle",
+        "text": "② 请求生命周期（Request Lifecycle）"
+      },
+      {
+        "depth": 3,
+        "slug": "你这里的问题",
+        "text": "你这里的问题："
+      },
+      {
+        "depth": 2,
+        "slug": "3-retry-机制-重试系统",
+        "text": "③ Retry 机制（重试系统）"
+      },
+      {
+        "depth": 3,
+        "slug": "正常设计应该是",
+        "text": "正常设计应该是："
+      },
+      {
+        "depth": 3,
+        "slug": "你这里的问题有两个",
+        "text": "你这里的问题有两个："
+      },
+      {
+        "depth": 2,
+        "slug": "4-bug-null-被当成-0-非常关键",
+        "text": "④ Bug：null 被当成 0（非常关键）"
+      },
+      {
+        "depth": 3,
+        "slug": "原始设计意图",
+        "text": "原始设计意图："
+      },
+      {
+        "depth": 3,
+        "slug": "实际代码发生了",
+        "text": "实际代码发生了："
+      },
+      {
+        "depth": 3,
+        "slug": "后果",
+        "text": "后果："
+      },
+      {
+        "depth": 1,
+        "slug": "四-为什么症状会-变来变去",
+        "text": "四、为什么症状会“变来变去”"
+      },
+      {
+        "depth": 2,
+        "slug": "第一阶段-协议问题",
+        "text": "第一阶段（协议问题）"
+      },
+      {
+        "depth": 2,
+        "slug": "第二阶段-修完-sse",
+        "text": "第二阶段（修完 SSE）"
+      },
+      {
+        "depth": 2,
+        "slug": "第三阶段-修-retry",
+        "text": "第三阶段（修 retry）"
+      },
+      {
+        "depth": 2,
+        "slug": "第四阶段-发现根因",
+        "text": "第四阶段（发现根因）"
+      },
+      {
+        "depth": 1,
+        "slug": "五-这些模块分别在系统里干什么",
+        "text": "五、这些模块分别在系统里干什么"
+      },
+      {
+        "depth": 2,
+        "slug": "1-协议层-sse-responses",
+        "text": "1️⃣ 协议层（SSE / Responses）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-路由层-provider-selector",
+        "text": "2️⃣ 路由层（Provider Selector）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-控制层-retry-policy",
+        "text": "3️⃣ 控制层（Retry / Policy）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-观测层-logs-debug-health",
+        "text": "4️⃣ 观测层（Logs / Debug / Health）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-为什么会出现这种-工业级复杂-bug",
+        "text": "六、为什么会出现这种“工业级复杂 bug”"
+      },
+      {
+        "depth": 3,
+        "slug": "1-状态很多-stateful",
+        "text": "① 状态很多（stateful）"
+      },
+      {
+        "depth": 3,
+        "slug": "2-时间敏感-streaming",
+        "text": "② 时间敏感（streaming）"
+      },
+      {
+        "depth": 3,
+        "slug": "3-失败模式复杂",
+        "text": "③ 失败模式复杂"
+      },
+      {
+        "depth": 1,
+        "slug": "七-最关键的-本质理解",
+        "text": "七、最关键的“本质理解”"
+      },
+      {
+        "depth": 1,
+        "slug": "八-给你一个更直觉的比喻",
+        "text": "八、给你一个更直觉的比喻"
+      },
+      {
+        "depth": 3,
+        "slug": "sse-外卖送达通知",
+        "text": "SSE = 外卖送达通知"
+      },
+      {
+        "depth": 3,
+        "slug": "provider-外卖员",
+        "text": "provider = 外卖员"
+      },
+      {
+        "depth": 3,
+        "slug": "retry-换骑手",
+        "text": "retry = 换骑手"
+      },
+      {
+        "depth": 3,
+        "slug": "maxcredentialswitchretries-最多能换几次骑手",
+        "text": "maxCredentialSwitchRetries = 最多能换几次骑手"
+      },
+      {
+        "depth": 3,
+        "slug": "你的-bug-就是",
+        "text": "你的 bug 就是："
+      },
+      {
+        "depth": 1,
+        "slug": "九-如果你要继续深入-建议",
+        "text": "九、如果你要继续深入（建议）"
+      },
+      {
+        "depth": 3,
+        "slug": "1-request-trace-id-全链路追踪",
+        "text": "1. request trace ID 全链路追踪"
+      },
+      {
+        "depth": 3,
+        "slug": "2-provider-isolation-隔离失败节点",
+        "text": "2. provider isolation（隔离失败节点）"
+      },
+      {
+        "depth": 3,
+        "slug": "3-强类型-config-避免-null-0",
+        "text": "3. 强类型 config（避免 null=0）"
+      }
+    ],
+    "detailPath": "articles/md_cd6289ee2e0f.json"
+  }
+}

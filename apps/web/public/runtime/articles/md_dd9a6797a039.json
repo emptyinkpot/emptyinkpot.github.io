@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_dd9a6797a039",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/deploy.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/ai改造计划/deploy.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/ai改造计划/deploy.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/deploy.md",
+    "slug": "agent-ai改造计划-deploy",
+    "title": "deploy",
+    "summary": "deploy是什么东西 ✔ 端口冲突解决（3001） ✔ 服务可启动（next / node OK） ✔ systemd 能接管（已验证） ✔ deploy 开始接入 runtime（现在这步） 这里面其实已经涉及一整套 后端/运维/部署/工程化 知识了。你不是只遇到一个 bug，而是把一个真实服务...",
+    "description": "deploy是什么东西 ✔ 端口冲突解决（3001） ✔ 服务可启动（next / node OK） ✔ systemd 能接管（已验证） ✔ deploy 开始接入 runtime（现在这步） 这里面其实已经涉及一整套 后端/运维/部署/工程化 知识了。你不是只遇到一个 bug，而是把一个真实服务...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent",
+      "ai改造计划"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent",
+      "ai改造计划"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "active",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent",
+        "ai改造计划"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "active",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/ai改造计划/deploy.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/ai改造计划/deploy.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/deploy.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T00:54:02.281Z",
+      "model": "coze-shell",
+      "entities": [
+        "Next.js",
+        "systemd",
+        "Docker",
+        "pnpm",
+        "Node.js",
+        "pm2",
+        "atramenti-console.service",
+        "aiclient2api",
+        "shell脚本",
+        "CI"
+      ],
+      "topics": [
+        "后端部署",
+        "运维工程",
+        "DevOps",
+        "前端项目构建",
+        "Node.js依赖管理",
+        "Linux服务器运维",
+        "端口管理",
+        "容器化部署",
+        "服务托管",
+        "部署流水线",
+        "健康检查",
+        "非交互脚本执行"
+      ],
+      "relations": [
+        {
+          "type": "托管于",
+          "target": "systemd",
+          "label": "服务托管",
+          "confidence": 1
+        },
+        {
+          "type": "运行于",
+          "target": "Docker",
+          "label": "容器运行",
+          "confidence": 1
+        },
+        {
+          "type": "基于",
+          "target": "Next.js",
+          "label": "框架依赖",
+          "confidence": 1
+        },
+        {
+          "type": "包含",
+          "target": "健康检查",
+          "label": "流程环节",
+          "confidence": 1
+        },
+        {
+          "type": "使用",
+          "target": "set -e",
+          "label": "脚本指令",
+          "confidence": 1
+        },
+        {
+          "type": "使用",
+          "target": "|| true",
+          "label": "脚本指令",
+          "confidence": 1
+        },
+        {
+          "type": "支持",
+          "target": "pnpm workspace",
+          "label": "依赖管理",
+          "confidence": 1
+        },
+        {
+          "type": "包含",
+          "target": "构建Build",
+          "label": "流程环节",
+          "confidence": 1
+        },
+        {
+          "type": "包含",
+          "target": "运行态Runtime",
+          "label": "流程环节",
+          "confidence": 1
+        },
+        {
+          "type": "依赖存储于",
+          "target": "node_modules",
+          "label": "依赖目录",
+          "confidence": 1
+        },
+        {
+          "type": "使用",
+          "target": "端口映射",
+          "label": "网络配置",
+          "confidence": 1
+        },
+        {
+          "type": "依赖",
+          "target": "非交互模式",
+          "label": "执行方式",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "AI改造计划"
+      ],
+      "clusters": [
+        "后端部署运维知识库",
+        "DevOps入门实践",
+        "Node.js项目部署指南"
+      ]
+    },
+    "series": "",
+    "project": "deploy",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "AI改造计划",
+        "DEPLOY"
+      ],
+      "subtitle": "deploy是什么东西 ✔ 端口冲突解决（3001） ✔ 服务可启动（next / node OK） ✔ systemd 能接管（已验证） ✔ deploy 开始接入 runtime（现在这步） 这里面其实已经涉及一整套 后端/运维/部署/工程化 知识了。你不是只遇到一个 bug，而是把一个真实服务..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "deploy是什么东西\n✔ 端口冲突解决（3001）  \n✔ 服务可启动（next / node OK）  \n✔ systemd 能接管（已验证）  \n✔ deploy 开始接入 runtime（现在这步）\n\n这里面其实已经涉及一整套**后端/运维/部署/工程化**知识了。你不是只遇到一个 bug，而是把一个真实服务从“能跑”推进到“可部署、可托管、可恢复”的阶段。\n\n## 你这段里涉及的计算机知识点\n\n### 1. 构建 Build\n\n`Creating an optimized production build ...` 属于构建阶段。\n\n意思是把源码变成生产环境能运行的产物。对 Next.js 来说，它会做：\n\n```text\n源码\n  ↓\n编译 TypeScript / JavaScript\n  ↓\n打包依赖\n  ↓\n生成 .next 产物\n  ↓\n优化页面和路由\n```\n\n所以它慢是正常的。它不是“卡”，而是在编译和优化。\n\n---\n\n### 2. 部署 Deploy\n\n部署不是单纯“上传代码”。\n\n真正的部署流程一般是：\n\n```text\n打包源码\n  ↓\n上传到服务器\n  ↓\n安装依赖\n  ↓\n构建项目\n  ↓\n同步到运行目录\n  ↓\n重启服务\n  ↓\n健康检查\n```\n\n你现在就在打通这条链。\n\n---\n\n### 3. 运行态 Runtime\n\n源码能 build 成功，不代表服务已经在线。\n\n运行态关心的是：\n\n```text\n服务有没有启动\n端口有没有监听\n进程有没有活着\n访问有没有响应\n```\n\n也就是：\n\n```bash\nps aux\ncurl http://localhost:端口\nsystemctl status 服务名\n```\n\n这些都是在看 runtime。\n\n---\n\n### 4. systemd 服务托管\n\n`systemd` 是 Linux 上管理服务的系统。\n\n你手动跑：\n\n```bash\npnpm start\n```\n\n只是临时运行。\n\n用 systemd 后变成：\n\n```text\n系统负责启动服务\n系统负责重启服务\n系统负责记录状态\n系统负责开机自启\n```\n\n这就是从“手动跑”变成“系统托管”。\n\n---\n\n### 5. unit 文件\n\n这个：\n\n```ini\n[Service]\nExecStart=...\nRestart=always\n```\n\n就是 systemd 的服务描述文件。\n\n它告诉 Linux：\n\n```text\n这个服务叫什么\n在哪个目录运行\n用什么命令启动\n挂了要不要重启\n```\n\n没有 unit 文件，systemd 根本不知道 `atramenti-console.service` 是谁。\n\n---\n\n### 6. 端口冲突\n\n你之前遇到的：\n\n```text\nEADDRINUSE: address already in use :::3000\n```\n\n意思是：\n\n```text\n3000 端口已经被别的程序占了\n```\n\n后来查出来是：\n\n```text\naiclient2api Docker 容器占了 3000\n```\n\n所以把 console-web 改到 3001 是正确的。\n\n---\n\n### 7. Docker 端口映射\n\n你看到的：\n\n```text\ndocker-proxy 占用 3000\n```\n\n说明 Docker 容器把宿主机的 3000 端口映射给了容器。\n\n大概是：\n\n```text\n服务器:3000 → 容器:3000\n```\n\n所以别的程序就不能再用服务器的 3000。\n\n---\n\n### 8. pnpm workspace\n\n你之前的核心坑是：\n\n```yaml\npackages:\n  - \".\"\n```\n\n这导致 `apps/console-web` 没被纳入 workspace。\n\n正确应该类似：\n\n```yaml\npackages:\n  - \".\"\n  - \"apps/*\"\n```\n\n否则 pnpm 不知道 `apps/console-web` 是项目成员，`next` 就不会正确安装。\n\n---\n\n### 9. node_modules 和软链\n\n你之前还碰到：\n\n```text\nruntimeRoot/node_modules\nsrcRoot/node_modules\napps/console-web/node_modules\n```\n\n这就是 Node 项目的依赖目录问题。\n\npnpm 的依赖结构比 npm 复杂，乱软链很容易让程序找不到 `.bin/next`。\n\n---\n\n### 10. 返回码 Exit Code\n\nLinux 命令执行完会返回一个数字：\n\n```text\n0 = 成功\n非0 = 失败\n```\n\n比如：\n\n```text\nexit code 5\nexit code 1\n```\n\n你现在的问题就是 deploy 脚本太依赖返回码，一旦某一步非0，就认为全失败。\n\n---\n\n### 11. `set -e`\n\n很多 shell 脚本会写：\n\n```bash\nset -e\n```\n\n意思是：\n\n```text\n只要任何一行失败，整个脚本立刻退出\n```\n\n它适合严格脚本，但部署时如果不处理好，就会因为一个无关紧要的小失败导致整个 deploy 失败。\n\n---\n\n### 12. `|| true`\n\n这个：\n\n```bash\nsystemctl --user enable 服务 || true\n```\n\n意思是：\n\n```text\n即使命令失败，也不要中断整个脚本\n```\n\n适合用于“不应该决定部署成败”的步骤。\n\n但注意，不能滥用。真正关键的检查要放到后面，比如：\n\n```bash\nsystemctl --user is-active 服务\n```\n\n---\n\n### 13. 健康检查 Health Check\n\n真正判断服务是否成功，不应该只看：\n\n```text\n命令有没有返回0\n```\n\n而应该看：\n\n```bash\ncurl http://localhost:5101\nsystemctl --user is-active atramenti-console.service\n```\n\n这叫健康检查。\n\n---\n\n### 14. 前台进程和后台服务\n\n`next start` 是前台进程：\n\n```text\n启动后一直运行，不会自动退出\n```\n\n如果部署脚本直接等它结束，就会像“卡住”。\n\n正确方式是交给：\n\n```text\nsystemd / pm2 / docker\n```\n\n这种服务管理器。\n\n---\n\n### 15. CI / 非交互执行\n\nAI 执行脚本时最怕命令问：\n\n```text\nProceed? (Y/n)\n```\n\n因为没人输入，就会卡住。\n\n所以部署脚本要使用：\n\n```bash\nCI=true\n--force\n--yes\n```\n\n这叫非交互执行。\n\n---\n\n## 你这次实际学到的是哪一类知识？\n\n不是单个知识点，而是这条完整链路：\n\n```text\n前端项目构建\n→ Node.js 依赖管理\n→ Linux 服务器目录管理\n→ 端口管理\n→ Docker 容器冲突\n→ systemd 服务托管\n→ shell 脚本\n→ 部署流水线\n→ 健康检查\n```\n\n一句话：\n\n```text\n你现在接触的是“后端部署 + 运维工程 + DevOps”的核心入门内容。\n```\n\n## 最简单的理解\n\n你最开始只是想：\n\n```text\n让项目跑起来\n```\n\n但真实工程里“跑起来”分三层：\n\n```text\n1. 能手动跑\n2. 能部署跑\n3. 能被系统长期托管地跑\n```\n\n你现在已经从第 1 层走到第 3 层了。",
+    "html": "<p>deploy是什么东西\n✔ 端口冲突解决（3001）<br>\n✔ 服务可启动（next / node OK）<br>\n✔ systemd 能接管（已验证）<br>\n✔ deploy 开始接入 runtime（现在这步）</p>\n<p>这里面其实已经涉及一整套<strong>后端/运维/部署/工程化</strong>知识了。你不是只遇到一个 bug，而是把一个真实服务从“能跑”推进到“可部署、可托管、可恢复”的阶段。</p>\n<h2 id=\"你这段里涉及的计算机知识点\">你这段里涉及的计算机知识点</h2>\n<h3 id=\"1-构建-build\">1. 构建 Build</h3>\n<p><code>Creating an optimized production build ...</code> 属于构建阶段。</p>\n<p>意思是把源码变成生产环境能运行的产物。对 Next.js 来说，它会做：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>源码</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>编译 TypeScript / JavaScript</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>打包依赖</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>生成 .next 产物</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>优化页面和路由</span></span></code></pre></figure>\n<p>所以它慢是正常的。它不是“卡”，而是在编译和优化。</p>\n<hr>\n<h3 id=\"2-部署-deploy\">2. 部署 Deploy</h3>\n<p>部署不是单纯“上传代码”。</p>\n<p>真正的部署流程一般是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>打包源码</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>上传到服务器</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>安装依赖</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>构建项目</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>同步到运行目录</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>重启服务</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>健康检查</span></span></code></pre></figure>\n<p>你现在就在打通这条链。</p>\n<hr>\n<h3 id=\"3-运行态-runtime\">3. 运行态 Runtime</h3>\n<p>源码能 build 成功，不代表服务已经在线。</p>\n<p>运行态关心的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>服务有没有启动</span></span>\n<span data-line=\"\"><span>端口有没有监听</span></span>\n<span data-line=\"\"><span>进程有没有活着</span></span>\n<span data-line=\"\"><span>访问有没有响应</span></span></code></pre></figure>\n<p>也就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">ps</span><span style=\"color:#9ECBFF\"> aux</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">curl</span><span style=\"color:#9ECBFF\"> http://localhost:端口</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#9ECBFF\"> status</span><span style=\"color:#9ECBFF\"> 服务名</span></span></code></pre></figure>\n<p>这些都是在看 runtime。</p>\n<hr>\n<h3 id=\"4-systemd-服务托管\">4. systemd 服务托管</h3>\n<p><code>systemd</code> 是 Linux 上管理服务的系统。</p>\n<p>你手动跑：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">pnpm</span><span style=\"color:#9ECBFF\"> start</span></span></code></pre></figure>\n<p>只是临时运行。</p>\n<p>用 systemd 后变成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>系统负责启动服务</span></span>\n<span data-line=\"\"><span>系统负责重启服务</span></span>\n<span data-line=\"\"><span>系统负责记录状态</span></span>\n<span data-line=\"\"><span>系统负责开机自启</span></span></code></pre></figure>\n<p>这就是从“手动跑”变成“系统托管”。</p>\n<hr>\n<h3 id=\"5-unit-文件\">5. unit 文件</h3>\n<p>这个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ini\" data-theme=\"github-dark\"><code data-language=\"ini\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">[Service]</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">ExecStart</span><span style=\"color:#E1E4E8\">=...</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">Restart</span><span style=\"color:#E1E4E8\">=always</span></span></code></pre></figure>\n<p>就是 systemd 的服务描述文件。</p>\n<p>它告诉 Linux：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>这个服务叫什么</span></span>\n<span data-line=\"\"><span>在哪个目录运行</span></span>\n<span data-line=\"\"><span>用什么命令启动</span></span>\n<span data-line=\"\"><span>挂了要不要重启</span></span></code></pre></figure>\n<p>没有 unit 文件，systemd 根本不知道 <code>atramenti-console.service</code> 是谁。</p>\n<hr>\n<h3 id=\"6-端口冲突\">6. 端口冲突</h3>\n<p>你之前遇到的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>EADDRINUSE: address already in use :::3000</span></span></code></pre></figure>\n<p>意思是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>3000 端口已经被别的程序占了</span></span></code></pre></figure>\n<p>后来查出来是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>aiclient2api Docker 容器占了 3000</span></span></code></pre></figure>\n<p>所以把 console-web 改到 3001 是正确的。</p>\n<hr>\n<h3 id=\"7-docker-端口映射\">7. Docker 端口映射</h3>\n<p>你看到的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>docker-proxy 占用 3000</span></span></code></pre></figure>\n<p>说明 Docker 容器把宿主机的 3000 端口映射给了容器。</p>\n<p>大概是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>服务器:3000 → 容器:3000</span></span></code></pre></figure>\n<p>所以别的程序就不能再用服务器的 3000。</p>\n<hr>\n<h3 id=\"8-pnpm-workspace\">8. pnpm workspace</h3>\n<p>你之前的核心坑是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#85E89D\">packages</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">\".\"</span></span></code></pre></figure>\n<p>这导致 <code>apps/console-web</code> 没被纳入 workspace。</p>\n<p>正确应该类似：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#85E89D\">packages</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">\".\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">\"apps/*\"</span></span></code></pre></figure>\n<p>否则 pnpm 不知道 <code>apps/console-web</code> 是项目成员，<code>next</code> 就不会正确安装。</p>\n<hr>\n<h3 id=\"9-node_modules-和软链\">9. node_modules 和软链</h3>\n<p>你之前还碰到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>runtimeRoot/node_modules</span></span>\n<span data-line=\"\"><span>srcRoot/node_modules</span></span>\n<span data-line=\"\"><span>apps/console-web/node_modules</span></span></code></pre></figure>\n<p>这就是 Node 项目的依赖目录问题。</p>\n<p>pnpm 的依赖结构比 npm 复杂，乱软链很容易让程序找不到 <code>.bin/next</code>。</p>\n<hr>\n<h3 id=\"10-返回码-exit-code\">10. 返回码 Exit Code</h3>\n<p>Linux 命令执行完会返回一个数字：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>0 = 成功</span></span>\n<span data-line=\"\"><span>非0 = 失败</span></span></code></pre></figure>\n<p>比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>exit code 5</span></span>\n<span data-line=\"\"><span>exit code 1</span></span></code></pre></figure>\n<p>你现在的问题就是 deploy 脚本太依赖返回码，一旦某一步非0，就认为全失败。</p>\n<hr>\n<h3 id=\"11-set--e\">11. <code>set -e</code></h3>\n<p>很多 shell 脚本会写：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF\">set</span><span style=\"color:#79B8FF\"> -e</span></span></code></pre></figure>\n<p>意思是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>只要任何一行失败，整个脚本立刻退出</span></span></code></pre></figure>\n<p>它适合严格脚本，但部署时如果不处理好，就会因为一个无关紧要的小失败导致整个 deploy 失败。</p>\n<hr>\n<h3 id=\"12--true\">12. <code>|| true</code></h3>\n<p>这个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#79B8FF\"> --user</span><span style=\"color:#9ECBFF\"> enable</span><span style=\"color:#9ECBFF\"> 服务</span><span style=\"color:#F97583\"> ||</span><span style=\"color:#79B8FF\"> true</span></span></code></pre></figure>\n<p>意思是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>即使命令失败，也不要中断整个脚本</span></span></code></pre></figure>\n<p>适合用于“不应该决定部署成败”的步骤。</p>\n<p>但注意，不能滥用。真正关键的检查要放到后面，比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#79B8FF\"> --user</span><span style=\"color:#9ECBFF\"> is-active</span><span style=\"color:#9ECBFF\"> 服务</span></span></code></pre></figure>\n<hr>\n<h3 id=\"13-健康检查-health-check\">13. 健康检查 Health Check</h3>\n<p>真正判断服务是否成功，不应该只看：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>命令有没有返回0</span></span></code></pre></figure>\n<p>而应该看：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">curl</span><span style=\"color:#9ECBFF\"> http://localhost:5101</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#79B8FF\"> --user</span><span style=\"color:#9ECBFF\"> is-active</span><span style=\"color:#9ECBFF\"> atramenti-console.service</span></span></code></pre></figure>\n<p>这叫健康检查。</p>\n<hr>\n<h3 id=\"14-前台进程和后台服务\">14. 前台进程和后台服务</h3>\n<p><code>next start</code> 是前台进程：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>启动后一直运行，不会自动退出</span></span></code></pre></figure>\n<p>如果部署脚本直接等它结束，就会像“卡住”。</p>\n<p>正确方式是交给：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>systemd / pm2 / docker</span></span></code></pre></figure>\n<p>这种服务管理器。</p>\n<hr>\n<h3 id=\"15-ci--非交互执行\">15. CI / 非交互执行</h3>\n<p>AI 执行脚本时最怕命令问：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Proceed? (Y/n)</span></span></code></pre></figure>\n<p>因为没人输入，就会卡住。</p>\n<p>所以部署脚本要使用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">CI</span><span style=\"color:#F97583\">=</span><span style=\"color:#9ECBFF\">true</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">--force</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">--yes</span></span></code></pre></figure>\n<p>这叫非交互执行。</p>\n<hr>\n<h2 id=\"你这次实际学到的是哪一类知识\">你这次实际学到的是哪一类知识？</h2>\n<p>不是单个知识点，而是这条完整链路：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>前端项目构建</span></span>\n<span data-line=\"\"><span>→ Node.js 依赖管理</span></span>\n<span data-line=\"\"><span>→ Linux 服务器目录管理</span></span>\n<span data-line=\"\"><span>→ 端口管理</span></span>\n<span data-line=\"\"><span>→ Docker 容器冲突</span></span>\n<span data-line=\"\"><span>→ systemd 服务托管</span></span>\n<span data-line=\"\"><span>→ shell 脚本</span></span>\n<span data-line=\"\"><span>→ 部署流水线</span></span>\n<span data-line=\"\"><span>→ 健康检查</span></span></code></pre></figure>\n<p>一句话：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你现在接触的是“后端部署 + 运维工程 + DevOps”的核心入门内容。</span></span></code></pre></figure>\n<h2 id=\"最简单的理解\">最简单的理解</h2>\n<p>你最开始只是想：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>让项目跑起来</span></span></code></pre></figure>\n<p>但真实工程里“跑起来”分三层：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>1. 能手动跑</span></span>\n<span data-line=\"\"><span>2. 能部署跑</span></span>\n<span data-line=\"\"><span>3. 能被系统长期托管地跑</span></span></code></pre></figure>\n<p>你现在已经从第 1 层走到第 3 层了。</p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "你这段里涉及的计算机知识点",
+        "text": "你这段里涉及的计算机知识点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-构建-build",
+        "text": "1. 构建 Build"
+      },
+      {
+        "depth": 3,
+        "slug": "2-部署-deploy",
+        "text": "2. 部署 Deploy"
+      },
+      {
+        "depth": 3,
+        "slug": "3-运行态-runtime",
+        "text": "3. 运行态 Runtime"
+      },
+      {
+        "depth": 3,
+        "slug": "4-systemd-服务托管",
+        "text": "4. systemd 服务托管"
+      },
+      {
+        "depth": 3,
+        "slug": "5-unit-文件",
+        "text": "5. unit 文件"
+      },
+      {
+        "depth": 3,
+        "slug": "6-端口冲突",
+        "text": "6. 端口冲突"
+      },
+      {
+        "depth": 3,
+        "slug": "7-docker-端口映射",
+        "text": "7. Docker 端口映射"
+      },
+      {
+        "depth": 3,
+        "slug": "8-pnpm-workspace",
+        "text": "8. pnpm workspace"
+      },
+      {
+        "depth": 3,
+        "slug": "9-node-modules-和软链",
+        "text": "9. node_modules 和软链"
+      },
+      {
+        "depth": 3,
+        "slug": "10-返回码-exit-code",
+        "text": "10. 返回码 Exit Code"
+      },
+      {
+        "depth": 3,
+        "slug": "11-set-e",
+        "text": "11. `set -e`"
+      },
+      {
+        "depth": 3,
+        "slug": "12-true",
+        "text": "12. `|| true`"
+      },
+      {
+        "depth": 3,
+        "slug": "13-健康检查-health-check",
+        "text": "13. 健康检查 Health Check"
+      },
+      {
+        "depth": 3,
+        "slug": "14-前台进程和后台服务",
+        "text": "14. 前台进程和后台服务"
+      },
+      {
+        "depth": 3,
+        "slug": "15-ci-非交互执行",
+        "text": "15. CI / 非交互执行"
+      },
+      {
+        "depth": 2,
+        "slug": "你这次实际学到的是哪一类知识",
+        "text": "你这次实际学到的是哪一类知识？"
+      },
+      {
+        "depth": 2,
+        "slug": "最简单的理解",
+        "text": "最简单的理解"
+      }
+    ],
+    "detailPath": "articles/md_dd9a6797a039.json"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_17cda59029f9",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E8%AE%BA%E6%96%87%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.md",
+    "sourcePath": "/home/vault/Obsidian/docs/论文文献资料说明.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/论文文献资料说明.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E8%AE%BA%E6%96%87%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.md",
+    "slug": "论文文献资料说明",
+    "title": "论文文献资料说明",
+    "summary": "论文文献资料说明 核心文档 文献综述与创新点建议.md 本地 PDF Indoor Air Quality Monitoring System for Smart Buildings.pdf 外文原文与译文 Benammar 2018 外文译文资料说明.md 快捷方式 系统综述 2024.url 低...",
+    "description": "论文文献资料说明 核心文档 文献综述与创新点建议.md 本地 PDF Indoor Air Quality Monitoring System for Smart Buildings.pdf 外文原文与译文 Benammar 2018 外文译文资料说明.md 快捷方式 系统综述 2024.url 低...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "形态-规范"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/论文文献资料说明.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/论文文献资料说明.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E8%AE%BA%E6%96%87%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "毕业论文",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "形态 规范",
+        "毕业论文"
+      ],
+      "subtitle": "论文文献资料说明 核心文档 文献综述与创新点建议.md 本地 PDF Indoor Air Quality Monitoring System for Smart Buildings.pdf 外文原文与译文 Benammar 2018 外文译文资料说明.md 快捷方式 系统综述 2024.url 低..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 论文文献资料说明\n\n### 核心文档\n\n- [文献综述与创新点建议.md](文献综述与创新点建议.md)\n\n### 本地 PDF\n\n- [Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf](../image/毕业论文__文献资料__可直接获取PDF__Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf)\n\n### 外文原文与译文\n\n- [Benammar 2018 外文译文资料说明.md](Benammar 2018 外文译文资料说明.md)\n\n### 快捷方式\n\n- [系统综述_2024.url](<资料收口/外部资料/系统综述_2024（文献资料 - 论文快捷方式）.url>)\n- [低成本监测综述_PMC8749853.url](<资料收口/外部资料/低成本监测综述_PMC8749853（文献资料 - 论文快捷方式）.url>)\n- [AirBuddy_移动端IAQ应用_2022.url](<资料收口/外部资料/AirBuddy_移动端IAQ应用_2022（文献资料 - 论文快捷方式）.url>)\n- [CO2短时预测_Attention_LSTM_2025.url](<资料收口/外部资料/CO2短时预测_Attention_LSTM_2025（文献资料 - 论文快捷方式）.url>)\n- [IoT_CO2稳态预测_LSTM_2023.url](<资料收口/外部资料/IoT_CO2稳态预测_LSTM_2023（文献资料 - 论文快捷方式）.url>)",
+    "html": "<h2 id=\"论文文献资料说明\">论文文献资料说明</h2>\n<h3 id=\"核心文档\">核心文档</h3>\n<ul>\n<li><a href=\"%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0%E4%B8%8E%E5%88%9B%E6%96%B0%E7%82%B9%E5%BB%BA%E8%AE%AE.md\">文献综述与创新点建议.md</a></li>\n</ul>\n<h3 id=\"本地-pdf\">本地 PDF</h3>\n<ul>\n<li><a href=\"../image/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87__%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99__%E5%8F%AF%E7%9B%B4%E6%8E%A5%E8%8E%B7%E5%8F%96PDF__Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf\">Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf</a></li>\n</ul>\n<h3 id=\"外文原文与译文\">外文原文与译文</h3>\n<ul>\n<li>[Benammar 2018 外文译文资料说明.md](Benammar 2018 外文译文资料说明.md)</li>\n</ul>\n<h3 id=\"快捷方式\">快捷方式</h3>\n<ul>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/%E7%B3%BB%E7%BB%9F%E7%BB%BC%E8%BF%B0_2024%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">系统综述_2024.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/%E4%BD%8E%E6%88%90%E6%9C%AC%E7%9B%91%E6%B5%8B%E7%BB%BC%E8%BF%B0_PMC8749853%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">低成本监测综述_PMC8749853.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/AirBuddy_%E7%A7%BB%E5%8A%A8%E7%AB%AFIAQ%E5%BA%94%E7%94%A8_2022%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">AirBuddy_移动端IAQ应用_2022.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/CO2%E7%9F%AD%E6%97%B6%E9%A2%84%E6%B5%8B_Attention_LSTM_2025%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">CO2短时预测_Attention_LSTM_2025.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/IoT_CO2%E7%A8%B3%E6%80%81%E9%A2%84%E6%B5%8B_LSTM_2023%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">IoT_CO2稳态预测_LSTM_2023.url</a></li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "论文文献资料说明",
+        "text": "论文文献资料说明"
+      },
+      {
+        "depth": 3,
+        "slug": "核心文档",
+        "text": "核心文档"
+      },
+      {
+        "depth": 3,
+        "slug": "本地-pdf",
+        "text": "本地 PDF"
+      },
+      {
+        "depth": 3,
+        "slug": "外文原文与译文",
+        "text": "外文原文与译文"
+      },
+      {
+        "depth": 3,
+        "slug": "快捷方式",
+        "text": "快捷方式"
+      }
+    ],
+    "detailPath": "articles/md_17cda59029f9.json"
+  }
+}

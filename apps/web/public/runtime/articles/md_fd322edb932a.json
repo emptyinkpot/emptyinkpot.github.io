@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_fd322edb932a",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/Ghost%20%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6%E7%AC%94%E8%AE%B0.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/Ghost 博客框架笔记.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Ghost 博客框架笔记.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Ghost%20%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6%E7%AC%94%E8%AE%B0.md",
+    "slug": "codex-knowledge-ghost-博客框架笔记",
+    "title": "Ghost 博客框架笔记",
+    "summary": "Ghost 博客框架笔记 当前结论：博客使用 Ghost 框架。",
+    "description": "Ghost 博客框架笔记 当前结论：博客使用 Ghost 框架。",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-工具工作流",
+      "形态-记录",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-工具工作流",
+        "形态-记录"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/Ghost 博客框架笔记.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Ghost 博客框架笔记.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Ghost%20%E5%8D%9A%E5%AE%A2%E6%A1%86%E6%9E%B6%E7%AC%94%E8%AE%B0.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Ghost 博客框架笔记",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 工具工作流",
+        "形态 记录",
+        "GHOST 博客框架笔记"
+      ],
+      "subtitle": "Ghost 博客框架笔记 当前结论：博客使用 Ghost 框架。"
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Ghost 博客框架笔记\n\n当前结论：博客使用 Ghost 框架。",
+    "html": "<h1 id=\"ghost-博客框架笔记\">Ghost 博客框架笔记</h1>\n<p>当前结论：博客使用 Ghost 框架。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "ghost-博客框架笔记",
+        "text": "Ghost 博客框架笔记"
+      }
+    ],
+    "detailPath": "articles/md_fd322edb932a.json"
+  }
+}

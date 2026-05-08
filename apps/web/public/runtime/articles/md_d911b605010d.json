@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_d911b605010d",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A7%E5%88%B6%E9%9D%A2%E4%B8%8E%E5%8D%8F%E5%90%8C%E4%BD%93%E7%B3%BB%E6%80%BB%E8%A7%88%EF%BC%882026-04-17%EF%BC%89.md",
+    "sourcePath": "/home/vault/Obsidian/docs/服务器控制面与协同体系总览（2026-04-17）.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/服务器控制面与协同体系总览（2026-04-17）.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A7%E5%88%B6%E9%9D%A2%E4%B8%8E%E5%8D%8F%E5%90%8C%E4%BD%93%E7%B3%BB%E6%80%BB%E8%A7%88%EF%BC%882026-04-17%EF%BC%89.md",
+    "slug": "服务器控制面与协同体系总览-2026-04-17",
+    "title": "服务器控制面与协同体系总览（2026-04-17）",
+    "summary": "服务器控制面与协同体系总览（2026 04 17） 1. 这套体系现在的核心结论 当前服务器体系已经明确分成三层： Windows 本机 NEVERLETMEGO：操作台，不承担正式管理节点职责 管理节点：124.220.233.126（别名 tcent） 运行节点：121.196.202.114（...",
+    "description": "服务器控制面与协同体系总览（2026 04 17） 1. 这套体系现在的核心结论 当前服务器体系已经明确分成三层： Windows 本机 NEVERLETMEGO：操作台，不承担正式管理节点职责 管理节点：124.220.233.126（别名 tcent） 运行节点：121.196.202.114（...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-系统运维",
+      "项目-多服务器智能体"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-系统运维",
+        "项目-多服务器智能体"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/服务器控制面与协同体系总览（2026-04-17）.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/服务器控制面与协同体系总览（2026-04-17）.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A7%E5%88%B6%E9%9D%A2%E4%B8%8E%E5%8D%8F%E5%90%8C%E4%BD%93%E7%B3%BB%E6%80%BB%E8%A7%88%EF%BC%882026-04-17%EF%BC%89.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "多服务器智能体",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 系统运维",
+        "项目 多服务器智能体",
+        "多服务器智能体"
+      ],
+      "subtitle": "服务器控制面与协同体系总览（2026 04 17） 1. 这套体系现在的核心结论 当前服务器体系已经明确分成三层： Windows 本机 NEVERLETMEGO：操作台，不承担正式管理节点职责 管理节点：124.220.233.126（别名 tcent） 运行节点：121.196.202.114（..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 服务器控制面与协同体系总览（2026-04-17）\n\n### 1. 这套体系现在的核心结论\n\n当前服务器体系已经明确分成三层：\n\n- Windows 本机 `NEVERLETMEGO`：操作台，不承担正式管理节点职责\n- 管理节点：`124.220.233.126`（别名 `tcent`）\n- 运行节点：`121.196.202.114`（别名 `aliyun-run`）、`111.228.6.224`（京东云运行机）\n- 待纳管节点：`140.143.229.144`（别名 `koze`，当前 SSH 仍未打通）\n\n已经落地的控制面：\n\n- Windows 本地控制目录：`E:\\server-control`\n- 管理节点 Linux 控制面：`/home/ubuntu/server-control-ansible`\n- 主机单机管理面板：Cockpit\n- Windows 轻量总览监控：SSH 拉取式 dashboard\n- 正式统一监控中心：Zabbix（部署在 `124.220.233.126`）\n- 基础自动化：Ansible（部署在 `124.220.233.126`）\n\n设计原则：\n\n- 不把 Windows 本机当正式管理节点\n- 不把多机管理混成“宝塔式大一统面板”\n- 统一入口、统一监控、统一批量变更，但尽量不直接暴露新的公网端口\n\n---\n\n### 2. 当前资产与角色分工\n\n#### 2.1 Windows 本机\n\n- 主机名：`NEVERLETMEGO`\n- 角色：操作台 / 浏览器入口 / SSH 入口 / 本地辅助脚本运行位置\n- 关键目录：`E:\\server-control`\n- 说明：\n  - 负责开隧道访问 Cockpit / Zabbix\n  - 负责本地状态页和定时刷新\n  - 不承担正式的 Ansible 控制面和中心监控服务\n\n#### 2.2 管理节点：tcent\n\n- 公网 IP：`124.220.233.126`\n- 内网 IP：`10.0.0.12`\n- SSH 用户：`ubuntu`\n- 角色：正式管理节点\n- 已部署：\n  - Cockpit：`127.0.0.1:9090`\n  - node exporter：`127.0.0.1:9100`\n  - Zabbix frontend：`127.0.0.1:18080`\n  - Zabbix server：服务端已启用\n  - Zabbix agent2：本机 agent 已启用\n  - Ansible 控制面：`/home/ubuntu/server-control-ansible`\n\n#### 2.3 运行节点：aliyun-run\n\n- 公网 IP：`121.196.202.114`\n- SSH 用户：`root`\n- 角色：运行节点\n- 已部署：\n  - Cockpit：`127.0.0.1:9090`\n  - node exporter：`127.0.0.1:9100`\n  - zabbix-agent2：监听 `0.0.0.0:10050`\n- 与管理节点关系：\n  - 通过 `124 -> 121` 的 SSH 隧道，把 agent 映射到 `124` 的 `127.0.0.1:10052`\n  - 因此 Zabbix 可以在不开放 `121` 公网 agent 端口的情况下完成采集\n\n#### 2.4 待纳管节点：koze\n\n- 公网 IP：`140.143.229.144`\n- 内网 IP：`10.1.52.211`\n- SSH 用户：`ubuntu`\n- 角色：候选被管节点\n- 当前状态：\n  - ICMP 可达\n  - SSH 不可达\n  - 从 Windows 与 `124` 到其 `22/2222/22022/22222/80/443` 都是 CLOSED\n- 结论：\n  - 机器不是不存在，而是入口端口没开、或 sshd 未监听\n  - 现阶段无法纳入 Ansible / Cockpit / Zabbix\n\n#### 2.5 京东云运行机\n\n- 公网 IP：`111.228.6.224`\n- 内网 IP：`172.16.0.6`\n- SSH 用户：`root`\n- 角色：运行节点\n- 已完成：\n  - UFW：deny incoming / allow outgoing\n  - 仅放通 `22/tcp`\n  - fail2ban：已启用 `sshd` jail\n  - Docker Engine + Compose：已安装\n- 备注：\n  - 已写入 `servers.json`\n  - 但当前 Windows 轻量监控里显示 `ssh_unreachable`，说明本地自动采集链路尚未完全同步到它\n\n---\n\n### 3. Windows 本地控制目录结构\n\n控制目录：`E:\\server-control`\n\n关键文件与用途：\n\n- `README.md`\n  - 当前控制体系的入口说明\n- `servers.json`\n  - 当前服务器清单、角色、已部署服务、备注\n- `ssh_config`\n  - Windows 本地 SSH 别名\n- `Test-Servers.ps1`\n  - 从 Windows 快速测试各主机连通性\n- `Open-Cockpit-B.ps1`\n  - 打开 `tcent` 的 Cockpit 隧道\n- `Open-Zabbix-124.ps1`\n  - 打开 `tcent` 的 Zabbix 前端隧道\n- `monitoring\\Refresh-Monitor.ps1`\n  - 通过 SSH 拉取状态并生成本地 dashboard\n- `monitoring\\Open-Monitor-Dashboard.ps1`\n  - 刷新并打开 dashboard\n- `ops\\inventory\\hosts.yml`\n  - Windows 侧保存的 inventory 结构参考\n- `ops\\playbooks\\bootstrap.yml`\n  - 基础纳管 playbook 参考\n- `bin\\Start-Server-Control.ps1`\n  - 本地加密控制面/秘密库入口\n- `secrets\\`\n  - 加密秘密库，敏感信息不应以明文散落在 JSON / SQL 中\n\n---\n\n### 4. SSH 别名与访问方式\n\n当前 Windows 本地别名：\n\n- `tcent`\n  - Host: `124.220.233.126`\n  - User: `ubuntu`\n  - Key: `~/.ssh/id_rsa`\n- `aliyun-run`\n  - Host: `121.196.202.114`\n  - User: `root`\n  - Key: `~/.ssh/id_ed25519`\n- `koze`\n  - Host: `140.143.229.144`\n  - User: `ubuntu`\n  - Key: `~/.ssh/id_rsa`\n\n注意：\n\n- `aliyun-run` 使用的是 `id_ed25519`，不是 `id_rsa`\n- 之前监控和脚本误报过 `121` 不可达，根因就是别名密钥指错\n\n---\n\n### 5. 管理节点上的正式控制面\n\n管理节点：`124.220.233.126`\n\n#### 5.1 Ansible\n\n已部署在：\n\n- `/home/ubuntu/server-control-ansible`\n\n当前内容：\n\n- `ansible.cfg`\n- `inventory/hosts.yml`\n- `playbooks/bootstrap.yml`\n\n已完成验证：\n\n- `ansible all -m ping --limit 'tcent,aliyun-run'` 成功\n- `ansible-playbook playbooks/bootstrap.yml --limit 'tcent,aliyun-run'` 成功\n\n说明：\n\n- 现在 `124` 已经是真正可工作的 Linux Ansible 控制面\n- 后续 `koze` 一旦 SSH 打通，可以直接纳入 inventory 然后执行 bootstrap\n\n#### 5.2 Zabbix\n\n已部署在：\n\n- Zabbix Server：`124` 本机服务\n- Zabbix Frontend：`127.0.0.1:18080`\n- Zabbix API：`http://127.0.0.1:18080/api_jsonrpc.php`\n\n当前状态：\n\n- API `apiinfo.version` 已返回 `7.4.9`\n- 默认登录 `Admin / zabbix` 可用\n- 已创建主机：\n  - `tcent` -> `127.0.0.1:10050`\n  - `aliyun-run` -> `127.0.0.1:10052`\n\n说明：\n\n- `124` 自身 agent 使用本地 `10050`\n- `121` 的 agent 通过 systemd 隧道服务映射到 `124` 的 `10052`\n- Zabbix 前端没有暴露公网，而是只监听回环，通过 Windows SSH 隧道访问\n\n#### 5.3 Cockpit\n\n- `124`：`127.0.0.1:9090`\n- `121`：`127.0.0.1:9090`\n\n使用方式：\n\n- 从 Windows 上开 SSH 本地转发访问\n- 不直接暴露到公网\n\n---\n\n### 6. 监控体系：轻量层 + 正式层\n\n#### 6.1 轻量层（Windows 本地 dashboard）\n\n特点：\n\n- 基于 SSH 拉取状态\n- 不依赖开放 exporter 公网端口\n- 适合快速看“哪些机器能连上、Cockpit / node exporter 是否活着”\n\n现有文件：\n\n- `E:\\server-control\\monitoring\\Refresh-Monitor.ps1`\n- `E:\\server-control\\monitoring\\Open-Monitor-Dashboard.ps1`\n- `E:\\server-control\\monitoring\\status.json`\n- `E:\\server-control\\monitoring\\dashboard.html`\n\n自动刷新：\n\n- 已建计划任务：`Server Control Monitor Refresh`\n- 每 15 分钟刷新一次\n- 以隐藏窗口运行\n\n注意：\n\n- 当前 `status.json` 只是“那一刻的连通性快照”\n- 如果别名或密钥变化，但未刷新，可能出现短暂滞后\n\n#### 6.2 正式层（Zabbix）\n\n特点：\n\n- 有中心数据库\n- 有 API\n- 有模板\n- 后续可扩展告警、触发器、邮件/IM 通知\n\n当前适合承担：\n\n- 正式主机监控中心\n- CPU / 内存 / 磁盘 / agent 可用性统一纳管\n\n---\n\n### 7. Windows 本机弹终端窗口问题的结论\n\n这个问题不是纯随机旧残留，而是启动链路设计问题。\n\n已定位到的主要来源：\n\n- 计划任务 `OpenClaw Node`\n  - 原先动作：`cmd.exe /c \"C:\\Users\\ASUS-KL\\.openclaw\\node.cmd\"`\n- 计划任务 `Aliyun Reverse SSH`\n  - 原先动作：`cmd.exe /c \"C:\\Users\\ASUS-KL\\.openclaw\\aliyun-reverse-ssh.cmd\"`\n- 启动项：\n  - `OpenClaw SSH Control.cmd`\n\n这些入口的问题：\n\n- 它们先起 `cmd.exe`\n- 即便后续再调 PowerShell，也会先闪一个终端窗口\n\n已经做的修正：\n\n- `OpenClaw Node` 改成：\n  - 直接 `powershell.exe -WindowStyle Hidden -File node-supervisor.ps1`\n- `Aliyun Reverse SSH` 改成：\n  - 直接 `powershell.exe -WindowStyle Hidden -File aliyun-reverse-ssh.ps1`\n- 启动目录中的 `OpenClaw SSH Control.cmd`\n  - 已改为 `OpenClaw SSH Control.vbs`\n  - 通过 `WScript.Shell.Run(..., 0, False)` 隐藏启动\n  - 原 `.cmd` 已改名为 `.cmd.disabled`\n\n结论：\n\n- 本机弹窗主因已经被压下去一轮\n- 如果以后仍偶尔弹窗，需要继续排查脚本内部是否还有二次拉起的可见控制台进程\n\n---\n\n### 8. 当前还没解决的问题\n\n#### 8.1 koze 仍未纳管\n\n当前证据：\n\n- 能 ping 通 `140.143.229.144`\n- 但 SSH / Web 等常用端口全部关闭\n\n最可能原因：\n\n- 云安全组/防火墙未放通\n- sshd 未监听\n- 端口改了但未知\n\n下一步建议：\n\n- 去云控制台或机器控制台确认 `sshd` 实际监听端口\n- 放通至少一个从 `124` 或 Windows 可达的管理端口\n- 然后纳入 `124` 的 Ansible + Cockpit + Zabbix\n\n#### 8.2 aliyun-run 在本地轻量 dashboard 中曾出现误报\n\n根因：\n\n- `ssh_config` 中别名曾使用错误私钥\n\n当前状态：\n\n- 已修正为 `id_ed25519`\n- 若本地 dashboard 仍偶发误报，先手动刷新一次再判断\n\n#### 8.3 京东云运行机还没完全并入轻量监控链路\n\n虽然资产已登记，但轻量 dashboard 当前快照里仍显示 `ssh_unreachable`。\n\n可能原因：\n\n- `Refresh-Monitor.ps1` 的目标别名/hosts 清单尚未同步完整\n- 或 SSH 别名尚未补充到 `ssh_config`\n\n---\n\n### 9. 现在推荐的日常操作方式\n\n#### 9.1 看整体情况\n\n在 Windows 上：\n\n```powershell\npowershell -ExecutionPolicy Bypass -File E:\\server-control\\monitoring\\Open-Monitor-Dashboard.ps1\n```\n\n#### 9.2 打开管理节点 Cockpit\n\n```powershell\npowershell -ExecutionPolicy Bypass -File E:\\server-control\\Open-Cockpit-B.ps1 -OpenBrowser\n```\n\n#### 9.3 打开管理节点 Zabbix\n\n```powershell\npowershell -ExecutionPolicy Bypass -File E:\\server-control\\Open-Zabbix-124.ps1 -OpenBrowser\n```\n\n#### 9.4 从 Windows 验证服务器可达性\n\n```powershell\npowershell -ExecutionPolicy Bypass -File E:\\server-control\\Test-Servers.ps1\n```\n\n#### 9.5 在管理节点上跑正式自动化\n\n登录 `124` 后：\n\n```bash\ncd ~/server-control-ansible\nansible all -m ping\nansible-playbook playbooks/bootstrap.yml --limit 'tcent,aliyun-run'\n```\n\n---\n\n### 10. 推荐的后续路线\n\n建议按这个顺序推进：\n\n1. 打通 `koze` 的 SSH 入口\n2. 把 `koze` 纳入 `124` 的 Ansible inventory\n3. 给 `koze` 装：\n   - Cockpit\n   - node exporter\n   - zabbix-agent2\n4. 把京东云运行机补进：\n   - `ssh_config`\n   - 本地 dashboard\n   - `124` 的 Ansible inventory\n   - Zabbix host\n5. 在 Zabbix 里补触发器和告警：\n   - 磁盘 > 80%\n   - load 持续过高\n   - agent 不可达\n   - 管理节点 Cockpit / Zabbix 前端异常\n6. 视需要再决定是否引入：\n   - Portainer（如果 Docker 节点明显增多）\n   - JumpServer（如果多人协作、审计需求提高）\n   - NetBox（如果服务器/资产数量继续增长）\n\n---\n\n### 11. 最终一句话总结\n\n这套服务器体系现在已经不是“几台机器各管各的”，而是已经形成了一个清晰的控制结构：\n\n- Windows 做操作台\n- `124` 做正式管理节点\n- `121` 和其他业务机做运行节点\n- Cockpit 管单机\n- Zabbix 管统一监控\n- Ansible 管批量变更\n- `koze` 是当前唯一明确卡在入口层的节点\n\n如果以后需要恢复上下文，优先看：\n\n- `E:\\server-control\\README.md`\n- `E:\\server-control\\servers.json`\n- `E:\\server-control\\monitoring\\status.json`\n- 本文档",
+    "html": "<h2 id=\"服务器控制面与协同体系总览2026-04-17\">服务器控制面与协同体系总览（2026-04-17）</h2>\n<h3 id=\"1-这套体系现在的核心结论\">1. 这套体系现在的核心结论</h3>\n<p>当前服务器体系已经明确分成三层：</p>\n<ul>\n<li>Windows 本机 <code>NEVERLETMEGO</code>：操作台，不承担正式管理节点职责</li>\n<li>管理节点：<code>124.220.233.126</code>（别名 <code>tcent</code>）</li>\n<li>运行节点：<code>121.196.202.114</code>（别名 <code>aliyun-run</code>）、<code>111.228.6.224</code>（京东云运行机）</li>\n<li>待纳管节点：<code>140.143.229.144</code>（别名 <code>koze</code>，当前 SSH 仍未打通）</li>\n</ul>\n<p>已经落地的控制面：</p>\n<ul>\n<li>Windows 本地控制目录：<code>E:\\server-control</code></li>\n<li>管理节点 Linux 控制面：<code>/home/ubuntu/server-control-ansible</code></li>\n<li>主机单机管理面板：Cockpit</li>\n<li>Windows 轻量总览监控：SSH 拉取式 dashboard</li>\n<li>正式统一监控中心：Zabbix（部署在 <code>124.220.233.126</code>）</li>\n<li>基础自动化：Ansible（部署在 <code>124.220.233.126</code>）</li>\n</ul>\n<p>设计原则：</p>\n<ul>\n<li>不把 Windows 本机当正式管理节点</li>\n<li>不把多机管理混成“宝塔式大一统面板”</li>\n<li>统一入口、统一监控、统一批量变更，但尽量不直接暴露新的公网端口</li>\n</ul>\n<hr>\n<h3 id=\"2-当前资产与角色分工\">2. 当前资产与角色分工</h3>\n<h4 id=\"21-windows-本机\">2.1 Windows 本机</h4>\n<ul>\n<li>主机名：<code>NEVERLETMEGO</code></li>\n<li>角色：操作台 / 浏览器入口 / SSH 入口 / 本地辅助脚本运行位置</li>\n<li>关键目录：<code>E:\\server-control</code></li>\n<li>说明：\n<ul>\n<li>负责开隧道访问 Cockpit / Zabbix</li>\n<li>负责本地状态页和定时刷新</li>\n<li>不承担正式的 Ansible 控制面和中心监控服务</li>\n</ul>\n</li>\n</ul>\n<h4 id=\"22-管理节点tcent\">2.2 管理节点：tcent</h4>\n<ul>\n<li>公网 IP：<code>124.220.233.126</code></li>\n<li>内网 IP：<code>10.0.0.12</code></li>\n<li>SSH 用户：<code>ubuntu</code></li>\n<li>角色：正式管理节点</li>\n<li>已部署：\n<ul>\n<li>Cockpit：<code>127.0.0.1:9090</code></li>\n<li>node exporter：<code>127.0.0.1:9100</code></li>\n<li>Zabbix frontend：<code>127.0.0.1:18080</code></li>\n<li>Zabbix server：服务端已启用</li>\n<li>Zabbix agent2：本机 agent 已启用</li>\n<li>Ansible 控制面：<code>/home/ubuntu/server-control-ansible</code></li>\n</ul>\n</li>\n</ul>\n<h4 id=\"23-运行节点aliyun-run\">2.3 运行节点：aliyun-run</h4>\n<ul>\n<li>公网 IP：<code>121.196.202.114</code></li>\n<li>SSH 用户：<code>root</code></li>\n<li>角色：运行节点</li>\n<li>已部署：\n<ul>\n<li>Cockpit：<code>127.0.0.1:9090</code></li>\n<li>node exporter：<code>127.0.0.1:9100</code></li>\n<li>zabbix-agent2：监听 <code>0.0.0.0:10050</code></li>\n</ul>\n</li>\n<li>与管理节点关系：\n<ul>\n<li>通过 <code>124 -> 121</code> 的 SSH 隧道，把 agent 映射到 <code>124</code> 的 <code>127.0.0.1:10052</code></li>\n<li>因此 Zabbix 可以在不开放 <code>121</code> 公网 agent 端口的情况下完成采集</li>\n</ul>\n</li>\n</ul>\n<h4 id=\"24-待纳管节点koze\">2.4 待纳管节点：koze</h4>\n<ul>\n<li>公网 IP：<code>140.143.229.144</code></li>\n<li>内网 IP：<code>10.1.52.211</code></li>\n<li>SSH 用户：<code>ubuntu</code></li>\n<li>角色：候选被管节点</li>\n<li>当前状态：\n<ul>\n<li>ICMP 可达</li>\n<li>SSH 不可达</li>\n<li>从 Windows 与 <code>124</code> 到其 <code>22/2222/22022/22222/80/443</code> 都是 CLOSED</li>\n</ul>\n</li>\n<li>结论：\n<ul>\n<li>机器不是不存在，而是入口端口没开、或 sshd 未监听</li>\n<li>现阶段无法纳入 Ansible / Cockpit / Zabbix</li>\n</ul>\n</li>\n</ul>\n<h4 id=\"25-京东云运行机\">2.5 京东云运行机</h4>\n<ul>\n<li>公网 IP：<code>111.228.6.224</code></li>\n<li>内网 IP：<code>172.16.0.6</code></li>\n<li>SSH 用户：<code>root</code></li>\n<li>角色：运行节点</li>\n<li>已完成：\n<ul>\n<li>UFW：deny incoming / allow outgoing</li>\n<li>仅放通 <code>22/tcp</code></li>\n<li>fail2ban：已启用 <code>sshd</code> jail</li>\n<li>Docker Engine + Compose：已安装</li>\n</ul>\n</li>\n<li>备注：\n<ul>\n<li>已写入 <code>servers.json</code></li>\n<li>但当前 Windows 轻量监控里显示 <code>ssh_unreachable</code>，说明本地自动采集链路尚未完全同步到它</li>\n</ul>\n</li>\n</ul>\n<hr>\n<h3 id=\"3-windows-本地控制目录结构\">3. Windows 本地控制目录结构</h3>\n<p>控制目录：<code>E:\\server-control</code></p>\n<p>关键文件与用途：</p>\n<ul>\n<li><code>README.md</code>\n<ul>\n<li>当前控制体系的入口说明</li>\n</ul>\n</li>\n<li><code>servers.json</code>\n<ul>\n<li>当前服务器清单、角色、已部署服务、备注</li>\n</ul>\n</li>\n<li><code>ssh_config</code>\n<ul>\n<li>Windows 本地 SSH 别名</li>\n</ul>\n</li>\n<li><code>Test-Servers.ps1</code>\n<ul>\n<li>从 Windows 快速测试各主机连通性</li>\n</ul>\n</li>\n<li><code>Open-Cockpit-B.ps1</code>\n<ul>\n<li>打开 <code>tcent</code> 的 Cockpit 隧道</li>\n</ul>\n</li>\n<li><code>Open-Zabbix-124.ps1</code>\n<ul>\n<li>打开 <code>tcent</code> 的 Zabbix 前端隧道</li>\n</ul>\n</li>\n<li><code>monitoring\\Refresh-Monitor.ps1</code>\n<ul>\n<li>通过 SSH 拉取状态并生成本地 dashboard</li>\n</ul>\n</li>\n<li><code>monitoring\\Open-Monitor-Dashboard.ps1</code>\n<ul>\n<li>刷新并打开 dashboard</li>\n</ul>\n</li>\n<li><code>ops\\inventory\\hosts.yml</code>\n<ul>\n<li>Windows 侧保存的 inventory 结构参考</li>\n</ul>\n</li>\n<li><code>ops\\playbooks\\bootstrap.yml</code>\n<ul>\n<li>基础纳管 playbook 参考</li>\n</ul>\n</li>\n<li><code>bin\\Start-Server-Control.ps1</code>\n<ul>\n<li>本地加密控制面/秘密库入口</li>\n</ul>\n</li>\n<li><code>secrets\\</code>\n<ul>\n<li>加密秘密库，敏感信息不应以明文散落在 JSON / SQL 中</li>\n</ul>\n</li>\n</ul>\n<hr>\n<h3 id=\"4-ssh-别名与访问方式\">4. SSH 别名与访问方式</h3>\n<p>当前 Windows 本地别名：</p>\n<ul>\n<li><code>tcent</code>\n<ul>\n<li>Host: <code>124.220.233.126</code></li>\n<li>User: <code>ubuntu</code></li>\n<li>Key: <code>~/.ssh/id_rsa</code></li>\n</ul>\n</li>\n<li><code>aliyun-run</code>\n<ul>\n<li>Host: <code>121.196.202.114</code></li>\n<li>User: <code>root</code></li>\n<li>Key: <code>~/.ssh/id_ed25519</code></li>\n</ul>\n</li>\n<li><code>koze</code>\n<ul>\n<li>Host: <code>140.143.229.144</code></li>\n<li>User: <code>ubuntu</code></li>\n<li>Key: <code>~/.ssh/id_rsa</code></li>\n</ul>\n</li>\n</ul>\n<p>注意：</p>\n<ul>\n<li><code>aliyun-run</code> 使用的是 <code>id_ed25519</code>，不是 <code>id_rsa</code></li>\n<li>之前监控和脚本误报过 <code>121</code> 不可达，根因就是别名密钥指错</li>\n</ul>\n<hr>\n<h3 id=\"5-管理节点上的正式控制面\">5. 管理节点上的正式控制面</h3>\n<p>管理节点：<code>124.220.233.126</code></p>\n<h4 id=\"51-ansible\">5.1 Ansible</h4>\n<p>已部署在：</p>\n<ul>\n<li><code>/home/ubuntu/server-control-ansible</code></li>\n</ul>\n<p>当前内容：</p>\n<ul>\n<li><code>ansible.cfg</code></li>\n<li><code>inventory/hosts.yml</code></li>\n<li><code>playbooks/bootstrap.yml</code></li>\n</ul>\n<p>已完成验证：</p>\n<ul>\n<li><code>ansible all -m ping --limit 'tcent,aliyun-run'</code> 成功</li>\n<li><code>ansible-playbook playbooks/bootstrap.yml --limit 'tcent,aliyun-run'</code> 成功</li>\n</ul>\n<p>说明：</p>\n<ul>\n<li>现在 <code>124</code> 已经是真正可工作的 Linux Ansible 控制面</li>\n<li>后续 <code>koze</code> 一旦 SSH 打通，可以直接纳入 inventory 然后执行 bootstrap</li>\n</ul>\n<h4 id=\"52-zabbix\">5.2 Zabbix</h4>\n<p>已部署在：</p>\n<ul>\n<li>Zabbix Server：<code>124</code> 本机服务</li>\n<li>Zabbix Frontend：<code>127.0.0.1:18080</code></li>\n<li>Zabbix API：<code>http://127.0.0.1:18080/api_jsonrpc.php</code></li>\n</ul>\n<p>当前状态：</p>\n<ul>\n<li>API <code>apiinfo.version</code> 已返回 <code>7.4.9</code></li>\n<li>默认登录 <code>Admin / zabbix</code> 可用</li>\n<li>已创建主机：\n<ul>\n<li><code>tcent</code> -> <code>127.0.0.1:10050</code></li>\n<li><code>aliyun-run</code> -> <code>127.0.0.1:10052</code></li>\n</ul>\n</li>\n</ul>\n<p>说明：</p>\n<ul>\n<li><code>124</code> 自身 agent 使用本地 <code>10050</code></li>\n<li><code>121</code> 的 agent 通过 systemd 隧道服务映射到 <code>124</code> 的 <code>10052</code></li>\n<li>Zabbix 前端没有暴露公网，而是只监听回环，通过 Windows SSH 隧道访问</li>\n</ul>\n<h4 id=\"53-cockpit\">5.3 Cockpit</h4>\n<ul>\n<li><code>124</code>：<code>127.0.0.1:9090</code></li>\n<li><code>121</code>：<code>127.0.0.1:9090</code></li>\n</ul>\n<p>使用方式：</p>\n<ul>\n<li>从 Windows 上开 SSH 本地转发访问</li>\n<li>不直接暴露到公网</li>\n</ul>\n<hr>\n<h3 id=\"6-监控体系轻量层--正式层\">6. 监控体系：轻量层 + 正式层</h3>\n<h4 id=\"61-轻量层windows-本地-dashboard\">6.1 轻量层（Windows 本地 dashboard）</h4>\n<p>特点：</p>\n<ul>\n<li>基于 SSH 拉取状态</li>\n<li>不依赖开放 exporter 公网端口</li>\n<li>适合快速看“哪些机器能连上、Cockpit / node exporter 是否活着”</li>\n</ul>\n<p>现有文件：</p>\n<ul>\n<li><code>E:\\server-control\\monitoring\\Refresh-Monitor.ps1</code></li>\n<li><code>E:\\server-control\\monitoring\\Open-Monitor-Dashboard.ps1</code></li>\n<li><code>E:\\server-control\\monitoring\\status.json</code></li>\n<li><code>E:\\server-control\\monitoring\\dashboard.html</code></li>\n</ul>\n<p>自动刷新：</p>\n<ul>\n<li>已建计划任务：<code>Server Control Monitor Refresh</code></li>\n<li>每 15 分钟刷新一次</li>\n<li>以隐藏窗口运行</li>\n</ul>\n<p>注意：</p>\n<ul>\n<li>当前 <code>status.json</code> 只是“那一刻的连通性快照”</li>\n<li>如果别名或密钥变化，但未刷新，可能出现短暂滞后</li>\n</ul>\n<h4 id=\"62-正式层zabbix\">6.2 正式层（Zabbix）</h4>\n<p>特点：</p>\n<ul>\n<li>有中心数据库</li>\n<li>有 API</li>\n<li>有模板</li>\n<li>后续可扩展告警、触发器、邮件/IM 通知</li>\n</ul>\n<p>当前适合承担：</p>\n<ul>\n<li>正式主机监控中心</li>\n<li>CPU / 内存 / 磁盘 / agent 可用性统一纳管</li>\n</ul>\n<hr>\n<h3 id=\"7-windows-本机弹终端窗口问题的结论\">7. Windows 本机弹终端窗口问题的结论</h3>\n<p>这个问题不是纯随机旧残留，而是启动链路设计问题。</p>\n<p>已定位到的主要来源：</p>\n<ul>\n<li>计划任务 <code>OpenClaw Node</code>\n<ul>\n<li>原先动作：<code>cmd.exe /c \"C:\\Users\\ASUS-KL\\.openclaw\\node.cmd\"</code></li>\n</ul>\n</li>\n<li>计划任务 <code>Aliyun Reverse SSH</code>\n<ul>\n<li>原先动作：<code>cmd.exe /c \"C:\\Users\\ASUS-KL\\.openclaw\\aliyun-reverse-ssh.cmd\"</code></li>\n</ul>\n</li>\n<li>启动项：\n<ul>\n<li><code>OpenClaw SSH Control.cmd</code></li>\n</ul>\n</li>\n</ul>\n<p>这些入口的问题：</p>\n<ul>\n<li>它们先起 <code>cmd.exe</code></li>\n<li>即便后续再调 PowerShell，也会先闪一个终端窗口</li>\n</ul>\n<p>已经做的修正：</p>\n<ul>\n<li><code>OpenClaw Node</code> 改成：\n<ul>\n<li>直接 <code>powershell.exe -WindowStyle Hidden -File node-supervisor.ps1</code></li>\n</ul>\n</li>\n<li><code>Aliyun Reverse SSH</code> 改成：\n<ul>\n<li>直接 <code>powershell.exe -WindowStyle Hidden -File aliyun-reverse-ssh.ps1</code></li>\n</ul>\n</li>\n<li>启动目录中的 <code>OpenClaw SSH Control.cmd</code>\n<ul>\n<li>已改为 <code>OpenClaw SSH Control.vbs</code></li>\n<li>通过 <code>WScript.Shell.Run(..., 0, False)</code> 隐藏启动</li>\n<li>原 <code>.cmd</code> 已改名为 <code>.cmd.disabled</code></li>\n</ul>\n</li>\n</ul>\n<p>结论：</p>\n<ul>\n<li>本机弹窗主因已经被压下去一轮</li>\n<li>如果以后仍偶尔弹窗，需要继续排查脚本内部是否还有二次拉起的可见控制台进程</li>\n</ul>\n<hr>\n<h3 id=\"8-当前还没解决的问题\">8. 当前还没解决的问题</h3>\n<h4 id=\"81-koze-仍未纳管\">8.1 koze 仍未纳管</h4>\n<p>当前证据：</p>\n<ul>\n<li>能 ping 通 <code>140.143.229.144</code></li>\n<li>但 SSH / Web 等常用端口全部关闭</li>\n</ul>\n<p>最可能原因：</p>\n<ul>\n<li>云安全组/防火墙未放通</li>\n<li>sshd 未监听</li>\n<li>端口改了但未知</li>\n</ul>\n<p>下一步建议：</p>\n<ul>\n<li>去云控制台或机器控制台确认 <code>sshd</code> 实际监听端口</li>\n<li>放通至少一个从 <code>124</code> 或 Windows 可达的管理端口</li>\n<li>然后纳入 <code>124</code> 的 Ansible + Cockpit + Zabbix</li>\n</ul>\n<h4 id=\"82-aliyun-run-在本地轻量-dashboard-中曾出现误报\">8.2 aliyun-run 在本地轻量 dashboard 中曾出现误报</h4>\n<p>根因：</p>\n<ul>\n<li><code>ssh_config</code> 中别名曾使用错误私钥</li>\n</ul>\n<p>当前状态：</p>\n<ul>\n<li>已修正为 <code>id_ed25519</code></li>\n<li>若本地 dashboard 仍偶发误报，先手动刷新一次再判断</li>\n</ul>\n<h4 id=\"83-京东云运行机还没完全并入轻量监控链路\">8.3 京东云运行机还没完全并入轻量监控链路</h4>\n<p>虽然资产已登记，但轻量 dashboard 当前快照里仍显示 <code>ssh_unreachable</code>。</p>\n<p>可能原因：</p>\n<ul>\n<li><code>Refresh-Monitor.ps1</code> 的目标别名/hosts 清单尚未同步完整</li>\n<li>或 SSH 别名尚未补充到 <code>ssh_config</code></li>\n</ul>\n<hr>\n<h3 id=\"9-现在推荐的日常操作方式\">9. 现在推荐的日常操作方式</h3>\n<h4 id=\"91-看整体情况\">9.1 看整体情况</h4>\n<p>在 Windows 上：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">powershell </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">ExecutionPolicy Bypass </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">File </span><span style=\"color:#79B8FF\">E:\\server-control\\monitoring\\Open-Monitor</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">Dashboard.ps1</span></span></code></pre></figure>\n<h4 id=\"92-打开管理节点-cockpit\">9.2 打开管理节点 Cockpit</h4>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">powershell </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">ExecutionPolicy Bypass </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">File </span><span style=\"color:#79B8FF\">E:\\server-control\\Open-Cockpit</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">B.ps1 </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">OpenBrowser</span></span></code></pre></figure>\n<h4 id=\"93-打开管理节点-zabbix\">9.3 打开管理节点 Zabbix</h4>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">powershell </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">ExecutionPolicy Bypass </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">File </span><span style=\"color:#79B8FF\">E:\\server-control\\Open-Zabbix</span><span style=\"color:#F97583\">-</span><span style=\"color:#79B8FF\">124.</span><span style=\"color:#E1E4E8\">ps1 </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">OpenBrowser</span></span></code></pre></figure>\n<h4 id=\"94-从-windows-验证服务器可达性\">9.4 从 Windows 验证服务器可达性</h4>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">powershell </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">ExecutionPolicy Bypass </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">File </span><span style=\"color:#79B8FF\">E:\\server-control\\Test-Servers.ps1</span></span></code></pre></figure>\n<h4 id=\"95-在管理节点上跑正式自动化\">9.5 在管理节点上跑正式自动化</h4>\n<p>登录 <code>124</code> 后：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF\">cd</span><span style=\"color:#9ECBFF\"> ~/server-control-ansible</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">ansible</span><span style=\"color:#9ECBFF\"> all</span><span style=\"color:#79B8FF\"> -m</span><span style=\"color:#9ECBFF\"> ping</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">ansible-playbook</span><span style=\"color:#9ECBFF\"> playbooks/bootstrap.yml</span><span style=\"color:#79B8FF\"> --limit</span><span style=\"color:#9ECBFF\"> 'tcent,aliyun-run'</span></span></code></pre></figure>\n<hr>\n<h3 id=\"10-推荐的后续路线\">10. 推荐的后续路线</h3>\n<p>建议按这个顺序推进：</p>\n<ol>\n<li>打通 <code>koze</code> 的 SSH 入口</li>\n<li>把 <code>koze</code> 纳入 <code>124</code> 的 Ansible inventory</li>\n<li>给 <code>koze</code> 装：\n<ul>\n<li>Cockpit</li>\n<li>node exporter</li>\n<li>zabbix-agent2</li>\n</ul>\n</li>\n<li>把京东云运行机补进：\n<ul>\n<li><code>ssh_config</code></li>\n<li>本地 dashboard</li>\n<li><code>124</code> 的 Ansible inventory</li>\n<li>Zabbix host</li>\n</ul>\n</li>\n<li>在 Zabbix 里补触发器和告警：\n<ul>\n<li>磁盘 > 80%</li>\n<li>load 持续过高</li>\n<li>agent 不可达</li>\n<li>管理节点 Cockpit / Zabbix 前端异常</li>\n</ul>\n</li>\n<li>视需要再决定是否引入：\n<ul>\n<li>Portainer（如果 Docker 节点明显增多）</li>\n<li>JumpServer（如果多人协作、审计需求提高）</li>\n<li>NetBox（如果服务器/资产数量继续增长）</li>\n</ul>\n</li>\n</ol>\n<hr>\n<h3 id=\"11-最终一句话总结\">11. 最终一句话总结</h3>\n<p>这套服务器体系现在已经不是“几台机器各管各的”，而是已经形成了一个清晰的控制结构：</p>\n<ul>\n<li>Windows 做操作台</li>\n<li><code>124</code> 做正式管理节点</li>\n<li><code>121</code> 和其他业务机做运行节点</li>\n<li>Cockpit 管单机</li>\n<li>Zabbix 管统一监控</li>\n<li>Ansible 管批量变更</li>\n<li><code>koze</code> 是当前唯一明确卡在入口层的节点</li>\n</ul>\n<p>如果以后需要恢复上下文，优先看：</p>\n<ul>\n<li><code>E:\\server-control\\README.md</code></li>\n<li><code>E:\\server-control\\servers.json</code></li>\n<li><code>E:\\server-control\\monitoring\\status.json</code></li>\n<li>本文档</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "服务器控制面与协同体系总览-2026-04-17",
+        "text": "服务器控制面与协同体系总览（2026-04-17）"
+      },
+      {
+        "depth": 3,
+        "slug": "1-这套体系现在的核心结论",
+        "text": "1. 这套体系现在的核心结论"
+      },
+      {
+        "depth": 3,
+        "slug": "2-当前资产与角色分工",
+        "text": "2. 当前资产与角色分工"
+      },
+      {
+        "depth": 3,
+        "slug": "3-windows-本地控制目录结构",
+        "text": "3. Windows 本地控制目录结构"
+      },
+      {
+        "depth": 3,
+        "slug": "4-ssh-别名与访问方式",
+        "text": "4. SSH 别名与访问方式"
+      },
+      {
+        "depth": 3,
+        "slug": "5-管理节点上的正式控制面",
+        "text": "5. 管理节点上的正式控制面"
+      },
+      {
+        "depth": 3,
+        "slug": "6-监控体系-轻量层-正式层",
+        "text": "6. 监控体系：轻量层 + 正式层"
+      },
+      {
+        "depth": 3,
+        "slug": "7-windows-本机弹终端窗口问题的结论",
+        "text": "7. Windows 本机弹终端窗口问题的结论"
+      },
+      {
+        "depth": 3,
+        "slug": "8-当前还没解决的问题",
+        "text": "8. 当前还没解决的问题"
+      },
+      {
+        "depth": 3,
+        "slug": "9-现在推荐的日常操作方式",
+        "text": "9. 现在推荐的日常操作方式"
+      },
+      {
+        "depth": 3,
+        "slug": "10-推荐的后续路线",
+        "text": "10. 推荐的后续路线"
+      },
+      {
+        "depth": 3,
+        "slug": "11-最终一句话总结",
+        "text": "11. 最终一句话总结"
+      }
+    ],
+    "detailPath": "articles/md_d911b605010d.json"
+  }
+}

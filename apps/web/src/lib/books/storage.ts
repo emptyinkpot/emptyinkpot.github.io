@@ -15,7 +15,7 @@ export interface BookSettings {
 
 export const defaultBookSettings: BookSettings = {
   openlistBaseUrl: import.meta.env.PUBLIC_OPENLIST_BASE_URL || '/api/openlist',
-  openlistBooksPath: '/夸克网盘/obsidian/data/docs/books/original',
+  openlistBooksPath: '/Obsidian/docs/books/original',
   readerTheme: 'sepia',
   showRecent: true
 };

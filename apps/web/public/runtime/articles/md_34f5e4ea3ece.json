@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_34f5e4ea3ece",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/FOC%E6%8E%A7%E5%88%B6%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86%E5%9B%BE.md",
+    "sourcePath": "/home/vault/Obsidian/docs/FOC控制电机原理图.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/FOC控制电机原理图.md",
+    "openlistUrl": "/openlist/Obsidian/docs/FOC%E6%8E%A7%E5%88%B6%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86%E5%9B%BE.md",
+    "slug": "foc控制电机原理图",
+    "title": "FOC控制电机原理图",
+    "summary": "<! Runtime embed pending migration: FOC控制电机原理图.md ../image/attachments Pasted image 20250701101617.png 有源，1为高电平23可以导通，",
+    "description": "<! Runtime embed pending migration: FOC控制电机原理图.md ../image/attachments Pasted image 20250701101617.png 有源，1为高电平23可以导通，",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "项目-毕业论文",
+      "FOC电机控制",
+      "image-attachments-pasted-image-20250701101617"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics",
+        "obsidian.wikilinks"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "项目-毕业论文"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/FOC控制电机原理图.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/FOC控制电机原理图.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/FOC%E6%8E%A7%E5%88%B6%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86%E5%9B%BE.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "毕业论文",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [
+        "../image/attachments__Pasted image 20250701101617.png"
+      ],
+      "backlinks": [],
+      "assets": [
+        "../image/attachments__Pasted image 20250701101617.png"
+      ]
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "项目 毕业论文",
+        "FOC电机控制",
+        "IMAGE ATTACHMENTS PASTED IMAGE 20250701101617",
+        "毕业论文"
+      ],
+      "subtitle": "<! Runtime embed pending migration: FOC控制电机原理图.md ../image/attachments Pasted image 20250701101617.png 有源，1为高电平23可以导通，"
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "<!-- Runtime embed pending migration: FOC控制电机原理图.md -> ../image/attachments__Pasted image 20250701101617.png -->\n有源，1为高电平23可以导通，",
+    "html": "<p>有源，1为高电平23可以导通，</p>",
+    "toc": [],
+    "detailPath": "articles/md_34f5e4ea3ece.json"
+  }
+}

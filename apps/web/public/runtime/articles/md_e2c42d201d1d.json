@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_e2c42d201d1d",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E8%87%AA%E6%8E%A7%E5%8A%9B%E5%AF%BC%E5%85%A5%E8%AF%B4%E6%98%8E%EF%BC%88%E5%81%A5%E5%BA%B7%E6%A0%B7%E4%BE%8B%EF%BC%89.md",
+    "sourcePath": "/home/vault/Obsidian/docs/自控力导入说明（健康样例）.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/自控力导入说明（健康样例）.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E8%87%AA%E6%8E%A7%E5%8A%9B%E5%AF%BC%E5%85%A5%E8%AF%B4%E6%98%8E%EF%BC%88%E5%81%A5%E5%BA%B7%E6%A0%B7%E4%BE%8B%EF%BC%89.md",
+    "slug": "自控力导入说明-健康样例",
+    "title": "自控力导入说明（健康样例）",
+    "summary": "自控力导入说明（健康样例） source epub: E:\\My Project\\Atramenti Console\\codex\\plugins\\obsidian\\data\\docs\\books\\收口文件\\books 自控力（健康样例）.epub imported at: 2026 04 18T05...",
+    "description": "自控力导入说明（健康样例） source epub: E:\\My Project\\Atramenti Console\\codex\\plugins\\obsidian\\data\\docs\\books\\收口文件\\books 自控力（健康样例）.epub imported at: 2026 04 18T05...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-阅读书库",
+      "项目-书库",
+      "形态-规范",
+      "导入样例"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-阅读书库",
+        "项目-书库",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/自控力导入说明（健康样例）.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/自控力导入说明（健康样例）.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E8%87%AA%E6%8E%A7%E5%8A%9B%E5%AF%BC%E5%85%A5%E8%AF%B4%E6%98%8E%EF%BC%88%E5%81%A5%E5%BA%B7%E6%A0%B7%E4%BE%8B%EF%BC%89.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "书库",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 阅读书库",
+        "项目 书库",
+        "形态 规范",
+        "导入样例",
+        "书库"
+      ],
+      "subtitle": "自控力导入说明（健康样例） source epub: E:\\My Project\\Atramenti Console\\codex\\plugins\\obsidian\\data\\docs\\books\\收口文件\\books 自控力（健康样例）.epub imported at: 2026 04 18T05..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 自控力导入说明（健康样例）\n\n- source_epub: E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\books\\收口文件\\books__自控力（健康样例）.epub\n- imported_at: 2026-04-18T05:32:50.207Z\n- importer_mode: standalone importer using epub-importer parser + turndown rules\n- reading_file: 自控力（全文）.md",
+    "html": "<h2 id=\"自控力导入说明健康样例\">自控力导入说明（健康样例）</h2>\n<ul>\n<li>source_epub: E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\books\\收口文件\\books__自控力（健康样例）.epub</li>\n<li>imported_at: 2026-04-18T05:32:50.207Z</li>\n<li>importer_mode: standalone importer using epub-importer parser + turndown rules</li>\n<li>reading_file: 自控力（全文）.md</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "自控力导入说明-健康样例",
+        "text": "自控力导入说明（健康样例）"
+      }
+    ],
+    "detailPath": "articles/md_e2c42d201d1d.json"
+  }
+}

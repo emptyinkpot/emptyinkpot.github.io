@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_9b3c293c5ece",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E6%B1%A0%E5%AD%90/Token%20Pool%20SSE-%E5%88%87%E6%8D%A2%E9%93%BE%E8%B7%AF%E5%A4%8D%E7%9B%98%202026-04-25.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/池子/Token Pool SSE-切换链路复盘 2026-04-25.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/池子/Token Pool SSE-切换链路复盘 2026-04-25.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%B1%A0%E5%AD%90/Token%20Pool%20SSE-%E5%88%87%E6%8D%A2%E9%93%BE%E8%B7%AF%E5%A4%8D%E7%9B%98%202026-04-25.md",
+    "slug": "blog-池子-token-pool-sse-切换链路复盘-2026-04-25",
+    "title": "Token Pool SSE-切换链路复盘 2026-04-25",
+    "summary": "Token Pool SSE 切换链路复盘 2026 04 25 一、结论先行 这次故障不是单点问题，而是一条完整请求链上连续叠加的几个结构性错误： 1. openaiResponses custom 早期存在 unary 先打一遍、stream 再打一遍的双发路径，放大了上游消耗。 2. 流式 r...",
+    "description": "Token Pool SSE 切换链路复盘 2026 04 25 一、结论先行 这次故障不是单点问题，而是一条完整请求链上连续叠加的几个结构性错误： 1. openaiResponses custom 早期存在 unary 先打一遍、stream 再打一遍的双发路径，放大了上游消耗。 2. 流式 r...",
+    "date": "2026-04-25",
+    "updated": "2026-04-25",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "token-pool",
+      "sse",
+      "routing",
+      "postmortem",
+      "blog",
+      "池子"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "池子"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "池子"
+      ],
+      "explicitTags": [
+        "token-pool",
+        "sse",
+        "routing",
+        "postmortem"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/池子/Token Pool SSE-切换链路复盘 2026-04-25.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/池子/Token Pool SSE-切换链路复盘 2026-04-25.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%B1%A0%E5%AD%90/Token%20Pool%20SSE-%E5%88%87%E6%8D%A2%E9%93%BE%E8%B7%AF%E5%A4%8D%E7%9B%98%202026-04-25.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Token Pool SSE 切换链路复盘",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "TOKEN POOL",
+        "SSE",
+        "ROUTING",
+        "POSTMORTEM",
+        "池子"
+      ],
+      "subtitle": "Token Pool SSE 切换链路复盘 2026 04 25 一、结论先行 这次故障不是单点问题，而是一条完整请求链上连续叠加的几个结构性错误： 1. openaiResponses custom 早期存在 unary 先打一遍、stream 再打一遍的双发路径，放大了上游消耗。 2. 流式 r..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Token Pool SSE-切换链路复盘 2026-04-25\n\n## 一、结论先行\n\n这次故障不是单点问题，而是一条完整请求链上连续叠加的几个结构性错误：\n\n1. `openaiResponses-custom` 早期存在 unary 先打一遍、stream 再打一遍的双发路径，放大了上游消耗。\n2. 流式 `response.completed` 在部分异常路径或尾包场景下丢失，客户端会报 `stream closed before response.completed`。\n3. CRS key 未显式配置 `maxCredentialSwitchRetries` 时，被错误归一化成 `0`，把凭证切换预算静默关掉。\n4. 即使切换预算恢复后，同一请求内的 retry 选择器仍会反复选回同一个坏 uuid，导致“名义上在切，实际上原地撞墙”。\n5. 从用户视角看，故障表现会不断变形：先是报错、再是几秒后消失、最后像是完全没反应。\n\n最终修复的核心不是单纯补一个 SSE 事件，而是把下面四个层级都补齐：\n\n- 协议终止层：保证 `response.completed`\n- 重试预算层：`null` 不再被误判为 `0`\n- 节点选择层：同一请求内排除已失败 uuid\n- 文档真相层：明确 canonical 入口、内部目标和验证顺序\n\n## 二、真实访问链\n\n当前 Token Pool 的真实 canonical 链如下：\n\n```text\n客户端 / Codex / OpenAI-compatible consumer\n  ↓\nhttps://key.tengokukk.com/openai/v1\n  ↓\nNginx on 170.106.179.226\n  ↓\nhttp://127.0.0.1:3301/v1\n  ↓\naiclient-2-api-mock.service\n  ↓\nopenaiResponses-custom provider pool\n  ↓\n具体上游节点 / credential\n```\n\n对应公开契约：\n\n- 公共 API base：`https://key.tengokukk.com/openai/v1`\n- 公共 health：`https://key.tengokukk.com/openai/health`\n- 公共 debug：\n  - `https://key.tengokukk.com/openai/debug/providers`\n  - `https://key.tengokukk.com/openai/debug/routes`\n  - `https://key.tengokukk.com/openai/debug/requests`\n\n对应内部运行目标：\n\n- runtime root：`/srv/aiclient-2-api-mock`\n- service：`aiclient-2-api-mock.service`\n- internal API base：`http://127.0.0.1:3301/v1`\n- internal health：`http://127.0.0.1:3301/health`\n\n## 三、这次故障是怎么一步步暴露出来的\n\n### 1. 第一阶段：客户端明确报协议错误\n\n用户最初看到的是：\n\n```text\nstream disconnected before completion: stream closed before response.completed\n```\n\n这说明客户端不是没收到任何东西，而是：\n\n- 已经建立了流\n- 但直到连接关闭都没等到合法的 `response.completed`\n\n这一阶段的主要问题在协议终止层。\n\n### 2. 第二阶段：修完 completion 后，症状变成“卡住后消失”\n\n当 `response.completed` 合成和 SSE tail buffer flush 落地之后，现象发生了质变：\n\n- 不再稳定报原来的 completion 错误\n- 变成卡几秒后直接消失\n\n这类现象很容易让人误判为：\n\n- Nginx 缓冲\n- SSE 被截断\n- 连接提前关闭\n\n但线上日志表明，真实主因不是“请求根本没到”，而是“请求到了，开始重试，但切换逻辑本身有结构性错误”。\n\n### 3. 第三阶段：发现 Key 缺省字段把切换预算关死\n\n线上 `crs_k_20260423_gateway` 并没有显式配置 `maxCredentialSwitchRetries`。\n\n问题在于：\n\n- `src/core/crs-key-store.js` 早期使用 `normalizeNumber`\n- 对 `null/undefined` 返回 `0`\n\n这会把“未配置”错误地变成“明确禁止切换”。\n\n修完第一层后，又发现主请求链里还有第二层相同问题：\n\n- `src/utils/common.js`\n- 用 `Number(routingPolicy?.maxCredentialSwitchRetries)`\n- 在 JavaScript 中 `Number(null) === 0`\n\n所以即使 key store 已经返回 `null`，主链还是会把它再次压回 `0`。\n\n### 4. 第四阶段：预算恢复后，发现选择器还在原地撞坏节点\n\n预算修好后，日志第一次出现了真正的 retry：\n\n- `retry 1/5`\n- `retry 2/5`\n- `retry 3/5`\n\n但更深的日志显示，每一轮 retry 都重新选回同一个坏节点：\n\n- `be1d6074-3a71-4702-ab53-d07d52512559`\n- `soxio-responses-v1`\n\n这说明系统名义上“在切换”，实际上却在：\n\n```text\n失败节点 A\n  → 标记不健康\n  → 等待随机 backoff\n  → 重新选回 A\n  → 再失败\n```\n\n这正是用户看到“卡几秒后直接消失”的直接原因。\n\n## 四、最终落地的修复项\n\n### 1. 协议层修复\n\n- `openaiResponses-custom` unary 改为单路径流式聚合，去掉先 unary 再 stream 重打的双发路径\n- 在上游有有效 Responses 事件但缺少终止事件时，合成 `response.completed`\n- SSE tail buffer flush 落地，避免尾包无换行导致 completion 被吞\n- 流式错误路径对 OpenAI Responses 客户端返回兼容的终止 completion，而不是裸错误事件\n\n### 2. 预算层修复\n\n- `src/core/crs-key-store.js`：缺省 `maxCredentialSwitchRetries` 改为 `null`\n- `src/utils/common.js`：`null/undefined/''` 视为未配置，正确回退到全局默认 `CREDENTIAL_SWITCH_MAX_RETRIES`\n\n### 3. 选择层修复\n\n- 同一请求内新增失败 uuid 排除逻辑\n- 某个节点在本次请求里 402 后，后续 retry 不得再选回它\n- 至少保证 retry 会尝试其他兼容节点，或者在候选耗尽后尽快失败返回\n\n### 4. README / 控制面修复\n\n- README 明确写死 canonical 公共入口\n- README 明确内部目标和 health/debug 合约\n- README 增补本次修复后的访问链和请求流转结构\n\n## 五、这次最关键的经验\n\n### 经验 1：不要把“未配置”归一化成 `0`\n\n`null` 和 `0` 在控制平面里语义完全不同：\n\n- `null` = 未配置，应该回退默认值\n- `0` = 显式关闭\n\n任何把 `null` 直接 `Number()` 掉的代码，都要高度警惕。\n\n### 经验 2：retry 是否发生，不能只看计数，要看它是否真的换了目标\n\n日志里出现：\n\n```text\nretry 1/5\nretry 2/5\n```\n\n并不代表系统真的在“切换”。\n\n必须继续确认：\n\n- 下一跳的 `uuid` 有没有变化\n- `selectedProviderId` 有没有变化\n- 是否只是“对同一个坏节点重复请求”\n\n### 经验 3：SSE 故障排查必须分四层看\n\n正确顺序应该是：\n\n1. 客户端层：有没有报 `response.completed` 缺失\n2. 入口层：Nginx access/error 有没有请求\n3. runtime 层：Node 日志里有没有收到请求、有没有写 completion\n4. 路由层：是不是切换预算、节点排除、provider 选择出了问题\n\n跳过其中任何一层，都很容易误判。\n\n### 经验 4：不要把“本地修好了”误当作“线上生效了”\n\n本次中间有一个关键转折是：\n\n- 本地 mock / 单测已经通过\n- 但 canonical 入口行为仍旧像旧版本\n\n只有在远端看到新日志特征、并且通过真实请求链验证，才算真正生效。\n\n### 经验 5：控制文档要把真相写死\n\n如果 README 没明确以下内容，后续极易再次混乱：\n\n- 唯一 canonical 入口\n- 内部运行目标\n- 公开 health/debug 契约\n- 标准排障顺序\n\n文档不只是说明书，它本身就是运行控制面的一部分。\n\n## 六、后续仍值得继续加强的点\n\n虽然这次已经把最关键的几刀补上了，但后续仍建议继续收敛：\n\n1. 给请求链增加显式 `excludedProviderUuids` / `attemptedProviderUuids` 观测输出\n2. 对 `402` 类错误区分“节点额度不足”与“账号级不可用”\n3. 对 Responses 流式失败补更稳定的最终 completion 契约\n4. Nginx 的 `/openai/v1` location 显式固定 SSE 友好配置，避免后续环境漂移\n5. 给 `provider selection` 和 `routing-runner` 增加更完整的跨节点 retry 单测\n\n## 七、给未来排障的最小流程\n\n如果以后又出现：\n\n- `stream closed before response.completed`\n- 卡住几秒后消失\n- 明明还有节点却不切换\n\n先按这条顺序查：\n\n1. `GET https://key.tengokukk.com/openai/health`\n2. `GET https://key.tengokukk.com/openai/debug/requests`\n3. `journalctl -u aiclient-2-api-mock.service --since '3 minutes ago'`\n4. 看 `routingPolicy.maxCredentialSwitchRetries`\n5. 看 retry 之后 `selectedProviderId` 是否真的变了\n6. 看同一请求内是否仍然反复命中同一个 uuid\n\n只要第 5 步和第 6 步没确认，就不能说“系统真的切换了”。\n\n## 八、一句话总括\n\n这次不是单纯的 SSE 修补，而是一次把“协议终止、切换预算、失败节点排除、canonical 文档真相”一起补齐的修复。\n\n真正让系统恢复可用的，不是哪一刀单独神奇，而是：\n\n```text\ncompletion 要能落地\n+ null 不能误判为 0\n+ retry 不能原地撞回同一坏节点\n+ README 必须把真实链路写死\n```\n\n\n\n\n\n# 超简单大白话，一秒懂 ## 1. 两个黄金端口 - **80 端口** = **HTTP**（不安全、明文、网址 `http://`） - **443 端口** = **HTTPS**（安全、加密、网址 `https://`） --- ## 2. 直接对应你现在的网站 你的： ``` https://key.tengokukk.com ``` ✅ **默认走的就是 443 端口** 只要浏览器输入 `https://` **自动默认访问服务器 443 端口**，不用你手动加端口号。 --- ## 3. 结合你服务器架构 ``` 外网用户 → 访问域名(https) ↓ 自动连你 VPS 的 **443 端口** ↓ Nginx 专门守在 443 门口 ↓ 解密HTTPS、校验证书 ↓ 转发内网 127.0.0.1:3301 ↓ 你的AI池子程序 ``` --- ## 4. 核心区别 | 端口 | 协议 | 特点 | |------|------|------| | 80 | http | 裸奔，数据不加密，容易被劫持 | | 443 | https | 全程加密，带SSL证书，安全，浏览器不会报错 | --- ## 5. 最通俗总结 - **443 = 安全上网的专属大门** - 你域名带 `https://`，全靠 443 端口支撑 - Nginx 就是霸占了你服务器的 **80、443** 两个端口 - 你的 3301 是内网后门，外人永远看不到 --- 补充： 你平时不用写： `https://key.tengokukk.com:443` 浏览器会**自动省略 443**，默认自带。",
+    "html": "<h1 id=\"token-pool-sse-切换链路复盘-2026-04-25\">Token Pool SSE-切换链路复盘 2026-04-25</h1>\n<h2 id=\"一结论先行\">一、结论先行</h2>\n<p>这次故障不是单点问题，而是一条完整请求链上连续叠加的几个结构性错误：</p>\n<ol>\n<li><code>openaiResponses-custom</code> 早期存在 unary 先打一遍、stream 再打一遍的双发路径，放大了上游消耗。</li>\n<li>流式 <code>response.completed</code> 在部分异常路径或尾包场景下丢失，客户端会报 <code>stream closed before response.completed</code>。</li>\n<li>CRS key 未显式配置 <code>maxCredentialSwitchRetries</code> 时，被错误归一化成 <code>0</code>，把凭证切换预算静默关掉。</li>\n<li>即使切换预算恢复后，同一请求内的 retry 选择器仍会反复选回同一个坏 uuid，导致“名义上在切，实际上原地撞墙”。</li>\n<li>从用户视角看，故障表现会不断变形：先是报错、再是几秒后消失、最后像是完全没反应。</li>\n</ol>\n<p>最终修复的核心不是单纯补一个 SSE 事件，而是把下面四个层级都补齐：</p>\n<ul>\n<li>协议终止层：保证 <code>response.completed</code></li>\n<li>重试预算层：<code>null</code> 不再被误判为 <code>0</code></li>\n<li>节点选择层：同一请求内排除已失败 uuid</li>\n<li>文档真相层：明确 canonical 入口、内部目标和验证顺序</li>\n</ul>\n<h2 id=\"二真实访问链\">二、真实访问链</h2>\n<p>当前 Token Pool 的真实 canonical 链如下：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>客户端 / Codex / OpenAI-compatible consumer</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>https://key.tengokukk.com/openai/v1</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Nginx on 170.106.179.226</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>http://127.0.0.1:3301/v1</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>aiclient-2-api-mock.service</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>openaiResponses-custom provider pool</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>具体上游节点 / credential</span></span></code></pre></figure>\n<p>对应公开契约：</p>\n<ul>\n<li>公共 API base：<code>https://key.tengokukk.com/openai/v1</code></li>\n<li>公共 health：<code>https://key.tengokukk.com/openai/health</code></li>\n<li>公共 debug：\n<ul>\n<li><code>https://key.tengokukk.com/openai/debug/providers</code></li>\n<li><code>https://key.tengokukk.com/openai/debug/routes</code></li>\n<li><code>https://key.tengokukk.com/openai/debug/requests</code></li>\n</ul>\n</li>\n</ul>\n<p>对应内部运行目标：</p>\n<ul>\n<li>runtime root：<code>/srv/aiclient-2-api-mock</code></li>\n<li>service：<code>aiclient-2-api-mock.service</code></li>\n<li>internal API base：<code>http://127.0.0.1:3301/v1</code></li>\n<li>internal health：<code>http://127.0.0.1:3301/health</code></li>\n</ul>\n<h2 id=\"三这次故障是怎么一步步暴露出来的\">三、这次故障是怎么一步步暴露出来的</h2>\n<h3 id=\"1-第一阶段客户端明确报协议错误\">1. 第一阶段：客户端明确报协议错误</h3>\n<p>用户最初看到的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>stream disconnected before completion: stream closed before response.completed</span></span></code></pre></figure>\n<p>这说明客户端不是没收到任何东西，而是：</p>\n<ul>\n<li>已经建立了流</li>\n<li>但直到连接关闭都没等到合法的 <code>response.completed</code></li>\n</ul>\n<p>这一阶段的主要问题在协议终止层。</p>\n<h3 id=\"2-第二阶段修完-completion-后症状变成卡住后消失\">2. 第二阶段：修完 completion 后，症状变成“卡住后消失”</h3>\n<p>当 <code>response.completed</code> 合成和 SSE tail buffer flush 落地之后，现象发生了质变：</p>\n<ul>\n<li>不再稳定报原来的 completion 错误</li>\n<li>变成卡几秒后直接消失</li>\n</ul>\n<p>这类现象很容易让人误判为：</p>\n<ul>\n<li>Nginx 缓冲</li>\n<li>SSE 被截断</li>\n<li>连接提前关闭</li>\n</ul>\n<p>但线上日志表明，真实主因不是“请求根本没到”，而是“请求到了，开始重试，但切换逻辑本身有结构性错误”。</p>\n<h3 id=\"3-第三阶段发现-key-缺省字段把切换预算关死\">3. 第三阶段：发现 Key 缺省字段把切换预算关死</h3>\n<p>线上 <code>crs_k_20260423_gateway</code> 并没有显式配置 <code>maxCredentialSwitchRetries</code>。</p>\n<p>问题在于：</p>\n<ul>\n<li><code>src/core/crs-key-store.js</code> 早期使用 <code>normalizeNumber</code></li>\n<li>对 <code>null/undefined</code> 返回 <code>0</code></li>\n</ul>\n<p>这会把“未配置”错误地变成“明确禁止切换”。</p>\n<p>修完第一层后，又发现主请求链里还有第二层相同问题：</p>\n<ul>\n<li><code>src/utils/common.js</code></li>\n<li>用 <code>Number(routingPolicy?.maxCredentialSwitchRetries)</code></li>\n<li>在 JavaScript 中 <code>Number(null) === 0</code></li>\n</ul>\n<p>所以即使 key store 已经返回 <code>null</code>，主链还是会把它再次压回 <code>0</code>。</p>\n<h3 id=\"4-第四阶段预算恢复后发现选择器还在原地撞坏节点\">4. 第四阶段：预算恢复后，发现选择器还在原地撞坏节点</h3>\n<p>预算修好后，日志第一次出现了真正的 retry：</p>\n<ul>\n<li><code>retry 1/5</code></li>\n<li><code>retry 2/5</code></li>\n<li><code>retry 3/5</code></li>\n</ul>\n<p>但更深的日志显示，每一轮 retry 都重新选回同一个坏节点：</p>\n<ul>\n<li><code>be1d6074-3a71-4702-ab53-d07d52512559</code></li>\n<li><code>soxio-responses-v1</code></li>\n</ul>\n<p>这说明系统名义上“在切换”，实际上却在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>失败节点 A</span></span>\n<span data-line=\"\"><span>  → 标记不健康</span></span>\n<span data-line=\"\"><span>  → 等待随机 backoff</span></span>\n<span data-line=\"\"><span>  → 重新选回 A</span></span>\n<span data-line=\"\"><span>  → 再失败</span></span></code></pre></figure>\n<p>这正是用户看到“卡几秒后直接消失”的直接原因。</p>\n<h2 id=\"四最终落地的修复项\">四、最终落地的修复项</h2>\n<h3 id=\"1-协议层修复\">1. 协议层修复</h3>\n<ul>\n<li><code>openaiResponses-custom</code> unary 改为单路径流式聚合，去掉先 unary 再 stream 重打的双发路径</li>\n<li>在上游有有效 Responses 事件但缺少终止事件时，合成 <code>response.completed</code></li>\n<li>SSE tail buffer flush 落地，避免尾包无换行导致 completion 被吞</li>\n<li>流式错误路径对 OpenAI Responses 客户端返回兼容的终止 completion，而不是裸错误事件</li>\n</ul>\n<h3 id=\"2-预算层修复\">2. 预算层修复</h3>\n<ul>\n<li><code>src/core/crs-key-store.js</code>：缺省 <code>maxCredentialSwitchRetries</code> 改为 <code>null</code></li>\n<li><code>src/utils/common.js</code>：<code>null/undefined/''</code> 视为未配置，正确回退到全局默认 <code>CREDENTIAL_SWITCH_MAX_RETRIES</code></li>\n</ul>\n<h3 id=\"3-选择层修复\">3. 选择层修复</h3>\n<ul>\n<li>同一请求内新增失败 uuid 排除逻辑</li>\n<li>某个节点在本次请求里 402 后，后续 retry 不得再选回它</li>\n<li>至少保证 retry 会尝试其他兼容节点，或者在候选耗尽后尽快失败返回</li>\n</ul>\n<h3 id=\"4-readme--控制面修复\">4. README / 控制面修复</h3>\n<ul>\n<li>README 明确写死 canonical 公共入口</li>\n<li>README 明确内部目标和 health/debug 合约</li>\n<li>README 增补本次修复后的访问链和请求流转结构</li>\n</ul>\n<h2 id=\"五这次最关键的经验\">五、这次最关键的经验</h2>\n<h3 id=\"经验-1不要把未配置归一化成-0\">经验 1：不要把“未配置”归一化成 <code>0</code></h3>\n<p><code>null</code> 和 <code>0</code> 在控制平面里语义完全不同：</p>\n<ul>\n<li><code>null</code> = 未配置，应该回退默认值</li>\n<li><code>0</code> = 显式关闭</li>\n</ul>\n<p>任何把 <code>null</code> 直接 <code>Number()</code> 掉的代码，都要高度警惕。</p>\n<h3 id=\"经验-2retry-是否发生不能只看计数要看它是否真的换了目标\">经验 2：retry 是否发生，不能只看计数，要看它是否真的换了目标</h3>\n<p>日志里出现：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>retry 1/5</span></span>\n<span data-line=\"\"><span>retry 2/5</span></span></code></pre></figure>\n<p>并不代表系统真的在“切换”。</p>\n<p>必须继续确认：</p>\n<ul>\n<li>下一跳的 <code>uuid</code> 有没有变化</li>\n<li><code>selectedProviderId</code> 有没有变化</li>\n<li>是否只是“对同一个坏节点重复请求”</li>\n</ul>\n<h3 id=\"经验-3sse-故障排查必须分四层看\">经验 3：SSE 故障排查必须分四层看</h3>\n<p>正确顺序应该是：</p>\n<ol>\n<li>客户端层：有没有报 <code>response.completed</code> 缺失</li>\n<li>入口层：Nginx access/error 有没有请求</li>\n<li>runtime 层：Node 日志里有没有收到请求、有没有写 completion</li>\n<li>路由层：是不是切换预算、节点排除、provider 选择出了问题</li>\n</ol>\n<p>跳过其中任何一层，都很容易误判。</p>\n<h3 id=\"经验-4不要把本地修好了误当作线上生效了\">经验 4：不要把“本地修好了”误当作“线上生效了”</h3>\n<p>本次中间有一个关键转折是：</p>\n<ul>\n<li>本地 mock / 单测已经通过</li>\n<li>但 canonical 入口行为仍旧像旧版本</li>\n</ul>\n<p>只有在远端看到新日志特征、并且通过真实请求链验证，才算真正生效。</p>\n<h3 id=\"经验-5控制文档要把真相写死\">经验 5：控制文档要把真相写死</h3>\n<p>如果 README 没明确以下内容，后续极易再次混乱：</p>\n<ul>\n<li>唯一 canonical 入口</li>\n<li>内部运行目标</li>\n<li>公开 health/debug 契约</li>\n<li>标准排障顺序</li>\n</ul>\n<p>文档不只是说明书，它本身就是运行控制面的一部分。</p>\n<h2 id=\"六后续仍值得继续加强的点\">六、后续仍值得继续加强的点</h2>\n<p>虽然这次已经把最关键的几刀补上了，但后续仍建议继续收敛：</p>\n<ol>\n<li>给请求链增加显式 <code>excludedProviderUuids</code> / <code>attemptedProviderUuids</code> 观测输出</li>\n<li>对 <code>402</code> 类错误区分“节点额度不足”与“账号级不可用”</li>\n<li>对 Responses 流式失败补更稳定的最终 completion 契约</li>\n<li>Nginx 的 <code>/openai/v1</code> location 显式固定 SSE 友好配置，避免后续环境漂移</li>\n<li>给 <code>provider selection</code> 和 <code>routing-runner</code> 增加更完整的跨节点 retry 单测</li>\n</ol>\n<h2 id=\"七给未来排障的最小流程\">七、给未来排障的最小流程</h2>\n<p>如果以后又出现：</p>\n<ul>\n<li><code>stream closed before response.completed</code></li>\n<li>卡住几秒后消失</li>\n<li>明明还有节点却不切换</li>\n</ul>\n<p>先按这条顺序查：</p>\n<ol>\n<li><code>GET https://key.tengokukk.com/openai/health</code></li>\n<li><code>GET https://key.tengokukk.com/openai/debug/requests</code></li>\n<li><code>journalctl -u aiclient-2-api-mock.service --since '3 minutes ago'</code></li>\n<li>看 <code>routingPolicy.maxCredentialSwitchRetries</code></li>\n<li>看 retry 之后 <code>selectedProviderId</code> 是否真的变了</li>\n<li>看同一请求内是否仍然反复命中同一个 uuid</li>\n</ol>\n<p>只要第 5 步和第 6 步没确认，就不能说“系统真的切换了”。</p>\n<h2 id=\"八一句话总括\">八、一句话总括</h2>\n<p>这次不是单纯的 SSE 修补，而是一次把“协议终止、切换预算、失败节点排除、canonical 文档真相”一起补齐的修复。</p>\n<p>真正让系统恢复可用的，不是哪一刀单独神奇，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>completion 要能落地</span></span>\n<span data-line=\"\"><span>+ null 不能误判为 0</span></span>\n<span data-line=\"\"><span>+ retry 不能原地撞回同一坏节点</span></span>\n<span data-line=\"\"><span>+ README 必须把真实链路写死</span></span></code></pre></figure>\n<h1 id=\"超简单大白话一秒懂--1-两个黄金端口---80-端口--http不安全明文网址-http---443-端口--https安全加密网址-https------2-直接对应你现在的网站-你的-httpskeytengokukkcom--默认走的就是-443-端口-只要浏览器输入-https-自动默认访问服务器-443-端口不用你手动加端口号------3-结合你服务器架构-外网用户--访问域名https--自动连你-vps-的-443-端口--nginx-专门守在-443-门口--解密https校验证书--转发内网-1270013301--你的ai池子程序------4-核心区别--端口--协议--特点----------------------80--http--裸奔数据不加密容易被劫持---443--https--全程加密带ssl证书安全浏览器不会报错-------5-最通俗总结---443--安全上网的专属大门---你域名带-https全靠-443-端口支撑---nginx-就是霸占了你服务器的-80443-两个端口---你的-3301-是内网后门外人永远看不到-----补充-你平时不用写-httpskeytengokukkcom443-浏览器会自动省略-443默认自带\">超简单大白话，一秒懂 ## 1. 两个黄金端口 - <strong>80 端口</strong> = <strong>HTTP</strong>（不安全、明文、网址 <code>http://</code>） - <strong>443 端口</strong> = <strong>HTTPS</strong>（安全、加密、网址 <code>https://</code>） --- ## 2. 直接对应你现在的网站 你的： <code>https://key.tengokukk.com</code> ✅ <strong>默认走的就是 443 端口</strong> 只要浏览器输入 <code>https://</code> <strong>自动默认访问服务器 443 端口</strong>，不用你手动加端口号。 --- ## 3. 结合你服务器架构 <code>外网用户 → 访问域名(https) ↓ 自动连你 VPS 的 **443 端口** ↓ Nginx 专门守在 443 门口 ↓ 解密HTTPS、校验证书 ↓ 转发内网 127.0.0.1:3301 ↓ 你的AI池子程序</code> --- ## 4. 核心区别 | 端口 | 协议 | 特点 | |------|------|------| | 80 | http | 裸奔，数据不加密，容易被劫持 | | 443 | https | 全程加密，带SSL证书，安全，浏览器不会报错 | --- ## 5. 最通俗总结 - <strong>443 = 安全上网的专属大门</strong> - 你域名带 <code>https://</code>，全靠 443 端口支撑 - Nginx 就是霸占了你服务器的 <strong>80、443</strong> 两个端口 - 你的 3301 是内网后门，外人永远看不到 --- 补充： 你平时不用写： <code>https://key.tengokukk.com:443</code> 浏览器会<strong>自动省略 443</strong>，默认自带。</h1>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "token-pool-sse-切换链路复盘-2026-04-25",
+        "text": "Token Pool SSE-切换链路复盘 2026-04-25"
+      },
+      {
+        "depth": 2,
+        "slug": "一-结论先行",
+        "text": "一、结论先行"
+      },
+      {
+        "depth": 2,
+        "slug": "二-真实访问链",
+        "text": "二、真实访问链"
+      },
+      {
+        "depth": 2,
+        "slug": "三-这次故障是怎么一步步暴露出来的",
+        "text": "三、这次故障是怎么一步步暴露出来的"
+      },
+      {
+        "depth": 3,
+        "slug": "1-第一阶段-客户端明确报协议错误",
+        "text": "1. 第一阶段：客户端明确报协议错误"
+      },
+      {
+        "depth": 3,
+        "slug": "2-第二阶段-修完-completion-后-症状变成-卡住后消失",
+        "text": "2. 第二阶段：修完 completion 后，症状变成“卡住后消失”"
+      },
+      {
+        "depth": 3,
+        "slug": "3-第三阶段-发现-key-缺省字段把切换预算关死",
+        "text": "3. 第三阶段：发现 Key 缺省字段把切换预算关死"
+      },
+      {
+        "depth": 3,
+        "slug": "4-第四阶段-预算恢复后-发现选择器还在原地撞坏节点",
+        "text": "4. 第四阶段：预算恢复后，发现选择器还在原地撞坏节点"
+      },
+      {
+        "depth": 2,
+        "slug": "四-最终落地的修复项",
+        "text": "四、最终落地的修复项"
+      },
+      {
+        "depth": 3,
+        "slug": "1-协议层修复",
+        "text": "1. 协议层修复"
+      },
+      {
+        "depth": 3,
+        "slug": "2-预算层修复",
+        "text": "2. 预算层修复"
+      },
+      {
+        "depth": 3,
+        "slug": "3-选择层修复",
+        "text": "3. 选择层修复"
+      },
+      {
+        "depth": 3,
+        "slug": "4-readme-控制面修复",
+        "text": "4. README / 控制面修复"
+      },
+      {
+        "depth": 2,
+        "slug": "五-这次最关键的经验",
+        "text": "五、这次最关键的经验"
+      },
+      {
+        "depth": 3,
+        "slug": "经验-1-不要把-未配置-归一化成-0",
+        "text": "经验 1：不要把“未配置”归一化成 `0`"
+      },
+      {
+        "depth": 3,
+        "slug": "经验-2-retry-是否发生-不能只看计数-要看它是否真的换了目标",
+        "text": "经验 2：retry 是否发生，不能只看计数，要看它是否真的换了目标"
+      },
+      {
+        "depth": 3,
+        "slug": "经验-3-sse-故障排查必须分四层看",
+        "text": "经验 3：SSE 故障排查必须分四层看"
+      },
+      {
+        "depth": 3,
+        "slug": "经验-4-不要把-本地修好了-误当作-线上生效了",
+        "text": "经验 4：不要把“本地修好了”误当作“线上生效了”"
+      },
+      {
+        "depth": 3,
+        "slug": "经验-5-控制文档要把真相写死",
+        "text": "经验 5：控制文档要把真相写死"
+      },
+      {
+        "depth": 2,
+        "slug": "六-后续仍值得继续加强的点",
+        "text": "六、后续仍值得继续加强的点"
+      },
+      {
+        "depth": 2,
+        "slug": "七-给未来排障的最小流程",
+        "text": "七、给未来排障的最小流程"
+      },
+      {
+        "depth": 2,
+        "slug": "八-一句话总括",
+        "text": "八、一句话总括"
+      },
+      {
+        "depth": 1,
+        "slug": "超简单大白话-一秒懂-1-两个黄金端口-80-端口-http-不安全-明文-网址-http-443-端口-https-安全-加密-网址-https-2-直接对应你现在的网站-你的-https-key-tengokukk-com-默认走的就是-443-端口-只要浏览器输入-https-自动默认访问服务器-443-端口-不用你手动加端口号-3-结合你服务器架构-外网用户-访问域名-https-自动连你-vps-的-443-端口-nginx-专门守在-443-门口-解密https-校验证书-转发内网-127-0-0-1-3301-你的ai池子程序-4-核心区别-端口-协议-特点-80-http-裸奔-数据不加密-容易被劫持-443-https-全程加密-带ssl证书-安全-浏览器不会报错-5-最通俗总结-443-安全上网的专属大门-你域名带-https-全靠-443-端口支撑-nginx-就是霸占了你服务器的-80-443-两个端口-你的-3301-是内网后门-外人永远看不到-补充-你平时不用写-https-key-tengokukk-com-443-浏览器会-自动省略-443-默认自带",
+        "text": "超简单大白话，一秒懂 ## 1. 两个黄金端口 - **80 端口** = **HTTP**（不安全、明文、网址 `http://`） - **443 端口** = **HTTPS**（安全、加密、网址 `https://`） --- ## 2. 直接对应你现在的网站 你的： ``` https://key.tengokukk.com ``` ✅ **默认走的就是 443 端口** 只要浏览器输入 `https://` **自动默认访问服务器 443 端口**，不用你手动加端口号。 --- ## 3. 结合你服务器架构 ``` 外网用户 → 访问域名(https) ↓ 自动连你 VPS 的 **443 端口** ↓ Nginx 专门守在 443 门口 ↓ 解密HTTPS、校验证书 ↓ 转发内网 127.0.0.1:3301 ↓ 你的AI池子程序 ``` --- ## 4. 核心区别 | 端口 | 协议 | 特点 | |------|------|------| | 80 | http | 裸奔，数据不加密，容易被劫持 | | 443 | https | 全程加密，带SSL证书，安全，浏览器不会报错 | --- ## 5. 最通俗总结 - **443 = 安全上网的专属大门** - 你域名带 `https://`，全靠 443 端口支撑 - Nginx 就是霸占了你服务器的 **80、443** 两个端口 - 你的 3301 是内网后门，外人永远看不到 --- 补充： 你平时不用写： `https://key.tengokukk.com:443` 浏览器会**自动省略 443**，默认自带。"
+      }
+    ],
+    "detailPath": "articles/md_9b3c293c5ece.json"
+  }
+}

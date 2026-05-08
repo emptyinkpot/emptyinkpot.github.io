@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_7a50c0c1546b",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/mini%20Kubernetes.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/mini Kubernetes.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/mini Kubernetes.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/mini%20Kubernetes.md",
+    "slug": "blog-mini-kubernetes",
+    "title": "mini Kubernetes",
+    "summary": "先说直白点： “mini Kubernetes”不是一个官方产品名 ，而是一种工程说法，意思是： 👉 用一套“缩小版的 Kubernetes 控制模型”，在本地或小规模环境里管理服务、任务和资源 🧠 先理解 Kubernetes 是什么 Kubernetes（常简称 K8s）本质是一个： 它干的...",
+    "description": "先说直白点： “mini Kubernetes”不是一个官方产品名 ，而是一种工程说法，意思是： 👉 用一套“缩小版的 Kubernetes 控制模型”，在本地或小规模环境里管理服务、任务和资源 🧠 先理解 Kubernetes 是什么 Kubernetes（常简称 K8s）本质是一个： 它干的...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/mini Kubernetes.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/mini Kubernetes.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/mini%20Kubernetes.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "mini Kubernetes",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "MINI KUBERNETES"
+      ],
+      "subtitle": "先说直白点： “mini Kubernetes”不是一个官方产品名 ，而是一种工程说法，意思是： 👉 用一套“缩小版的 Kubernetes 控制模型”，在本地或小规模环境里管理服务、任务和资源 🧠 先理解 Kubernetes 是什么 Kubernetes（常简称 K8s）本质是一个： 它干的..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "先说直白点：  \n**“mini Kubernetes”不是一个官方产品名**，而是一种工程说法，意思是：\n\n> 👉 用一套“缩小版的 Kubernetes 控制模型”，在本地或小规模环境里管理服务、任务和资源\n\n---\n\n# 🧠 先理解 Kubernetes 是什么\n\nKubernetes（常简称 K8s）本质是一个：\n\n```text\n分布式系统控制器（control plane）\n```\n\n它干的事情是：\n\n- 管理服务（容器）\n    \n- 调度任务（在哪台机器跑）\n    \n- 维护状态（挂了自动拉起）\n    \n- 做网络/负载均衡\n    \n- 做配置和密钥管理\n    \n\n---\n\n# 🧩 那 “mini Kubernetes” 是什么？\n\n就是把上面那一整套复杂系统：\n\n```text\n大规模集群调度系统\n```\n\n👇 缩成：\n\n```text\n单机 / 小规模 / 轻量控制系统\n```\n\n---\n\n## 📦 对应关系（你现在的系统 vs K8s）\n\n|Kubernetes 概念|你现在的东西|\n|---|---|\n|Control Plane|`.codex`|\n|Node|你的服务器（server-170）|\n|Pod / Service|webui / proxy / 注册任务|\n|Scheduler|你手动 / agent 调度|\n|ConfigMap|config.toml|\n|Secret|auth.json|\n|Health Check|你用 curl / netstat|\n\n---\n\n👉 你其实已经在“手写一个 mini K8s 了，只是没结构化”\n\n---\n\n# 🔥 举个非常具体的例子\n\n你刚才在做的事情：\n\n```text\n启动 webui\n↓\n检查端口\n↓\n测试代理\n↓\n跑注册任务\n↓\n看日志\n```\n\n这在 Kubernetes 里是：\n\n```text\nDeployment + Service + HealthCheck + Job\n```\n\n---\n\n# 🧠 mini Kubernetes 的核心思想（重点）\n\n不是技术，而是这几个原则：\n\n---\n\n## 1️⃣ 声明式（Declarative）\n\n不是说：\n\n```bash\npython webui.py\n```\n\n而是：\n\n```json\n{\n  \"service\": \"webui\",\n  \"port\": 18000,\n  \"state\": \"running\"\n}\n```\n\n👉 系统负责“让它变成 running”\n\n---\n\n## 2️⃣ 控制循环（Control Loop）\n\n核心逻辑：\n\n```text\n期望状态 vs 实际状态\n→ 自动修复\n```\n\n比如：\n\n- 你希望 webui 在跑\n    \n- 实际挂了\n    \n\n👉 系统自动重启\n\n---\n\n## 3️⃣ 调度（Scheduling）\n\n你以后一定会遇到：\n\n```text\n这个任务跑在本地还是 server-170？\n```\n\nmini K8s 会做：\n\n```text\n自动选择节点\n```\n\n---\n\n## 4️⃣ 资源抽象\n\n你现在是：\n\n```text\n端口 / 进程 / 脚本\n```\n\nmini K8s 会变成：\n\n```text\n服务 / 节点 / 任务\n```\n\n---\n\n# 🚨 为什么我刚才说你已经“快到这一步了”\n\n因为你现在已经有：\n\n- `.codex`（控制面）\n    \n- gateway.ps1（入口）\n    \n- 多服务（webui / proxy / 注册）\n    \n- 多节点（本地 + server-170）\n    \n- 状态（sqlite / logs）\n    \n\n👉 只差：\n\n```text\n❗ 没有统一调度和状态控制\n```\n\n---\n\n# 🔧 如果你真的做一个 mini Kubernetes（给你个结构）\n\n可以长这样：\n\n```text\n.codex/\n  control/\n    config.toml\n    nodes.json\n    services.json\n  runtime/\n    state.db\n    logs/\n  scheduler/\n    scheduler.py\n  health/\n    checks.ps1\n```\n\n---\n\n## services.json（核心）\n\n```json\n{\n  \"services\": [\n    {\n      \"name\": \"webui\",\n      \"node\": \"local\",\n      \"port\": 18000,\n      \"desired_state\": \"running\"\n    },\n    {\n      \"name\": \"proxy\",\n      \"node\": \"server-170\",\n      \"port\": 3128,\n      \"desired_state\": \"running\"\n    }\n  ]\n}\n```\n\n---\n\n👉 然后一个 loop：\n\n```python\nwhile True:\n    check_actual_state()\n    compare_with_desired()\n    fix()\n```\n\n---\n\n# 🎯 用一句话总结\n\n> mini Kubernetes =  \n> ❌ 不再“手动跑脚本”  \n> ✔️ 而是“定义系统应该长什么样，让系统自己维持”\n\n---\n\n# 🧠 给你一个很现实的判断\n\n你现在还在：\n\n```text\ncurl + ssh + 手动调试\n```\n\n如果你不做这一步升级，后面你会：\n\n```text\n❗ 彻底失控（服务越来越多）\n```\n\n---\n\n# 🚀 如果你继续往下走\n\n我可以帮你直接设计一套：\n\n- `.codex → 控制面`\n    \n- `nodes → 多服务器`\n    \n- `proxy pool → 调度`\n    \n- `registration → job system`\n    \n\n👉 直接变成：\n\n```text\n你自己的“轻量级调度系统”\n```\n\n而不是现在这种：\n\n```text\n脚本拼装系统\n```\n\n---\n\n要不要下一步我帮你**把你现有项目直接改成 mini-K8s 架构图 + 第一版实现骨架**？",
+    "html": "<p>先说直白点：<br>\n<strong>“mini Kubernetes”不是一个官方产品名</strong>，而是一种工程说法，意思是：</p>\n<blockquote>\n<p>👉 用一套“缩小版的 Kubernetes 控制模型”，在本地或小规模环境里管理服务、任务和资源</p>\n</blockquote>\n<hr>\n<h1 id=\"-先理解-kubernetes-是什么\">🧠 先理解 Kubernetes 是什么</h1>\n<p>Kubernetes（常简称 K8s）本质是一个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>分布式系统控制器（control plane）</span></span></code></pre></figure>\n<p>它干的事情是：</p>\n<ul>\n<li>\n<p>管理服务（容器）</p>\n</li>\n<li>\n<p>调度任务（在哪台机器跑）</p>\n</li>\n<li>\n<p>维护状态（挂了自动拉起）</p>\n</li>\n<li>\n<p>做网络/负载均衡</p>\n</li>\n<li>\n<p>做配置和密钥管理</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-那-mini-kubernetes-是什么\">🧩 那 “mini Kubernetes” 是什么？</h1>\n<p>就是把上面那一整套复杂系统：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>大规模集群调度系统</span></span></code></pre></figure>\n<p>👇 缩成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>单机 / 小规模 / 轻量控制系统</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-对应关系你现在的系统-vs-k8s\">📦 对应关系（你现在的系统 vs K8s）</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>Kubernetes 概念</th>\n<th>你现在的东西</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Control Plane</td>\n<td><code>.codex</code></td>\n</tr>\n<tr>\n<td>Node</td>\n<td>你的服务器（server-170）</td>\n</tr>\n<tr>\n<td>Pod / Service</td>\n<td>webui / proxy / 注册任务</td>\n</tr>\n<tr>\n<td>Scheduler</td>\n<td>你手动 / agent 调度</td>\n</tr>\n<tr>\n<td>ConfigMap</td>\n<td>config.toml</td>\n</tr>\n<tr>\n<td>Secret</td>\n<td>auth.json</td>\n</tr>\n<tr>\n<td>Health Check</td>\n<td>你用 curl / netstat</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<p>👉 你其实已经在“手写一个 mini K8s 了，只是没结构化”</p>\n<hr>\n<h1 id=\"-举个非常具体的例子\">🔥 举个非常具体的例子</h1>\n<p>你刚才在做的事情：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>启动 webui</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>检查端口</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>测试代理</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>跑注册任务</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>看日志</span></span></code></pre></figure>\n<p>这在 Kubernetes 里是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Deployment + Service + HealthCheck + Job</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-mini-kubernetes-的核心思想重点\">🧠 mini Kubernetes 的核心思想（重点）</h1>\n<p>不是技术，而是这几个原则：</p>\n<hr>\n<h2 id=\"1️⃣-声明式declarative\">1️⃣ 声明式（Declarative）</h2>\n<p>不是说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">python</span><span style=\"color:#9ECBFF\"> webui.py</span></span></code></pre></figure>\n<p>而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"service\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"webui\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"port\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">18000</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"state\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"running\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>👉 系统负责“让它变成 running”</p>\n<hr>\n<h2 id=\"2️⃣-控制循环control-loop\">2️⃣ 控制循环（Control Loop）</h2>\n<p>核心逻辑：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>期望状态 vs 实际状态</span></span>\n<span data-line=\"\"><span>→ 自动修复</span></span></code></pre></figure>\n<p>比如：</p>\n<ul>\n<li>\n<p>你希望 webui 在跑</p>\n</li>\n<li>\n<p>实际挂了</p>\n</li>\n</ul>\n<p>👉 系统自动重启</p>\n<hr>\n<h2 id=\"3️⃣-调度scheduling\">3️⃣ 调度（Scheduling）</h2>\n<p>你以后一定会遇到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>这个任务跑在本地还是 server-170？</span></span></code></pre></figure>\n<p>mini K8s 会做：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>自动选择节点</span></span></code></pre></figure>\n<hr>\n<h2 id=\"4️⃣-资源抽象\">4️⃣ 资源抽象</h2>\n<p>你现在是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>端口 / 进程 / 脚本</span></span></code></pre></figure>\n<p>mini K8s 会变成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>服务 / 节点 / 任务</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-为什么我刚才说你已经快到这一步了\">🚨 为什么我刚才说你已经“快到这一步了”</h1>\n<p>因为你现在已经有：</p>\n<ul>\n<li>\n<p><code>.codex</code>（控制面）</p>\n</li>\n<li>\n<p>gateway.ps1（入口）</p>\n</li>\n<li>\n<p>多服务（webui / proxy / 注册）</p>\n</li>\n<li>\n<p>多节点（本地 + server-170）</p>\n</li>\n<li>\n<p>状态（sqlite / logs）</p>\n</li>\n</ul>\n<p>👉 只差：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❗ 没有统一调度和状态控制</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你真的做一个-mini-kubernetes给你个结构\">🔧 如果你真的做一个 mini Kubernetes（给你个结构）</h1>\n<p>可以长这样：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>.codex/</span></span>\n<span data-line=\"\"><span>  control/</span></span>\n<span data-line=\"\"><span>    config.toml</span></span>\n<span data-line=\"\"><span>    nodes.json</span></span>\n<span data-line=\"\"><span>    services.json</span></span>\n<span data-line=\"\"><span>  runtime/</span></span>\n<span data-line=\"\"><span>    state.db</span></span>\n<span data-line=\"\"><span>    logs/</span></span>\n<span data-line=\"\"><span>  scheduler/</span></span>\n<span data-line=\"\"><span>    scheduler.py</span></span>\n<span data-line=\"\"><span>  health/</span></span>\n<span data-line=\"\"><span>    checks.ps1</span></span></code></pre></figure>\n<hr>\n<h2 id=\"servicesjson核心\">services.json（核心）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"services\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"name\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"webui\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"node\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"local\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"port\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">18000</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"desired_state\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"running\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    },</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"name\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"proxy\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"node\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"server-170\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"port\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">3128</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"desired_state\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"running\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<p>👉 然后一个 loop：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"python\" data-theme=\"github-dark\"><code data-language=\"python\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">while</span><span style=\"color:#79B8FF\"> True</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    check_actual_state()</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    compare_with_desired()</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    fix()</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-用一句话总结\">🎯 用一句话总结</h1>\n<blockquote>\n<p>mini Kubernetes =<br>\n❌ 不再“手动跑脚本”<br>\n✔️ 而是“定义系统应该长什么样，让系统自己维持”</p>\n</blockquote>\n<hr>\n<h1 id=\"-给你一个很现实的判断\">🧠 给你一个很现实的判断</h1>\n<p>你现在还在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>curl + ssh + 手动调试</span></span></code></pre></figure>\n<p>如果你不做这一步升级，后面你会：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❗ 彻底失控（服务越来越多）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你继续往下走\">🚀 如果你继续往下走</h1>\n<p>我可以帮你直接设计一套：</p>\n<ul>\n<li>\n<p><code>.codex → 控制面</code></p>\n</li>\n<li>\n<p><code>nodes → 多服务器</code></p>\n</li>\n<li>\n<p><code>proxy pool → 调度</code></p>\n</li>\n<li>\n<p><code>registration → job system</code></p>\n</li>\n</ul>\n<p>👉 直接变成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你自己的“轻量级调度系统”</span></span></code></pre></figure>\n<p>而不是现在这种：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>脚本拼装系统</span></span></code></pre></figure>\n<hr>\n<p>要不要下一步我帮你<strong>把你现有项目直接改成 mini-K8s 架构图 + 第一版实现骨架</strong>？</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "先理解-kubernetes-是什么",
+        "text": "🧠 先理解 Kubernetes 是什么"
+      },
+      {
+        "depth": 1,
+        "slug": "那-mini-kubernetes-是什么",
+        "text": "🧩 那 “mini Kubernetes” 是什么？"
+      },
+      {
+        "depth": 2,
+        "slug": "对应关系-你现在的系统-vs-k8s",
+        "text": "📦 对应关系（你现在的系统 vs K8s）"
+      },
+      {
+        "depth": 1,
+        "slug": "举个非常具体的例子",
+        "text": "🔥 举个非常具体的例子"
+      },
+      {
+        "depth": 1,
+        "slug": "mini-kubernetes-的核心思想-重点",
+        "text": "🧠 mini Kubernetes 的核心思想（重点）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-声明式-declarative",
+        "text": "1️⃣ 声明式（Declarative）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-控制循环-control-loop",
+        "text": "2️⃣ 控制循环（Control Loop）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-调度-scheduling",
+        "text": "3️⃣ 调度（Scheduling）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-资源抽象",
+        "text": "4️⃣ 资源抽象"
+      },
+      {
+        "depth": 1,
+        "slug": "为什么我刚才说你已经-快到这一步了",
+        "text": "🚨 为什么我刚才说你已经“快到这一步了”"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你真的做一个-mini-kubernetes-给你个结构",
+        "text": "🔧 如果你真的做一个 mini Kubernetes（给你个结构）"
+      },
+      {
+        "depth": 2,
+        "slug": "services-json-核心",
+        "text": "services.json（核心）"
+      },
+      {
+        "depth": 1,
+        "slug": "用一句话总结",
+        "text": "🎯 用一句话总结"
+      },
+      {
+        "depth": 1,
+        "slug": "给你一个很现实的判断",
+        "text": "🧠 给你一个很现实的判断"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你继续往下走",
+        "text": "🚀 如果你继续往下走"
+      }
+    ],
+    "detailPath": "articles/md_7a50c0c1546b.json"
+  }
+}

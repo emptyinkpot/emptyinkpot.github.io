@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_1de96a7cfa6b",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E5%BC%83%E4%BC%A0%E7%BB%9F%E5%8D%9A%E5%AE%A2%EF%BC%8C%E8%BD%AC%E5%90%91%20Runtime%20Knowledge%20System.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/我为什么放弃传统博客，转向 Runtime Knowledge System.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/我为什么放弃传统博客，转向 Runtime Knowledge System.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E5%BC%83%E4%BC%A0%E7%BB%9F%E5%8D%9A%E5%AE%A2%EF%BC%8C%E8%BD%AC%E5%90%91%20Runtime%20Knowledge%20System.md",
+    "slug": "why-i-left-traditional-blog-for-runtime-knowledge-system",
+    "title": "我为什么放弃传统博客，转向 Runtime Knowledge System",
+    "summary": "这不是一篇工具推荐合集，而是一篇个人知识系统的架构演化记录：为什么传统博客不够用，为什么 Obsidian 会成为写作真源，为什么 Quartz 像 Vault Projection Engine，以及为什么我最终把博客重构成 Runtime Knowledge System。",
+    "description": "这不是一篇工具推荐合集，而是一篇个人知识系统的架构演化记录：为什么传统博客不够用，为什么 Obsidian 会成为写作真源，为什么 Quartz 像 Vault Projection Engine，以及为什么我最终把博客重构成 Runtime Knowledge System。",
+    "date": "2026-05-07",
+    "updated": "2026-05-07",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "知识系统",
+      "Runtime",
+      "Obsidian",
+      "Quartz",
+      "Headless CMS",
+      "Astro",
+      "blog",
+      "wikilink"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "frontmatter.categories"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags",
+        "obsidian.wikilinks"
+      ],
+      "folderTags": [
+        "blog"
+      ],
+      "explicitTags": [
+        "知识系统",
+        "Runtime",
+        "Obsidian",
+        "Quartz",
+        "Headless CMS",
+        "Astro"
+      ],
+      "explicitCategories": [
+        "blog"
+      ]
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/我为什么放弃传统博客，转向 Runtime Knowledge System.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/我为什么放弃传统博客，转向 Runtime Knowledge System.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E5%BC%83%E4%BC%A0%E7%BB%9F%E5%8D%9A%E5%AE%A2%EF%BC%8C%E8%BD%AC%E5%90%91%20Runtime%20Knowledge%20System.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "Knowledge Operating System",
+    "project": "Knowledge Operating System",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": true,
+    "relations": {
+      "wikilinks": [
+        "wikilink"
+      ],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "知识系统",
+        "RUNTIME",
+        "OBSIDIAN",
+        "QUARTZ",
+        "HEADLESS CMS"
+      ],
+      "subtitle": "这不是一篇工具推荐合集，而是一篇个人知识系统的架构演化记录：为什么传统博客不够用，为什么 Obsidian 会成为写作真源，为什么 Quartz 像 Vault Projection Engine，以及为什么我最终把博客重构成 Runtime Knowledge System。"
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# 我为什么放弃传统博客，转向 Runtime Knowledge System\n\n我越来越不想把自己的站点叫作“博客”。\n\n不是因为博客这个词过时，而是因为传统博客默认的系统边界已经不够用了。传统博客关心的是：\n\n```txt\nMarkdown\n↓\nHTML\n↓\n页面\n```\n\n但我真正需要的是：\n\n```txt\n知识对象\n↓\n投影\n↓\n阅读空间\n↓\n关系网络\n↓\n运行时状态\n```\n\n这两者不是同一种东西。\n\n一篇文章不只是一个文件。一本书不只是一个 PDF。一个视觉素材不只是一个图片路径。它们都应该是可以被阅读、搜索、关联、标注、继续生长的对象。\n\n所以这篇不是“好用工具推荐合集”。那种文章已经太多了。真正有价值的是：我为什么从传统博客一路踩坑，最后走向 Runtime Knowledge System。\n\n## 为什么传统博客越来越不够用\n\n传统博客的核心假设很简单：\n\n```txt\n内容是文章\n文章是 Markdown\n站点是构建结果\n搜索是静态索引\n```\n\n这个模型在早期很好。写几篇文章，生成几个页面，RSS 和搜索能跑，部署到服务器，就够了。\n\n但当内容系统开始变复杂，它会暴露出几个根本问题。\n\n第一，Markdown 只是文件，不是对象。\n\n传统博客把 Markdown 当成文章源码，但我的知识库里不只有文章。还有书籍、PDF、视觉素材、项目记录、维护笔记、史料、代码片段、阅读高亮、未完成草稿。这些东西都有元数据、状态、关系和使用场景。把它们全塞进 `posts`，只会让系统越来越脏。\n\n第二，写作空间和发布空间会互相污染。\n\nObsidian 里的 Vault 是认知空间，里面应该有草稿、碎片、私有笔记、附件、双链和临时结构。公开站点是发布空间，它必须有明确边界。如果直接把 Vault 当博客源，最后一定会混进不该公开的内容。\n\n第三，静态索引不是知识系统。\n\nPagefind 这类静态搜索非常适合构建期页面，但它并不知道你的对象关系、阅读状态、Graph、书籍进度、视觉素材聚类。它可以是一个搜索投影，但不能成为整个知识系统的 authority。\n\n第四，构建期系统很难表达运行时状态。\n\n我需要的是：\n\n- 阅读位置\n- 高亮和批注\n- Drawer Reader\n- 书籍目录\n- Runtime Feed\n- Graph\n- OpenList 文件层\n- 视觉素材索引\n- 后台元数据\n- 多端同步\n\n这些东西不是 `npm run build` 能全部解决的。它们需要 runtime。\n\n所以传统博客的问题不是“不够炫”，而是系统模型太窄。\n\n## Obsidian 为什么会成为事实写作真源\n\n我最后还是把 Obsidian 放在写作真源的位置。\n\n不是因为它适合直接发布，而是因为它适合长期写作。\n\nObsidian 的真正价值在这里：\n\n- 文件是本地 Markdown，寿命足够长\n- Vault 可以完整迁移，不被某个服务绑死\n- `[wikilink](#wikilink)` 能自然表达知识之间的关系\n- Graph 不是装饰，而是知识对象之间的导航方式\n- 插件生态足够强\n- local-first，写作时不依赖远端服务\n\n官方入口：<https://obsidian.md>\n\n但这里必须说清楚：Obsidian 是认知空间，不是发布系统。\n\n它里面可以有混乱、草稿、私人内容、附件和半成品。网站不应该直接读取整个 Vault。成熟架构应该是：\n\n```txt\nObsidian Vault\n↓\nNormalize\n↓\nRuntime MarkdownObject\n↓\nPublic Projection\n```\n\n这一步是我从“博客”走向“知识系统”的关键。\n\n## Quartz 为什么会火\n\nQuartz 不能只理解成静态博客生成器。\n\n它真正厉害的地方是：它把 Obsidian Vault 投影成一个可浏览的网站。\n\n我更愿意把 Quartz 理解成：\n\n```txt\nVault Projection Engine\n```\n\n它解决的不是“怎么写博客主题”，而是：\n\n- wikilink 怎么变成网页链接\n- backlink 怎么生成\n- folder 和 tag 怎么投影成页面\n- Graph 怎么渲染\n- Markdown 怎么经过统一 transform pipeline\n- 私有内容和公开内容怎么区分\n\n项目地址：<https://github.com/jackyzha0/quartz>\n\n这也是为什么 Quartz 在 Obsidian 发布领域会火。它抓住了一个本质问题：写作真源和展示站点之间必须有一层 projection。\n\n## 为什么我没有直接用 Quartz\n\n我没有直接把站点换成 Quartz。\n\n原因不是 Quartz 不好，而是我的系统目标已经超过了“发布一个数字花园”。\n\nQuartz 更偏 publish：\n\n```txt\nVault\n↓\nStatic Site\n```\n\n而我需要的是：\n\n```txt\nVault\n↓\nRuntime Projection\n↓\nFeed / Reader / Drawer / Search / Graph / Books / Visuals\n```\n\n我需要的不只是页面，而是运行时对象。\n\n例如一篇文章进入站点之后，它不应该只生成一个 HTML。它还要进入首页 Feed、Reader Drawer、Knowledge Graph、RSS、搜索索引、分类和标签页面。一本书也不应该只是文件链接，它要有目录、正文、阅读位置、高亮和关联节点。\n\nQuartz 的思想我会吸收，尤其是 Markdown pipeline、wikilink、backlink 和 graph projection。但我不想把整个前台交给 Quartz，因为我的前台已经变成了一个更复杂的 Runtime Shell。\n\n这也是我最终选择：\n\n```txt\nObsidian\n↓\nRuntime MarkdownObject\n↓\nAstro Presentation Shell\n```\n\n而不是：\n\n```txt\nObsidian\n↓\nQuartz Site\n```\n\n## Headless CMS 为什么崛起\n\nHeadless CMS 的本质不是“一个更好看的后台”。\n\n它真正代表的是一个架构分层：\n\n```txt\nContent Authority\n≠\nPresentation Layer\n```\n\n传统 CMS 把内容、后台、模板、数据库和页面绑在一起。Headless CMS 则把内容变成 API 或对象模型，让前台只负责展示。\n\n这正好契合知识系统的需求。因为我的站点不应该让 Astro 组件直接变成内容真源。前台应该是只读投影，真正的写作和元数据管理应该在更清晰的 authority 层。\n\n几个项目值得重点看，但不要把它们写成工具清单。\n\nDirectus 的重点是数据库对象系统。它可以把 SQL 数据库直接变成 API、后台和权限控制面。对我来说，它适合管理书籍、视觉素材、文件索引和人工 metadata overlay。\n\nDirectus：<https://github.com/directus/directus>\n\nStrapi 更像典型 Headless CMS 路线。它强调内容类型、媒体库、REST / GraphQL、插件生态和企业内容管理。它适合标准化内容运营，但如果个人知识系统已经高度对象化，就需要小心别把它重新做成后台表单。\n\nStrapi：<https://github.com/strapi/strapi>\n\nPayload 的价值在于 TypeScript native 和 Next.js native。它更像把 CMS 和应用后端合并成一个现代全栈框架，适合需要强类型、React 管理界面和自定义业务逻辑的项目。\n\nPayload：<https://github.com/payloadcms/payload>\n\n这些项目共同说明了一件事：内容系统已经不再只是 Markdown 文件夹。真正重要的是 authority、权限、对象模型、API 和运行时投影。\n\n## Astro 在我的系统里扮演什么角色\n\nAstro 仍然非常适合做展示层。\n\n它的优势很明确：内容型网站性能好，默认 HTML 输出干净，React islands 可以只在需要交互的地方激活，构建产物也容易部署。\n\nAstro：<https://astro.build>\n\n但 Astro 不应该被误用成全部真源。\n\n我现在给 Astro 的定位是：\n\n```txt\nPresentation Shell\n```\n\n它负责页面、布局、视觉系统、静态构建和少量 islands。它不负责成为所有对象的最终 authority。\n\n文章来自 Runtime MarkdownObject。书籍来自 OpenList live/index。视觉素材未来可以来自 Immich 或对象存储索引。运行时状态进入数据库。Astro 只负责把这些对象投影成可阅读、可浏览、可交互的界面。\n\n## Runtime Blog 会成为下一代个人网站吗\n\n我越来越相信，个人网站会从“博客”变成“个人操作系统”。\n\n不是每个人都需要这么复杂。但如果一个人的内容系统已经包含：\n\n- 写作\n- 读书\n- 项目记录\n- 图片和视频素材\n- 史料库\n- Graph\n- 高亮\n- 文件库\n- 搜索\n- 自动同步\n\n那它就不再是一个博客主题能解决的问题。\n\n这时需要的是 Runtime Blog，或者更准确地说：\n\n```txt\nRuntime Knowledge System\n```\n\n它的核心不是“动态网站”，而是“对象运行时”。\n\n每篇文章都是 MarkdownObject。\n\n每本书都是 BookObject。\n\n每张图都是 VisualObject。\n\n每条高亮都是 AnnotationObject。\n\n每个文件都应该知道自己的来源、状态、投影位置和关系。\n\n## 我现在的技术栈\n\n我目前更认可这样的分层：\n\n```txt\nAuthoring\n└── Obsidian\n\nSync\n└── Remotely Save / WebDAV / OpenList\n\nStorage\n└── Vault + OpenList + Object Storage\n\nProjection\n└── Runtime MarkdownObject\n\nFrontend\n└── Astro + React Islands\n\nSearch\n└── Pagefind now / Meilisearch later\n\nMedia\n└── Immich / visual runtime later\n\nMetadata\n└── Directus or similar Headless CMS later\n```\n\n这个结构最重要的不是用了哪些项目，而是每一层都知道自己是不是 authority。\n\nObsidian 是写作真源。\n\nRuntime MarkdownObject 是公开文章投影真源。\n\nAstro 是展示层。\n\n数据库只保存运行时状态。\n\nOpenList 是文件层，不是 CMS。\n\n这几句话比任何工具列表都重要。\n\n## 我踩过的坑\n\n真正让我转向 Runtime Knowledge System 的，不是看了某个开源项目，而是踩坑。\n\n我踩过的坑包括：\n\n第一，双 authority。\n\n一套内容在 Astro posts，一套内容在 runtime index。两个地方都能决定文章是否存在，最后系统会变得不可理解。\n\n第二，fake runtime。\n\n页面看起来是动态的，但真正决定内容存在性的仍然是构建期 artifact。这种“看起来 runtime，实际 build-time”的系统最容易误导维护者。\n\n第三，兼容层复活。\n\n有些东西名义上 deprecated，但只要还有组件引用，它就会重新变成事实真源。\n\n第四，watcher upload 幻觉。\n\n监听文件变化不等于发布系统。没有 normalize、过滤、权限边界和 projection contract，watcher 只是一个更危险的复制器。\n\n第五，overlay explosion。\n\nDrawer、Command、Reader、Graph、Search 都各写一套 runtime，最后会出现状态分裂。真正成熟的系统要收束 runtime authority，而不是不断加新层。\n\n第六，工具名词替代架构判断。\n\nQuartz、Directus、Strapi、Payload、Astro 都很好，但它们不能替你决定系统边界。真正的问题永远是：谁是写作真源？谁是公开投影？谁是运行时状态？谁只是缓存？\n\n## 最后\n\n我放弃的不是博客写作。\n\n我放弃的是传统博客那个过窄的系统模型。\n\n我仍然需要文章、RSS、搜索和页面。但我更需要一个能容纳文章、书籍、视觉素材、项目、史料、Graph 和阅读状态的知识运行时。\n\n所以我现在真正想做的，不是一个更漂亮的博客。\n\n而是一套：\n\n```txt\nRuntime Knowledge System\n```\n\n它从 Obsidian 开始，但不止于 Obsidian。\n\n它借鉴 Quartz，但不止于发布。\n\n它会接入 Headless CMS，但不退回后台表单。\n\n它使用 Astro，但不让 Astro 冒充全部真源。\n\n这才是我这次重构真正想要的方向。",
+    "html": "<h1 id=\"我为什么放弃传统博客转向-runtime-knowledge-system\">我为什么放弃传统博客，转向 Runtime Knowledge System</h1>\n<p>我越来越不想把自己的站点叫作“博客”。</p>\n<p>不是因为博客这个词过时，而是因为传统博客默认的系统边界已经不够用了。传统博客关心的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Markdown</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>HTML</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>页面</span></span></code></pre></figure>\n<p>但我真正需要的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>知识对象</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>投影</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>阅读空间</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>关系网络</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>运行时状态</span></span></code></pre></figure>\n<p>这两者不是同一种东西。</p>\n<p>一篇文章不只是一个文件。一本书不只是一个 PDF。一个视觉素材不只是一个图片路径。它们都应该是可以被阅读、搜索、关联、标注、继续生长的对象。</p>\n<p>所以这篇不是“好用工具推荐合集”。那种文章已经太多了。真正有价值的是：我为什么从传统博客一路踩坑，最后走向 Runtime Knowledge System。</p>\n<h2 id=\"为什么传统博客越来越不够用\">为什么传统博客越来越不够用</h2>\n<p>传统博客的核心假设很简单：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>内容是文章</span></span>\n<span data-line=\"\"><span>文章是 Markdown</span></span>\n<span data-line=\"\"><span>站点是构建结果</span></span>\n<span data-line=\"\"><span>搜索是静态索引</span></span></code></pre></figure>\n<p>这个模型在早期很好。写几篇文章，生成几个页面，RSS 和搜索能跑，部署到服务器，就够了。</p>\n<p>但当内容系统开始变复杂，它会暴露出几个根本问题。</p>\n<p>第一，Markdown 只是文件，不是对象。</p>\n<p>传统博客把 Markdown 当成文章源码，但我的知识库里不只有文章。还有书籍、PDF、视觉素材、项目记录、维护笔记、史料、代码片段、阅读高亮、未完成草稿。这些东西都有元数据、状态、关系和使用场景。把它们全塞进 <code>posts</code>，只会让系统越来越脏。</p>\n<p>第二，写作空间和发布空间会互相污染。</p>\n<p>Obsidian 里的 Vault 是认知空间，里面应该有草稿、碎片、私有笔记、附件、双链和临时结构。公开站点是发布空间，它必须有明确边界。如果直接把 Vault 当博客源，最后一定会混进不该公开的内容。</p>\n<p>第三，静态索引不是知识系统。</p>\n<p>Pagefind 这类静态搜索非常适合构建期页面，但它并不知道你的对象关系、阅读状态、Graph、书籍进度、视觉素材聚类。它可以是一个搜索投影，但不能成为整个知识系统的 authority。</p>\n<p>第四，构建期系统很难表达运行时状态。</p>\n<p>我需要的是：</p>\n<ul>\n<li>阅读位置</li>\n<li>高亮和批注</li>\n<li>Drawer Reader</li>\n<li>书籍目录</li>\n<li>Runtime Feed</li>\n<li>Graph</li>\n<li>OpenList 文件层</li>\n<li>视觉素材索引</li>\n<li>后台元数据</li>\n<li>多端同步</li>\n</ul>\n<p>这些东西不是 <code>npm run build</code> 能全部解决的。它们需要 runtime。</p>\n<p>所以传统博客的问题不是“不够炫”，而是系统模型太窄。</p>\n<h2 id=\"obsidian-为什么会成为事实写作真源\">Obsidian 为什么会成为事实写作真源</h2>\n<p>我最后还是把 Obsidian 放在写作真源的位置。</p>\n<p>不是因为它适合直接发布，而是因为它适合长期写作。</p>\n<p>Obsidian 的真正价值在这里：</p>\n<ul>\n<li>文件是本地 Markdown，寿命足够长</li>\n<li>Vault 可以完整迁移，不被某个服务绑死</li>\n<li><code>[wikilink](#wikilink)</code> 能自然表达知识之间的关系</li>\n<li>Graph 不是装饰，而是知识对象之间的导航方式</li>\n<li>插件生态足够强</li>\n<li>local-first，写作时不依赖远端服务</li>\n</ul>\n<p>官方入口：<a href=\"https://obsidian.md\">https://obsidian.md</a></p>\n<p>但这里必须说清楚：Obsidian 是认知空间，不是发布系统。</p>\n<p>它里面可以有混乱、草稿、私人内容、附件和半成品。网站不应该直接读取整个 Vault。成熟架构应该是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Obsidian Vault</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Normalize</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Runtime MarkdownObject</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Public Projection</span></span></code></pre></figure>\n<p>这一步是我从“博客”走向“知识系统”的关键。</p>\n<h2 id=\"quartz-为什么会火\">Quartz 为什么会火</h2>\n<p>Quartz 不能只理解成静态博客生成器。</p>\n<p>它真正厉害的地方是：它把 Obsidian Vault 投影成一个可浏览的网站。</p>\n<p>我更愿意把 Quartz 理解成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Vault Projection Engine</span></span></code></pre></figure>\n<p>它解决的不是“怎么写博客主题”，而是：</p>\n<ul>\n<li>wikilink 怎么变成网页链接</li>\n<li>backlink 怎么生成</li>\n<li>folder 和 tag 怎么投影成页面</li>\n<li>Graph 怎么渲染</li>\n<li>Markdown 怎么经过统一 transform pipeline</li>\n<li>私有内容和公开内容怎么区分</li>\n</ul>\n<p>项目地址：<a href=\"https://github.com/jackyzha0/quartz\">https://github.com/jackyzha0/quartz</a></p>\n<p>这也是为什么 Quartz 在 Obsidian 发布领域会火。它抓住了一个本质问题：写作真源和展示站点之间必须有一层 projection。</p>\n<h2 id=\"为什么我没有直接用-quartz\">为什么我没有直接用 Quartz</h2>\n<p>我没有直接把站点换成 Quartz。</p>\n<p>原因不是 Quartz 不好，而是我的系统目标已经超过了“发布一个数字花园”。</p>\n<p>Quartz 更偏 publish：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Vault</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Static Site</span></span></code></pre></figure>\n<p>而我需要的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Vault</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Runtime Projection</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Feed / Reader / Drawer / Search / Graph / Books / Visuals</span></span></code></pre></figure>\n<p>我需要的不只是页面，而是运行时对象。</p>\n<p>例如一篇文章进入站点之后，它不应该只生成一个 HTML。它还要进入首页 Feed、Reader Drawer、Knowledge Graph、RSS、搜索索引、分类和标签页面。一本书也不应该只是文件链接，它要有目录、正文、阅读位置、高亮和关联节点。</p>\n<p>Quartz 的思想我会吸收，尤其是 Markdown pipeline、wikilink、backlink 和 graph projection。但我不想把整个前台交给 Quartz，因为我的前台已经变成了一个更复杂的 Runtime Shell。</p>\n<p>这也是我最终选择：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Obsidian</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Runtime MarkdownObject</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Astro Presentation Shell</span></span></code></pre></figure>\n<p>而不是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Obsidian</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Quartz Site</span></span></code></pre></figure>\n<h2 id=\"headless-cms-为什么崛起\">Headless CMS 为什么崛起</h2>\n<p>Headless CMS 的本质不是“一个更好看的后台”。</p>\n<p>它真正代表的是一个架构分层：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Content Authority</span></span>\n<span data-line=\"\"><span>≠</span></span>\n<span data-line=\"\"><span>Presentation Layer</span></span></code></pre></figure>\n<p>传统 CMS 把内容、后台、模板、数据库和页面绑在一起。Headless CMS 则把内容变成 API 或对象模型，让前台只负责展示。</p>\n<p>这正好契合知识系统的需求。因为我的站点不应该让 Astro 组件直接变成内容真源。前台应该是只读投影，真正的写作和元数据管理应该在更清晰的 authority 层。</p>\n<p>几个项目值得重点看，但不要把它们写成工具清单。</p>\n<p>Directus 的重点是数据库对象系统。它可以把 SQL 数据库直接变成 API、后台和权限控制面。对我来说，它适合管理书籍、视觉素材、文件索引和人工 metadata overlay。</p>\n<p>Directus：<a href=\"https://github.com/directus/directus\">https://github.com/directus/directus</a></p>\n<p>Strapi 更像典型 Headless CMS 路线。它强调内容类型、媒体库、REST / GraphQL、插件生态和企业内容管理。它适合标准化内容运营，但如果个人知识系统已经高度对象化，就需要小心别把它重新做成后台表单。</p>\n<p>Strapi：<a href=\"https://github.com/strapi/strapi\">https://github.com/strapi/strapi</a></p>\n<p>Payload 的价值在于 TypeScript native 和 Next.js native。它更像把 CMS 和应用后端合并成一个现代全栈框架，适合需要强类型、React 管理界面和自定义业务逻辑的项目。</p>\n<p>Payload：<a href=\"https://github.com/payloadcms/payload\">https://github.com/payloadcms/payload</a></p>\n<p>这些项目共同说明了一件事：内容系统已经不再只是 Markdown 文件夹。真正重要的是 authority、权限、对象模型、API 和运行时投影。</p>\n<h2 id=\"astro-在我的系统里扮演什么角色\">Astro 在我的系统里扮演什么角色</h2>\n<p>Astro 仍然非常适合做展示层。</p>\n<p>它的优势很明确：内容型网站性能好，默认 HTML 输出干净，React islands 可以只在需要交互的地方激活，构建产物也容易部署。</p>\n<p>Astro：<a href=\"https://astro.build\">https://astro.build</a></p>\n<p>但 Astro 不应该被误用成全部真源。</p>\n<p>我现在给 Astro 的定位是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Presentation Shell</span></span></code></pre></figure>\n<p>它负责页面、布局、视觉系统、静态构建和少量 islands。它不负责成为所有对象的最终 authority。</p>\n<p>文章来自 Runtime MarkdownObject。书籍来自 OpenList live/index。视觉素材未来可以来自 Immich 或对象存储索引。运行时状态进入数据库。Astro 只负责把这些对象投影成可阅读、可浏览、可交互的界面。</p>\n<h2 id=\"runtime-blog-会成为下一代个人网站吗\">Runtime Blog 会成为下一代个人网站吗</h2>\n<p>我越来越相信，个人网站会从“博客”变成“个人操作系统”。</p>\n<p>不是每个人都需要这么复杂。但如果一个人的内容系统已经包含：</p>\n<ul>\n<li>写作</li>\n<li>读书</li>\n<li>项目记录</li>\n<li>图片和视频素材</li>\n<li>史料库</li>\n<li>Graph</li>\n<li>高亮</li>\n<li>文件库</li>\n<li>搜索</li>\n<li>自动同步</li>\n</ul>\n<p>那它就不再是一个博客主题能解决的问题。</p>\n<p>这时需要的是 Runtime Blog，或者更准确地说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Runtime Knowledge System</span></span></code></pre></figure>\n<p>它的核心不是“动态网站”，而是“对象运行时”。</p>\n<p>每篇文章都是 MarkdownObject。</p>\n<p>每本书都是 BookObject。</p>\n<p>每张图都是 VisualObject。</p>\n<p>每条高亮都是 AnnotationObject。</p>\n<p>每个文件都应该知道自己的来源、状态、投影位置和关系。</p>\n<h2 id=\"我现在的技术栈\">我现在的技术栈</h2>\n<p>我目前更认可这样的分层：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Authoring</span></span>\n<span data-line=\"\"><span>└── Obsidian</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Sync</span></span>\n<span data-line=\"\"><span>└── Remotely Save / WebDAV / OpenList</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Storage</span></span>\n<span data-line=\"\"><span>└── Vault + OpenList + Object Storage</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Projection</span></span>\n<span data-line=\"\"><span>└── Runtime MarkdownObject</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Frontend</span></span>\n<span data-line=\"\"><span>└── Astro + React Islands</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Search</span></span>\n<span data-line=\"\"><span>└── Pagefind now / Meilisearch later</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Media</span></span>\n<span data-line=\"\"><span>└── Immich / visual runtime later</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Metadata</span></span>\n<span data-line=\"\"><span>└── Directus or similar Headless CMS later</span></span></code></pre></figure>\n<p>这个结构最重要的不是用了哪些项目，而是每一层都知道自己是不是 authority。</p>\n<p>Obsidian 是写作真源。</p>\n<p>Runtime MarkdownObject 是公开文章投影真源。</p>\n<p>Astro 是展示层。</p>\n<p>数据库只保存运行时状态。</p>\n<p>OpenList 是文件层，不是 CMS。</p>\n<p>这几句话比任何工具列表都重要。</p>\n<h2 id=\"我踩过的坑\">我踩过的坑</h2>\n<p>真正让我转向 Runtime Knowledge System 的，不是看了某个开源项目，而是踩坑。</p>\n<p>我踩过的坑包括：</p>\n<p>第一，双 authority。</p>\n<p>一套内容在 Astro posts，一套内容在 runtime index。两个地方都能决定文章是否存在，最后系统会变得不可理解。</p>\n<p>第二，fake runtime。</p>\n<p>页面看起来是动态的，但真正决定内容存在性的仍然是构建期 artifact。这种“看起来 runtime，实际 build-time”的系统最容易误导维护者。</p>\n<p>第三，兼容层复活。</p>\n<p>有些东西名义上 deprecated，但只要还有组件引用，它就会重新变成事实真源。</p>\n<p>第四，watcher upload 幻觉。</p>\n<p>监听文件变化不等于发布系统。没有 normalize、过滤、权限边界和 projection contract，watcher 只是一个更危险的复制器。</p>\n<p>第五，overlay explosion。</p>\n<p>Drawer、Command、Reader、Graph、Search 都各写一套 runtime，最后会出现状态分裂。真正成熟的系统要收束 runtime authority，而不是不断加新层。</p>\n<p>第六，工具名词替代架构判断。</p>\n<p>Quartz、Directus、Strapi、Payload、Astro 都很好，但它们不能替你决定系统边界。真正的问题永远是：谁是写作真源？谁是公开投影？谁是运行时状态？谁只是缓存？</p>\n<h2 id=\"最后\">最后</h2>\n<p>我放弃的不是博客写作。</p>\n<p>我放弃的是传统博客那个过窄的系统模型。</p>\n<p>我仍然需要文章、RSS、搜索和页面。但我更需要一个能容纳文章、书籍、视觉素材、项目、史料、Graph 和阅读状态的知识运行时。</p>\n<p>所以我现在真正想做的，不是一个更漂亮的博客。</p>\n<p>而是一套：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Runtime Knowledge System</span></span></code></pre></figure>\n<p>它从 Obsidian 开始，但不止于 Obsidian。</p>\n<p>它借鉴 Quartz，但不止于发布。</p>\n<p>它会接入 Headless CMS，但不退回后台表单。</p>\n<p>它使用 Astro，但不让 Astro 冒充全部真源。</p>\n<p>这才是我这次重构真正想要的方向。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "我为什么放弃传统博客-转向-runtime-knowledge-system",
+        "text": "我为什么放弃传统博客，转向 Runtime Knowledge System"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么传统博客越来越不够用",
+        "text": "为什么传统博客越来越不够用"
+      },
+      {
+        "depth": 2,
+        "slug": "obsidian-为什么会成为事实写作真源",
+        "text": "Obsidian 为什么会成为事实写作真源"
+      },
+      {
+        "depth": 2,
+        "slug": "quartz-为什么会火",
+        "text": "Quartz 为什么会火"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么我没有直接用-quartz",
+        "text": "为什么我没有直接用 Quartz"
+      },
+      {
+        "depth": 2,
+        "slug": "headless-cms-为什么崛起",
+        "text": "Headless CMS 为什么崛起"
+      },
+      {
+        "depth": 2,
+        "slug": "astro-在我的系统里扮演什么角色",
+        "text": "Astro 在我的系统里扮演什么角色"
+      },
+      {
+        "depth": 2,
+        "slug": "runtime-blog-会成为下一代个人网站吗",
+        "text": "Runtime Blog 会成为下一代个人网站吗"
+      },
+      {
+        "depth": 2,
+        "slug": "我现在的技术栈",
+        "text": "我现在的技术栈"
+      },
+      {
+        "depth": 2,
+        "slug": "我踩过的坑",
+        "text": "我踩过的坑"
+      },
+      {
+        "depth": 2,
+        "slug": "最后",
+        "text": "最后"
+      }
+    ],
+    "detailPath": "articles/md_1de96a7cfa6b.json"
+  }
+}

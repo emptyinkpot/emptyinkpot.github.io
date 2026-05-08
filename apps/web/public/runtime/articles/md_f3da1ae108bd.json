@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_f3da1ae108bd",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E6%95%B0%E6%8D%AE%E5%BA%93.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程学习之路/数据库.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/数据库.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E6%95%B0%E6%8D%AE%E5%BA%93.md",
+    "slug": "blog-编程学习之路-数据库",
+    "title": "数据库",
+    "summary": "好，这块我不给你讲一堆概念，我直接按 “你现在能用 + 能落地” 的方式讲清楚👇 🧠 一句话先定住 🔥 一、数据库到底是啥（本质） 你现在程序里所有信息，比如： 如果不用数据库，你只能： 👉 所以要用： 🧱 二、数据库核心结构（必须懂） 🟢 1. 数据库（Database） 🟡 2....",
+    "description": "好，这块我不给你讲一堆概念，我直接按 “你现在能用 + 能落地” 的方式讲清楚👇 🧠 一句话先定住 🔥 一、数据库到底是啥（本质） 你现在程序里所有信息，比如： 如果不用数据库，你只能： 👉 所以要用： 🧱 二、数据库核心结构（必须懂） 🟢 1. 数据库（Database） 🟡 2....",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程学习之路"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程学习之路/数据库.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/数据库.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/%E6%95%B0%E6%8D%AE%E5%BA%93.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "数据库",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程学习之路",
+        "数据库"
+      ],
+      "subtitle": "好，这块我不给你讲一堆概念，我直接按 “你现在能用 + 能落地” 的方式讲清楚👇 🧠 一句话先定住 🔥 一、数据库到底是啥（本质） 你现在程序里所有信息，比如： 如果不用数据库，你只能： 👉 所以要用： 🧱 二、数据库核心结构（必须懂） 🟢 1. 数据库（Database） 🟡 2...."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "好，这块我不给你讲一堆概念，我直接按**“你现在能用 + 能落地”**的方式讲清楚👇\n\n---\n\n# 🧠 一句话先定住\n\n```text\n数据库 = 专门用来“存数据 + 查询数据”的系统\n```\n\n---\n\n# 🔥 一、数据库到底是啥（本质）\n\n你现在程序里所有信息，比如：\n\n```text\n用户\n请求记录\ntoken消耗\n日志\n配置\n```\n\n如果不用数据库，你只能：\n\n```text\n存在变量 ❌（程序一关就没）\n写文件 ⚠️（难查、难管理）\n```\n\n---\n\n👉 所以要用：\n\n```text\n数据库（可长期保存 + 可查询）\n```\n\n---\n\n# 🧱 二、数据库核心结构（必须懂）\n\n---\n\n## 🟢 1. 数据库（Database）\n\n```text\n一个整体存储空间\n```\n\n---\n\n## 🟡 2. 表（Table）\n\n```text\n类似 Excel 表\n```\n\n---\n\n## 🟠 3. 行（Row）\n\n```text\n一条数据\n```\n\n---\n\n## 🔵 4. 列（Column）\n\n```text\n字段（名字、类型）\n```\n\n---\n\n## 举个例子👇\n\n```text\nusers 表\n\nid | name | role\n----------------\n1  | 张三 | admin\n2  | 李四 | user\n```\n\n---\n\n# 🧱 三、怎么“建表”（最关键）\n\n---\n\n## 方法 1：SQL（最标准）\n\n比如你要建一个用户表👇\n\n```sql\nCREATE TABLE users (\n  id INT PRIMARY KEY,\n  name VARCHAR(50),\n  role VARCHAR(20)\n);\n```\n\n---\n\n👉 这句话干了啥：\n\n```text\n创建一个叫 users 的表\n定义字段（列）\n```\n\n---\n\n# 🧠 四、数据库要不要“本地文件”\n\n这个问题你问得很好，很多人搞混👇\n\n---\n\n## ✅ 结论先说\n\n```text\n数据库本质就是文件 ✔\n但你不会直接操作文件\n```\n\n---\n\n## 🔍 解释\n\n---\n\n### 🟢 MySQL / PostgreSQL\n\n```text\n数据存在磁盘文件里 ✔\n```\n\n但：\n\n```text\n你不能直接改文件 ❌\n必须通过数据库系统操作 ✔\n```\n\n---\n\n### 🟡 SQLite（特殊）\n\n```text\n就是一个 .db 文件 ✔\n```\n\n👉 适合：\n\n```text\n小项目 / 本地开发\n```\n\n---\n\n## 对比👇\n\n|数据库|是否文件|你是否直接操作|\n|---|---|---|\n|MySQL|✔|❌|\n|PostgreSQL|✔|❌|\n|SQLite|✔|✔（但一般也用SQL）|\n\n---\n\n# 🧱 五、你现在项目该怎么选（非常关键）\n\n你现在做的是：\n\n```text\nAI Gateway + Key Pool\n```\n\n---\n\n👉 推荐👇\n\n---\n\n## 🟢 起步阶段（你现在）\n\n```text\nSQLite ✔\n```\n\n优点：\n\n```text\n简单\n不用装服务\n一个文件搞定\n```\n\n---\n\n## 🔴 进阶阶段\n\n```text\nPostgreSQL / MySQL\n```\n\n用于：\n\n```text\n多用户\n高并发\n生产环境\n```\n\n---\n\n# 🧱 六、数据库在你系统里的位置\n\n你现在系统👇\n\n```text\n浏览器\n ↓\nNext.js\n ↓\nNode（控制层）\n ↓\nAI / key池\n```\n\n---\n\n👉 加数据库👇\n\n```text\n浏览器\n ↓\nNext.js\n ↓\nNode\n ↓\n数据库（存数据）\n ↓\nAI\n```\n\n---\n\n# 🔥 七、你最该建的 3 张表（直接给你）\n\n---\n\n## 🟢 1. 用户表\n\n```sql\nusers (\n  id,\n  name,\n  role\n)\n```\n\n---\n\n## 🟡 2. 请求日志\n\n```sql\nrequests (\n  id,\n  user_id,\n  model,\n  tokens,\n  created_at\n)\n```\n\n---\n\n## 🔴 3. key池\n\n```sql\nkeys (\n  id,\n  api_key,\n  provider,\n  status\n)\n```\n\n---\n\n👉 你现在系统其实最需要：\n\n```text\n请求日志 + key管理\n```\n\n---\n\n# 🧠 八、数据库的核心操作（只要记这4个）\n\n---\n\n## 1️⃣ 插入\n\n```sql\nINSERT INTO users VALUES (1, '张三', 'admin');\n```\n\n---\n\n## 2️⃣ 查询\n\n```sql\nSELECT * FROM users;\n```\n\n---\n\n## 3️⃣ 更新\n\n```sql\nUPDATE users SET role = 'user' WHERE id = 1;\n```\n\n---\n\n## 4️⃣ 删除\n\n```sql\nDELETE FROM users WHERE id = 1;\n```\n\n---\n\n# 🧠 九、最关键理解（很多人不知道）\n\n```text\n数据库 ≠ 文件存储\n\n数据库 = 文件 + 索引 + 查询引擎\n```\n\n---\n\n👉 重点：\n\n```text\n它的价值不是“存”\n而是“能快速查”\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\n数据库 = 有结构的数据存储系统\n\n建表 = 定义数据结构\nSQL = 操作数据的语言\n文件 = 底层实现（你不用管）\n```\n\n---\n\n# 🚀 如果你要下一步（非常建议）\n\n我可以帮你直接给你一套：\n\n```text\n✔ 适配你AI系统的数据库设计\n✔ 表结构\n✔ Node 接入代码\n✔ 查询示例\n```\n\n直接能用，不是教学版。\n\n---\n\n你只要说：\n\n```text\n数据库落地\n```\n\n我给你一版**直接接进你当前项目的方案**。",
+    "html": "<p>好，这块我不给你讲一堆概念，我直接按**“你现在能用 + 能落地”**的方式讲清楚👇</p>\n<hr>\n<h1 id=\"-一句话先定住\">🧠 一句话先定住</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据库 = 专门用来“存数据 + 查询数据”的系统</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一数据库到底是啥本质\">🔥 一、数据库到底是啥（本质）</h1>\n<p>你现在程序里所有信息，比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户</span></span>\n<span data-line=\"\"><span>请求记录</span></span>\n<span data-line=\"\"><span>token消耗</span></span>\n<span data-line=\"\"><span>日志</span></span>\n<span data-line=\"\"><span>配置</span></span></code></pre></figure>\n<p>如果不用数据库，你只能：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>存在变量 ❌（程序一关就没）</span></span>\n<span data-line=\"\"><span>写文件 ⚠️（难查、难管理）</span></span></code></pre></figure>\n<hr>\n<p>👉 所以要用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据库（可长期保存 + 可查询）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二数据库核心结构必须懂\">🧱 二、数据库核心结构（必须懂）</h1>\n<hr>\n<h2 id=\"-1-数据库database\">🟢 1. 数据库（Database）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一个整体存储空间</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-2-表table\">🟡 2. 表（Table）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>类似 Excel 表</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-3-行row\">🟠 3. 行（Row）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一条数据</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-4-列column\">🔵 4. 列（Column）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>字段（名字、类型）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"举个例子\">举个例子👇</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>users 表</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>id | name | role</span></span>\n<span data-line=\"\"><span>----------------</span></span>\n<span data-line=\"\"><span>1  | 张三 | admin</span></span>\n<span data-line=\"\"><span>2  | 李四 | user</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三怎么建表最关键\">🧱 三、怎么“建表”（最关键）</h1>\n<hr>\n<h2 id=\"方法-1sql最标准\">方法 1：SQL（最标准）</h2>\n<p>比如你要建一个用户表👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">CREATE</span><span style=\"color:#F97583\"> TABLE</span><span style=\"color:#B392F0\"> users</span><span style=\"color:#E1E4E8\"> (</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  id </span><span style=\"color:#F97583\">INT</span><span style=\"color:#F97583\"> PRIMARY KEY</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  name</span><span style=\"color:#F97583\"> VARCHAR</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">50</span><span style=\"color:#E1E4E8\">),</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  role</span><span style=\"color:#F97583\"> VARCHAR</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">20</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">);</span></span></code></pre></figure>\n<hr>\n<p>👉 这句话干了啥：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>创建一个叫 users 的表</span></span>\n<span data-line=\"\"><span>定义字段（列）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四数据库要不要本地文件\">🧠 四、数据库要不要“本地文件”</h1>\n<p>这个问题你问得很好，很多人搞混👇</p>\n<hr>\n<h2 id=\"-结论先说\">✅ 结论先说</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据库本质就是文件 ✔</span></span>\n<span data-line=\"\"><span>但你不会直接操作文件</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-解释\">🔍 解释</h2>\n<hr>\n<h3 id=\"-mysql--postgresql\">🟢 MySQL / PostgreSQL</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据存在磁盘文件里 ✔</span></span></code></pre></figure>\n<p>但：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你不能直接改文件 ❌</span></span>\n<span data-line=\"\"><span>必须通过数据库系统操作 ✔</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-sqlite特殊\">🟡 SQLite（特殊）</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>就是一个 .db 文件 ✔</span></span></code></pre></figure>\n<p>👉 适合：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>小项目 / 本地开发</span></span></code></pre></figure>\n<hr>\n<h2 id=\"对比\">对比👇</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>数据库</th>\n<th>是否文件</th>\n<th>你是否直接操作</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>MySQL</td>\n<td>✔</td>\n<td>❌</td>\n</tr>\n<tr>\n<td>PostgreSQL</td>\n<td>✔</td>\n<td>❌</td>\n</tr>\n<tr>\n<td>SQLite</td>\n<td>✔</td>\n<td>✔（但一般也用SQL）</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h1 id=\"-五你现在项目该怎么选非常关键\">🧱 五、你现在项目该怎么选（非常关键）</h1>\n<p>你现在做的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI Gateway + Key Pool</span></span></code></pre></figure>\n<hr>\n<p>👉 推荐👇</p>\n<hr>\n<h2 id=\"-起步阶段你现在\">🟢 起步阶段（你现在）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>SQLite ✔</span></span></code></pre></figure>\n<p>优点：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>简单</span></span>\n<span data-line=\"\"><span>不用装服务</span></span>\n<span data-line=\"\"><span>一个文件搞定</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-进阶阶段\">🔴 进阶阶段</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>PostgreSQL / MySQL</span></span></code></pre></figure>\n<p>用于：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>多用户</span></span>\n<span data-line=\"\"><span>高并发</span></span>\n<span data-line=\"\"><span>生产环境</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六数据库在你系统里的位置\">🧱 六、数据库在你系统里的位置</h1>\n<p>你现在系统👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>浏览器</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>Next.js</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>Node（控制层）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>AI / key池</span></span></code></pre></figure>\n<hr>\n<p>👉 加数据库👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>浏览器</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>Next.js</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>Node</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>数据库（存数据）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>AI</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七你最该建的-3-张表直接给你\">🔥 七、你最该建的 3 张表（直接给你）</h1>\n<hr>\n<h2 id=\"-1-用户表\">🟢 1. 用户表</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">users (</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  id,</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  name</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  role</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-2-请求日志\">🟡 2. 请求日志</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">requests (</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  id,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  user_id,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  model,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  tokens,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  created_at</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-3-key池\">🔴 3. key池</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">keys (</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  id,</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  api_key,</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  provider</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  status</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<hr>\n<p>👉 你现在系统其实最需要：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>请求日志 + key管理</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-八数据库的核心操作只要记这4个\">🧠 八、数据库的核心操作（只要记这4个）</h1>\n<hr>\n<h2 id=\"1️⃣-插入\">1️⃣ 插入</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">INSERT INTO</span><span style=\"color:#E1E4E8\"> users </span><span style=\"color:#F97583\">VALUES</span><span style=\"color:#E1E4E8\"> (</span><span style=\"color:#79B8FF\">1</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">'张三'</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">'admin'</span><span style=\"color:#E1E4E8\">);</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2️⃣-查询\">2️⃣ 查询</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">SELECT</span><span style=\"color:#F97583\"> *</span><span style=\"color:#F97583\"> FROM</span><span style=\"color:#E1E4E8\"> users;</span></span></code></pre></figure>\n<hr>\n<h2 id=\"3️⃣-更新\">3️⃣ 更新</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">UPDATE</span><span style=\"color:#E1E4E8\"> users </span><span style=\"color:#F97583\">SET</span><span style=\"color:#F97583\"> role</span><span style=\"color:#F97583\"> =</span><span style=\"color:#9ECBFF\"> 'user'</span><span style=\"color:#F97583\"> WHERE</span><span style=\"color:#E1E4E8\"> id </span><span style=\"color:#F97583\">=</span><span style=\"color:#79B8FF\"> 1</span><span style=\"color:#E1E4E8\">;</span></span></code></pre></figure>\n<hr>\n<h2 id=\"4️⃣-删除\">4️⃣ 删除</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"sql\" data-theme=\"github-dark\"><code data-language=\"sql\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">DELETE</span><span style=\"color:#F97583\"> FROM</span><span style=\"color:#E1E4E8\"> users </span><span style=\"color:#F97583\">WHERE</span><span style=\"color:#E1E4E8\"> id </span><span style=\"color:#F97583\">=</span><span style=\"color:#79B8FF\"> 1</span><span style=\"color:#E1E4E8\">;</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-九最关键理解很多人不知道\">🧠 九、最关键理解（很多人不知道）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据库 ≠ 文件存储</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>数据库 = 文件 + 索引 + 查询引擎</span></span></code></pre></figure>\n<hr>\n<p>👉 重点：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>它的价值不是“存”</span></span>\n<span data-line=\"\"><span>而是“能快速查”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据库 = 有结构的数据存储系统</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>建表 = 定义数据结构</span></span>\n<span data-line=\"\"><span>SQL = 操作数据的语言</span></span>\n<span data-line=\"\"><span>文件 = 底层实现（你不用管）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你要下一步非常建议\">🚀 如果你要下一步（非常建议）</h1>\n<p>我可以帮你直接给你一套：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 适配你AI系统的数据库设计</span></span>\n<span data-line=\"\"><span>✔ 表结构</span></span>\n<span data-line=\"\"><span>✔ Node 接入代码</span></span>\n<span data-line=\"\"><span>✔ 查询示例</span></span></code></pre></figure>\n<p>直接能用，不是教学版。</p>\n<hr>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>数据库落地</span></span></code></pre></figure>\n<p>我给你一版<strong>直接接进你当前项目的方案</strong>。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话先定住",
+        "text": "🧠 一句话先定住"
+      },
+      {
+        "depth": 1,
+        "slug": "一-数据库到底是啥-本质",
+        "text": "🔥 一、数据库到底是啥（本质）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-数据库核心结构-必须懂",
+        "text": "🧱 二、数据库核心结构（必须懂）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-数据库-database",
+        "text": "🟢 1. 数据库（Database）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-表-table",
+        "text": "🟡 2. 表（Table）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-行-row",
+        "text": "🟠 3. 行（Row）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-列-column",
+        "text": "🔵 4. 列（Column）"
+      },
+      {
+        "depth": 2,
+        "slug": "举个例子",
+        "text": "举个例子👇"
+      },
+      {
+        "depth": 1,
+        "slug": "三-怎么-建表-最关键",
+        "text": "🧱 三、怎么“建表”（最关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "方法-1-sql-最标准",
+        "text": "方法 1：SQL（最标准）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-数据库要不要-本地文件",
+        "text": "🧠 四、数据库要不要“本地文件”"
+      },
+      {
+        "depth": 2,
+        "slug": "结论先说",
+        "text": "✅ 结论先说"
+      },
+      {
+        "depth": 2,
+        "slug": "解释",
+        "text": "🔍 解释"
+      },
+      {
+        "depth": 3,
+        "slug": "mysql-postgresql",
+        "text": "🟢 MySQL / PostgreSQL"
+      },
+      {
+        "depth": 3,
+        "slug": "sqlite-特殊",
+        "text": "🟡 SQLite（特殊）"
+      },
+      {
+        "depth": 2,
+        "slug": "对比",
+        "text": "对比👇"
+      },
+      {
+        "depth": 1,
+        "slug": "五-你现在项目该怎么选-非常关键",
+        "text": "🧱 五、你现在项目该怎么选（非常关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "起步阶段-你现在",
+        "text": "🟢 起步阶段（你现在）"
+      },
+      {
+        "depth": 2,
+        "slug": "进阶阶段",
+        "text": "🔴 进阶阶段"
+      },
+      {
+        "depth": 1,
+        "slug": "六-数据库在你系统里的位置",
+        "text": "🧱 六、数据库在你系统里的位置"
+      },
+      {
+        "depth": 1,
+        "slug": "七-你最该建的-3-张表-直接给你",
+        "text": "🔥 七、你最该建的 3 张表（直接给你）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-用户表",
+        "text": "🟢 1. 用户表"
+      },
+      {
+        "depth": 2,
+        "slug": "2-请求日志",
+        "text": "🟡 2. 请求日志"
+      },
+      {
+        "depth": 2,
+        "slug": "3-key池",
+        "text": "🔴 3. key池"
+      },
+      {
+        "depth": 1,
+        "slug": "八-数据库的核心操作-只要记这4个",
+        "text": "🧠 八、数据库的核心操作（只要记这4个）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-插入",
+        "text": "1️⃣ 插入"
+      },
+      {
+        "depth": 2,
+        "slug": "2-查询",
+        "text": "2️⃣ 查询"
+      },
+      {
+        "depth": 2,
+        "slug": "3-更新",
+        "text": "3️⃣ 更新"
+      },
+      {
+        "depth": 2,
+        "slug": "4-删除",
+        "text": "4️⃣ 删除"
+      },
+      {
+        "depth": 1,
+        "slug": "九-最关键理解-很多人不知道",
+        "text": "🧠 九、最关键理解（很多人不知道）"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要下一步-非常建议",
+        "text": "🚀 如果你要下一步（非常建议）"
+      }
+    ],
+    "detailPath": "articles/md_f3da1ae108bd.json"
+  }
+}

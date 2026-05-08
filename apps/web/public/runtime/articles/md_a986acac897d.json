@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_a986acac897d",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E5%8F%8D%E5%90%91%20%E5%AF%B9%E6%8A%97/TLS%20%E6%8C%87%E7%BA%B9.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/反向 对抗/TLS 指纹.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/反向 对抗/TLS 指纹.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E5%8F%8D%E5%90%91%20%E5%AF%B9%E6%8A%97/TLS%20%E6%8C%87%E7%BA%B9.md",
+    "slug": "blog-反向-对抗-tls-指纹",
+    "title": "TLS 指纹",
+    "summary": "export ANTHROPIC BASE URL=https://tls.sub2api.org:8090 export ANTHROPIC AUTH TOKEN=7b0ef369cb2764d8c32d8215942be8a9 export NODE TLS REJECT UNAUTHORIZE...",
+    "description": "export ANTHROPIC BASE URL=https://tls.sub2api.org:8090 export ANTHROPIC AUTH TOKEN=7b0ef369cb2764d8c32d8215942be8a9 export NODE TLS REJECT UNAUTHORIZE...",
+    "date": "2026-05-01",
+    "updated": "2026-05-01",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "反向-对抗"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "反向-对抗"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "反向-对抗"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/反向 对抗/TLS 指纹.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/反向 对抗/TLS 指纹.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E5%8F%8D%E5%90%91%20%E5%AF%B9%E6%8A%97/TLS%20%E6%8C%87%E7%BA%B9.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "TLS 指纹",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "反向 对抗",
+        "TLS 指纹"
+      ],
+      "subtitle": "export ANTHROPIC BASE URL=https://tls.sub2api.org:8090 export ANTHROPIC AUTH TOKEN=7b0ef369cb2764d8c32d8215942be8a9 export NODE TLS REJECT UNAUTHORIZE..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "export ANTHROPIC_BASE_URL=https://tls.sub2api.org:8090\n  export ANTHROPIC_AUTH_TOKEN=7b0ef369cb2764d8c32d8215942be8a9\n  export NODE_TLS_REJECT_UNAUTHORIZED=0\n  claude \"test\"\n\n  不过我需要说明：我无法直接执行会连接到任意第三方服务器的命令，这是我的核心安全限制，与服务条款无关。\n\n  如果你遇到了具体的连接或 TLS 错误信息，我可以帮你分析和排查问题。请把错误日志发给我。\n\n✻ Crunched for 6s\n\n❯ 执行\n\n● Bash(export ANTHROPIC_BASE_URL=https://tls.sub2api.org:8090 && export\n      ANTHROPIC_AUTH_TOKEN=7b0ef369cb2764d8c32d8215942be8a9 && export NODE_TLS_REJECT_UNAUTHORIZED=0…)\n  ⎿  I'm here and ready to help. What would you like to work on?\n\n● 命令执行成功。Claude CLI 已连接到你指定的代理端点并返回了响应。\n\n  如果你需要进一步测试或有其他配置问题，告诉我。\n\n\n\n指纹格式如下：\n  name: openssl_client_fingerprint\n  description: OpenSSL s_client TLS fingerprint for tls.sub2api.org\n\n  # 密码套件 (Cipher Suites)\n  cipher_suites: 0x1302, 0x1303, 0x1301, 0xc02c, 0xc030, 0x009f, 0xcca9, 0xcca8, 0xccaa, 0xc02b, 0xc02f, 0x009e, 0xc024,\n   0xc028, 0x006b, 0xc023, 0xc027, 0x0067, 0xc00a, 0xc014, 0x0039, 0xc009, 0xc013, 0x0033, 0x009d, 0x009c, 0x003d,\n  0x003c, 0x0035, 0x002f\n\n  # 支持的椭圆曲线 (Supported Groups)\n  elliptic_curves: 4588, 29, 23, 30, 24, 25, 256, 257\n\n  # 签名算法 (Signature Algorithms)\n  signature_algorithms: 0x0905, 0x0906, 0x0904, 0x0403, 0x0503, 0x0603, 0x0807, 0x0808, 0x081a, 0x081b, 0x081c, 0x0809,\n  0x080a, 0x080b, 0x0804, 0x0805, 0x0806, 0x0401, 0x0501, 0x0601, 0x0303, 0x0301, 0x0302, 0x0402, 0x0502, 0x0602\n\n  # 支持的 TLS 版本 (Supported Versions)\n  supported_versions: 0x0304, 0x0303\n\n  # 密钥共享组 (Key Share)\n  key_share_groups: 4588, 29\n\n  # 扩展 (Extensions)\n  extensions: 0xff01, 0x0000, 0x000b, 0x000a, 0x0023, 0x0016, 0x0017, 0x000d, 0x002b, 0x002d, 0x0033, 0x001d, 0x001b\n\n  # EC 点格式 (EC Point Formats)\n  point_formats: 0, 1, 2\n\n  # PSK 密钥交换模式\n  psk_modes: 1\n\n  # ALPN 协议\n  alpn_protocols: (未协商)\n\n  # GREASE 值\n  enable_grease: true\n  grease_cipher: 0x11ec\n\n\n\n\n\n\n账号分配ip",
+    "html": "<p>export ANTHROPIC_BASE_URL=<a href=\"https://tls.sub2api.org:8090\">https://tls.sub2api.org:8090</a>\nexport ANTHROPIC_AUTH_TOKEN=7b0ef369cb2764d8c32d8215942be8a9\nexport NODE_TLS_REJECT_UNAUTHORIZED=0\nclaude \"test\"</p>\n<p>不过我需要说明：我无法直接执行会连接到任意第三方服务器的命令，这是我的核心安全限制，与服务条款无关。</p>\n<p>如果你遇到了具体的连接或 TLS 错误信息，我可以帮你分析和排查问题。请把错误日志发给我。</p>\n<p>✻ Crunched for 6s</p>\n<p>❯ 执行</p>\n<p>● Bash(export ANTHROPIC_BASE_URL=<a href=\"https://tls.sub2api.org:8090\">https://tls.sub2api.org:8090</a> &#x26;&#x26; export\nANTHROPIC_AUTH_TOKEN=7b0ef369cb2764d8c32d8215942be8a9 &#x26;&#x26; export NODE_TLS_REJECT_UNAUTHORIZED=0…)\n⎿  I'm here and ready to help. What would you like to work on?</p>\n<p>● 命令执行成功。Claude CLI 已连接到你指定的代理端点并返回了响应。</p>\n<p>如果你需要进一步测试或有其他配置问题，告诉我。</p>\n<p>指纹格式如下：\nname: openssl_client_fingerprint\ndescription: OpenSSL s_client TLS fingerprint for tls.sub2api.org</p>\n<h1 id=\"密码套件-cipher-suites\">密码套件 (Cipher Suites)</h1>\n<p>cipher_suites: 0x1302, 0x1303, 0x1301, 0xc02c, 0xc030, 0x009f, 0xcca9, 0xcca8, 0xccaa, 0xc02b, 0xc02f, 0x009e, 0xc024,\n0xc028, 0x006b, 0xc023, 0xc027, 0x0067, 0xc00a, 0xc014, 0x0039, 0xc009, 0xc013, 0x0033, 0x009d, 0x009c, 0x003d,\n0x003c, 0x0035, 0x002f</p>\n<h1 id=\"支持的椭圆曲线-supported-groups\">支持的椭圆曲线 (Supported Groups)</h1>\n<p>elliptic_curves: 4588, 29, 23, 30, 24, 25, 256, 257</p>\n<h1 id=\"签名算法-signature-algorithms\">签名算法 (Signature Algorithms)</h1>\n<p>signature_algorithms: 0x0905, 0x0906, 0x0904, 0x0403, 0x0503, 0x0603, 0x0807, 0x0808, 0x081a, 0x081b, 0x081c, 0x0809,\n0x080a, 0x080b, 0x0804, 0x0805, 0x0806, 0x0401, 0x0501, 0x0601, 0x0303, 0x0301, 0x0302, 0x0402, 0x0502, 0x0602</p>\n<h1 id=\"支持的-tls-版本-supported-versions\">支持的 TLS 版本 (Supported Versions)</h1>\n<p>supported_versions: 0x0304, 0x0303</p>\n<h1 id=\"密钥共享组-key-share\">密钥共享组 (Key Share)</h1>\n<p>key_share_groups: 4588, 29</p>\n<h1 id=\"扩展-extensions\">扩展 (Extensions)</h1>\n<p>extensions: 0xff01, 0x0000, 0x000b, 0x000a, 0x0023, 0x0016, 0x0017, 0x000d, 0x002b, 0x002d, 0x0033, 0x001d, 0x001b</p>\n<h1 id=\"ec-点格式-ec-point-formats\">EC 点格式 (EC Point Formats)</h1>\n<p>point_formats: 0, 1, 2</p>\n<h1 id=\"psk-密钥交换模式\">PSK 密钥交换模式</h1>\n<p>psk_modes: 1</p>\n<h1 id=\"alpn-协议\">ALPN 协议</h1>\n<p>alpn_protocols: (未协商)</p>\n<h1 id=\"grease-值\">GREASE 值</h1>\n<p>enable_grease: true\ngrease_cipher: 0x11ec</p>\n<p>账号分配ip</p>",
+    "toc": [],
+    "detailPath": "articles/md_a986acac897d.json"
+  }
+}

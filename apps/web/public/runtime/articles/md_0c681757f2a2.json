@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_0c681757f2a2",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.md",
+    "sourcePath": "/home/vault/Obsidian/docs/毕业论文资料说明.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/毕业论文资料说明.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.md",
+    "slug": "毕业论文资料说明",
+    "title": "毕业论文资料说明",
+    "summary": "毕业论文资料说明 这里集中管理毕业论文原稿、Markdown 转换稿、图片资源和转换脚本。 当前结构 原稿/ 原始 Word 文件 转换稿/ Pandoc 转换后的 Markdown 和回转后的 docx 资源文件/ 从 Word 中提取出的图片、公式图片等资源 scripts/ docx md 和...",
+    "description": "毕业论文资料说明 这里集中管理毕业论文原稿、Markdown 转换稿、图片资源和转换脚本。 当前结构 原稿/ 原始 Word 文件 转换稿/ Pandoc 转换后的 Markdown 和回转后的 docx 资源文件/ 从 Word 中提取出的图片、公式图片等资源 scripts/ docx md 和...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "项目-毕业论文",
+      "形态-规范"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "项目-毕业论文",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/毕业论文资料说明.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/毕业论文资料说明.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "毕业论文",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "项目 毕业论文",
+        "形态 规范",
+        "毕业论文"
+      ],
+      "subtitle": "毕业论文资料说明 这里集中管理毕业论文原稿、Markdown 转换稿、图片资源和转换脚本。 当前结构 原稿/ 原始 Word 文件 转换稿/ Pandoc 转换后的 Markdown 和回转后的 docx 资源文件/ 从 Word 中提取出的图片、公式图片等资源 scripts/ docx md 和..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 毕业论文资料说明\n\n这里集中管理毕业论文原稿、Markdown 转换稿、图片资源和转换脚本。\n\n### 当前结构\n\n- `原稿/`\n  - 原始 Word 文件\n- `转换稿/`\n  - Pandoc 转换后的 Markdown 和回转后的 docx\n- `资源文件/`\n  - 从 Word 中提取出的图片、公式图片等资源\n- `scripts/`\n  - `docx -> md` 和 `md -> docx` 转换脚本\n- `docx-automation/`\n  - 更完整的 DOCX 自动化框架\n\n### 当前文件\n\n- `原稿/刘高朋_毕业论文.docx`\n- `转换稿/刘高朋_毕业论文.md`\n- `转换稿/刘高朋_毕业论文_清洗版.md`\n- `docx-automation/README.md`\n- `写作骨架模板.md`\n\n### 使用方式\n\n#### Word 转 Markdown\n\n```powershell\npowershell -ExecutionPolicy Bypass -File .\\scripts\\convert-docx-to-md.ps1\n```\n\n#### Markdown 转 Word\n\n```powershell\npowershell -ExecutionPolicy Bypass -File .\\scripts\\convert-md-to-docx.ps1\n```\n\n### 说明\n\n- 已安装 `Pandoc 3.9.0.2`\n- 反向生成 Word 时，默认使用原始论文 `docx` 作为 `reference-doc`\n- 这样可以尽量保留原学校模板中的字体、段落、页边距和样式体系",
+    "html": "<h2 id=\"毕业论文资料说明\">毕业论文资料说明</h2>\n<p>这里集中管理毕业论文原稿、Markdown 转换稿、图片资源和转换脚本。</p>\n<h3 id=\"当前结构\">当前结构</h3>\n<ul>\n<li><code>原稿/</code>\n<ul>\n<li>原始 Word 文件</li>\n</ul>\n</li>\n<li><code>转换稿/</code>\n<ul>\n<li>Pandoc 转换后的 Markdown 和回转后的 docx</li>\n</ul>\n</li>\n<li><code>资源文件/</code>\n<ul>\n<li>从 Word 中提取出的图片、公式图片等资源</li>\n</ul>\n</li>\n<li><code>scripts/</code>\n<ul>\n<li><code>docx -> md</code> 和 <code>md -> docx</code> 转换脚本</li>\n</ul>\n</li>\n<li><code>docx-automation/</code>\n<ul>\n<li>更完整的 DOCX 自动化框架</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"当前文件\">当前文件</h3>\n<ul>\n<li><code>原稿/刘高朋_毕业论文.docx</code></li>\n<li><code>转换稿/刘高朋_毕业论文.md</code></li>\n<li><code>转换稿/刘高朋_毕业论文_清洗版.md</code></li>\n<li><code>docx-automation/README.md</code></li>\n<li><code>写作骨架模板.md</code></li>\n</ul>\n<h3 id=\"使用方式\">使用方式</h3>\n<h4 id=\"word-转-markdown\">Word 转 Markdown</h4>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">powershell </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">ExecutionPolicy Bypass </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">File .</span><span style=\"color:#79B8FF\">\\scripts\\convert-docx</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">to</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">md.ps1</span></span></code></pre></figure>\n<h4 id=\"markdown-转-word\">Markdown 转 Word</h4>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">powershell </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">ExecutionPolicy Bypass </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">File .</span><span style=\"color:#79B8FF\">\\scripts\\convert-md</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">to</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">docx.ps1</span></span></code></pre></figure>\n<h3 id=\"说明\">说明</h3>\n<ul>\n<li>已安装 <code>Pandoc 3.9.0.2</code></li>\n<li>反向生成 Word 时，默认使用原始论文 <code>docx</code> 作为 <code>reference-doc</code></li>\n<li>这样可以尽量保留原学校模板中的字体、段落、页边距和样式体系</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "毕业论文资料说明",
+        "text": "毕业论文资料说明"
+      },
+      {
+        "depth": 3,
+        "slug": "当前结构",
+        "text": "当前结构"
+      },
+      {
+        "depth": 3,
+        "slug": "当前文件",
+        "text": "当前文件"
+      },
+      {
+        "depth": 3,
+        "slug": "使用方式",
+        "text": "使用方式"
+      },
+      {
+        "depth": 3,
+        "slug": "说明",
+        "text": "说明"
+      }
+    ],
+    "detailPath": "articles/md_0c681757f2a2.json"
+  }
+}

@@ -1,0 +1,482 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_018d7bf721bd",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/Mortis%20%E6%8C%87%E6%8C%A5%E5%B1%82%E4%B8%8E%20Guard%20%E5%8F%8C%E8%84%91%E6%9E%B6%E6%9E%84%E8%A7%84%E8%8C%83.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/Mortis%20%E6%8C%87%E6%8C%A5%E5%B1%82%E4%B8%8E%20Guard%20%E5%8F%8C%E8%84%91%E6%9E%B6%E6%9E%84%E8%A7%84%E8%8C%83.md",
+    "slug": "agent-mortis-指挥层与-guard-双脑架构规范",
+    "title": "Mortis 指挥层与 Guard 双脑架构规范",
+    "summary": "Mortis 指挥层与 Guard 双脑架构规范 目标与定位 本文是 Mortis controller / queue / Codex 执行链的专题 canonical 规范，用来把“指挥层决策 + 执行层操作”的双脑架构固定成可落地的真源，而不是继续停留在聊天里的口头约束。 它不替代 任务包与能...",
+    "description": "Mortis 指挥层与 Guard 双脑架构规范 目标与定位 本文是 Mortis controller / queue / Codex 执行链的专题 canonical 规范，用来把“指挥层决策 + 执行层操作”的双脑架构固定成可落地的真源，而不是继续停留在聊天里的口头约束。 它不替代 任务包与能...",
+    "date": "2026-04-23",
+    "updated": "2026-04-23",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "类-技术方案",
+      "项目-Atramenti-Console",
+      "形态-规范",
+      "agent"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [
+        "类-技术方案",
+        "项目-Atramenti-Console",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/Mortis%20%E6%8C%87%E6%8C%A5%E5%B1%82%E4%B8%8E%20Guard%20%E5%8F%8C%E8%84%91%E6%9E%B6%E6%9E%84%E8%A7%84%E8%8C%83.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Mortis 指挥层与 Guard 双脑架构规范",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "类 技术方案",
+        "项目 ATRAMENTI CONSOLE",
+        "形态 规范",
+        "MORTIS 指挥层与 GUARD 双脑架构规范"
+      ],
+      "subtitle": "Mortis 指挥层与 Guard 双脑架构规范 目标与定位 本文是 Mortis controller / queue / Codex 执行链的专题 canonical 规范，用来把“指挥层决策 + 执行层操作”的双脑架构固定成可落地的真源，而不是继续停留在聊天里的口头约束。 它不替代 任务包与能..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Mortis 指挥层与 Guard 双脑架构规范\n\n## 目标与定位\n\n本文是 Mortis controller / queue / Codex 执行链的专题 canonical 规范，用来把“指挥层决策 + 执行层操作”的双脑架构固定成可落地的真源，而不是继续停留在聊天里的口头约束。\n\n它不替代 `任务包与能力分层路由规范.md` 的通用执行基线，而是在 Mortis 的 controller、task queue、Guard 审查、Codex 执行场景下，补一层更硬的结构化约束。\n\n## 一、总原则\n\n1. controller 决策，Codex 执行；执行器默认不能自己扩展范围。\n2. 先判层，再定入口，再定 allowed_files，最后才允许执行。\n3. 任何问题先做 minimal experiment，禁止跳过实验直接持久化。\n4. 一个任务只允许一个主入口文件或主入口点，避免多入口并行改动。\n5. 未达到 `V3` 之前，执行链不得声称“成功”。\n\n## 二、四层架构\n\n| 层 | 角色 | 核心责任 | 必须产物 | 禁止事项 |\n| --- | --- | --- | --- | --- |\n| 指挥层 | 你 / ChatGPT / controller_session | 判层、定入口、定边界、产出 `execution_plan` | 结构化 plan、层级诊断表、验证等级要求 | 直接改文件、直接代替执行器做持久化 |\n| 约束层 | Skill | 为特定任务族补充边界、模板、入口与流程约束 | 领域规则、允许入口、禁止入口、检查清单 | 越过 controller 自己下发临时私有规则 |\n| 审查层 | MCP Guard | 在 task 入队和执行前检查 plan、层级、范围与验证门槛 | `BLOCK` / `PASS` 结论、阻断原因 | 没有 `execution_plan` 也放行 |\n| 执行层 | Codex | 只按 plan 改文件、跑命令、回传结果与 diff | 执行日志、diff、当前验证等级 | 自行判层、自增步骤、自扩文件范围 |\n\n核心口径只有一句话：Codex 不是 planner，而是 executor。\n\n## 三、层级模型 L1-L6\n\n| 层级 | 含义 | 典型对象 | 默认入口 |\n| --- | --- | --- | --- |\n| `L1` | 输入宿主层 | Windows Terminal、快捷键、GUI 事件、按键映射 | 宿主设置文件、快捷键配置 |\n| `L2` | 会话层 | PowerShell profile、bashrc、环境变量注入 | profile / shell init 文件 |\n| `L3` | 配置层 | `settings.json`、`config.toml`、app config | 单一配置文件 |\n| `L4` | 业务代码层 | repo 代码、`server.mjs`、业务 handler | 对应仓内源码文件 |\n| `L5` | 系统进程层 | `SIGINT`、`child_process`、`taskkill`、win32 handler | 系统调用边界、进程控制代码 |\n| `L6` | 网络层 | API、MCP、HTTP、外部服务 | 网络接口、远端服务入口 |\n\n这张表的用途不是分类好看，而是决定“问题应该从哪个入口修”。\n\n## 四、越层规则\n\n1. 若问题属于 `L1` / `L2` / `L3`，禁止直接改 `L4` / `L5`。\n2. 若问题属于 `L4`，才允许改业务代码；能在配置层解决时不优先碰代码层。\n3. 若问题属于 `L5`，必须明确系统调用边界、信号来源和 kill / spawn 影响面。\n4. 若问题属于 `L6`，仍要先判断真实故障是否来自更低层；网络症状不能自动推导成代码问题。\n5. 一个 execution_plan 只能有一个 `target_layer`，其余只作为 `allowed_layers` 的补充，不允许多主层并行。\n\n### 典型映射\n\n```json\n{\n  \"WindowsTerminal/settings.json\": \"L1\",\n  \"keybindings.json\": \"L1\",\n  \"PowerShell_profile.ps1\": \"L2\",\n  \"config.toml\": \"L3\",\n  \"*.ts|*.js|server/**\": \"L4\",\n  \"win-spawn-relay.mjs|signal相关\": \"L5\"\n}\n```\n\n这份 `layer_map` 应由 Guard 与 task_gate 共享，而不是每个 agent 临时脑补一份。\n\n## 五、`execution_plan` 作为唯一执行凭证\n\n所有可执行 task 在进入 queue 前都必须带 `execution_plan`。没有 plan，Guard 直接 `BLOCK`。\n\n### Canonical 结构\n\n```json\n{\n  \"problem_type\": \"terminal_input\",\n  \"host\": \"WindowsTerminal+PowerShell\",\n  \"target_layer\": \"L1\",\n  \"allowed_layers\": [\"L1\"],\n  \"allowed_files\": [\"WindowsTerminal/settings.json\"],\n  \"forbidden_files\": [\"codex/**\", \"server/**\", \"*.mjs\"],\n  \"steps\": [\n    \"读取 settings.json\",\n    \"修改 ctrl+c 绑定为空输入\",\n    \"保存\"\n  ],\n  \"minimal_experiment\": [\n    \"临时修改并测试 ctrl+c 行为\"\n  ],\n  \"success_criteria\": [\n    \"ctrl+c 无中断\",\n    \"复制不受影响\"\n  ],\n  \"verification_level_required\": \"V3\"\n}\n```\n\n### 字段职责\n\n- `problem_type`：controller 对问题本质的分类，不由执行器反推。\n- `host`：宿主组合，例如 `WindowsTerminal+PowerShell`、`Mortis+TaskQueue`。\n- `target_layer`：主修复层；只允许一个。\n- `allowed_layers`：本轮允许触达的层；不在其中即视为越层。\n- `allowed_files`：白名单；执行器只能改这里。\n- `forbidden_files`：显式黑名单，用于防止“顺手改”。\n- `steps`：正式执行步骤；执行器不得新增步骤。\n- `minimal_experiment`：先验证假设的最小动作；未执行则不能持久化。\n- `success_criteria`：控制器定义的完成条件；不是执行器自由发挥的“看起来正常”。\n- `verification_level_required`：最终最低验收门槛。\n\n## 六、强制流程\n\n### 6.1 标准顺序\n\n1. controller 输出层级诊断表。\n2. 执行 `minimal_experiment`。\n3. 回传实验结果与当前验证等级。\n4. controller 决定是否允许进入持久化步骤。\n5. 仅在 plan 允许时执行正式步骤并写回结果。\n\n### 6.2 诊断表最小字段\n\n| 现象 | 宿主 | 主层 | 次层 | 允许入口 | 禁止入口 | 最小实验 | 目标验证等级 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| 用户看到的问题描述 | 真实运行宿主 | 一个主层 | 可选次层 | 允许修改的入口文件或系统 | 不允许碰的入口 | 先验证假设的最小动作 | `V3` 或 `V4` |\n\n这张表必须先于真实改动出现；没有诊断表，说明 controller 还没真正定边界。\n\n## 七、验证等级\n\n| 等级 | 含义 | 允许说法 |\n| --- | --- | --- |\n| `V0` | 未验证 | 只能说“已写 plan / 未执行” |\n| `V1` | 仅文件修改 | 只能说“已改文件” |\n| `V2` | 命令成功 | 只能说“命令通过 / 实验通过” |\n| `V3` | 用户真实验证 | 才允许说“问题已解决 / 成功” |\n| `V4` | 回归验证 | 可说“已完成回归验证” |\n\n在 Mortis controller / Guard / Codex 这条执行链内部，统一使用 `V0-V4` 口径，不用 `verified` 这个词来替代真实验证等级。\n\n注意：Atramenti 的 verification bundle 仍可保留 `verified / unverified / failed` 作为外层交付分类，但那是文档归档层，不是执行器内部状态机。\n\n## 八、禁止行为\n\n1. 不得跨层修改。\n2. 不得同时改多个入口。\n3. 不得未实验直接持久化。\n4. 不得修改 `allowed_files` 之外文件。\n5. 不得自行扩展问题范围。\n6. 未达到 `V3` 不得输出成功。\n\n这些规则不是建议，而是 Guard 的硬门槛。\n\n## 九、MCP Guard 规则\n\nGuard 在 task 创建前和执行前都可运行一次；任何一次失败都直接 `BLOCK`。\n\n```text\nif execution_plan 不存在 -> BLOCK\nif target_file 不在 allowed_files -> BLOCK\nif file_layer 不在 allowed_layers -> BLOCK\nif problem_layer in {L1, L2, L3} and target_layer in {L4, L5} -> BLOCK\nif minimal_experiment 未执行 -> BLOCK\nif 声明 success and verification_level < V3 -> BLOCK\n```\n\n### Guard 的三个子检查器\n\n- `layer_guard`：根据 `layer_map` 检查是否越层。\n- `scope_guard`：限制只能修改 `allowed_files`。\n- `verification_guard`：要求输出结论达到 plan 指定的验证等级。\n\nGuard 的职责不是补 plan，而是拒绝坏 plan、越权执行和伪成功。\n\n## 十、Mortis 接入架构\n\n### A. `controller_session`\n\n- 新增会话类型，只负责生成 `execution_plan`。\n- 默认不执行 task。\n- 适合需要人工确认或高风险分层判断的入口。\n\n### B. `issue + task_queue`（主方案）\n\n- controller 在 issue 创建或 agent 指派前生成 `plan_json`。\n- `plan_json` 写入 issue metadata / task metadata。\n- `task_gate` 调用 Guard 校验，通过后才入队。\n- daemon 从 queue 取任务，再调用 Codex 作为执行器。\n\n这是推荐主路径，因为它把 plan、queue、Guard、executor 串成了一条硬链，而不是靠执行器自觉。\n\n### C. `autopilot`\n\n- autopilot 作为策略脑自动生成 plan 并触发 task。\n- 仍需经过同一套 Guard 和 task_gate。\n- 它可以替代人工 controller 生成 plan，但不能绕过 Guard。\n\n## 十一、数据流\n\n```text\n用户 / 事件\n  -> controller_session 生成 execution_plan\n  -> 写入 issue 或 task metadata\n  -> task_gate 调用 MCP_GUARD 校验\n  -> 通过后创建 task\n  -> daemon 从 queue 领取任务\n  -> 执行 agent（Codex 等）\n  -> 回传 progress / result / verification_level\n  -> controller 判断继续、结束或升级回归验证\n```\n\n关键点是：queue 前一定先 Guard；Codex 之后一定回 controller，而不是让执行器自己宣布完成。\n\n## 十二、数据库与服务接入点建议\n\n### 12.1 字段建议\n\n- `issues.plan_json`\n- `tasks.plan_json`\n- `tasks.verification_level`\n- `chat_session.controller_plan`\n\n如果现有 issue / task 结构已有 metadata 字段，也可以先把 plan 放入 metadata，再逐步显式 schema 化；但语义上仍应保持同名职责。\n\n### 12.2 服务接入点\n\n推荐在 `server/internal/service/task.go` 的入队前加：\n\n1. `validate(plan_json)`\n2. `layer_guard(plan_json, target_files)`\n3. `scope_guard(plan_json, target_files)`\n4. `verification_guard(plan_json, requested_status)`\n\n不通过则拒绝入队。\n\n## 十三、Codex 执行约束\n\nCodex 必须以“收到 execution_plan 的执行器”身份工作，而不是 assistant 式 planner。\n\n### 允许行为\n\n- 读取 `allowed_files`\n- 执行 `steps`\n- 执行 `minimal_experiment`\n- 回传日志、diff、当前验证等级\n\n### 禁止行为\n\n- 自行新增步骤\n- 修改其它文件\n- 自己改 `verification_level_required`\n- 发现阻碍后擅自换层修复\n- 输出解释性长文替代结构化结果\n\n### 推荐输出格式\n\n1. 层级诊断表\n2. 执行日志\n3. diff\n4. 当前验证等级\n\n执行器不负责“讲道理”，只负责回传受约束的执行结果。\n\n## 十四、最小实验与单点修改原则\n\n### 最小实验原则\n\n任何问题先做临时方案验证，再决定是否持久化。例如：\n\n- 终端问题先临时改宿主快捷键。\n- 配置问题先用单次环境变量或临时 config 覆盖验证。\n- 进程问题先用单次 kill / spawn / dry-run 验证因果，再改长期 handler。\n\n### 单点修改原则\n\n一个任务默认只允许一个主入口文件或主入口点。原因不是机械限制，而是为了防止“同一个问题同时改宿主配置、业务代码、进程 handler”，最后谁起作用都说不清。\n\n## 十五、落地顺序建议\n\n1. 先把 `execution_plan` 与 `verification_level` 字段打通到 issue / task metadata。\n2. 再把 `task_gate + MCP_GUARD` 插到 queue 入口。\n3. 再收紧 Codex executor 的输入输出契约。\n4. 最后再考虑 `controller_session` 和 `autopilot` 的自动化程度。\n\n这样能先建立硬门禁，再补“谁来生成 plan”的智能层，而不是一开始就让 autopilot 自动下发无门禁任务。\n\n## 十六、一句话模板\n\n```text\n你是执行器，不负责思考；仅按 execution_plan 执行。禁止越层、禁止扩散、先实验再持久化，未达 V3 不得声称成功。\n```\n\n这是 Codex 侧的最小提示词模板，但真正的约束主体仍然应该是 controller + Guard，而不是提示词本身。\n\n## 十七、Execution Gateway 作为硬门禁层\n\n上面的 controller / Guard / executor 结构还不够；如果没有真正的执行入口拦截，规则仍会退化成“建议”。因此需要在执行器之前再放一层 `Execution Gateway`。\n\n### 17.1 Gateway 的唯一职责\n\n`Execution Gateway` 不负责思考，不负责补 plan，只负责三件事：\n\n1. 判断任务能否开始。\n2. 判断当前动作能否执行。\n3. 判断执行结果能否进入“已完成”。\n\n### 17.2 三道门\n\n#### A. 任务门\n\n- 判断任务是否 trivial。\n- 判断是否必须先写 plan。\n- 判断是否需要工具 / MCP / 远端协同。\n- 未通过就直接阻断启动。\n\n硬规则口径：\n\n```text\nNo plan -> no execution\nNo mode / route -> no execution\n```\n\n#### B. 动作门\n\n- 命令执行、浏览器打开、文件修改、MCP 调用、远端访问都必须先过 Gateway。\n- AI 不直接触发外部能力；AI 只能请求 Gateway 执行动作。\n\n#### C. 完成门\n\n- 执行完成不等于任务完成。\n- 必须检查真实结果、artifact、残留进程 / 页面 / 锁、验证等级。\n\n硬规则口径：\n\n```text\nNo verification -> no completion\n```\n\n### 17.3 Gateway 是程序，不是提示词\n\n这里的门禁必须落在代码层，而不是继续堆在文本规则里：\n\n```text\nif no plan -> block\nif tool route exists and no tool path chosen -> block\nif no verification artifact -> block\n```\n\n因此至少要有三类可执行模块：\n\n- `task_gate`\n- `action_gate`\n- `verify_gate`\n\n## 十八、能力网关层\n\n`Execution Gateway` 只负责准入；真正与外部世界接触的能力，需要继续收口到更窄的能力网关。\n\n### 18.1 Command Gateway\n\n职责：\n\n- 所有命令统一从这里出去。\n- 统一处理 stdout / stderr / timeout / kill / 退出码。\n- 切断不受控启动链，避免 `cmd.exe -> npx.cmd -> shell wrapper` 这种漂移路径重新长出来。\n\n推荐链路：\n\n```text\nexecutor -> command gateway -> node + real js entry\n```\n\n### 18.2 Browser Manager\n\nAI 不直接操作 Playwright / Puppeteer，只能走 `Browser Manager`。它至少应提供：\n\n- `open_page`\n- `verify_page`\n- `act_page`\n- `list_pages`\n- `close_task_pages`\n\n补强要求：\n\n- 自动回收 browser / context / page\n- 任务级 tab 上限\n- 先 verify 再 act\n- 截图 / DOM / console 作为 artifact\n\n### 18.3 File Gateway\n\n全局系统不能让执行器任意读写任意文件，因此要有 task-scoped file sandbox：\n\n- 读哪个文件\n- 能不能写\n- 是否越界\n- 是否触碰系统关键路径或别的项目边界\n\n核心原则：\n\n```text\n某个任务只能动自己的工作区与允许路径\n```\n\n## 十九、多 agent 的最小协同结构\n\n如果任务升级为多 agent，最小正确结构只有三类角色：\n\n- `Planner`\n- `Guard`\n- `Executor`\n\n### 19.1 职责分工\n\n#### Planner\n\n- 判断任务类型\n- 拆步骤\n- 决定模式（`FAST / DEEP / AGENT`）\n- 写 plan\n\n它不执行代码，不直接碰环境。\n\n#### Guard\n\n- 审查计划\n- 审查动作\n- 审查结果\n- 判断是否偏航\n\n它不负责出主意，也不负责执行。\n\n#### Executor\n\n- 调网关\n- 执行动作\n- 返回结果\n\n它不能扩 scope，不能自己升级任务，不能绕过 gate。\n\n### 19.2 单向依赖\n\n依赖关系必须锁死成：\n\n```text\nPlanner -> Guard -> Executor -> Guard\n```\n\n禁止：\n\n- `Executor` 反向主导 `Planner`\n- `Executor` 绕过 `Guard`\n\n### 19.3 模式切换\n\n不是所有任务都需要完整三代理，因此保留三种模式：\n\n- `/fast`：小任务，直接执行\n- `/deep`：中型工程任务，允许更多分析\n- `/agent`：复杂任务，进入完整多代理流程\n\n默认仍是 `fast`，但遇到下列条件自动升级到 `deep` 或 `agent`：\n\n- 多步骤浏览器自动化\n- 跨本机 + 服务器\n- 超过 2 个文件修改\n- 持续运行任务\n- 高不确定性任务\n\n## 二十、Mortis 与外部 Web GPT 的角色边界\n\nWeb ChatGPT 可以接入，但它不适合作为核心执行后端，只适合作为高层策略脑或人工辅助顾问层。\n\n### 20.1 适合做的事\n\n- 高层规划\n- 复杂解释\n- 策略讨论\n- 人机协同咨询\n\n### 20.2 不适合做的事\n\n- 高频自动调用\n- 关键任务主后端\n- 稳定执行引擎\n\n### 20.3 推荐接法\n\n如果 Mortis 需要调用 Web ChatGPT，应通过独立桥接层：\n\n```text\nMortis\n  -> Web GPT Bridge\n  -> Browser Session / Human-in-the-loop\n  -> ChatGPT Web\n```\n\n这个桥只负责：\n\n- 发问题\n- 收回答\n- 存归档\n- 作为高层建议输入\n\n它不直接拿 Web ChatGPT 去操控系统。\n\n## 二十一、本机与服务器的执行边界\n\n默认原则不是“一律本机”也不是“一律远端”，而是：\n\n```text\n能远程执行的，优先远程\n必须本机人工介入的，才留本机\n```\n\n### 21.1 本机更适合承载的动作\n\n- 登录\n- 验证码\n- 本机 GUI / 输入设备相关验证\n- 本机浏览器会话与人工确认点\n- 用户工作站独占资源\n\n### 21.2 服务器更适合承载的动作\n\n- 可重复批处理\n- 长时任务\n- 与控制面 / deploy target 同机更稳定的任务\n- 不依赖人工交互的脚本链\n\nMortis 的职责是决定任务落在哪一侧执行；Gateway 的职责是保证“落在哪一侧”之后，动作仍然是受控的。\n\n## 二十二、Mortis 团队分工与 owner tree\n\n在 `PLAN-20260422-014314` 已验证的 live 最小三角基础上，Mortis 不应直接照搬 `Atramenti box` 的 CEO / PMO / HR 办公室隐喻，而应吸收其中更可迁移的结构：`profile` 与 `runtime` 解耦、owner tree 明确、编排层保持薄、handoff/approval/artifact 有标准对象。\n\n### 22.1 当前已验证的最小三角\n\n当前 live 工作基础仍是：\n\n```text\nMortis Operator\nMortis Builder\nMortis Guard\n```\n\n它已经证明：\n\n- `Operator` 可以真实接活、读取 live workspace、路由 issue 并收口结果。\n- `Builder` 可以在受控路径内完成本地/仓库执行。\n- `Guard` 可以对真实 run 和结果做 PASS / BLOCK 审查。\n\n因此后续扩编必须建立在这个三角之上，而不是重做一套新控制面。\n\n### 22.2 推荐扩编结构\n\n推荐把 `controller` 保持为逻辑上游，而不是一开始就强制建成常驻 live agent。\n\n```text\nMortis Controller\n  -> Mortis Operator\n      -> Mortis Planner\n      -> Mortis Researcher\n      -> Mortis Architect\n      -> Mortis Builder\n      -> Mortis Guard\n      -> Mortis QA\n      -> Mortis Ops\n      -> Mortis Recoverer\n      -> Mortis Archivist\n```\n\n其中：\n\n- `Controller`：逻辑决策脑，负责判层、定边界、产出 plan；可由人工 controller_session 或 autopilot 承担。\n- `Operator`：统一入口、任务分诊、agent 指派、结果汇总、升级和 closeout。\n- `Planner`：把需求压成 `execution_plan`，不直接执行。\n- `Researcher`：补上下文、查现状、查文档、查外部资料。\n- `Architect`：做跨模块/跨系统结构判断，不直接落地。\n- `Builder`：只按 plan 执行，产出 diff、日志和 artifact。\n- `Guard`：审 plan、审 scope、审验证等级和 closeout。\n- `QA`：专注 browser.run、UI、smoke、回归和用户可见验证。\n- `Ops`：负责 deploy、runtime、host、service、告警与恢复。\n- `Recoverer`：追索失败 run、遗留任务、丢失状态与漂移会话。\n- `Archivist`：归档 verification bundle、handoff、证据链和历史决策。\n\n### 22.3 owner tree 规则\n\n默认 owner 关系建议如下：\n\n```text\ncontroller\n  owner: none\n\noperator\n  owner: controller\n\nplanner / researcher / architect / builder / guard / qa / ops / recoverer / archivist\n  owner: operator\n```\n\n核心约束：\n\n1. `Builder` 与 `Guard` 必须平级，不能互相拥有。\n2. `QA` 与 `Ops` 是侧翼角色，默认也归 `Operator`，不直接拥有 `Builder`。\n3. `Planner / Researcher / Architect` 只提供 plan、背景和结构判断，不直接触发落地动作。\n4. 所有 override、重派与升级默认由 `Operator` 发起；`Controller` 只处理更高层的边界重判。\n\n### 22.4 推荐部门划分\n\n为了让前端和状态投影更易读，推荐分为五个逻辑部门：\n\n| department | 角色 | 用途 |\n| --- | --- | --- |\n| `control` | `controller` / `operator` | 入口、路由、收口、升级 |\n| `planning` | `planner` / `researcher` / `architect` | 计划、资料、结构判断 |\n| `execution` | `builder` | 真实执行 |\n| `review` | `guard` / `qa` | 审查、验证、回归 |\n| `operations` | `ops` / `recoverer` / `archivist` | 部署、恢复、归档 |\n\n### 22.5 路由规则\n\n默认路由顺序建议如下：\n\n```text\nIssue / Event\n  -> Operator\n  -> (Planner / Researcher / Architect as needed)\n  -> Guard 预审\n  -> Builder / QA / Ops\n  -> Guard 复审\n  -> Operator closeout\n```\n\n补充规则：\n\n- 信息不全 -> `Researcher`\n- 需要拆 plan -> `Planner`\n- 涉及结构设计 -> `Architect`\n- 直接落地 -> `Guard` 预审后给 `Builder`\n- 需要浏览器或用户可见验证 -> `QA`\n- 涉及 deploy/runtime/host/service -> `Ops`\n\n### 22.6 实施顺序\n\n扩编不要一口气铺满，按三阶段推进：\n\n1. `Phase 1`：保留 `Operator / Builder / Guard`，新增 `Planner / QA / Ops` 三个 profile。\n2. `Phase 2`：补 `Researcher / Architect`，把 route/handoff 标准化。\n3. `Phase 3`：再考虑 `Recoverer / Archivist` 与更重的 control-room 可视化。\n\n这能保证 Mortis 先把执行链跑稳，而不是先变成一个巨型办公室 UI。\n\n### 22.7 `Phase 1` 首版落地定义\n\n`Phase 1` 的目标不是让 Mortis 一夜之间长成完整组织，而是把现有 `Operator / Builder / Guard` 执行链扩成一个能稳定拆 plan、做可见验证、做 deploy/runtime 收口的最小作战队。\n\n本轮只新增三个 profile：\n\n- `Planner`\n- `QA`\n- `Ops`\n\n它们都默认由 `Operator` 拥有和调度，不单独拥有队列入口，也不绕过 `Guard`。\n\n### 22.8 `Phase 1` 角色触发与对象契约\n\n| 角色 | 何时触发 | 最小输入 | 最小输出 | 不负责什么 |\n| --- | --- | --- | --- | --- |\n| `Planner` | 需求超过 trivial；任务需要拆步、定边界、定验证；`Operator` 无法直接安全分派给 `Builder` | issue 摘要、目标路径、约束、已有上下文 | `execution_plan`、route 建议、验证标准、风险点 | 不直接改代码、不直接 deploy、不自宣完成 |\n| `QA` | 任务涉及 browser.run、前端页面、用户可见回归、smoke、截图证据、交互验证 | 待验证对象、期望可见结果、验证环境、已有 artifact | verification 结果、截图/console/DOM artifact、失败 repro、回归结论 | 不决定产品边界、不替代 `Guard` 做 policy 审批 |\n| `Ops` | 任务涉及 deploy、runtime、host、service、端口、observer、恢复、线上状态收口 | deploy target、运行态上下文、host/service 清单、风险范围 | deploy 结果、runtime 状态、恢复动作记录、线上验证结论 | 不负责需求拆解、不替代 `Operator` 做全局路由 |\n\n补充硬规则：\n\n1. `Planner` 的输出对象必须是可交给 `Guard` 和 `Builder` 的 `execution_plan`，而不是长篇建议。\n2. `QA` 的输出对象必须带 artifact 引用，不能只回“已验证”。\n3. `Ops` 的输出对象必须带 target / runtime / result 三元组，不能只回“已部署”。\n\n### 22.9 与 `Operator` 的拥有关系\n\n`Phase 1` 下 owner tree 仍保持简单：\n\n```text\nController\n  -> Operator\n      -> Planner\n      -> Builder\n      -> Guard\n      -> QA\n      -> Ops\n```\n\n这里有三个明确边界：\n\n1. `Operator` 负责挑选谁来接下一棒，但不替代子角色产出其专属对象。\n2. `Planner / QA / Ops` 都不能直接把任务标记为完成，最终 closeout 仍回到 `Operator`。\n3. `Guard` 继续作为平级审查者存在；`Planner` 不能越过 `Guard` 直接派给 `Builder`，`Ops` 也不能因为“只是部署”就跳过 `Guard` 或完成门。\n\n### 22.10 `Phase 1` 标准 handoff\n\n`Phase 1` 先不要求引入全新的复杂消息总线，但交接内容至少要标准化为下列字段：\n\n- `fromProfile`\n- `toProfile`\n- `reason`\n- `target`\n- `expectedOutput`\n- `artifacts`\n- `blockingQuestions`\n- `approvalNeeded`\n\n最小 handoff 约束：\n\n- `Operator -> Planner`：必须给出任务目标、范围边界、已知约束。\n- `Planner -> Guard`：必须给出 `execution_plan`、验证标准、风险和 route 选择原因。\n- `Guard -> Builder / QA / Ops`：必须给出 `PASS/BLOCK` 与具体条件，不能只回抽象态度。\n- `Builder -> QA`：必须给出可验证对象、预期可见结果、必要启动方式和已有 artifact。\n- `Builder / QA / Ops -> Guard`：必须给出 closeout 前的证据链，供复审。\n- `Guard -> Operator`：必须给出是否可 closeout、是否需要补审批、是否仍有剩余 gap。\n\n### 22.11 `Phase 1` 审批边界\n\n新增 `Planner / QA / Ops` 后，审批边界应比最小三角更清楚：\n\n| 动作 | 默认发起者 | 是否需要审批/复审 | 备注 |\n| --- | --- | --- | --- |\n| 新增或修改 `execution_plan` | `Planner` | 需 `Guard` 预审 | 无 plan 不执行 |\n| 代码或文件落地 | `Builder` | 需 `Guard` 复审 | 仍沿用现有 scope gate |\n| 浏览器验证、截图、smoke | `QA` | 需 `Guard` 复审 | 用户可见任务默认走 `QA` |\n| deploy / service restart / runtime repair | `Ops` | 高风险时需显式 approval，完成后仍需 `Guard` 复审 | `Ops` 不是免审通道 |\n| closeout / 结果宣布 | `Operator` | 以 `Guard` 复审结论为前提 | 不由执行侧自宣完成 |\n\n硬边界：\n\n- `Planner` 不能批准自己的 plan。\n- `QA` 不能以“页面打开了”替代 `Guard` 的完成门。\n- `Ops` 不能以“服务启动了”替代线上/运行态验证。\n\n### 22.12 `Phase 1` 路由矩阵\n\n`Operator` 在首版可以按下表路由，避免把所有事都丢给 `Builder`：\n\n| 任务特征 | 首选角色 | 次选/后续 | 说明 |\n| --- | --- | --- | --- |\n| 需求含糊、范围不清、需要拆步骤 | `Planner` | `Guard` -> `Builder` | 先形成 plan，再执行 |\n| 已有明确 plan，需要直接改代码/改文档/落产物 | `Builder` | `QA` / `Ops` | 先走 `Guard` 预审 |\n| 前端改动、页面交互、browser.run、截图、用户可见验证 | `QA` | `Guard` -> `Operator` | `QA` 负责可见结果证据 |\n| deploy、service、host、runtime、observer、恢复 | `Ops` | `Guard` -> `Operator` | `Ops` 负责运行态收口 |\n| 同时包含代码落地 + 浏览器验收 | `Builder` | `QA` | 不要让 `Builder` 自证可见结果 |\n| 同时包含代码落地 + deploy/runtime 改动 | `Builder` | `Ops` | 构建与部署分开收口 |\n| 同时包含 plan 拆解 + UI 回归 + deploy | `Planner` | `Builder` -> `QA` -> `Ops` | 保持单向 handoff，避免并发串线 |\n\n默认 route 口径可以简写为：\n\n```text\nNeed structure -> Planner\nNeed implementation -> Builder\nNeed visible proof -> QA\nNeed runtime/deploy -> Ops\nNeed policy/closeout decision -> Guard -> Operator\n```\n\n### 22.13 `Phase 1` 完成标准\n\n只有满足下面条件，才能说 `Planner / QA / Ops` 第一版已真正落地，而不是只在文档中出现：\n\n1. `Operator` 能把任务稳定路由给这三个 profile，而不是继续全塞给 `Builder`。\n2. `Planner` 的输出已收敛成 `execution_plan` 对象，而不是自由文本。\n3. `QA` 至少能覆盖 browser.run / 前端页面 / smoke 的证据链。\n4. `Ops` 至少能覆盖 deploy target / runtime state / recovery action 的记录。\n5. `Guard` 仍然卡住 plan、完成门和 override，而不是被新角色绕空。\n\n## 二十三、Mortis 结构化对象草案\n\nMortis 当前已有 `issue / task / run / runtime / comment` 这些基础对象；后续若要把团队编排落得更稳定，建议追加但不平行替代以下对象：\n\n- `agent profile`\n- `agent instance projection`\n- `approval record`\n- `override decision`\n- `artifact manifest`\n- `handoff message`\n\n本规范只固定语义和职责；可直接复制的 TypeScript 草案放在：\n\n`E:\\My Project\\Atramenti-Console\\codex\\_artifacts\\task-packs\\20260422-mortis-team-structure-schema\\mortis-team-schema.draft.ts`\n\n### 23.1 `agent profile`\n\n用途：\n\n- 定义角色，不定义具体运行时实例\n- 表达 `role / department / ownerProfile / capabilities / allowedActions`\n- 让同一 runtime 可以承载多个 profile，而不是把角色永久绑死在 provider 上\n\n### 23.2 `agent instance projection`\n\n用途：\n\n- 把 live agent 当前状态投影出来，给列表页 / control-room / issue detail 用\n- 表达 `profileId / runtimeKind / ownerAgentId / currentTaskId / approvalsNeeded / state`\n\n这一层对应的是“运行中的谁正在做什么”，而不是“组织上谁负责什么”。\n\n### 23.3 `approval record`\n\n用途：\n\n- 记录 `scope_expand / layer_override / deploy / runtime_reassign / closeout_override`\n- 统一保存 `reason / riskLevel / decidedBy / evidenceRefs`\n\nGuard 可以 `BLOCK`，但是否 override 应通过标准 approval/override 记录，而不是只留在评论文本里。\n\n### 23.4 `artifact manifest`\n\n用途：\n\n- 统一记录一次执行对应的 artifact 列表，而不是让前端去猜 comment 或 task.result\n- 尤其适合 `browser.run`、smoke、proof-file、verification bundle\n\n对 `browser.run`，建议最小固定产物为：\n\n- `screenshot`\n- `html_snapshot`\n- `json_result`\n- `run.summary` 或 `verification_bundle`\n\n### 23.5 `handoff message`\n\n用途：\n\n- 标准化 `Operator / Planner / Builder / Guard / QA / Ops` 之间的交接\n- 把现在很多只存在于 comment 文本中的隐式交接，升级成显式消息\n\n推荐消息种类：\n\n- `task`\n- `event`\n- `response`\n- `handoff`\n- `review_request`\n- `review_result`\n\n### 23.6 推荐状态机\n\n建议把后续前端、API 和 closeout 口径统一为：\n\n- `issue`: `todo -> in_progress -> in_review -> done`\n- `task`: `queued -> running -> completed | blocked | failed`\n- `approval`: `pending -> approved | rejected | expired`\n- `handoff`: `created -> delivered -> acknowledged -> resolved`\n\n### 23.7 当前最值得先落的字段\n\n若只做最小增量，优先级如下：\n\n1. `agent.profileId`\n2. `agent.role`\n3. `agent.ownerAgentId` 或 `ownerProfileId`\n4. `task.context.handoff`\n5. `task.context.execution`\n6. `run.result.artifactManifestId`\n7. 独立 `approval` 记录\n\n这七项足以把 Mortis 从“最小三角已跑通”推进到“可持续扩编而不失控”的状态。",
+    "html": "<h1 id=\"mortis-指挥层与-guard-双脑架构规范\">Mortis 指挥层与 Guard 双脑架构规范</h1>\n<h2 id=\"目标与定位\">目标与定位</h2>\n<p>本文是 Mortis controller / queue / Codex 执行链的专题 canonical 规范，用来把“指挥层决策 + 执行层操作”的双脑架构固定成可落地的真源，而不是继续停留在聊天里的口头约束。</p>\n<p>它不替代 <code>任务包与能力分层路由规范.md</code> 的通用执行基线，而是在 Mortis 的 controller、task queue、Guard 审查、Codex 执行场景下，补一层更硬的结构化约束。</p>\n<h2 id=\"一总原则\">一、总原则</h2>\n<ol>\n<li>controller 决策，Codex 执行；执行器默认不能自己扩展范围。</li>\n<li>先判层，再定入口，再定 allowed_files，最后才允许执行。</li>\n<li>任何问题先做 minimal experiment，禁止跳过实验直接持久化。</li>\n<li>一个任务只允许一个主入口文件或主入口点，避免多入口并行改动。</li>\n<li>未达到 <code>V3</code> 之前，执行链不得声称“成功”。</li>\n</ol>\n<h2 id=\"二四层架构\">二、四层架构</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>层</th>\n<th>角色</th>\n<th>核心责任</th>\n<th>必须产物</th>\n<th>禁止事项</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>指挥层</td>\n<td>你 / ChatGPT / controller_session</td>\n<td>判层、定入口、定边界、产出 <code>execution_plan</code></td>\n<td>结构化 plan、层级诊断表、验证等级要求</td>\n<td>直接改文件、直接代替执行器做持久化</td>\n</tr>\n<tr>\n<td>约束层</td>\n<td>Skill</td>\n<td>为特定任务族补充边界、模板、入口与流程约束</td>\n<td>领域规则、允许入口、禁止入口、检查清单</td>\n<td>越过 controller 自己下发临时私有规则</td>\n</tr>\n<tr>\n<td>审查层</td>\n<td>MCP Guard</td>\n<td>在 task 入队和执行前检查 plan、层级、范围与验证门槛</td>\n<td><code>BLOCK</code> / <code>PASS</code> 结论、阻断原因</td>\n<td>没有 <code>execution_plan</code> 也放行</td>\n</tr>\n<tr>\n<td>执行层</td>\n<td>Codex</td>\n<td>只按 plan 改文件、跑命令、回传结果与 diff</td>\n<td>执行日志、diff、当前验证等级</td>\n<td>自行判层、自增步骤、自扩文件范围</td>\n</tr>\n</tbody>\n</table></div>\n<p>核心口径只有一句话：Codex 不是 planner，而是 executor。</p>\n<h2 id=\"三层级模型-l1-l6\">三、层级模型 L1-L6</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>层级</th>\n<th>含义</th>\n<th>典型对象</th>\n<th>默认入口</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>L1</code></td>\n<td>输入宿主层</td>\n<td>Windows Terminal、快捷键、GUI 事件、按键映射</td>\n<td>宿主设置文件、快捷键配置</td>\n</tr>\n<tr>\n<td><code>L2</code></td>\n<td>会话层</td>\n<td>PowerShell profile、bashrc、环境变量注入</td>\n<td>profile / shell init 文件</td>\n</tr>\n<tr>\n<td><code>L3</code></td>\n<td>配置层</td>\n<td><code>settings.json</code>、<code>config.toml</code>、app config</td>\n<td>单一配置文件</td>\n</tr>\n<tr>\n<td><code>L4</code></td>\n<td>业务代码层</td>\n<td>repo 代码、<code>server.mjs</code>、业务 handler</td>\n<td>对应仓内源码文件</td>\n</tr>\n<tr>\n<td><code>L5</code></td>\n<td>系统进程层</td>\n<td><code>SIGINT</code>、<code>child_process</code>、<code>taskkill</code>、win32 handler</td>\n<td>系统调用边界、进程控制代码</td>\n</tr>\n<tr>\n<td><code>L6</code></td>\n<td>网络层</td>\n<td>API、MCP、HTTP、外部服务</td>\n<td>网络接口、远端服务入口</td>\n</tr>\n</tbody>\n</table></div>\n<p>这张表的用途不是分类好看，而是决定“问题应该从哪个入口修”。</p>\n<h2 id=\"四越层规则\">四、越层规则</h2>\n<ol>\n<li>若问题属于 <code>L1</code> / <code>L2</code> / <code>L3</code>，禁止直接改 <code>L4</code> / <code>L5</code>。</li>\n<li>若问题属于 <code>L4</code>，才允许改业务代码；能在配置层解决时不优先碰代码层。</li>\n<li>若问题属于 <code>L5</code>，必须明确系统调用边界、信号来源和 kill / spawn 影响面。</li>\n<li>若问题属于 <code>L6</code>，仍要先判断真实故障是否来自更低层；网络症状不能自动推导成代码问题。</li>\n<li>一个 execution_plan 只能有一个 <code>target_layer</code>，其余只作为 <code>allowed_layers</code> 的补充，不允许多主层并行。</li>\n</ol>\n<h3 id=\"典型映射\">典型映射</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"WindowsTerminal/settings.json\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"L1\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"keybindings.json\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"L1\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"PowerShell_profile.ps1\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"L2\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"config.toml\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"L3\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"*.ts|*.js|server/**\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"L4\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"win-spawn-relay.mjs|signal相关\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"L5\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>这份 <code>layer_map</code> 应由 Guard 与 task_gate 共享，而不是每个 agent 临时脑补一份。</p>\n<h2 id=\"五execution_plan-作为唯一执行凭证\">五、<code>execution_plan</code> 作为唯一执行凭证</h2>\n<p>所有可执行 task 在进入 queue 前都必须带 <code>execution_plan</code>。没有 plan，Guard 直接 <code>BLOCK</code>。</p>\n<h3 id=\"canonical-结构\">Canonical 结构</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"problem_type\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"terminal_input\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"host\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"WindowsTerminal+PowerShell\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"target_layer\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"L1\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"allowed_layers\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#9ECBFF\">\"L1\"</span><span style=\"color:#E1E4E8\">],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"allowed_files\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#9ECBFF\">\"WindowsTerminal/settings.json\"</span><span style=\"color:#E1E4E8\">],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"forbidden_files\"</span><span style=\"color:#E1E4E8\">: [</span><span style=\"color:#9ECBFF\">\"codex/**\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"server/**\"</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#9ECBFF\">\"*.mjs\"</span><span style=\"color:#E1E4E8\">],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"steps\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"读取 settings.json\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"修改 ctrl+c 绑定为空输入\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"保存\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"minimal_experiment\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"临时修改并测试 ctrl+c 行为\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"success_criteria\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"ctrl+c 无中断\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"复制不受影响\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"verification_level_required\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"V3\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<h3 id=\"字段职责\">字段职责</h3>\n<ul>\n<li><code>problem_type</code>：controller 对问题本质的分类，不由执行器反推。</li>\n<li><code>host</code>：宿主组合，例如 <code>WindowsTerminal+PowerShell</code>、<code>Mortis+TaskQueue</code>。</li>\n<li><code>target_layer</code>：主修复层；只允许一个。</li>\n<li><code>allowed_layers</code>：本轮允许触达的层；不在其中即视为越层。</li>\n<li><code>allowed_files</code>：白名单；执行器只能改这里。</li>\n<li><code>forbidden_files</code>：显式黑名单，用于防止“顺手改”。</li>\n<li><code>steps</code>：正式执行步骤；执行器不得新增步骤。</li>\n<li><code>minimal_experiment</code>：先验证假设的最小动作；未执行则不能持久化。</li>\n<li><code>success_criteria</code>：控制器定义的完成条件；不是执行器自由发挥的“看起来正常”。</li>\n<li><code>verification_level_required</code>：最终最低验收门槛。</li>\n</ul>\n<h2 id=\"六强制流程\">六、强制流程</h2>\n<h3 id=\"61-标准顺序\">6.1 标准顺序</h3>\n<ol>\n<li>controller 输出层级诊断表。</li>\n<li>执行 <code>minimal_experiment</code>。</li>\n<li>回传实验结果与当前验证等级。</li>\n<li>controller 决定是否允许进入持久化步骤。</li>\n<li>仅在 plan 允许时执行正式步骤并写回结果。</li>\n</ol>\n<h3 id=\"62-诊断表最小字段\">6.2 诊断表最小字段</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>现象</th>\n<th>宿主</th>\n<th>主层</th>\n<th>次层</th>\n<th>允许入口</th>\n<th>禁止入口</th>\n<th>最小实验</th>\n<th>目标验证等级</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>用户看到的问题描述</td>\n<td>真实运行宿主</td>\n<td>一个主层</td>\n<td>可选次层</td>\n<td>允许修改的入口文件或系统</td>\n<td>不允许碰的入口</td>\n<td>先验证假设的最小动作</td>\n<td><code>V3</code> 或 <code>V4</code></td>\n</tr>\n</tbody>\n</table></div>\n<p>这张表必须先于真实改动出现；没有诊断表，说明 controller 还没真正定边界。</p>\n<h2 id=\"七验证等级\">七、验证等级</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>等级</th>\n<th>含义</th>\n<th>允许说法</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>V0</code></td>\n<td>未验证</td>\n<td>只能说“已写 plan / 未执行”</td>\n</tr>\n<tr>\n<td><code>V1</code></td>\n<td>仅文件修改</td>\n<td>只能说“已改文件”</td>\n</tr>\n<tr>\n<td><code>V2</code></td>\n<td>命令成功</td>\n<td>只能说“命令通过 / 实验通过”</td>\n</tr>\n<tr>\n<td><code>V3</code></td>\n<td>用户真实验证</td>\n<td>才允许说“问题已解决 / 成功”</td>\n</tr>\n<tr>\n<td><code>V4</code></td>\n<td>回归验证</td>\n<td>可说“已完成回归验证”</td>\n</tr>\n</tbody>\n</table></div>\n<p>在 Mortis controller / Guard / Codex 这条执行链内部，统一使用 <code>V0-V4</code> 口径，不用 <code>verified</code> 这个词来替代真实验证等级。</p>\n<p>注意：Atramenti 的 verification bundle 仍可保留 <code>verified / unverified / failed</code> 作为外层交付分类，但那是文档归档层，不是执行器内部状态机。</p>\n<h2 id=\"八禁止行为\">八、禁止行为</h2>\n<ol>\n<li>不得跨层修改。</li>\n<li>不得同时改多个入口。</li>\n<li>不得未实验直接持久化。</li>\n<li>不得修改 <code>allowed_files</code> 之外文件。</li>\n<li>不得自行扩展问题范围。</li>\n<li>未达到 <code>V3</code> 不得输出成功。</li>\n</ol>\n<p>这些规则不是建议，而是 Guard 的硬门槛。</p>\n<h2 id=\"九mcp-guard-规则\">九、MCP Guard 规则</h2>\n<p>Guard 在 task 创建前和执行前都可运行一次；任何一次失败都直接 <code>BLOCK</code>。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>if execution_plan 不存在 -> BLOCK</span></span>\n<span data-line=\"\"><span>if target_file 不在 allowed_files -> BLOCK</span></span>\n<span data-line=\"\"><span>if file_layer 不在 allowed_layers -> BLOCK</span></span>\n<span data-line=\"\"><span>if problem_layer in {L1, L2, L3} and target_layer in {L4, L5} -> BLOCK</span></span>\n<span data-line=\"\"><span>if minimal_experiment 未执行 -> BLOCK</span></span>\n<span data-line=\"\"><span>if 声明 success and verification_level &#x3C; V3 -> BLOCK</span></span></code></pre></figure>\n<h3 id=\"guard-的三个子检查器\">Guard 的三个子检查器</h3>\n<ul>\n<li><code>layer_guard</code>：根据 <code>layer_map</code> 检查是否越层。</li>\n<li><code>scope_guard</code>：限制只能修改 <code>allowed_files</code>。</li>\n<li><code>verification_guard</code>：要求输出结论达到 plan 指定的验证等级。</li>\n</ul>\n<p>Guard 的职责不是补 plan，而是拒绝坏 plan、越权执行和伪成功。</p>\n<h2 id=\"十mortis-接入架构\">十、Mortis 接入架构</h2>\n<h3 id=\"a-controller_session\">A. <code>controller_session</code></h3>\n<ul>\n<li>新增会话类型，只负责生成 <code>execution_plan</code>。</li>\n<li>默认不执行 task。</li>\n<li>适合需要人工确认或高风险分层判断的入口。</li>\n</ul>\n<h3 id=\"b-issue--task_queue主方案\">B. <code>issue + task_queue</code>（主方案）</h3>\n<ul>\n<li>controller 在 issue 创建或 agent 指派前生成 <code>plan_json</code>。</li>\n<li><code>plan_json</code> 写入 issue metadata / task metadata。</li>\n<li><code>task_gate</code> 调用 Guard 校验，通过后才入队。</li>\n<li>daemon 从 queue 取任务，再调用 Codex 作为执行器。</li>\n</ul>\n<p>这是推荐主路径，因为它把 plan、queue、Guard、executor 串成了一条硬链，而不是靠执行器自觉。</p>\n<h3 id=\"c-autopilot\">C. <code>autopilot</code></h3>\n<ul>\n<li>autopilot 作为策略脑自动生成 plan 并触发 task。</li>\n<li>仍需经过同一套 Guard 和 task_gate。</li>\n<li>它可以替代人工 controller 生成 plan，但不能绕过 Guard。</li>\n</ul>\n<h2 id=\"十一数据流\">十一、数据流</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户 / 事件</span></span>\n<span data-line=\"\"><span>  -> controller_session 生成 execution_plan</span></span>\n<span data-line=\"\"><span>  -> 写入 issue 或 task metadata</span></span>\n<span data-line=\"\"><span>  -> task_gate 调用 MCP_GUARD 校验</span></span>\n<span data-line=\"\"><span>  -> 通过后创建 task</span></span>\n<span data-line=\"\"><span>  -> daemon 从 queue 领取任务</span></span>\n<span data-line=\"\"><span>  -> 执行 agent（Codex 等）</span></span>\n<span data-line=\"\"><span>  -> 回传 progress / result / verification_level</span></span>\n<span data-line=\"\"><span>  -> controller 判断继续、结束或升级回归验证</span></span></code></pre></figure>\n<p>关键点是：queue 前一定先 Guard；Codex 之后一定回 controller，而不是让执行器自己宣布完成。</p>\n<h2 id=\"十二数据库与服务接入点建议\">十二、数据库与服务接入点建议</h2>\n<h3 id=\"121-字段建议\">12.1 字段建议</h3>\n<ul>\n<li><code>issues.plan_json</code></li>\n<li><code>tasks.plan_json</code></li>\n<li><code>tasks.verification_level</code></li>\n<li><code>chat_session.controller_plan</code></li>\n</ul>\n<p>如果现有 issue / task 结构已有 metadata 字段，也可以先把 plan 放入 metadata，再逐步显式 schema 化；但语义上仍应保持同名职责。</p>\n<h3 id=\"122-服务接入点\">12.2 服务接入点</h3>\n<p>推荐在 <code>server/internal/service/task.go</code> 的入队前加：</p>\n<ol>\n<li><code>validate(plan_json)</code></li>\n<li><code>layer_guard(plan_json, target_files)</code></li>\n<li><code>scope_guard(plan_json, target_files)</code></li>\n<li><code>verification_guard(plan_json, requested_status)</code></li>\n</ol>\n<p>不通过则拒绝入队。</p>\n<h2 id=\"十三codex-执行约束\">十三、Codex 执行约束</h2>\n<p>Codex 必须以“收到 execution_plan 的执行器”身份工作，而不是 assistant 式 planner。</p>\n<h3 id=\"允许行为\">允许行为</h3>\n<ul>\n<li>读取 <code>allowed_files</code></li>\n<li>执行 <code>steps</code></li>\n<li>执行 <code>minimal_experiment</code></li>\n<li>回传日志、diff、当前验证等级</li>\n</ul>\n<h3 id=\"禁止行为\">禁止行为</h3>\n<ul>\n<li>自行新增步骤</li>\n<li>修改其它文件</li>\n<li>自己改 <code>verification_level_required</code></li>\n<li>发现阻碍后擅自换层修复</li>\n<li>输出解释性长文替代结构化结果</li>\n</ul>\n<h3 id=\"推荐输出格式\">推荐输出格式</h3>\n<ol>\n<li>层级诊断表</li>\n<li>执行日志</li>\n<li>diff</li>\n<li>当前验证等级</li>\n</ol>\n<p>执行器不负责“讲道理”，只负责回传受约束的执行结果。</p>\n<h2 id=\"十四最小实验与单点修改原则\">十四、最小实验与单点修改原则</h2>\n<h3 id=\"最小实验原则\">最小实验原则</h3>\n<p>任何问题先做临时方案验证，再决定是否持久化。例如：</p>\n<ul>\n<li>终端问题先临时改宿主快捷键。</li>\n<li>配置问题先用单次环境变量或临时 config 覆盖验证。</li>\n<li>进程问题先用单次 kill / spawn / dry-run 验证因果，再改长期 handler。</li>\n</ul>\n<h3 id=\"单点修改原则\">单点修改原则</h3>\n<p>一个任务默认只允许一个主入口文件或主入口点。原因不是机械限制，而是为了防止“同一个问题同时改宿主配置、业务代码、进程 handler”，最后谁起作用都说不清。</p>\n<h2 id=\"十五落地顺序建议\">十五、落地顺序建议</h2>\n<ol>\n<li>先把 <code>execution_plan</code> 与 <code>verification_level</code> 字段打通到 issue / task metadata。</li>\n<li>再把 <code>task_gate + MCP_GUARD</code> 插到 queue 入口。</li>\n<li>再收紧 Codex executor 的输入输出契约。</li>\n<li>最后再考虑 <code>controller_session</code> 和 <code>autopilot</code> 的自动化程度。</li>\n</ol>\n<p>这样能先建立硬门禁，再补“谁来生成 plan”的智能层，而不是一开始就让 autopilot 自动下发无门禁任务。</p>\n<h2 id=\"十六一句话模板\">十六、一句话模板</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你是执行器，不负责思考；仅按 execution_plan 执行。禁止越层、禁止扩散、先实验再持久化，未达 V3 不得声称成功。</span></span></code></pre></figure>\n<p>这是 Codex 侧的最小提示词模板，但真正的约束主体仍然应该是 controller + Guard，而不是提示词本身。</p>\n<h2 id=\"十七execution-gateway-作为硬门禁层\">十七、Execution Gateway 作为硬门禁层</h2>\n<p>上面的 controller / Guard / executor 结构还不够；如果没有真正的执行入口拦截，规则仍会退化成“建议”。因此需要在执行器之前再放一层 <code>Execution Gateway</code>。</p>\n<h3 id=\"171-gateway-的唯一职责\">17.1 Gateway 的唯一职责</h3>\n<p><code>Execution Gateway</code> 不负责思考，不负责补 plan，只负责三件事：</p>\n<ol>\n<li>判断任务能否开始。</li>\n<li>判断当前动作能否执行。</li>\n<li>判断执行结果能否进入“已完成”。</li>\n</ol>\n<h3 id=\"172-三道门\">17.2 三道门</h3>\n<h4 id=\"a-任务门\">A. 任务门</h4>\n<ul>\n<li>判断任务是否 trivial。</li>\n<li>判断是否必须先写 plan。</li>\n<li>判断是否需要工具 / MCP / 远端协同。</li>\n<li>未通过就直接阻断启动。</li>\n</ul>\n<p>硬规则口径：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>No plan -> no execution</span></span>\n<span data-line=\"\"><span>No mode / route -> no execution</span></span></code></pre></figure>\n<h4 id=\"b-动作门\">B. 动作门</h4>\n<ul>\n<li>命令执行、浏览器打开、文件修改、MCP 调用、远端访问都必须先过 Gateway。</li>\n<li>AI 不直接触发外部能力；AI 只能请求 Gateway 执行动作。</li>\n</ul>\n<h4 id=\"c-完成门\">C. 完成门</h4>\n<ul>\n<li>执行完成不等于任务完成。</li>\n<li>必须检查真实结果、artifact、残留进程 / 页面 / 锁、验证等级。</li>\n</ul>\n<p>硬规则口径：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>No verification -> no completion</span></span></code></pre></figure>\n<h3 id=\"173-gateway-是程序不是提示词\">17.3 Gateway 是程序，不是提示词</h3>\n<p>这里的门禁必须落在代码层，而不是继续堆在文本规则里：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>if no plan -> block</span></span>\n<span data-line=\"\"><span>if tool route exists and no tool path chosen -> block</span></span>\n<span data-line=\"\"><span>if no verification artifact -> block</span></span></code></pre></figure>\n<p>因此至少要有三类可执行模块：</p>\n<ul>\n<li><code>task_gate</code></li>\n<li><code>action_gate</code></li>\n<li><code>verify_gate</code></li>\n</ul>\n<h2 id=\"十八能力网关层\">十八、能力网关层</h2>\n<p><code>Execution Gateway</code> 只负责准入；真正与外部世界接触的能力，需要继续收口到更窄的能力网关。</p>\n<h3 id=\"181-command-gateway\">18.1 Command Gateway</h3>\n<p>职责：</p>\n<ul>\n<li>所有命令统一从这里出去。</li>\n<li>统一处理 stdout / stderr / timeout / kill / 退出码。</li>\n<li>切断不受控启动链，避免 <code>cmd.exe -> npx.cmd -> shell wrapper</code> 这种漂移路径重新长出来。</li>\n</ul>\n<p>推荐链路：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>executor -> command gateway -> node + real js entry</span></span></code></pre></figure>\n<h3 id=\"182-browser-manager\">18.2 Browser Manager</h3>\n<p>AI 不直接操作 Playwright / Puppeteer，只能走 <code>Browser Manager</code>。它至少应提供：</p>\n<ul>\n<li><code>open_page</code></li>\n<li><code>verify_page</code></li>\n<li><code>act_page</code></li>\n<li><code>list_pages</code></li>\n<li><code>close_task_pages</code></li>\n</ul>\n<p>补强要求：</p>\n<ul>\n<li>自动回收 browser / context / page</li>\n<li>任务级 tab 上限</li>\n<li>先 verify 再 act</li>\n<li>截图 / DOM / console 作为 artifact</li>\n</ul>\n<h3 id=\"183-file-gateway\">18.3 File Gateway</h3>\n<p>全局系统不能让执行器任意读写任意文件，因此要有 task-scoped file sandbox：</p>\n<ul>\n<li>读哪个文件</li>\n<li>能不能写</li>\n<li>是否越界</li>\n<li>是否触碰系统关键路径或别的项目边界</li>\n</ul>\n<p>核心原则：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>某个任务只能动自己的工作区与允许路径</span></span></code></pre></figure>\n<h2 id=\"十九多-agent-的最小协同结构\">十九、多 agent 的最小协同结构</h2>\n<p>如果任务升级为多 agent，最小正确结构只有三类角色：</p>\n<ul>\n<li><code>Planner</code></li>\n<li><code>Guard</code></li>\n<li><code>Executor</code></li>\n</ul>\n<h3 id=\"191-职责分工\">19.1 职责分工</h3>\n<h4 id=\"planner\">Planner</h4>\n<ul>\n<li>判断任务类型</li>\n<li>拆步骤</li>\n<li>决定模式（<code>FAST / DEEP / AGENT</code>）</li>\n<li>写 plan</li>\n</ul>\n<p>它不执行代码，不直接碰环境。</p>\n<h4 id=\"guard\">Guard</h4>\n<ul>\n<li>审查计划</li>\n<li>审查动作</li>\n<li>审查结果</li>\n<li>判断是否偏航</li>\n</ul>\n<p>它不负责出主意，也不负责执行。</p>\n<h4 id=\"executor\">Executor</h4>\n<ul>\n<li>调网关</li>\n<li>执行动作</li>\n<li>返回结果</li>\n</ul>\n<p>它不能扩 scope，不能自己升级任务，不能绕过 gate。</p>\n<h3 id=\"192-单向依赖\">19.2 单向依赖</h3>\n<p>依赖关系必须锁死成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Planner -> Guard -> Executor -> Guard</span></span></code></pre></figure>\n<p>禁止：</p>\n<ul>\n<li><code>Executor</code> 反向主导 <code>Planner</code></li>\n<li><code>Executor</code> 绕过 <code>Guard</code></li>\n</ul>\n<h3 id=\"193-模式切换\">19.3 模式切换</h3>\n<p>不是所有任务都需要完整三代理，因此保留三种模式：</p>\n<ul>\n<li><code>/fast</code>：小任务，直接执行</li>\n<li><code>/deep</code>：中型工程任务，允许更多分析</li>\n<li><code>/agent</code>：复杂任务，进入完整多代理流程</li>\n</ul>\n<p>默认仍是 <code>fast</code>，但遇到下列条件自动升级到 <code>deep</code> 或 <code>agent</code>：</p>\n<ul>\n<li>多步骤浏览器自动化</li>\n<li>跨本机 + 服务器</li>\n<li>超过 2 个文件修改</li>\n<li>持续运行任务</li>\n<li>高不确定性任务</li>\n</ul>\n<h2 id=\"二十mortis-与外部-web-gpt-的角色边界\">二十、Mortis 与外部 Web GPT 的角色边界</h2>\n<p>Web ChatGPT 可以接入，但它不适合作为核心执行后端，只适合作为高层策略脑或人工辅助顾问层。</p>\n<h3 id=\"201-适合做的事\">20.1 适合做的事</h3>\n<ul>\n<li>高层规划</li>\n<li>复杂解释</li>\n<li>策略讨论</li>\n<li>人机协同咨询</li>\n</ul>\n<h3 id=\"202-不适合做的事\">20.2 不适合做的事</h3>\n<ul>\n<li>高频自动调用</li>\n<li>关键任务主后端</li>\n<li>稳定执行引擎</li>\n</ul>\n<h3 id=\"203-推荐接法\">20.3 推荐接法</h3>\n<p>如果 Mortis 需要调用 Web ChatGPT，应通过独立桥接层：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Mortis</span></span>\n<span data-line=\"\"><span>  -> Web GPT Bridge</span></span>\n<span data-line=\"\"><span>  -> Browser Session / Human-in-the-loop</span></span>\n<span data-line=\"\"><span>  -> ChatGPT Web</span></span></code></pre></figure>\n<p>这个桥只负责：</p>\n<ul>\n<li>发问题</li>\n<li>收回答</li>\n<li>存归档</li>\n<li>作为高层建议输入</li>\n</ul>\n<p>它不直接拿 Web ChatGPT 去操控系统。</p>\n<h2 id=\"二十一本机与服务器的执行边界\">二十一、本机与服务器的执行边界</h2>\n<p>默认原则不是“一律本机”也不是“一律远端”，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>能远程执行的，优先远程</span></span>\n<span data-line=\"\"><span>必须本机人工介入的，才留本机</span></span></code></pre></figure>\n<h3 id=\"211-本机更适合承载的动作\">21.1 本机更适合承载的动作</h3>\n<ul>\n<li>登录</li>\n<li>验证码</li>\n<li>本机 GUI / 输入设备相关验证</li>\n<li>本机浏览器会话与人工确认点</li>\n<li>用户工作站独占资源</li>\n</ul>\n<h3 id=\"212-服务器更适合承载的动作\">21.2 服务器更适合承载的动作</h3>\n<ul>\n<li>可重复批处理</li>\n<li>长时任务</li>\n<li>与控制面 / deploy target 同机更稳定的任务</li>\n<li>不依赖人工交互的脚本链</li>\n</ul>\n<p>Mortis 的职责是决定任务落在哪一侧执行；Gateway 的职责是保证“落在哪一侧”之后，动作仍然是受控的。</p>\n<h2 id=\"二十二mortis-团队分工与-owner-tree\">二十二、Mortis 团队分工与 owner tree</h2>\n<p>在 <code>PLAN-20260422-014314</code> 已验证的 live 最小三角基础上，Mortis 不应直接照搬 <code>Atramenti box</code> 的 CEO / PMO / HR 办公室隐喻，而应吸收其中更可迁移的结构：<code>profile</code> 与 <code>runtime</code> 解耦、owner tree 明确、编排层保持薄、handoff/approval/artifact 有标准对象。</p>\n<h3 id=\"221-当前已验证的最小三角\">22.1 当前已验证的最小三角</h3>\n<p>当前 live 工作基础仍是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Mortis Operator</span></span>\n<span data-line=\"\"><span>Mortis Builder</span></span>\n<span data-line=\"\"><span>Mortis Guard</span></span></code></pre></figure>\n<p>它已经证明：</p>\n<ul>\n<li><code>Operator</code> 可以真实接活、读取 live workspace、路由 issue 并收口结果。</li>\n<li><code>Builder</code> 可以在受控路径内完成本地/仓库执行。</li>\n<li><code>Guard</code> 可以对真实 run 和结果做 PASS / BLOCK 审查。</li>\n</ul>\n<p>因此后续扩编必须建立在这个三角之上，而不是重做一套新控制面。</p>\n<h3 id=\"222-推荐扩编结构\">22.2 推荐扩编结构</h3>\n<p>推荐把 <code>controller</code> 保持为逻辑上游，而不是一开始就强制建成常驻 live agent。</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Mortis Controller</span></span>\n<span data-line=\"\"><span>  -> Mortis Operator</span></span>\n<span data-line=\"\"><span>      -> Mortis Planner</span></span>\n<span data-line=\"\"><span>      -> Mortis Researcher</span></span>\n<span data-line=\"\"><span>      -> Mortis Architect</span></span>\n<span data-line=\"\"><span>      -> Mortis Builder</span></span>\n<span data-line=\"\"><span>      -> Mortis Guard</span></span>\n<span data-line=\"\"><span>      -> Mortis QA</span></span>\n<span data-line=\"\"><span>      -> Mortis Ops</span></span>\n<span data-line=\"\"><span>      -> Mortis Recoverer</span></span>\n<span data-line=\"\"><span>      -> Mortis Archivist</span></span></code></pre></figure>\n<p>其中：</p>\n<ul>\n<li><code>Controller</code>：逻辑决策脑，负责判层、定边界、产出 plan；可由人工 controller_session 或 autopilot 承担。</li>\n<li><code>Operator</code>：统一入口、任务分诊、agent 指派、结果汇总、升级和 closeout。</li>\n<li><code>Planner</code>：把需求压成 <code>execution_plan</code>，不直接执行。</li>\n<li><code>Researcher</code>：补上下文、查现状、查文档、查外部资料。</li>\n<li><code>Architect</code>：做跨模块/跨系统结构判断，不直接落地。</li>\n<li><code>Builder</code>：只按 plan 执行，产出 diff、日志和 artifact。</li>\n<li><code>Guard</code>：审 plan、审 scope、审验证等级和 closeout。</li>\n<li><code>QA</code>：专注 browser.run、UI、smoke、回归和用户可见验证。</li>\n<li><code>Ops</code>：负责 deploy、runtime、host、service、告警与恢复。</li>\n<li><code>Recoverer</code>：追索失败 run、遗留任务、丢失状态与漂移会话。</li>\n<li><code>Archivist</code>：归档 verification bundle、handoff、证据链和历史决策。</li>\n</ul>\n<h3 id=\"223-owner-tree-规则\">22.3 owner tree 规则</h3>\n<p>默认 owner 关系建议如下：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>controller</span></span>\n<span data-line=\"\"><span>  owner: none</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>operator</span></span>\n<span data-line=\"\"><span>  owner: controller</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>planner / researcher / architect / builder / guard / qa / ops / recoverer / archivist</span></span>\n<span data-line=\"\"><span>  owner: operator</span></span></code></pre></figure>\n<p>核心约束：</p>\n<ol>\n<li><code>Builder</code> 与 <code>Guard</code> 必须平级，不能互相拥有。</li>\n<li><code>QA</code> 与 <code>Ops</code> 是侧翼角色，默认也归 <code>Operator</code>，不直接拥有 <code>Builder</code>。</li>\n<li><code>Planner / Researcher / Architect</code> 只提供 plan、背景和结构判断，不直接触发落地动作。</li>\n<li>所有 override、重派与升级默认由 <code>Operator</code> 发起；<code>Controller</code> 只处理更高层的边界重判。</li>\n</ol>\n<h3 id=\"224-推荐部门划分\">22.4 推荐部门划分</h3>\n<p>为了让前端和状态投影更易读，推荐分为五个逻辑部门：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>department</th>\n<th>角色</th>\n<th>用途</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>control</code></td>\n<td><code>controller</code> / <code>operator</code></td>\n<td>入口、路由、收口、升级</td>\n</tr>\n<tr>\n<td><code>planning</code></td>\n<td><code>planner</code> / <code>researcher</code> / <code>architect</code></td>\n<td>计划、资料、结构判断</td>\n</tr>\n<tr>\n<td><code>execution</code></td>\n<td><code>builder</code></td>\n<td>真实执行</td>\n</tr>\n<tr>\n<td><code>review</code></td>\n<td><code>guard</code> / <code>qa</code></td>\n<td>审查、验证、回归</td>\n</tr>\n<tr>\n<td><code>operations</code></td>\n<td><code>ops</code> / <code>recoverer</code> / <code>archivist</code></td>\n<td>部署、恢复、归档</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"225-路由规则\">22.5 路由规则</h3>\n<p>默认路由顺序建议如下：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Issue / Event</span></span>\n<span data-line=\"\"><span>  -> Operator</span></span>\n<span data-line=\"\"><span>  -> (Planner / Researcher / Architect as needed)</span></span>\n<span data-line=\"\"><span>  -> Guard 预审</span></span>\n<span data-line=\"\"><span>  -> Builder / QA / Ops</span></span>\n<span data-line=\"\"><span>  -> Guard 复审</span></span>\n<span data-line=\"\"><span>  -> Operator closeout</span></span></code></pre></figure>\n<p>补充规则：</p>\n<ul>\n<li>信息不全 -> <code>Researcher</code></li>\n<li>需要拆 plan -> <code>Planner</code></li>\n<li>涉及结构设计 -> <code>Architect</code></li>\n<li>直接落地 -> <code>Guard</code> 预审后给 <code>Builder</code></li>\n<li>需要浏览器或用户可见验证 -> <code>QA</code></li>\n<li>涉及 deploy/runtime/host/service -> <code>Ops</code></li>\n</ul>\n<h3 id=\"226-实施顺序\">22.6 实施顺序</h3>\n<p>扩编不要一口气铺满，按三阶段推进：</p>\n<ol>\n<li><code>Phase 1</code>：保留 <code>Operator / Builder / Guard</code>，新增 <code>Planner / QA / Ops</code> 三个 profile。</li>\n<li><code>Phase 2</code>：补 <code>Researcher / Architect</code>，把 route/handoff 标准化。</li>\n<li><code>Phase 3</code>：再考虑 <code>Recoverer / Archivist</code> 与更重的 control-room 可视化。</li>\n</ol>\n<p>这能保证 Mortis 先把执行链跑稳，而不是先变成一个巨型办公室 UI。</p>\n<h3 id=\"227-phase-1-首版落地定义\">22.7 <code>Phase 1</code> 首版落地定义</h3>\n<p><code>Phase 1</code> 的目标不是让 Mortis 一夜之间长成完整组织，而是把现有 <code>Operator / Builder / Guard</code> 执行链扩成一个能稳定拆 plan、做可见验证、做 deploy/runtime 收口的最小作战队。</p>\n<p>本轮只新增三个 profile：</p>\n<ul>\n<li><code>Planner</code></li>\n<li><code>QA</code></li>\n<li><code>Ops</code></li>\n</ul>\n<p>它们都默认由 <code>Operator</code> 拥有和调度，不单独拥有队列入口，也不绕过 <code>Guard</code>。</p>\n<h3 id=\"228-phase-1-角色触发与对象契约\">22.8 <code>Phase 1</code> 角色触发与对象契约</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>角色</th>\n<th>何时触发</th>\n<th>最小输入</th>\n<th>最小输出</th>\n<th>不负责什么</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>Planner</code></td>\n<td>需求超过 trivial；任务需要拆步、定边界、定验证；<code>Operator</code> 无法直接安全分派给 <code>Builder</code></td>\n<td>issue 摘要、目标路径、约束、已有上下文</td>\n<td><code>execution_plan</code>、route 建议、验证标准、风险点</td>\n<td>不直接改代码、不直接 deploy、不自宣完成</td>\n</tr>\n<tr>\n<td><code>QA</code></td>\n<td>任务涉及 browser.run、前端页面、用户可见回归、smoke、截图证据、交互验证</td>\n<td>待验证对象、期望可见结果、验证环境、已有 artifact</td>\n<td>verification 结果、截图/console/DOM artifact、失败 repro、回归结论</td>\n<td>不决定产品边界、不替代 <code>Guard</code> 做 policy 审批</td>\n</tr>\n<tr>\n<td><code>Ops</code></td>\n<td>任务涉及 deploy、runtime、host、service、端口、observer、恢复、线上状态收口</td>\n<td>deploy target、运行态上下文、host/service 清单、风险范围</td>\n<td>deploy 结果、runtime 状态、恢复动作记录、线上验证结论</td>\n<td>不负责需求拆解、不替代 <code>Operator</code> 做全局路由</td>\n</tr>\n</tbody>\n</table></div>\n<p>补充硬规则：</p>\n<ol>\n<li><code>Planner</code> 的输出对象必须是可交给 <code>Guard</code> 和 <code>Builder</code> 的 <code>execution_plan</code>，而不是长篇建议。</li>\n<li><code>QA</code> 的输出对象必须带 artifact 引用，不能只回“已验证”。</li>\n<li><code>Ops</code> 的输出对象必须带 target / runtime / result 三元组，不能只回“已部署”。</li>\n</ol>\n<h3 id=\"229-与-operator-的拥有关系\">22.9 与 <code>Operator</code> 的拥有关系</h3>\n<p><code>Phase 1</code> 下 owner tree 仍保持简单：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Controller</span></span>\n<span data-line=\"\"><span>  -> Operator</span></span>\n<span data-line=\"\"><span>      -> Planner</span></span>\n<span data-line=\"\"><span>      -> Builder</span></span>\n<span data-line=\"\"><span>      -> Guard</span></span>\n<span data-line=\"\"><span>      -> QA</span></span>\n<span data-line=\"\"><span>      -> Ops</span></span></code></pre></figure>\n<p>这里有三个明确边界：</p>\n<ol>\n<li><code>Operator</code> 负责挑选谁来接下一棒，但不替代子角色产出其专属对象。</li>\n<li><code>Planner / QA / Ops</code> 都不能直接把任务标记为完成，最终 closeout 仍回到 <code>Operator</code>。</li>\n<li><code>Guard</code> 继续作为平级审查者存在；<code>Planner</code> 不能越过 <code>Guard</code> 直接派给 <code>Builder</code>，<code>Ops</code> 也不能因为“只是部署”就跳过 <code>Guard</code> 或完成门。</li>\n</ol>\n<h3 id=\"2210-phase-1-标准-handoff\">22.10 <code>Phase 1</code> 标准 handoff</h3>\n<p><code>Phase 1</code> 先不要求引入全新的复杂消息总线，但交接内容至少要标准化为下列字段：</p>\n<ul>\n<li><code>fromProfile</code></li>\n<li><code>toProfile</code></li>\n<li><code>reason</code></li>\n<li><code>target</code></li>\n<li><code>expectedOutput</code></li>\n<li><code>artifacts</code></li>\n<li><code>blockingQuestions</code></li>\n<li><code>approvalNeeded</code></li>\n</ul>\n<p>最小 handoff 约束：</p>\n<ul>\n<li><code>Operator -> Planner</code>：必须给出任务目标、范围边界、已知约束。</li>\n<li><code>Planner -> Guard</code>：必须给出 <code>execution_plan</code>、验证标准、风险和 route 选择原因。</li>\n<li><code>Guard -> Builder / QA / Ops</code>：必须给出 <code>PASS/BLOCK</code> 与具体条件，不能只回抽象态度。</li>\n<li><code>Builder -> QA</code>：必须给出可验证对象、预期可见结果、必要启动方式和已有 artifact。</li>\n<li><code>Builder / QA / Ops -> Guard</code>：必须给出 closeout 前的证据链，供复审。</li>\n<li><code>Guard -> Operator</code>：必须给出是否可 closeout、是否需要补审批、是否仍有剩余 gap。</li>\n</ul>\n<h3 id=\"2211-phase-1-审批边界\">22.11 <code>Phase 1</code> 审批边界</h3>\n<p>新增 <code>Planner / QA / Ops</code> 后，审批边界应比最小三角更清楚：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>动作</th>\n<th>默认发起者</th>\n<th>是否需要审批/复审</th>\n<th>备注</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>新增或修改 <code>execution_plan</code></td>\n<td><code>Planner</code></td>\n<td>需 <code>Guard</code> 预审</td>\n<td>无 plan 不执行</td>\n</tr>\n<tr>\n<td>代码或文件落地</td>\n<td><code>Builder</code></td>\n<td>需 <code>Guard</code> 复审</td>\n<td>仍沿用现有 scope gate</td>\n</tr>\n<tr>\n<td>浏览器验证、截图、smoke</td>\n<td><code>QA</code></td>\n<td>需 <code>Guard</code> 复审</td>\n<td>用户可见任务默认走 <code>QA</code></td>\n</tr>\n<tr>\n<td>deploy / service restart / runtime repair</td>\n<td><code>Ops</code></td>\n<td>高风险时需显式 approval，完成后仍需 <code>Guard</code> 复审</td>\n<td><code>Ops</code> 不是免审通道</td>\n</tr>\n<tr>\n<td>closeout / 结果宣布</td>\n<td><code>Operator</code></td>\n<td>以 <code>Guard</code> 复审结论为前提</td>\n<td>不由执行侧自宣完成</td>\n</tr>\n</tbody>\n</table></div>\n<p>硬边界：</p>\n<ul>\n<li><code>Planner</code> 不能批准自己的 plan。</li>\n<li><code>QA</code> 不能以“页面打开了”替代 <code>Guard</code> 的完成门。</li>\n<li><code>Ops</code> 不能以“服务启动了”替代线上/运行态验证。</li>\n</ul>\n<h3 id=\"2212-phase-1-路由矩阵\">22.12 <code>Phase 1</code> 路由矩阵</h3>\n<p><code>Operator</code> 在首版可以按下表路由，避免把所有事都丢给 <code>Builder</code>：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>任务特征</th>\n<th>首选角色</th>\n<th>次选/后续</th>\n<th>说明</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>需求含糊、范围不清、需要拆步骤</td>\n<td><code>Planner</code></td>\n<td><code>Guard</code> -> <code>Builder</code></td>\n<td>先形成 plan，再执行</td>\n</tr>\n<tr>\n<td>已有明确 plan，需要直接改代码/改文档/落产物</td>\n<td><code>Builder</code></td>\n<td><code>QA</code> / <code>Ops</code></td>\n<td>先走 <code>Guard</code> 预审</td>\n</tr>\n<tr>\n<td>前端改动、页面交互、browser.run、截图、用户可见验证</td>\n<td><code>QA</code></td>\n<td><code>Guard</code> -> <code>Operator</code></td>\n<td><code>QA</code> 负责可见结果证据</td>\n</tr>\n<tr>\n<td>deploy、service、host、runtime、observer、恢复</td>\n<td><code>Ops</code></td>\n<td><code>Guard</code> -> <code>Operator</code></td>\n<td><code>Ops</code> 负责运行态收口</td>\n</tr>\n<tr>\n<td>同时包含代码落地 + 浏览器验收</td>\n<td><code>Builder</code></td>\n<td><code>QA</code></td>\n<td>不要让 <code>Builder</code> 自证可见结果</td>\n</tr>\n<tr>\n<td>同时包含代码落地 + deploy/runtime 改动</td>\n<td><code>Builder</code></td>\n<td><code>Ops</code></td>\n<td>构建与部署分开收口</td>\n</tr>\n<tr>\n<td>同时包含 plan 拆解 + UI 回归 + deploy</td>\n<td><code>Planner</code></td>\n<td><code>Builder</code> -> <code>QA</code> -> <code>Ops</code></td>\n<td>保持单向 handoff，避免并发串线</td>\n</tr>\n</tbody>\n</table></div>\n<p>默认 route 口径可以简写为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Need structure -> Planner</span></span>\n<span data-line=\"\"><span>Need implementation -> Builder</span></span>\n<span data-line=\"\"><span>Need visible proof -> QA</span></span>\n<span data-line=\"\"><span>Need runtime/deploy -> Ops</span></span>\n<span data-line=\"\"><span>Need policy/closeout decision -> Guard -> Operator</span></span></code></pre></figure>\n<h3 id=\"2213-phase-1-完成标准\">22.13 <code>Phase 1</code> 完成标准</h3>\n<p>只有满足下面条件，才能说 <code>Planner / QA / Ops</code> 第一版已真正落地，而不是只在文档中出现：</p>\n<ol>\n<li><code>Operator</code> 能把任务稳定路由给这三个 profile，而不是继续全塞给 <code>Builder</code>。</li>\n<li><code>Planner</code> 的输出已收敛成 <code>execution_plan</code> 对象，而不是自由文本。</li>\n<li><code>QA</code> 至少能覆盖 browser.run / 前端页面 / smoke 的证据链。</li>\n<li><code>Ops</code> 至少能覆盖 deploy target / runtime state / recovery action 的记录。</li>\n<li><code>Guard</code> 仍然卡住 plan、完成门和 override，而不是被新角色绕空。</li>\n</ol>\n<h2 id=\"二十三mortis-结构化对象草案\">二十三、Mortis 结构化对象草案</h2>\n<p>Mortis 当前已有 <code>issue / task / run / runtime / comment</code> 这些基础对象；后续若要把团队编排落得更稳定，建议追加但不平行替代以下对象：</p>\n<ul>\n<li><code>agent profile</code></li>\n<li><code>agent instance projection</code></li>\n<li><code>approval record</code></li>\n<li><code>override decision</code></li>\n<li><code>artifact manifest</code></li>\n<li><code>handoff message</code></li>\n</ul>\n<p>本规范只固定语义和职责；可直接复制的 TypeScript 草案放在：</p>\n<p><code>E:\\My Project\\Atramenti-Console\\codex\\_artifacts\\task-packs\\20260422-mortis-team-structure-schema\\mortis-team-schema.draft.ts</code></p>\n<h3 id=\"231-agent-profile\">23.1 <code>agent profile</code></h3>\n<p>用途：</p>\n<ul>\n<li>定义角色，不定义具体运行时实例</li>\n<li>表达 <code>role / department / ownerProfile / capabilities / allowedActions</code></li>\n<li>让同一 runtime 可以承载多个 profile，而不是把角色永久绑死在 provider 上</li>\n</ul>\n<h3 id=\"232-agent-instance-projection\">23.2 <code>agent instance projection</code></h3>\n<p>用途：</p>\n<ul>\n<li>把 live agent 当前状态投影出来，给列表页 / control-room / issue detail 用</li>\n<li>表达 <code>profileId / runtimeKind / ownerAgentId / currentTaskId / approvalsNeeded / state</code></li>\n</ul>\n<p>这一层对应的是“运行中的谁正在做什么”，而不是“组织上谁负责什么”。</p>\n<h3 id=\"233-approval-record\">23.3 <code>approval record</code></h3>\n<p>用途：</p>\n<ul>\n<li>记录 <code>scope_expand / layer_override / deploy / runtime_reassign / closeout_override</code></li>\n<li>统一保存 <code>reason / riskLevel / decidedBy / evidenceRefs</code></li>\n</ul>\n<p>Guard 可以 <code>BLOCK</code>，但是否 override 应通过标准 approval/override 记录，而不是只留在评论文本里。</p>\n<h3 id=\"234-artifact-manifest\">23.4 <code>artifact manifest</code></h3>\n<p>用途：</p>\n<ul>\n<li>统一记录一次执行对应的 artifact 列表，而不是让前端去猜 comment 或 task.result</li>\n<li>尤其适合 <code>browser.run</code>、smoke、proof-file、verification bundle</li>\n</ul>\n<p>对 <code>browser.run</code>，建议最小固定产物为：</p>\n<ul>\n<li><code>screenshot</code></li>\n<li><code>html_snapshot</code></li>\n<li><code>json_result</code></li>\n<li><code>run.summary</code> 或 <code>verification_bundle</code></li>\n</ul>\n<h3 id=\"235-handoff-message\">23.5 <code>handoff message</code></h3>\n<p>用途：</p>\n<ul>\n<li>标准化 <code>Operator / Planner / Builder / Guard / QA / Ops</code> 之间的交接</li>\n<li>把现在很多只存在于 comment 文本中的隐式交接，升级成显式消息</li>\n</ul>\n<p>推荐消息种类：</p>\n<ul>\n<li><code>task</code></li>\n<li><code>event</code></li>\n<li><code>response</code></li>\n<li><code>handoff</code></li>\n<li><code>review_request</code></li>\n<li><code>review_result</code></li>\n</ul>\n<h3 id=\"236-推荐状态机\">23.6 推荐状态机</h3>\n<p>建议把后续前端、API 和 closeout 口径统一为：</p>\n<ul>\n<li><code>issue</code>: <code>todo -> in_progress -> in_review -> done</code></li>\n<li><code>task</code>: <code>queued -> running -> completed | blocked | failed</code></li>\n<li><code>approval</code>: <code>pending -> approved | rejected | expired</code></li>\n<li><code>handoff</code>: <code>created -> delivered -> acknowledged -> resolved</code></li>\n</ul>\n<h3 id=\"237-当前最值得先落的字段\">23.7 当前最值得先落的字段</h3>\n<p>若只做最小增量，优先级如下：</p>\n<ol>\n<li><code>agent.profileId</code></li>\n<li><code>agent.role</code></li>\n<li><code>agent.ownerAgentId</code> 或 <code>ownerProfileId</code></li>\n<li><code>task.context.handoff</code></li>\n<li><code>task.context.execution</code></li>\n<li><code>run.result.artifactManifestId</code></li>\n<li>独立 <code>approval</code> 记录</li>\n</ol>\n<p>这七项足以把 Mortis 从“最小三角已跑通”推进到“可持续扩编而不失控”的状态。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "mortis-指挥层与-guard-双脑架构规范",
+        "text": "Mortis 指挥层与 Guard 双脑架构规范"
+      },
+      {
+        "depth": 2,
+        "slug": "目标与定位",
+        "text": "目标与定位"
+      },
+      {
+        "depth": 2,
+        "slug": "一-总原则",
+        "text": "一、总原则"
+      },
+      {
+        "depth": 2,
+        "slug": "二-四层架构",
+        "text": "二、四层架构"
+      },
+      {
+        "depth": 2,
+        "slug": "三-层级模型-l1-l6",
+        "text": "三、层级模型 L1-L6"
+      },
+      {
+        "depth": 2,
+        "slug": "四-越层规则",
+        "text": "四、越层规则"
+      },
+      {
+        "depth": 3,
+        "slug": "典型映射",
+        "text": "典型映射"
+      },
+      {
+        "depth": 2,
+        "slug": "五-execution-plan-作为唯一执行凭证",
+        "text": "五、`execution_plan` 作为唯一执行凭证"
+      },
+      {
+        "depth": 3,
+        "slug": "canonical-结构",
+        "text": "Canonical 结构"
+      },
+      {
+        "depth": 3,
+        "slug": "字段职责",
+        "text": "字段职责"
+      },
+      {
+        "depth": 2,
+        "slug": "六-强制流程",
+        "text": "六、强制流程"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-标准顺序",
+        "text": "6.1 标准顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-诊断表最小字段",
+        "text": "6.2 诊断表最小字段"
+      },
+      {
+        "depth": 2,
+        "slug": "七-验证等级",
+        "text": "七、验证等级"
+      },
+      {
+        "depth": 2,
+        "slug": "八-禁止行为",
+        "text": "八、禁止行为"
+      },
+      {
+        "depth": 2,
+        "slug": "九-mcp-guard-规则",
+        "text": "九、MCP Guard 规则"
+      },
+      {
+        "depth": 3,
+        "slug": "guard-的三个子检查器",
+        "text": "Guard 的三个子检查器"
+      },
+      {
+        "depth": 2,
+        "slug": "十-mortis-接入架构",
+        "text": "十、Mortis 接入架构"
+      },
+      {
+        "depth": 3,
+        "slug": "a-controller-session",
+        "text": "A. `controller_session`"
+      },
+      {
+        "depth": 3,
+        "slug": "b-issue-task-queue-主方案",
+        "text": "B. `issue + task_queue`（主方案）"
+      },
+      {
+        "depth": 3,
+        "slug": "c-autopilot",
+        "text": "C. `autopilot`"
+      },
+      {
+        "depth": 2,
+        "slug": "十一-数据流",
+        "text": "十一、数据流"
+      },
+      {
+        "depth": 2,
+        "slug": "十二-数据库与服务接入点建议",
+        "text": "十二、数据库与服务接入点建议"
+      },
+      {
+        "depth": 3,
+        "slug": "12-1-字段建议",
+        "text": "12.1 字段建议"
+      },
+      {
+        "depth": 3,
+        "slug": "12-2-服务接入点",
+        "text": "12.2 服务接入点"
+      },
+      {
+        "depth": 2,
+        "slug": "十三-codex-执行约束",
+        "text": "十三、Codex 执行约束"
+      },
+      {
+        "depth": 3,
+        "slug": "允许行为",
+        "text": "允许行为"
+      },
+      {
+        "depth": 3,
+        "slug": "禁止行为",
+        "text": "禁止行为"
+      },
+      {
+        "depth": 3,
+        "slug": "推荐输出格式",
+        "text": "推荐输出格式"
+      },
+      {
+        "depth": 2,
+        "slug": "十四-最小实验与单点修改原则",
+        "text": "十四、最小实验与单点修改原则"
+      },
+      {
+        "depth": 3,
+        "slug": "最小实验原则",
+        "text": "最小实验原则"
+      },
+      {
+        "depth": 3,
+        "slug": "单点修改原则",
+        "text": "单点修改原则"
+      },
+      {
+        "depth": 2,
+        "slug": "十五-落地顺序建议",
+        "text": "十五、落地顺序建议"
+      },
+      {
+        "depth": 2,
+        "slug": "十六-一句话模板",
+        "text": "十六、一句话模板"
+      },
+      {
+        "depth": 2,
+        "slug": "十七-execution-gateway-作为硬门禁层",
+        "text": "十七、Execution Gateway 作为硬门禁层"
+      },
+      {
+        "depth": 3,
+        "slug": "17-1-gateway-的唯一职责",
+        "text": "17.1 Gateway 的唯一职责"
+      },
+      {
+        "depth": 3,
+        "slug": "17-2-三道门",
+        "text": "17.2 三道门"
+      },
+      {
+        "depth": 3,
+        "slug": "17-3-gateway-是程序-不是提示词",
+        "text": "17.3 Gateway 是程序，不是提示词"
+      },
+      {
+        "depth": 2,
+        "slug": "十八-能力网关层",
+        "text": "十八、能力网关层"
+      },
+      {
+        "depth": 3,
+        "slug": "18-1-command-gateway",
+        "text": "18.1 Command Gateway"
+      },
+      {
+        "depth": 3,
+        "slug": "18-2-browser-manager",
+        "text": "18.2 Browser Manager"
+      },
+      {
+        "depth": 3,
+        "slug": "18-3-file-gateway",
+        "text": "18.3 File Gateway"
+      },
+      {
+        "depth": 2,
+        "slug": "十九-多-agent-的最小协同结构",
+        "text": "十九、多 agent 的最小协同结构"
+      },
+      {
+        "depth": 3,
+        "slug": "19-1-职责分工",
+        "text": "19.1 职责分工"
+      },
+      {
+        "depth": 3,
+        "slug": "19-2-单向依赖",
+        "text": "19.2 单向依赖"
+      },
+      {
+        "depth": 3,
+        "slug": "19-3-模式切换",
+        "text": "19.3 模式切换"
+      },
+      {
+        "depth": 2,
+        "slug": "二十-mortis-与外部-web-gpt-的角色边界",
+        "text": "二十、Mortis 与外部 Web GPT 的角色边界"
+      },
+      {
+        "depth": 3,
+        "slug": "20-1-适合做的事",
+        "text": "20.1 适合做的事"
+      },
+      {
+        "depth": 3,
+        "slug": "20-2-不适合做的事",
+        "text": "20.2 不适合做的事"
+      },
+      {
+        "depth": 3,
+        "slug": "20-3-推荐接法",
+        "text": "20.3 推荐接法"
+      },
+      {
+        "depth": 2,
+        "slug": "二十一-本机与服务器的执行边界",
+        "text": "二十一、本机与服务器的执行边界"
+      },
+      {
+        "depth": 3,
+        "slug": "21-1-本机更适合承载的动作",
+        "text": "21.1 本机更适合承载的动作"
+      },
+      {
+        "depth": 3,
+        "slug": "21-2-服务器更适合承载的动作",
+        "text": "21.2 服务器更适合承载的动作"
+      },
+      {
+        "depth": 2,
+        "slug": "二十二-mortis-团队分工与-owner-tree",
+        "text": "二十二、Mortis 团队分工与 owner tree"
+      },
+      {
+        "depth": 3,
+        "slug": "22-1-当前已验证的最小三角",
+        "text": "22.1 当前已验证的最小三角"
+      },
+      {
+        "depth": 3,
+        "slug": "22-2-推荐扩编结构",
+        "text": "22.2 推荐扩编结构"
+      },
+      {
+        "depth": 3,
+        "slug": "22-3-owner-tree-规则",
+        "text": "22.3 owner tree 规则"
+      },
+      {
+        "depth": 3,
+        "slug": "22-4-推荐部门划分",
+        "text": "22.4 推荐部门划分"
+      },
+      {
+        "depth": 3,
+        "slug": "22-5-路由规则",
+        "text": "22.5 路由规则"
+      },
+      {
+        "depth": 3,
+        "slug": "22-6-实施顺序",
+        "text": "22.6 实施顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "22-7-phase-1-首版落地定义",
+        "text": "22.7 `Phase 1` 首版落地定义"
+      },
+      {
+        "depth": 3,
+        "slug": "22-8-phase-1-角色触发与对象契约",
+        "text": "22.8 `Phase 1` 角色触发与对象契约"
+      },
+      {
+        "depth": 3,
+        "slug": "22-9-与-operator-的拥有关系",
+        "text": "22.9 与 `Operator` 的拥有关系"
+      },
+      {
+        "depth": 3,
+        "slug": "22-10-phase-1-标准-handoff",
+        "text": "22.10 `Phase 1` 标准 handoff"
+      },
+      {
+        "depth": 3,
+        "slug": "22-11-phase-1-审批边界",
+        "text": "22.11 `Phase 1` 审批边界"
+      },
+      {
+        "depth": 3,
+        "slug": "22-12-phase-1-路由矩阵",
+        "text": "22.12 `Phase 1` 路由矩阵"
+      },
+      {
+        "depth": 3,
+        "slug": "22-13-phase-1-完成标准",
+        "text": "22.13 `Phase 1` 完成标准"
+      },
+      {
+        "depth": 2,
+        "slug": "二十三-mortis-结构化对象草案",
+        "text": "二十三、Mortis 结构化对象草案"
+      },
+      {
+        "depth": 3,
+        "slug": "23-1-agent-profile",
+        "text": "23.1 `agent profile`"
+      },
+      {
+        "depth": 3,
+        "slug": "23-2-agent-instance-projection",
+        "text": "23.2 `agent instance projection`"
+      },
+      {
+        "depth": 3,
+        "slug": "23-3-approval-record",
+        "text": "23.3 `approval record`"
+      },
+      {
+        "depth": 3,
+        "slug": "23-4-artifact-manifest",
+        "text": "23.4 `artifact manifest`"
+      },
+      {
+        "depth": 3,
+        "slug": "23-5-handoff-message",
+        "text": "23.5 `handoff message`"
+      },
+      {
+        "depth": 3,
+        "slug": "23-6-推荐状态机",
+        "text": "23.6 推荐状态机"
+      },
+      {
+        "depth": 3,
+        "slug": "23-7-当前最值得先落的字段",
+        "text": "23.7 当前最值得先落的字段"
+      }
+    ],
+    "detailPath": "articles/md_018d7bf721bd.json"
+  }
+}

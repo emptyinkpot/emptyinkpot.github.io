@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - apps/android-shell/**
+      - apps/web/public/.well-known/assetlinks.json
       - apps/web/public/manifest.webmanifest
       - apps/web/public/sw.js
       - apps/web/public/images/branding/**

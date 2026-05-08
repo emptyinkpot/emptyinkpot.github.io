@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_457b4e8f1e42",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/AI%20%E6%89%A7%E8%A1%8C%E6%8E%A7%E5%88%B6%E6%9E%B6%E6%9E%84.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/AI 执行控制架构.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/AI 执行控制架构.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/AI%20%E6%89%A7%E8%A1%8C%E6%8E%A7%E5%88%B6%E6%9E%B6%E6%9E%84.md",
+    "slug": "codex-knowledge-ai-执行控制架构",
+    "title": "AI 执行控制架构",
+    "summary": "AI 执行控制架构 当前部署决策（2026 04 24） Canonical target: E:\\My Project\\Atramenti Console\\codex\\plugins\\obsidian\\data\\docs\\codex knowledge\\AI 执行控制架构.md Audience:...",
+    "description": "AI 执行控制架构 当前部署决策（2026 04 24） Canonical target: E:\\My Project\\Atramenti Console\\codex\\plugins\\obsidian\\data\\docs\\codex knowledge\\AI 执行控制架构.md Audience:...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-能力设计",
+      "项目-Atramenti-Console",
+      "形态-方案",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-能力设计",
+        "项目-Atramenti-Console",
+        "形态-方案"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/AI 执行控制架构.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/AI 执行控制架构.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/AI%20%E6%89%A7%E8%A1%8C%E6%8E%A7%E5%88%B6%E6%9E%B6%E6%9E%84.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "AI 执行控制架构",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 能力设计",
+        "项目 ATRAMENTI CONSOLE",
+        "形态 方案",
+        "AI 执行控制架构"
+      ],
+      "subtitle": "AI 执行控制架构 当前部署决策（2026 04 24） Canonical target: E:\\My Project\\Atramenti Console\\codex\\plugins\\obsidian\\data\\docs\\codex knowledge\\AI 执行控制架构.md Audience:..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# AI 执行控制架构\n\n## 当前部署决策（2026-04-24）\n\n- Canonical target: `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\AI 执行控制架构.md`\n- Audience: 未来自己、继续接手云端 MCP 的实现者、运维与部署执行人\n- Status date: 2026-04-24\n\n这份文档现在不再只是抽象架构说明，还承载当前已经定下来的落机决策。\n\n### 已定结论\n\n工业级云端 MCP **不放到当前任一现有公网机上作为完整执行宿主**。\n\n当前正式定型为：\n\n```text\n170.106.179.226\n  = Gateway / Auth / MCP Router\n\n121.196.202.114\n  = lightweight remote MCP runtime\n\nnew heavy worker node\n  = industrial cloud MCP executor\n```\n\n也就是：\n\n- `170` 继续只做公网入口层\n- `121` 继续只做轻量远程 MCP\n- 新增一台 `heavy worker node` 承担任务编排、浏览器池、代码执行、受限 shell、artifact 与日志链路\n\n### 为什么不是 170\n\n当前现场已经确认：\n\n- `170.106.179.226` 是 active 的正式入口机\n- 它当前角色是 `nginx + api gateway`\n- `key.tengokukk.com` 的正式 AI 网关链路已经收敛在这台机器上\n\n因此它适合承载：\n\n- `Gateway`\n- `Auth`\n- `Rate Limit`\n- `MCP Router`\n- 轻量协议转换\n\n但不适合再混跑：\n\n- `browser-worker`\n- `code-worker`\n- `shell-worker`\n- 浏览器池\n- 沙箱执行器\n- 重队列消费器\n\n原因不是“绝对跑不动”，而是：\n\n```text\n一旦执行层把 CPU / RAM / 磁盘 / shm / 网络打满，先受影响的会是正式公网入口。\n```\n\n这会把：\n\n- 入口层稳定性\n- 执行层风险\n- 线上模型网关可用性\n\n绑定成同一个故障域。\n\n### 为什么不是 121\n\n`121.196.202.114` 当前只应继续承担 `lightweight remote MCP runtime`。\n\n它适合：\n\n- `context-store`\n- `database-ops-mcp`\n- `log-diagnose`\n- `output-guard`\n- `prompt-compressor`\n- `repo-inspector`\n- `ripgrep-search`\n\n它不适合升级成工业级主执行池，原因已经在当前运行规则里写清：\n\n- 它是轻量节点\n- 重检查与大测试不应上这台机器\n- 目前已有 SSH / banner timeout 的历史约束\n\n所以对 `121` 的正确用法不是“继续加码”，而是：\n\n```text\n保留轻量职责，避免变成新的耦合点。\n```\n\n### 新 heavy worker node 的职责边界\n\n新增节点只承载执行层，不承载公网正式入口。\n\n首批职责：\n\n- `task-orchestrator`\n- `worker-runtime`\n- `browser-worker`\n- `code-worker`\n- `shell-worker`（受限）\n- `artifact storage`（本地缓存层）\n- `job logs`\n- 受控工作目录 / 沙箱目录\n\n不放到 heavy node 的内容：\n\n- 主域名 TLS 终止\n- 公网总入口\n- 生产 AI 网关对外入口\n\n### 推荐最低规格\n\n第一版最低不要低于：\n\n- `4 vCPU`\n- `8 GB RAM`\n- `60+ GB SSD`\n- 稳定 SSH\n- Linux\n- `Node 22`\n- `pnpm`\n- `Docker` 与 `docker compose`\n\n如果要跑并发浏览器、多个 agent、较重代码任务，更实际的推荐值是：\n\n- `8 vCPU`\n- `16 GB RAM`\n- `120+ GB SSD`\n\n### 当前执行拓扑定版\n\n```text\nClient / Codex / Cline / Roo\n  -> 170 gateway\n  -> MCP Router\n  -> Task Orchestrator\n  -> new heavy worker node\n       -> browser-worker\n       -> code-worker\n       -> shell-worker\n       -> artifacts / logs\n\n121 runtime node\n  -> 继续承接轻量 MCP\n```\n\n### 第一阶段实施清单\n\n#### Phase 1: 购置与准备\n\n- 新开 `heavy worker node`\n- 装 `Node 22`、`pnpm`、`Docker`、`docker compose`\n- 建工作根目录，例如 `/srv/cloud-mcp`\n- 建运行目录，例如 `/srv/cloud-mcp/.runtime`\n\n#### Phase 2: 先落最小执行闭环\n\n- `task-orchestrator`\n- `browser-worker`\n- `code-worker`\n- `redis`\n- `postgres`\n- `artifact/log` 目录\n\n#### Phase 3: 与 170 打通\n\n- `170` 只转发到内部控制面\n- 不把高风险执行能力直接暴露公网\n- 所有副作用动作都转任务，不走同步裸执行\n\n#### Phase 4: 把 121 保持在轻量层\n\n- 保留已有轻量远程 MCP\n- 不迁入浏览器池与大构建任务\n- 仅在需要时承接只读或轻量能力\n\n### 当前不做的事\n\n在 heavy node 未到位前，当前不做下面这些高耦合方案：\n\n- 不把完整 worker pool 直接堆到 `170`\n- 不把 `121` 临时拔高成工业级执行宿主\n- 不把本地 Windows 工作站长期当作云端执行中枢\n\n一句话定型：\n\n> 当前服务器体系里的最佳放置方式不是“从现有机器里硬选一台”，而是“保留 170 入口层、保留 121 轻量层、补一台 heavy worker node 承担工业级执行层”。\n下面这套是按你当前系统抽出来的“AI 执行控制架构”，目标不是只防危险命令，而是同时提升：\n\n- 执行成功率\n    \n- 结果可信度\n    \n- 可追责性\n    \n- 可扩展性\n    \n\n我先给结论：\n\n> **不要让 AI 直接碰 shell / 文件 / 网络。**\n> \n> 要让 AI 只碰“受控能力”，所有真实执行都经过一层 **Execution Control Plane**。\n\n---\n\n# 1. 总体形态\n\n你现在大概是：\n\n```text\nClient / Codex\n   ↓\nNginx / Gateway\n   ↓\nAIClient2API\n   ↓\nUpstream model\n   ↓\ntool_call\n   ↓\nshell / file / network\n```\n\n我要你升级成：\n\n```text\nClient / Codex\n   ↓\nAPI Gateway\n   ↓\nModel Router\n   ↓\nExecution Control Plane\n   ├─ Policy Engine\n   ├─ Tool Registry\n   ├─ Planner / Validator\n   ├─ Risk Scorer\n   ├─ Approval Gate\n   ├─ Sandboxed Executors\n   ├─ State Store\n   ├─ Audit / Replay\n   └─ Observability\n   ↓\nReal effects:\n   ├─ file ops\n   ├─ shell ops\n   ├─ network ops\n   ├─ browser ops\n   └─ MCP / external services\n```\n\n核心原则就一句：\n\n> **模型负责提出动作，控制平面负责决定动作能不能发生、怎么发生、发生后如何核验。**\n\n---\n\n# 2. 分层职责\n\n## A. API Gateway\n\n职责很窄：\n\n- 鉴权\n    \n- 限流\n    \n- 路由\n    \n- 请求标准化\n    \n- SSE/stream 稳定转发\n    \n\n不要在这里做复杂判断。\n\n---\n\n## B. Model Router\n\n职责：\n\n- 选择模型\n    \n- 统一协议\n    \n- 把 chat/responses/streaming 统一成内部事件流\n    \n\n输出不要直接是“执行命令”，而是内部统一结构：\n\n```json\n{\n  \"session_id\": \"s_123\",\n  \"turn_id\": \"t_456\",\n  \"intent\": \"clean_desktop_shortcuts\",\n  \"proposed_actions\": [\n    {\n      \"tool\": \"fs.delete_shortcut\",\n      \"args\": {\n        \"path\": \"C:\\\\Users\\\\ASUS-KL\\\\Desktop\\\\xxx.lnk\"\n      }\n    }\n  ],\n  \"raw_model_output\": {}\n}\n```\n\n---\n\n## C. Execution Control Plane\n\n这是主角。\n\n它由 8 个子模块组成。\n\n---\n\n# 3. 八个核心模块\n\n## 3.1 Tool Registry\n\n不要给 AI 直接暴露 shell。  \n先把能力注册成“工具能力目录”。\n\n例如：\n\n```text\nfs.list_desktop_shortcuts\nfs.inspect_shortcut_target\nfs.move_to_recycle_bin\nshell.run_powershell_readonly\nshell.run_powershell_mutation\nnet.fetch_http_get\nbrowser.click\nbrowser.type\ndoc.write_markdown\n```\n\n每个工具都带元数据：\n\n```json\n{\n  \"tool_name\": \"fs.move_to_recycle_bin\",\n  \"category\": \"filesystem\",\n  \"risk_level\": \"medium\",\n  \"mutates_state\": true,\n  \"requires_approval\": false,\n  \"allowed_paths\": [\n    \"C:\\\\Users\\\\ASUS-KL\\\\Desktop\",\n    \"C:\\\\Users\\\\Public\\\\Desktop\"\n  ],\n  \"validator\": \"validate_desktop_path\",\n  \"executor\": \"windows_fs_executor\"\n}\n```\n\n重点：\n\n> AI 看见的是“业务工具”，不是裸命令。\n\n---\n\n## 3.2 Policy Engine\n\n这是门禁核心。\n\n它判断：\n\n- 这个会话能不能调用这个工具\n    \n- 参数是否合法\n    \n- 当前上下文下是否允许执行\n    \n- 是否需要人工确认\n    \n- 是否需要降权执行\n    \n\n策略建议用三层：\n\n### 全局策略\n\n例如：\n\n- 禁止删除系统目录\n    \n- 禁止写入 `C:\\Windows`\n    \n- 禁止联网访问未允许域名\n    \n- 禁止执行编码后的 PowerShell\n    \n\n### 工作区策略\n\n例如：\n\n- 只允许改当前 repo\n    \n- 文档默认写到指定知识库\n    \n- 只允许动桌面快捷方式，不动其他用户目录\n    \n\n### 任务策略\n\n例如：\n\n- 本次任务是“清理失效快捷方式”\n    \n- 允许 `inspect -> classify -> recycle`\n    \n- 不允许 `shell download`, `registry edit`\n    \n\n策略输出例子：\n\n```json\n{\n  \"decision\": \"allow_with_constraints\",\n  \"constraints\": {\n    \"max_actions\": 20,\n    \"allowed_tools\": [\n      \"fs.list_desktop_shortcuts\",\n      \"fs.inspect_shortcut_target\",\n      \"fs.move_to_recycle_bin\"\n    ],\n    \"allowed_paths\": [\n      \"C:\\\\Users\\\\ASUS-KL\\\\Desktop\",\n      \"C:\\\\Users\\\\Public\\\\Desktop\"\n    ]\n  },\n  \"reason\": \"desktop shortcut cleanup scoped task\"\n}\n```\n\n---\n\n## 3.3 Risk Scorer\n\n不是所有 allow 都一样。\n\n给每个 action 算风险分，维度包括：\n\n- 工具风险\n    \n- 参数风险\n    \n- 路径风险\n    \n- 破坏性\n    \n- 不可逆性\n    \n- 外部副作用\n    \n- 是否偏离用户意图\n    \n- 是否连续失败后仍在重试\n    \n\n示例：\n\n```json\n{\n  \"tool\": \"shell.run_powershell_mutation\",\n  \"risk_score\": 83,\n  \"risk_factors\": [\n    \"mutating_shell\",\n    \"touches_user_home\",\n    \"wildcard_delete\",\n    \"low_explainability\"\n  ]\n}\n```\n\n可设置阈值：\n\n- 0-30：自动执行\n    \n- 31-60：需要二次验证\n    \n- 61-80：需要人工确认\n    \n- 81+：拒绝或拆解重规划\n    \n\n---\n\n## 3.4 Planner / Validator\n\n让模型“先提计划，再执行”，而不是一上来就开干。\n\n流程：\n\n1. 模型生成计划\n    \n2. Planner 把计划拆成原子 action\n    \n3. Validator 检查：\n    \n    - 参数是否齐全\n        \n    - 是否可执行\n        \n    - 是否和任务目标一致\n        \n    - 是否违反状态机\n        \n\n比如桌面清理任务：\n\n```text\nPlan:\n1. 枚举快捷方式\n2. 检查目标是否存在\n3. 标记失效项\n4. 移入回收站\n5. 复查并汇报\n```\n\n原子化后：\n\n```json\n[\n  {\"tool\":\"fs.list_desktop_shortcuts\",\"args\":{\"scope\":\"user_and_public\"}},\n  {\"tool\":\"fs.inspect_shortcut_target\",\"args\":{\"path\":\"...1.lnk\"}},\n  {\"tool\":\"fs.inspect_shortcut_target\",\"args\":{\"path\":\"...2.lnk\"}},\n  {\"tool\":\"fs.move_to_recycle_bin\",\"args\":{\"path\":\"...2.lnk\"}}\n]\n```\n\n这样 AI 就不容易跳步骤。\n\n---\n\n## 3.5 Approval Gate\n\n高风险动作别直接执行。\n\n批准类型建议三档：\n\n### Auto\n\n低风险自动通过。\n\n### Silent checkpoint\n\n系统自动继续，但留下 checkpoint。  \n适合批量中风险操作。\n\n### Human approval\n\n明确需要你点头。\n\n比如：\n\n- 删除文件：checkpoint\n    \n- 删除目录：人工确认\n    \n- 联网下载并执行：强制人工确认\n    \n- 改系统代理/注册表：强制人工确认\n    \n\n批准消息应是结构化的，不是自由文本：\n\n```json\n{\n  \"approval_id\": \"appr_001\",\n  \"summary\": \"Delete 12 broken desktop shortcuts\",\n  \"risk\": \"medium\",\n  \"why\": [\n    \"all targets missing\",\n    \"scope limited to desktop\",\n    \"recycle bin used instead of permanent delete\"\n  ],\n  \"actions\": [\n    {\"tool\":\"fs.move_to_recycle_bin\",\"count\":12}\n  ]\n}\n```\n\n---\n\n## 3.6 Sandboxed Executors\n\n真正执行必须分仓。\n\n不要一个总 shell。  \n至少拆成：\n\n- `fs_executor`\n    \n- `shell_ro_executor`\n    \n- `shell_rw_executor`\n    \n- `network_executor`\n    \n- `browser_executor`\n    \n- `mcp_executor`\n    \n\n每个 executor 都有独立约束：\n\n### shell_ro_executor\n\n只允许只读命令：\n\n- `Get-ChildItem`\n    \n- `Get-Content`\n    \n- `rg`\n    \n- `Select-String`\n    \n\n### shell_rw_executor\n\n允许写，但必须：\n\n- 带工作目录\n    \n- 带超时\n    \n- 带路径白名单\n    \n- 带命令 AST 检查\n    \n\n### network_executor\n\n只允许白名单域名，默认 deny。\n\n### browser_executor\n\n只能操作允许站点和允许动作。\n\n关键点：\n\n> “工具权限” 和 “模型权限” 分开。  \n> 模型可以提议，executor 才决定是否实际落地。\n\n---\n\n## 3.7 State Store\n\n这是提高准确率的关键。\n\n你需要一个状态库记录：\n\n- 当前任务目标\n    \n- 已执行动作\n    \n- 文件快照\n    \n- 最近失败原因\n    \n- 允许作用域\n    \n- 审批结果\n    \n- 回滚点\n    \n\n没有状态库，AI 很容易：\n\n- 重复执行\n    \n- 忘记做过什么\n    \n- 产生幻觉式“我已经删了”\n    \n\n例如：\n\n```json\n{\n  \"task_id\": \"task_desktop_cleanup_001\",\n  \"objective\": \"clean broken desktop shortcuts\",\n  \"scope\": [\n    \"C:\\\\Users\\\\ASUS-KL\\\\Desktop\",\n    \"C:\\\\Users\\\\Public\\\\Desktop\"\n  ],\n  \"artifacts\": {\n    \"found_shortcuts\": 31,\n    \"broken_shortcuts\": 12,\n    \"recycled_shortcuts\": 12\n  },\n  \"last_action\": \"fs.move_to_recycle_bin\",\n  \"rollback_points\": [\n    \"recycle_bin_snapshot_20260423_101100\"\n  ]\n}\n```\n\n---\n\n## 3.8 Audit / Replay / Observability\n\n工业级一定要能追责。\n\n每次执行都要记录：\n\n- 输入\n    \n- 模型输出\n    \n- 策略判定\n    \n- 风险分\n    \n- 最终批准状态\n    \n- 实际命令\n    \n- stdout/stderr\n    \n- 产物\n    \n- 结果校验\n    \n\n日志建议分三类：\n\n### Decision log\n\n为什么允许/拒绝\n\n### Action log\n\n实际干了什么\n\n### Verification log\n\n结果是否符合预期\n\n最好支持 replay：\n\n> 以后能拿某次事故完整回放。\n\n---\n\n# 4. 控制流\n\n## 4.1 标准执行流\n\n```text\n用户请求\n  ↓\nModel Router\n  ↓\n提议 actions\n  ↓\nPolicy Engine\n  ↓\nRisk Scorer\n  ↓\nPlanner/Validator\n  ↓\nApproval Gate\n  ↓\nSandboxed Executor\n  ↓\nPost-Execution Verifier\n  ↓\nState Store + Audit\n  ↓\n返回用户\n```\n\n---\n\n## 4.2 后置校验\n\n这是你当前系统特别缺的。\n\n比如 AI 说“文件已创建”，必须再校验：\n\n- 文件是否存在\n    \n- 内容是否正确\n    \n- 路径是否对\n    \n- 是否出现副作用\n    \n\n例子：\n\n```json\n{\n  \"verification\": {\n    \"type\": \"file_exists_and_content_match\",\n    \"path\": \"C:\\\\Users\\\\ASUS-KL\\\\.codex\\\\.tmp\\\\tool-action-proof.txt\",\n    \"expected_content\": \"TOOL-OK\",\n    \"actual\": \"TOOL-OK\",\n    \"passed\": true\n  }\n}\n```\n\n没有这一层，AI 很容易“说做了但没做”。\n\n---\n\n# 5. 工业级状态机\n\n每个任务建议进入有限状态机：\n\n```text\nDRAFT\n→ PLANNED\n→ POLICY_CHECKED\n→ APPROVED\n→ EXECUTING\n→ VERIFYING\n→ COMPLETED\n→ FAILED\n→ ROLLED_BACK\n```\n\n这样可以防止：\n\n- 未审批就执行\n    \n- 执行失败却报成功\n    \n- 校验没过也结束\n    \n\n---\n\n# 6. 你的系统具体怎么插\n\n按你当前形态，建议这样落：\n\n```text\n170 nginx\n  ↓\n3301 AIClient2API\n  ↓\nExecution Control Plane  (新增)\n  ├─ policy-service\n  ├─ tool-registry\n  ├─ executor-service\n  ├─ verifier-service\n  └─ audit-store\n  ↓\n3000 upstream / model\n```\n\n但更合理的内部顺序是：\n\n```text\nclient\n  ↓\ngateway\n  ↓\ncontrol-plane\n  ↓\nmodel / upstream\n  ↓\ntool proposals\n  ↓\ncontrol-plane\n  ↓\nexecutors\n```\n\n也就是控制平面最好包住模型前后，不是只在后面拦。\n\n---\n\n# 7. 最小可落地版本\n\n先别一口吃成平台。第一版做 6 个模块就够：\n\n```text\n1. Tool Registry\n2. Policy Engine\n3. Risk Scorer\n4. Approval Gate\n5. Executors\n6. Post-Execution Verifier\n```\n\n并且只先管 4 类动作：\n\n- 文件读\n    \n- 文件写\n    \n- 回收站删除\n    \n- shell 命令\n    \n\n你马上就能把你当前系统从“能执行”升级到“可控执行”。\n\n---\n\n# 8. 推荐目录结构\n\n按你的模块化偏好，建议：\n\n```text\nmodules/execution-control/\n  module.json\n  README.md\n  src/\n    contracts/\n      action.ts\n      policy.ts\n      approval.ts\n      execution-result.ts\n    application/\n      plan-actions.ts\n      evaluate-policy.ts\n      score-risk.ts\n      request-approval.ts\n      execute-action.ts\n      verify-result.ts\n    domain/\n      entities/\n        action-plan.ts\n        risk-report.ts\n        approval-ticket.ts\n      services/\n        policy-engine.ts\n        risk-engine.ts\n        verification-engine.ts\n    infrastructure/\n      policy/\n        static-policy-loader.ts\n      registry/\n        tool-registry.ts\n      executors/\n        fs-executor.ts\n        shell-ro-executor.ts\n        shell-rw-executor.ts\n      storage/\n        audit-repo.ts\n        state-repo.ts\n    interface/\n      http/\n        execution-controller.ts\n      cli/\n        execution-debug.ts\n    index.ts\n  tests/\n    unit/\n    integration/\n    contract/\n```\n\n---\n\n# 9. 三条硬规则\n\n## 规则一\n\n**模型永远不能直接拿到 unrestricted shell。**\n\n## 规则二\n\n**所有有副作用的动作，必须可验证。**\n\n## 规则三\n\n**所有高风险动作，必须可中断、可回滚、可追责。**\n\n---\n\n# 10. 你现在最适合的演进路径\n\n## 第一步\n\n把裸 shell 拆成受控工具：\n\n- `fs.list_shortcuts`\n    \n- `fs.inspect_shortcut`\n    \n- `fs.recycle_item`\n    \n- `shell.readonly`\n    \n\n## 第二步\n\n加 Policy Engine + 路径白名单。\n\n## 第三步\n\n加 Post-Execution Verifier。\n\n## 第四步\n\n加 Approval Gate。\n\n## 第五步\n\n再做统一状态机和审计回放。\n\n---\n\n# 11. 一句话总结\n\n你要的工业级 AI 执行控制架构，本质上是：\n\n> **模型提出动作，控制平面裁决动作，执行器受限落地，校验器证明结果。**\n\n不是“让 AI 更自由”，而是：\n\n> **让 AI 只在被约束的轨道里高效工作。**\n\n如果你要，我下一步可以直接给你这套架构的 **模块接口定义 + TypeScript 骨架代码**。",
+    "html": "<h1 id=\"ai-执行控制架构\">AI 执行控制架构</h1>\n<h2 id=\"当前部署决策2026-04-24\">当前部署决策（2026-04-24）</h2>\n<ul>\n<li>Canonical target: <code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\AI 执行控制架构.md</code></li>\n<li>Audience: 未来自己、继续接手云端 MCP 的实现者、运维与部署执行人</li>\n<li>Status date: 2026-04-24</li>\n</ul>\n<p>这份文档现在不再只是抽象架构说明，还承载当前已经定下来的落机决策。</p>\n<h3 id=\"已定结论\">已定结论</h3>\n<p>工业级云端 MCP <strong>不放到当前任一现有公网机上作为完整执行宿主</strong>。</p>\n<p>当前正式定型为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>170.106.179.226</span></span>\n<span data-line=\"\"><span>  = Gateway / Auth / MCP Router</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>121.196.202.114</span></span>\n<span data-line=\"\"><span>  = lightweight remote MCP runtime</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>new heavy worker node</span></span>\n<span data-line=\"\"><span>  = industrial cloud MCP executor</span></span></code></pre></figure>\n<p>也就是：</p>\n<ul>\n<li><code>170</code> 继续只做公网入口层</li>\n<li><code>121</code> 继续只做轻量远程 MCP</li>\n<li>新增一台 <code>heavy worker node</code> 承担任务编排、浏览器池、代码执行、受限 shell、artifact 与日志链路</li>\n</ul>\n<h3 id=\"为什么不是-170\">为什么不是 170</h3>\n<p>当前现场已经确认：</p>\n<ul>\n<li><code>170.106.179.226</code> 是 active 的正式入口机</li>\n<li>它当前角色是 <code>nginx + api gateway</code></li>\n<li><code>key.tengokukk.com</code> 的正式 AI 网关链路已经收敛在这台机器上</li>\n</ul>\n<p>因此它适合承载：</p>\n<ul>\n<li><code>Gateway</code></li>\n<li><code>Auth</code></li>\n<li><code>Rate Limit</code></li>\n<li><code>MCP Router</code></li>\n<li>轻量协议转换</li>\n</ul>\n<p>但不适合再混跑：</p>\n<ul>\n<li><code>browser-worker</code></li>\n<li><code>code-worker</code></li>\n<li><code>shell-worker</code></li>\n<li>浏览器池</li>\n<li>沙箱执行器</li>\n<li>重队列消费器</li>\n</ul>\n<p>原因不是“绝对跑不动”，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一旦执行层把 CPU / RAM / 磁盘 / shm / 网络打满，先受影响的会是正式公网入口。</span></span></code></pre></figure>\n<p>这会把：</p>\n<ul>\n<li>入口层稳定性</li>\n<li>执行层风险</li>\n<li>线上模型网关可用性</li>\n</ul>\n<p>绑定成同一个故障域。</p>\n<h3 id=\"为什么不是-121\">为什么不是 121</h3>\n<p><code>121.196.202.114</code> 当前只应继续承担 <code>lightweight remote MCP runtime</code>。</p>\n<p>它适合：</p>\n<ul>\n<li><code>context-store</code></li>\n<li><code>database-ops-mcp</code></li>\n<li><code>log-diagnose</code></li>\n<li><code>output-guard</code></li>\n<li><code>prompt-compressor</code></li>\n<li><code>repo-inspector</code></li>\n<li><code>ripgrep-search</code></li>\n</ul>\n<p>它不适合升级成工业级主执行池，原因已经在当前运行规则里写清：</p>\n<ul>\n<li>它是轻量节点</li>\n<li>重检查与大测试不应上这台机器</li>\n<li>目前已有 SSH / banner timeout 的历史约束</li>\n</ul>\n<p>所以对 <code>121</code> 的正确用法不是“继续加码”，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>保留轻量职责，避免变成新的耦合点。</span></span></code></pre></figure>\n<h3 id=\"新-heavy-worker-node-的职责边界\">新 heavy worker node 的职责边界</h3>\n<p>新增节点只承载执行层，不承载公网正式入口。</p>\n<p>首批职责：</p>\n<ul>\n<li><code>task-orchestrator</code></li>\n<li><code>worker-runtime</code></li>\n<li><code>browser-worker</code></li>\n<li><code>code-worker</code></li>\n<li><code>shell-worker</code>（受限）</li>\n<li><code>artifact storage</code>（本地缓存层）</li>\n<li><code>job logs</code></li>\n<li>受控工作目录 / 沙箱目录</li>\n</ul>\n<p>不放到 heavy node 的内容：</p>\n<ul>\n<li>主域名 TLS 终止</li>\n<li>公网总入口</li>\n<li>生产 AI 网关对外入口</li>\n</ul>\n<h3 id=\"推荐最低规格\">推荐最低规格</h3>\n<p>第一版最低不要低于：</p>\n<ul>\n<li><code>4 vCPU</code></li>\n<li><code>8 GB RAM</code></li>\n<li><code>60+ GB SSD</code></li>\n<li>稳定 SSH</li>\n<li>Linux</li>\n<li><code>Node 22</code></li>\n<li><code>pnpm</code></li>\n<li><code>Docker</code> 与 <code>docker compose</code></li>\n</ul>\n<p>如果要跑并发浏览器、多个 agent、较重代码任务，更实际的推荐值是：</p>\n<ul>\n<li><code>8 vCPU</code></li>\n<li><code>16 GB RAM</code></li>\n<li><code>120+ GB SSD</code></li>\n</ul>\n<h3 id=\"当前执行拓扑定版\">当前执行拓扑定版</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client / Codex / Cline / Roo</span></span>\n<span data-line=\"\"><span>  -> 170 gateway</span></span>\n<span data-line=\"\"><span>  -> MCP Router</span></span>\n<span data-line=\"\"><span>  -> Task Orchestrator</span></span>\n<span data-line=\"\"><span>  -> new heavy worker node</span></span>\n<span data-line=\"\"><span>       -> browser-worker</span></span>\n<span data-line=\"\"><span>       -> code-worker</span></span>\n<span data-line=\"\"><span>       -> shell-worker</span></span>\n<span data-line=\"\"><span>       -> artifacts / logs</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>121 runtime node</span></span>\n<span data-line=\"\"><span>  -> 继续承接轻量 MCP</span></span></code></pre></figure>\n<h3 id=\"第一阶段实施清单\">第一阶段实施清单</h3>\n<h4 id=\"phase-1-购置与准备\">Phase 1: 购置与准备</h4>\n<ul>\n<li>新开 <code>heavy worker node</code></li>\n<li>装 <code>Node 22</code>、<code>pnpm</code>、<code>Docker</code>、<code>docker compose</code></li>\n<li>建工作根目录，例如 <code>/srv/cloud-mcp</code></li>\n<li>建运行目录，例如 <code>/srv/cloud-mcp/.runtime</code></li>\n</ul>\n<h4 id=\"phase-2-先落最小执行闭环\">Phase 2: 先落最小执行闭环</h4>\n<ul>\n<li><code>task-orchestrator</code></li>\n<li><code>browser-worker</code></li>\n<li><code>code-worker</code></li>\n<li><code>redis</code></li>\n<li><code>postgres</code></li>\n<li><code>artifact/log</code> 目录</li>\n</ul>\n<h4 id=\"phase-3-与-170-打通\">Phase 3: 与 170 打通</h4>\n<ul>\n<li><code>170</code> 只转发到内部控制面</li>\n<li>不把高风险执行能力直接暴露公网</li>\n<li>所有副作用动作都转任务，不走同步裸执行</li>\n</ul>\n<h4 id=\"phase-4-把-121-保持在轻量层\">Phase 4: 把 121 保持在轻量层</h4>\n<ul>\n<li>保留已有轻量远程 MCP</li>\n<li>不迁入浏览器池与大构建任务</li>\n<li>仅在需要时承接只读或轻量能力</li>\n</ul>\n<h3 id=\"当前不做的事\">当前不做的事</h3>\n<p>在 heavy node 未到位前，当前不做下面这些高耦合方案：</p>\n<ul>\n<li>不把完整 worker pool 直接堆到 <code>170</code></li>\n<li>不把 <code>121</code> 临时拔高成工业级执行宿主</li>\n<li>不把本地 Windows 工作站长期当作云端执行中枢</li>\n</ul>\n<p>一句话定型：</p>\n<blockquote>\n<p>当前服务器体系里的最佳放置方式不是“从现有机器里硬选一台”，而是“保留 170 入口层、保留 121 轻量层、补一台 heavy worker node 承担工业级执行层”。\n下面这套是按你当前系统抽出来的“AI 执行控制架构”，目标不是只防危险命令，而是同时提升：</p>\n</blockquote>\n<ul>\n<li>\n<p>执行成功率</p>\n</li>\n<li>\n<p>结果可信度</p>\n</li>\n<li>\n<p>可追责性</p>\n</li>\n<li>\n<p>可扩展性</p>\n</li>\n</ul>\n<p>我先给结论：</p>\n<blockquote>\n<p><strong>不要让 AI 直接碰 shell / 文件 / 网络。</strong></p>\n<p>要让 AI 只碰“受控能力”，所有真实执行都经过一层 <strong>Execution Control Plane</strong>。</p>\n</blockquote>\n<hr>\n<h1 id=\"1-总体形态\">1. 总体形态</h1>\n<p>你现在大概是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client / Codex</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Nginx / Gateway</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>AIClient2API</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Upstream model</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>tool_call</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>shell / file / network</span></span></code></pre></figure>\n<p>我要你升级成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client / Codex</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>API Gateway</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Model Router</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Execution Control Plane</span></span>\n<span data-line=\"\"><span>   ├─ Policy Engine</span></span>\n<span data-line=\"\"><span>   ├─ Tool Registry</span></span>\n<span data-line=\"\"><span>   ├─ Planner / Validator</span></span>\n<span data-line=\"\"><span>   ├─ Risk Scorer</span></span>\n<span data-line=\"\"><span>   ├─ Approval Gate</span></span>\n<span data-line=\"\"><span>   ├─ Sandboxed Executors</span></span>\n<span data-line=\"\"><span>   ├─ State Store</span></span>\n<span data-line=\"\"><span>   ├─ Audit / Replay</span></span>\n<span data-line=\"\"><span>   └─ Observability</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Real effects:</span></span>\n<span data-line=\"\"><span>   ├─ file ops</span></span>\n<span data-line=\"\"><span>   ├─ shell ops</span></span>\n<span data-line=\"\"><span>   ├─ network ops</span></span>\n<span data-line=\"\"><span>   ├─ browser ops</span></span>\n<span data-line=\"\"><span>   └─ MCP / external services</span></span></code></pre></figure>\n<p>核心原则就一句：</p>\n<blockquote>\n<p><strong>模型负责提出动作，控制平面负责决定动作能不能发生、怎么发生、发生后如何核验。</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"2-分层职责\">2. 分层职责</h1>\n<h2 id=\"a-api-gateway\">A. API Gateway</h2>\n<p>职责很窄：</p>\n<ul>\n<li>\n<p>鉴权</p>\n</li>\n<li>\n<p>限流</p>\n</li>\n<li>\n<p>路由</p>\n</li>\n<li>\n<p>请求标准化</p>\n</li>\n<li>\n<p>SSE/stream 稳定转发</p>\n</li>\n</ul>\n<p>不要在这里做复杂判断。</p>\n<hr>\n<h2 id=\"b-model-router\">B. Model Router</h2>\n<p>职责：</p>\n<ul>\n<li>\n<p>选择模型</p>\n</li>\n<li>\n<p>统一协议</p>\n</li>\n<li>\n<p>把 chat/responses/streaming 统一成内部事件流</p>\n</li>\n</ul>\n<p>输出不要直接是“执行命令”，而是内部统一结构：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"session_id\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"s_123\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"turn_id\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"t_456\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"intent\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"clean_desktop_shortcuts\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"proposed_actions\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"tool\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"fs.delete_shortcut\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">      \"args\"</span><span style=\"color:#E1E4E8\">: {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">        \"path\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">ASUS-KL</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Desktop</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">xxx.lnk\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">      }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"raw_model_output\"</span><span style=\"color:#E1E4E8\">: {}</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h2 id=\"c-execution-control-plane\">C. Execution Control Plane</h2>\n<p>这是主角。</p>\n<p>它由 8 个子模块组成。</p>\n<hr>\n<h1 id=\"3-八个核心模块\">3. 八个核心模块</h1>\n<h2 id=\"31-tool-registry\">3.1 Tool Registry</h2>\n<p>不要给 AI 直接暴露 shell。<br>\n先把能力注册成“工具能力目录”。</p>\n<p>例如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>fs.list_desktop_shortcuts</span></span>\n<span data-line=\"\"><span>fs.inspect_shortcut_target</span></span>\n<span data-line=\"\"><span>fs.move_to_recycle_bin</span></span>\n<span data-line=\"\"><span>shell.run_powershell_readonly</span></span>\n<span data-line=\"\"><span>shell.run_powershell_mutation</span></span>\n<span data-line=\"\"><span>net.fetch_http_get</span></span>\n<span data-line=\"\"><span>browser.click</span></span>\n<span data-line=\"\"><span>browser.type</span></span>\n<span data-line=\"\"><span>doc.write_markdown</span></span></code></pre></figure>\n<p>每个工具都带元数据：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"tool_name\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"fs.move_to_recycle_bin\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"category\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"filesystem\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"risk_level\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"medium\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"mutates_state\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">true</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"requires_approval\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">false</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"allowed_paths\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">ASUS-KL</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Desktop\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Public</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Desktop\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"validator\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"validate_desktop_path\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"executor\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"windows_fs_executor\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>重点：</p>\n<blockquote>\n<p>AI 看见的是“业务工具”，不是裸命令。</p>\n</blockquote>\n<hr>\n<h2 id=\"32-policy-engine\">3.2 Policy Engine</h2>\n<p>这是门禁核心。</p>\n<p>它判断：</p>\n<ul>\n<li>\n<p>这个会话能不能调用这个工具</p>\n</li>\n<li>\n<p>参数是否合法</p>\n</li>\n<li>\n<p>当前上下文下是否允许执行</p>\n</li>\n<li>\n<p>是否需要人工确认</p>\n</li>\n<li>\n<p>是否需要降权执行</p>\n</li>\n</ul>\n<p>策略建议用三层：</p>\n<h3 id=\"全局策略\">全局策略</h3>\n<p>例如：</p>\n<ul>\n<li>\n<p>禁止删除系统目录</p>\n</li>\n<li>\n<p>禁止写入 <code>C:\\Windows</code></p>\n</li>\n<li>\n<p>禁止联网访问未允许域名</p>\n</li>\n<li>\n<p>禁止执行编码后的 PowerShell</p>\n</li>\n</ul>\n<h3 id=\"工作区策略\">工作区策略</h3>\n<p>例如：</p>\n<ul>\n<li>\n<p>只允许改当前 repo</p>\n</li>\n<li>\n<p>文档默认写到指定知识库</p>\n</li>\n<li>\n<p>只允许动桌面快捷方式，不动其他用户目录</p>\n</li>\n</ul>\n<h3 id=\"任务策略\">任务策略</h3>\n<p>例如：</p>\n<ul>\n<li>\n<p>本次任务是“清理失效快捷方式”</p>\n</li>\n<li>\n<p>允许 <code>inspect -> classify -> recycle</code></p>\n</li>\n<li>\n<p>不允许 <code>shell download</code>, <code>registry edit</code></p>\n</li>\n</ul>\n<p>策略输出例子：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"decision\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"allow_with_constraints\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"constraints\"</span><span style=\"color:#E1E4E8\">: {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"max_actions\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">20</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"allowed_tools\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">      \"fs.list_desktop_shortcuts\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">      \"fs.inspect_shortcut_target\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">      \"fs.move_to_recycle_bin\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"allowed_paths\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">      \"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">ASUS-KL</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Desktop\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">      \"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Public</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Desktop\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    ]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  },</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"reason\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"desktop shortcut cleanup scoped task\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h2 id=\"33-risk-scorer\">3.3 Risk Scorer</h2>\n<p>不是所有 allow 都一样。</p>\n<p>给每个 action 算风险分，维度包括：</p>\n<ul>\n<li>\n<p>工具风险</p>\n</li>\n<li>\n<p>参数风险</p>\n</li>\n<li>\n<p>路径风险</p>\n</li>\n<li>\n<p>破坏性</p>\n</li>\n<li>\n<p>不可逆性</p>\n</li>\n<li>\n<p>外部副作用</p>\n</li>\n<li>\n<p>是否偏离用户意图</p>\n</li>\n<li>\n<p>是否连续失败后仍在重试</p>\n</li>\n</ul>\n<p>示例：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"tool\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"shell.run_powershell_mutation\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"risk_score\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">83</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"risk_factors\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"mutating_shell\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"touches_user_home\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"wildcard_delete\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"low_explainability\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>可设置阈值：</p>\n<ul>\n<li>\n<p>0-30：自动执行</p>\n</li>\n<li>\n<p>31-60：需要二次验证</p>\n</li>\n<li>\n<p>61-80：需要人工确认</p>\n</li>\n<li>\n<p>81+：拒绝或拆解重规划</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"34-planner--validator\">3.4 Planner / Validator</h2>\n<p>让模型“先提计划，再执行”，而不是一上来就开干。</p>\n<p>流程：</p>\n<ol>\n<li>\n<p>模型生成计划</p>\n</li>\n<li>\n<p>Planner 把计划拆成原子 action</p>\n</li>\n<li>\n<p>Validator 检查：</p>\n<ul>\n<li>\n<p>参数是否齐全</p>\n</li>\n<li>\n<p>是否可执行</p>\n</li>\n<li>\n<p>是否和任务目标一致</p>\n</li>\n<li>\n<p>是否违反状态机</p>\n</li>\n</ul>\n</li>\n</ol>\n<p>比如桌面清理任务：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Plan:</span></span>\n<span data-line=\"\"><span>1. 枚举快捷方式</span></span>\n<span data-line=\"\"><span>2. 检查目标是否存在</span></span>\n<span data-line=\"\"><span>3. 标记失效项</span></span>\n<span data-line=\"\"><span>4. 移入回收站</span></span>\n<span data-line=\"\"><span>5. 复查并汇报</span></span></code></pre></figure>\n<p>原子化后：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">[</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  {</span><span style=\"color:#79B8FF\">\"tool\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"fs.list_desktop_shortcuts\"</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"args\"</span><span style=\"color:#E1E4E8\">:{</span><span style=\"color:#79B8FF\">\"scope\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"user_and_public\"</span><span style=\"color:#E1E4E8\">}},</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  {</span><span style=\"color:#79B8FF\">\"tool\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"fs.inspect_shortcut_target\"</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"args\"</span><span style=\"color:#E1E4E8\">:{</span><span style=\"color:#79B8FF\">\"path\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"...1.lnk\"</span><span style=\"color:#E1E4E8\">}},</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  {</span><span style=\"color:#79B8FF\">\"tool\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"fs.inspect_shortcut_target\"</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"args\"</span><span style=\"color:#E1E4E8\">:{</span><span style=\"color:#79B8FF\">\"path\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"...2.lnk\"</span><span style=\"color:#E1E4E8\">}},</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  {</span><span style=\"color:#79B8FF\">\"tool\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"fs.move_to_recycle_bin\"</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"args\"</span><span style=\"color:#E1E4E8\">:{</span><span style=\"color:#79B8FF\">\"path\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"...2.lnk\"</span><span style=\"color:#E1E4E8\">}}</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">]</span></span></code></pre></figure>\n<p>这样 AI 就不容易跳步骤。</p>\n<hr>\n<h2 id=\"35-approval-gate\">3.5 Approval Gate</h2>\n<p>高风险动作别直接执行。</p>\n<p>批准类型建议三档：</p>\n<h3 id=\"auto\">Auto</h3>\n<p>低风险自动通过。</p>\n<h3 id=\"silent-checkpoint\">Silent checkpoint</h3>\n<p>系统自动继续，但留下 checkpoint。<br>\n适合批量中风险操作。</p>\n<h3 id=\"human-approval\">Human approval</h3>\n<p>明确需要你点头。</p>\n<p>比如：</p>\n<ul>\n<li>\n<p>删除文件：checkpoint</p>\n</li>\n<li>\n<p>删除目录：人工确认</p>\n</li>\n<li>\n<p>联网下载并执行：强制人工确认</p>\n</li>\n<li>\n<p>改系统代理/注册表：强制人工确认</p>\n</li>\n</ul>\n<p>批准消息应是结构化的，不是自由文本：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"approval_id\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"appr_001\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"summary\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"Delete 12 broken desktop shortcuts\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"risk\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"medium\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"why\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"all targets missing\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"scope limited to desktop\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"recycle bin used instead of permanent delete\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"actions\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">    {</span><span style=\"color:#79B8FF\">\"tool\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"fs.move_to_recycle_bin\"</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"count\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#79B8FF\">12</span><span style=\"color:#E1E4E8\">}</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h2 id=\"36-sandboxed-executors\">3.6 Sandboxed Executors</h2>\n<p>真正执行必须分仓。</p>\n<p>不要一个总 shell。<br>\n至少拆成：</p>\n<ul>\n<li>\n<p><code>fs_executor</code></p>\n</li>\n<li>\n<p><code>shell_ro_executor</code></p>\n</li>\n<li>\n<p><code>shell_rw_executor</code></p>\n</li>\n<li>\n<p><code>network_executor</code></p>\n</li>\n<li>\n<p><code>browser_executor</code></p>\n</li>\n<li>\n<p><code>mcp_executor</code></p>\n</li>\n</ul>\n<p>每个 executor 都有独立约束：</p>\n<h3 id=\"shell_ro_executor\">shell_ro_executor</h3>\n<p>只允许只读命令：</p>\n<ul>\n<li>\n<p><code>Get-ChildItem</code></p>\n</li>\n<li>\n<p><code>Get-Content</code></p>\n</li>\n<li>\n<p><code>rg</code></p>\n</li>\n<li>\n<p><code>Select-String</code></p>\n</li>\n</ul>\n<h3 id=\"shell_rw_executor\">shell_rw_executor</h3>\n<p>允许写，但必须：</p>\n<ul>\n<li>\n<p>带工作目录</p>\n</li>\n<li>\n<p>带超时</p>\n</li>\n<li>\n<p>带路径白名单</p>\n</li>\n<li>\n<p>带命令 AST 检查</p>\n</li>\n</ul>\n<h3 id=\"network_executor\">network_executor</h3>\n<p>只允许白名单域名，默认 deny。</p>\n<h3 id=\"browser_executor\">browser_executor</h3>\n<p>只能操作允许站点和允许动作。</p>\n<p>关键点：</p>\n<blockquote>\n<p>“工具权限” 和 “模型权限” 分开。<br>\n模型可以提议，executor 才决定是否实际落地。</p>\n</blockquote>\n<hr>\n<h2 id=\"37-state-store\">3.7 State Store</h2>\n<p>这是提高准确率的关键。</p>\n<p>你需要一个状态库记录：</p>\n<ul>\n<li>\n<p>当前任务目标</p>\n</li>\n<li>\n<p>已执行动作</p>\n</li>\n<li>\n<p>文件快照</p>\n</li>\n<li>\n<p>最近失败原因</p>\n</li>\n<li>\n<p>允许作用域</p>\n</li>\n<li>\n<p>审批结果</p>\n</li>\n<li>\n<p>回滚点</p>\n</li>\n</ul>\n<p>没有状态库，AI 很容易：</p>\n<ul>\n<li>\n<p>重复执行</p>\n</li>\n<li>\n<p>忘记做过什么</p>\n</li>\n<li>\n<p>产生幻觉式“我已经删了”</p>\n</li>\n</ul>\n<p>例如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"task_id\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"task_desktop_cleanup_001\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"objective\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"clean broken desktop shortcuts\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"scope\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">ASUS-KL</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Desktop\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Public</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Desktop\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ],</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"artifacts\"</span><span style=\"color:#E1E4E8\">: {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"found_shortcuts\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">31</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"broken_shortcuts\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">12</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"recycled_shortcuts\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">12</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  },</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"last_action\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"fs.move_to_recycle_bin\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"rollback_points\"</span><span style=\"color:#E1E4E8\">: [</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">    \"recycle_bin_snapshot_20260423_101100\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  ]</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h2 id=\"38-audit--replay--observability\">3.8 Audit / Replay / Observability</h2>\n<p>工业级一定要能追责。</p>\n<p>每次执行都要记录：</p>\n<ul>\n<li>\n<p>输入</p>\n</li>\n<li>\n<p>模型输出</p>\n</li>\n<li>\n<p>策略判定</p>\n</li>\n<li>\n<p>风险分</p>\n</li>\n<li>\n<p>最终批准状态</p>\n</li>\n<li>\n<p>实际命令</p>\n</li>\n<li>\n<p>stdout/stderr</p>\n</li>\n<li>\n<p>产物</p>\n</li>\n<li>\n<p>结果校验</p>\n</li>\n</ul>\n<p>日志建议分三类：</p>\n<h3 id=\"decision-log\">Decision log</h3>\n<p>为什么允许/拒绝</p>\n<h3 id=\"action-log\">Action log</h3>\n<p>实际干了什么</p>\n<h3 id=\"verification-log\">Verification log</h3>\n<p>结果是否符合预期</p>\n<p>最好支持 replay：</p>\n<blockquote>\n<p>以后能拿某次事故完整回放。</p>\n</blockquote>\n<hr>\n<h1 id=\"4-控制流\">4. 控制流</h1>\n<h2 id=\"41-标准执行流\">4.1 标准执行流</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户请求</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Model Router</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>提议 actions</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Policy Engine</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Risk Scorer</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Planner/Validator</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Approval Gate</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Sandboxed Executor</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Post-Execution Verifier</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>State Store + Audit</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>返回用户</span></span></code></pre></figure>\n<hr>\n<h2 id=\"42-后置校验\">4.2 后置校验</h2>\n<p>这是你当前系统特别缺的。</p>\n<p>比如 AI 说“文件已创建”，必须再校验：</p>\n<ul>\n<li>\n<p>文件是否存在</p>\n</li>\n<li>\n<p>内容是否正确</p>\n</li>\n<li>\n<p>路径是否对</p>\n</li>\n<li>\n<p>是否出现副作用</p>\n</li>\n</ul>\n<p>例子：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"verification\"</span><span style=\"color:#E1E4E8\">: {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"type\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"file_exists_and_content_match\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"path\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"C:</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">Users</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">ASUS-KL</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">.codex</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">.tmp</span><span style=\"color:#79B8FF\">\\\\</span><span style=\"color:#9ECBFF\">tool-action-proof.txt\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"expected_content\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"TOOL-OK\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"actual\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"TOOL-OK\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"passed\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">true</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>没有这一层，AI 很容易“说做了但没做”。</p>\n<hr>\n<h1 id=\"5-工业级状态机\">5. 工业级状态机</h1>\n<p>每个任务建议进入有限状态机：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>DRAFT</span></span>\n<span data-line=\"\"><span>→ PLANNED</span></span>\n<span data-line=\"\"><span>→ POLICY_CHECKED</span></span>\n<span data-line=\"\"><span>→ APPROVED</span></span>\n<span data-line=\"\"><span>→ EXECUTING</span></span>\n<span data-line=\"\"><span>→ VERIFYING</span></span>\n<span data-line=\"\"><span>→ COMPLETED</span></span>\n<span data-line=\"\"><span>→ FAILED</span></span>\n<span data-line=\"\"><span>→ ROLLED_BACK</span></span></code></pre></figure>\n<p>这样可以防止：</p>\n<ul>\n<li>\n<p>未审批就执行</p>\n</li>\n<li>\n<p>执行失败却报成功</p>\n</li>\n<li>\n<p>校验没过也结束</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"6-你的系统具体怎么插\">6. 你的系统具体怎么插</h1>\n<p>按你当前形态，建议这样落：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>170 nginx</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>3301 AIClient2API</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Execution Control Plane  (新增)</span></span>\n<span data-line=\"\"><span>  ├─ policy-service</span></span>\n<span data-line=\"\"><span>  ├─ tool-registry</span></span>\n<span data-line=\"\"><span>  ├─ executor-service</span></span>\n<span data-line=\"\"><span>  ├─ verifier-service</span></span>\n<span data-line=\"\"><span>  └─ audit-store</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>3000 upstream / model</span></span></code></pre></figure>\n<p>但更合理的内部顺序是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>client</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>gateway</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>control-plane</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>model / upstream</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>tool proposals</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>control-plane</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>executors</span></span></code></pre></figure>\n<p>也就是控制平面最好包住模型前后，不是只在后面拦。</p>\n<hr>\n<h1 id=\"7-最小可落地版本\">7. 最小可落地版本</h1>\n<p>先别一口吃成平台。第一版做 6 个模块就够：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>1. Tool Registry</span></span>\n<span data-line=\"\"><span>2. Policy Engine</span></span>\n<span data-line=\"\"><span>3. Risk Scorer</span></span>\n<span data-line=\"\"><span>4. Approval Gate</span></span>\n<span data-line=\"\"><span>5. Executors</span></span>\n<span data-line=\"\"><span>6. Post-Execution Verifier</span></span></code></pre></figure>\n<p>并且只先管 4 类动作：</p>\n<ul>\n<li>\n<p>文件读</p>\n</li>\n<li>\n<p>文件写</p>\n</li>\n<li>\n<p>回收站删除</p>\n</li>\n<li>\n<p>shell 命令</p>\n</li>\n</ul>\n<p>你马上就能把你当前系统从“能执行”升级到“可控执行”。</p>\n<hr>\n<h1 id=\"8-推荐目录结构\">8. 推荐目录结构</h1>\n<p>按你的模块化偏好，建议：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>modules/execution-control/</span></span>\n<span data-line=\"\"><span>  module.json</span></span>\n<span data-line=\"\"><span>  README.md</span></span>\n<span data-line=\"\"><span>  src/</span></span>\n<span data-line=\"\"><span>    contracts/</span></span>\n<span data-line=\"\"><span>      action.ts</span></span>\n<span data-line=\"\"><span>      policy.ts</span></span>\n<span data-line=\"\"><span>      approval.ts</span></span>\n<span data-line=\"\"><span>      execution-result.ts</span></span>\n<span data-line=\"\"><span>    application/</span></span>\n<span data-line=\"\"><span>      plan-actions.ts</span></span>\n<span data-line=\"\"><span>      evaluate-policy.ts</span></span>\n<span data-line=\"\"><span>      score-risk.ts</span></span>\n<span data-line=\"\"><span>      request-approval.ts</span></span>\n<span data-line=\"\"><span>      execute-action.ts</span></span>\n<span data-line=\"\"><span>      verify-result.ts</span></span>\n<span data-line=\"\"><span>    domain/</span></span>\n<span data-line=\"\"><span>      entities/</span></span>\n<span data-line=\"\"><span>        action-plan.ts</span></span>\n<span data-line=\"\"><span>        risk-report.ts</span></span>\n<span data-line=\"\"><span>        approval-ticket.ts</span></span>\n<span data-line=\"\"><span>      services/</span></span>\n<span data-line=\"\"><span>        policy-engine.ts</span></span>\n<span data-line=\"\"><span>        risk-engine.ts</span></span>\n<span data-line=\"\"><span>        verification-engine.ts</span></span>\n<span data-line=\"\"><span>    infrastructure/</span></span>\n<span data-line=\"\"><span>      policy/</span></span>\n<span data-line=\"\"><span>        static-policy-loader.ts</span></span>\n<span data-line=\"\"><span>      registry/</span></span>\n<span data-line=\"\"><span>        tool-registry.ts</span></span>\n<span data-line=\"\"><span>      executors/</span></span>\n<span data-line=\"\"><span>        fs-executor.ts</span></span>\n<span data-line=\"\"><span>        shell-ro-executor.ts</span></span>\n<span data-line=\"\"><span>        shell-rw-executor.ts</span></span>\n<span data-line=\"\"><span>      storage/</span></span>\n<span data-line=\"\"><span>        audit-repo.ts</span></span>\n<span data-line=\"\"><span>        state-repo.ts</span></span>\n<span data-line=\"\"><span>    interface/</span></span>\n<span data-line=\"\"><span>      http/</span></span>\n<span data-line=\"\"><span>        execution-controller.ts</span></span>\n<span data-line=\"\"><span>      cli/</span></span>\n<span data-line=\"\"><span>        execution-debug.ts</span></span>\n<span data-line=\"\"><span>    index.ts</span></span>\n<span data-line=\"\"><span>  tests/</span></span>\n<span data-line=\"\"><span>    unit/</span></span>\n<span data-line=\"\"><span>    integration/</span></span>\n<span data-line=\"\"><span>    contract/</span></span></code></pre></figure>\n<hr>\n<h1 id=\"9-三条硬规则\">9. 三条硬规则</h1>\n<h2 id=\"规则一\">规则一</h2>\n<p><strong>模型永远不能直接拿到 unrestricted shell。</strong></p>\n<h2 id=\"规则二\">规则二</h2>\n<p><strong>所有有副作用的动作，必须可验证。</strong></p>\n<h2 id=\"规则三\">规则三</h2>\n<p><strong>所有高风险动作，必须可中断、可回滚、可追责。</strong></p>\n<hr>\n<h1 id=\"10-你现在最适合的演进路径\">10. 你现在最适合的演进路径</h1>\n<h2 id=\"第一步\">第一步</h2>\n<p>把裸 shell 拆成受控工具：</p>\n<ul>\n<li>\n<p><code>fs.list_shortcuts</code></p>\n</li>\n<li>\n<p><code>fs.inspect_shortcut</code></p>\n</li>\n<li>\n<p><code>fs.recycle_item</code></p>\n</li>\n<li>\n<p><code>shell.readonly</code></p>\n</li>\n</ul>\n<h2 id=\"第二步\">第二步</h2>\n<p>加 Policy Engine + 路径白名单。</p>\n<h2 id=\"第三步\">第三步</h2>\n<p>加 Post-Execution Verifier。</p>\n<h2 id=\"第四步\">第四步</h2>\n<p>加 Approval Gate。</p>\n<h2 id=\"第五步\">第五步</h2>\n<p>再做统一状态机和审计回放。</p>\n<hr>\n<h1 id=\"11-一句话总结\">11. 一句话总结</h1>\n<p>你要的工业级 AI 执行控制架构，本质上是：</p>\n<blockquote>\n<p><strong>模型提出动作，控制平面裁决动作，执行器受限落地，校验器证明结果。</strong></p>\n</blockquote>\n<p>不是“让 AI 更自由”，而是：</p>\n<blockquote>\n<p><strong>让 AI 只在被约束的轨道里高效工作。</strong></p>\n</blockquote>\n<p>如果你要，我下一步可以直接给你这套架构的 <strong>模块接口定义 + TypeScript 骨架代码</strong>。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "ai-执行控制架构",
+        "text": "AI 执行控制架构"
+      },
+      {
+        "depth": 2,
+        "slug": "当前部署决策-2026-04-24",
+        "text": "当前部署决策（2026-04-24）"
+      },
+      {
+        "depth": 3,
+        "slug": "已定结论",
+        "text": "已定结论"
+      },
+      {
+        "depth": 3,
+        "slug": "为什么不是-170",
+        "text": "为什么不是 170"
+      },
+      {
+        "depth": 3,
+        "slug": "为什么不是-121",
+        "text": "为什么不是 121"
+      },
+      {
+        "depth": 3,
+        "slug": "新-heavy-worker-node-的职责边界",
+        "text": "新 heavy worker node 的职责边界"
+      },
+      {
+        "depth": 3,
+        "slug": "推荐最低规格",
+        "text": "推荐最低规格"
+      },
+      {
+        "depth": 3,
+        "slug": "当前执行拓扑定版",
+        "text": "当前执行拓扑定版"
+      },
+      {
+        "depth": 3,
+        "slug": "第一阶段实施清单",
+        "text": "第一阶段实施清单"
+      },
+      {
+        "depth": 3,
+        "slug": "当前不做的事",
+        "text": "当前不做的事"
+      },
+      {
+        "depth": 1,
+        "slug": "1-总体形态",
+        "text": "1. 总体形态"
+      },
+      {
+        "depth": 1,
+        "slug": "2-分层职责",
+        "text": "2. 分层职责"
+      },
+      {
+        "depth": 2,
+        "slug": "a-api-gateway",
+        "text": "A. API Gateway"
+      },
+      {
+        "depth": 2,
+        "slug": "b-model-router",
+        "text": "B. Model Router"
+      },
+      {
+        "depth": 2,
+        "slug": "c-execution-control-plane",
+        "text": "C. Execution Control Plane"
+      },
+      {
+        "depth": 1,
+        "slug": "3-八个核心模块",
+        "text": "3. 八个核心模块"
+      },
+      {
+        "depth": 2,
+        "slug": "3-1-tool-registry",
+        "text": "3.1 Tool Registry"
+      },
+      {
+        "depth": 2,
+        "slug": "3-2-policy-engine",
+        "text": "3.2 Policy Engine"
+      },
+      {
+        "depth": 3,
+        "slug": "全局策略",
+        "text": "全局策略"
+      },
+      {
+        "depth": 3,
+        "slug": "工作区策略",
+        "text": "工作区策略"
+      },
+      {
+        "depth": 3,
+        "slug": "任务策略",
+        "text": "任务策略"
+      },
+      {
+        "depth": 2,
+        "slug": "3-3-risk-scorer",
+        "text": "3.3 Risk Scorer"
+      },
+      {
+        "depth": 2,
+        "slug": "3-4-planner-validator",
+        "text": "3.4 Planner / Validator"
+      },
+      {
+        "depth": 2,
+        "slug": "3-5-approval-gate",
+        "text": "3.5 Approval Gate"
+      },
+      {
+        "depth": 3,
+        "slug": "auto",
+        "text": "Auto"
+      },
+      {
+        "depth": 3,
+        "slug": "silent-checkpoint",
+        "text": "Silent checkpoint"
+      },
+      {
+        "depth": 3,
+        "slug": "human-approval",
+        "text": "Human approval"
+      },
+      {
+        "depth": 2,
+        "slug": "3-6-sandboxed-executors",
+        "text": "3.6 Sandboxed Executors"
+      },
+      {
+        "depth": 3,
+        "slug": "shell-ro-executor",
+        "text": "shell_ro_executor"
+      },
+      {
+        "depth": 3,
+        "slug": "shell-rw-executor",
+        "text": "shell_rw_executor"
+      },
+      {
+        "depth": 3,
+        "slug": "network-executor",
+        "text": "network_executor"
+      },
+      {
+        "depth": 3,
+        "slug": "browser-executor",
+        "text": "browser_executor"
+      },
+      {
+        "depth": 2,
+        "slug": "3-7-state-store",
+        "text": "3.7 State Store"
+      },
+      {
+        "depth": 2,
+        "slug": "3-8-audit-replay-observability",
+        "text": "3.8 Audit / Replay / Observability"
+      },
+      {
+        "depth": 3,
+        "slug": "decision-log",
+        "text": "Decision log"
+      },
+      {
+        "depth": 3,
+        "slug": "action-log",
+        "text": "Action log"
+      },
+      {
+        "depth": 3,
+        "slug": "verification-log",
+        "text": "Verification log"
+      },
+      {
+        "depth": 1,
+        "slug": "4-控制流",
+        "text": "4. 控制流"
+      },
+      {
+        "depth": 2,
+        "slug": "4-1-标准执行流",
+        "text": "4.1 标准执行流"
+      },
+      {
+        "depth": 2,
+        "slug": "4-2-后置校验",
+        "text": "4.2 后置校验"
+      },
+      {
+        "depth": 1,
+        "slug": "5-工业级状态机",
+        "text": "5. 工业级状态机"
+      },
+      {
+        "depth": 1,
+        "slug": "6-你的系统具体怎么插",
+        "text": "6. 你的系统具体怎么插"
+      },
+      {
+        "depth": 1,
+        "slug": "7-最小可落地版本",
+        "text": "7. 最小可落地版本"
+      },
+      {
+        "depth": 1,
+        "slug": "8-推荐目录结构",
+        "text": "8. 推荐目录结构"
+      },
+      {
+        "depth": 1,
+        "slug": "9-三条硬规则",
+        "text": "9. 三条硬规则"
+      },
+      {
+        "depth": 2,
+        "slug": "规则一",
+        "text": "规则一"
+      },
+      {
+        "depth": 2,
+        "slug": "规则二",
+        "text": "规则二"
+      },
+      {
+        "depth": 2,
+        "slug": "规则三",
+        "text": "规则三"
+      },
+      {
+        "depth": 1,
+        "slug": "10-你现在最适合的演进路径",
+        "text": "10. 你现在最适合的演进路径"
+      },
+      {
+        "depth": 2,
+        "slug": "第一步",
+        "text": "第一步"
+      },
+      {
+        "depth": 2,
+        "slug": "第二步",
+        "text": "第二步"
+      },
+      {
+        "depth": 2,
+        "slug": "第三步",
+        "text": "第三步"
+      },
+      {
+        "depth": 2,
+        "slug": "第四步",
+        "text": "第四步"
+      },
+      {
+        "depth": 2,
+        "slug": "第五步",
+        "text": "第五步"
+      },
+      {
+        "depth": 1,
+        "slug": "11-一句话总结",
+        "text": "11. 一句话总结"
+      }
+    ],
+    "detailPath": "articles/md_457b4e8f1e42.json"
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_37ce4937024c",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E5%B7%A5%E7%A8%8B%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%20%E5%B7%A5%E7%A8%8B%E8%BE%B9%E7%95%8C%E7%BA%A6%E6%9D%9F%20%E5%BE%88%E9%87%8D%E8%A6%81.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/工程编程规范 工程边界约束 很重要.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/工程编程规范 工程边界约束 很重要.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E5%B7%A5%E7%A8%8B%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%20%E5%B7%A5%E7%A8%8B%E8%BE%B9%E7%95%8C%E7%BA%A6%E6%9D%9F%20%E5%BE%88%E9%87%8D%E8%A6%81.md",
+    "slug": "blog-编程规范-工程编程规范-工程边界约束-很重要",
+    "title": "工程编程规范 工程边界约束 很重要",
+    "summary": "会，而且 好的工程基本都会写清楚这些信息 。但不是随便写一堆，而是 有固定位置和分层规范的 。我给你讲“真实工程里怎么做”，你照着这个来，以后就不会乱。 🧠 一句话结论 🔥 一、最常见的3个文件（核心） 🥇 1. README.md（必须有） 👉 用来写： 示例（你应该写成这样） 👉 作用...",
+    "description": "会，而且 好的工程基本都会写清楚这些信息 。但不是随便写一堆，而是 有固定位置和分层规范的 。我给你讲“真实工程里怎么做”，你照着这个来，以后就不会乱。 🧠 一句话结论 🔥 一、最常见的3个文件（核心） 🥇 1. README.md（必须有） 👉 用来写： 示例（你应该写成这样） 👉 作用...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/工程编程规范 工程边界约束 很重要.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/工程编程规范 工程边界约束 很重要.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E5%B7%A5%E7%A8%8B%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%20%E5%B7%A5%E7%A8%8B%E8%BE%B9%E7%95%8C%E7%BA%A6%E6%9D%9F%20%E5%BE%88%E9%87%8D%E8%A6%81.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "工程编程规范 工程边界约束 很重要",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "工程编程规范 工程边界约束 很重要"
+      ],
+      "subtitle": "会，而且 好的工程基本都会写清楚这些信息 。但不是随便写一堆，而是 有固定位置和分层规范的 。我给你讲“真实工程里怎么做”，你照着这个来，以后就不会乱。 🧠 一句话结论 🔥 一、最常见的3个文件（核心） 🥇 1. README.md（必须有） 👉 用来写： 示例（你应该写成这样） 👉 作用..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "会，而且**好的工程基本都会写清楚这些信息**。但不是随便写一堆，而是**有固定位置和分层规范的**。我给你讲“真实工程里怎么做”，你照着这个来，以后就不会乱。\n\n---\n\n# 🧠 一句话结论\n\n```text\n✔ 会写\n✔ 但不是写在一个地方\n✔ 是分文件、分层记录\n```\n\n---\n\n# 🔥 一、最常见的3个文件（核心）\n\n---\n\n## 🥇 1. README.md（必须有）\n\n👉 用来写：\n\n```text\n✔ 项目介绍\n✔ 本地怎么跑\n✔ 服务器部署在哪\n✔ 基本访问地址\n```\n\n---\n\n### 示例（你应该写成这样）\n\n```md\n# aiclient2api Gateway\n\n## 部署信息\n\n- Server: 170.106.179.226\n- Path: /srv/aiclient-2-api-mock\n- Docker: aiclient2api\n\n## 访问地址\n\n- API: http://170.106.179.226:3301/v1\n- Health: http://170.106.179.226:3301/health\n\n## 仓库\n\n- GitHub: https://github.com/xxx/xxx\n```\n\n---\n\n👉 作用：\n\n```text\n任何人打开仓库 → 立刻知道系统在哪跑\n```\n\n---\n\n## 🥈 2. .env / config.json（运行配置）\n\n👉 用来写：\n\n```text\n✔ API key\n✔ base_url\n✔ provider\n✔ 环境变量\n```\n\n---\n\n⚠️ 注意：\n\n```text\n❌ 不写服务器IP说明\n❌ 不写说明文档\n```\n\n👉 这里只放：\n\n```text\n“机器要读的配置”\n```\n\n---\n\n## 🥉 3. DEPLOY.md（或者 docs/deploy.md）\n\n👉 专门写部署流程（专业项目都会有）\n\n---\n\n### 示例\n\n```md\n# Deploy Guide\n\n## Server\n\n- Host: 170.106.179.226\n- User: ubuntu\n\n## Steps\n\n1. 拉代码\n2. docker build\n3. docker run\n\n## Runtime Path\n\n- /srv/aiclient-2-api-mock\n```\n\n---\n\n👉 作用：\n\n```text\n别人能一键复现你的部署\n```\n\n---\n\n# 🧱 二、更专业一点的团队会这样分\n\n---\n\n## 📁 标准结构\n\n```text\nproject/\n├── README.md          ← 对外说明\n├── docs/\n│   ├── deploy.md      ← 部署说明\n│   ├── architecture.md← 架构图\n│   └── runbook.md     ← 运维手册\n├── .env.example       ← 环境模板\n├── configs/           ← 运行配置\n└── src/\n```\n\n---\n\n# 🔥 三、真正厉害的人还会写这个（你可以学）\n\n---\n\n## 🧠 runbook.md（运维手册）\n\n写这种：\n\n```text\n✔ 服务挂了怎么重启\n✔ 日志在哪\n✔ 怎么排查问题\n```\n\n---\n\n### 示例\n\n```md\n# Runbook\n\n## Restart\n\ndocker restart aiclient2api\n\n## Logs\n\ndocker logs -f aiclient2api\n\n## Common Issues\n\n- No healthy provider → 检查 provider_pools.json\n```\n\n---\n\n👉 这个非常重要：\n\n```text\n未来你自己都会感谢你现在写这个\n```\n\n---\n\n# 💥 四、你这次为什么会乱\n\n你现在的问题就是：\n\n```text\n❌ 没有“单一真源文档”\n❌ 不知道哪个系统在哪\n❌ 本地 / 远端 / console 混在一起\n```\n\n---\n\n👉 如果你当时有：\n\n```text\nREADME + deploy.md\n```\n\n你根本不会绕一天\n\n---\n\n# 🧠 五、最关键一句话（你必须记住）\n\n```text\n代码是给机器看的\n文档是给人看的\n```\n\n---\n\n# 🚀 六、我给你一个最实用建议（马上做）\n\n你现在立刻建一个文件：\n\n---\n\n## 👉 README.md 写这几行\n\n```md\n# My AI Gateway\n\n## 当前运行环境\n\n- Server: 170.106.179.226\n- Path: /srv/aiclient-2-api-mock\n- Container: aiclient2api\n\n## 当前问题\n\n- gpt-5.4 被路由到 openai-custom\n- openai-custom 不健康\n```\n\n---\n\n👉 你以后：\n\n```text\n任何调试都不会迷路\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\n✔ 好的程序员一定会写这些\n✔ 不写文档 → 一定迷路\n✔ 文档 = 控制复杂度的核心工具\n```\n\n---\n\n# 🚀 如果你要我帮你直接生成一套完整文档\n\n我可以帮你输出：\n\n```text\n✔ README.md（完整）\n✔ deploy.md\n✔ runbook.md\n✔ 架构图\n```\n\n---\n\n你只要说：\n\n```text\n生成文档模板\n```\n\n我给你一套可以直接用的。",
+    "html": "<p>会，而且<strong>好的工程基本都会写清楚这些信息</strong>。但不是随便写一堆，而是<strong>有固定位置和分层规范的</strong>。我给你讲“真实工程里怎么做”，你照着这个来，以后就不会乱。</p>\n<hr>\n<h1 id=\"-一句话结论\">🧠 一句话结论</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 会写</span></span>\n<span data-line=\"\"><span>✔ 但不是写在一个地方</span></span>\n<span data-line=\"\"><span>✔ 是分文件、分层记录</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一最常见的3个文件核心\">🔥 一、最常见的3个文件（核心）</h1>\n<hr>\n<h2 id=\"-1-readmemd必须有\">🥇 1. README.md（必须有）</h2>\n<p>👉 用来写：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 项目介绍</span></span>\n<span data-line=\"\"><span>✔ 本地怎么跑</span></span>\n<span data-line=\"\"><span>✔ 服务器部署在哪</span></span>\n<span data-line=\"\"><span>✔ 基本访问地址</span></span></code></pre></figure>\n<hr>\n<h3 id=\"示例你应该写成这样\">示例（你应该写成这样）</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># aiclient2api Gateway</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 部署信息</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Server: 170.106.179.226</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Path: /srv/aiclient-2-api-mock</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Docker: aiclient2api</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 访问地址</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> API: http://170.106.179.226:3301/v1</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Health: http://170.106.179.226:3301/health</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 仓库</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> GitHub: https://github.com/xxx/xxx</span></span></code></pre></figure>\n<hr>\n<p>👉 作用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>任何人打开仓库 → 立刻知道系统在哪跑</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-2-env--configjson运行配置\">🥈 2. .env / config.json（运行配置）</h2>\n<p>👉 用来写：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ API key</span></span>\n<span data-line=\"\"><span>✔ base_url</span></span>\n<span data-line=\"\"><span>✔ provider</span></span>\n<span data-line=\"\"><span>✔ 环境变量</span></span></code></pre></figure>\n<hr>\n<p>⚠️ 注意：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 不写服务器IP说明</span></span>\n<span data-line=\"\"><span>❌ 不写说明文档</span></span></code></pre></figure>\n<p>👉 这里只放：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>“机器要读的配置”</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-3-deploymd或者-docsdeploymd\">🥉 3. DEPLOY.md（或者 docs/deploy.md）</h2>\n<p>👉 专门写部署流程（专业项目都会有）</p>\n<hr>\n<h3 id=\"示例\">示例</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># Deploy Guide</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Server</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Host: 170.106.179.226</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> User: ubuntu</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Steps</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">1.</span><span style=\"color:#E1E4E8\"> 拉代码</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">2.</span><span style=\"color:#E1E4E8\"> docker build</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">3.</span><span style=\"color:#E1E4E8\"> docker run</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Runtime Path</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> /srv/aiclient-2-api-mock</span></span></code></pre></figure>\n<hr>\n<p>👉 作用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>别人能一键复现你的部署</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二更专业一点的团队会这样分\">🧱 二、更专业一点的团队会这样分</h1>\n<hr>\n<h2 id=\"-标准结构\">📁 标准结构</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>project/</span></span>\n<span data-line=\"\"><span>├── README.md          ← 对外说明</span></span>\n<span data-line=\"\"><span>├── docs/</span></span>\n<span data-line=\"\"><span>│   ├── deploy.md      ← 部署说明</span></span>\n<span data-line=\"\"><span>│   ├── architecture.md← 架构图</span></span>\n<span data-line=\"\"><span>│   └── runbook.md     ← 运维手册</span></span>\n<span data-line=\"\"><span>├── .env.example       ← 环境模板</span></span>\n<span data-line=\"\"><span>├── configs/           ← 运行配置</span></span>\n<span data-line=\"\"><span>└── src/</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三真正厉害的人还会写这个你可以学\">🔥 三、真正厉害的人还会写这个（你可以学）</h1>\n<hr>\n<h2 id=\"-runbookmd运维手册\">🧠 runbook.md（运维手册）</h2>\n<p>写这种：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 服务挂了怎么重启</span></span>\n<span data-line=\"\"><span>✔ 日志在哪</span></span>\n<span data-line=\"\"><span>✔ 怎么排查问题</span></span></code></pre></figure>\n<hr>\n<h3 id=\"示例-1\">示例</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># Runbook</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Restart</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">docker restart aiclient2api</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Logs</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">docker logs -f aiclient2api</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## Common Issues</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> No healthy provider → 检查 provider_pools.json</span></span></code></pre></figure>\n<hr>\n<p>👉 这个非常重要：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>未来你自己都会感谢你现在写这个</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四你这次为什么会乱\">💥 四、你这次为什么会乱</h1>\n<p>你现在的问题就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 没有“单一真源文档”</span></span>\n<span data-line=\"\"><span>❌ 不知道哪个系统在哪</span></span>\n<span data-line=\"\"><span>❌ 本地 / 远端 / console 混在一起</span></span></code></pre></figure>\n<hr>\n<p>👉 如果你当时有：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>README + deploy.md</span></span></code></pre></figure>\n<p>你根本不会绕一天</p>\n<hr>\n<h1 id=\"-五最关键一句话你必须记住\">🧠 五、最关键一句话（你必须记住）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>代码是给机器看的</span></span>\n<span data-line=\"\"><span>文档是给人看的</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六我给你一个最实用建议马上做\">🚀 六、我给你一个最实用建议（马上做）</h1>\n<p>你现在立刻建一个文件：</p>\n<hr>\n<h2 id=\"-readmemd-写这几行\">👉 README.md 写这几行</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\"># My AI Gateway</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 当前运行环境</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Server: 170.106.179.226</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Path: /srv/aiclient-2-api-mock</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> Container: aiclient2api</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 当前问题</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> gpt-5.4 被路由到 openai-custom</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> openai-custom 不健康</span></span></code></pre></figure>\n<hr>\n<p>👉 你以后：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>任何调试都不会迷路</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 好的程序员一定会写这些</span></span>\n<span data-line=\"\"><span>✔ 不写文档 → 一定迷路</span></span>\n<span data-line=\"\"><span>✔ 文档 = 控制复杂度的核心工具</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你要我帮你直接生成一套完整文档\">🚀 如果你要我帮你直接生成一套完整文档</h1>\n<p>我可以帮你输出：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ README.md（完整）</span></span>\n<span data-line=\"\"><span>✔ deploy.md</span></span>\n<span data-line=\"\"><span>✔ runbook.md</span></span>\n<span data-line=\"\"><span>✔ 架构图</span></span></code></pre></figure>\n<hr>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>生成文档模板</span></span></code></pre></figure>\n<p>我给你一套可以直接用的。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话结论",
+        "text": "🧠 一句话结论"
+      },
+      {
+        "depth": 1,
+        "slug": "一-最常见的3个文件-核心",
+        "text": "🔥 一、最常见的3个文件（核心）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-readme-md-必须有",
+        "text": "🥇 1. README.md（必须有）"
+      },
+      {
+        "depth": 3,
+        "slug": "示例-你应该写成这样",
+        "text": "示例（你应该写成这样）"
+      },
+      {
+        "depth": 1,
+        "slug": "aiclient2api-gateway",
+        "text": "aiclient2api Gateway"
+      },
+      {
+        "depth": 2,
+        "slug": "部署信息",
+        "text": "部署信息"
+      },
+      {
+        "depth": 2,
+        "slug": "访问地址",
+        "text": "访问地址"
+      },
+      {
+        "depth": 2,
+        "slug": "仓库",
+        "text": "仓库"
+      },
+      {
+        "depth": 2,
+        "slug": "2-env-config-json-运行配置",
+        "text": "🥈 2. .env / config.json（运行配置）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-deploy-md-或者-docs-deploy-md",
+        "text": "🥉 3. DEPLOY.md（或者 docs/deploy.md）"
+      },
+      {
+        "depth": 3,
+        "slug": "示例",
+        "text": "示例"
+      },
+      {
+        "depth": 1,
+        "slug": "deploy-guide",
+        "text": "Deploy Guide"
+      },
+      {
+        "depth": 2,
+        "slug": "server",
+        "text": "Server"
+      },
+      {
+        "depth": 2,
+        "slug": "steps",
+        "text": "Steps"
+      },
+      {
+        "depth": 2,
+        "slug": "runtime-path",
+        "text": "Runtime Path"
+      },
+      {
+        "depth": 1,
+        "slug": "二-更专业一点的团队会这样分",
+        "text": "🧱 二、更专业一点的团队会这样分"
+      },
+      {
+        "depth": 2,
+        "slug": "标准结构",
+        "text": "📁 标准结构"
+      },
+      {
+        "depth": 1,
+        "slug": "三-真正厉害的人还会写这个-你可以学",
+        "text": "🔥 三、真正厉害的人还会写这个（你可以学）"
+      },
+      {
+        "depth": 2,
+        "slug": "runbook-md-运维手册",
+        "text": "🧠 runbook.md（运维手册）"
+      },
+      {
+        "depth": 3,
+        "slug": "示例",
+        "text": "示例"
+      },
+      {
+        "depth": 1,
+        "slug": "runbook",
+        "text": "Runbook"
+      },
+      {
+        "depth": 2,
+        "slug": "restart",
+        "text": "Restart"
+      },
+      {
+        "depth": 2,
+        "slug": "logs",
+        "text": "Logs"
+      },
+      {
+        "depth": 2,
+        "slug": "common-issues",
+        "text": "Common Issues"
+      },
+      {
+        "depth": 1,
+        "slug": "四-你这次为什么会乱",
+        "text": "💥 四、你这次为什么会乱"
+      },
+      {
+        "depth": 1,
+        "slug": "五-最关键一句话-你必须记住",
+        "text": "🧠 五、最关键一句话（你必须记住）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-我给你一个最实用建议-马上做",
+        "text": "🚀 六、我给你一个最实用建议（马上做）"
+      },
+      {
+        "depth": 2,
+        "slug": "readme-md-写这几行",
+        "text": "👉 README.md 写这几行"
+      },
+      {
+        "depth": 1,
+        "slug": "my-ai-gateway",
+        "text": "My AI Gateway"
+      },
+      {
+        "depth": 2,
+        "slug": "当前运行环境",
+        "text": "当前运行环境"
+      },
+      {
+        "depth": 2,
+        "slug": "当前问题",
+        "text": "当前问题"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要我帮你直接生成一套完整文档",
+        "text": "🚀 如果你要我帮你直接生成一套完整文档"
+      }
+    ],
+    "detailPath": "articles/md_37ce4937024c.json"
+  }
+}

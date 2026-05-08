@@ -3,15 +3,17 @@ import path from 'node:path';
 
 const rootDir = process.cwd();
 const appDir = 'apps/web';
-const postsDir = resolvePath(`${appDir}/src/content/posts`);
+const runtimeContentIndexPath = resolvePath('public-data/runtime/content-index.json');
+const publicRuntimeContentIndexPath = resolvePath(`${appDir}/public/runtime/content-index.json`);
 const rssPagePath = resolvePath(`${appDir}/src/pages/rss.xml.ts`);
 const searchPagePath = resolvePath(`${appDir}/src/pages/search.astro`);
 const issues = [];
-const canonicalOwners = new Map();
 const slugOwners = new Map();
-const redirectOwners = new Map();
 
-validatePosts();
+validateRuntimeIndexJson(runtimeContentIndexPath, 'Runtime article index');
+validateRuntimeIndexJson(publicRuntimeContentIndexPath, 'Public runtime article index');
+validateRuntimeArticles();
+validateRuntimeCollections();
 validateSiteSupportPages();
 
 if (issues.length) {
@@ -21,97 +23,174 @@ if (issues.length) {
 
 console.log('Content governance validation passed');
 
-function validatePosts() {
-  const postFiles = listMarkdownFiles(postsDir);
-
-  if (!postFiles.length) {
-    issues.push(`No post files were found in ${appDir}/src/content/posts`);
+function validateRuntimeIndexJson(filePath, label) {
+  if (!fs.existsSync(filePath)) {
+    issues.push(`${label} is missing: ${path.relative(rootDir, filePath)}`);
     return;
   }
 
-  postFiles.forEach((absolutePath) => {
-    const relativePath = toRelativePath(absolutePath);
-    const source = readText(absolutePath);
-    const frontmatter = extractFrontmatter(source, relativePath);
-
-    if (!frontmatter) {
-      return;
-    }
-
-    const slug = readScalarField(frontmatter, 'slug');
-    const description = readScalarField(frontmatter, 'description');
-    const summary = readScalarField(frontmatter, 'summary');
-    const canonical = readScalarField(frontmatter, 'canonical');
-    const redirectFrom = readListField(frontmatter, 'redirectFrom');
-    const markdownLinks = extractMarkdownLinks(source);
-
-    if (!slug) {
-      issues.push(`Post is missing slug: ${relativePath}`);
-    } else {
-      recordUnique(slugOwners, slug, `Duplicate canonical slug: ${slug}`);
-    }
-
-    if (!description && !summary) {
-      issues.push(`Post must provide description or summary: ${relativePath}`);
-    }
-
-    if (summary && summary.length < 24) {
-      issues.push(`Post summary is too short to be useful: ${relativePath}`);
-    }
-
-    if (canonical) {
-      if (!/^https?:\/\//.test(canonical)) {
-        issues.push(`Canonical URL must be absolute: ${relativePath}`);
-      }
-
-      recordUnique(canonicalOwners, canonical, `Duplicate canonical URL: ${canonical}`);
-    }
-
-    redirectFrom.forEach((alias) => {
-      if (!alias) {
-        issues.push(`redirectFrom contains an empty alias: ${relativePath}`);
-        return;
-      }
-
-      if (/^https?:\/\//.test(alias)) {
-        issues.push(`redirectFrom must use slug aliases, not full URLs: ${relativePath}`);
-      }
-
-      if (alias.includes('/')) {
-        issues.push(`redirectFrom alias must be a single slug segment: ${relativePath} -> ${alias}`);
-      }
-
-      if (slug && alias === slug) {
-        issues.push(`redirectFrom alias duplicates the canonical slug: ${relativePath} -> ${alias}`);
-      }
-
-      recordUnique(redirectOwners, alias, `Duplicate redirectFrom alias: ${alias}`);
-    });
-
-    markdownLinks.forEach((link) => {
-      if (!isLocalMarkdownLink(link.target)) {
-        return;
-      }
-
-      const resolvedTarget = path.resolve(path.dirname(absolutePath), link.target);
-      const normalizedTarget = toRelativePath(resolvedTarget);
-
-      if (!isInsideDirectory(resolvedTarget, rootDir)) {
-        issues.push(`Markdown link escapes repository root: ${relativePath} -> ${link.target}`);
-        return;
-      }
-
-      if (!fs.existsSync(resolvedTarget)) {
-        issues.push(`Markdown link target is missing: ${relativePath} -> ${normalizedTarget}`);
-      }
-    });
-  });
-
-  for (const alias of redirectOwners.keys()) {
-    if (slugOwners.has(alias)) {
-      issues.push(`redirectFrom alias collides with an existing canonical slug: ${alias}`);
-    }
+  try {
+    JSON.parse(readText(filePath));
+  } catch (error) {
+    issues.push(`${label} must be valid JSON: ${error.message}`);
   }
+}
+
+function validateRuntimeArticles() {
+  if (!fs.existsSync(runtimeContentIndexPath)) {
+    issues.push('Runtime article index is missing: public-data/runtime/content-index.json');
+    return;
+  }
+
+  const index = JSON.parse(readText(runtimeContentIndexPath));
+  const articles = Array.isArray(index.articles) ? index.articles : [];
+
+  if (!articles.length) {
+    issues.push('Runtime article index does not contain any articles');
+    return;
+  }
+
+  articles.forEach((article, indexNumber) => {
+    const label = article?.slug || article?.id || `article[${indexNumber}]`;
+
+    if (article?.type !== 'MarkdownObject') {
+      issues.push(`Runtime article must be a MarkdownObject: ${label}`);
+    }
+
+    if (!article?.slug) {
+      issues.push(`Runtime article is missing slug: ${label}`);
+    } else {
+      recordUnique(slugOwners, article.slug, `Duplicate runtime article slug: ${article.slug}`);
+    }
+
+    if (!article?.title) {
+      issues.push(`Runtime article is missing title: ${label}`);
+    }
+
+    if (!article?.summary && !article?.description) {
+      issues.push(`Runtime article must provide summary or description: ${label}`);
+    }
+
+    if (!article?.date) {
+      issues.push(`Runtime article is missing date: ${label}`);
+    }
+
+    if (!article?.body && !article?.html) {
+      issues.push(`Runtime article must provide body or html: ${label}`);
+    }
+
+    if (article?.projection?.feed !== true) {
+      issues.push(`Runtime article is not enabled for feed projection: ${label}`);
+    }
+
+    if (!article?.sourcePath) {
+      issues.push(`Runtime article is missing sourcePath: ${label}`);
+    }
+
+    if (!article?.openlistPath) {
+      issues.push(`Runtime article is missing openlistPath: ${label}`);
+    } else if (!String(article.openlistPath).startsWith('/openlist/Obsidian/docs/')) {
+      issues.push(`Runtime article openlistPath must use the public OpenList content bus: ${label}`);
+    }
+
+    if (!article?.openlistUrl) {
+      issues.push(`Runtime article is missing openlistUrl: ${label}`);
+    } else if (!String(article.openlistUrl).startsWith('/openlist/Obsidian/docs/')) {
+      issues.push(`Runtime article openlistUrl must use the public OpenList content bus: ${label}`);
+    }
+
+    if (String(article?.source || '').startsWith('/home/vault')) {
+      issues.push(`Runtime article source must not expose the Linux hot mirror path: ${label}`);
+    }
+
+    if (article?.sourceRoot !== 'vault') {
+      issues.push(`Runtime article must declare sourceRoot=vault: ${label}`);
+    }
+
+    if (!['post', 'note', 'paper', 'project', 'book-note', 'codex'].includes(article?.kind)) {
+      issues.push(`Runtime article has invalid kind: ${label}`);
+    }
+
+    if (!Array.isArray(article?.folderTags)) {
+      issues.push(`Runtime article is missing folderTags array: ${label}`);
+    }
+
+    if (article?.derivedTaxonomy?.mode !== 'filesystem-frontmatter-wikilink-derived') {
+      issues.push(`Runtime article must declare filesystem/frontmatter/wikilink derived taxonomy mode: ${label}`);
+    }
+
+    if (article?.derivedTaxonomy?.semanticAuthority !== false) {
+      issues.push(`Runtime article derived taxonomy must not claim semantic authority: ${label}`);
+    }
+
+    if (!article?.semantic || article.semantic.authority !== false || article.semantic.source !== 'sidecar') {
+      issues.push(`Runtime article semantic metadata must be a non-authoritative sidecar slot: ${label}`);
+    }
+
+    if (!['public', 'private', 'draft'].includes(article?.visibility)) {
+      issues.push(`Runtime article has invalid visibility: ${label}`);
+    }
+
+    if (article?.visibility !== 'public') {
+      issues.push(`Runtime article must not project private or draft content: ${label}`);
+    }
+
+    if (typeof article?.published !== 'boolean') {
+      issues.push(`Runtime article is missing published boolean: ${label}`);
+    }
+
+    if (typeof article?.runtimeFeed !== 'boolean') {
+      issues.push(`Runtime article is missing runtimeFeed boolean: ${label}`);
+    }
+
+    if (!article?.published) {
+      issues.push(`Runtime article must be published by default docs projection or explicit published=true: ${label}`);
+    }
+
+    if (!article?.relations || !Array.isArray(article.relations.wikilinks) || !Array.isArray(article.relations.backlinks) || !Array.isArray(article.relations.assets)) {
+      issues.push(`Runtime article is missing normalized relations: ${label}`);
+    }
+
+    if (!article?.card?.eyebrow || !Array.isArray(article.card.chips) || !article.card.chips.length || !article.card.subtitle) {
+      issues.push(`Runtime article is missing derived card metadata: ${label}`);
+    }
+  });
+}
+
+function validateRuntimeCollections() {
+  if (!fs.existsSync(runtimeContentIndexPath)) return;
+
+  const index = JSON.parse(readText(runtimeContentIndexPath));
+  const collections = Array.isArray(index.collections) ? index.collections : [];
+
+  if (!collections.length) {
+    issues.push('Runtime content index must expose KnowledgeCollection projections');
+    return;
+  }
+
+  collections.forEach((collection, indexNumber) => {
+    const label = collection?.id || `collection[${indexNumber}]`;
+
+    if (collection?.type !== 'KnowledgeCollection') {
+      issues.push(`Runtime collection must be a KnowledgeCollection: ${label}`);
+    }
+
+    if (!collection?.title || !collection?.description) {
+      issues.push(`Runtime collection is missing title or description: ${label}`);
+    }
+
+    if (!Array.isArray(collection?.objects) || !collection.objects.length) {
+      issues.push(`Runtime collection must contain object refs: ${label}`);
+    }
+
+    if (!collection?.card?.eyebrow || !Array.isArray(collection.card.chips) || !collection.card.chips.length) {
+      issues.push(`Runtime collection is missing derived card metadata: ${label}`);
+    }
+
+    if (collection?.projections?.home !== true || collection?.projections?.graph !== true || collection?.projections?.search !== true) {
+      issues.push(`Runtime collection must declare home/graph/search projections: ${label}`);
+    }
+  });
 }
 
 function validateSiteSupportPages() {
@@ -124,7 +203,10 @@ function validateSiteSupportPages() {
       issues.push('RSS metadata still uses the old Site v2 wording');
     }
 
-    if (!rssSource.includes('description: post.data.description ?? post.data.summary ??')) {
+    if (
+      !rssSource.includes('description: post.data.description ?? post.data.summary ??') &&
+      !rssSource.includes('description: article.description || article.summary')
+    ) {
       issues.push('RSS feed is not yet reusing summary as the fallback description field');
     }
   }
@@ -152,71 +234,6 @@ function resolvePath(relativePath) {
   return path.resolve(rootDir, relativePath);
 }
 
-function toRelativePath(absolutePath) {
-  return path.relative(rootDir, absolutePath).replace(/\\/g, '/');
-}
-
-function listMarkdownFiles(directory) {
-  return fs
-    .readdirSync(directory, { withFileTypes: true })
-    .flatMap((entry) => {
-      const absolutePath = path.join(directory, entry.name);
-      if (entry.isDirectory()) {
-        return listMarkdownFiles(absolutePath);
-      }
-
-      return /\.mdx?$/i.test(entry.name) ? [absolutePath] : [];
-    });
-}
-
-function extractFrontmatter(source, relativePath) {
-  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!match) {
-    issues.push(`Post is missing frontmatter block: ${relativePath}`);
-    return null;
-  }
-
-  return match[1];
-}
-
-function readScalarField(frontmatter, fieldName) {
-  const pattern = new RegExp(`^${escapeRegExp(fieldName)}:\\s+(.+)$`, 'm');
-  const match = frontmatter.match(pattern);
-  return match ? match[1].trim() : '';
-}
-
-function readListField(frontmatter, fieldName) {
-  const lines = frontmatter.split(/\r?\n/);
-  const values = [];
-  let inField = false;
-
-  for (const line of lines) {
-    if (!inField) {
-      if (line.trim() === `${fieldName}:`) {
-        inField = true;
-      }
-      continue;
-    }
-
-    if (/^\s*-\s+/.test(line)) {
-      values.push(line.replace(/^\s*-\s+/, '').trim());
-      continue;
-    }
-
-    if (/^\s*$/.test(line)) {
-      continue;
-    }
-
-    if (/^[A-Za-z0-9_-]+:\s*/.test(line)) {
-      break;
-    }
-
-    break;
-  }
-
-  return values;
-}
-
 function recordUnique(ownerMap, value, message) {
   if (ownerMap.has(value)) {
     issues.push(message);
@@ -224,24 +241,4 @@ function recordUnique(ownerMap, value, message) {
   }
 
   ownerMap.set(value, true);
-}
-
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function extractMarkdownLinks(source) {
-  return Array.from(source.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g), ([, text, target]) => ({
-    text,
-    target: target.trim()
-  }));
-}
-
-function isLocalMarkdownLink(target) {
-  return !/^(https?:|mailto:|#|\/)/.test(target) && /\.md(#.*)?$/i.test(target);
-}
-
-function isInsideDirectory(targetPath, directoryPath) {
-  const relativePath = path.relative(directoryPath, targetPath);
-  return relativePath !== '' && !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
 }

@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_2a24104e39a7",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/MCP%20%E6%B8%85%E5%8D%95%E6%80%BB%E8%A1%A8.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/MCP 清单总表.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/MCP 清单总表.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/MCP%20%E6%B8%85%E5%8D%95%E6%80%BB%E8%A1%A8.md",
+    "slug": "agent-mcp-清单总表",
+    "title": "MCP 清单总表",
+    "summary": "MCP 清单总表 2026 04 19 起，本文作为 docs/agent 下 MCP 管理的 canonical 文档，吸收 MCP 体系与安装管理规范.md 与 MCP 安装记录（2026 04 17）.md；..\\codex knowledge\\50 tools\\docx automation...",
+    "description": "MCP 清单总表 2026 04 19 起，本文作为 docs/agent 下 MCP 管理的 canonical 文档，吸收 MCP 体系与安装管理规范.md 与 MCP 安装记录（2026 04 17）.md；..\\codex knowledge\\50 tools\\docx automation...",
+    "date": "2026-04-22",
+    "updated": "2026-04-22",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "类-系统运维",
+      "项目-MCP",
+      "形态-总表",
+      "MCP 管理",
+      "agent"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [
+        "类-系统运维",
+        "项目-MCP",
+        "形态-总表"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/MCP 清单总表.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/MCP 清单总表.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/MCP%20%E6%B8%85%E5%8D%95%E6%80%BB%E8%A1%A8.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "MCP",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [
+        "md_f0340fa6cc06"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "类 系统运维",
+        "项目 MCP",
+        "形态 总表",
+        "MCP 管理",
+        "MCP"
+      ],
+      "subtitle": "MCP 清单总表 2026 04 19 起，本文作为 docs/agent 下 MCP 管理的 canonical 文档，吸收 MCP 体系与安装管理规范.md 与 MCP 安装记录（2026 04 17）.md；..\\codex knowledge\\50 tools\\docx automation..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# MCP 清单总表\n\n> 2026-04-19 起，本文作为 `docs/agent` 下 MCP 管理的 canonical 文档，吸收 `MCP 体系与安装管理规范.md` 与 `MCP 安装记录（2026-04-17）.md`；`..\\codex-knowledge\\50-tools\\docx-automation-guide.md` 与 `..\\codex-knowledge\\50-tools\\epub-reading-options.md` 因不属于同一项目/同一交付物，保持独立。\n>\n> 如需继续修改、整合或扩写这份文档的结构与归并方式，先遵循 `C:\\Users\\ASUS-KL\\.codex\\AGENTS.md` 中的文档规则层；维护说明见 `C:\\Users\\ASUS-KL\\.codex\\AGENTS.annotated.md`，不要再并行长出新的总表壳或说明壳。\n\n## 0. 使用导航\n\n这份文档现在是 `docs/agent` 下 MCP 管理的 canonical 文档，负责两类信息：\n\n- 当前 live MCP 注册状态\n- MCP 管理规范与历史安装记录的可追溯归档\n\n边界说明：本文只负责 MCP 专题，不承担项目总体 `current-state` 三件套职责；项目当前总体状态仍先看 `PROJECT-CONTEXT.md`、`SESSION-HANDOFF.md`、`plan.md`。\n\n如果你来这里是为了找资料，直接按下面进：\n\n- 想看当前这台机器实际启用的 MCP -> 继续看本文第 1~5 节\n- 想看“哪些旧说法已经过时” -> 看本文第 6 节\n- 想看 2026-04-17 的历史规范与安装记录原文 -> 看本文后半部分“整合补编（2026-04-19）”\n- 想回到多服务器总体系 -> `Server Operation & Maintenance Manual.md`\n\n## 1. 当前 live 判定基准（2026-04-20）\n\n本页当前以“这台机器现在怎么配”为准，不再以 2026-04-17 的旧快照为准。\n\n当前真源：\n\n- 实际配置文件：`C:\\Users\\ASUS-KL\\.codex\\config.toml`\n- 当前 managed block 生成脚本：`E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1`\n- 当前 repo-managed MCP 根目录：`E:\\My Project\\Atramenti-Console\\codex\\mcps`\n- 当前受托管的配置块标记：\n  - `# BEGIN self-debug-closed-loop managed mcp servers`\n  - `# END self-debug-closed-loop managed mcp servers`\n\n这意味着：\n\n1. 当前 Codex 的 live MCP 清单，应以 `config.toml` 里的 managed block 为准。\n2. 当前路径真源已经切到 `E:\\My Project\\Atramenti-Console\\codex\\mcps`，不是更早文档里写的 `E:\\My Project\\Atramenti-Console\\mcps`。\n3. 旧的 `provision-codex-integration.mjs` 叙述现在只能视为历史来源材料，不能再当作当前注册真源。\n\n## 2. 当前已注册并生效的 MCP 总表\n\n下表按 live `config.toml` 整理；当前 live 条目以实际 managed block 为准。\n\n| MCP 名称 | 类别 | 主入口 | startup timeout | 当前状态 | 说明 |\n| --- | --- | --- | --- | --- | --- |\n| `agent-runtime-mcp` | 运行时探针 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\agent-runtime-mcp\\server.mjs` | - | 已注册 | browser / context / memory readiness 检查 |\n| `chrome-devtools-mcp` | 浏览器调试 | `npx.cmd -y chrome-devtools-mcp@0.20.3` | - | 已注册 | 原始 Chrome DevTools MCP |\n| `chrome-devtools-mcp-wrapper` | 浏览器调试包装层 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\chrome-devtools-mcp-wrapper\\server.mjs` | - | 已注册 | repo-local wrapper，补本地隔离与兼容启动 |\n| `cloud-repo-mcp` | 代码仓库 / 文件读取 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\cloud-repo-mcp\\server.mjs` | - | 已注册 | 云仓库与远程代码资源能力 |\n| `context-store` | 上下文存储 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\context-store\\server.mjs` | - | 已注册 | Roo context-store 探针与能力接入 |\n| `context-store-reranker` | 上下文重排 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\context-store\\reranker\\server.mjs` | - | 已注册 | context-store reranker / 相关性重排 |\n| `core-qmd-dist-src-mcp` | 本地知识检索 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\core\\qmd\\dist\\src\\mcp\\server.js` | - | 已注册 | QMD 文档检索与知识库读取 |\n| `database-ops-mcp` | 数据库检查 / 运维上下文 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\database-ops-mcp\\server.mjs` | - | 已注册 | canonical 数据库检查 MCP；`db-readonly` 仅保留兼容 wrapper |\n| `dev-quality-mcp` | 代码质量 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\dev-quality-mcp\\server.mjs` | - | 已注册 | 结构化质量检查 |\n| `drawio-diagrams` | 图表生成 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\drawio-diagrams\\server.mjs` | - | 已注册 | draw.io 图表写入与渲染 |\n| `experience-mcp` | 经验库 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\experience\\mcp\\server.mjs` | - | 已注册 | experience-manager 读写入口 |\n| `fetch-mcp` | 文档 / 网页摄入 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs` | - | 已注册 | 网页抓取与正文抽取 |\n| `frontend-patterns-mcp` | 前端模式 / 设计规范 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\frontend-patterns-mcp\\server.mjs` | - | 已注册 | 设计简报、模式目录、bundled snippets，支持 stdio + HTTP |\n| `github-delivery-mcp` | Git 提交 / 推送 / PR 交付 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\github-delivery-mcp\\server.mjs` | - | 已注册 | disposable working copy 准备/回收、本地 checkout 起点的 repo 边界解析、提交、push、开 PR |\n| `github-workflow-mcp` | GitHub CI / PR | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\github-workflow-mcp\\server.mjs` | - | 已注册 | workflow、job、PR 健康检查 |\n| `log-diagnose` | 日志诊断 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\log-diagnose\\server.mjs` | - | 已注册 | 日志诊断探针 |\n| `markitdown-mcp` | 文档转换 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs` | - | 已注册 | PDF / Office / 网页转 Markdown |\n| `media-video-ffmpeg-mcp` | 视频处理 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\media\\video\\ffmpeg-mcp\\server.mjs` | - | 已注册 | 基础 FFmpeg 能力 |\n| `media-video-video-audio-mcp` | 音视频编排 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\media\\video\\video-audio-mcp\\server.mjs` | - | 已注册 | 字幕、转场、叠字、裁剪等音视频处理 |\n| `media-video-yt-dlp-mcp` | 视频下载 / 字幕 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\media\\video\\yt-dlp-mcp\\server.mjs` | - | 已注册 | YouTube / 视频元数据 / 字幕 / 音频 |\n| `orchestration-pipeline` | 编排验证 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\orchestration-pipeline\\server.mjs` | - | 已注册 | Roo orchestration pipeline 与 relay 验证 |\n| `output-guard` | 输出约束 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\server.mjs` | - | 已注册 | Roo output-guard 探针 |\n| `plantuml-diagrams` | 图表生成 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\plantuml-diagrams\\server.mjs` | - | 已注册 | PlantUML 编码 / 渲染 |\n| `playwright-browser` | 浏览器自动化 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\playwright-browser\\server.mjs` | - | 已注册 | Playwright browser 探针 |\n| `prompt-compressor` | 提示压缩 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\prompt-compressor\\server.mjs` | - | 已注册 | Roo prompt-compressor 探针 |\n| `repo-inspector` | 仓库检查 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\repo-inspector\\server.mjs` | - | 已注册 | Repo inspector 探针 |\n| `ripgrep-search` | 检索 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\ripgrep-search\\server.mjs` | - | 已注册 | 快速文本 / 正则检索 |\n| `standards-guard` | 标准检查 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\standards-guard\\server.mjs` | - | 已注册 | npm run check / 标准门禁探针 |\n| `workspace-toolkit-mcp` | 工作区探针 | `E:\\My Project\\Atramenti-Console\\codex\\mcps\\workspace-toolkit-mcp\\server.mjs` | - | 已注册 | repo / db / log / output 类检查 |\n## 3. 当前 live 注册结构怎么理解\n\n### 3.1 代码与工程检查层\n\n这批是当前默认常用的工程型 MCP：\n\n- `cloud-repo-mcp`\n- `dev-quality-mcp`\n- `ripgrep-search`\n- `workspace-toolkit-mcp`\n- `agent-runtime-mcp`\n- `github-workflow-mcp`\n\n### 3.2 GitHub 交付层\n\n当前 GitHub 相关能力现在是明确拆层，而不是继续把远端 API、CI 审计、本地提交发布混成一个入口：\n\n- `github`\n- `github-workflow-mcp`\n- `github-delivery-mcp`\n\n分工规则：\n\n- `github`：官方 remote GitHub MCP，负责 GitHub 平台面 API\n- `github-workflow-mcp`：workflow、job、PR 健康 / 失败调查\n- `github-delivery-mcp`：从 canonical repo / 本机工作副本起步的 `prepare_working_copy`、`retire_working_copy`、`repo_context`、`gh_auth_status`、`publish_changes`、`create_pull_request`\n\n### 3.3 文档与媒体输入层\n\n当前已经不是只有 `fetch-mcp` 和 `markitdown-mcp` 两个输入点，媒体链也已经接进 live 配置：\n\n- `fetch-mcp`\n- `markitdown-mcp`\n- `ffmpeg-mcp`\n- `yt-dlp-mcp`\n- `video-audio-mcp`\n\n这也意味着：\n\n- “当前没有默认预装 `ffmpeg`”这类旧说法已经过时\n- 当前文档 / 视频 / 字幕 / 音频链路已经是同一批 live 已注册工具的一部分\n\n### 3.4 浏览器与设计层\n\n- `chrome-devtools-mcp`\n- `pencil`\n\n前者负责页面、控制台、网络面验证；后者负责 `.pen` 设计文档读写。\n\n## 4. 当前未注册但仓库内仍存在的典型 MCP / 能力\n\n`E:\\My Project\\Atramenti-Console\\codex\\mcps` 下现在还有大量 MCP 或模块目录，但它们不应自动视为“已注册”。\n\n典型例子：\n\n- `context-store`\n- `database-ops-mcp`\n- `log-diagnose`\n- `orchestration-pipeline`\n- `output-guard`\n- `playwright-browser`\n- `prompt-compressor`\n- `repo-inspector`\n- `standards-guard`\n- `chrome-devtools-mcp-wrapper`\n- `drawio-diagrams`\n- `plantuml-diagrams`\n\n这些目录说明“仓库里有能力实现或包装”，但是否当前启用，仍然只看 `C:\\Users\\ASUS-KL\\.codex\\config.toml`。\n\n## 5. 当前管理方式（按现在的设置）\n\n如果后续要新增、删除或改路径，当前正确做法是：\n\n1. 修改 `E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1`\n2. 运行该脚本回写 `C:\\Users\\ASUS-KL\\.codex\\config.toml`\n3. 再核对 managed block 与实际路径是否一致\n\n当前管理要点：\n\n- 以 `codex` 为能力真源，不以仓库根 `mcps` 为真源\n- 不要只手改 `config.toml` 后就认为长期生效\n- 当前 live 注册以 PowerShell 路径重写脚本为准，而不是旧的 provision 口径\n- 如果文档写“已注册”，必须能在当前 `config.toml` 里找到对应项\n- GitHub 提交相关能力的当前 canonical 组合是：`github` + `github-workflow-mcp` + `github-delivery-mcp`，不要再并行长出一个职责重复的大而全 GitHub MCP\n\n## 6. 这份文档中哪些旧口径已经过时\n\n以下旧口径现在都不再准确：\n\n- `E:\\My Project\\Atramenti-Console\\mcps` 是当前 MCP 真源目录 -> 已过时，现应为 `E:\\My Project\\Atramenti-Console\\codex\\mcps`\n- `self-debug-closed-loop/scripts/provision-codex-integration.mjs` 是当前 Codex 配置托管入口 -> 已过时，现应以 `register-codex-paths.ps1` 为准\n- 当前 live 注册包含 `context-store` / `db-readonly` / `repo-inspector` / `notion` 等 -> 已过时；其中数据库链路现已收口为 `database-ops-mcp`，`db-readonly` 只保留兼容层，不再作为 live 一等注册项\n- 当前重点仍不包含 `ffmpeg` -> 已过时，`ffmpeg-mcp`、`yt-dlp-mcp`、`video-audio-mcp` 已在当前 live 配置中注册\n- GitHub 提交 / 推送 / PR 仍主要靠手工 shell 串命令、没有 MCP 收口 -> 已过时，当前 live 组合已经是 `github` + `github-workflow-mcp` + `github-delivery-mcp`\n\n下面的“整合补编”继续保留，是为了保留规范来源和历史安装记录，不代表这些历史叙述仍然是当前真源。\n\n## 7. 整合补编（2026-04-19）\n\n- canonical target：`MCP 清单总表.md`\n- absorbed sources：`MCP 体系与安装管理规范.md`、`MCP 安装记录（2026-04-17）.md`\n- excluded after topical-coherence audit：`..\\codex-knowledge\\50-tools\\docx-automation-guide.md`、`..\\codex-knowledge\\50-tools\\epub-reading-options.md`\n\n### 并入文件：MCP 体系与安装管理规范.md\n\n- 整合方式：保留原文全文与 frontmatter 来源信息，不做信息删减；仅修复已失效的内部文件指向。\n\n<details>\n<summary>原文档 frontmatter</summary>\n\n```yaml\ntitle: \"MCP 体系与安装管理规范\"\ntags:\n- \"类-系统运维\"\n- \"项目-MCP\"\n- \"形态-规范\"\nproject: \"MCP\"\ntype: \"规范\"\naliases:\n- \"文档治理__MCP 体系与安装管理规范手册__MCP 体系与安装管理规范\"\n```\n</details>\n\n# MCP 体系与安装管理规范\n\n## 1. 文档目的\n\n本文用于说明你当前环境中的 MCP 应该如何安装、如何归档、如何在文档中记录，以及文档类 MCP 应该怎样纳入你现有工程规范。\n\n## 2. 核心原则\n\n### 2.1 MCP 本体不放在 Obsidian 文档目录\n\nObsidian 文档目录只适合放：\n\n- MCP 说明文档\n- 架构图\n- 使用手册\n- 安装记录\n\n不适合放：\n\n- `node_modules`\n- npm 安装依赖\n- MCP 服务源码副本\n- 临时调试脚本\n- 构建中间产物\n\n### 2.2 MCP 配置与 MCP 文档分离\n\n建议分三层：\n\n1. **运行配置层**：Codex / OpenClaw / Atramenti-Console 的实际 MCP 配置\n2. **代码实现层**：真正的 MCP 服务实现目录\n3. **说明文档层**：Obsidian 中的手册与记录\n\n### 2.3 文档类 MCP 也要和普通 MCP 一样管理\n\n不要把“文档写作增强工具”视为一次性脚本。像：\n\n- `fetch-mcp`\n- `markitdown-mcp`\n- `plantuml-diagrams`\n- `drawio-diagrams`\n\n这类都应该按 MCP 规范管理，而不是散落在文档目录里。\n\n## 3. 推荐落位\n\n### 3.1 MCP 代码实现目录\n\n推荐继续以工程目录为准，例如：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps`\n- `C:\\Users\\ASUS-KL\\.codex\\config.toml` 中的 MCP 注册项\n- 其他专用工作区中的 MCP 项目目录\n\n### 3.2 MCP 文档目录\n\n推荐在 Obsidian 中统一放到：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent`\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs`\n\n这里只记录：\n\n- MCP 列表\n- 用途说明\n- 输入输出能力\n- 安装位置\n- 配置方式\n- 故障处理\n- 是否已注册生效\n\n## 4. 你当前环境中的 MCP 分类建议\n\n### 4.1 内部工程型 MCP\n\n这类 MCP 已经纳入你的工程体系，应该优先按项目管理：\n\n- `cloud-repo-mcp`\n- `context-store`\n- `context-store-reranker`\n- `database-ops-mcp`\n- `dev-quality-mcp`\n- `experience-mcp`\n- `github-workflow-mcp`\n- `log-diagnose`\n- `orchestration-pipeline`\n- `output-guard`\n- `playwright-browser`\n- `prompt-compressor`\n- `repo-inspector`\n- `ripgrep-search`\n- `standards-guard`\n\n### 4.2 外部能力但已工程收编的 MCP\n\n这类原本来自 npm、远程服务或外部仓库，但现在已经纳入本地工程规范：\n\n- `chrome-devtools-mcp-wrapper`\n- `drawio-diagrams`\n- `plantuml-diagrams`\n- `fetch-mcp`\n- `markitdown-mcp`\n\n### 4.3 远程 SaaS 型 MCP\n\n- `notion`\n\n这类 MCP 的代码本体不在本地，但配置、使用说明、风险说明仍应进入文档体系。\n\n## 5. 安装规范建议\n\n### 5.1 优先级顺序\n\n推荐安装优先级：\n\n1. 优先复用现有工程目录中的 MCP\n2. 其次使用官方源或官方仓库中的 MCP\n3. 再考虑稳定的 npm 包或远程 MCP\n4. 最后才临时接第三方、无稳定维护的包装器\n\n### 5.2 安装后必须记录的字段\n\n每新增一个 MCP，都建议在文档里记录：\n\n- MCP 名称\n- 作用\n- 来源\n- 安装方式\n- 实际配置位置\n- 实际代码目录\n- 是否属于本地工程\n- 是否含外部依赖\n- 是否已验证可用\n- 当前是否已注册生效\n\n### 5.3 文档类 MCP 的额外建议\n\n对文档类 MCP，最好额外记录：\n\n- 支持的输入类型\n- 是否需要额外依赖（例如 `ffmpeg`）\n- 是否需要代理\n- 是否有本地包装脚本\n- 是否附带使用模板\n\n## 6. 稳定注册规范\n\n### 6.1 不要只手改 `config.toml`\n\n如果某个 MCP 只是手动写进 `C:\\Users\\ASUS-KL\\.codex\\config.toml`，而没有进入统一托管流程，后续在受管路径重写或环境刷新时就可能出现“注册漂移”。\n\n### 6.2 以受管路径重写脚本为准\n\n当前应以这个脚本作为 Codex MCP 配置的托管入口：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1`\n\n它当前不是“扫描整个 MCP 根目录自动发现”，而是按脚本里显式受管的 MCP 条目重写 `config.toml` 的 managed block，并把这些条目统一指向 repo-managed launcher 路径。\n\n当前这类受管条目包括：\n\n- `cloud-repo-mcp`\n- `dev-quality-mcp`\n- `ripgrep-search`\n- `workspace-toolkit-mcp`\n- `agent-runtime-mcp`\n- `github-workflow-mcp`\n- `fetch-mcp`\n- `markitdown-mcp`\n- `ffmpeg-mcp`\n- `yt-dlp-mcp`\n- `video-audio-mcp`\n- `pencil`\n\n### 6.3 文档类 MCP 的推荐做法\n\n对于需要长期稳定保留的文档类 MCP，推荐目录内至少具备：\n\n- `README.md`\n- `server.json`\n- `start.cmd`\n- `server.mjs`\n\n其中：\n\n- `start.cmd` 负责本地启动细节与环境变量封装\n- `server.mjs` 负责作为稳定 launcher 入口；是否进入 live 注册仍以 `register-codex-paths.ps1` 中的受管条目为准\n\n## 7. 文档建议结构\n\n建议为 MCP 单独维护以下文档：\n\n- `MCP 清单总表.md`：当前 canonical 文档，已吸收总规范、总表与安装记录\n- `C:\\Users\\ASUS-KL\\.codex\\AGENTS.md`：文档类任务的默认操作规范；如果要继续改这份总表的结构、合并方式或 companion 层，先按它执行\n- `MCP 安装记录（YYYY-MM-DD）`：若后续再有新变更，可继续作为并入本文的单次记录标题规范\n\n## 8. 本次整理结论\n\n本次已经明确：\n\n- 文档目录中继续只保留说明文档与展示资源\n- 文档类 MCP 应放在 `E:\\My Project\\Atramenti-Console\\codex\\mcps`\n- `fetch-mcp` 已完成本地包装，并补了使用模板\n- `markitdown-mcp` 已完成基于官方仓库固定 commit 的稳定包装\n- 两者已经通过 `server.mjs` + `register-codex-paths.ps1` 纳入受管配置链路，并稳定注册进 Codex 配置\n- 后续再遇到类似 MCP，应优先修复托管链路，而不是只改 `config.toml`\n\n## 9. 后续建议\n\n1. 以后新增文档类 MCP，都优先放进 `E:\\My Project\\Atramenti-Console\\codex\\mcps`\n2. MCP 总表里始终区分“当前已注册生效”“已收编但未托管”“仅文档记录”\n3. 如后面继续扩展文档 / 媒体链，按同一受管方式补新的音视频 / OCR / 转写类 MCP\n4. 每次新增或修复 MCP，都补一份 `MCP 安装记录（YYYY-MM-DD）.md`\n\n\n### 并入文件：MCP 安装记录（2026-04-17）.md\n\n- 整合方式：保留原文全文与 frontmatter 来源信息，不做信息删减。\n\n<details>\n<summary>原文档 frontmatter</summary>\n\n```yaml\ntitle: \"MCP 安装记录（2026-04-17）\"\ntags:\n- \"类-系统运维\"\n- \"项目-MCP\"\n- \"形态-记录\"\nproject: \"MCP\"\ntype: \"记录\"\ntopics:\n- \"MCP 管理\"\naliases:\n- \"服务器体系__MCP 管理__MCP 安装记录（2026-04-17）\"\n```\n</details>\n\n# MCP 安装记录（2026-04-17）\n\n## 1. 本次变更目标\n\n本次新增并稳定化两项文档类 MCP：\n\n- `fetch-mcp`\n- `markitdown-mcp`\n\n目标有两层：\n\n1. 提升网页资料抓取与多格式文档转 Markdown 的能力\n2. 解决这两个 MCP 在 Codex 中“注册漂移”的问题，让它们能稳定出现在配置里\n\n## 2. 新增原因\n\n### 2.1 fetch-mcp\n\n新增 `fetch-mcp` 的原因：\n\n- 文档写作经常需要先抓网页正文\n- 需要把在线资料变成可整理、可归档的 Markdown 输入材料\n- 后续写方案、写操作说明、写调研稿时更方便做多源整合\n\n### 2.2 markitdown-mcp\n\n新增 `markitdown-mcp` 的原因：\n\n- 需要把 PDF、Word、PPT、网页、本地文件统一转成 Markdown\n- 便于把外部资料纳入 Obsidian 与现有文档生产链路\n- 便于在转换后继续做章节重组、手册化重写和知识卡片化整理\n\n## 3. 安装位置\n\n### 3.1 MCP 工程目录\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp`\n\n### 3.2 Codex 实际配置位置\n\n- `C:\\Users\\ASUS-KL\\.codex\\config.toml`\n\n### 3.3 Codex 配置托管脚本\n\n- `E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1`\n\n## 4. 本次落地的封装文件\n\n### 4.1 fetch-mcp\n\n已落地文件：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\README.md`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.json`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\start.cmd`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\USAGE-TEMPLATE.md`\n\n封装要点：\n\n- 增加固定默认 User-Agent\n- 预留代理环境变量 `FETCH_MCP_PROXY_URL`\n- 预留自定义 User-Agent 环境变量 `FETCH_MCP_USER_AGENT`\n- 附带使用说明模板，便于沉淀网页抓取工作流\n\n### 4.2 markitdown-mcp\n\n已落地文件：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\README.md`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.json`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\start.cmd`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs`\n\n封装要点：\n\n- 来源为 `microsoft/markitdown` 官方仓库中的 `packages/markitdown-mcp`\n- 固定 commit：`604bba13da2f43b756b49122cb65bdedb85b1dff`\n- 采用本地封装方式，避免依赖不稳定的第三方包装层\n\n## 5. 注册漂移问题与根因\n\n### 5.1 现象\n\n最初这两个 MCP 虽然已经封装好，但它们没有稳定留在 Codex 配置里；手动改完 `config.toml` 后，后续受管路径重写或环境刷新时仍可能消失。\n\n### 5.2 根因\n\n根因不是 MCP 本身无法启动，而是 `C:\\Users\\ASUS-KL\\.codex\\config.toml` 并不是唯一事实来源。\n\n当前已经确认的托管入口是：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1`\n\n该脚本会按显式受管条目重写 Codex 配置托管区块，并把当前 live MCP 指向 `E:\\My Project\\Atramenti-Console\\codex\\mcps` 下的 launcher 路径。\n\n如果一个 MCP 没有被纳入这个脚本的受管条目，即使手动写进 `config.toml`，后续也会发生“注册漂移”。\n\n## 6. 解决办法\n\n本次采用的稳定化做法是：\n\n1. 保留每个 MCP 自己的 `start.cmd`，承接本地启动逻辑\n2. 新增 `server.mjs` 作为稳定 launcher 入口\n3. 让 `register-codex-paths.ps1` 把这两个 MCP 的 canonical 路径写进 managed block\n4. 通过该脚本回写 `C:\\Users\\ASUS-KL\\.codex\\config.toml`\n\n本次新增的托管入口为：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs`\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs`\n\n## 7. 验证结果\n\n### 7.1 配置托管结果\n\n执行路径重写脚本之后，`C:\\Users\\ASUS-KL\\.codex\\config.toml` 中已出现：\n\n- `fetch-mcp`\n- `markitdown-mcp`\n\n对应入口为：\n\n- `fetch-mcp` -> `node E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs`\n- `markitdown-mcp` -> `node E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs`\n\n### 7.2 当前结论\n\n当前可以认为：\n\n- 两个 MCP 已完成本地封装\n- 两个 MCP 已纳入 Codex 托管配置链路\n- 两个 MCP 已注册并生效\n- 后续如再次执行 `register-codex-paths.ps1`，理论上仍会保留，而不是被回写掉\n\n## 8. 当前能力收益\n\n本次补齐后，文档生产链路新增了两段稳定输入能力：\n\n- `fetch-mcp`：网页正文抓取\n- `markitdown-mcp`：多格式资料转 Markdown\n\n这使得“网页 / PDF / Word / PPT / 本地文件 -> Markdown -> 结构化文档 / 知识库条目”的流程更顺。\n\n## 9. 暂缓项\n\n本次没有默认预装 `ffmpeg`。\n\n原因：\n\n- 当前重点是文档资料、网页资料、PDF / Office 资料的稳定摄入\n- 音频、视频、语音稿转 Markdown 暂未成为当前主链路\n- 等后续确实要做音频 / 视频 / 语音稿处理时，再补 `ffmpeg` 更合适\n\n## 10. 后续维护建议\n\n1. 以后新增 MCP，优先先看它是否能被 provision 脚本自动发现\n2. 若要长期稳定注册，优先补 `server.mjs`，不要只手改 `config.toml`\n3. 文档类 MCP 每次新增或修复后，都同步更新 `MCP 清单总表.md`\n4. 重要变更单独补一份 `MCP 安装记录（YYYY-MM-DD）.md`",
+    "html": "<h1 id=\"mcp-清单总表\">MCP 清单总表</h1>\n<blockquote>\n<p>2026-04-19 起，本文作为 <code>docs/agent</code> 下 MCP 管理的 canonical 文档，吸收 <code>MCP 体系与安装管理规范.md</code> 与 <code>MCP 安装记录（2026-04-17）.md</code>；<code>..\\codex-knowledge\\50-tools\\docx-automation-guide.md</code> 与 <code>..\\codex-knowledge\\50-tools\\epub-reading-options.md</code> 因不属于同一项目/同一交付物，保持独立。</p>\n<p>如需继续修改、整合或扩写这份文档的结构与归并方式，先遵循 <code>C:\\Users\\ASUS-KL\\.codex\\AGENTS.md</code> 中的文档规则层；维护说明见 <code>C:\\Users\\ASUS-KL\\.codex\\AGENTS.annotated.md</code>，不要再并行长出新的总表壳或说明壳。</p>\n</blockquote>\n<h2 id=\"0-使用导航\">0. 使用导航</h2>\n<p>这份文档现在是 <code>docs/agent</code> 下 MCP 管理的 canonical 文档，负责两类信息：</p>\n<ul>\n<li>当前 live MCP 注册状态</li>\n<li>MCP 管理规范与历史安装记录的可追溯归档</li>\n</ul>\n<p>边界说明：本文只负责 MCP 专题，不承担项目总体 <code>current-state</code> 三件套职责；项目当前总体状态仍先看 <code>PROJECT-CONTEXT.md</code>、<code>SESSION-HANDOFF.md</code>、<code>plan.md</code>。</p>\n<p>如果你来这里是为了找资料，直接按下面进：</p>\n<ul>\n<li>想看当前这台机器实际启用的 MCP -> 继续看本文第 1~5 节</li>\n<li>想看“哪些旧说法已经过时” -> 看本文第 6 节</li>\n<li>想看 2026-04-17 的历史规范与安装记录原文 -> 看本文后半部分“整合补编（2026-04-19）”</li>\n<li>想回到多服务器总体系 -> <code>Server Operation &#x26; Maintenance Manual.md</code></li>\n</ul>\n<h2 id=\"1-当前-live-判定基准2026-04-20\">1. 当前 live 判定基准（2026-04-20）</h2>\n<p>本页当前以“这台机器现在怎么配”为准，不再以 2026-04-17 的旧快照为准。</p>\n<p>当前真源：</p>\n<ul>\n<li>实际配置文件：<code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n<li>当前 managed block 生成脚本：<code>E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1</code></li>\n<li>当前 repo-managed MCP 根目录：<code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code></li>\n<li>当前受托管的配置块标记：\n<ul>\n<li><code># BEGIN self-debug-closed-loop managed mcp servers</code></li>\n<li><code># END self-debug-closed-loop managed mcp servers</code></li>\n</ul>\n</li>\n</ul>\n<p>这意味着：</p>\n<ol>\n<li>当前 Codex 的 live MCP 清单，应以 <code>config.toml</code> 里的 managed block 为准。</li>\n<li>当前路径真源已经切到 <code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code>，不是更早文档里写的 <code>E:\\My Project\\Atramenti-Console\\mcps</code>。</li>\n<li>旧的 <code>provision-codex-integration.mjs</code> 叙述现在只能视为历史来源材料，不能再当作当前注册真源。</li>\n</ol>\n<h2 id=\"2-当前已注册并生效的-mcp-总表\">2. 当前已注册并生效的 MCP 总表</h2>\n<p>下表按 live <code>config.toml</code> 整理；当前 live 条目以实际 managed block 为准。</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>MCP 名称</th>\n<th>类别</th>\n<th>主入口</th>\n<th>startup timeout</th>\n<th>当前状态</th>\n<th>说明</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>agent-runtime-mcp</code></td>\n<td>运行时探针</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\agent-runtime-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>browser / context / memory readiness 检查</td>\n</tr>\n<tr>\n<td><code>chrome-devtools-mcp</code></td>\n<td>浏览器调试</td>\n<td><code>npx.cmd -y chrome-devtools-mcp@0.20.3</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>原始 Chrome DevTools MCP</td>\n</tr>\n<tr>\n<td><code>chrome-devtools-mcp-wrapper</code></td>\n<td>浏览器调试包装层</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\chrome-devtools-mcp-wrapper\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>repo-local wrapper，补本地隔离与兼容启动</td>\n</tr>\n<tr>\n<td><code>cloud-repo-mcp</code></td>\n<td>代码仓库 / 文件读取</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\cloud-repo-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>云仓库与远程代码资源能力</td>\n</tr>\n<tr>\n<td><code>context-store</code></td>\n<td>上下文存储</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\context-store\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>Roo context-store 探针与能力接入</td>\n</tr>\n<tr>\n<td><code>context-store-reranker</code></td>\n<td>上下文重排</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\context-store\\reranker\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>context-store reranker / 相关性重排</td>\n</tr>\n<tr>\n<td><code>core-qmd-dist-src-mcp</code></td>\n<td>本地知识检索</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\core\\qmd\\dist\\src\\mcp\\server.js</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>QMD 文档检索与知识库读取</td>\n</tr>\n<tr>\n<td><code>database-ops-mcp</code></td>\n<td>数据库检查 / 运维上下文</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\database-ops-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>canonical 数据库检查 MCP；<code>db-readonly</code> 仅保留兼容 wrapper</td>\n</tr>\n<tr>\n<td><code>dev-quality-mcp</code></td>\n<td>代码质量</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\dev-quality-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>结构化质量检查</td>\n</tr>\n<tr>\n<td><code>drawio-diagrams</code></td>\n<td>图表生成</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\drawio-diagrams\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>draw.io 图表写入与渲染</td>\n</tr>\n<tr>\n<td><code>experience-mcp</code></td>\n<td>经验库</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\experience\\mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>experience-manager 读写入口</td>\n</tr>\n<tr>\n<td><code>fetch-mcp</code></td>\n<td>文档 / 网页摄入</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>网页抓取与正文抽取</td>\n</tr>\n<tr>\n<td><code>frontend-patterns-mcp</code></td>\n<td>前端模式 / 设计规范</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\frontend-patterns-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>设计简报、模式目录、bundled snippets，支持 stdio + HTTP</td>\n</tr>\n<tr>\n<td><code>github-delivery-mcp</code></td>\n<td>Git 提交 / 推送 / PR 交付</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\github-delivery-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>disposable working copy 准备/回收、本地 checkout 起点的 repo 边界解析、提交、push、开 PR</td>\n</tr>\n<tr>\n<td><code>github-workflow-mcp</code></td>\n<td>GitHub CI / PR</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\github-workflow-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>workflow、job、PR 健康检查</td>\n</tr>\n<tr>\n<td><code>log-diagnose</code></td>\n<td>日志诊断</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\log-diagnose\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>日志诊断探针</td>\n</tr>\n<tr>\n<td><code>markitdown-mcp</code></td>\n<td>文档转换</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>PDF / Office / 网页转 Markdown</td>\n</tr>\n<tr>\n<td><code>media-video-ffmpeg-mcp</code></td>\n<td>视频处理</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\media\\video\\ffmpeg-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>基础 FFmpeg 能力</td>\n</tr>\n<tr>\n<td><code>media-video-video-audio-mcp</code></td>\n<td>音视频编排</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\media\\video\\video-audio-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>字幕、转场、叠字、裁剪等音视频处理</td>\n</tr>\n<tr>\n<td><code>media-video-yt-dlp-mcp</code></td>\n<td>视频下载 / 字幕</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\media\\video\\yt-dlp-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>YouTube / 视频元数据 / 字幕 / 音频</td>\n</tr>\n<tr>\n<td><code>orchestration-pipeline</code></td>\n<td>编排验证</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\orchestration-pipeline\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>Roo orchestration pipeline 与 relay 验证</td>\n</tr>\n<tr>\n<td><code>output-guard</code></td>\n<td>输出约束</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\output-guard\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>Roo output-guard 探针</td>\n</tr>\n<tr>\n<td><code>plantuml-diagrams</code></td>\n<td>图表生成</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\plantuml-diagrams\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>PlantUML 编码 / 渲染</td>\n</tr>\n<tr>\n<td><code>playwright-browser</code></td>\n<td>浏览器自动化</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\playwright-browser\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>Playwright browser 探针</td>\n</tr>\n<tr>\n<td><code>prompt-compressor</code></td>\n<td>提示压缩</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\prompt-compressor\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>Roo prompt-compressor 探针</td>\n</tr>\n<tr>\n<td><code>repo-inspector</code></td>\n<td>仓库检查</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\repo-inspector\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>Repo inspector 探针</td>\n</tr>\n<tr>\n<td><code>ripgrep-search</code></td>\n<td>检索</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\ripgrep-search\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>快速文本 / 正则检索</td>\n</tr>\n<tr>\n<td><code>standards-guard</code></td>\n<td>标准检查</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\standards-guard\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>npm run check / 标准门禁探针</td>\n</tr>\n<tr>\n<td><code>workspace-toolkit-mcp</code></td>\n<td>工作区探针</td>\n<td><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\workspace-toolkit-mcp\\server.mjs</code></td>\n<td>-</td>\n<td>已注册</td>\n<td>repo / db / log / output 类检查</td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"3-当前-live-注册结构怎么理解\">3. 当前 live 注册结构怎么理解</h2>\n<h3 id=\"31-代码与工程检查层\">3.1 代码与工程检查层</h3>\n<p>这批是当前默认常用的工程型 MCP：</p>\n<ul>\n<li><code>cloud-repo-mcp</code></li>\n<li><code>dev-quality-mcp</code></li>\n<li><code>ripgrep-search</code></li>\n<li><code>workspace-toolkit-mcp</code></li>\n<li><code>agent-runtime-mcp</code></li>\n<li><code>github-workflow-mcp</code></li>\n</ul>\n<h3 id=\"32-github-交付层\">3.2 GitHub 交付层</h3>\n<p>当前 GitHub 相关能力现在是明确拆层，而不是继续把远端 API、CI 审计、本地提交发布混成一个入口：</p>\n<ul>\n<li><code>github</code></li>\n<li><code>github-workflow-mcp</code></li>\n<li><code>github-delivery-mcp</code></li>\n</ul>\n<p>分工规则：</p>\n<ul>\n<li><code>github</code>：官方 remote GitHub MCP，负责 GitHub 平台面 API</li>\n<li><code>github-workflow-mcp</code>：workflow、job、PR 健康 / 失败调查</li>\n<li><code>github-delivery-mcp</code>：从 canonical repo / 本机工作副本起步的 <code>prepare_working_copy</code>、<code>retire_working_copy</code>、<code>repo_context</code>、<code>gh_auth_status</code>、<code>publish_changes</code>、<code>create_pull_request</code></li>\n</ul>\n<h3 id=\"33-文档与媒体输入层\">3.3 文档与媒体输入层</h3>\n<p>当前已经不是只有 <code>fetch-mcp</code> 和 <code>markitdown-mcp</code> 两个输入点，媒体链也已经接进 live 配置：</p>\n<ul>\n<li><code>fetch-mcp</code></li>\n<li><code>markitdown-mcp</code></li>\n<li><code>ffmpeg-mcp</code></li>\n<li><code>yt-dlp-mcp</code></li>\n<li><code>video-audio-mcp</code></li>\n</ul>\n<p>这也意味着：</p>\n<ul>\n<li>“当前没有默认预装 <code>ffmpeg</code>”这类旧说法已经过时</li>\n<li>当前文档 / 视频 / 字幕 / 音频链路已经是同一批 live 已注册工具的一部分</li>\n</ul>\n<h3 id=\"34-浏览器与设计层\">3.4 浏览器与设计层</h3>\n<ul>\n<li><code>chrome-devtools-mcp</code></li>\n<li><code>pencil</code></li>\n</ul>\n<p>前者负责页面、控制台、网络面验证；后者负责 <code>.pen</code> 设计文档读写。</p>\n<h2 id=\"4-当前未注册但仓库内仍存在的典型-mcp--能力\">4. 当前未注册但仓库内仍存在的典型 MCP / 能力</h2>\n<p><code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code> 下现在还有大量 MCP 或模块目录，但它们不应自动视为“已注册”。</p>\n<p>典型例子：</p>\n<ul>\n<li><code>context-store</code></li>\n<li><code>database-ops-mcp</code></li>\n<li><code>log-diagnose</code></li>\n<li><code>orchestration-pipeline</code></li>\n<li><code>output-guard</code></li>\n<li><code>playwright-browser</code></li>\n<li><code>prompt-compressor</code></li>\n<li><code>repo-inspector</code></li>\n<li><code>standards-guard</code></li>\n<li><code>chrome-devtools-mcp-wrapper</code></li>\n<li><code>drawio-diagrams</code></li>\n<li><code>plantuml-diagrams</code></li>\n</ul>\n<p>这些目录说明“仓库里有能力实现或包装”，但是否当前启用，仍然只看 <code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code>。</p>\n<h2 id=\"5-当前管理方式按现在的设置\">5. 当前管理方式（按现在的设置）</h2>\n<p>如果后续要新增、删除或改路径，当前正确做法是：</p>\n<ol>\n<li>修改 <code>E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1</code></li>\n<li>运行该脚本回写 <code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n<li>再核对 managed block 与实际路径是否一致</li>\n</ol>\n<p>当前管理要点：</p>\n<ul>\n<li>以 <code>codex</code> 为能力真源，不以仓库根 <code>mcps</code> 为真源</li>\n<li>不要只手改 <code>config.toml</code> 后就认为长期生效</li>\n<li>当前 live 注册以 PowerShell 路径重写脚本为准，而不是旧的 provision 口径</li>\n<li>如果文档写“已注册”，必须能在当前 <code>config.toml</code> 里找到对应项</li>\n<li>GitHub 提交相关能力的当前 canonical 组合是：<code>github</code> + <code>github-workflow-mcp</code> + <code>github-delivery-mcp</code>，不要再并行长出一个职责重复的大而全 GitHub MCP</li>\n</ul>\n<h2 id=\"6-这份文档中哪些旧口径已经过时\">6. 这份文档中哪些旧口径已经过时</h2>\n<p>以下旧口径现在都不再准确：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\mcps</code> 是当前 MCP 真源目录 -> 已过时，现应为 <code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code></li>\n<li><code>self-debug-closed-loop/scripts/provision-codex-integration.mjs</code> 是当前 Codex 配置托管入口 -> 已过时，现应以 <code>register-codex-paths.ps1</code> 为准</li>\n<li>当前 live 注册包含 <code>context-store</code> / <code>db-readonly</code> / <code>repo-inspector</code> / <code>notion</code> 等 -> 已过时；其中数据库链路现已收口为 <code>database-ops-mcp</code>，<code>db-readonly</code> 只保留兼容层，不再作为 live 一等注册项</li>\n<li>当前重点仍不包含 <code>ffmpeg</code> -> 已过时，<code>ffmpeg-mcp</code>、<code>yt-dlp-mcp</code>、<code>video-audio-mcp</code> 已在当前 live 配置中注册</li>\n<li>GitHub 提交 / 推送 / PR 仍主要靠手工 shell 串命令、没有 MCP 收口 -> 已过时，当前 live 组合已经是 <code>github</code> + <code>github-workflow-mcp</code> + <code>github-delivery-mcp</code></li>\n</ul>\n<p>下面的“整合补编”继续保留，是为了保留规范来源和历史安装记录，不代表这些历史叙述仍然是当前真源。</p>\n<h2 id=\"7-整合补编2026-04-19\">7. 整合补编（2026-04-19）</h2>\n<ul>\n<li>canonical target：<code>MCP 清单总表.md</code></li>\n<li>absorbed sources：<code>MCP 体系与安装管理规范.md</code>、<code>MCP 安装记录（2026-04-17）.md</code></li>\n<li>excluded after topical-coherence audit：<code>..\\codex-knowledge\\50-tools\\docx-automation-guide.md</code>、<code>..\\codex-knowledge\\50-tools\\epub-reading-options.md</code></li>\n</ul>\n<h3 id=\"并入文件mcp-体系与安装管理规范md\">并入文件：MCP 体系与安装管理规范.md</h3>\n<ul>\n<li>整合方式：保留原文全文与 frontmatter 来源信息，不做信息删减；仅修复已失效的内部文件指向。</li>\n</ul>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#85E89D\">title</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"MCP 体系与安装管理规范\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">tags</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"类-系统运维\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"项目-MCP\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"形态-规范\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">project</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"MCP\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">type</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"规范\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">aliases</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"文档治理__MCP 体系与安装管理规范手册__MCP 体系与安装管理规范\"</span></span></code></pre></figure>\n<h1 id=\"mcp-体系与安装管理规范\">MCP 体系与安装管理规范</h1>\n<h2 id=\"1-文档目的\">1. 文档目的</h2>\n<p>本文用于说明你当前环境中的 MCP 应该如何安装、如何归档、如何在文档中记录，以及文档类 MCP 应该怎样纳入你现有工程规范。</p>\n<h2 id=\"2-核心原则\">2. 核心原则</h2>\n<h3 id=\"21-mcp-本体不放在-obsidian-文档目录\">2.1 MCP 本体不放在 Obsidian 文档目录</h3>\n<p>Obsidian 文档目录只适合放：</p>\n<ul>\n<li>MCP 说明文档</li>\n<li>架构图</li>\n<li>使用手册</li>\n<li>安装记录</li>\n</ul>\n<p>不适合放：</p>\n<ul>\n<li><code>node_modules</code></li>\n<li>npm 安装依赖</li>\n<li>MCP 服务源码副本</li>\n<li>临时调试脚本</li>\n<li>构建中间产物</li>\n</ul>\n<h3 id=\"22-mcp-配置与-mcp-文档分离\">2.2 MCP 配置与 MCP 文档分离</h3>\n<p>建议分三层：</p>\n<ol>\n<li><strong>运行配置层</strong>：Codex / OpenClaw / Atramenti-Console 的实际 MCP 配置</li>\n<li><strong>代码实现层</strong>：真正的 MCP 服务实现目录</li>\n<li><strong>说明文档层</strong>：Obsidian 中的手册与记录</li>\n</ol>\n<h3 id=\"23-文档类-mcp-也要和普通-mcp-一样管理\">2.3 文档类 MCP 也要和普通 MCP 一样管理</h3>\n<p>不要把“文档写作增强工具”视为一次性脚本。像：</p>\n<ul>\n<li><code>fetch-mcp</code></li>\n<li><code>markitdown-mcp</code></li>\n<li><code>plantuml-diagrams</code></li>\n<li><code>drawio-diagrams</code></li>\n</ul>\n<p>这类都应该按 MCP 规范管理，而不是散落在文档目录里。</p>\n<h2 id=\"3-推荐落位\">3. 推荐落位</h2>\n<h3 id=\"31-mcp-代码实现目录\">3.1 MCP 代码实现目录</h3>\n<p>推荐继续以工程目录为准，例如：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code> 中的 MCP 注册项</li>\n<li>其他专用工作区中的 MCP 项目目录</li>\n</ul>\n<h3 id=\"32-mcp-文档目录\">3.2 MCP 文档目录</h3>\n<p>推荐在 Obsidian 中统一放到：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs</code></li>\n</ul>\n<p>这里只记录：</p>\n<ul>\n<li>MCP 列表</li>\n<li>用途说明</li>\n<li>输入输出能力</li>\n<li>安装位置</li>\n<li>配置方式</li>\n<li>故障处理</li>\n<li>是否已注册生效</li>\n</ul>\n<h2 id=\"4-你当前环境中的-mcp-分类建议\">4. 你当前环境中的 MCP 分类建议</h2>\n<h3 id=\"41-内部工程型-mcp\">4.1 内部工程型 MCP</h3>\n<p>这类 MCP 已经纳入你的工程体系，应该优先按项目管理：</p>\n<ul>\n<li><code>cloud-repo-mcp</code></li>\n<li><code>context-store</code></li>\n<li><code>context-store-reranker</code></li>\n<li><code>database-ops-mcp</code></li>\n<li><code>dev-quality-mcp</code></li>\n<li><code>experience-mcp</code></li>\n<li><code>github-workflow-mcp</code></li>\n<li><code>log-diagnose</code></li>\n<li><code>orchestration-pipeline</code></li>\n<li><code>output-guard</code></li>\n<li><code>playwright-browser</code></li>\n<li><code>prompt-compressor</code></li>\n<li><code>repo-inspector</code></li>\n<li><code>ripgrep-search</code></li>\n<li><code>standards-guard</code></li>\n</ul>\n<h3 id=\"42-外部能力但已工程收编的-mcp\">4.2 外部能力但已工程收编的 MCP</h3>\n<p>这类原本来自 npm、远程服务或外部仓库，但现在已经纳入本地工程规范：</p>\n<ul>\n<li><code>chrome-devtools-mcp-wrapper</code></li>\n<li><code>drawio-diagrams</code></li>\n<li><code>plantuml-diagrams</code></li>\n<li><code>fetch-mcp</code></li>\n<li><code>markitdown-mcp</code></li>\n</ul>\n<h3 id=\"43-远程-saas-型-mcp\">4.3 远程 SaaS 型 MCP</h3>\n<ul>\n<li><code>notion</code></li>\n</ul>\n<p>这类 MCP 的代码本体不在本地，但配置、使用说明、风险说明仍应进入文档体系。</p>\n<h2 id=\"5-安装规范建议\">5. 安装规范建议</h2>\n<h3 id=\"51-优先级顺序\">5.1 优先级顺序</h3>\n<p>推荐安装优先级：</p>\n<ol>\n<li>优先复用现有工程目录中的 MCP</li>\n<li>其次使用官方源或官方仓库中的 MCP</li>\n<li>再考虑稳定的 npm 包或远程 MCP</li>\n<li>最后才临时接第三方、无稳定维护的包装器</li>\n</ol>\n<h3 id=\"52-安装后必须记录的字段\">5.2 安装后必须记录的字段</h3>\n<p>每新增一个 MCP，都建议在文档里记录：</p>\n<ul>\n<li>MCP 名称</li>\n<li>作用</li>\n<li>来源</li>\n<li>安装方式</li>\n<li>实际配置位置</li>\n<li>实际代码目录</li>\n<li>是否属于本地工程</li>\n<li>是否含外部依赖</li>\n<li>是否已验证可用</li>\n<li>当前是否已注册生效</li>\n</ul>\n<h3 id=\"53-文档类-mcp-的额外建议\">5.3 文档类 MCP 的额外建议</h3>\n<p>对文档类 MCP，最好额外记录：</p>\n<ul>\n<li>支持的输入类型</li>\n<li>是否需要额外依赖（例如 <code>ffmpeg</code>）</li>\n<li>是否需要代理</li>\n<li>是否有本地包装脚本</li>\n<li>是否附带使用模板</li>\n</ul>\n<h2 id=\"6-稳定注册规范\">6. 稳定注册规范</h2>\n<h3 id=\"61-不要只手改-configtoml\">6.1 不要只手改 <code>config.toml</code></h3>\n<p>如果某个 MCP 只是手动写进 <code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code>，而没有进入统一托管流程，后续在受管路径重写或环境刷新时就可能出现“注册漂移”。</p>\n<h3 id=\"62-以受管路径重写脚本为准\">6.2 以受管路径重写脚本为准</h3>\n<p>当前应以这个脚本作为 Codex MCP 配置的托管入口：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1</code></li>\n</ul>\n<p>它当前不是“扫描整个 MCP 根目录自动发现”，而是按脚本里显式受管的 MCP 条目重写 <code>config.toml</code> 的 managed block，并把这些条目统一指向 repo-managed launcher 路径。</p>\n<p>当前这类受管条目包括：</p>\n<ul>\n<li><code>cloud-repo-mcp</code></li>\n<li><code>dev-quality-mcp</code></li>\n<li><code>ripgrep-search</code></li>\n<li><code>workspace-toolkit-mcp</code></li>\n<li><code>agent-runtime-mcp</code></li>\n<li><code>github-workflow-mcp</code></li>\n<li><code>fetch-mcp</code></li>\n<li><code>markitdown-mcp</code></li>\n<li><code>ffmpeg-mcp</code></li>\n<li><code>yt-dlp-mcp</code></li>\n<li><code>video-audio-mcp</code></li>\n<li><code>pencil</code></li>\n</ul>\n<h3 id=\"63-文档类-mcp-的推荐做法\">6.3 文档类 MCP 的推荐做法</h3>\n<p>对于需要长期稳定保留的文档类 MCP，推荐目录内至少具备：</p>\n<ul>\n<li><code>README.md</code></li>\n<li><code>server.json</code></li>\n<li><code>start.cmd</code></li>\n<li><code>server.mjs</code></li>\n</ul>\n<p>其中：</p>\n<ul>\n<li><code>start.cmd</code> 负责本地启动细节与环境变量封装</li>\n<li><code>server.mjs</code> 负责作为稳定 launcher 入口；是否进入 live 注册仍以 <code>register-codex-paths.ps1</code> 中的受管条目为准</li>\n</ul>\n<h2 id=\"7-文档建议结构\">7. 文档建议结构</h2>\n<p>建议为 MCP 单独维护以下文档：</p>\n<ul>\n<li><code>MCP 清单总表.md</code>：当前 canonical 文档，已吸收总规范、总表与安装记录</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\AGENTS.md</code>：文档类任务的默认操作规范；如果要继续改这份总表的结构、合并方式或 companion 层，先按它执行</li>\n<li><code>MCP 安装记录（YYYY-MM-DD）</code>：若后续再有新变更，可继续作为并入本文的单次记录标题规范</li>\n</ul>\n<h2 id=\"8-本次整理结论\">8. 本次整理结论</h2>\n<p>本次已经明确：</p>\n<ul>\n<li>文档目录中继续只保留说明文档与展示资源</li>\n<li>文档类 MCP 应放在 <code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code></li>\n<li><code>fetch-mcp</code> 已完成本地包装，并补了使用模板</li>\n<li><code>markitdown-mcp</code> 已完成基于官方仓库固定 commit 的稳定包装</li>\n<li>两者已经通过 <code>server.mjs</code> + <code>register-codex-paths.ps1</code> 纳入受管配置链路，并稳定注册进 Codex 配置</li>\n<li>后续再遇到类似 MCP，应优先修复托管链路，而不是只改 <code>config.toml</code></li>\n</ul>\n<h2 id=\"9-后续建议\">9. 后续建议</h2>\n<ol>\n<li>以后新增文档类 MCP，都优先放进 <code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code></li>\n<li>MCP 总表里始终区分“当前已注册生效”“已收编但未托管”“仅文档记录”</li>\n<li>如后面继续扩展文档 / 媒体链，按同一受管方式补新的音视频 / OCR / 转写类 MCP</li>\n<li>每次新增或修复 MCP，都补一份 <code>MCP 安装记录（YYYY-MM-DD）.md</code></li>\n</ol>\n<h3 id=\"并入文件mcp-安装记录2026-04-17md\">并入文件：MCP 安装记录（2026-04-17）.md</h3>\n<ul>\n<li>整合方式：保留原文全文与 frontmatter 来源信息，不做信息删减。</li>\n</ul>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#85E89D\">title</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"MCP 安装记录（2026-04-17）\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">tags</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"类-系统运维\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"项目-MCP\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"形态-记录\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">project</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"MCP\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">type</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"记录\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">topics</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"MCP 管理\"</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">aliases</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">- </span><span style=\"color:#9ECBFF\">\"服务器体系__MCP 管理__MCP 安装记录（2026-04-17）\"</span></span></code></pre></figure>\n<h1 id=\"mcp-安装记录2026-04-17\">MCP 安装记录（2026-04-17）</h1>\n<h2 id=\"1-本次变更目标\">1. 本次变更目标</h2>\n<p>本次新增并稳定化两项文档类 MCP：</p>\n<ul>\n<li><code>fetch-mcp</code></li>\n<li><code>markitdown-mcp</code></li>\n</ul>\n<p>目标有两层：</p>\n<ol>\n<li>提升网页资料抓取与多格式文档转 Markdown 的能力</li>\n<li>解决这两个 MCP 在 Codex 中“注册漂移”的问题，让它们能稳定出现在配置里</li>\n</ol>\n<h2 id=\"2-新增原因\">2. 新增原因</h2>\n<h3 id=\"21-fetch-mcp\">2.1 fetch-mcp</h3>\n<p>新增 <code>fetch-mcp</code> 的原因：</p>\n<ul>\n<li>文档写作经常需要先抓网页正文</li>\n<li>需要把在线资料变成可整理、可归档的 Markdown 输入材料</li>\n<li>后续写方案、写操作说明、写调研稿时更方便做多源整合</li>\n</ul>\n<h3 id=\"22-markitdown-mcp\">2.2 markitdown-mcp</h3>\n<p>新增 <code>markitdown-mcp</code> 的原因：</p>\n<ul>\n<li>需要把 PDF、Word、PPT、网页、本地文件统一转成 Markdown</li>\n<li>便于把外部资料纳入 Obsidian 与现有文档生产链路</li>\n<li>便于在转换后继续做章节重组、手册化重写和知识卡片化整理</li>\n</ul>\n<h2 id=\"3-安装位置\">3. 安装位置</h2>\n<h3 id=\"31-mcp-工程目录\">3.1 MCP 工程目录</h3>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp</code></li>\n</ul>\n<h3 id=\"32-codex-实际配置位置\">3.2 Codex 实际配置位置</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n</ul>\n<h3 id=\"33-codex-配置托管脚本\">3.3 Codex 配置托管脚本</h3>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1</code></li>\n</ul>\n<h2 id=\"4-本次落地的封装文件\">4. 本次落地的封装文件</h2>\n<h3 id=\"41-fetch-mcp\">4.1 fetch-mcp</h3>\n<p>已落地文件：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\README.md</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.json</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\start.cmd</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\USAGE-TEMPLATE.md</code></li>\n</ul>\n<p>封装要点：</p>\n<ul>\n<li>增加固定默认 User-Agent</li>\n<li>预留代理环境变量 <code>FETCH_MCP_PROXY_URL</code></li>\n<li>预留自定义 User-Agent 环境变量 <code>FETCH_MCP_USER_AGENT</code></li>\n<li>附带使用说明模板，便于沉淀网页抓取工作流</li>\n</ul>\n<h3 id=\"42-markitdown-mcp\">4.2 markitdown-mcp</h3>\n<p>已落地文件：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\README.md</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.json</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\start.cmd</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs</code></li>\n</ul>\n<p>封装要点：</p>\n<ul>\n<li>来源为 <code>microsoft/markitdown</code> 官方仓库中的 <code>packages/markitdown-mcp</code></li>\n<li>固定 commit：<code>604bba13da2f43b756b49122cb65bdedb85b1dff</code></li>\n<li>采用本地封装方式，避免依赖不稳定的第三方包装层</li>\n</ul>\n<h2 id=\"5-注册漂移问题与根因\">5. 注册漂移问题与根因</h2>\n<h3 id=\"51-现象\">5.1 现象</h3>\n<p>最初这两个 MCP 虽然已经封装好，但它们没有稳定留在 Codex 配置里；手动改完 <code>config.toml</code> 后，后续受管路径重写或环境刷新时仍可能消失。</p>\n<h3 id=\"52-根因\">5.2 根因</h3>\n<p>根因不是 MCP 本身无法启动，而是 <code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code> 并不是唯一事实来源。</p>\n<p>当前已经确认的托管入口是：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\scripts\\register-codex-paths.ps1</code></li>\n</ul>\n<p>该脚本会按显式受管条目重写 Codex 配置托管区块，并把当前 live MCP 指向 <code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code> 下的 launcher 路径。</p>\n<p>如果一个 MCP 没有被纳入这个脚本的受管条目，即使手动写进 <code>config.toml</code>，后续也会发生“注册漂移”。</p>\n<h2 id=\"6-解决办法\">6. 解决办法</h2>\n<p>本次采用的稳定化做法是：</p>\n<ol>\n<li>保留每个 MCP 自己的 <code>start.cmd</code>，承接本地启动逻辑</li>\n<li>新增 <code>server.mjs</code> 作为稳定 launcher 入口</li>\n<li>让 <code>register-codex-paths.ps1</code> 把这两个 MCP 的 canonical 路径写进 managed block</li>\n<li>通过该脚本回写 <code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n</ol>\n<p>本次新增的托管入口为：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs</code></li>\n</ul>\n<h2 id=\"7-验证结果\">7. 验证结果</h2>\n<h3 id=\"71-配置托管结果\">7.1 配置托管结果</h3>\n<p>执行路径重写脚本之后，<code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code> 中已出现：</p>\n<ul>\n<li><code>fetch-mcp</code></li>\n<li><code>markitdown-mcp</code></li>\n</ul>\n<p>对应入口为：</p>\n<ul>\n<li><code>fetch-mcp</code> -> <code>node E:\\My Project\\Atramenti-Console\\codex\\mcps\\fetch-mcp\\server.mjs</code></li>\n<li><code>markitdown-mcp</code> -> <code>node E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs</code></li>\n</ul>\n<h3 id=\"72-当前结论\">7.2 当前结论</h3>\n<p>当前可以认为：</p>\n<ul>\n<li>两个 MCP 已完成本地封装</li>\n<li>两个 MCP 已纳入 Codex 托管配置链路</li>\n<li>两个 MCP 已注册并生效</li>\n<li>后续如再次执行 <code>register-codex-paths.ps1</code>，理论上仍会保留，而不是被回写掉</li>\n</ul>\n<h2 id=\"8-当前能力收益\">8. 当前能力收益</h2>\n<p>本次补齐后，文档生产链路新增了两段稳定输入能力：</p>\n<ul>\n<li><code>fetch-mcp</code>：网页正文抓取</li>\n<li><code>markitdown-mcp</code>：多格式资料转 Markdown</li>\n</ul>\n<p>这使得“网页 / PDF / Word / PPT / 本地文件 -> Markdown -> 结构化文档 / 知识库条目”的流程更顺。</p>\n<h2 id=\"9-暂缓项\">9. 暂缓项</h2>\n<p>本次没有默认预装 <code>ffmpeg</code>。</p>\n<p>原因：</p>\n<ul>\n<li>当前重点是文档资料、网页资料、PDF / Office 资料的稳定摄入</li>\n<li>音频、视频、语音稿转 Markdown 暂未成为当前主链路</li>\n<li>等后续确实要做音频 / 视频 / 语音稿处理时，再补 <code>ffmpeg</code> 更合适</li>\n</ul>\n<h2 id=\"10-后续维护建议\">10. 后续维护建议</h2>\n<ol>\n<li>以后新增 MCP，优先先看它是否能被 provision 脚本自动发现</li>\n<li>若要长期稳定注册，优先补 <code>server.mjs</code>，不要只手改 <code>config.toml</code></li>\n<li>文档类 MCP 每次新增或修复后，都同步更新 <code>MCP 清单总表.md</code></li>\n<li>重要变更单独补一份 <code>MCP 安装记录（YYYY-MM-DD）.md</code></li>\n</ol>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "mcp-清单总表",
+        "text": "MCP 清单总表"
+      },
+      {
+        "depth": 2,
+        "slug": "0-使用导航",
+        "text": "0. 使用导航"
+      },
+      {
+        "depth": 2,
+        "slug": "1-当前-live-判定基准-2026-04-20",
+        "text": "1. 当前 live 判定基准（2026-04-20）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-当前已注册并生效的-mcp-总表",
+        "text": "2. 当前已注册并生效的 MCP 总表"
+      },
+      {
+        "depth": 2,
+        "slug": "3-当前-live-注册结构怎么理解",
+        "text": "3. 当前 live 注册结构怎么理解"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-代码与工程检查层",
+        "text": "3.1 代码与工程检查层"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-github-交付层",
+        "text": "3.2 GitHub 交付层"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-文档与媒体输入层",
+        "text": "3.3 文档与媒体输入层"
+      },
+      {
+        "depth": 3,
+        "slug": "3-4-浏览器与设计层",
+        "text": "3.4 浏览器与设计层"
+      },
+      {
+        "depth": 2,
+        "slug": "4-当前未注册但仓库内仍存在的典型-mcp-能力",
+        "text": "4. 当前未注册但仓库内仍存在的典型 MCP / 能力"
+      },
+      {
+        "depth": 2,
+        "slug": "5-当前管理方式-按现在的设置",
+        "text": "5. 当前管理方式（按现在的设置）"
+      },
+      {
+        "depth": 2,
+        "slug": "6-这份文档中哪些旧口径已经过时",
+        "text": "6. 这份文档中哪些旧口径已经过时"
+      },
+      {
+        "depth": 2,
+        "slug": "7-整合补编-2026-04-19",
+        "text": "7. 整合补编（2026-04-19）"
+      },
+      {
+        "depth": 3,
+        "slug": "并入文件-mcp-体系与安装管理规范",
+        "text": "并入文件：MCP 体系与安装管理规范.md"
+      },
+      {
+        "depth": 1,
+        "slug": "mcp-体系与安装管理规范",
+        "text": "MCP 体系与安装管理规范"
+      },
+      {
+        "depth": 2,
+        "slug": "1-文档目的",
+        "text": "1. 文档目的"
+      },
+      {
+        "depth": 2,
+        "slug": "2-核心原则",
+        "text": "2. 核心原则"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-mcp-本体不放在-obsidian-文档目录",
+        "text": "2.1 MCP 本体不放在 Obsidian 文档目录"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-mcp-配置与-mcp-文档分离",
+        "text": "2.2 MCP 配置与 MCP 文档分离"
+      },
+      {
+        "depth": 3,
+        "slug": "2-3-文档类-mcp-也要和普通-mcp-一样管理",
+        "text": "2.3 文档类 MCP 也要和普通 MCP 一样管理"
+      },
+      {
+        "depth": 2,
+        "slug": "3-推荐落位",
+        "text": "3. 推荐落位"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-mcp-代码实现目录",
+        "text": "3.1 MCP 代码实现目录"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-mcp-文档目录",
+        "text": "3.2 MCP 文档目录"
+      },
+      {
+        "depth": 2,
+        "slug": "4-你当前环境中的-mcp-分类建议",
+        "text": "4. 你当前环境中的 MCP 分类建议"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-内部工程型-mcp",
+        "text": "4.1 内部工程型 MCP"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-外部能力但已工程收编的-mcp",
+        "text": "4.2 外部能力但已工程收编的 MCP"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-远程-saas-型-mcp",
+        "text": "4.3 远程 SaaS 型 MCP"
+      },
+      {
+        "depth": 2,
+        "slug": "5-安装规范建议",
+        "text": "5. 安装规范建议"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-优先级顺序",
+        "text": "5.1 优先级顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-安装后必须记录的字段",
+        "text": "5.2 安装后必须记录的字段"
+      },
+      {
+        "depth": 3,
+        "slug": "5-3-文档类-mcp-的额外建议",
+        "text": "5.3 文档类 MCP 的额外建议"
+      },
+      {
+        "depth": 2,
+        "slug": "6-稳定注册规范",
+        "text": "6. 稳定注册规范"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-不要只手改-config-toml",
+        "text": "6.1 不要只手改 `config.toml`"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-以受管路径重写脚本为准",
+        "text": "6.2 以受管路径重写脚本为准"
+      },
+      {
+        "depth": 3,
+        "slug": "6-3-文档类-mcp-的推荐做法",
+        "text": "6.3 文档类 MCP 的推荐做法"
+      },
+      {
+        "depth": 2,
+        "slug": "7-文档建议结构",
+        "text": "7. 文档建议结构"
+      },
+      {
+        "depth": 2,
+        "slug": "8-本次整理结论",
+        "text": "8. 本次整理结论"
+      },
+      {
+        "depth": 2,
+        "slug": "9-后续建议",
+        "text": "9. 后续建议"
+      },
+      {
+        "depth": 3,
+        "slug": "并入文件-mcp-安装记录-2026-04-17",
+        "text": "并入文件：MCP 安装记录（2026-04-17）.md"
+      },
+      {
+        "depth": 1,
+        "slug": "mcp-安装记录-2026-04-17",
+        "text": "MCP 安装记录（2026-04-17）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-本次变更目标",
+        "text": "1. 本次变更目标"
+      },
+      {
+        "depth": 2,
+        "slug": "2-新增原因",
+        "text": "2. 新增原因"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-fetch-mcp",
+        "text": "2.1 fetch-mcp"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-markitdown-mcp",
+        "text": "2.2 markitdown-mcp"
+      },
+      {
+        "depth": 2,
+        "slug": "3-安装位置",
+        "text": "3. 安装位置"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-mcp-工程目录",
+        "text": "3.1 MCP 工程目录"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-codex-实际配置位置",
+        "text": "3.2 Codex 实际配置位置"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-codex-配置托管脚本",
+        "text": "3.3 Codex 配置托管脚本"
+      },
+      {
+        "depth": 2,
+        "slug": "4-本次落地的封装文件",
+        "text": "4. 本次落地的封装文件"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-fetch-mcp",
+        "text": "4.1 fetch-mcp"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-markitdown-mcp",
+        "text": "4.2 markitdown-mcp"
+      },
+      {
+        "depth": 2,
+        "slug": "5-注册漂移问题与根因",
+        "text": "5. 注册漂移问题与根因"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-现象",
+        "text": "5.1 现象"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-根因",
+        "text": "5.2 根因"
+      },
+      {
+        "depth": 2,
+        "slug": "6-解决办法",
+        "text": "6. 解决办法"
+      },
+      {
+        "depth": 2,
+        "slug": "7-验证结果",
+        "text": "7. 验证结果"
+      },
+      {
+        "depth": 3,
+        "slug": "7-1-配置托管结果",
+        "text": "7.1 配置托管结果"
+      },
+      {
+        "depth": 3,
+        "slug": "7-2-当前结论",
+        "text": "7.2 当前结论"
+      },
+      {
+        "depth": 2,
+        "slug": "8-当前能力收益",
+        "text": "8. 当前能力收益"
+      },
+      {
+        "depth": 2,
+        "slug": "9-暂缓项",
+        "text": "9. 暂缓项"
+      },
+      {
+        "depth": 2,
+        "slug": "10-后续维护建议",
+        "text": "10. 后续维护建议"
+      }
+    ],
+    "detailPath": "articles/md_2a24104e39a7.json"
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_b6b5013cd4ae",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-home.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/obsidian-ide-home.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-home.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-home.md",
+    "slug": "codex-knowledge-obsidian-ide-home",
+    "title": "Obsidian IDE Home",
+    "summary": "Obsidian IDE Home 这是当前 vault 的本地 IDE 化入口页。 快速跳转 obsidian ide stack document writing system index engineering document writing standard document writin...",
+    "description": "Obsidian IDE Home 这是当前 vault 的本地 IDE 化入口页。 快速跳转 obsidian ide stack document writing system index engineering document writing standard document writin...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge",
+      "obsidian-ide-stack",
+      "document-writing-system-index",
+      "engineering-document-writing-standard",
+      "document-writing-registry",
+      "document-writing-registry-schema",
+      "document-writing-checklist"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags",
+        "obsidian.wikilinks"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/obsidian-ide-home.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-home.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/obsidian-ide-home.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "obsidian ide home",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [
+        "obsidian-ide-stack",
+        "document-writing-system-index",
+        "engineering-document-writing-standard",
+        "document-writing-registry.json",
+        "document-writing-registry.schema.json",
+        "document-writing-checklist"
+      ],
+      "backlinks": [
+        "md_d92d19fbfb47",
+        "md_f03ccab077b9"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "OBSIDIAN IDE STACK",
+        "DOCUMENT WRITING SYSTEM INDEX",
+        "ENGINEERING DOCUMENT WRITING STANDARD",
+        "DOCUMENT WRITING REGISTRY",
+        "DOCUMENT WRITING REGISTRY SCHEMA"
+      ],
+      "subtitle": "Obsidian IDE Home 这是当前 vault 的本地 IDE 化入口页。 快速跳转 obsidian ide stack document writing system index engineering document writing standard document writin..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Obsidian IDE Home\r\n\r\n这是当前 vault 的本地 IDE 化入口页。\r\n\r\n## 快速跳转\r\n\r\n- [obsidian-ide-stack](#obsidian-ide-stack)\r\n- [document-writing-system-index](#document-writing-system-index)\r\n- [engineering-document-writing-standard](#engineering-document-writing-standard)\r\n- [document-writing-registry.json](#document-writing-registry)\r\n- [document-writing-registry.schema.json](#document-writing-registry-schema)\r\n\r\n## 当前能力\r\n\r\n### 文件与代码编辑\r\n\r\n- `Code Files` 负责 JSON / YAML / JS / TS / Python / PowerShell / 配置类文件编辑\r\n- `Custom File Extensions and Types` 只做补位，不和 `Code Files` 抢主要代码扩展名\r\n\r\n### 命令与外部程序\r\n\r\n当前已预置命令：\r\n\r\n- `Open vault in VS Code`\r\n- `Open current file in VS Code`\r\n- `Open current folder in VS Code`\r\n- `Open current folder in PowerShell`\r\n- `Open current file folder in PowerShell`\r\n- `Open current folder in Explorer`\r\n- `Open current file in default app`\r\n- `Git status for current folder`\r\n- `Validate current JSON file`\r\n- `Validate document writing registry JSON`\r\n- `Open document writing system index in VS Code`\r\n\r\n### Git 与自动化\r\n\r\n- `Obsidian Git` 已安装并启用更像 IDE 的 diff / hunk 能力\r\n- `Local REST API` 已安装，可作为后续自动化桥\r\n\r\n## 推荐使用方式\r\n\r\n### 我想写文档\r\n\r\n- [document-writing-system-index](#document-writing-system-index)\r\n- [engineering-document-writing-standard](#engineering-document-writing-standard)\r\n- [document-writing-checklist](#document-writing-checklist)\r\n\r\n### 我想改 JSON / 配置文件\r\n\r\n- 直接在文件树中打开目标文件\r\n- 需要校验时，运行 `Validate current JSON file`\r\n\r\n### 我想转去 VS Code\r\n\r\n- 运行 `Open current file in VS Code`\r\n- 或 `Open current folder in VS Code`\r\n\r\n### 我想开命令行\r\n\r\n- 当前在文件夹视角时，运行 `Open current folder in PowerShell`\r\n- 当前在文件视角时，运行 `Open current file folder in PowerShell`\r\n\r\n### 我想快速看 Git 状态\r\n\r\n- 运行 `Git status for current folder`\r\n\r\n### 我想用系统默认程序打开文件\r\n\r\n- 运行 `Open current file in default app`\r\n\r\n## 注意\r\n\r\n- `Code Files` 当前依赖在线 Monaco 资源，离线时可能不可用\r\n- 新安装插件如果界面没出现，请重启 Obsidian 或重新加载社区插件",
+    "html": "<h1 id=\"obsidian-ide-home\">Obsidian IDE Home</h1>\n<p>这是当前 vault 的本地 IDE 化入口页。</p>\n<h2 id=\"快速跳转\">快速跳转</h2>\n<ul>\n<li><a href=\"#obsidian-ide-stack\">obsidian-ide-stack</a></li>\n<li><a href=\"#document-writing-system-index\">document-writing-system-index</a></li>\n<li><a href=\"#engineering-document-writing-standard\">engineering-document-writing-standard</a></li>\n<li><a href=\"#document-writing-registry\">document-writing-registry.json</a></li>\n<li><a href=\"#document-writing-registry-schema\">document-writing-registry.schema.json</a></li>\n</ul>\n<h2 id=\"当前能力\">当前能力</h2>\n<h3 id=\"文件与代码编辑\">文件与代码编辑</h3>\n<ul>\n<li><code>Code Files</code> 负责 JSON / YAML / JS / TS / Python / PowerShell / 配置类文件编辑</li>\n<li><code>Custom File Extensions and Types</code> 只做补位，不和 <code>Code Files</code> 抢主要代码扩展名</li>\n</ul>\n<h3 id=\"命令与外部程序\">命令与外部程序</h3>\n<p>当前已预置命令：</p>\n<ul>\n<li><code>Open vault in VS Code</code></li>\n<li><code>Open current file in VS Code</code></li>\n<li><code>Open current folder in VS Code</code></li>\n<li><code>Open current folder in PowerShell</code></li>\n<li><code>Open current file folder in PowerShell</code></li>\n<li><code>Open current folder in Explorer</code></li>\n<li><code>Open current file in default app</code></li>\n<li><code>Git status for current folder</code></li>\n<li><code>Validate current JSON file</code></li>\n<li><code>Validate document writing registry JSON</code></li>\n<li><code>Open document writing system index in VS Code</code></li>\n</ul>\n<h3 id=\"git-与自动化\">Git 与自动化</h3>\n<ul>\n<li><code>Obsidian Git</code> 已安装并启用更像 IDE 的 diff / hunk 能力</li>\n<li><code>Local REST API</code> 已安装，可作为后续自动化桥</li>\n</ul>\n<h2 id=\"推荐使用方式\">推荐使用方式</h2>\n<h3 id=\"我想写文档\">我想写文档</h3>\n<ul>\n<li><a href=\"#document-writing-system-index\">document-writing-system-index</a></li>\n<li><a href=\"#engineering-document-writing-standard\">engineering-document-writing-standard</a></li>\n<li><a href=\"#document-writing-checklist\">document-writing-checklist</a></li>\n</ul>\n<h3 id=\"我想改-json--配置文件\">我想改 JSON / 配置文件</h3>\n<ul>\n<li>直接在文件树中打开目标文件</li>\n<li>需要校验时，运行 <code>Validate current JSON file</code></li>\n</ul>\n<h3 id=\"我想转去-vs-code\">我想转去 VS Code</h3>\n<ul>\n<li>运行 <code>Open current file in VS Code</code></li>\n<li>或 <code>Open current folder in VS Code</code></li>\n</ul>\n<h3 id=\"我想开命令行\">我想开命令行</h3>\n<ul>\n<li>当前在文件夹视角时，运行 <code>Open current folder in PowerShell</code></li>\n<li>当前在文件视角时，运行 <code>Open current file folder in PowerShell</code></li>\n</ul>\n<h3 id=\"我想快速看-git-状态\">我想快速看 Git 状态</h3>\n<ul>\n<li>运行 <code>Git status for current folder</code></li>\n</ul>\n<h3 id=\"我想用系统默认程序打开文件\">我想用系统默认程序打开文件</h3>\n<ul>\n<li>运行 <code>Open current file in default app</code></li>\n</ul>\n<h2 id=\"注意\">注意</h2>\n<ul>\n<li><code>Code Files</code> 当前依赖在线 Monaco 资源，离线时可能不可用</li>\n<li>新安装插件如果界面没出现，请重启 Obsidian 或重新加载社区插件</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "obsidian-ide-home",
+        "text": "Obsidian IDE Home"
+      },
+      {
+        "depth": 2,
+        "slug": "快速跳转",
+        "text": "快速跳转"
+      },
+      {
+        "depth": 2,
+        "slug": "当前能力",
+        "text": "当前能力"
+      },
+      {
+        "depth": 3,
+        "slug": "文件与代码编辑",
+        "text": "文件与代码编辑"
+      },
+      {
+        "depth": 3,
+        "slug": "命令与外部程序",
+        "text": "命令与外部程序"
+      },
+      {
+        "depth": 3,
+        "slug": "git-与自动化",
+        "text": "Git 与自动化"
+      },
+      {
+        "depth": 2,
+        "slug": "推荐使用方式",
+        "text": "推荐使用方式"
+      },
+      {
+        "depth": 3,
+        "slug": "我想写文档",
+        "text": "我想写文档"
+      },
+      {
+        "depth": 3,
+        "slug": "我想改-json-配置文件",
+        "text": "我想改 JSON / 配置文件"
+      },
+      {
+        "depth": 3,
+        "slug": "我想转去-vs-code",
+        "text": "我想转去 VS Code"
+      },
+      {
+        "depth": 3,
+        "slug": "我想开命令行",
+        "text": "我想开命令行"
+      },
+      {
+        "depth": 3,
+        "slug": "我想快速看-git-状态",
+        "text": "我想快速看 Git 状态"
+      },
+      {
+        "depth": 3,
+        "slug": "我想用系统默认程序打开文件",
+        "text": "我想用系统默认程序打开文件"
+      },
+      {
+        "depth": 2,
+        "slug": "注意",
+        "text": "注意"
+      }
+    ],
+    "detailPath": "articles/md_b6b5013cd4ae.json"
+  }
+}

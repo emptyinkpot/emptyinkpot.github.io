@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_7b562aac8474",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E5%8C%96/README.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/视频自动化/README.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/视频自动化/README.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E5%8C%96/README.md",
+    "slug": "blog-视频自动化-readme",
+    "title": "README",
+    "summary": "视频自动化：花生 AI 功能反向分析与实现拆解 基于公开页面、公开前端 bundle、浏览器网络请求与可见 UI 行为整理。未绕过登录、未访问私有后端源码，涉及服务端内部算法的部分均标注为“推断实现”。 1. 产品定位 花生 AI 是一个“文稿/口播输入 自动生成视频项目 AI 辅助剪辑与素材匹配...",
+    "description": "视频自动化：花生 AI 功能反向分析与实现拆解 基于公开页面、公开前端 bundle、浏览器网络请求与可见 UI 行为整理。未绕过登录、未访问私有后端源码，涉及服务端内部算法的部分均标注为“推断实现”。 1. 产品定位 花生 AI 是一个“文稿/口播输入 自动生成视频项目 AI 辅助剪辑与素材匹配...",
+    "date": "2026-05-03",
+    "updated": "2026-05-03",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "视频自动化"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "视频自动化"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "视频自动化"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/视频自动化/README.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/视频自动化/README.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E5%8C%96/README.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "README",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "视频自动化",
+        "README"
+      ],
+      "subtitle": "视频自动化：花生 AI 功能反向分析与实现拆解 基于公开页面、公开前端 bundle、浏览器网络请求与可见 UI 行为整理。未绕过登录、未访问私有后端源码，涉及服务端内部算法的部分均标注为“推断实现”。 1. 产品定位 花生 AI 是一个“文稿/口播输入 自动生成视频项目 AI 辅助剪辑与素材匹配..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# 视频自动化：花生 AI 功能反向分析与实现拆解\n\n> 基于公开页面、公开前端 bundle、浏览器网络请求与可见 UI 行为整理。未绕过登录、未访问私有后端源码，涉及服务端内部算法的部分均标注为“推断实现”。\n\n## 1. 产品定位\n\n花生 AI 是一个“文稿/口播输入 -> 自动生成视频项目 -> AI 辅助剪辑与素材匹配 -> 导出成片”的视频创作智能体。\n\n它的核心能力不是单一 TTS 或播放器，而是一条视频自动化生产链：\n\n1. 输入文稿或上传口播音频/文稿文件。\n2. 自动拆解文稿为分镜/段落/字幕。\n3. 自动匹配公开视频素材、模板素材或用户本地素材。\n4. 自动生成项目方案、分镜规划和初版视频。\n5. 在项目编辑器中通过 AI Agent 或手动操作继续微调。\n6. 完成配音、字幕、素材替换、重排、导出等流程。\n\n## 2. 已观测到的技术栈\n\n### 前端\n\n- Next.js App Router + React。\n- Ant Design、部分 MUI、Tailwind 风格 utility class、CSS Modules。\n- MobX 状态管理。\n- 静态资源由 `s1.hdslb.com/bfs/static/innovideo/...` 承载。\n- 图片、视频、图标等资源由 `i0/i1/i2.hdslb.com` 承载。\n\n### 登录与安全\n\n- 登录态通过 Bilibili/花生账号体系判断。\n- 登录接口观测：`https://api.huasheng.cn/x/web-interface/nav`。\n- 未登录时项目详情、VIP 信息等接口返回 `401` 或 `-101`。\n- POST 请求会自动追加 `csrf`，来源是 cookie 中的 `bili_jct`。\n- 页面加载 Bilibili Gaia/minntaki 相关安全 SDK/WASM。\n\n### 埋点与实验\n\n- 错误监控和埋点：`biliMirror`、`reporter-pb`。\n- 埋点上报：`https://data.huasheng.cn/v2/log/web`。\n- A/B 实验变量包括：\n  - `agent_page`\n  - `front_montage`\n  - `montage_composite`\n  - `podcast_mtq`\n  - `local_recall`\n\n## 3. 页面与接口入口\n\n### 用户给定页面\n\n```text\nhttps://www.huasheng.cn/videov2/89228750983169\n```\n\n该页面会请求：\n\n```text\nGET /api/innovideo/project/info?pid=89228750983169\n```\n\n未登录观测响应：\n\n```json\n{\"code\":401,\"reason\":\"账号未登录\",\"message\":\"账号未登录\",\"metadata\":{}}\n```\n\n因此未登录状态下页面最终落到首页创作台。\n\n### 公开配置接口\n\n```text\nGET /api/innovideo/config\n```\n\n观测到的关键配置：\n\n- `script_max`: `10000`\n- `audio_script_max`: `50000`\n- `user_material_max`: `200`\n- `tts_speed_switch`: `true`\n- 默认文稿、默认音色、音色列表、举报标签、模型配置等。\n\n### 首页创作相关入口\n\n```text\n/project/create\n/podcast/project/create\n/api/huasheng/project/create?csrf=...\n```\n\n创建成功后根据项目类型跳转：\n\n```text\n/video/{pid}\n/videov2/{pid}\n/podcast/{pid}\n/podcastv2/{pid}\n```\n\n## 4. 全功能清单\n\n### 首页创作台\n\n- 文稿输入。\n- 文稿字数限制。\n- 上传口播音频。\n- 上传文稿文件。\n- 选择画面形式。\n- 选择口播配音。\n- 创建项目。\n- 展示花生介绍视频。\n- 展示灵感发现视频列表。\n- 返回旧版。\n- 联系客服。\n- 隐私政策、服务协议、备案信息。\n\n### 项目创建\n\n- 普通视频项目。\n- `videov2` 新版视频项目。\n- 播客项目。\n- `podcastv2` 新版播客项目。\n- 示例项目创建。\n- 服务协议确认。\n- 安全风控提示。\n- VIP/套餐权限拦截。\n- 本地素材召回项目标记。\n\n### AI Agent 编辑\n\n观测到的 Agent 能力文案和接口表明其支持：\n\n- 载入项目工程。\n- 获取项目信息。\n- 规划项目方案。\n- 解析视频脚本。\n- 生成分镜规划表。\n- 搜索视频素材。\n- 联网检索创作素材。\n- 检索匹配素材。\n- 匹配分镜字幕。\n- 更新任务清单。\n- 更新视频分镜。\n- 编排新增分镜。\n- 修改分镜字幕。\n- 重排分镜顺序。\n- 移除分镜片段。\n- 重配当前分镜画面。\n- 执行子任务。\n- 取消会话。\n- 加载聊天历史。\n\n相关接口：\n\n```text\n/api/huasheng/chat/run\n/api/huasheng/chat/events\n/api/huasheng/chat/history\n/api/huasheng/chat/cancel\n/api/huasheng/chat/state\n/api/huasheng/chat/answers\n/api/huasheng/chat/tool-cost\n/api/huasheng/chat/running/effects\n```\n\nSSE 事件流：\n\n```text\n//sse.huasheng.cn/api/huasheng/chat/events\n```\n\n### TTS 与口播配音\n\n- 公共音色列表。\n- 口播音色选择。\n- 语速开关。\n- 创建 TTS 任务。\n- 轮询 TTS 结果。\n- 自动播放生成音频。\n- 失败提示和重试。\n\n相关接口：\n\n```text\n/material/tts/list\n/tts/task\n/tts/task/result\n/voice/save\n```\n\n### 音色克隆\n\n- 10 秒快速克隆。\n- 上传本人录音克隆。\n- 上传身份核实音频。\n- 实名认证拦截。\n- 朗读文案一致性校验。\n- 音色保存。\n- 音色重命名。\n- 音色删除。\n- 音色模型更换。\n- 旧音色升级提示。\n\n相关接口：\n\n```text\n/voice/quick/clone/task/v2\n/voice/quick/clone/task/result/v2\n/voice/clone/prerecorded/task/v2\n/voice/clone/prerecorded/task/result/v2\n/voice/clone/list\n/voice/clone/save\n/voice/clone/rename\n/voice/clone/delete\n/voice/clone/change/engine\n/voice/clone/identity\n/voice/clone/text\n```\n\n### 会员、积分、支付\n\n- VIP 信息。\n- 会员权益。\n- 套餐面板。\n- 充值下单。\n- 订单状态。\n- 开通记录。\n- 订阅记录。\n- 取消订阅。\n- 积分面板。\n- 积分记录。\n\n相关接口：\n\n```text\n/api/vip/info\n/api/vip/recharge/panel\n/api/vip/recharge/pre/order\n/api/vip/recharge/order/status\n/api/vip/recharge/record\n/api/vip/subscribe/record\n/api/vip/subscribe/rescind\n/api/point/panel\n/api/point/record\n/api/point/batches\n```\n\n## 5. 自动分段：需要关注哪些信息\n\n自动分段是整个系统的第一层结构化能力。它决定后面的素材匹配、字幕生成、镜头节奏和手动微调体验。\n\n### 5.1 输入来源\n\n花生支持至少三类输入：\n\n1. 直接输入/粘贴视频文稿。\n2. 上传口播音频。\n3. 上传文稿文件，例如 `docx`。\n\n上传控件观测到的 accept 类型包括：\n\n```text\naudio/mpeg\naudio/wav\naudio/vnd.wav\naudio/flac\naudio/x-flac\naudio/mp4\naudio/m4a\naudio/x-m4a\nvideo/mp4\napplication/vnd.openxmlformats-officedocument.wordprocessingml.document\n```\n\n### 5.2 分段目标\n\n自动分段不只是把文本按句号切开，而是要生成“可剪辑单元”：\n\n- 段落。\n- 分镜。\n- 字幕片段。\n- 口播音频片段。\n- 素材匹配 query。\n- 每段建议时长。\n- 每段画面风格或镜头意图。\n\n### 5.3 可复刻的数据结构\n\n```ts\ntype ScriptSegment = {\n  id: string;\n  index: number;\n  text: string;\n  summary: string;\n  keywords: string[];\n  visualQuery: string[];\n  startTime?: number;\n  endTime?: number;\n  duration?: number;\n  speaker?: string;\n  emotion?: string;\n  sceneType?: \"fact\" | \"story\" | \"transition\" | \"quote\" | \"conclusion\";\n  status: \"draft\" | \"matched\" | \"edited\" | \"rendering\" | \"done\" | \"failed\";\n};\n```\n\n### 5.4 推断实现流程\n\n1. 文稿清洗：去除空行、特殊符号、无意义停顿词。\n2. 语义分段：按主题变化、句群、转折词、时间线、因果结构切分。\n3. 字幕分句：把长段拆成适合展示的字幕句。\n4. 时长估算：按字数、语速、音频识别结果估计每段时间。\n5. 生成视觉 query：为每个段落提取素材检索词。\n6. 生成分镜规划：输出镜头顺序、画面建议、字幕和配音映射。\n\n### 5.5 口播音频分段\n\n如果输入是音频，自动分段还需要：\n\n- ASR 转写。\n- 句级时间戳。\n- 静音检测。\n- 换气声/停顿保留。\n- 字幕对齐。\n- 音频片段切分。\n\n页面文案提示音频要求：\n\n- 音频环境要安静。\n- 音量大小保持一致。\n- 不要重复拼接同一段音频。\n- 支持口播音频文件上传。\n\n### 5.6 分段质量评估\n\n一个好的自动分段应该满足：\n\n- 每段语义完整。\n- 字幕长度适合阅读。\n- 时长接近实际口播节奏。\n- 每段都能生成明确的素材搜索意图。\n- 段落边界方便用户手动调整。\n- 分段失败时可回退到原文或重新生成。\n\n## 6. 自动匹配素材：需要关注哪些信息\n\n自动匹配素材是花生最关键的自动化能力之一。它同时包含服务端素材检索和浏览器本地素材召回。\n\n### 6.1 素材来源\n\n从页面和 bundle 推断，素材至少来自三类：\n\n1. 平台运营/推荐素材。\n2. 联网检索或 B 站公开视频素材。\n3. 用户本地关联文件夹中的素材。\n\n首页“灵感发现”视频列表来自：\n\n```text\nhttps://api.huasheng.cn/x/activity_components/eva_operation/list?source_id=29ERAmwloghvktd00&pn=1&ps=50\n```\n\n### 6.2 画面形式\n\n首页可见“画面”选择：\n\n- 视频素材。\n- 音画模板。\n\n这说明匹配素材时存在两套策略：\n\n1. 以真实视频片段填充画面。\n2. 以音频模板/视觉模板生成音画组合。\n\n### 6.3 匹配对象\n\n自动匹配不是匹配整篇文稿，而是匹配每个分镜或字幕段：\n\n```ts\ntype MaterialMatchRequest = {\n  segmentId: string;\n  text: string;\n  keywords: string[];\n  visualQuery: string[];\n  desiredDuration: number;\n  aspectRatio: \"16:9\" | \"9:16\" | \"1:1\";\n  style?: string;\n  avoid?: string[];\n  source: \"platform\" | \"web\" | \"local\";\n};\n```\n\n### 6.4 匹配结果结构\n\n```ts\ntype MaterialCandidate = {\n  id: string;\n  source: \"platform\" | \"web\" | \"local\";\n  title?: string;\n  filePath?: string;\n  url?: string;\n  cover?: string;\n  startTime: number;\n  endTime: number;\n  duration: number;\n  score: number;\n  reason?: string;\n  tags?: string[];\n  copyright?: \"unknown\" | \"allowed\" | \"restricted\";\n};\n```\n\n### 6.5 本地素材召回证据\n\n公开 bundle 中能看到明显的本地召回服务：\n\n- `LocalRecallService`\n- `Phase1_Query`\n- `Phase2_Package`\n- `Phase3_Upload`\n- `TextSearchService`\n- `searchByText`\n- `meta.json`\n- `local_recall_result_{taskId}.zip`\n\n本地召回流程：\n\n1. 用户关联本地文件夹。\n2. 浏览器读取并索引本地视频素材。\n3. 下载/加载本地 AI 模型。\n4. 用文本 query 搜索视频片段。\n5. 召回结果按 `filePath + startTime + endTime` 去重。\n6. 生成关键帧 jpg。\n7. 打包 `meta.json + jpg` 成 zip。\n8. 上传 zip 到 UPOS。\n9. 后端把召回结果绑定到项目分镜。\n\n### 6.6 本地模型\n\n观测到模型资源：\n\n```text\nhttps://boss.hdslb.com/webcut/models/clip/vit-b-16.img.fp32.onnx\nhttps://boss.hdslb.com/webcut/models/clip/vit-b-16.txt.fp32.onnx\nhttps://boss.hdslb.com/webcut/models/clip/vocab.txt\nhttps://boss.hdslb.com/webcut/resources/onnxruntime-web@1.23.2/\n```\n\n这说明本地素材匹配很可能使用 CLIP 类图文向量检索：\n\n- 图像模型：提取视频关键帧 embedding。\n- 文本模型：提取分镜 query embedding。\n- 相似度检索：返回最相关视频片段。\n\n### 6.7 自动匹配流程复刻\n\n```text\n文稿分段\n  -> 为每段生成素材 query\n  -> 搜索平台素材/联网素材/本地素材\n  -> 获取候选片段\n  -> 按相关性、清晰度、时长、版权、水印、黑边等打分\n  -> 给每个分镜选择 Top 1\n  -> 保留 Top N 作为手动替换候选\n  -> 写入项目时间线\n```\n\n### 6.8 素材质量过滤\n\n配置接口中举报标签暴露了素材质量维度，可作为过滤规则：\n\n- 敏感人物或物品。\n- 违法违规。\n- 色情低俗。\n- 引人不适。\n- 侵权。\n- 重复出现。\n- 素材画风突兀。\n- 不相关。\n- 不清晰。\n- 有水印或字幕。\n- 黑边。\n- 其他。\n\n这些标签说明素材匹配后有质量反馈闭环，适合做：\n\n- 自动降权。\n- 用户反馈训练。\n- 二次推荐。\n- 黑名单过滤。\n\n## 7. 手动微调：需要关注哪些信息\n\n手动微调是自动生成后的关键体验。自动化系统必须允许用户快速纠错，而不是只给一个不可编辑的视频。\n\n### 7.1 可微调对象\n\n应支持至少这些编辑对象：\n\n- 分镜顺序。\n- 分镜字幕。\n- 每段素材。\n- 素材裁剪起止时间。\n- 口播配音音色。\n- TTS 语速。\n- 音频模板。\n- 画面模板。\n- 分镜新增/删除。\n- 本地素材替换。\n- AI 重新匹配。\n\nbundle 文案中观测到的相关能力：\n\n- `修改分镜字幕`\n- `重排分镜顺序`\n- `移除分镜片段`\n- `请重配当前分镜的画面`\n- `搜索分镜`\n- `搜索分镜（输入描述关键词，按回车搜索）`\n- `已匹配我的素材`\n- `已搜索视频素材`\n- `目标分镜正在合成中，请稍后再试`\n\n### 7.2 手动微调的数据模型\n\n```ts\ntype TimelineScene = {\n  id: string;\n  order: number;\n  subtitle: string;\n  voiceText: string;\n  material: MaterialCandidate | null;\n  alternatives: MaterialCandidate[];\n  startTime: number;\n  endTime: number;\n  locked: boolean;\n  renderState: \"idle\" | \"rendering\" | \"done\" | \"failed\";\n};\n```\n\n### 7.3 微调交互建议\n\n适合实现的交互：\n\n- 点击分镜，右侧显示字幕、素材、音频、模板。\n- 字幕可直接编辑。\n- 素材可一键“重配”。\n- 素材可搜索替换。\n- 保留候选素材列表。\n- 分镜可拖拽排序。\n- 分镜可锁定，避免 AI 后续改动。\n- 支持撤销/重做。\n- 支持保存点/版本点。\n- 支持“只重配当前分镜”，避免全局重生成。\n\n### 7.4 撤销重做与保存点\n\n观测到项目版本相关接口：\n\n```text\n/api/huasheng/project/checkpoint/list\n/api/huasheng/project/checkpoint/undo_redo\n/api/huasheng/project/savepoint/list\n/api/huasheng/project/savepoint/apply\n/api/huasheng/project/savepoint/undo_redo\n```\n\n这说明手动微调不是直接覆盖项目，而是有操作历史或保存点机制。\n\n可复刻方案：\n\n```ts\ntype ProjectOperation = {\n  id: string;\n  type:\n    | \"segment.updateText\"\n    | \"segment.replaceMaterial\"\n    | \"segment.reorder\"\n    | \"segment.remove\"\n    | \"segment.add\"\n    | \"voice.change\"\n    | \"template.change\";\n  payload: unknown;\n  inversePatch: unknown;\n  createdAt: number;\n};\n```\n\n## 8. 推荐实现架构\n\n### 前端模块\n\n```text\napps/web\n  /create             首页创作台\n  /video/[pid]        视频编辑器\n  /podcast/[pid]      播客编辑器\n  /components\n  /stores             MobX/Zustand 状态\n  /services\n    project.ts\n    agent.ts\n    tts.ts\n    voiceClone.ts\n    material.ts\n    upload.ts\n    localRecall.ts\n```\n\n### 后端服务\n\n```text\nservices\n  auth-service\n  project-service\n  script-segmentation-service\n  material-search-service\n  tts-service\n  voice-clone-service\n  agent-service\n  billing-service\n  upload-service\n```\n\n### 核心流程\n\n```text\nCreateProject\n  -> NormalizeInput\n  -> SegmentScript\n  -> GenerateStoryboard\n  -> MatchMaterials\n  -> GenerateVoice\n  -> BuildTimeline\n  -> SaveProject\n  -> OpenEditor\n```\n\n### Agent 流程\n\n```text\nPOST /chat/run\n  -> 创建 run\n  -> SSE /chat/events 推送执行状态\n  -> 工具调用修改项目\n  -> 用户确认或继续追问\n  -> 写入 checkpoint/savepoint\n```\n\n## 9. 最小可行复刻版本\n\n如果要做一个简化版，建议优先实现：\n\n1. 文稿输入。\n2. LLM 自动分段。\n3. 每段生成素材 query。\n4. 从本地素材库或公开视频 API 搜索候选素材。\n5. 自动选 Top 1 生成时间线。\n6. 用户可编辑字幕、替换素材、重排分镜。\n7. TTS 生成配音。\n8. FFmpeg 合成视频。\n9. 操作历史支持撤销/重做。\n\n可以先不做：\n\n- 会员支付。\n- 音色克隆。\n- 浏览器端 ONNX 本地召回。\n- 复杂 Agent 工具链。\n- 多人播客。\n- 大规模素材质量反馈系统。\n\n## 10. 风险与边界\n\n- 服务端具体模型、排序规则、版权策略不可从公开前端完全确认。\n- 未登录状态无法验证完整项目编辑器界面和导出流程。\n- 自动素材匹配涉及版权、肖像权、水印、平台授权，需要在自研实现中单独设计合规策略。\n- 本地文件夹召回依赖浏览器 File System Access、OPFS、ONNX Runtime，兼容性和性能都需要实测。\n\n## 11. 证据索引\n\n观测页面：\n\n```text\nhttps://www.huasheng.cn/videov2/89228750983169\n```\n\n关键公开接口：\n\n```text\nGET https://www.huasheng.cn/api/innovideo/config\nGET https://www.huasheng.cn/api/innovideo/project/info?pid=89228750983169\nGET https://api.huasheng.cn/x/web-interface/nav\nGET https://api.huasheng.cn/x/activity_components/eva_operation/list?source_id=29ERAmwloghvktd00&pn=1&ps=50\n```\n\n关键前端 bundle 证据：\n\n```text\n/_next/static/chunks/app/video/page-*.js\n/_next/static/chunks/app/page-*.js\n/_next/static/chunks/app/layout-*.js\n```\n\n关键功能字符串：\n\n```text\n规划项目方案\n解析视频脚本\n生成分镜规划表\n搜索视频素材\n检索匹配素材\n匹配分镜字幕\n修改分镜字幕\n重排分镜顺序\n移除分镜片段\n本地模型未启用，无法选择参与匹配成片\n下载本地AI模型，并启用素材智能解析\n```",
+    "html": "<h1 id=\"视频自动化花生-ai-功能反向分析与实现拆解\">视频自动化：花生 AI 功能反向分析与实现拆解</h1>\n<blockquote>\n<p>基于公开页面、公开前端 bundle、浏览器网络请求与可见 UI 行为整理。未绕过登录、未访问私有后端源码，涉及服务端内部算法的部分均标注为“推断实现”。</p>\n</blockquote>\n<h2 id=\"1-产品定位\">1. 产品定位</h2>\n<p>花生 AI 是一个“文稿/口播输入 -> 自动生成视频项目 -> AI 辅助剪辑与素材匹配 -> 导出成片”的视频创作智能体。</p>\n<p>它的核心能力不是单一 TTS 或播放器，而是一条视频自动化生产链：</p>\n<ol>\n<li>输入文稿或上传口播音频/文稿文件。</li>\n<li>自动拆解文稿为分镜/段落/字幕。</li>\n<li>自动匹配公开视频素材、模板素材或用户本地素材。</li>\n<li>自动生成项目方案、分镜规划和初版视频。</li>\n<li>在项目编辑器中通过 AI Agent 或手动操作继续微调。</li>\n<li>完成配音、字幕、素材替换、重排、导出等流程。</li>\n</ol>\n<h2 id=\"2-已观测到的技术栈\">2. 已观测到的技术栈</h2>\n<h3 id=\"前端\">前端</h3>\n<ul>\n<li>Next.js App Router + React。</li>\n<li>Ant Design、部分 MUI、Tailwind 风格 utility class、CSS Modules。</li>\n<li>MobX 状态管理。</li>\n<li>静态资源由 <code>s1.hdslb.com/bfs/static/innovideo/...</code> 承载。</li>\n<li>图片、视频、图标等资源由 <code>i0/i1/i2.hdslb.com</code> 承载。</li>\n</ul>\n<h3 id=\"登录与安全\">登录与安全</h3>\n<ul>\n<li>登录态通过 Bilibili/花生账号体系判断。</li>\n<li>登录接口观测：<code>https://api.huasheng.cn/x/web-interface/nav</code>。</li>\n<li>未登录时项目详情、VIP 信息等接口返回 <code>401</code> 或 <code>-101</code>。</li>\n<li>POST 请求会自动追加 <code>csrf</code>，来源是 cookie 中的 <code>bili_jct</code>。</li>\n<li>页面加载 Bilibili Gaia/minntaki 相关安全 SDK/WASM。</li>\n</ul>\n<h3 id=\"埋点与实验\">埋点与实验</h3>\n<ul>\n<li>错误监控和埋点：<code>biliMirror</code>、<code>reporter-pb</code>。</li>\n<li>埋点上报：<code>https://data.huasheng.cn/v2/log/web</code>。</li>\n<li>A/B 实验变量包括：\n<ul>\n<li><code>agent_page</code></li>\n<li><code>front_montage</code></li>\n<li><code>montage_composite</code></li>\n<li><code>podcast_mtq</code></li>\n<li><code>local_recall</code></li>\n</ul>\n</li>\n</ul>\n<h2 id=\"3-页面与接口入口\">3. 页面与接口入口</h2>\n<h3 id=\"用户给定页面\">用户给定页面</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://www.huasheng.cn/videov2/89228750983169</span></span></code></pre></figure>\n<p>该页面会请求：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GET /api/innovideo/project/info?pid=89228750983169</span></span></code></pre></figure>\n<p>未登录观测响应：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span><span style=\"color:#79B8FF\">\"code\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#79B8FF\">401</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"reason\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"账号未登录\"</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"message\"</span><span style=\"color:#E1E4E8\">:</span><span style=\"color:#9ECBFF\">\"账号未登录\"</span><span style=\"color:#E1E4E8\">,</span><span style=\"color:#79B8FF\">\"metadata\"</span><span style=\"color:#E1E4E8\">:{}}</span></span></code></pre></figure>\n<p>因此未登录状态下页面最终落到首页创作台。</p>\n<h3 id=\"公开配置接口\">公开配置接口</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GET /api/innovideo/config</span></span></code></pre></figure>\n<p>观测到的关键配置：</p>\n<ul>\n<li><code>script_max</code>: <code>10000</code></li>\n<li><code>audio_script_max</code>: <code>50000</code></li>\n<li><code>user_material_max</code>: <code>200</code></li>\n<li><code>tts_speed_switch</code>: <code>true</code></li>\n<li>默认文稿、默认音色、音色列表、举报标签、模型配置等。</li>\n</ul>\n<h3 id=\"首页创作相关入口\">首页创作相关入口</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/project/create</span></span>\n<span data-line=\"\"><span>/podcast/project/create</span></span>\n<span data-line=\"\"><span>/api/huasheng/project/create?csrf=...</span></span></code></pre></figure>\n<p>创建成功后根据项目类型跳转：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/video/{pid}</span></span>\n<span data-line=\"\"><span>/videov2/{pid}</span></span>\n<span data-line=\"\"><span>/podcast/{pid}</span></span>\n<span data-line=\"\"><span>/podcastv2/{pid}</span></span></code></pre></figure>\n<h2 id=\"4-全功能清单\">4. 全功能清单</h2>\n<h3 id=\"首页创作台\">首页创作台</h3>\n<ul>\n<li>文稿输入。</li>\n<li>文稿字数限制。</li>\n<li>上传口播音频。</li>\n<li>上传文稿文件。</li>\n<li>选择画面形式。</li>\n<li>选择口播配音。</li>\n<li>创建项目。</li>\n<li>展示花生介绍视频。</li>\n<li>展示灵感发现视频列表。</li>\n<li>返回旧版。</li>\n<li>联系客服。</li>\n<li>隐私政策、服务协议、备案信息。</li>\n</ul>\n<h3 id=\"项目创建\">项目创建</h3>\n<ul>\n<li>普通视频项目。</li>\n<li><code>videov2</code> 新版视频项目。</li>\n<li>播客项目。</li>\n<li><code>podcastv2</code> 新版播客项目。</li>\n<li>示例项目创建。</li>\n<li>服务协议确认。</li>\n<li>安全风控提示。</li>\n<li>VIP/套餐权限拦截。</li>\n<li>本地素材召回项目标记。</li>\n</ul>\n<h3 id=\"ai-agent-编辑\">AI Agent 编辑</h3>\n<p>观测到的 Agent 能力文案和接口表明其支持：</p>\n<ul>\n<li>载入项目工程。</li>\n<li>获取项目信息。</li>\n<li>规划项目方案。</li>\n<li>解析视频脚本。</li>\n<li>生成分镜规划表。</li>\n<li>搜索视频素材。</li>\n<li>联网检索创作素材。</li>\n<li>检索匹配素材。</li>\n<li>匹配分镜字幕。</li>\n<li>更新任务清单。</li>\n<li>更新视频分镜。</li>\n<li>编排新增分镜。</li>\n<li>修改分镜字幕。</li>\n<li>重排分镜顺序。</li>\n<li>移除分镜片段。</li>\n<li>重配当前分镜画面。</li>\n<li>执行子任务。</li>\n<li>取消会话。</li>\n<li>加载聊天历史。</li>\n</ul>\n<p>相关接口：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/api/huasheng/chat/run</span></span>\n<span data-line=\"\"><span>/api/huasheng/chat/events</span></span>\n<span data-line=\"\"><span>/api/huasheng/chat/history</span></span>\n<span data-line=\"\"><span>/api/huasheng/chat/cancel</span></span>\n<span data-line=\"\"><span>/api/huasheng/chat/state</span></span>\n<span data-line=\"\"><span>/api/huasheng/chat/answers</span></span>\n<span data-line=\"\"><span>/api/huasheng/chat/tool-cost</span></span>\n<span data-line=\"\"><span>/api/huasheng/chat/running/effects</span></span></code></pre></figure>\n<p>SSE 事件流：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>//sse.huasheng.cn/api/huasheng/chat/events</span></span></code></pre></figure>\n<h3 id=\"tts-与口播配音\">TTS 与口播配音</h3>\n<ul>\n<li>公共音色列表。</li>\n<li>口播音色选择。</li>\n<li>语速开关。</li>\n<li>创建 TTS 任务。</li>\n<li>轮询 TTS 结果。</li>\n<li>自动播放生成音频。</li>\n<li>失败提示和重试。</li>\n</ul>\n<p>相关接口：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/material/tts/list</span></span>\n<span data-line=\"\"><span>/tts/task</span></span>\n<span data-line=\"\"><span>/tts/task/result</span></span>\n<span data-line=\"\"><span>/voice/save</span></span></code></pre></figure>\n<h3 id=\"音色克隆\">音色克隆</h3>\n<ul>\n<li>10 秒快速克隆。</li>\n<li>上传本人录音克隆。</li>\n<li>上传身份核实音频。</li>\n<li>实名认证拦截。</li>\n<li>朗读文案一致性校验。</li>\n<li>音色保存。</li>\n<li>音色重命名。</li>\n<li>音色删除。</li>\n<li>音色模型更换。</li>\n<li>旧音色升级提示。</li>\n</ul>\n<p>相关接口：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/voice/quick/clone/task/v2</span></span>\n<span data-line=\"\"><span>/voice/quick/clone/task/result/v2</span></span>\n<span data-line=\"\"><span>/voice/clone/prerecorded/task/v2</span></span>\n<span data-line=\"\"><span>/voice/clone/prerecorded/task/result/v2</span></span>\n<span data-line=\"\"><span>/voice/clone/list</span></span>\n<span data-line=\"\"><span>/voice/clone/save</span></span>\n<span data-line=\"\"><span>/voice/clone/rename</span></span>\n<span data-line=\"\"><span>/voice/clone/delete</span></span>\n<span data-line=\"\"><span>/voice/clone/change/engine</span></span>\n<span data-line=\"\"><span>/voice/clone/identity</span></span>\n<span data-line=\"\"><span>/voice/clone/text</span></span></code></pre></figure>\n<h3 id=\"会员积分支付\">会员、积分、支付</h3>\n<ul>\n<li>VIP 信息。</li>\n<li>会员权益。</li>\n<li>套餐面板。</li>\n<li>充值下单。</li>\n<li>订单状态。</li>\n<li>开通记录。</li>\n<li>订阅记录。</li>\n<li>取消订阅。</li>\n<li>积分面板。</li>\n<li>积分记录。</li>\n</ul>\n<p>相关接口：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/api/vip/info</span></span>\n<span data-line=\"\"><span>/api/vip/recharge/panel</span></span>\n<span data-line=\"\"><span>/api/vip/recharge/pre/order</span></span>\n<span data-line=\"\"><span>/api/vip/recharge/order/status</span></span>\n<span data-line=\"\"><span>/api/vip/recharge/record</span></span>\n<span data-line=\"\"><span>/api/vip/subscribe/record</span></span>\n<span data-line=\"\"><span>/api/vip/subscribe/rescind</span></span>\n<span data-line=\"\"><span>/api/point/panel</span></span>\n<span data-line=\"\"><span>/api/point/record</span></span>\n<span data-line=\"\"><span>/api/point/batches</span></span></code></pre></figure>\n<h2 id=\"5-自动分段需要关注哪些信息\">5. 自动分段：需要关注哪些信息</h2>\n<p>自动分段是整个系统的第一层结构化能力。它决定后面的素材匹配、字幕生成、镜头节奏和手动微调体验。</p>\n<h3 id=\"51-输入来源\">5.1 输入来源</h3>\n<p>花生支持至少三类输入：</p>\n<ol>\n<li>直接输入/粘贴视频文稿。</li>\n<li>上传口播音频。</li>\n<li>上传文稿文件，例如 <code>docx</code>。</li>\n</ol>\n<p>上传控件观测到的 accept 类型包括：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>audio/mpeg</span></span>\n<span data-line=\"\"><span>audio/wav</span></span>\n<span data-line=\"\"><span>audio/vnd.wav</span></span>\n<span data-line=\"\"><span>audio/flac</span></span>\n<span data-line=\"\"><span>audio/x-flac</span></span>\n<span data-line=\"\"><span>audio/mp4</span></span>\n<span data-line=\"\"><span>audio/m4a</span></span>\n<span data-line=\"\"><span>audio/x-m4a</span></span>\n<span data-line=\"\"><span>video/mp4</span></span>\n<span data-line=\"\"><span>application/vnd.openxmlformats-officedocument.wordprocessingml.document</span></span></code></pre></figure>\n<h3 id=\"52-分段目标\">5.2 分段目标</h3>\n<p>自动分段不只是把文本按句号切开，而是要生成“可剪辑单元”：</p>\n<ul>\n<li>段落。</li>\n<li>分镜。</li>\n<li>字幕片段。</li>\n<li>口播音频片段。</li>\n<li>素材匹配 query。</li>\n<li>每段建议时长。</li>\n<li>每段画面风格或镜头意图。</li>\n</ul>\n<h3 id=\"53-可复刻的数据结构\">5.3 可复刻的数据结构</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">type</span><span style=\"color:#B392F0\"> ScriptSegment</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  id</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  index</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  text</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  summary</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  keywords</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">[];</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  visualQuery</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">[];</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  startTime</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  endTime</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  duration</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  speaker</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  emotion</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  sceneType</span><span style=\"color:#F97583\">?:</span><span style=\"color:#9ECBFF\"> \"fact\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"story\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"transition\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"quote\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"conclusion\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  status</span><span style=\"color:#F97583\">:</span><span style=\"color:#9ECBFF\"> \"draft\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"matched\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"edited\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"rendering\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"done\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"failed\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">};</span></span></code></pre></figure>\n<h3 id=\"54-推断实现流程\">5.4 推断实现流程</h3>\n<ol>\n<li>文稿清洗：去除空行、特殊符号、无意义停顿词。</li>\n<li>语义分段：按主题变化、句群、转折词、时间线、因果结构切分。</li>\n<li>字幕分句：把长段拆成适合展示的字幕句。</li>\n<li>时长估算：按字数、语速、音频识别结果估计每段时间。</li>\n<li>生成视觉 query：为每个段落提取素材检索词。</li>\n<li>生成分镜规划：输出镜头顺序、画面建议、字幕和配音映射。</li>\n</ol>\n<h3 id=\"55-口播音频分段\">5.5 口播音频分段</h3>\n<p>如果输入是音频，自动分段还需要：</p>\n<ul>\n<li>ASR 转写。</li>\n<li>句级时间戳。</li>\n<li>静音检测。</li>\n<li>换气声/停顿保留。</li>\n<li>字幕对齐。</li>\n<li>音频片段切分。</li>\n</ul>\n<p>页面文案提示音频要求：</p>\n<ul>\n<li>音频环境要安静。</li>\n<li>音量大小保持一致。</li>\n<li>不要重复拼接同一段音频。</li>\n<li>支持口播音频文件上传。</li>\n</ul>\n<h3 id=\"56-分段质量评估\">5.6 分段质量评估</h3>\n<p>一个好的自动分段应该满足：</p>\n<ul>\n<li>每段语义完整。</li>\n<li>字幕长度适合阅读。</li>\n<li>时长接近实际口播节奏。</li>\n<li>每段都能生成明确的素材搜索意图。</li>\n<li>段落边界方便用户手动调整。</li>\n<li>分段失败时可回退到原文或重新生成。</li>\n</ul>\n<h2 id=\"6-自动匹配素材需要关注哪些信息\">6. 自动匹配素材：需要关注哪些信息</h2>\n<p>自动匹配素材是花生最关键的自动化能力之一。它同时包含服务端素材检索和浏览器本地素材召回。</p>\n<h3 id=\"61-素材来源\">6.1 素材来源</h3>\n<p>从页面和 bundle 推断，素材至少来自三类：</p>\n<ol>\n<li>平台运营/推荐素材。</li>\n<li>联网检索或 B 站公开视频素材。</li>\n<li>用户本地关联文件夹中的素材。</li>\n</ol>\n<p>首页“灵感发现”视频列表来自：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://api.huasheng.cn/x/activity_components/eva_operation/list?source_id=29ERAmwloghvktd00&#x26;pn=1&#x26;ps=50</span></span></code></pre></figure>\n<h3 id=\"62-画面形式\">6.2 画面形式</h3>\n<p>首页可见“画面”选择：</p>\n<ul>\n<li>视频素材。</li>\n<li>音画模板。</li>\n</ul>\n<p>这说明匹配素材时存在两套策略：</p>\n<ol>\n<li>以真实视频片段填充画面。</li>\n<li>以音频模板/视觉模板生成音画组合。</li>\n</ol>\n<h3 id=\"63-匹配对象\">6.3 匹配对象</h3>\n<p>自动匹配不是匹配整篇文稿，而是匹配每个分镜或字幕段：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">type</span><span style=\"color:#B392F0\"> MaterialMatchRequest</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  segmentId</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  text</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  keywords</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">[];</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  visualQuery</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">[];</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  desiredDuration</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  aspectRatio</span><span style=\"color:#F97583\">:</span><span style=\"color:#9ECBFF\"> \"16:9\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"9:16\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"1:1\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  style</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  avoid</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">[];</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  source</span><span style=\"color:#F97583\">:</span><span style=\"color:#9ECBFF\"> \"platform\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"web\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"local\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">};</span></span></code></pre></figure>\n<h3 id=\"64-匹配结果结构\">6.4 匹配结果结构</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">type</span><span style=\"color:#B392F0\"> MaterialCandidate</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  id</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  source</span><span style=\"color:#F97583\">:</span><span style=\"color:#9ECBFF\"> \"platform\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"web\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"local\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  title</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  filePath</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  url</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  cover</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  startTime</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  endTime</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  duration</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  score</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  reason</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  tags</span><span style=\"color:#F97583\">?:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">[];</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  copyright</span><span style=\"color:#F97583\">?:</span><span style=\"color:#9ECBFF\"> \"unknown\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"allowed\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"restricted\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">};</span></span></code></pre></figure>\n<h3 id=\"65-本地素材召回证据\">6.5 本地素材召回证据</h3>\n<p>公开 bundle 中能看到明显的本地召回服务：</p>\n<ul>\n<li><code>LocalRecallService</code></li>\n<li><code>Phase1_Query</code></li>\n<li><code>Phase2_Package</code></li>\n<li><code>Phase3_Upload</code></li>\n<li><code>TextSearchService</code></li>\n<li><code>searchByText</code></li>\n<li><code>meta.json</code></li>\n<li><code>local_recall_result_{taskId}.zip</code></li>\n</ul>\n<p>本地召回流程：</p>\n<ol>\n<li>用户关联本地文件夹。</li>\n<li>浏览器读取并索引本地视频素材。</li>\n<li>下载/加载本地 AI 模型。</li>\n<li>用文本 query 搜索视频片段。</li>\n<li>召回结果按 <code>filePath + startTime + endTime</code> 去重。</li>\n<li>生成关键帧 jpg。</li>\n<li>打包 <code>meta.json + jpg</code> 成 zip。</li>\n<li>上传 zip 到 UPOS。</li>\n<li>后端把召回结果绑定到项目分镜。</li>\n</ol>\n<h3 id=\"66-本地模型\">6.6 本地模型</h3>\n<p>观测到模型资源：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://boss.hdslb.com/webcut/models/clip/vit-b-16.img.fp32.onnx</span></span>\n<span data-line=\"\"><span>https://boss.hdslb.com/webcut/models/clip/vit-b-16.txt.fp32.onnx</span></span>\n<span data-line=\"\"><span>https://boss.hdslb.com/webcut/models/clip/vocab.txt</span></span>\n<span data-line=\"\"><span>https://boss.hdslb.com/webcut/resources/onnxruntime-web@1.23.2/</span></span></code></pre></figure>\n<p>这说明本地素材匹配很可能使用 CLIP 类图文向量检索：</p>\n<ul>\n<li>图像模型：提取视频关键帧 embedding。</li>\n<li>文本模型：提取分镜 query embedding。</li>\n<li>相似度检索：返回最相关视频片段。</li>\n</ul>\n<h3 id=\"67-自动匹配流程复刻\">6.7 自动匹配流程复刻</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>文稿分段</span></span>\n<span data-line=\"\"><span>  -> 为每段生成素材 query</span></span>\n<span data-line=\"\"><span>  -> 搜索平台素材/联网素材/本地素材</span></span>\n<span data-line=\"\"><span>  -> 获取候选片段</span></span>\n<span data-line=\"\"><span>  -> 按相关性、清晰度、时长、版权、水印、黑边等打分</span></span>\n<span data-line=\"\"><span>  -> 给每个分镜选择 Top 1</span></span>\n<span data-line=\"\"><span>  -> 保留 Top N 作为手动替换候选</span></span>\n<span data-line=\"\"><span>  -> 写入项目时间线</span></span></code></pre></figure>\n<h3 id=\"68-素材质量过滤\">6.8 素材质量过滤</h3>\n<p>配置接口中举报标签暴露了素材质量维度，可作为过滤规则：</p>\n<ul>\n<li>敏感人物或物品。</li>\n<li>违法违规。</li>\n<li>色情低俗。</li>\n<li>引人不适。</li>\n<li>侵权。</li>\n<li>重复出现。</li>\n<li>素材画风突兀。</li>\n<li>不相关。</li>\n<li>不清晰。</li>\n<li>有水印或字幕。</li>\n<li>黑边。</li>\n<li>其他。</li>\n</ul>\n<p>这些标签说明素材匹配后有质量反馈闭环，适合做：</p>\n<ul>\n<li>自动降权。</li>\n<li>用户反馈训练。</li>\n<li>二次推荐。</li>\n<li>黑名单过滤。</li>\n</ul>\n<h2 id=\"7-手动微调需要关注哪些信息\">7. 手动微调：需要关注哪些信息</h2>\n<p>手动微调是自动生成后的关键体验。自动化系统必须允许用户快速纠错，而不是只给一个不可编辑的视频。</p>\n<h3 id=\"71-可微调对象\">7.1 可微调对象</h3>\n<p>应支持至少这些编辑对象：</p>\n<ul>\n<li>分镜顺序。</li>\n<li>分镜字幕。</li>\n<li>每段素材。</li>\n<li>素材裁剪起止时间。</li>\n<li>口播配音音色。</li>\n<li>TTS 语速。</li>\n<li>音频模板。</li>\n<li>画面模板。</li>\n<li>分镜新增/删除。</li>\n<li>本地素材替换。</li>\n<li>AI 重新匹配。</li>\n</ul>\n<p>bundle 文案中观测到的相关能力：</p>\n<ul>\n<li><code>修改分镜字幕</code></li>\n<li><code>重排分镜顺序</code></li>\n<li><code>移除分镜片段</code></li>\n<li><code>请重配当前分镜的画面</code></li>\n<li><code>搜索分镜</code></li>\n<li><code>搜索分镜（输入描述关键词，按回车搜索）</code></li>\n<li><code>已匹配我的素材</code></li>\n<li><code>已搜索视频素材</code></li>\n<li><code>目标分镜正在合成中，请稍后再试</code></li>\n</ul>\n<h3 id=\"72-手动微调的数据模型\">7.2 手动微调的数据模型</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">type</span><span style=\"color:#B392F0\"> TimelineScene</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  id</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  order</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  subtitle</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  voiceText</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  material</span><span style=\"color:#F97583\">:</span><span style=\"color:#B392F0\"> MaterialCandidate</span><span style=\"color:#F97583\"> |</span><span style=\"color:#79B8FF\"> null</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  alternatives</span><span style=\"color:#F97583\">:</span><span style=\"color:#B392F0\"> MaterialCandidate</span><span style=\"color:#E1E4E8\">[];</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  startTime</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  endTime</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  locked</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> boolean</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  renderState</span><span style=\"color:#F97583\">:</span><span style=\"color:#9ECBFF\"> \"idle\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"rendering\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"done\"</span><span style=\"color:#F97583\"> |</span><span style=\"color:#9ECBFF\"> \"failed\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">};</span></span></code></pre></figure>\n<h3 id=\"73-微调交互建议\">7.3 微调交互建议</h3>\n<p>适合实现的交互：</p>\n<ul>\n<li>点击分镜，右侧显示字幕、素材、音频、模板。</li>\n<li>字幕可直接编辑。</li>\n<li>素材可一键“重配”。</li>\n<li>素材可搜索替换。</li>\n<li>保留候选素材列表。</li>\n<li>分镜可拖拽排序。</li>\n<li>分镜可锁定，避免 AI 后续改动。</li>\n<li>支持撤销/重做。</li>\n<li>支持保存点/版本点。</li>\n<li>支持“只重配当前分镜”，避免全局重生成。</li>\n</ul>\n<h3 id=\"74-撤销重做与保存点\">7.4 撤销重做与保存点</h3>\n<p>观测到项目版本相关接口：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/api/huasheng/project/checkpoint/list</span></span>\n<span data-line=\"\"><span>/api/huasheng/project/checkpoint/undo_redo</span></span>\n<span data-line=\"\"><span>/api/huasheng/project/savepoint/list</span></span>\n<span data-line=\"\"><span>/api/huasheng/project/savepoint/apply</span></span>\n<span data-line=\"\"><span>/api/huasheng/project/savepoint/undo_redo</span></span></code></pre></figure>\n<p>这说明手动微调不是直接覆盖项目，而是有操作历史或保存点机制。</p>\n<p>可复刻方案：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">type</span><span style=\"color:#B392F0\"> ProjectOperation</span><span style=\"color:#F97583\"> =</span><span style=\"color:#E1E4E8\"> {</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  id</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> string</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  type</span><span style=\"color:#F97583\">:</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    |</span><span style=\"color:#9ECBFF\"> \"segment.updateText\"</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    |</span><span style=\"color:#9ECBFF\"> \"segment.replaceMaterial\"</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    |</span><span style=\"color:#9ECBFF\"> \"segment.reorder\"</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    |</span><span style=\"color:#9ECBFF\"> \"segment.remove\"</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    |</span><span style=\"color:#9ECBFF\"> \"segment.add\"</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    |</span><span style=\"color:#9ECBFF\"> \"voice.change\"</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    |</span><span style=\"color:#9ECBFF\"> \"template.change\"</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  payload</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> unknown</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  inversePatch</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> unknown</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  createdAt</span><span style=\"color:#F97583\">:</span><span style=\"color:#79B8FF\"> number</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">};</span></span></code></pre></figure>\n<h2 id=\"8-推荐实现架构\">8. 推荐实现架构</h2>\n<h3 id=\"前端模块\">前端模块</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>apps/web</span></span>\n<span data-line=\"\"><span>  /create             首页创作台</span></span>\n<span data-line=\"\"><span>  /video/[pid]        视频编辑器</span></span>\n<span data-line=\"\"><span>  /podcast/[pid]      播客编辑器</span></span>\n<span data-line=\"\"><span>  /components</span></span>\n<span data-line=\"\"><span>  /stores             MobX/Zustand 状态</span></span>\n<span data-line=\"\"><span>  /services</span></span>\n<span data-line=\"\"><span>    project.ts</span></span>\n<span data-line=\"\"><span>    agent.ts</span></span>\n<span data-line=\"\"><span>    tts.ts</span></span>\n<span data-line=\"\"><span>    voiceClone.ts</span></span>\n<span data-line=\"\"><span>    material.ts</span></span>\n<span data-line=\"\"><span>    upload.ts</span></span>\n<span data-line=\"\"><span>    localRecall.ts</span></span></code></pre></figure>\n<h3 id=\"后端服务\">后端服务</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>services</span></span>\n<span data-line=\"\"><span>  auth-service</span></span>\n<span data-line=\"\"><span>  project-service</span></span>\n<span data-line=\"\"><span>  script-segmentation-service</span></span>\n<span data-line=\"\"><span>  material-search-service</span></span>\n<span data-line=\"\"><span>  tts-service</span></span>\n<span data-line=\"\"><span>  voice-clone-service</span></span>\n<span data-line=\"\"><span>  agent-service</span></span>\n<span data-line=\"\"><span>  billing-service</span></span>\n<span data-line=\"\"><span>  upload-service</span></span></code></pre></figure>\n<h3 id=\"核心流程\">核心流程</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>CreateProject</span></span>\n<span data-line=\"\"><span>  -> NormalizeInput</span></span>\n<span data-line=\"\"><span>  -> SegmentScript</span></span>\n<span data-line=\"\"><span>  -> GenerateStoryboard</span></span>\n<span data-line=\"\"><span>  -> MatchMaterials</span></span>\n<span data-line=\"\"><span>  -> GenerateVoice</span></span>\n<span data-line=\"\"><span>  -> BuildTimeline</span></span>\n<span data-line=\"\"><span>  -> SaveProject</span></span>\n<span data-line=\"\"><span>  -> OpenEditor</span></span></code></pre></figure>\n<h3 id=\"agent-流程\">Agent 流程</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>POST /chat/run</span></span>\n<span data-line=\"\"><span>  -> 创建 run</span></span>\n<span data-line=\"\"><span>  -> SSE /chat/events 推送执行状态</span></span>\n<span data-line=\"\"><span>  -> 工具调用修改项目</span></span>\n<span data-line=\"\"><span>  -> 用户确认或继续追问</span></span>\n<span data-line=\"\"><span>  -> 写入 checkpoint/savepoint</span></span></code></pre></figure>\n<h2 id=\"9-最小可行复刻版本\">9. 最小可行复刻版本</h2>\n<p>如果要做一个简化版，建议优先实现：</p>\n<ol>\n<li>文稿输入。</li>\n<li>LLM 自动分段。</li>\n<li>每段生成素材 query。</li>\n<li>从本地素材库或公开视频 API 搜索候选素材。</li>\n<li>自动选 Top 1 生成时间线。</li>\n<li>用户可编辑字幕、替换素材、重排分镜。</li>\n<li>TTS 生成配音。</li>\n<li>FFmpeg 合成视频。</li>\n<li>操作历史支持撤销/重做。</li>\n</ol>\n<p>可以先不做：</p>\n<ul>\n<li>会员支付。</li>\n<li>音色克隆。</li>\n<li>浏览器端 ONNX 本地召回。</li>\n<li>复杂 Agent 工具链。</li>\n<li>多人播客。</li>\n<li>大规模素材质量反馈系统。</li>\n</ul>\n<h2 id=\"10-风险与边界\">10. 风险与边界</h2>\n<ul>\n<li>服务端具体模型、排序规则、版权策略不可从公开前端完全确认。</li>\n<li>未登录状态无法验证完整项目编辑器界面和导出流程。</li>\n<li>自动素材匹配涉及版权、肖像权、水印、平台授权，需要在自研实现中单独设计合规策略。</li>\n<li>本地文件夹召回依赖浏览器 File System Access、OPFS、ONNX Runtime，兼容性和性能都需要实测。</li>\n</ul>\n<h2 id=\"11-证据索引\">11. 证据索引</h2>\n<p>观测页面：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>https://www.huasheng.cn/videov2/89228750983169</span></span></code></pre></figure>\n<p>关键公开接口：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GET https://www.huasheng.cn/api/innovideo/config</span></span>\n<span data-line=\"\"><span>GET https://www.huasheng.cn/api/innovideo/project/info?pid=89228750983169</span></span>\n<span data-line=\"\"><span>GET https://api.huasheng.cn/x/web-interface/nav</span></span>\n<span data-line=\"\"><span>GET https://api.huasheng.cn/x/activity_components/eva_operation/list?source_id=29ERAmwloghvktd00&#x26;pn=1&#x26;ps=50</span></span></code></pre></figure>\n<p>关键前端 bundle 证据：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>/_next/static/chunks/app/video/page-*.js</span></span>\n<span data-line=\"\"><span>/_next/static/chunks/app/page-*.js</span></span>\n<span data-line=\"\"><span>/_next/static/chunks/app/layout-*.js</span></span></code></pre></figure>\n<p>关键功能字符串：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>规划项目方案</span></span>\n<span data-line=\"\"><span>解析视频脚本</span></span>\n<span data-line=\"\"><span>生成分镜规划表</span></span>\n<span data-line=\"\"><span>搜索视频素材</span></span>\n<span data-line=\"\"><span>检索匹配素材</span></span>\n<span data-line=\"\"><span>匹配分镜字幕</span></span>\n<span data-line=\"\"><span>修改分镜字幕</span></span>\n<span data-line=\"\"><span>重排分镜顺序</span></span>\n<span data-line=\"\"><span>移除分镜片段</span></span>\n<span data-line=\"\"><span>本地模型未启用，无法选择参与匹配成片</span></span>\n<span data-line=\"\"><span>下载本地AI模型，并启用素材智能解析</span></span></code></pre></figure>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "视频自动化-花生-ai-功能反向分析与实现拆解",
+        "text": "视频自动化：花生 AI 功能反向分析与实现拆解"
+      },
+      {
+        "depth": 2,
+        "slug": "1-产品定位",
+        "text": "1. 产品定位"
+      },
+      {
+        "depth": 2,
+        "slug": "2-已观测到的技术栈",
+        "text": "2. 已观测到的技术栈"
+      },
+      {
+        "depth": 3,
+        "slug": "前端",
+        "text": "前端"
+      },
+      {
+        "depth": 3,
+        "slug": "登录与安全",
+        "text": "登录与安全"
+      },
+      {
+        "depth": 3,
+        "slug": "埋点与实验",
+        "text": "埋点与实验"
+      },
+      {
+        "depth": 2,
+        "slug": "3-页面与接口入口",
+        "text": "3. 页面与接口入口"
+      },
+      {
+        "depth": 3,
+        "slug": "用户给定页面",
+        "text": "用户给定页面"
+      },
+      {
+        "depth": 3,
+        "slug": "公开配置接口",
+        "text": "公开配置接口"
+      },
+      {
+        "depth": 3,
+        "slug": "首页创作相关入口",
+        "text": "首页创作相关入口"
+      },
+      {
+        "depth": 2,
+        "slug": "4-全功能清单",
+        "text": "4. 全功能清单"
+      },
+      {
+        "depth": 3,
+        "slug": "首页创作台",
+        "text": "首页创作台"
+      },
+      {
+        "depth": 3,
+        "slug": "项目创建",
+        "text": "项目创建"
+      },
+      {
+        "depth": 3,
+        "slug": "ai-agent-编辑",
+        "text": "AI Agent 编辑"
+      },
+      {
+        "depth": 3,
+        "slug": "tts-与口播配音",
+        "text": "TTS 与口播配音"
+      },
+      {
+        "depth": 3,
+        "slug": "音色克隆",
+        "text": "音色克隆"
+      },
+      {
+        "depth": 3,
+        "slug": "会员-积分-支付",
+        "text": "会员、积分、支付"
+      },
+      {
+        "depth": 2,
+        "slug": "5-自动分段-需要关注哪些信息",
+        "text": "5. 自动分段：需要关注哪些信息"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-输入来源",
+        "text": "5.1 输入来源"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-分段目标",
+        "text": "5.2 分段目标"
+      },
+      {
+        "depth": 3,
+        "slug": "5-3-可复刻的数据结构",
+        "text": "5.3 可复刻的数据结构"
+      },
+      {
+        "depth": 3,
+        "slug": "5-4-推断实现流程",
+        "text": "5.4 推断实现流程"
+      },
+      {
+        "depth": 3,
+        "slug": "5-5-口播音频分段",
+        "text": "5.5 口播音频分段"
+      },
+      {
+        "depth": 3,
+        "slug": "5-6-分段质量评估",
+        "text": "5.6 分段质量评估"
+      },
+      {
+        "depth": 2,
+        "slug": "6-自动匹配素材-需要关注哪些信息",
+        "text": "6. 自动匹配素材：需要关注哪些信息"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-素材来源",
+        "text": "6.1 素材来源"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-画面形式",
+        "text": "6.2 画面形式"
+      },
+      {
+        "depth": 3,
+        "slug": "6-3-匹配对象",
+        "text": "6.3 匹配对象"
+      },
+      {
+        "depth": 3,
+        "slug": "6-4-匹配结果结构",
+        "text": "6.4 匹配结果结构"
+      },
+      {
+        "depth": 3,
+        "slug": "6-5-本地素材召回证据",
+        "text": "6.5 本地素材召回证据"
+      },
+      {
+        "depth": 3,
+        "slug": "6-6-本地模型",
+        "text": "6.6 本地模型"
+      },
+      {
+        "depth": 3,
+        "slug": "6-7-自动匹配流程复刻",
+        "text": "6.7 自动匹配流程复刻"
+      },
+      {
+        "depth": 3,
+        "slug": "6-8-素材质量过滤",
+        "text": "6.8 素材质量过滤"
+      },
+      {
+        "depth": 2,
+        "slug": "7-手动微调-需要关注哪些信息",
+        "text": "7. 手动微调：需要关注哪些信息"
+      },
+      {
+        "depth": 3,
+        "slug": "7-1-可微调对象",
+        "text": "7.1 可微调对象"
+      },
+      {
+        "depth": 3,
+        "slug": "7-2-手动微调的数据模型",
+        "text": "7.2 手动微调的数据模型"
+      },
+      {
+        "depth": 3,
+        "slug": "7-3-微调交互建议",
+        "text": "7.3 微调交互建议"
+      },
+      {
+        "depth": 3,
+        "slug": "7-4-撤销重做与保存点",
+        "text": "7.4 撤销重做与保存点"
+      },
+      {
+        "depth": 2,
+        "slug": "8-推荐实现架构",
+        "text": "8. 推荐实现架构"
+      },
+      {
+        "depth": 3,
+        "slug": "前端模块",
+        "text": "前端模块"
+      },
+      {
+        "depth": 3,
+        "slug": "后端服务",
+        "text": "后端服务"
+      },
+      {
+        "depth": 3,
+        "slug": "核心流程",
+        "text": "核心流程"
+      },
+      {
+        "depth": 3,
+        "slug": "agent-流程",
+        "text": "Agent 流程"
+      },
+      {
+        "depth": 2,
+        "slug": "9-最小可行复刻版本",
+        "text": "9. 最小可行复刻版本"
+      },
+      {
+        "depth": 2,
+        "slug": "10-风险与边界",
+        "text": "10. 风险与边界"
+      },
+      {
+        "depth": 2,
+        "slug": "11-证据索引",
+        "text": "11. 证据索引"
+      }
+    ],
+    "detailPath": "articles/md_7b562aac8474.json"
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_541f10b10adb",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/GitHub%20%E4%BB%93%E7%BE%A4%E8%A7%92%E8%89%B2%E4%B8%8E%E6%94%B6%E5%8F%A3%E6%B8%85%E5%8D%95.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/GitHub 仓群角色与收口清单.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/GitHub 仓群角色与收口清单.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/GitHub%20%E4%BB%93%E7%BE%A4%E8%A7%92%E8%89%B2%E4%B8%8E%E6%94%B6%E5%8F%A3%E6%B8%85%E5%8D%95.md",
+    "slug": "agent-github-仓群角色与收口清单",
+    "title": "GitHub 仓群角色与收口清单",
+    "summary": "GitHub 仓群角色与收口清单 更新时间：2026 04 21 适用范围：emptyinkpot/ 当前 GitHub 仓群 结论用途：回答“哪些仓是当前活仓”“哪些只是 mirror/backup/archive”“哪些已经明显过量，后续应合并或删除” 判定依据 用户提供的当前仓列表 gh re...",
+    "description": "GitHub 仓群角色与收口清单 更新时间：2026 04 21 适用范围：emptyinkpot/ 当前 GitHub 仓群 结论用途：回答“哪些仓是当前活仓”“哪些只是 mirror/backup/archive”“哪些已经明显过量，后续应合并或删除” 判定依据 用户提供的当前仓列表 gh re...",
+    "date": "2026-04-21",
+    "updated": "2026-04-21",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/GitHub 仓群角色与收口清单.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/GitHub 仓群角色与收口清单.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/GitHub%20%E4%BB%93%E7%BE%A4%E8%A7%92%E8%89%B2%E4%B8%8E%E6%94%B6%E5%8F%A3%E6%B8%85%E5%8D%95.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "GitHub 仓群角色与收口清单",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "GITHUB 仓群角色与收口清单"
+      ],
+      "subtitle": "GitHub 仓群角色与收口清单 更新时间：2026 04 21 适用范围：emptyinkpot/ 当前 GitHub 仓群 结论用途：回答“哪些仓是当前活仓”“哪些只是 mirror/backup/archive”“哪些已经明显过量，后续应合并或删除” 判定依据 用户提供的当前仓列表 gh re..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# GitHub 仓群角色与收口清单\n\n- 更新时间：`2026-04-21`\n- 适用范围：`emptyinkpot/*` 当前 GitHub 仓群\n- 结论用途：回答“哪些仓是当前活仓”“哪些只是 mirror/backup/archive”“哪些已经明显过量，后续应合并或删除”\n\n## 判定依据\n\n- 用户提供的当前仓列表\n- `gh repo list emptyinkpot --limit 100 --json name,url,isPrivate,isFork,description`\n- 本机 Git 顶层 / remote 审计\n- `C:\\Users\\ASUS-KL\\.codex\\REPO-OWNERSHIP-MAP.md` 当前口径\n\n## 先说结论\n\n- 不是“一个仓就能拉回所有过去记录”。不同 repo 只覆盖各自跟踪边界，不能替代全局配置、外部镜像、历史冻结、公开发布镜像与未纳入同一 repo 的目录。\n- 但当前这批 `backup-*` / `archive-*` / `mirror-*` 也确实明显过多，已经超出“合理备份层”的数量。\n- 以后默认结构应该是：`少量活仓 + 少量有明确职责的 mirror/backup + 极少量统一 archive`，而不是每次迁移/兜底都长一个新 GitHub 仓。\n\n## 当前建议分层\n\n### A. 明确应保留的长期活仓\n\n这些仓当前仍然承担清晰边界，不属于“快照泛滥”问题：\n\n| 仓库 | 当前角色 | 依据 | 默认动作 |\n| --- | --- | --- | --- |\n| `asus-kl-codex-home` | `mirror/backup repo` | 本机 `.codex` 当前独立 git 顶层就是它 | 继续保留 |\n| `my-project-root` | `umbrella repo` | `E:\\My Project` 当前独立 git 顶层就是它 | 继续保留 |\n| `Atramenti-Console` | `owning repo` | `E:\\My Project\\Atramenti-Console` 当前独立 git 顶层就是它 | 继续保留 |\n| `emptyinkpot.github.io` | `owning repo` | 当前 MyBlog 已明确收口到 GitHub 真源 + 服务器部署 | 继续保留 |\n| `mortis-multica-source` | `owning repo` | `.codex` / handoff 已把它列为 Mortis 真实源码真源 | 继续保留 |\n\n### B. 明确有当前职责、但不是第一开发真源的结构化仓\n\n这些仓不是“活源码第一真源”，但当前仍有合理存在理由：\n\n| 仓库 | 当前角色 | 依据 | 默认动作 |\n| --- | --- | --- | --- |\n| `my-project-qmd` | `mirror/backup repo` | 当前 `qmd` 外置 gitdir/worktree 方案仍在使用 | 暂保留，后续若退役外置 gitdir 再收口 |\n| `my-project-yt-dlp-mcp` | `mirror/backup repo` | 当前视频 MCP 外置 gitdir/worktree 方案仍在使用 | 暂保留 |\n| `my-project-video-audio-mcp` | `mirror/backup repo` | 同上 | 暂保留 |\n| `my-project-ffmpeg-mcp` | `mirror/backup repo` | 同上 | 暂保留 |\n| `mortis-napcat-control` | `publish mirror` | 本机 `.publish\\mortis-napcat-control` 独立指向该远端；editable source 在 `Atramenti-Console` | 保留，但只当发布镜像 |\n| `mortis-multica-watch` | `public watch mirror` | GitHub 描述明确是 sanitized watch mirror | 保留，但不要当源码真源 |\n| `mirror-openai-skills-vendor-imports` | `vendor/reference repo` | 本机 `C:\\Users\\ASUS-KL\\.codex\\vendor_imports\\skills` 直接指向它，且保留 `upstream=openai/skills` | 保留 |\n| `golutra` | `vendor/reference repo` | 本机 `E:\\My Project\\Atramenti box\\golutra` 是独立 public fork | 保留 |\n\n### C. 当前可视为独立专题仓，但缺少本机活边界证据\n\n这些仓未表现出“快照泛滥”特征，但本轮也没有足够本机现场证据证明它们仍是当前活开发面：\n\n| 仓库 | 当前建议角色 | 说明 | 默认动作 |\n| --- | --- | --- | --- |\n| `Lex-Universalis` | `independent project repo` | 可能是独立项目，但本轮未发现本机活工作面 | 保留，后续按需补 ownership map |\n| `Roo-Kit` | `independent project repo` | 看起来是独立公开项目，不属于 snapshot 仓 | 保留 |\n| `DataSheet` | `independent project repo` | 私有专题仓，但本轮未发现本机活工作面 | 保留，待核实 |\n\n### D. 当前存在边界冲突，后续必须二选一收口\n\n这些仓的问题不是“纯快照”，而是“GitHub 上像独立 repo，但本机现场并没有与之对应的独立 owning repo 边界”：\n\n| 仓库 | 当前现象 | 风险 | 推荐动作 |\n| --- | --- | --- | --- |\n| `cloude-app` | 本机 `E:\\My Project\\Cloude App` 仍落在 `my-project-root` umbrella 边界；GitHub `emptyinkpot/cloude-app` 已被降级归档 | 历史冲突边界若不落文档，仍会被误读成独立真源 | 当前按 umbrella 收口；只有后续补出本机独立 git 边界时才恢复独立 repo 口径 |\n| `Parliamentary-Simulation` | GitHub 独立存在，但本机路径当前仍属于 `E:\\My Project` 顶层 | 同上，但该项目已出现“远端独立 repo / 本机 umbrella 子目录 / 部署文档按独立项目 clone”三层分叉 | 不要直接原地硬切；先走 staged migration，再补本机独立 owning repo |\n\n执行状态（`2026-04-21`）：\n\n- `cloude-app`\n  - 本机目录 `E:\\My Project\\Cloude App` 当前 `git rev-parse --show-toplevel` 仍返回 `E:\\My Project`\n  - 仓内未发现直接引用 `https://github.com/emptyinkpot/cloude-app`\n  - `Startup-Hub` 仍把它当作 root umbrella 内的普通一级目录看待\n  - 当前建议：先正式回归 `my-project-root` umbrella 口径；GitHub 上的 `cloude-app` 暂不视为当前 owning repo，后续若真要独立开发，再补本机独立 repo 边界\n  - 真实收口动作已执行：`emptyinkpot/cloude-app` 当前已改成 GitHub `archived=true`，不再继续冒充独立活仓；当前本机开发边界明确落在 umbrella 内\n- `Parliamentary-Simulation`\n  - 本机目录 `E:\\My Project\\Parliamentary-Simulation` 当前也仍落在 `my-project-root` umbrella 边界\n  - 但项目内部已有明确 GitHub/服务器部署口径：`docs\\SERVER_DEPLOYMENT_DEBUG.md` 直接写了 `git clone https://github.com/emptyinkpot/Parliamentary-Simulation.git`\n  - 项目本体也更像完整独立工程：根目录具备 `deploy/`、`server/`、`src/`、`pnpm-workspace.yaml`、完整 README/CHANGELOG\n  - 当前建议：后续应升格为独立 owning repo；也就是说，不是把 GitHub 仓降级掉，而是把本机工作边界补齐到与该 GitHub repo 对齐\n  - 但当前不适合直接在 `E:\\My Project\\Parliamentary-Simulation` 原地硬切：本机目录与 GitHub 远端已经明显分叉，直接 `git init` / 直接改 remote 会把 root umbrella 的历史、忽略规则、本地私有载荷和远端项目历史混成一锅\n  - 现场审计速记：\n    - 本机顶层仍是 `E:/My Project`，root 仓当前仍跟踪 `Parliamentary-Simulation` 约 `302` 个文件\n    - 审计起点远端 HEAD 为 `b6ca1c46533ae5dff972d3c510291d2b0063064e`；当前 staged migration 已推进到 `3beb49a`\n    - top-level local-only：`08225aab32ca785bc4f300aece678b9b/`、`assets/`、`deploy/`、`key/`、`.env.local`\n    - top-level remote-only：`.sourcery.yaml`\n    - 递归对比下，本机 `304` 个文件、远端 `300` 个文件、共通 `299` 个文件里有 `291` 个内容不同\n  - 本轮收口结论应改为 staged migration：\n    1. 以 `emptyinkpot/Parliamentary-Simulation` 远端仓作为目标边界真源，先拉出一次干净 working copy\n    2. 盘点本机目录相对远端的本地特有内容，区分“应进入独立 repo”“仅本地保留/忽略”“应继续留在 umbrella”\n    3. 对齐 `.gitignore`、部署脚本、环境样例与目录结构后，再决定何时把本机工作路径切成真正独立 git 边界\n    4. 在 staged migration 完成前，继续把 `E:\\My Project\\Parliamentary-Simulation` 视为 `my-project-root` umbrella 内的特殊待迁目录，而不是已经完成切换的独立 repo\n  - 当前已知的第一轮分桶建议：\n    - 应进入独立 repo：`docs/SERVER_DEPLOYMENT_DEBUG.md`、`deploy/systemd/parliamentary-server.service`、`server/.env.example` 及相关 README / 部署脚本修正\n    - 仅本地保留/忽略：`.env.local`、`server/.env`、`key/`、异常空目录或缓存残留\n    - 远端既有基线需保留：`.sourcery.yaml`\n  - staged migration 第一条真实动作已完成：已在干净 working copy 中把 `docs/SERVER_DEPLOYMENT_DEBUG.md`、`deploy/systemd/parliamentary-server.service`、`server/.env.example` 与 README 导航入口吸收到 GitHub 独立仓，并推送提交 `747d4d2`（`docs: add server deployment baseline`）\n  - staged migration 第二条真实动作也已完成：已继续在干净 working copy 中把 `README.md`、`docs/SERVER_DEPLOYMENT_DEBUG.md` 与 `server/package.json` 的生产入口口径对齐到 `dist/server/src/main.js`，并推送提交 `3beb49a`（`docs: align server deployment entrypoints`）\n\n### E. 当前更像实验 / fork / mirror 仓，而不是需要立即处理的 snapshot 仓\n\n这些仓默认应理解为 `vendor/reference` 或实验仓，而不是当前主问题：\n\n| 仓库 | 当前建议角色 | 默认动作 |\n| --- | --- | --- |\n| `ai-town` | `vendor/reference repo` | 如仍有实验用途可保留；否则后续再归档 |\n| `ai-office` | `vendor/reference repo` | 同上 |\n| `agent-office` | `vendor/reference repo` | 同上 |\n| `auto-coding-agent-demo` | `vendor/reference repo` | 同上 |\n\n### F. 优先收口删除的“过量快照 / 临时镜像”仓\n\n这批仓就是当前“为什么这么多快照”的主要来源。它们默认不该继续增长，也不该再被当成日常工作面。\n\n#### F1. 同类历史快照批量仓\n\n- `backup-gemini-history-8b7b18af0509`\n- `backup-gemini-history-e9f140ed02c7`\n- `backup-gemini-history-b4c9cd0272f3`\n- `backup-trae-snapshot-69c645ff1881`\n- `backup-trae-snapshot-69c4cc2c71ed41`\n- `backup-trae-snapshot-69c4cc2c71ed40`\n- `backup-trae-snapshot-69c4bff6be56`\n- `backup-trae-snapshot-69c4bb043467`\n- `backup-trae-snapshot-69c4bacea33e`\n- `backup-trae-snapshot-69c4b4c289c1`\n- `backup-trae-snapshot-69c4afed89c1`\n- `backup-trae-snapshot-69c4adc489c1`\n\n建议：\n\n1. 不再新增同模式新仓。\n2. 若确需保留历史，合并成一到两个统一 archive 容器，或直接导出为离线压缩包/冷备。\n3. 合并完成后，逐个删除这些分散 snapshot repo。\n\n执行状态（`2026-04-21`）：\n\n- 上述 `backup-gemini-history-*` 与 `backup-trae-snapshot-*` 已先完成一次 `archived=true` 可逆收口，随后又在用户确认后执行 GitHub 真删除。\n- 当前状态：这些分散的历史快照仓已不再存在于 GitHub，可通过 `gh repo view emptyinkpot/<repo>` 返回 repository 不存在来复核。\n\n#### F2. 一次性 workspace / 项目切面归档仓\n\n- `backup-openclaw-workspace`\n- `archive-my-project-openclaw-20260418`\n- `archive-my-project-atramenti-console-20260418`\n\n建议：\n\n1. 这类仓不应继续作为“可继续开发的备用真源”。\n2. 最终目标是：保留一个统一 archive 落点即可，不再按项目切面继续新长 archive repo。\n\n执行状态（`2026-04-21`）：\n\n- `backup-openclaw-workspace`\n- `archive-my-project-openclaw-20260418`\n- `archive-my-project-atramenti-console-20260418`\n\n以上 3 个仓也已先进入 `archived=true`，随后在用户确认后执行 GitHub 真删除；当前不再作为可见 GitHub 仓保留。\n\n#### F3. 明显带有临时镜像味道、且当前未见本机活边界证据的 mirror 仓\n\n- `mirror-claude-code-full`\n- `mirror-multica-style-audit`\n- `mirror-andrej-karpathy-skills-temp`\n- `mirror-markitdown-local`\n\n建议：\n\n1. 若本机已无对应独立 repo/worktree/长期消费链路，默认进入候选退役清单。\n2. 真有少数仍需保留者，也必须补清楚“本机路径 + 角色 + upstream/consumer 关系”。\n\n执行状态（`2026-04-21`）：\n\n- `mirror-claude-code-full` 已确认本机无活引用；先归档后，已在用户确认后执行 GitHub 真删除。\n- `mirror-multica-style-audit` 已复核本机无目录、无活引用、无消费链路证据；当前已执行 GitHub 真删除。\n- `mirror-andrej-karpathy-skills-temp` 已复核本机无目录、无活引用、无消费链路证据；当前已执行 GitHub 真删除。\n- `mirror-markitdown-local` 已完成单独复核：当前真正活用的是 `markitdown-mcp` 集成路径（`.codex\\config.toml -> E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs`），本机未发现独立 markitdown worktree；因此也已在先归档后执行 GitHub 真删除。\n\n## 默认收口目标\n\n后续 GitHub 仓群应尽量收敛到下面 4 层：\n\n1. `长期活仓`\n   - `asus-kl-codex-home`\n   - `my-project-root`\n   - `Atramenti-Console`\n   - `emptyinkpot.github.io`\n   - `mortis-multica-source`\n   - 仍然有真实独立边界的专题仓\n2. `有明确职责的少量 mirror/backup`\n   - 外置 gitdir 仍依赖的备份仓\n   - 明确公开发布镜像\n   - 明确 vendor/reference mirror\n3. `统一 archive`\n   - 少量、稳定命名、明确只读\n4. `不再保留的分散 snapshot repo`\n   - 同类 hash/timestamp 仓批量清理\n\n## 后续执行顺序\n\n1. 先冻结新增：停止继续创建新的 `backup-*` / `archive-*` / `mirror-*` 临时仓。\n2. 再补边界：把仍然有用途的 mirror/vendor 仓补进 ownership map。\n3. 再做归并：把仍需保留的少量 snapshot/history 收敛到统一 archive 落点。\n4. 最后删除：对已确认无保留必要的分散 snapshot repo，直接做 GitHub 真删除，并把删除结果回写 canonical 文档。\n\n## 本轮最重要的治理结论\n\n- 当前真正“太多”的不是所有 GitHub repo，而是 `backup-*` / `archive-*` / `mirror-*` 这一层。\n- `my-project-qmd` / `my-project-ffmpeg-mcp` / `my-project-video-audio-mcp` / `my-project-yt-dlp-mcp` 这类虽然看起来也多，但它们当前仍是外置 gitdir/worktree 方案的一部分，不应和纯 snapshot 仓混为一谈。\n- `cloude-app` 与 `Parliamentary-Simulation` 目前最需要处理的是“边界冲突”，不是立刻删除 GitHub 仓。\n- `cloude-app` 的真实边界收口已开始：当前 GitHub 冲突仓已 archive，本机路径明确继续归 `my-project-root` umbrella。\n- `Parliamentary-Simulation` 的真实 staged migration 已开始：公共部署资产已吸收到独立 GitHub 仓提交 `747d4d2`，随后又完成第二步公共入口对齐提交 `3beb49a`；后续再继续处理本机目录从 umbrella 迁出的动作。\n- 本轮已完成第一批真实删除：`backup-gemini-history-*`、`backup-trae-snapshot-*`、`backup-openclaw-workspace`、两份 `archive-my-project-*`、`mirror-claude-code-full`、`mirror-markitdown-local` 已全部从 GitHub 删除。\n- 本轮又完成第二批 mirror 候选真实删除：`mirror-multica-style-audit`、`mirror-andrej-karpathy-skills-temp` 已全部从 GitHub 删除。\n- 这批仓的处理顺序是“先 archive，再 delete”；当前下一轮不应重复盯住它们，而应转去处理剩余仍在 GitHub 上的边界冲突仓或仍需归并的 archive 结构。",
+    "html": "<h1 id=\"github-仓群角色与收口清单\">GitHub 仓群角色与收口清单</h1>\n<ul>\n<li>更新时间：<code>2026-04-21</code></li>\n<li>适用范围：<code>emptyinkpot/*</code> 当前 GitHub 仓群</li>\n<li>结论用途：回答“哪些仓是当前活仓”“哪些只是 mirror/backup/archive”“哪些已经明显过量，后续应合并或删除”</li>\n</ul>\n<h2 id=\"判定依据\">判定依据</h2>\n<ul>\n<li>用户提供的当前仓列表</li>\n<li><code>gh repo list emptyinkpot --limit 100 --json name,url,isPrivate,isFork,description</code></li>\n<li>本机 Git 顶层 / remote 审计</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\REPO-OWNERSHIP-MAP.md</code> 当前口径</li>\n</ul>\n<h2 id=\"先说结论\">先说结论</h2>\n<ul>\n<li>不是“一个仓就能拉回所有过去记录”。不同 repo 只覆盖各自跟踪边界，不能替代全局配置、外部镜像、历史冻结、公开发布镜像与未纳入同一 repo 的目录。</li>\n<li>但当前这批 <code>backup-*</code> / <code>archive-*</code> / <code>mirror-*</code> 也确实明显过多，已经超出“合理备份层”的数量。</li>\n<li>以后默认结构应该是：<code>少量活仓 + 少量有明确职责的 mirror/backup + 极少量统一 archive</code>，而不是每次迁移/兜底都长一个新 GitHub 仓。</li>\n</ul>\n<h2 id=\"当前建议分层\">当前建议分层</h2>\n<h3 id=\"a-明确应保留的长期活仓\">A. 明确应保留的长期活仓</h3>\n<p>这些仓当前仍然承担清晰边界，不属于“快照泛滥”问题：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>仓库</th>\n<th>当前角色</th>\n<th>依据</th>\n<th>默认动作</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>asus-kl-codex-home</code></td>\n<td><code>mirror/backup repo</code></td>\n<td>本机 <code>.codex</code> 当前独立 git 顶层就是它</td>\n<td>继续保留</td>\n</tr>\n<tr>\n<td><code>my-project-root</code></td>\n<td><code>umbrella repo</code></td>\n<td><code>E:\\My Project</code> 当前独立 git 顶层就是它</td>\n<td>继续保留</td>\n</tr>\n<tr>\n<td><code>Atramenti-Console</code></td>\n<td><code>owning repo</code></td>\n<td><code>E:\\My Project\\Atramenti-Console</code> 当前独立 git 顶层就是它</td>\n<td>继续保留</td>\n</tr>\n<tr>\n<td><code>emptyinkpot.github.io</code></td>\n<td><code>owning repo</code></td>\n<td>当前 MyBlog 已明确收口到 GitHub 真源 + 服务器部署</td>\n<td>继续保留</td>\n</tr>\n<tr>\n<td><code>mortis-multica-source</code></td>\n<td><code>owning repo</code></td>\n<td><code>.codex</code> / handoff 已把它列为 Mortis 真实源码真源</td>\n<td>继续保留</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"b-明确有当前职责但不是第一开发真源的结构化仓\">B. 明确有当前职责、但不是第一开发真源的结构化仓</h3>\n<p>这些仓不是“活源码第一真源”，但当前仍有合理存在理由：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>仓库</th>\n<th>当前角色</th>\n<th>依据</th>\n<th>默认动作</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>my-project-qmd</code></td>\n<td><code>mirror/backup repo</code></td>\n<td>当前 <code>qmd</code> 外置 gitdir/worktree 方案仍在使用</td>\n<td>暂保留，后续若退役外置 gitdir 再收口</td>\n</tr>\n<tr>\n<td><code>my-project-yt-dlp-mcp</code></td>\n<td><code>mirror/backup repo</code></td>\n<td>当前视频 MCP 外置 gitdir/worktree 方案仍在使用</td>\n<td>暂保留</td>\n</tr>\n<tr>\n<td><code>my-project-video-audio-mcp</code></td>\n<td><code>mirror/backup repo</code></td>\n<td>同上</td>\n<td>暂保留</td>\n</tr>\n<tr>\n<td><code>my-project-ffmpeg-mcp</code></td>\n<td><code>mirror/backup repo</code></td>\n<td>同上</td>\n<td>暂保留</td>\n</tr>\n<tr>\n<td><code>mortis-napcat-control</code></td>\n<td><code>publish mirror</code></td>\n<td>本机 <code>.publish\\mortis-napcat-control</code> 独立指向该远端；editable source 在 <code>Atramenti-Console</code></td>\n<td>保留，但只当发布镜像</td>\n</tr>\n<tr>\n<td><code>mortis-multica-watch</code></td>\n<td><code>public watch mirror</code></td>\n<td>GitHub 描述明确是 sanitized watch mirror</td>\n<td>保留，但不要当源码真源</td>\n</tr>\n<tr>\n<td><code>mirror-openai-skills-vendor-imports</code></td>\n<td><code>vendor/reference repo</code></td>\n<td>本机 <code>C:\\Users\\ASUS-KL\\.codex\\vendor_imports\\skills</code> 直接指向它，且保留 <code>upstream=openai/skills</code></td>\n<td>保留</td>\n</tr>\n<tr>\n<td><code>golutra</code></td>\n<td><code>vendor/reference repo</code></td>\n<td>本机 <code>E:\\My Project\\Atramenti box\\golutra</code> 是独立 public fork</td>\n<td>保留</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"c-当前可视为独立专题仓但缺少本机活边界证据\">C. 当前可视为独立专题仓，但缺少本机活边界证据</h3>\n<p>这些仓未表现出“快照泛滥”特征，但本轮也没有足够本机现场证据证明它们仍是当前活开发面：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>仓库</th>\n<th>当前建议角色</th>\n<th>说明</th>\n<th>默认动作</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>Lex-Universalis</code></td>\n<td><code>independent project repo</code></td>\n<td>可能是独立项目，但本轮未发现本机活工作面</td>\n<td>保留，后续按需补 ownership map</td>\n</tr>\n<tr>\n<td><code>Roo-Kit</code></td>\n<td><code>independent project repo</code></td>\n<td>看起来是独立公开项目，不属于 snapshot 仓</td>\n<td>保留</td>\n</tr>\n<tr>\n<td><code>DataSheet</code></td>\n<td><code>independent project repo</code></td>\n<td>私有专题仓，但本轮未发现本机活工作面</td>\n<td>保留，待核实</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"d-当前存在边界冲突后续必须二选一收口\">D. 当前存在边界冲突，后续必须二选一收口</h3>\n<p>这些仓的问题不是“纯快照”，而是“GitHub 上像独立 repo，但本机现场并没有与之对应的独立 owning repo 边界”：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>仓库</th>\n<th>当前现象</th>\n<th>风险</th>\n<th>推荐动作</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>cloude-app</code></td>\n<td>本机 <code>E:\\My Project\\Cloude App</code> 仍落在 <code>my-project-root</code> umbrella 边界；GitHub <code>emptyinkpot/cloude-app</code> 已被降级归档</td>\n<td>历史冲突边界若不落文档，仍会被误读成独立真源</td>\n<td>当前按 umbrella 收口；只有后续补出本机独立 git 边界时才恢复独立 repo 口径</td>\n</tr>\n<tr>\n<td><code>Parliamentary-Simulation</code></td>\n<td>GitHub 独立存在，但本机路径当前仍属于 <code>E:\\My Project</code> 顶层</td>\n<td>同上，但该项目已出现“远端独立 repo / 本机 umbrella 子目录 / 部署文档按独立项目 clone”三层分叉</td>\n<td>不要直接原地硬切；先走 staged migration，再补本机独立 owning repo</td>\n</tr>\n</tbody>\n</table></div>\n<p>执行状态（<code>2026-04-21</code>）：</p>\n<ul>\n<li><code>cloude-app</code>\n<ul>\n<li>本机目录 <code>E:\\My Project\\Cloude App</code> 当前 <code>git rev-parse --show-toplevel</code> 仍返回 <code>E:\\My Project</code></li>\n<li>仓内未发现直接引用 <code>https://github.com/emptyinkpot/cloude-app</code></li>\n<li><code>Startup-Hub</code> 仍把它当作 root umbrella 内的普通一级目录看待</li>\n<li>当前建议：先正式回归 <code>my-project-root</code> umbrella 口径；GitHub 上的 <code>cloude-app</code> 暂不视为当前 owning repo，后续若真要独立开发，再补本机独立 repo 边界</li>\n<li>真实收口动作已执行：<code>emptyinkpot/cloude-app</code> 当前已改成 GitHub <code>archived=true</code>，不再继续冒充独立活仓；当前本机开发边界明确落在 umbrella 内</li>\n</ul>\n</li>\n<li><code>Parliamentary-Simulation</code>\n<ul>\n<li>本机目录 <code>E:\\My Project\\Parliamentary-Simulation</code> 当前也仍落在 <code>my-project-root</code> umbrella 边界</li>\n<li>但项目内部已有明确 GitHub/服务器部署口径：<code>docs\\SERVER_DEPLOYMENT_DEBUG.md</code> 直接写了 <code>git clone https://github.com/emptyinkpot/Parliamentary-Simulation.git</code></li>\n<li>项目本体也更像完整独立工程：根目录具备 <code>deploy/</code>、<code>server/</code>、<code>src/</code>、<code>pnpm-workspace.yaml</code>、完整 README/CHANGELOG</li>\n<li>当前建议：后续应升格为独立 owning repo；也就是说，不是把 GitHub 仓降级掉，而是把本机工作边界补齐到与该 GitHub repo 对齐</li>\n<li>但当前不适合直接在 <code>E:\\My Project\\Parliamentary-Simulation</code> 原地硬切：本机目录与 GitHub 远端已经明显分叉，直接 <code>git init</code> / 直接改 remote 会把 root umbrella 的历史、忽略规则、本地私有载荷和远端项目历史混成一锅</li>\n<li>现场审计速记：\n<ul>\n<li>本机顶层仍是 <code>E:/My Project</code>，root 仓当前仍跟踪 <code>Parliamentary-Simulation</code> 约 <code>302</code> 个文件</li>\n<li>审计起点远端 HEAD 为 <code>b6ca1c46533ae5dff972d3c510291d2b0063064e</code>；当前 staged migration 已推进到 <code>3beb49a</code></li>\n<li>top-level local-only：<code>08225aab32ca785bc4f300aece678b9b/</code>、<code>assets/</code>、<code>deploy/</code>、<code>key/</code>、<code>.env.local</code></li>\n<li>top-level remote-only：<code>.sourcery.yaml</code></li>\n<li>递归对比下，本机 <code>304</code> 个文件、远端 <code>300</code> 个文件、共通 <code>299</code> 个文件里有 <code>291</code> 个内容不同</li>\n</ul>\n</li>\n<li>本轮收口结论应改为 staged migration：\n<ol>\n<li>以 <code>emptyinkpot/Parliamentary-Simulation</code> 远端仓作为目标边界真源，先拉出一次干净 working copy</li>\n<li>盘点本机目录相对远端的本地特有内容，区分“应进入独立 repo”“仅本地保留/忽略”“应继续留在 umbrella”</li>\n<li>对齐 <code>.gitignore</code>、部署脚本、环境样例与目录结构后，再决定何时把本机工作路径切成真正独立 git 边界</li>\n<li>在 staged migration 完成前，继续把 <code>E:\\My Project\\Parliamentary-Simulation</code> 视为 <code>my-project-root</code> umbrella 内的特殊待迁目录，而不是已经完成切换的独立 repo</li>\n</ol>\n</li>\n<li>当前已知的第一轮分桶建议：\n<ul>\n<li>应进入独立 repo：<code>docs/SERVER_DEPLOYMENT_DEBUG.md</code>、<code>deploy/systemd/parliamentary-server.service</code>、<code>server/.env.example</code> 及相关 README / 部署脚本修正</li>\n<li>仅本地保留/忽略：<code>.env.local</code>、<code>server/.env</code>、<code>key/</code>、异常空目录或缓存残留</li>\n<li>远端既有基线需保留：<code>.sourcery.yaml</code></li>\n</ul>\n</li>\n<li>staged migration 第一条真实动作已完成：已在干净 working copy 中把 <code>docs/SERVER_DEPLOYMENT_DEBUG.md</code>、<code>deploy/systemd/parliamentary-server.service</code>、<code>server/.env.example</code> 与 README 导航入口吸收到 GitHub 独立仓，并推送提交 <code>747d4d2</code>（<code>docs: add server deployment baseline</code>）</li>\n<li>staged migration 第二条真实动作也已完成：已继续在干净 working copy 中把 <code>README.md</code>、<code>docs/SERVER_DEPLOYMENT_DEBUG.md</code> 与 <code>server/package.json</code> 的生产入口口径对齐到 <code>dist/server/src/main.js</code>，并推送提交 <code>3beb49a</code>（<code>docs: align server deployment entrypoints</code>）</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"e-当前更像实验--fork--mirror-仓而不是需要立即处理的-snapshot-仓\">E. 当前更像实验 / fork / mirror 仓，而不是需要立即处理的 snapshot 仓</h3>\n<p>这些仓默认应理解为 <code>vendor/reference</code> 或实验仓，而不是当前主问题：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>仓库</th>\n<th>当前建议角色</th>\n<th>默认动作</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>ai-town</code></td>\n<td><code>vendor/reference repo</code></td>\n<td>如仍有实验用途可保留；否则后续再归档</td>\n</tr>\n<tr>\n<td><code>ai-office</code></td>\n<td><code>vendor/reference repo</code></td>\n<td>同上</td>\n</tr>\n<tr>\n<td><code>agent-office</code></td>\n<td><code>vendor/reference repo</code></td>\n<td>同上</td>\n</tr>\n<tr>\n<td><code>auto-coding-agent-demo</code></td>\n<td><code>vendor/reference repo</code></td>\n<td>同上</td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"f-优先收口删除的过量快照--临时镜像仓\">F. 优先收口删除的“过量快照 / 临时镜像”仓</h3>\n<p>这批仓就是当前“为什么这么多快照”的主要来源。它们默认不该继续增长，也不该再被当成日常工作面。</p>\n<h4 id=\"f1-同类历史快照批量仓\">F1. 同类历史快照批量仓</h4>\n<ul>\n<li><code>backup-gemini-history-8b7b18af0509</code></li>\n<li><code>backup-gemini-history-e9f140ed02c7</code></li>\n<li><code>backup-gemini-history-b4c9cd0272f3</code></li>\n<li><code>backup-trae-snapshot-69c645ff1881</code></li>\n<li><code>backup-trae-snapshot-69c4cc2c71ed41</code></li>\n<li><code>backup-trae-snapshot-69c4cc2c71ed40</code></li>\n<li><code>backup-trae-snapshot-69c4bff6be56</code></li>\n<li><code>backup-trae-snapshot-69c4bb043467</code></li>\n<li><code>backup-trae-snapshot-69c4bacea33e</code></li>\n<li><code>backup-trae-snapshot-69c4b4c289c1</code></li>\n<li><code>backup-trae-snapshot-69c4afed89c1</code></li>\n<li><code>backup-trae-snapshot-69c4adc489c1</code></li>\n</ul>\n<p>建议：</p>\n<ol>\n<li>不再新增同模式新仓。</li>\n<li>若确需保留历史，合并成一到两个统一 archive 容器，或直接导出为离线压缩包/冷备。</li>\n<li>合并完成后，逐个删除这些分散 snapshot repo。</li>\n</ol>\n<p>执行状态（<code>2026-04-21</code>）：</p>\n<ul>\n<li>上述 <code>backup-gemini-history-*</code> 与 <code>backup-trae-snapshot-*</code> 已先完成一次 <code>archived=true</code> 可逆收口，随后又在用户确认后执行 GitHub 真删除。</li>\n<li>当前状态：这些分散的历史快照仓已不再存在于 GitHub，可通过 <code>gh repo view emptyinkpot/&#x3C;repo></code> 返回 repository 不存在来复核。</li>\n</ul>\n<h4 id=\"f2-一次性-workspace--项目切面归档仓\">F2. 一次性 workspace / 项目切面归档仓</h4>\n<ul>\n<li><code>backup-openclaw-workspace</code></li>\n<li><code>archive-my-project-openclaw-20260418</code></li>\n<li><code>archive-my-project-atramenti-console-20260418</code></li>\n</ul>\n<p>建议：</p>\n<ol>\n<li>这类仓不应继续作为“可继续开发的备用真源”。</li>\n<li>最终目标是：保留一个统一 archive 落点即可，不再按项目切面继续新长 archive repo。</li>\n</ol>\n<p>执行状态（<code>2026-04-21</code>）：</p>\n<ul>\n<li><code>backup-openclaw-workspace</code></li>\n<li><code>archive-my-project-openclaw-20260418</code></li>\n<li><code>archive-my-project-atramenti-console-20260418</code></li>\n</ul>\n<p>以上 3 个仓也已先进入 <code>archived=true</code>，随后在用户确认后执行 GitHub 真删除；当前不再作为可见 GitHub 仓保留。</p>\n<h4 id=\"f3-明显带有临时镜像味道且当前未见本机活边界证据的-mirror-仓\">F3. 明显带有临时镜像味道、且当前未见本机活边界证据的 mirror 仓</h4>\n<ul>\n<li><code>mirror-claude-code-full</code></li>\n<li><code>mirror-multica-style-audit</code></li>\n<li><code>mirror-andrej-karpathy-skills-temp</code></li>\n<li><code>mirror-markitdown-local</code></li>\n</ul>\n<p>建议：</p>\n<ol>\n<li>若本机已无对应独立 repo/worktree/长期消费链路，默认进入候选退役清单。</li>\n<li>真有少数仍需保留者，也必须补清楚“本机路径 + 角色 + upstream/consumer 关系”。</li>\n</ol>\n<p>执行状态（<code>2026-04-21</code>）：</p>\n<ul>\n<li><code>mirror-claude-code-full</code> 已确认本机无活引用；先归档后，已在用户确认后执行 GitHub 真删除。</li>\n<li><code>mirror-multica-style-audit</code> 已复核本机无目录、无活引用、无消费链路证据；当前已执行 GitHub 真删除。</li>\n<li><code>mirror-andrej-karpathy-skills-temp</code> 已复核本机无目录、无活引用、无消费链路证据；当前已执行 GitHub 真删除。</li>\n<li><code>mirror-markitdown-local</code> 已完成单独复核：当前真正活用的是 <code>markitdown-mcp</code> 集成路径（<code>.codex\\config.toml -> E:\\My Project\\Atramenti-Console\\codex\\mcps\\markitdown-mcp\\server.mjs</code>），本机未发现独立 markitdown worktree；因此也已在先归档后执行 GitHub 真删除。</li>\n</ul>\n<h2 id=\"默认收口目标\">默认收口目标</h2>\n<p>后续 GitHub 仓群应尽量收敛到下面 4 层：</p>\n<ol>\n<li><code>长期活仓</code>\n<ul>\n<li><code>asus-kl-codex-home</code></li>\n<li><code>my-project-root</code></li>\n<li><code>Atramenti-Console</code></li>\n<li><code>emptyinkpot.github.io</code></li>\n<li><code>mortis-multica-source</code></li>\n<li>仍然有真实独立边界的专题仓</li>\n</ul>\n</li>\n<li><code>有明确职责的少量 mirror/backup</code>\n<ul>\n<li>外置 gitdir 仍依赖的备份仓</li>\n<li>明确公开发布镜像</li>\n<li>明确 vendor/reference mirror</li>\n</ul>\n</li>\n<li><code>统一 archive</code>\n<ul>\n<li>少量、稳定命名、明确只读</li>\n</ul>\n</li>\n<li><code>不再保留的分散 snapshot repo</code>\n<ul>\n<li>同类 hash/timestamp 仓批量清理</li>\n</ul>\n</li>\n</ol>\n<h2 id=\"后续执行顺序\">后续执行顺序</h2>\n<ol>\n<li>先冻结新增：停止继续创建新的 <code>backup-*</code> / <code>archive-*</code> / <code>mirror-*</code> 临时仓。</li>\n<li>再补边界：把仍然有用途的 mirror/vendor 仓补进 ownership map。</li>\n<li>再做归并：把仍需保留的少量 snapshot/history 收敛到统一 archive 落点。</li>\n<li>最后删除：对已确认无保留必要的分散 snapshot repo，直接做 GitHub 真删除，并把删除结果回写 canonical 文档。</li>\n</ol>\n<h2 id=\"本轮最重要的治理结论\">本轮最重要的治理结论</h2>\n<ul>\n<li>当前真正“太多”的不是所有 GitHub repo，而是 <code>backup-*</code> / <code>archive-*</code> / <code>mirror-*</code> 这一层。</li>\n<li><code>my-project-qmd</code> / <code>my-project-ffmpeg-mcp</code> / <code>my-project-video-audio-mcp</code> / <code>my-project-yt-dlp-mcp</code> 这类虽然看起来也多，但它们当前仍是外置 gitdir/worktree 方案的一部分，不应和纯 snapshot 仓混为一谈。</li>\n<li><code>cloude-app</code> 与 <code>Parliamentary-Simulation</code> 目前最需要处理的是“边界冲突”，不是立刻删除 GitHub 仓。</li>\n<li><code>cloude-app</code> 的真实边界收口已开始：当前 GitHub 冲突仓已 archive，本机路径明确继续归 <code>my-project-root</code> umbrella。</li>\n<li><code>Parliamentary-Simulation</code> 的真实 staged migration 已开始：公共部署资产已吸收到独立 GitHub 仓提交 <code>747d4d2</code>，随后又完成第二步公共入口对齐提交 <code>3beb49a</code>；后续再继续处理本机目录从 umbrella 迁出的动作。</li>\n<li>本轮已完成第一批真实删除：<code>backup-gemini-history-*</code>、<code>backup-trae-snapshot-*</code>、<code>backup-openclaw-workspace</code>、两份 <code>archive-my-project-*</code>、<code>mirror-claude-code-full</code>、<code>mirror-markitdown-local</code> 已全部从 GitHub 删除。</li>\n<li>本轮又完成第二批 mirror 候选真实删除：<code>mirror-multica-style-audit</code>、<code>mirror-andrej-karpathy-skills-temp</code> 已全部从 GitHub 删除。</li>\n<li>这批仓的处理顺序是“先 archive，再 delete”；当前下一轮不应重复盯住它们，而应转去处理剩余仍在 GitHub 上的边界冲突仓或仍需归并的 archive 结构。</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "github-仓群角色与收口清单",
+        "text": "GitHub 仓群角色与收口清单"
+      },
+      {
+        "depth": 2,
+        "slug": "判定依据",
+        "text": "判定依据"
+      },
+      {
+        "depth": 2,
+        "slug": "先说结论",
+        "text": "先说结论"
+      },
+      {
+        "depth": 2,
+        "slug": "当前建议分层",
+        "text": "当前建议分层"
+      },
+      {
+        "depth": 3,
+        "slug": "a-明确应保留的长期活仓",
+        "text": "A. 明确应保留的长期活仓"
+      },
+      {
+        "depth": 3,
+        "slug": "b-明确有当前职责-但不是第一开发真源的结构化仓",
+        "text": "B. 明确有当前职责、但不是第一开发真源的结构化仓"
+      },
+      {
+        "depth": 3,
+        "slug": "c-当前可视为独立专题仓-但缺少本机活边界证据",
+        "text": "C. 当前可视为独立专题仓，但缺少本机活边界证据"
+      },
+      {
+        "depth": 3,
+        "slug": "d-当前存在边界冲突-后续必须二选一收口",
+        "text": "D. 当前存在边界冲突，后续必须二选一收口"
+      },
+      {
+        "depth": 3,
+        "slug": "e-当前更像实验-fork-mirror-仓-而不是需要立即处理的-snapshot-仓",
+        "text": "E. 当前更像实验 / fork / mirror 仓，而不是需要立即处理的 snapshot 仓"
+      },
+      {
+        "depth": 3,
+        "slug": "f-优先收口删除的-过量快照-临时镜像-仓",
+        "text": "F. 优先收口删除的“过量快照 / 临时镜像”仓"
+      },
+      {
+        "depth": 2,
+        "slug": "默认收口目标",
+        "text": "默认收口目标"
+      },
+      {
+        "depth": 2,
+        "slug": "后续执行顺序",
+        "text": "后续执行顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "本轮最重要的治理结论",
+        "text": "本轮最重要的治理结论"
+      }
+    ],
+    "detailPath": "articles/md_541f10b10adb.json"
+  }
+}

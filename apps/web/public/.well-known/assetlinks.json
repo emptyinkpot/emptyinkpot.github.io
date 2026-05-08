@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.tengokukk.myblog",
+      "sha256_cert_fingerprints": [
+        "1C:64:9F:75:41:AE:39:B7:A7:D7:E3:4D:EE:41:CB:EA:BC:1F:13:7F:27:39:6A:F4:19:F0:76:B6:FE:A3:11:BD"
+      ]
+    }
+  }
+]

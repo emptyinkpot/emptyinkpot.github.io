@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_43fe1a489bb3",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E5%88%98%E9%AB%98%E6%9C%8B%E5%BC%80%E9%A2%98%E6%8A%A5%E5%91%8A%EF%BC%88%E5%B8%A6%E5%9B%BE%E7%89%88%EF%BC%89.md",
+    "sourcePath": "/home/vault/Obsidian/docs/刘高朋开题报告（带图版）.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/刘高朋开题报告（带图版）.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E5%88%98%E9%AB%98%E6%9C%8B%E5%BC%80%E9%A2%98%E6%8A%A5%E5%91%8A%EF%BC%88%E5%B8%A6%E5%9B%BE%E7%89%88%EF%BC%89.md",
+    "slug": "刘高朋开题报告-带图版",
+    "title": "刘高朋开题报告（带图版）",
+    "summary": "刘高朋开题报告（带图版） 华北水利水电大学本科生毕业设计（论文）开题报告 <table <colgroup <col style=\"width: 15%\" / <col style=\"width: 15%\" / <col style=\"width: 11%\" / <col style=\"width:...",
+    "description": "刘高朋开题报告（带图版） 华北水利水电大学本科生毕业设计（论文）开题报告 <table <colgroup <col style=\"width: 15%\" / <col style=\"width: 15%\" / <col style=\"width: 11%\" / <col style=\"width:...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "项目-毕业论文",
+      "形态-记录"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "项目-毕业论文",
+        "形态-记录"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/刘高朋开题报告（带图版）.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/刘高朋开题报告（带图版）.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E5%88%98%E9%AB%98%E6%9C%8B%E5%BC%80%E9%A2%98%E6%8A%A5%E5%91%8A%EF%BC%88%E5%B8%A6%E5%9B%BE%E7%89%88%EF%BC%89.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "毕业论文",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "项目 毕业论文",
+        "形态 记录",
+        "毕业论文"
+      ],
+      "subtitle": "刘高朋开题报告（带图版） 华北水利水电大学本科生毕业设计（论文）开题报告 <table <colgroup <col style=\"width: 15%\" / <col style=\"width: 15%\" / <col style=\"width: 11%\" / <col style=\"width:..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 刘高朋开题报告（带图版）\n\n**华北水利水电大学本科生毕业设计（论文）开题报告**\n\n<table>\n<colgroup>\n<col style=\"width: 15%\" />\n<col style=\"width: 15%\" />\n<col style=\"width: 11%\" />\n<col style=\"width: 16%\" />\n<col style=\"width: 9%\" />\n<col style=\"width: 31%\" />\n</colgroup>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">学生姓名</td>\n<td style=\"text-align: center;\">刘高朋</td>\n<td style=\"text-align: center;\">学号</td>\n<td style=\"text-align: center;\">202213210</td>\n<td style=\"text-align: center;\">专业</td>\n<td style=\"text-align: center;\">电子信息工程</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">题目名称</td>\n<td colspan=\"5\" style=\"text-align: center;\">嵌入式二氧化碳检测与预警设计</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\"><p>研究或设计概述</p>\n<p>（500字左右）</p></td>\n<td colspan=\"5\" style=\"text-align: center;\"><p>CO₂浓度作为室内空气质量的核心指标，在封闭 / 半封闭空间中一旦超标，不仅会危害人体健康，还会对生产安全与环境质量造成不良影响。当前市面上的 CO₂监测设备普遍存在体型庞大、功耗较高、测量精度易受环境干扰、预警方式单一且缺乏远程交互功能等问题，难以适配多场景使用需求，无法为环境调控提供高效支撑，因此相关监测预警需求亟待解决。</p>\n<p>本设计将基于 CO₂检测技术标准，结合现有设备的研究成果，充分依托嵌入式系统的集成优势，构建一套集传感采集、主控处理、多维度预警与电源供给于一体的检测预警方案。该方案将实现 CO₂浓度的实时精准监测、数据处理以及多级预警响应，为保障人员健康、维护生产安全及优化环境提供智能支持。</p>\n<p>本设计以 “低功耗、小型化、高精度、高可靠性” 为核心目标，计划通过引入校准算法与温度补偿技术提升测量精度，采用轻量化设计降低设备功耗，同时兼具本地声光显示与远程预警交互能力。此方案能够有效弥补现有设备的不足，适配民用建筑、工业车间等多场景，切实解决 CO₂监测预警难题，具有显著的实用价值与良好的工程应用前景。</p></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">主要内容</td>\n<td colspan=\"5\" style=\"text-align: center;\"><p>本设计以 “低功耗、小型化、高精度、高可靠性” 为核心目标，聚焦室内外封闭 / 半封闭空间的 CO₂监测与预警需求，整体由传感采集模块、主控处理模块、预警交互模块及电源供给模块四部分组成，各模块协同工作构成完整的检测预警系统，具体内容如下：</p>\n<p>1. 传感采集模块：集成高性能 CO₂传感器，负责采集环境中 CO₂的原始浓度信号。搭配温度补偿电路，用于消除环境温度变化对采集信号的干扰，为后续数据处理提供稳定、准确的原始数据。</p>\n<p>2. 主控处理模块：选用 STM32低功耗主控芯片，作为整个系统的核心。一方面接收传感采集模块传输的信号，通过引入校准算法对信号进行修正，完成 CO₂浓度的精准计算与校验；另一方面统筹协调其他模块的工作，确保系统有序运行。</p>\n<p>3. 预警交互模块：包含本地交互与远程交互两部分。本地端通过 OLED 屏实时显示 CO₂浓度数值，结合 LED 指示灯与蜂鸣器实现多级声光预警；远程端借助 Wi-Fi/BLE 通信技术，将数据上传至手机 APP 或云平台，支持用户远程查看浓度数据及接收超标推送提醒。</p>\n<p>4. 电源供给模块：采用高效电源方案，配合轻量化软硬件设计（如设备休眠策略、精简电路架构），在为整个系统稳定供电的同时，降低能耗，助力设备实现小型化设计，适配多场景部署需求。</p>\n<p>该系统通过各模块的有机结合，可覆盖民用建筑、工业车间、温室大棚等封闭空间，弥补现有设备在适配性、精度、预警时效性上的不足，有效解决各类场景的 CO₂监测预警难题，具备较高的实用价值与工程应用前景。</p></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">主要参考文献（不少于10篇）</td>\n<td colspan=\"5\" style=\"text-align: center;\"><p>[1] 谢超, 王正. 基于单片机的室内空气质量监测系统设计与实现[J]. 林业机械与木工设备, 2020, 48(12):32-36.</p>\n<p>[2] Texas Instruments. Design Guide: TIDA-010270 用于通过 BLE 监测心电图、呼吸、脉搏和体温的临床可穿戴贴片参考设计[R]. 2024.</p>\n<p>[3] Fang H, Deng L C. Design of Embedded Indoor Multiple Dangerous Gas Detection Alarm System[J]. Applied Mechanics and Materials, 2014, 475-476:209-213.</p>\n<p>[4] 张毅. 基于STM32的二氧化碳浓度监测系统设计[J]. 电子技术应用, 2022, 48(5):89-92+97.</p>\n<p>[5] 王军. 低功耗嵌入式气体检测系统的设计与实现[J]. 计算机测量与控制, 2021, 29(3):25-28+33.</p>\n<p>[6] Chen Y, Li J, Zhang H. Design of Wireless CO₂ Monitoring System Based on ESP32 and BLE[C]// 2023 6th International Conference on Electronics Technology (ICET). IEEE, 2023:456-460.</p>\n<p>[7] 刘敏. 红外吸收式CO₂传感器校准技术研究[J]. 传感器与微系统, 2020, 39(8):38-40+44.</p>\n<p>[8] TI. CC2674R10 超低功耗蓝牙5.3 控制器数据手册[Z]. 2024.</p>\n<p>[9] 李明, 张华. 嵌入式系统低功耗设计技术研究[J]. 微电子学与计算机, 2022, 39(7):112-116.</p>\n<p>[10] Wang L, Chen W, Liu Z. A Multi-level Early Warning System for Indoor Air Quality Based on Embedded Technology[J]. Journal of Ambient Intelligence and Humanized Computing, 2022, 13(10):4589-4601.</p>\n<p>[11] 中国电子技术标准化研究院. 室内空气质量监测设备技术要求(GB/T 39600-2020)[S]. 北京:中国标准出版社, 2020.</p></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">采取的主要技术路线或方法</td>\n<td colspan=\"5\" style=\"text-align: center;\"><p>本设计包括智能 CO₂监测预警器、远程数据交互界面。智能 CO₂监测预警器需实现三方面功能：数据采集、本地预警、远程交互，远程数据交互界面则将 CO₂浓度数据以直观方式呈现。有关智能 CO₂监测预警器的系统设计说明如下：</p>\n<p><img src=\"../image/毕业论文__图片素材__开题报告提取__media__image1.png\" style=\"width:4.48958in;height:2.52083in\" /></p>\n<p>（1）智能 CO₂监测预警器的整体设计。采用单主控架构，以 STM32 为控制核心，由主控直接连接传感采集模块、本地交互模块、远程交互模块及电源模块，完成数据采集、处理、预警及传输的全流程自动化运行。</p>\n<p>（2）数据采集功能。通过 CO₂传感器采集环境中 CO₂原始浓度信号，结合温度补偿电路消除环境干扰，再通过校准算法对信号进行修正，最终由主控完成数据的精准计算与校验，确保监测精度。</p>\n<p>（3）本地预警功能。当 CO₂浓度接近阈值或超标时，主控触发多级预警机制：一级预警（接近阈值）通过 OLED 屏显示浓度数值 + LED 指示灯闪烁提示；二级预警（超标）在一级基础上启动蜂鸣器声光报警，同时可扩展联动通风设备。</p>\n<p>（4）远程交互功能。通过 BLE 模块将实时 CO₂浓度数据上传至手机 APP 或云平台，实现远程数据查看、超标推送提醒；同时支持从远程端获取设备状态指令，辅助环境调控决策。</p>\n<p>（5）核心特性实现。以 “低功耗、小型化、高精度、高可靠性” 为目标：轻量化软硬件设计（如低功耗主控 + 休眠策略）降低能耗；温度补偿 + 校准算法提升监测精度；本地 + 远程双重交互保障预警时效性，适配民用建筑、工业车间等多场景需求。</p></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">时间安排</td>\n<td colspan=\"5\" style=\"text-align: center;\"><blockquote>\n<p>1-2 周 完成开题报告</p>\n<p>3-4 周 完成外文原文及译文翻译</p>\n<p>5-6 周 完成硬件选型并购买</p>\n<p>7-10 周 搭建硬件电路，烧写程序、调试电路板，修改调试算法</p>\n<p>11-13 周 撰写论文，论文修订、打印、整理与提交</p>\n<p>14-15 周 答辩资料整理，准备毕业答辩</p>\n</blockquote></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">指导教师意见</td>\n<td colspan=\"5\" style=\"text-align: center;\"><p>签 名：</p>\n<p>年 月 日</p></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">备注</td>\n<td colspan=\"5\" style=\"text-align: center;\"></td>\n</tr>\n</tbody>\n</table>",
+    "html": "<h2 id=\"刘高朋开题报告带图版\">刘高朋开题报告（带图版）</h2>\n<p><strong>华北水利水电大学本科生毕业设计（论文）开题报告</strong></p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "刘高朋开题报告-带图版",
+        "text": "刘高朋开题报告（带图版）"
+      }
+    ],
+    "detailPath": "articles/md_43fe1a489bb3.json"
+  }
+}

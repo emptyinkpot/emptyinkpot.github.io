@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_8c02fecd64bf",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90%E6%95%B4%E7%90%86.md",
+    "sourcePath": "/home/vault/Obsidian/docs/图片来源整理.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/图片来源整理.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90%E6%95%B4%E7%90%86.md",
+    "slug": "图片来源整理",
+    "title": "图片来源整理",
+    "summary": "毕业论文图片来源整理 已纳入本地素材的图片 1. 系统框架图 文件： system framework opening.png 来源： 刘高朋 开题报告.docx 建议位置： 第 2 章系统框架部分 用途说明： 适合用作论文总体结构示意图 2. SCD41 官方产品图 文件： SCD41 官方图.w...",
+    "description": "毕业论文图片来源整理 已纳入本地素材的图片 1. 系统框架图 文件： system framework opening.png 来源： 刘高朋 开题报告.docx 建议位置： 第 2 章系统框架部分 用途说明： 适合用作论文总体结构示意图 2. SCD41 官方产品图 文件： SCD41 官方图.w...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "项目-毕业论文"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "项目-毕业论文"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/图片来源整理.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/图片来源整理.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E5%9B%BE%E7%89%87%E6%9D%A5%E6%BA%90%E6%95%B4%E7%90%86.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "毕业论文",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "项目 毕业论文",
+        "毕业论文"
+      ],
+      "subtitle": "毕业论文图片来源整理 已纳入本地素材的图片 1. 系统框架图 文件： system framework opening.png 来源： 刘高朋 开题报告.docx 建议位置： 第 2 章系统框架部分 用途说明： 适合用作论文总体结构示意图 2. SCD41 官方产品图 文件： SCD41 官方图.w..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 毕业论文图片来源整理\n\n### 已纳入本地素材的图片\n\n#### 1. 系统框架图\n\n- 文件：\n  [system_framework_opening.png](../image/毕业论文__assets__media__system_framework_opening.png)\n- 来源：\n  [刘高朋_开题报告.docx](<资料收口/外部资料/刘高朋_开题报告（毕业论文 - 原稿）.docx>)\n- 建议位置：\n  第 2 章系统框架部分\n- 用途说明：\n  适合用作论文总体结构示意图\n\n#### 2. SCD41 官方产品图\n\n- 文件：\n  [SCD41_官方图.webp](../image/毕业论文__图片素材__官方资料__SCD41_官方图.webp)\n- 来源页快捷方式：\n  [SCD41_官方页.url](<资料收口/外部资料/SCD41_官方页（图片素材 - 官方资料）.url>)\n- 用途说明：\n  可用于第 3 章传感采集模块的器件展示\n\n### 建议继续使用的官方图片来源\n\n#### 2. SCD41 传感器\n\n- 官方页面：\n  https://sensirion.com/products/catalog/SCD41\n- 适用内容：\n  第 3 章传感采集模块介绍\n- 说明：\n  官方页面含产品图、规格参数、Datasheet 与 Design-in Guide\n\n#### 3. STM32F103C8 主控芯片\n\n- 官方页面：\n  https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8.html\n- 本地快捷方式：\n  [STM32F103C8_官方页.url](<资料收口/外部资料/STM32F103C8_官方页（图片素材 - 官方资料）.url>)\n- 适用内容：\n  第 3 章主控最小系统设计\n- 说明：\n  官方页面可用于芯片定位、性能说明和器件外观引用\n\n#### 4. ESP32-WROOM-32 模块\n\n- 官方页面：\n  https://www.espressif.com/en/products/modules/esp32-wroom-32\n- 参考文档页：\n  https://docs.espressif.com/projects/esp-idf/en/release-v4.0/hw-reference/modules-and-boards.html\n- 本地快捷方式：\n  [ESP32-WROOM-32_官方页.url](<资料收口/外部资料/ESP32-WROOM-32_官方页（图片素材 - 官方资料）.url>)\n- 适用内容：\n  第 3 章无线通信模块设计\n- 说明：\n  文档页明确列出该模块资料和前后视图说明\n\n#### 5. SSD1306 OLED 控制器\n\n- 官方页面：\n  https://www.solomon-systech.com/product/ssd1306\n- 本地快捷方式：\n  [SSD1306_官方页.url](<资料收口/外部资料/SSD1306_官方页（图片素材 - 官方资料）.url>)\n- 适用内容：\n  第 3 章显示模块设计\n- 说明：\n  建议优先引用控制器资料页或其 datasheet 中的结构图、接口图\n\n### 论文插图建议\n\n#### 可保留\n\n- 现有 `assets/media` 中的器件图\n- 开题报告提取的系统框架图\n\n#### 建议后续补充\n\n- 样机实物图\n- 主控与传感器连线图\n- OLED 界面截图\n- 测试环境搭建照片\n- 浓度变化趋势曲线图\n\n### 使用提醒\n\n- 论文正式提交前，建议统一在图注中写明“资料来源”或在参考文献中补足器件手册。\n- 若最终用于答辩或公开提交，优先采用官方产品页、datasheet、设计指南中的图片或自行绘制的结构图。",
+    "html": "<h2 id=\"毕业论文图片来源整理\">毕业论文图片来源整理</h2>\n<h3 id=\"已纳入本地素材的图片\">已纳入本地素材的图片</h3>\n<h4 id=\"1-系统框架图\">1. 系统框架图</h4>\n<ul>\n<li>文件：\n<a href=\"../image/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87__assets__media__system_framework_opening.png\">system_framework_opening.png</a></li>\n<li>来源：\n<a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/%E5%88%98%E9%AB%98%E6%9C%8B_%E5%BC%80%E9%A2%98%E6%8A%A5%E5%91%8A%EF%BC%88%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%20-%20%E5%8E%9F%E7%A8%BF%EF%BC%89.docx\">刘高朋_开题报告.docx</a></li>\n<li>建议位置：\n第 2 章系统框架部分</li>\n<li>用途说明：\n适合用作论文总体结构示意图</li>\n</ul>\n<h4 id=\"2-scd41-官方产品图\">2. SCD41 官方产品图</h4>\n<ul>\n<li>文件：\n<a href=\"../image/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87__%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90__%E5%AE%98%E6%96%B9%E8%B5%84%E6%96%99__SCD41_%E5%AE%98%E6%96%B9%E5%9B%BE.webp\">SCD41_官方图.webp</a></li>\n<li>来源页快捷方式：\n<a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/SCD41_%E5%AE%98%E6%96%B9%E9%A1%B5%EF%BC%88%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90%20-%20%E5%AE%98%E6%96%B9%E8%B5%84%E6%96%99%EF%BC%89.url\">SCD41_官方页.url</a></li>\n<li>用途说明：\n可用于第 3 章传感采集模块的器件展示</li>\n</ul>\n<h3 id=\"建议继续使用的官方图片来源\">建议继续使用的官方图片来源</h3>\n<h4 id=\"2-scd41-传感器\">2. SCD41 传感器</h4>\n<ul>\n<li>官方页面：\n<a href=\"https://sensirion.com/products/catalog/SCD41\">https://sensirion.com/products/catalog/SCD41</a></li>\n<li>适用内容：\n第 3 章传感采集模块介绍</li>\n<li>说明：\n官方页面含产品图、规格参数、Datasheet 与 Design-in Guide</li>\n</ul>\n<h4 id=\"3-stm32f103c8-主控芯片\">3. STM32F103C8 主控芯片</h4>\n<ul>\n<li>官方页面：\n<a href=\"https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8.html\">https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8.html</a></li>\n<li>本地快捷方式：\n<a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/STM32F103C8_%E5%AE%98%E6%96%B9%E9%A1%B5%EF%BC%88%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90%20-%20%E5%AE%98%E6%96%B9%E8%B5%84%E6%96%99%EF%BC%89.url\">STM32F103C8_官方页.url</a></li>\n<li>适用内容：\n第 3 章主控最小系统设计</li>\n<li>说明：\n官方页面可用于芯片定位、性能说明和器件外观引用</li>\n</ul>\n<h4 id=\"4-esp32-wroom-32-模块\">4. ESP32-WROOM-32 模块</h4>\n<ul>\n<li>官方页面：\n<a href=\"https://www.espressif.com/en/products/modules/esp32-wroom-32\">https://www.espressif.com/en/products/modules/esp32-wroom-32</a></li>\n<li>参考文档页：\n<a href=\"https://docs.espressif.com/projects/esp-idf/en/release-v4.0/hw-reference/modules-and-boards.html\">https://docs.espressif.com/projects/esp-idf/en/release-v4.0/hw-reference/modules-and-boards.html</a></li>\n<li>本地快捷方式：\n<a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/ESP32-WROOM-32_%E5%AE%98%E6%96%B9%E9%A1%B5%EF%BC%88%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90%20-%20%E5%AE%98%E6%96%B9%E8%B5%84%E6%96%99%EF%BC%89.url\">ESP32-WROOM-32_官方页.url</a></li>\n<li>适用内容：\n第 3 章无线通信模块设计</li>\n<li>说明：\n文档页明确列出该模块资料和前后视图说明</li>\n</ul>\n<h4 id=\"5-ssd1306-oled-控制器\">5. SSD1306 OLED 控制器</h4>\n<ul>\n<li>官方页面：\n<a href=\"https://www.solomon-systech.com/product/ssd1306\">https://www.solomon-systech.com/product/ssd1306</a></li>\n<li>本地快捷方式：\n<a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/SSD1306_%E5%AE%98%E6%96%B9%E9%A1%B5%EF%BC%88%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90%20-%20%E5%AE%98%E6%96%B9%E8%B5%84%E6%96%99%EF%BC%89.url\">SSD1306_官方页.url</a></li>\n<li>适用内容：\n第 3 章显示模块设计</li>\n<li>说明：\n建议优先引用控制器资料页或其 datasheet 中的结构图、接口图</li>\n</ul>\n<h3 id=\"论文插图建议\">论文插图建议</h3>\n<h4 id=\"可保留\">可保留</h4>\n<ul>\n<li>现有 <code>assets/media</code> 中的器件图</li>\n<li>开题报告提取的系统框架图</li>\n</ul>\n<h4 id=\"建议后续补充\">建议后续补充</h4>\n<ul>\n<li>样机实物图</li>\n<li>主控与传感器连线图</li>\n<li>OLED 界面截图</li>\n<li>测试环境搭建照片</li>\n<li>浓度变化趋势曲线图</li>\n</ul>\n<h3 id=\"使用提醒\">使用提醒</h3>\n<ul>\n<li>论文正式提交前，建议统一在图注中写明“资料来源”或在参考文献中补足器件手册。</li>\n<li>若最终用于答辩或公开提交，优先采用官方产品页、datasheet、设计指南中的图片或自行绘制的结构图。</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "毕业论文图片来源整理",
+        "text": "毕业论文图片来源整理"
+      },
+      {
+        "depth": 3,
+        "slug": "已纳入本地素材的图片",
+        "text": "已纳入本地素材的图片"
+      },
+      {
+        "depth": 3,
+        "slug": "建议继续使用的官方图片来源",
+        "text": "建议继续使用的官方图片来源"
+      },
+      {
+        "depth": 3,
+        "slug": "论文插图建议",
+        "text": "论文插图建议"
+      },
+      {
+        "depth": 3,
+        "slug": "使用提醒",
+        "text": "使用提醒"
+      }
+    ],
+    "detailPath": "articles/md_8c02fecd64bf.json"
+  }
+}

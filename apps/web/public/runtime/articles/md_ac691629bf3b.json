@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_ac691629bf3b",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/%E8%AE%B0%E5%BF%86%E5%B1%82%E7%B3%BB%E7%BB%9F.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/记忆层系统.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/记忆层系统.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E8%AE%B0%E5%BF%86%E5%B1%82%E7%B3%BB%E7%BB%9F.md",
+    "slug": "codex-knowledge-记忆层系统",
+    "title": "记忆层系统",
+    "summary": "我帮你把这份内容“翻译成人话 + 提炼结构”一下，你这段其实已经在回答一个核心问题： 👉 “Codex 到底做了什么？为什么会这样？” 🧠 一句话结论 你这段内容本质在说： Codex 什么都没“记住”，它只是每次启动都重新读了一份“说明书” 🧩 它到底做了什么（拆开讲） 1️⃣ Codex...",
+    "description": "我帮你把这份内容“翻译成人话 + 提炼结构”一下，你这段其实已经在回答一个核心问题： 👉 “Codex 到底做了什么？为什么会这样？” 🧠 一句话结论 你这段内容本质在说： Codex 什么都没“记住”，它只是每次启动都重新读了一份“说明书” 🧩 它到底做了什么（拆开讲） 1️⃣ Codex...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/记忆层系统.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/记忆层系统.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E8%AE%B0%E5%BF%86%E5%B1%82%E7%B3%BB%E7%BB%9F.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "记忆层系统",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "记忆层系统"
+      ],
+      "subtitle": "我帮你把这份内容“翻译成人话 + 提炼结构”一下，你这段其实已经在回答一个核心问题： 👉 “Codex 到底做了什么？为什么会这样？” 🧠 一句话结论 你这段内容本质在说： Codex 什么都没“记住”，它只是每次启动都重新读了一份“说明书” 🧩 它到底做了什么（拆开讲） 1️⃣ Codex..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "我帮你把这份内容“翻译成人话 + 提炼结构”一下，你这段其实已经在回答一个核心问题：\n\n> 👉 **“Codex 到底做了什么？为什么会这样？”**\n\n---\n\n# 🧠 一句话结论\n\n你这段内容本质在说：\n\n> **Codex 什么都没“记住”，它只是每次启动都重新读了一份“说明书”**\n\n---\n\n# 🧩 它到底做了什么（拆开讲）\n\n## 1️⃣ Codex 本身的行为\n\n它的机制是：\n\n- 每次启动 = **全新实例**\n    \n- 不保留：\n    \n    - 上一次对话 ❌\n        \n    - 上一次任务 ❌\n        \n- 只会读：\n    \n    - 👉 **配置文件（比如 AGENTS.md）**\n        \n\n👉 所以：\n\n```text\n它不是“有记忆”\n而是“每次重新加载上下文”\n```\n\n---\n\n## 2️⃣ 你这段在做的事情（核心动作）\n\n你其实做了三件非常关键的事：\n\n---\n\n### ✅ ① 识别问题本质\n\n```text\nCodex 记不住东西\n→ 因为没有持久记忆层\n```\n\n👉 这是关键转折点（认知升级）\n\n---\n\n### ✅ ② 引入“伪记忆层”\n\n你用了：\n\n```text\nAGENTS.md\n```\n\n本质作用：\n\n> 👉 让 Codex 每次启动都读取同一份“世界观说明书”\n\n---\n\n### ✅ ③ 把你的系统“写死给它看”\n\n你写了：\n\n- 服务器列表\n    \n- 部署路径\n    \n- 操作命令\n    \n- 约束规则\n    \n- 行为规范\n    \n\n👉 这一步本质是：\n\n```text\n把你的真实系统 → 转成 AI 可读的结构化上下文\n```\n\n---\n\n# ⚙️ 本质原理（最关键）\n\n你这套其实不是“让 AI 记住”，而是：\n\n> 👉 **把“状态”从 AI 内部，搬到文件系统里**\n\n---\n\n## 对比一下你现在的架构：\n\n### ❌ 原来（失败模式）\n\n```text\nAI ←→ 对话（临时）\n```\n\n→ 一断就没\n\n---\n\n### ✅ 现在（正确模式）\n\n```text\nAI ←→ AGENTS.md（持久）\n           ↑\n        你维护\n```\n\n---\n\n# 🔥 再说直白一点\n\n你现在干的事情其实是：\n\n> 👉 **在给 Codex 建一个“外挂大脑”**\n\n它不是记住了：\n\n```text\n而是你每次都把记忆塞给它\n```\n\n---\n\n# 🧠 再往深一层（你这种水平必须理解）\n\n你现在已经在做：\n\n## 👉 “AI 操作系统”的雏形\n\n结构已经出来了：\n\n```text\n┌───────────────┐\n│   Codex AI     │\n└──────┬────────┘\n       ↓\n┌───────────────┐\n│ AGENTS.md      │ ← 静态规则（世界观）\n│ MEMORY.md      │ ← 动态状态\n└──────┬────────┘\n       ↓\n┌───────────────┐\n│ 真实服务器 / 项目 │\n└───────────────┘\n```\n\n---\n\n# 🧨 你现在差的不是“理解”，而是这一层👇\n\n## ❗你还没做的关键一步：\n\n你现在只是：\n\n```text\n手动写 AGENTS.md\n```\n\n但真正强的是：\n\n> 👉 **让 AI 自己维护 MEMORY.md**\n\n---\n\n# 🚀 给你升级路线（很关键）\n\n你接下来应该做的是：\n\n## 1️⃣ 静态层（你已经做了）\n\n- AGENTS.md ✔\n    \n\n---\n\n## 2️⃣ 动态层（你刚开始）\n\n- MEMORY.md（状态记录）\n    \n\n---\n\n## 3️⃣ 自动化层（你还没做）\n\n让 Codex：\n\n```text\n每次执行完任务 → 自动更新 MEMORY.md\n```\n\n比如：\n\n```md\n## 最近部署\n\n- 2026-04-24\n  - 重启 aiclient-2-api-mock\n  - 修改 base_url\n```\n\n---\n\n## 4️⃣ 最终形态（你要的那个）\n\n```text\nAI 不需要你解释\n→ 自己看 MEMORY.md + AGENTS.md\n→ 自动理解你整个系统\n```\n\n---\n\n# 🧠 最后一句总结（你这段到底做了啥）\n\n你这段本质完成了：\n\n> ✅ 把“AI 的短期记忆问题”  \n> 👉 转化成“工程上的持久状态管理问题”\n\n---\n\n# 如果你要继续，我可以直接帮你做👇\n\n我可以给你一套：\n\n### 👉「完整 AI 记忆系统工程版」\n\n包含：\n\n- AGENTS.md（强化版）\n    \n- MEMORY.md（自动结构）\n    \n- 自动更新脚本（Codex可执行）\n    \n- 架构感知模板（让AI读懂项目）\n    \n\n甚至可以直接变成：\n\n> 👉 **“AI 自动管理你所有服务器”系统**\n\n你现在已经在门口了，就差这一步。",
+    "html": "<p>我帮你把这份内容“翻译成人话 + 提炼结构”一下，你这段其实已经在回答一个核心问题：</p>\n<blockquote>\n<p>👉 <strong>“Codex 到底做了什么？为什么会这样？”</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-一句话结论\">🧠 一句话结论</h1>\n<p>你这段内容本质在说：</p>\n<blockquote>\n<p><strong>Codex 什么都没“记住”，它只是每次启动都重新读了一份“说明书”</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-它到底做了什么拆开讲\">🧩 它到底做了什么（拆开讲）</h1>\n<h2 id=\"1️⃣-codex-本身的行为\">1️⃣ Codex 本身的行为</h2>\n<p>它的机制是：</p>\n<ul>\n<li>\n<p>每次启动 = <strong>全新实例</strong></p>\n</li>\n<li>\n<p>不保留：</p>\n<ul>\n<li>\n<p>上一次对话 ❌</p>\n</li>\n<li>\n<p>上一次任务 ❌</p>\n</li>\n</ul>\n</li>\n<li>\n<p>只会读：</p>\n<ul>\n<li>👉 <strong>配置文件（比如 AGENTS.md）</strong></li>\n</ul>\n</li>\n</ul>\n<p>👉 所以：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>它不是“有记忆”</span></span>\n<span data-line=\"\"><span>而是“每次重新加载上下文”</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2️⃣-你这段在做的事情核心动作\">2️⃣ 你这段在做的事情（核心动作）</h2>\n<p>你其实做了三件非常关键的事：</p>\n<hr>\n<h3 id=\"--识别问题本质\">✅ ① 识别问题本质</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Codex 记不住东西</span></span>\n<span data-line=\"\"><span>→ 因为没有持久记忆层</span></span></code></pre></figure>\n<p>👉 这是关键转折点（认知升级）</p>\n<hr>\n<h3 id=\"--引入伪记忆层\">✅ ② 引入“伪记忆层”</h3>\n<p>你用了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AGENTS.md</span></span></code></pre></figure>\n<p>本质作用：</p>\n<blockquote>\n<p>👉 让 Codex 每次启动都读取同一份“世界观说明书”</p>\n</blockquote>\n<hr>\n<h3 id=\"--把你的系统写死给它看\">✅ ③ 把你的系统“写死给它看”</h3>\n<p>你写了：</p>\n<ul>\n<li>\n<p>服务器列表</p>\n</li>\n<li>\n<p>部署路径</p>\n</li>\n<li>\n<p>操作命令</p>\n</li>\n<li>\n<p>约束规则</p>\n</li>\n<li>\n<p>行为规范</p>\n</li>\n</ul>\n<p>👉 这一步本质是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>把你的真实系统 → 转成 AI 可读的结构化上下文</span></span></code></pre></figure>\n<hr>\n<h1 id=\"️-本质原理最关键\">⚙️ 本质原理（最关键）</h1>\n<p>你这套其实不是“让 AI 记住”，而是：</p>\n<blockquote>\n<p>👉 <strong>把“状态”从 AI 内部，搬到文件系统里</strong></p>\n</blockquote>\n<hr>\n<h2 id=\"对比一下你现在的架构\">对比一下你现在的架构：</h2>\n<h3 id=\"-原来失败模式\">❌ 原来（失败模式）</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI ←→ 对话（临时）</span></span></code></pre></figure>\n<p>→ 一断就没</p>\n<hr>\n<h3 id=\"-现在正确模式\">✅ 现在（正确模式）</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI ←→ AGENTS.md（持久）</span></span>\n<span data-line=\"\"><span>           ↑</span></span>\n<span data-line=\"\"><span>        你维护</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-再说直白一点\">🔥 再说直白一点</h1>\n<p>你现在干的事情其实是：</p>\n<blockquote>\n<p>👉 <strong>在给 Codex 建一个“外挂大脑”</strong></p>\n</blockquote>\n<p>它不是记住了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>而是你每次都把记忆塞给它</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-再往深一层你这种水平必须理解\">🧠 再往深一层（你这种水平必须理解）</h1>\n<p>你现在已经在做：</p>\n<h2 id=\"-ai-操作系统的雏形\">👉 “AI 操作系统”的雏形</h2>\n<p>结构已经出来了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>┌───────────────┐</span></span>\n<span data-line=\"\"><span>│   Codex AI     │</span></span>\n<span data-line=\"\"><span>└──────┬────────┘</span></span>\n<span data-line=\"\"><span>       ↓</span></span>\n<span data-line=\"\"><span>┌───────────────┐</span></span>\n<span data-line=\"\"><span>│ AGENTS.md      │ ← 静态规则（世界观）</span></span>\n<span data-line=\"\"><span>│ MEMORY.md      │ ← 动态状态</span></span>\n<span data-line=\"\"><span>└──────┬────────┘</span></span>\n<span data-line=\"\"><span>       ↓</span></span>\n<span data-line=\"\"><span>┌───────────────┐</span></span>\n<span data-line=\"\"><span>│ 真实服务器 / 项目 │</span></span>\n<span data-line=\"\"><span>└───────────────┘</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-你现在差的不是理解而是这一层\">🧨 你现在差的不是“理解”，而是这一层👇</h1>\n<h2 id=\"你还没做的关键一步\">❗你还没做的关键一步：</h2>\n<p>你现在只是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>手动写 AGENTS.md</span></span></code></pre></figure>\n<p>但真正强的是：</p>\n<blockquote>\n<p>👉 <strong>让 AI 自己维护 MEMORY.md</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-给你升级路线很关键\">🚀 给你升级路线（很关键）</h1>\n<p>你接下来应该做的是：</p>\n<h2 id=\"1️⃣-静态层你已经做了\">1️⃣ 静态层（你已经做了）</h2>\n<ul>\n<li>AGENTS.md ✔</li>\n</ul>\n<hr>\n<h2 id=\"2️⃣-动态层你刚开始\">2️⃣ 动态层（你刚开始）</h2>\n<ul>\n<li>MEMORY.md（状态记录）</li>\n</ul>\n<hr>\n<h2 id=\"3️⃣-自动化层你还没做\">3️⃣ 自动化层（你还没做）</h2>\n<p>让 Codex：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>每次执行完任务 → 自动更新 MEMORY.md</span></span></code></pre></figure>\n<p>比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"md\" data-theme=\"github-dark\"><code data-language=\"md\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF;font-weight:bold\">## 最近部署</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">-</span><span style=\"color:#E1E4E8\"> 2026-04-24</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  -</span><span style=\"color:#E1E4E8\"> 重启 aiclient-2-api-mock</span></span>\n<span data-line=\"\"><span style=\"color:#FFAB70\">  -</span><span style=\"color:#E1E4E8\"> 修改 base_url</span></span></code></pre></figure>\n<hr>\n<h2 id=\"4️⃣-最终形态你要的那个\">4️⃣ 最终形态（你要的那个）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI 不需要你解释</span></span>\n<span data-line=\"\"><span>→ 自己看 MEMORY.md + AGENTS.md</span></span>\n<span data-line=\"\"><span>→ 自动理解你整个系统</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一句总结你这段到底做了啥\">🧠 最后一句总结（你这段到底做了啥）</h1>\n<p>你这段本质完成了：</p>\n<blockquote>\n<p>✅ 把“AI 的短期记忆问题”<br>\n👉 转化成“工程上的持久状态管理问题”</p>\n</blockquote>\n<hr>\n<h1 id=\"如果你要继续我可以直接帮你做\">如果你要继续，我可以直接帮你做👇</h1>\n<p>我可以给你一套：</p>\n<h3 id=\"完整-ai-记忆系统工程版\">👉「完整 AI 记忆系统工程版」</h3>\n<p>包含：</p>\n<ul>\n<li>\n<p>AGENTS.md（强化版）</p>\n</li>\n<li>\n<p>MEMORY.md（自动结构）</p>\n</li>\n<li>\n<p>自动更新脚本（Codex可执行）</p>\n</li>\n<li>\n<p>架构感知模板（让AI读懂项目）</p>\n</li>\n</ul>\n<p>甚至可以直接变成：</p>\n<blockquote>\n<p>👉 <strong>“AI 自动管理你所有服务器”系统</strong></p>\n</blockquote>\n<p>你现在已经在门口了，就差这一步。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话结论",
+        "text": "🧠 一句话结论"
+      },
+      {
+        "depth": 1,
+        "slug": "它到底做了什么-拆开讲",
+        "text": "🧩 它到底做了什么（拆开讲）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-codex-本身的行为",
+        "text": "1️⃣ Codex 本身的行为"
+      },
+      {
+        "depth": 2,
+        "slug": "2-你这段在做的事情-核心动作",
+        "text": "2️⃣ 你这段在做的事情（核心动作）"
+      },
+      {
+        "depth": 3,
+        "slug": "1-识别问题本质",
+        "text": "✅ ① 识别问题本质"
+      },
+      {
+        "depth": 3,
+        "slug": "2-引入-伪记忆层",
+        "text": "✅ ② 引入“伪记忆层”"
+      },
+      {
+        "depth": 3,
+        "slug": "3-把你的系统-写死给它看",
+        "text": "✅ ③ 把你的系统“写死给它看”"
+      },
+      {
+        "depth": 1,
+        "slug": "本质原理-最关键",
+        "text": "⚙️ 本质原理（最关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "对比一下你现在的架构",
+        "text": "对比一下你现在的架构："
+      },
+      {
+        "depth": 3,
+        "slug": "原来-失败模式",
+        "text": "❌ 原来（失败模式）"
+      },
+      {
+        "depth": 3,
+        "slug": "现在-正确模式",
+        "text": "✅ 现在（正确模式）"
+      },
+      {
+        "depth": 1,
+        "slug": "再说直白一点",
+        "text": "🔥 再说直白一点"
+      },
+      {
+        "depth": 1,
+        "slug": "再往深一层-你这种水平必须理解",
+        "text": "🧠 再往深一层（你这种水平必须理解）"
+      },
+      {
+        "depth": 2,
+        "slug": "ai-操作系统-的雏形",
+        "text": "👉 “AI 操作系统”的雏形"
+      },
+      {
+        "depth": 1,
+        "slug": "你现在差的不是-理解-而是这一层",
+        "text": "🧨 你现在差的不是“理解”，而是这一层👇"
+      },
+      {
+        "depth": 2,
+        "slug": "你还没做的关键一步",
+        "text": "❗你还没做的关键一步："
+      },
+      {
+        "depth": 1,
+        "slug": "给你升级路线-很关键",
+        "text": "🚀 给你升级路线（很关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-静态层-你已经做了",
+        "text": "1️⃣ 静态层（你已经做了）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-动态层-你刚开始",
+        "text": "2️⃣ 动态层（你刚开始）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-自动化层-你还没做",
+        "text": "3️⃣ 自动化层（你还没做）"
+      },
+      {
+        "depth": 2,
+        "slug": "最近部署",
+        "text": "最近部署"
+      },
+      {
+        "depth": 2,
+        "slug": "4-最终形态-你要的那个",
+        "text": "4️⃣ 最终形态（你要的那个）"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一句总结-你这段到底做了啥",
+        "text": "🧠 最后一句总结（你这段到底做了啥）"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要继续-我可以直接帮你做",
+        "text": "如果你要继续，我可以直接帮你做👇"
+      },
+      {
+        "depth": 3,
+        "slug": "完整-ai-记忆系统工程版",
+        "text": "👉「完整 AI 记忆系统工程版」"
+      }
+    ],
+    "detailPath": "articles/md_ac691629bf3b.json"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_16107a93423f",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/Obsidian%20%E7%AC%94%E8%AE%B0%E5%91%BD%E5%90%8D%E4%B8%8E%E6%A0%87%E7%AD%BE%E8%A7%84%E8%8C%83.md",
+    "sourcePath": "/home/vault/Obsidian/docs/Obsidian 笔记命名与标签规范.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/Obsidian 笔记命名与标签规范.md",
+    "openlistUrl": "/openlist/Obsidian/docs/Obsidian%20%E7%AC%94%E8%AE%B0%E5%91%BD%E5%90%8D%E4%B8%8E%E6%A0%87%E7%AD%BE%E8%A7%84%E8%8C%83.md",
+    "slug": "obsidian-笔记命名与标签规范",
+    "title": "Obsidian 笔记命名与标签规范",
+    "summary": "Obsidian 笔记命名与标签规范 标题怎么写 文件名直接写人能读懂的标题 不再把分类硬编码进文件名，也不要再写一长串前缀 重名时再补括号上下文，例如：目录（风格工具） 标题先服务阅读，再服务整理；分类交给标签和属性 标签怎么打 现在改用扁平主标签，不再依赖多层级标签树 一个笔记通常只保留 1 2...",
+    "description": "Obsidian 笔记命名与标签规范 标题怎么写 文件名直接写人能读懂的标题 不再把分类硬编码进文件名，也不要再写一长串前缀 重名时再补括号上下文，例如：目录（风格工具） 标题先服务阅读，再服务整理；分类交给标签和属性 标签怎么打 现在改用扁平主标签，不再依赖多层级标签树 一个笔记通常只保留 1 2...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-知识库治理",
+      "形态-规范"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-知识库治理",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/Obsidian 笔记命名与标签规范.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/Obsidian 笔记命名与标签规范.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/Obsidian%20%E7%AC%94%E8%AE%B0%E5%91%BD%E5%90%8D%E4%B8%8E%E6%A0%87%E7%AD%BE%E8%A7%84%E8%8C%83.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Obsidian",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 知识库治理",
+        "形态 规范",
+        "OBSIDIAN"
+      ],
+      "subtitle": "Obsidian 笔记命名与标签规范 标题怎么写 文件名直接写人能读懂的标题 不再把分类硬编码进文件名，也不要再写一长串前缀 重名时再补括号上下文，例如：目录（风格工具） 标题先服务阅读，再服务整理；分类交给标签和属性 标签怎么打 现在改用扁平主标签，不再依赖多层级标签树 一个笔记通常只保留 1 2..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## Obsidian 笔记命名与标签规范\n\n### 标题怎么写\n- 文件名直接写人能读懂的标题\n- 不再把分类硬编码进文件名，也不要再写一长串前缀\n- 重名时再补括号上下文，例如：`目录（风格工具）`\n- 标题先服务阅读，再服务整理；分类交给标签和属性\n\n### 标签怎么打\n- 现在改用扁平主标签，不再依赖多层级标签树\n- 一个笔记通常只保留 1-2 个主标签\n- 当前主标签建议控制在这些范围内：\n  - `服务器`\n  - `指令`\n  - `论文`\n  - `小说`\n  - `视频`\n  - `文档`\n  - `读书`\n  - `技术`\n  - `职业`\n  - `创作`\n  - `知识库`\n  - `随笔`\n  - `扣子`\n  - `实习`\n- 标签负责“大类归属”，不要拿标签去塞项目名、章节号、临时批次\n\n### 哪些信息放属性\n- `title`\n- `aliases`\n- `tags`\n- `type`\n- `status`\n- `project`\n- `series`\n- `topics`\n- `created`\n- `updated`\n\n### 推荐属性分工\n- `project`：项目、系统、产品名，例如 `Atramenti-Console`、`Obsidian`\n- `series`：系列、专题、作品线，例如某部长篇小说或某组视频主题\n- `type`：文档形态，例如 `手册`、`规范`、`说明`、`配置`、`报告`\n- `topics`：比标签更细的主题词，适合写多个，但不要失控\n\n### 推荐写法示例\n\n```yaml\n---\ntitle: 多服务器智能体体系技术手册\ntags:\n  - 服务器\nproject: Atramenti-Console\ntype: 手册\ntopics:\n  - 多服务器\n  - 智能体协同\n---\n```\n\n```yaml\n---\ntitle: 自控力\ntags:\n  - 读书\nseries: 自控力\ntopics:\n  - 导入样例\n---\n```\n\n### 整理原则\n- 物理目录尽量少：主要保留 `docs` 和 `image`\n- 检索优先靠标签、属性、固定搜索入口，不靠文件夹套文件夹\n- 如果一个信息只是为了方便筛选，优先放属性，不要继续加子标签\n- 如果一个标签只服务一两篇笔记，优先把它并回主标签，把细分信息转进属性",
+    "html": "<h2 id=\"obsidian-笔记命名与标签规范\">Obsidian 笔记命名与标签规范</h2>\n<h3 id=\"标题怎么写\">标题怎么写</h3>\n<ul>\n<li>文件名直接写人能读懂的标题</li>\n<li>不再把分类硬编码进文件名，也不要再写一长串前缀</li>\n<li>重名时再补括号上下文，例如：<code>目录（风格工具）</code></li>\n<li>标题先服务阅读，再服务整理；分类交给标签和属性</li>\n</ul>\n<h3 id=\"标签怎么打\">标签怎么打</h3>\n<ul>\n<li>现在改用扁平主标签，不再依赖多层级标签树</li>\n<li>一个笔记通常只保留 1-2 个主标签</li>\n<li>当前主标签建议控制在这些范围内：\n<ul>\n<li><code>服务器</code></li>\n<li><code>指令</code></li>\n<li><code>论文</code></li>\n<li><code>小说</code></li>\n<li><code>视频</code></li>\n<li><code>文档</code></li>\n<li><code>读书</code></li>\n<li><code>技术</code></li>\n<li><code>职业</code></li>\n<li><code>创作</code></li>\n<li><code>知识库</code></li>\n<li><code>随笔</code></li>\n<li><code>扣子</code></li>\n<li><code>实习</code></li>\n</ul>\n</li>\n<li>标签负责“大类归属”，不要拿标签去塞项目名、章节号、临时批次</li>\n</ul>\n<h3 id=\"哪些信息放属性\">哪些信息放属性</h3>\n<ul>\n<li><code>title</code></li>\n<li><code>aliases</code></li>\n<li><code>tags</code></li>\n<li><code>type</code></li>\n<li><code>status</code></li>\n<li><code>project</code></li>\n<li><code>series</code></li>\n<li><code>topics</code></li>\n<li><code>created</code></li>\n<li><code>updated</code></li>\n</ul>\n<h3 id=\"推荐属性分工\">推荐属性分工</h3>\n<ul>\n<li><code>project</code>：项目、系统、产品名，例如 <code>Atramenti-Console</code>、<code>Obsidian</code></li>\n<li><code>series</code>：系列、专题、作品线，例如某部长篇小说或某组视频主题</li>\n<li><code>type</code>：文档形态，例如 <code>手册</code>、<code>规范</code>、<code>说明</code>、<code>配置</code>、<code>报告</code></li>\n<li><code>topics</code>：比标签更细的主题词，适合写多个，但不要失控</li>\n</ul>\n<h3 id=\"推荐写法示例\">推荐写法示例</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">---</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">title</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">多服务器智能体体系技术手册</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">tags</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">服务器</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">project</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">Atramenti-Console</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">type</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">手册</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">topics</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">多服务器</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">智能体协同</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">---</span></span></code></pre></figure>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"yaml\" data-theme=\"github-dark\"><code data-language=\"yaml\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">---</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">title</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">自控力</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">tags</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">读书</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">series</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">自控力</span></span>\n<span data-line=\"\"><span style=\"color:#85E89D\">topics</span><span style=\"color:#E1E4E8\">:</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  - </span><span style=\"color:#9ECBFF\">导入样例</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">---</span></span></code></pre></figure>\n<h3 id=\"整理原则\">整理原则</h3>\n<ul>\n<li>物理目录尽量少：主要保留 <code>docs</code> 和 <code>image</code></li>\n<li>检索优先靠标签、属性、固定搜索入口，不靠文件夹套文件夹</li>\n<li>如果一个信息只是为了方便筛选，优先放属性，不要继续加子标签</li>\n<li>如果一个标签只服务一两篇笔记，优先把它并回主标签，把细分信息转进属性</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "obsidian-笔记命名与标签规范",
+        "text": "Obsidian 笔记命名与标签规范"
+      },
+      {
+        "depth": 3,
+        "slug": "标题怎么写",
+        "text": "标题怎么写"
+      },
+      {
+        "depth": 3,
+        "slug": "标签怎么打",
+        "text": "标签怎么打"
+      },
+      {
+        "depth": 3,
+        "slug": "哪些信息放属性",
+        "text": "哪些信息放属性"
+      },
+      {
+        "depth": 3,
+        "slug": "推荐属性分工",
+        "text": "推荐属性分工"
+      },
+      {
+        "depth": 3,
+        "slug": "推荐写法示例",
+        "text": "推荐写法示例"
+      },
+      {
+        "depth": 3,
+        "slug": "整理原则",
+        "text": "整理原则"
+      }
+    ],
+    "detailPath": "articles/md_16107a93423f.json"
+  }
+}

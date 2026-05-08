@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_d515b451d48d",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/Multi-Armed%20Bandit.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程学习之路/Multi-Armed Bandit.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/Multi-Armed Bandit.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/Multi-Armed%20Bandit.md",
+    "slug": "blog-编程学习之路-multi-armed-bandit",
+    "title": "Multi-Armed Bandit",
+    "summary": "Multi Armed Bandit 中文：多臂老虎机，简称 MAB 1. 通俗大白话 想象赌场里一台 老虎机 ，拉摇杆有概率赚钱； 如果有 好几台老虎机（多臂） ，每台中奖概率、收益都不一样： 你不知道哪台收益最高 不能一直死磕一台（怕亏） 也不能每台都乱试（浪费成本） MAB 就是一套算法： 在...",
+    "description": "Multi Armed Bandit 中文：多臂老虎机，简称 MAB 1. 通俗大白话 想象赌场里一台 老虎机 ，拉摇杆有概率赚钱； 如果有 好几台老虎机（多臂） ，每台中奖概率、收益都不一样： 你不知道哪台收益最高 不能一直死磕一台（怕亏） 也不能每台都乱试（浪费成本） MAB 就是一套算法： 在...",
+    "date": "2026-04-28",
+    "updated": "2026-04-28",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程学习之路"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程学习之路/Multi-Armed Bandit.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/Multi-Armed Bandit.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/Multi-Armed%20Bandit.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Multi Armed Bandit",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程学习之路",
+        "MULTI ARMED BANDIT"
+      ],
+      "subtitle": "Multi Armed Bandit 中文：多臂老虎机，简称 MAB 1. 通俗大白话 想象赌场里一台 老虎机 ，拉摇杆有概率赚钱； 如果有 好几台老虎机（多臂） ，每台中奖概率、收益都不一样： 你不知道哪台收益最高 不能一直死磕一台（怕亏） 也不能每台都乱试（浪费成本） MAB 就是一套算法： 在..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Multi-Armed Bandit\n\n**中文：多臂老虎机，简称 MAB**\n\n## 1. 通俗大白话\n\n想象赌场里一台**老虎机**，拉摇杆有概率赚钱；\n\n如果有**好几台老虎机（多臂）**，每台中奖概率、收益都不一样：\n\n- 你不知道哪台收益最高\n- 不能一直死磕一台（怕亏）\n- 也不能每台都乱试（浪费成本）\n\n**MAB 就是一套算法：**\n\n在「**探索（试新渠道）**」和「**利用（用好渠道）**」之间做平衡。\n\n---\n\n## 2. 核心矛盾（经典两难）\n\n1. **Exploration 探索**\n    \n    尝试冷门 / 新的上游、新 Key、新节点，找出潜力好的线路\n2. **Exploitation 利用**\n    \n    一直用当前延迟最低、成功率最高、最便宜的优质线路\n\n无脑只用最好的 → 新优质渠道永远发现不了\n\n无脑乱试所有渠道 → 故障率、耗时、成本爆炸\n\n**MAB = 自动动态平衡这两件事**\n\n---\n\n## 3. 套入你 AI 网关 / Token Pool 场景（重点）\n\n完美对应你的业务：\n\n- 每一个 **Provider / 上游渠道 / Key / 节点** = 一只「老虎机」\n- 指标：成功率、首 Token 耗时、报错率、402 欠费、稳定性\n- MAB 算法作用：\n    \n    1. 优先调度**当前表现最好**的线路\n    2. 低频率悄悄测试其他冷门线路\n    3. 线路变差（频繁 402、超时、报错）自动降低权重\n    4. 新线路变强，自动慢慢加大调用比例\n    \n\n---\n\n## 4. 常见 MAB 算法\n\n- **Epsilon-Greedy**：90% 用好线路，10% 随机探索\n- **Thompson Sampling 汤普森采样**：工业界最常用，AI / 路由首选\n- UCB（置信上界）：适合追求稳定低延迟场景\n\n---\n\n## 5. 和你之前故障的关联\n\n你之前的问题：\n\n> 重试只会卡死在同一个坏 UUID、不会自动择优、不会淘汰烂节点\n\n**成熟 MAB 路由 直接解决：**\n\n- 自动统计各节点失败率、延迟\n- 劣化节点自动降权、减少分配\n- 无需硬写死「固定排除名单」，**动态智能选路**\n\n---\n\n## 极简一句话总结\n\n**多臂老虎机 (MAB) = 一套智能路由算法，帮你的 AI 池子自动择优、试探新线路、淘汰烂节点，平衡稳定与探索。**",
+    "html": "<h1 id=\"multi-armed-bandit\">Multi-Armed Bandit</h1>\n<p><strong>中文：多臂老虎机，简称 MAB</strong></p>\n<h2 id=\"1-通俗大白话\">1. 通俗大白话</h2>\n<p>想象赌场里一台<strong>老虎机</strong>，拉摇杆有概率赚钱；</p>\n<p>如果有<strong>好几台老虎机（多臂）</strong>，每台中奖概率、收益都不一样：</p>\n<ul>\n<li>你不知道哪台收益最高</li>\n<li>不能一直死磕一台（怕亏）</li>\n<li>也不能每台都乱试（浪费成本）</li>\n</ul>\n<p><strong>MAB 就是一套算法：</strong></p>\n<p>在「<strong>探索（试新渠道）</strong>」和「<strong>利用（用好渠道）</strong>」之间做平衡。</p>\n<hr>\n<h2 id=\"2-核心矛盾经典两难\">2. 核心矛盾（经典两难）</h2>\n<ol>\n<li>\n<p><strong>Exploration 探索</strong></p>\n<p>尝试冷门 / 新的上游、新 Key、新节点，找出潜力好的线路</p>\n</li>\n<li>\n<p><strong>Exploitation 利用</strong></p>\n<p>一直用当前延迟最低、成功率最高、最便宜的优质线路</p>\n</li>\n</ol>\n<p>无脑只用最好的 → 新优质渠道永远发现不了</p>\n<p>无脑乱试所有渠道 → 故障率、耗时、成本爆炸</p>\n<p><strong>MAB = 自动动态平衡这两件事</strong></p>\n<hr>\n<h2 id=\"3-套入你-ai-网关--token-pool-场景重点\">3. 套入你 AI 网关 / Token Pool 场景（重点）</h2>\n<p>完美对应你的业务：</p>\n<ul>\n<li>\n<p>每一个 <strong>Provider / 上游渠道 / Key / 节点</strong> = 一只「老虎机」</p>\n</li>\n<li>\n<p>指标：成功率、首 Token 耗时、报错率、402 欠费、稳定性</p>\n</li>\n<li>\n<p>MAB 算法作用：</p>\n<ol>\n<li>优先调度<strong>当前表现最好</strong>的线路</li>\n<li>低频率悄悄测试其他冷门线路</li>\n<li>线路变差（频繁 402、超时、报错）自动降低权重</li>\n<li>新线路变强，自动慢慢加大调用比例</li>\n</ol>\n</li>\n</ul>\n<hr>\n<h2 id=\"4-常见-mab-算法\">4. 常见 MAB 算法</h2>\n<ul>\n<li><strong>Epsilon-Greedy</strong>：90% 用好线路，10% 随机探索</li>\n<li><strong>Thompson Sampling 汤普森采样</strong>：工业界最常用，AI / 路由首选</li>\n<li>UCB（置信上界）：适合追求稳定低延迟场景</li>\n</ul>\n<hr>\n<h2 id=\"5-和你之前故障的关联\">5. 和你之前故障的关联</h2>\n<p>你之前的问题：</p>\n<blockquote>\n<p>重试只会卡死在同一个坏 UUID、不会自动择优、不会淘汰烂节点</p>\n</blockquote>\n<p><strong>成熟 MAB 路由 直接解决：</strong></p>\n<ul>\n<li>自动统计各节点失败率、延迟</li>\n<li>劣化节点自动降权、减少分配</li>\n<li>无需硬写死「固定排除名单」，<strong>动态智能选路</strong></li>\n</ul>\n<hr>\n<h2 id=\"极简一句话总结\">极简一句话总结</h2>\n<p><strong>多臂老虎机 (MAB) = 一套智能路由算法，帮你的 AI 池子自动择优、试探新线路、淘汰烂节点，平衡稳定与探索。</strong></p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "multi-armed-bandit",
+        "text": "Multi-Armed Bandit"
+      },
+      {
+        "depth": 2,
+        "slug": "1-通俗大白话",
+        "text": "1. 通俗大白话"
+      },
+      {
+        "depth": 2,
+        "slug": "2-核心矛盾-经典两难",
+        "text": "2. 核心矛盾（经典两难）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-套入你-ai-网关-token-pool-场景-重点",
+        "text": "3. 套入你 AI 网关 / Token Pool 场景（重点）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-常见-mab-算法",
+        "text": "4. 常见 MAB 算法"
+      },
+      {
+        "depth": 2,
+        "slug": "5-和你之前故障的关联",
+        "text": "5. 和你之前故障的关联"
+      },
+      {
+        "depth": 2,
+        "slug": "极简一句话总结",
+        "text": "极简一句话总结"
+      }
+    ],
+    "detailPath": "articles/md_d515b451d48d.json"
+  }
+}

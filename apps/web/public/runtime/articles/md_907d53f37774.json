@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_907d53f37774",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/%E9%97%A8%E7%A6%81.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/门禁.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/门禁.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E9%97%A8%E7%A6%81.md",
+    "slug": "codex-knowledge-门禁",
+    "title": "门禁",
+    "summary": "可以，而且 不只是能做 ——你现在这套门禁如果继续停留在本地 gateway，其实已经开始“瓶颈化”了。 我先直接把你这个问题的答案压成一句话： 最佳形态不是 MCP，也不是单纯云服务，而是： 👉「本地强门禁 + 云端控制面 + MCP 作为执行插件」的三层架构 下面给你讲清楚为什么。 🧠 先纠...",
+    "description": "可以，而且 不只是能做 ——你现在这套门禁如果继续停留在本地 gateway，其实已经开始“瓶颈化”了。 我先直接把你这个问题的答案压成一句话： 最佳形态不是 MCP，也不是单纯云服务，而是： 👉「本地强门禁 + 云端控制面 + MCP 作为执行插件」的三层架构 下面给你讲清楚为什么。 🧠 先纠...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/门禁.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/门禁.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E9%97%A8%E7%A6%81.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "门禁",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "门禁"
+      ],
+      "subtitle": "可以，而且 不只是能做 ——你现在这套门禁如果继续停留在本地 gateway，其实已经开始“瓶颈化”了。 我先直接把你这个问题的答案压成一句话： 最佳形态不是 MCP，也不是单纯云服务，而是： 👉「本地强门禁 + 云端控制面 + MCP 作为执行插件」的三层架构 下面给你讲清楚为什么。 🧠 先纠..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "可以，而且**不只是能做**——你现在这套门禁如果继续停留在本地 gateway，其实已经开始“瓶颈化”了。\n\n我先直接把你这个问题的答案压成一句话：\n\n> **最佳形态不是 MCP，也不是单纯云服务，而是：  \n> 👉「本地强门禁 + 云端控制面 + MCP 作为执行插件」的三层架构**\n\n下面给你讲清楚为什么。\n\n---\n\n# 🧠 先纠正一个关键认知\n\n你现在问：\n\n> 能不能做成 MCP？\n\n答案是：\n\n👉 **可以做，但单独做成 MCP 是错误形态**\n\n---\n\n## ❗原因（非常关键）\n\nMCP 的本质是：\n\n```text\n能力提供者（tool provider）\n```\n\n它是：\n\n- 被调用的\n    \n- 可选的\n    \n- 可绕过的\n    \n\n---\n\n而你的门禁是：\n\n```text\n执行控制者（execution controller）\n```\n\n它必须：\n\n- ❗不可绕过\n    \n- ❗在最前面\n    \n- ❗决定“能不能执行”\n    \n\n---\n\n👉 所以结论：\n\n|方案|对不对|\n|---|---|\n|门禁 = MCP|❌ 错|\n|门禁 = CLI hook|⚠️ 不稳|\n|门禁 = Gateway|✅ 对|\n|门禁 = 控制层（Control Plane）|🔥 最优|\n\n---\n\n# 🏗️ 最佳架构（我建议你走这个）\n\n```text\n            ┌──────────────────────┐\n            │   云端 Control Plane │\n            │----------------------│\n            │ 规则策略 / 权限 / 风控 │\n            │ 审计日志 / 任务追踪   │\n            └─────────▲────────────┘\n                      │ API\n                      │\n┌─────────────────────┴─────────────────────┐\n│           本地 Gateway（强门禁）            │\n│------------------------------------------│\n│ 任务解析 / 分级 / 是否允许执行            │\n│ plan 校验 / 入口锁死                     │\n└─────────▲───────────────▲───────────────┘\n          │               │\n          │               │\n     ┌────┴────┐     ┌────┴────┐\n     │  Codex  │     │   MCP   │\n     │ (执行)  │     │ (能力)  │\n     └─────────┘     └─────────┘\n```\n\n---\n\n# 🔥 三层职责（必须分清）\n\n## 🥇 第一层：Gateway（你现在做的）\n\n👉 **唯一入口，绝对控制**\n\n做的事：\n\n- 是否允许执行\n    \n- 是否写 plan\n    \n- 是否触发任务\n    \n\n👉 ❗这一层必须本地\n\n---\n\n## 🥈 第二层：Control Plane（你下一步该做的）\n\n👉 **云端大脑**\n\n做的事：\n\n- 规则配置（谁能干什么）\n    \n- 风险策略（L1~L4）\n    \n- 日志汇总\n    \n- agent 行为分析\n    \n\n---\n\n## 🥉 第三层：MCP\n\n👉 **能力插件**\n\n做的事：\n\n- 文件操作\n    \n- 网络请求\n    \n- 自动部署\n    \n- 外部系统接入\n    \n\n---\n\n# 💥 为什么必须上云（你现在这个点已经到了）\n\n你现在已经遇到这些问题了：\n\n- MCP 越来越多\n    \n- agent 行为越来越复杂\n    \n- 任务开始有“副作用”（部署 / 改系统）\n    \n\n👉 本地 gateway 会开始扛不住：\n\n```text\n规则写死\n日志分散\n无法全局观察\n```\n\n---\n\n# 🚀 云端版本能解决什么？\n\n## ① 统一策略\n\n```json\n{\n  \"L3\": \"require_confirm\",\n  \"L4\": \"deny\",\n  \"deploy\": \"only_on_main_repo\"\n}\n```\n\n---\n\n## ② 多机器统一控制\n\n```text\n你电脑\n服务器\n远程 agent\n\n全部受控\n```\n\n---\n\n## ③ 行为审计（这个很关键）\n\n```text\n谁执行了什么任务\n调用了哪些 MCP\n花了多少 token\n有没有越权\n```\n\n---\n\n## ④ 动态调整（比你现在强一百倍）\n\n你现在是：\n\n```text\n改代码 → 重启\n```\n\n云端是：\n\n```text\n改规则 → 立即生效\n```\n\n---\n\n# 🧠 那 MCP 在这里的位置是什么？\n\n👉 MCP 变成：\n\n```text\n“受控执行单元”\n```\n\n比如：\n\n```text\nmcp.deploy\nmcp.fs\nmcp.browser\n```\n\n但：\n\n```text\n调用 MCP 前必须经过 gateway + control plane\n```\n\n---\n\n# 🎯 最优形态（我帮你压最终版）\n\n```text\n本地：\n- gateway.ps1（强门禁，不可绕过）\n\n云端：\n- control-plane（规则 + 审计）\n\n执行：\n- codex（模型）\n- mcp（工具）\n```\n\n---\n\n# ❗千万不要走的错误路线（我帮你避坑）\n\n### ❌ 门禁做成 MCP\n\n结果：\n\n```text\nagent 可以选择不用它\n```\n\n直接废\n\n---\n\n### ❌ 只做本地规则\n\n结果：\n\n```text\n不可扩展\n不可观测\n不可协同\n```\n\n---\n\n### ❌ 直接云端执行（没有本地门禁）\n\n结果：\n\n```text\n失去控制入口\n```\n\n---\n\n# 🧨 最核心一句话（记住这个）\n\n> **MCP 是“手”，Codex 是“大脑”，  \n> 你现在做的门禁，是“神经中枢”**\n\n---\n\n# 🚀 如果你要继续往下做（我建议）\n\n下一步可以直接上：\n\n👉 **最小 Control Plane（MVP）**\n\n我可以帮你做：\n\n- 一个本地 → 云端策略同步接口\n    \n- 一个简单的规则服务（Node / Python）\n    \n- 一个日志 dashboard（看 agent 在干嘛）\n    \n\n---\n\n你只要说一句：\n\n👉 **“做 Control Plane MVP”**\n\n我给你一套可以直接跑的架构（不是概念，是能启动的）。",
+    "html": "<p>可以，而且<strong>不只是能做</strong>——你现在这套门禁如果继续停留在本地 gateway，其实已经开始“瓶颈化”了。</p>\n<p>我先直接把你这个问题的答案压成一句话：</p>\n<blockquote>\n<p><strong>最佳形态不是 MCP，也不是单纯云服务，而是：<br>\n👉「本地强门禁 + 云端控制面 + MCP 作为执行插件」的三层架构</strong></p>\n</blockquote>\n<p>下面给你讲清楚为什么。</p>\n<hr>\n<h1 id=\"-先纠正一个关键认知\">🧠 先纠正一个关键认知</h1>\n<p>你现在问：</p>\n<blockquote>\n<p>能不能做成 MCP？</p>\n</blockquote>\n<p>答案是：</p>\n<p>👉 <strong>可以做，但单独做成 MCP 是错误形态</strong></p>\n<hr>\n<h2 id=\"原因非常关键\">❗原因（非常关键）</h2>\n<p>MCP 的本质是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>能力提供者（tool provider）</span></span></code></pre></figure>\n<p>它是：</p>\n<ul>\n<li>\n<p>被调用的</p>\n</li>\n<li>\n<p>可选的</p>\n</li>\n<li>\n<p>可绕过的</p>\n</li>\n</ul>\n<hr>\n<p>而你的门禁是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>执行控制者（execution controller）</span></span></code></pre></figure>\n<p>它必须：</p>\n<ul>\n<li>\n<p>❗不可绕过</p>\n</li>\n<li>\n<p>❗在最前面</p>\n</li>\n<li>\n<p>❗决定“能不能执行”</p>\n</li>\n</ul>\n<hr>\n<p>👉 所以结论：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>方案</th>\n<th>对不对</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>门禁 = MCP</td>\n<td>❌ 错</td>\n</tr>\n<tr>\n<td>门禁 = CLI hook</td>\n<td>⚠️ 不稳</td>\n</tr>\n<tr>\n<td>门禁 = Gateway</td>\n<td>✅ 对</td>\n</tr>\n<tr>\n<td>门禁 = 控制层（Control Plane）</td>\n<td>🔥 最优</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h1 id=\"️-最佳架构我建议你走这个\">🏗️ 最佳架构（我建议你走这个）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>            ┌──────────────────────┐</span></span>\n<span data-line=\"\"><span>            │   云端 Control Plane │</span></span>\n<span data-line=\"\"><span>            │----------------------│</span></span>\n<span data-line=\"\"><span>            │ 规则策略 / 权限 / 风控 │</span></span>\n<span data-line=\"\"><span>            │ 审计日志 / 任务追踪   │</span></span>\n<span data-line=\"\"><span>            └─────────▲────────────┘</span></span>\n<span data-line=\"\"><span>                      │ API</span></span>\n<span data-line=\"\"><span>                      │</span></span>\n<span data-line=\"\"><span>┌─────────────────────┴─────────────────────┐</span></span>\n<span data-line=\"\"><span>│           本地 Gateway（强门禁）            │</span></span>\n<span data-line=\"\"><span>│------------------------------------------│</span></span>\n<span data-line=\"\"><span>│ 任务解析 / 分级 / 是否允许执行            │</span></span>\n<span data-line=\"\"><span>│ plan 校验 / 入口锁死                     │</span></span>\n<span data-line=\"\"><span>└─────────▲───────────────▲───────────────┘</span></span>\n<span data-line=\"\"><span>          │               │</span></span>\n<span data-line=\"\"><span>          │               │</span></span>\n<span data-line=\"\"><span>     ┌────┴────┐     ┌────┴────┐</span></span>\n<span data-line=\"\"><span>     │  Codex  │     │   MCP   │</span></span>\n<span data-line=\"\"><span>     │ (执行)  │     │ (能力)  │</span></span>\n<span data-line=\"\"><span>     └─────────┘     └─────────┘</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三层职责必须分清\">🔥 三层职责（必须分清）</h1>\n<h2 id=\"-第一层gateway你现在做的\">🥇 第一层：Gateway（你现在做的）</h2>\n<p>👉 <strong>唯一入口，绝对控制</strong></p>\n<p>做的事：</p>\n<ul>\n<li>\n<p>是否允许执行</p>\n</li>\n<li>\n<p>是否写 plan</p>\n</li>\n<li>\n<p>是否触发任务</p>\n</li>\n</ul>\n<p>👉 ❗这一层必须本地</p>\n<hr>\n<h2 id=\"-第二层control-plane你下一步该做的\">🥈 第二层：Control Plane（你下一步该做的）</h2>\n<p>👉 <strong>云端大脑</strong></p>\n<p>做的事：</p>\n<ul>\n<li>\n<p>规则配置（谁能干什么）</p>\n</li>\n<li>\n<p>风险策略（L1~L4）</p>\n</li>\n<li>\n<p>日志汇总</p>\n</li>\n<li>\n<p>agent 行为分析</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-第三层mcp\">🥉 第三层：MCP</h2>\n<p>👉 <strong>能力插件</strong></p>\n<p>做的事：</p>\n<ul>\n<li>\n<p>文件操作</p>\n</li>\n<li>\n<p>网络请求</p>\n</li>\n<li>\n<p>自动部署</p>\n</li>\n<li>\n<p>外部系统接入</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"-为什么必须上云你现在这个点已经到了\">💥 为什么必须上云（你现在这个点已经到了）</h1>\n<p>你现在已经遇到这些问题了：</p>\n<ul>\n<li>\n<p>MCP 越来越多</p>\n</li>\n<li>\n<p>agent 行为越来越复杂</p>\n</li>\n<li>\n<p>任务开始有“副作用”（部署 / 改系统）</p>\n</li>\n</ul>\n<p>👉 本地 gateway 会开始扛不住：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>规则写死</span></span>\n<span data-line=\"\"><span>日志分散</span></span>\n<span data-line=\"\"><span>无法全局观察</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-云端版本能解决什么\">🚀 云端版本能解决什么？</h1>\n<h2 id=\"-统一策略\">① 统一策略</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"L3\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"require_confirm\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"L4\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"deny\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"deploy\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"only_on_main_repo\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-多机器统一控制\">② 多机器统一控制</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你电脑</span></span>\n<span data-line=\"\"><span>服务器</span></span>\n<span data-line=\"\"><span>远程 agent</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>全部受控</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-行为审计这个很关键\">③ 行为审计（这个很关键）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>谁执行了什么任务</span></span>\n<span data-line=\"\"><span>调用了哪些 MCP</span></span>\n<span data-line=\"\"><span>花了多少 token</span></span>\n<span data-line=\"\"><span>有没有越权</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-动态调整比你现在强一百倍\">④ 动态调整（比你现在强一百倍）</h2>\n<p>你现在是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>改代码 → 重启</span></span></code></pre></figure>\n<p>云端是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>改规则 → 立即生效</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-那-mcp-在这里的位置是什么\">🧠 那 MCP 在这里的位置是什么？</h1>\n<p>👉 MCP 变成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>“受控执行单元”</span></span></code></pre></figure>\n<p>比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>mcp.deploy</span></span>\n<span data-line=\"\"><span>mcp.fs</span></span>\n<span data-line=\"\"><span>mcp.browser</span></span></code></pre></figure>\n<p>但：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>调用 MCP 前必须经过 gateway + control plane</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最优形态我帮你压最终版\">🎯 最优形态（我帮你压最终版）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本地：</span></span>\n<span data-line=\"\"><span>- gateway.ps1（强门禁，不可绕过）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>云端：</span></span>\n<span data-line=\"\"><span>- control-plane（规则 + 审计）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>执行：</span></span>\n<span data-line=\"\"><span>- codex（模型）</span></span>\n<span data-line=\"\"><span>- mcp（工具）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"千万不要走的错误路线我帮你避坑\">❗千万不要走的错误路线（我帮你避坑）</h1>\n<h3 id=\"-门禁做成-mcp\">❌ 门禁做成 MCP</h3>\n<p>结果：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>agent 可以选择不用它</span></span></code></pre></figure>\n<p>直接废</p>\n<hr>\n<h3 id=\"-只做本地规则\">❌ 只做本地规则</h3>\n<p>结果：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>不可扩展</span></span>\n<span data-line=\"\"><span>不可观测</span></span>\n<span data-line=\"\"><span>不可协同</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-直接云端执行没有本地门禁\">❌ 直接云端执行（没有本地门禁）</h3>\n<p>结果：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>失去控制入口</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最核心一句话记住这个\">🧨 最核心一句话（记住这个）</h1>\n<blockquote>\n<p><strong>MCP 是“手”，Codex 是“大脑”，<br>\n你现在做的门禁，是“神经中枢”</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-如果你要继续往下做我建议\">🚀 如果你要继续往下做（我建议）</h1>\n<p>下一步可以直接上：</p>\n<p>👉 <strong>最小 Control Plane（MVP）</strong></p>\n<p>我可以帮你做：</p>\n<ul>\n<li>\n<p>一个本地 → 云端策略同步接口</p>\n</li>\n<li>\n<p>一个简单的规则服务（Node / Python）</p>\n</li>\n<li>\n<p>一个日志 dashboard（看 agent 在干嘛）</p>\n</li>\n</ul>\n<hr>\n<p>你只要说一句：</p>\n<p>👉 <strong>“做 Control Plane MVP”</strong></p>\n<p>我给你一套可以直接跑的架构（不是概念，是能启动的）。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "先纠正一个关键认知",
+        "text": "🧠 先纠正一个关键认知"
+      },
+      {
+        "depth": 2,
+        "slug": "原因-非常关键",
+        "text": "❗原因（非常关键）"
+      },
+      {
+        "depth": 1,
+        "slug": "最佳架构-我建议你走这个",
+        "text": "🏗️ 最佳架构（我建议你走这个）"
+      },
+      {
+        "depth": 1,
+        "slug": "三层职责-必须分清",
+        "text": "🔥 三层职责（必须分清）"
+      },
+      {
+        "depth": 2,
+        "slug": "第一层-gateway-你现在做的",
+        "text": "🥇 第一层：Gateway（你现在做的）"
+      },
+      {
+        "depth": 2,
+        "slug": "第二层-control-plane-你下一步该做的",
+        "text": "🥈 第二层：Control Plane（你下一步该做的）"
+      },
+      {
+        "depth": 2,
+        "slug": "第三层-mcp",
+        "text": "🥉 第三层：MCP"
+      },
+      {
+        "depth": 1,
+        "slug": "为什么必须上云-你现在这个点已经到了",
+        "text": "💥 为什么必须上云（你现在这个点已经到了）"
+      },
+      {
+        "depth": 1,
+        "slug": "云端版本能解决什么",
+        "text": "🚀 云端版本能解决什么？"
+      },
+      {
+        "depth": 2,
+        "slug": "1-统一策略",
+        "text": "① 统一策略"
+      },
+      {
+        "depth": 2,
+        "slug": "2-多机器统一控制",
+        "text": "② 多机器统一控制"
+      },
+      {
+        "depth": 2,
+        "slug": "3-行为审计-这个很关键",
+        "text": "③ 行为审计（这个很关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-动态调整-比你现在强一百倍",
+        "text": "④ 动态调整（比你现在强一百倍）"
+      },
+      {
+        "depth": 1,
+        "slug": "那-mcp-在这里的位置是什么",
+        "text": "🧠 那 MCP 在这里的位置是什么？"
+      },
+      {
+        "depth": 1,
+        "slug": "最优形态-我帮你压最终版",
+        "text": "🎯 最优形态（我帮你压最终版）"
+      },
+      {
+        "depth": 1,
+        "slug": "千万不要走的错误路线-我帮你避坑",
+        "text": "❗千万不要走的错误路线（我帮你避坑）"
+      },
+      {
+        "depth": 3,
+        "slug": "门禁做成-mcp",
+        "text": "❌ 门禁做成 MCP"
+      },
+      {
+        "depth": 3,
+        "slug": "只做本地规则",
+        "text": "❌ 只做本地规则"
+      },
+      {
+        "depth": 3,
+        "slug": "直接云端执行-没有本地门禁",
+        "text": "❌ 直接云端执行（没有本地门禁）"
+      },
+      {
+        "depth": 1,
+        "slug": "最核心一句话-记住这个",
+        "text": "🧨 最核心一句话（记住这个）"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要继续往下做-我建议",
+        "text": "🚀 如果你要继续往下做（我建议）"
+      }
+    ],
+    "detailPath": "articles/md_907d53f37774.json"
+  }
+}

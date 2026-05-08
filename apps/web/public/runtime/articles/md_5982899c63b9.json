@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_5982899c63b9",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/CI%20CD%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/CI CD 自动部署.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/CI CD 自动部署.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/CI%20CD%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2.md",
+    "slug": "blog-编程规范-ci-cd-自动部署",
+    "title": "CI CD 自动部署",
+    "summary": "我给你用 最直白、最接地气 的方式讲清楚，你马上就能懂👇 # 1. npm run selftest:pre commit 通过 是什么意思？ 这句话翻译成人话： ### 你本地电脑上，「提交前自检脚本」跑完全部通过了 ✅ 它具体做了这些事： 运行代码格式检查（lint） 运行代码规范检查 运行单...",
+    "description": "我给你用 最直白、最接地气 的方式讲清楚，你马上就能懂👇 # 1. npm run selftest:pre commit 通过 是什么意思？ 这句话翻译成人话： ### 你本地电脑上，「提交前自检脚本」跑完全部通过了 ✅ 它具体做了这些事： 运行代码格式检查（lint） 运行代码规范检查 运行单...",
+    "date": "2026-04-30",
+    "updated": "2026-04-30",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/CI CD 自动部署.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/CI CD 自动部署.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/CI%20CD%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "CI CD 自动部署",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "CI CD 自动部署"
+      ],
+      "subtitle": "我给你用 最直白、最接地气 的方式讲清楚，你马上就能懂👇 # 1. npm run selftest:pre commit 通过 是什么意思？ 这句话翻译成人话： ### 你本地电脑上，「提交前自检脚本」跑完全部通过了 ✅ 它具体做了这些事： 运行代码格式检查（lint） 运行代码规范检查 运行单..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "我给你用**最直白、最接地气**的方式讲清楚，你马上就能懂👇 # 1. **npm run selftest:pre-commit 通过 是什么意思？** 这句话翻译成人话： ### **你本地电脑上，「提交前自检脚本」跑完全部通过了 ✅** 它具体做了这些事： - 运行代码格式检查（lint） - 运行代码规范检查 - 运行单元测试/基础自测 - 检查有没有语法错误、格式错误、明显bug **通过 = 你现在的代码可以安全 commit（提交）** **不通过 = 不让你提交，必须先修复错误** --- # 2. **CI 可以在本地跑吗？** ### **完全可以！而且你现在就在本地跑 CI！** 你看到的： - `local checks` = **本地版 CI 检查** - `CI checks` = **服务器版 CI 检查** 它们**99% 是同一套脚本**，只是运行环境不一样： - 本地：你电脑 - 服务器：GitHub / GitLab 云端机器 ### 所以： **你本地跑 npm run selftest:pre-commit = 你在本地提前模拟跑了一遍 CI** 好处： - 不用推到云端就知道能不能过 - 提前修复，避免云端 CI 变红 - 速度快很多 --- # 3. 你现在这套结构是什么？（超级重要） 你现在是**双层保护**： ### 第一层（本地） **git 提交前 → 自动跑 selftest → 不通过不让提交** ### 第二层（云端） **git push 后 → CI 自动再跑一遍 same checks → 不通过不让合并代码** --- # 4. 超简总结（你只需要记这 3 句） 1. **npm run selftest:pre-commit 通过** = 本地提交前自检全过，可以提交代码。 2. **CI 可以在本地跑** = 你现在跑的就是本地版 CI，和云端逻辑一样。 3. **你现在是双层防护** = 本地拦一次 + CI 拦一次，保证代码不会乱提交。 --- 如果你愿意，我可以**用一张图给你画出你现在的完整提交流程**，让你一眼看懂整个门禁机制！\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# CI/CD 自动部署：从 GitHub-hosted 账单门禁切到 170 自托管 runner 的一套正确做法\n\n## 先说结论\n\n这次最关键的认知不是“把 workflow 写出来了”，而是：\n\n```text\n自动部署是否真的可用\n!=\n仓库里有一个 GitHub Actions YAML\n```\n\n真正可用的自动部署，至少要同时满足四件事：\n\n1. `push` 后确实会触发 job\n2. job 确实能在真实执行机上跑起来\n3. 部署脚本走的是 canonical 路径，不是临时拼装\n4. 部署后有公网与内部双验证，而不是只看 workflow 绿了\n\n这次 Token Pool 的落地，最终收敛成了下面这条真实链路：\n\n```text\n开发机改代码\n↓\npush 到 GitHub main\n↓\nGitHub Actions workflow: .github/workflows/deploy-runtime.yml\n↓\n170 自托管 runner: token-pool-prod-170\n↓\nactions/checkout\n↓\ndeploy/deploy-runtime-local.sh\n↓\ngit archive HEAD -> tar -xf -> npm ci --omit=dev\n↓\nsystemctl restart token-pool-gateway-prod.service\n↓\n内部健康检查 + 公网入口验证\n```\n\n---\n\n## 一、这次真正踩到的坑，不是代码，是执行地点\n\n一开始表面上看，是“已经有自动部署 workflow 了，但怎么就是不自动上线”。\n\n后来真正查出来，问题根本不在业务代码，而在执行地点：\n\n```text\nworkflow 跑在 GitHub-hosted runner\n↓\nGitHub 账号被账单 / spending limit 门禁卡住\n↓\njob 连启动都启动不了\n↓\n看起来像“自动部署坏了”\n```\n\n这个阶段最容易犯的错是继续改 YAML 细节，或者继续怀疑 SSH。\n\n但只要 job 都没真的跑起来，后面所有 SSH、scp、docker、systemctl 都是伪命题。\n\n所以第一条工程原则是：\n\n```text\n先确认 job 到底跑在哪台机器上\n```\n\n如果执行器本身起不来，再漂亮的 workflow 也是假的。\n\n---\n\n## 二、为什么 GitHub-hosted + SSH 容易变成“看似自动，实则脆弱”\n\n很多项目的第一版自动部署都会写成这样：\n\n```text\nGitHub-hosted runner\n↓\nSSH 到服务器\n↓\nscp 文件\n↓\n远程执行 restart\n```\n\n这条链不是不能用，但它天然有几个问题：\n\n### 1. 执行器和运行机分离\n\n真正跑服务的是服务器，但真正执行部署的是 GitHub 的云主机。\n\n这意味着：\n\n- 中间多一层网络和 SSH 依赖\n- 需要 repo secret 里长期保留部署私钥\n- 任何 GitHub-hosted 额度、账单、并发限制，都会直接影响 deploy\n\n### 2. YAML 容易堆成脚本坟场\n\n如果把大量 SSH 逻辑直接塞进 workflow：\n\n- 可读性会越来越差\n- 别的项目很难复用\n- 出问题时很难判断到底是 workflow、SSH、还是部署逻辑坏了\n\n### 3. 容易误把“push 成功”当成“deploy 成功”\n\n这类项目里最常见的错觉就是：\n\n```text\n我已经 push 了\n=\n线上应该已经更新\n```\n\n实际上必须拆开看：\n\n```text\npush\n↓\n是否触发 workflow\n↓\nworkflow 是否真的开始执行\n↓\n部署脚本是否成功\n↓\n服务是否成功重启\n↓\n公网是否验证通过\n```\n\n任何一步没过，都不能叫“已部署”。\n\n---\n\n## 三、为什么这次要改成 170 自托管 runner\n\n这次的正确解法，不是继续打补丁，而是把 deploy job 的执行地点直接迁到真实运行机：\n\n```text\nGitHub 只负责下发任务\n170 自己执行 checkout / deploy / restart / verify\n```\n\n这样做的直接收益：\n\n### 1. 避开 GitHub-hosted 账单门禁\n\njob 不再依赖 GitHub 的云主机额度，而是跑在你自己的服务器上。\n\n### 2. 自动部署链更短\n\n从：\n\n```text\nGitHub runner -> SSH -> 170\n```\n\n变成：\n\n```text\n170 本机 runner -> 170 本机 runtime\n```\n\n中间少了一整层“远程跳板”复杂度。\n\n### 3. 默认不再需要 repo 级 SSH 私钥\n\n因为 workflow 已经在 170 本机上跑，所以不再需要把 `TOKEN_POOL_DEPLOY_SSH_KEY` 这种部署私钥长期塞在 GitHub secrets 里。\n\n这件事很重要，因为：\n\n```text\n不需要的高权限 secret\n=\n应该删除\n```\n\n不是“留着也没事”。\n\n---\n\n## 四、正确结构：runner 负责执行，deploy 脚本负责部署\n\n这次不是只改了一个 workflow，而是把职责拆开了。\n\n### 1. workflow 只负责调度\n\n`Deploy runtime to 170` 现在做的事很简单：\n\n- 命中路径过滤后触发\n- 绑定到 `self-hosted, token-pool, production, cn-170`\n- `actions/checkout`\n- 调 `deploy/deploy-runtime-local.sh`\n\n也就是说：\n\n```text\nworkflow = 调度层\n```\n\n### 2. deploy 脚本负责 canonical 发布动作\n\n真正的发布动作收口在仓内脚本：\n\n`deploy/deploy-runtime-local.sh`\n\n它负责：\n\n- `git archive HEAD`\n- 解包到 `/srv/token-pool-gateway-prod`\n- `npm ci --omit=dev`\n- `systemctl restart token-pool-gateway-prod.service`\n- 健康检查和公网验证\n\n也就是说：\n\n```text\ndeploy 脚本 = 发布层\n```\n\n### 3. runner 安装模板负责基础设施复用\n\n为了让别的项目也能照搬，这次又额外把 runner 安装动作抽成模板：\n\n- `deploy/setup-self-hosted-runner.sh`\n- `deploy/setup-self-hosted-runner.env.example`\n\n也就是说：\n\n```text\nrunner 安装模板 = 基础设施复用层\n```\n\n这三层分开之后，整个系统会稳定很多。\n\n---\n\n## 五、旧 SSH 发布链应该怎么处理\n\n一个很容易犯的错是：\n\n```text\n新链路上线了\n↓\n旧链路还留着\n↓\n大家继续混着用\n```\n\n这会制造长期认知污染。\n\n正确做法不是“假装旧路径不存在”，而是明确降级：\n\n### 当前 Token Pool 的做法\n\n- `deploy/deploy-runtime-local.sh`：当前 production 默认发布路径\n- `deploy/deploy-runtime-170.ps1`：历史 / 应急 SSH 发布路径\n\n而且不只是 README 写一句“历史”就算了，还要在脚本自身里直接提示：\n\n```text\nemergency SSH deploy path in use\nprefer deploy-runtime-local.sh for normal production deploys\n```\n\n这样就算有人直接打开旧脚本，也会立刻看到它不是默认路径。\n\n---\n\n## 六、secret 管理的正确原则\n\n这次有一个很值钱的收尾动作：\n\n```text\n把 TOKEN_POOL_DEPLOY_SSH_KEY 从 GitHub repo secrets 删除\n```\n\n为什么要删？\n\n因为它已经不是自动部署必需项了。\n\n如果继续留着，会带来两个问题：\n\n### 1. 误导认知\n\n后来的维护者会以为：\n\n```text\n自动部署还依赖 SSH 私钥\n```\n\n实际上已经不依赖。\n\n### 2. 扩大不必要的敏感面\n\n一个 secret 只要存在，就意味着：\n\n- 它可能被误用\n- 它需要被轮换\n- 它增加了配置复杂度\n\n所以工程上更好的规则是：\n\n```text\n不再需要的 secret，应该删除，而不是保留\n```\n\n当前这套结构下，保留的只应该是：\n\n- `TOKEN_POOL_DEPLOY_VERIFY_TOKEN`\n\n它用于部署后的受保护接口验证，仍然有实际价值。\n\n---\n\n## 七、怎么判断“自动部署真的正常了”\n\n不要只看：\n\n- 本地没报错\n- YAML 看起来很漂亮\n- GitHub 页面有个绿色勾\n\n真正应该看的是这几层证据：\n\n### 1. 最新 workflow run 成功\n\n而且要确认是跑在目标 self-hosted runner 上。\n\n### 2. 服务真重启成功\n\n例如：\n\n```text\ntoken-pool-gateway-prod.service = active\n```\n\n### 3. 内部健康检查通过\n\n例如：\n\n- `http://127.0.0.1:3301/health`\n\n### 4. 公网入口验证通过\n\n例如：\n\n- `https://pool-console.tengokukk.com/api/health`\n- `https://pool-console.tengokukk.com/console-next/`\n- `https://key.tengokukk.com/openai/v1/responses`\n\n只有这些证据一起成立，才能说：\n\n```text\n自动部署正常\n```\n\n而不是“看起来好像正常”。\n\n---\n\n## 八、给以后项目复用的最小模板\n\n如果别的项目也有一台长期在线的生产机，推荐直接复用这套思路：\n\n```text\n项目 repo\n├── .github/workflows/deploy-runtime.yml\n├── deploy/deploy-runtime-local.sh\n├── deploy/setup-self-hosted-runner.sh\n└── deploy/setup-self-hosted-runner.env.example\n```\n\n最小原则只有五条：\n\n1. 有长期在线主机时，优先自托管 runner，不优先 GitHub-hosted + SSH\n2. workflow 只做调度，不在 YAML 里塞满部署细节\n3. 部署动作收口到 repo 内 canonical 脚本\n4. deploy 后必须做内部 + 公网双验证\n5. 不再需要的 deploy secret 必须删除\n\n---\n\n## 九、一句话总结\n\n这次最值钱的不是“把自动部署打通了”，而是把下面这套工程认知真正落地了：\n\n```text\n执行器在哪里\n比 YAML 写得多漂亮更重要\n```\n\n以及：\n\n```text\npush != deployed\nworkflow success != runtime success\n不再需要的 secret != 留着备用\n```\n\n如果把这三句话记住，后面很多 CI/CD 假成功、部署误判、权限污染的问题，都会少很多。",
+    "html": "<p>我给你用<strong>最直白、最接地气</strong>的方式讲清楚，你马上就能懂👇 # 1. <strong>npm run selftest:pre-commit 通过 是什么意思？</strong> 这句话翻译成人话： ### <strong>你本地电脑上，「提交前自检脚本」跑完全部通过了 ✅</strong> 它具体做了这些事： - 运行代码格式检查（lint） - 运行代码规范检查 - 运行单元测试/基础自测 - 检查有没有语法错误、格式错误、明显bug <strong>通过 = 你现在的代码可以安全 commit（提交）</strong> <strong>不通过 = 不让你提交，必须先修复错误</strong> --- # 2. <strong>CI 可以在本地跑吗？</strong> ### <strong>完全可以！而且你现在就在本地跑 CI！</strong> 你看到的： - <code>local checks</code> = <strong>本地版 CI 检查</strong> - <code>CI checks</code> = <strong>服务器版 CI 检查</strong> 它们<strong>99% 是同一套脚本</strong>，只是运行环境不一样： - 本地：你电脑 - 服务器：GitHub / GitLab 云端机器 ### 所以： <strong>你本地跑 npm run selftest:pre-commit = 你在本地提前模拟跑了一遍 CI</strong> 好处： - 不用推到云端就知道能不能过 - 提前修复，避免云端 CI 变红 - 速度快很多 --- # 3. 你现在这套结构是什么？（超级重要） 你现在是<strong>双层保护</strong>： ### 第一层（本地） <strong>git 提交前 → 自动跑 selftest → 不通过不让提交</strong> ### 第二层（云端） <strong>git push 后 → CI 自动再跑一遍 same checks → 不通过不让合并代码</strong> --- # 4. 超简总结（你只需要记这 3 句） 1. <strong>npm run selftest:pre-commit 通过</strong> = 本地提交前自检全过，可以提交代码。 2. <strong>CI 可以在本地跑</strong> = 你现在跑的就是本地版 CI，和云端逻辑一样。 3. <strong>你现在是双层防护</strong> = 本地拦一次 + CI 拦一次，保证代码不会乱提交。 --- 如果你愿意，我可以<strong>用一张图给你画出你现在的完整提交流程</strong>，让你一眼看懂整个门禁机制！</p>\n<h1 id=\"cicd-自动部署从-github-hosted-账单门禁切到-170-自托管-runner-的一套正确做法\">CI/CD 自动部署：从 GitHub-hosted 账单门禁切到 170 自托管 runner 的一套正确做法</h1>\n<h2 id=\"先说结论\">先说结论</h2>\n<p>这次最关键的认知不是“把 workflow 写出来了”，而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>自动部署是否真的可用</span></span>\n<span data-line=\"\"><span>!=</span></span>\n<span data-line=\"\"><span>仓库里有一个 GitHub Actions YAML</span></span></code></pre></figure>\n<p>真正可用的自动部署，至少要同时满足四件事：</p>\n<ol>\n<li><code>push</code> 后确实会触发 job</li>\n<li>job 确实能在真实执行机上跑起来</li>\n<li>部署脚本走的是 canonical 路径，不是临时拼装</li>\n<li>部署后有公网与内部双验证，而不是只看 workflow 绿了</li>\n</ol>\n<p>这次 Token Pool 的落地，最终收敛成了下面这条真实链路：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>开发机改代码</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>push 到 GitHub main</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>GitHub Actions workflow: .github/workflows/deploy-runtime.yml</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>170 自托管 runner: token-pool-prod-170</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>actions/checkout</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>deploy/deploy-runtime-local.sh</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>git archive HEAD -> tar -xf -> npm ci --omit=dev</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>systemctl restart token-pool-gateway-prod.service</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>内部健康检查 + 公网入口验证</span></span></code></pre></figure>\n<hr>\n<h2 id=\"一这次真正踩到的坑不是代码是执行地点\">一、这次真正踩到的坑，不是代码，是执行地点</h2>\n<p>一开始表面上看，是“已经有自动部署 workflow 了，但怎么就是不自动上线”。</p>\n<p>后来真正查出来，问题根本不在业务代码，而在执行地点：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>workflow 跑在 GitHub-hosted runner</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>GitHub 账号被账单 / spending limit 门禁卡住</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>job 连启动都启动不了</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>看起来像“自动部署坏了”</span></span></code></pre></figure>\n<p>这个阶段最容易犯的错是继续改 YAML 细节，或者继续怀疑 SSH。</p>\n<p>但只要 job 都没真的跑起来，后面所有 SSH、scp、docker、systemctl 都是伪命题。</p>\n<p>所以第一条工程原则是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>先确认 job 到底跑在哪台机器上</span></span></code></pre></figure>\n<p>如果执行器本身起不来，再漂亮的 workflow 也是假的。</p>\n<hr>\n<h2 id=\"二为什么-github-hosted--ssh-容易变成看似自动实则脆弱\">二、为什么 GitHub-hosted + SSH 容易变成“看似自动，实则脆弱”</h2>\n<p>很多项目的第一版自动部署都会写成这样：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GitHub-hosted runner</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>SSH 到服务器</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>scp 文件</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>远程执行 restart</span></span></code></pre></figure>\n<p>这条链不是不能用，但它天然有几个问题：</p>\n<h3 id=\"1-执行器和运行机分离\">1. 执行器和运行机分离</h3>\n<p>真正跑服务的是服务器，但真正执行部署的是 GitHub 的云主机。</p>\n<p>这意味着：</p>\n<ul>\n<li>中间多一层网络和 SSH 依赖</li>\n<li>需要 repo secret 里长期保留部署私钥</li>\n<li>任何 GitHub-hosted 额度、账单、并发限制，都会直接影响 deploy</li>\n</ul>\n<h3 id=\"2-yaml-容易堆成脚本坟场\">2. YAML 容易堆成脚本坟场</h3>\n<p>如果把大量 SSH 逻辑直接塞进 workflow：</p>\n<ul>\n<li>可读性会越来越差</li>\n<li>别的项目很难复用</li>\n<li>出问题时很难判断到底是 workflow、SSH、还是部署逻辑坏了</li>\n</ul>\n<h3 id=\"3-容易误把push-成功当成deploy-成功\">3. 容易误把“push 成功”当成“deploy 成功”</h3>\n<p>这类项目里最常见的错觉就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>我已经 push 了</span></span>\n<span data-line=\"\"><span>=</span></span>\n<span data-line=\"\"><span>线上应该已经更新</span></span></code></pre></figure>\n<p>实际上必须拆开看：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>push</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>是否触发 workflow</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>workflow 是否真的开始执行</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>部署脚本是否成功</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>服务是否成功重启</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>公网是否验证通过</span></span></code></pre></figure>\n<p>任何一步没过，都不能叫“已部署”。</p>\n<hr>\n<h2 id=\"三为什么这次要改成-170-自托管-runner\">三、为什么这次要改成 170 自托管 runner</h2>\n<p>这次的正确解法，不是继续打补丁，而是把 deploy job 的执行地点直接迁到真实运行机：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GitHub 只负责下发任务</span></span>\n<span data-line=\"\"><span>170 自己执行 checkout / deploy / restart / verify</span></span></code></pre></figure>\n<p>这样做的直接收益：</p>\n<h3 id=\"1-避开-github-hosted-账单门禁\">1. 避开 GitHub-hosted 账单门禁</h3>\n<p>job 不再依赖 GitHub 的云主机额度，而是跑在你自己的服务器上。</p>\n<h3 id=\"2-自动部署链更短\">2. 自动部署链更短</h3>\n<p>从：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>GitHub runner -> SSH -> 170</span></span></code></pre></figure>\n<p>变成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>170 本机 runner -> 170 本机 runtime</span></span></code></pre></figure>\n<p>中间少了一整层“远程跳板”复杂度。</p>\n<h3 id=\"3-默认不再需要-repo-级-ssh-私钥\">3. 默认不再需要 repo 级 SSH 私钥</h3>\n<p>因为 workflow 已经在 170 本机上跑，所以不再需要把 <code>TOKEN_POOL_DEPLOY_SSH_KEY</code> 这种部署私钥长期塞在 GitHub secrets 里。</p>\n<p>这件事很重要，因为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>不需要的高权限 secret</span></span>\n<span data-line=\"\"><span>=</span></span>\n<span data-line=\"\"><span>应该删除</span></span></code></pre></figure>\n<p>不是“留着也没事”。</p>\n<hr>\n<h2 id=\"四正确结构runner-负责执行deploy-脚本负责部署\">四、正确结构：runner 负责执行，deploy 脚本负责部署</h2>\n<p>这次不是只改了一个 workflow，而是把职责拆开了。</p>\n<h3 id=\"1-workflow-只负责调度\">1. workflow 只负责调度</h3>\n<p><code>Deploy runtime to 170</code> 现在做的事很简单：</p>\n<ul>\n<li>命中路径过滤后触发</li>\n<li>绑定到 <code>self-hosted, token-pool, production, cn-170</code></li>\n<li><code>actions/checkout</code></li>\n<li>调 <code>deploy/deploy-runtime-local.sh</code></li>\n</ul>\n<p>也就是说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>workflow = 调度层</span></span></code></pre></figure>\n<h3 id=\"2-deploy-脚本负责-canonical-发布动作\">2. deploy 脚本负责 canonical 发布动作</h3>\n<p>真正的发布动作收口在仓内脚本：</p>\n<p><code>deploy/deploy-runtime-local.sh</code></p>\n<p>它负责：</p>\n<ul>\n<li><code>git archive HEAD</code></li>\n<li>解包到 <code>/srv/token-pool-gateway-prod</code></li>\n<li><code>npm ci --omit=dev</code></li>\n<li><code>systemctl restart token-pool-gateway-prod.service</code></li>\n<li>健康检查和公网验证</li>\n</ul>\n<p>也就是说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>deploy 脚本 = 发布层</span></span></code></pre></figure>\n<h3 id=\"3-runner-安装模板负责基础设施复用\">3. runner 安装模板负责基础设施复用</h3>\n<p>为了让别的项目也能照搬，这次又额外把 runner 安装动作抽成模板：</p>\n<ul>\n<li><code>deploy/setup-self-hosted-runner.sh</code></li>\n<li><code>deploy/setup-self-hosted-runner.env.example</code></li>\n</ul>\n<p>也就是说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>runner 安装模板 = 基础设施复用层</span></span></code></pre></figure>\n<p>这三层分开之后，整个系统会稳定很多。</p>\n<hr>\n<h2 id=\"五旧-ssh-发布链应该怎么处理\">五、旧 SSH 发布链应该怎么处理</h2>\n<p>一个很容易犯的错是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>新链路上线了</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>旧链路还留着</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>大家继续混着用</span></span></code></pre></figure>\n<p>这会制造长期认知污染。</p>\n<p>正确做法不是“假装旧路径不存在”，而是明确降级：</p>\n<h3 id=\"当前-token-pool-的做法\">当前 Token Pool 的做法</h3>\n<ul>\n<li><code>deploy/deploy-runtime-local.sh</code>：当前 production 默认发布路径</li>\n<li><code>deploy/deploy-runtime-170.ps1</code>：历史 / 应急 SSH 发布路径</li>\n</ul>\n<p>而且不只是 README 写一句“历史”就算了，还要在脚本自身里直接提示：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>emergency SSH deploy path in use</span></span>\n<span data-line=\"\"><span>prefer deploy-runtime-local.sh for normal production deploys</span></span></code></pre></figure>\n<p>这样就算有人直接打开旧脚本，也会立刻看到它不是默认路径。</p>\n<hr>\n<h2 id=\"六secret-管理的正确原则\">六、secret 管理的正确原则</h2>\n<p>这次有一个很值钱的收尾动作：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>把 TOKEN_POOL_DEPLOY_SSH_KEY 从 GitHub repo secrets 删除</span></span></code></pre></figure>\n<p>为什么要删？</p>\n<p>因为它已经不是自动部署必需项了。</p>\n<p>如果继续留着，会带来两个问题：</p>\n<h3 id=\"1-误导认知\">1. 误导认知</h3>\n<p>后来的维护者会以为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>自动部署还依赖 SSH 私钥</span></span></code></pre></figure>\n<p>实际上已经不依赖。</p>\n<h3 id=\"2-扩大不必要的敏感面\">2. 扩大不必要的敏感面</h3>\n<p>一个 secret 只要存在，就意味着：</p>\n<ul>\n<li>它可能被误用</li>\n<li>它需要被轮换</li>\n<li>它增加了配置复杂度</li>\n</ul>\n<p>所以工程上更好的规则是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>不再需要的 secret，应该删除，而不是保留</span></span></code></pre></figure>\n<p>当前这套结构下，保留的只应该是：</p>\n<ul>\n<li><code>TOKEN_POOL_DEPLOY_VERIFY_TOKEN</code></li>\n</ul>\n<p>它用于部署后的受保护接口验证，仍然有实际价值。</p>\n<hr>\n<h2 id=\"七怎么判断自动部署真的正常了\">七、怎么判断“自动部署真的正常了”</h2>\n<p>不要只看：</p>\n<ul>\n<li>本地没报错</li>\n<li>YAML 看起来很漂亮</li>\n<li>GitHub 页面有个绿色勾</li>\n</ul>\n<p>真正应该看的是这几层证据：</p>\n<h3 id=\"1-最新-workflow-run-成功\">1. 最新 workflow run 成功</h3>\n<p>而且要确认是跑在目标 self-hosted runner 上。</p>\n<h3 id=\"2-服务真重启成功\">2. 服务真重启成功</h3>\n<p>例如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>token-pool-gateway-prod.service = active</span></span></code></pre></figure>\n<h3 id=\"3-内部健康检查通过\">3. 内部健康检查通过</h3>\n<p>例如：</p>\n<ul>\n<li><code>http://127.0.0.1:3301/health</code></li>\n</ul>\n<h3 id=\"4-公网入口验证通过\">4. 公网入口验证通过</h3>\n<p>例如：</p>\n<ul>\n<li><code>https://pool-console.tengokukk.com/api/health</code></li>\n<li><code>https://pool-console.tengokukk.com/console-next/</code></li>\n<li><code>https://key.tengokukk.com/openai/v1/responses</code></li>\n</ul>\n<p>只有这些证据一起成立，才能说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>自动部署正常</span></span></code></pre></figure>\n<p>而不是“看起来好像正常”。</p>\n<hr>\n<h2 id=\"八给以后项目复用的最小模板\">八、给以后项目复用的最小模板</h2>\n<p>如果别的项目也有一台长期在线的生产机，推荐直接复用这套思路：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>项目 repo</span></span>\n<span data-line=\"\"><span>├── .github/workflows/deploy-runtime.yml</span></span>\n<span data-line=\"\"><span>├── deploy/deploy-runtime-local.sh</span></span>\n<span data-line=\"\"><span>├── deploy/setup-self-hosted-runner.sh</span></span>\n<span data-line=\"\"><span>└── deploy/setup-self-hosted-runner.env.example</span></span></code></pre></figure>\n<p>最小原则只有五条：</p>\n<ol>\n<li>有长期在线主机时，优先自托管 runner，不优先 GitHub-hosted + SSH</li>\n<li>workflow 只做调度，不在 YAML 里塞满部署细节</li>\n<li>部署动作收口到 repo 内 canonical 脚本</li>\n<li>deploy 后必须做内部 + 公网双验证</li>\n<li>不再需要的 deploy secret 必须删除</li>\n</ol>\n<hr>\n<h2 id=\"九一句话总结\">九、一句话总结</h2>\n<p>这次最值钱的不是“把自动部署打通了”，而是把下面这套工程认知真正落地了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>执行器在哪里</span></span>\n<span data-line=\"\"><span>比 YAML 写得多漂亮更重要</span></span></code></pre></figure>\n<p>以及：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>push != deployed</span></span>\n<span data-line=\"\"><span>workflow success != runtime success</span></span>\n<span data-line=\"\"><span>不再需要的 secret != 留着备用</span></span></code></pre></figure>\n<p>如果把这三句话记住，后面很多 CI/CD 假成功、部署误判、权限污染的问题，都会少很多。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "ci-cd-自动部署-从-github-hosted-账单门禁切到-170-自托管-runner-的一套正确做法",
+        "text": "CI/CD 自动部署：从 GitHub-hosted 账单门禁切到 170 自托管 runner 的一套正确做法"
+      },
+      {
+        "depth": 2,
+        "slug": "先说结论",
+        "text": "先说结论"
+      },
+      {
+        "depth": 2,
+        "slug": "一-这次真正踩到的坑-不是代码-是执行地点",
+        "text": "一、这次真正踩到的坑，不是代码，是执行地点"
+      },
+      {
+        "depth": 2,
+        "slug": "二-为什么-github-hosted-ssh-容易变成-看似自动-实则脆弱",
+        "text": "二、为什么 GitHub-hosted + SSH 容易变成“看似自动，实则脆弱”"
+      },
+      {
+        "depth": 3,
+        "slug": "1-执行器和运行机分离",
+        "text": "1. 执行器和运行机分离"
+      },
+      {
+        "depth": 3,
+        "slug": "2-yaml-容易堆成脚本坟场",
+        "text": "2. YAML 容易堆成脚本坟场"
+      },
+      {
+        "depth": 3,
+        "slug": "3-容易误把-push-成功-当成-deploy-成功",
+        "text": "3. 容易误把“push 成功”当成“deploy 成功”"
+      },
+      {
+        "depth": 2,
+        "slug": "三-为什么这次要改成-170-自托管-runner",
+        "text": "三、为什么这次要改成 170 自托管 runner"
+      },
+      {
+        "depth": 3,
+        "slug": "1-避开-github-hosted-账单门禁",
+        "text": "1. 避开 GitHub-hosted 账单门禁"
+      },
+      {
+        "depth": 3,
+        "slug": "2-自动部署链更短",
+        "text": "2. 自动部署链更短"
+      },
+      {
+        "depth": 3,
+        "slug": "3-默认不再需要-repo-级-ssh-私钥",
+        "text": "3. 默认不再需要 repo 级 SSH 私钥"
+      },
+      {
+        "depth": 2,
+        "slug": "四-正确结构-runner-负责执行-deploy-脚本负责部署",
+        "text": "四、正确结构：runner 负责执行，deploy 脚本负责部署"
+      },
+      {
+        "depth": 3,
+        "slug": "1-workflow-只负责调度",
+        "text": "1. workflow 只负责调度"
+      },
+      {
+        "depth": 3,
+        "slug": "2-deploy-脚本负责-canonical-发布动作",
+        "text": "2. deploy 脚本负责 canonical 发布动作"
+      },
+      {
+        "depth": 3,
+        "slug": "3-runner-安装模板负责基础设施复用",
+        "text": "3. runner 安装模板负责基础设施复用"
+      },
+      {
+        "depth": 2,
+        "slug": "五-旧-ssh-发布链应该怎么处理",
+        "text": "五、旧 SSH 发布链应该怎么处理"
+      },
+      {
+        "depth": 3,
+        "slug": "当前-token-pool-的做法",
+        "text": "当前 Token Pool 的做法"
+      },
+      {
+        "depth": 2,
+        "slug": "六-secret-管理的正确原则",
+        "text": "六、secret 管理的正确原则"
+      },
+      {
+        "depth": 3,
+        "slug": "1-误导认知",
+        "text": "1. 误导认知"
+      },
+      {
+        "depth": 3,
+        "slug": "2-扩大不必要的敏感面",
+        "text": "2. 扩大不必要的敏感面"
+      },
+      {
+        "depth": 2,
+        "slug": "七-怎么判断-自动部署真的正常了",
+        "text": "七、怎么判断“自动部署真的正常了”"
+      },
+      {
+        "depth": 3,
+        "slug": "1-最新-workflow-run-成功",
+        "text": "1. 最新 workflow run 成功"
+      },
+      {
+        "depth": 3,
+        "slug": "2-服务真重启成功",
+        "text": "2. 服务真重启成功"
+      },
+      {
+        "depth": 3,
+        "slug": "3-内部健康检查通过",
+        "text": "3. 内部健康检查通过"
+      },
+      {
+        "depth": 3,
+        "slug": "4-公网入口验证通过",
+        "text": "4. 公网入口验证通过"
+      },
+      {
+        "depth": 2,
+        "slug": "八-给以后项目复用的最小模板",
+        "text": "八、给以后项目复用的最小模板"
+      },
+      {
+        "depth": 2,
+        "slug": "九-一句话总结",
+        "text": "九、一句话总结"
+      }
+    ],
+    "detailPath": "articles/md_5982899c63b9.json"
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_f0340fa6cc06",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%8B%E5%86%8C%E4%BC%B4%E9%9A%8F%E4%BB%AA%E8%A1%A8%E7%9B%98.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/服务器手册伴随仪表盘.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/服务器手册伴随仪表盘.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%8B%E5%86%8C%E4%BC%B4%E9%9A%8F%E4%BB%AA%E8%A1%A8%E7%9B%98.md",
+    "slug": "agent-服务器手册伴随仪表盘",
+    "title": "服务器手册伴随仪表盘",
+    "summary": "服务器手册伴随仪表盘 [!abstract] 这页是干什么的 主手册真源：Server Operation & Maintenance Manual 本页职责：把服务器体系相关内容按服务器、按业务模块、按真源入口组织成一个浏览层 交互视图：依赖已启用的 Bases 核心插件；主手册正文本身不再为“好...",
+    "description": "服务器手册伴随仪表盘 [!abstract] 这页是干什么的 主手册真源：Server Operation & Maintenance Manual 本页职责：把服务器体系相关内容按服务器、按业务模块、按真源入口组织成一个浏览层 交互视图：依赖已启用的 Bases 核心插件；主手册正文本身不再为“好...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "类-系统运维",
+      "项目-多服务器智能体",
+      "形态-仪表盘",
+      "agent",
+      "server-operation-maintenance-manual",
+      "atramenti-console-文档汇编",
+      "mcp-清单总表",
+      "记忆体系分工与蒸馏方案-2026-04-19",
+      "服务器手册伴随视图"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags",
+        "obsidian.wikilinks"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [
+        "类-系统运维",
+        "项目-多服务器智能体",
+        "形态-仪表盘"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/服务器手册伴随仪表盘.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/服务器手册伴随仪表盘.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%8B%E5%86%8C%E4%BC%B4%E9%9A%8F%E4%BB%AA%E8%A1%A8%E7%9B%98.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "多服务器智能体",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [
+        "Server Operation & Maintenance Manual",
+        "Atramenti-Console 文档汇编",
+        "MCP 清单总表",
+        "记忆体系分工与蒸馏方案（2026-04-19）",
+        "服务器手册伴随视图.base"
+      ],
+      "backlinks": [],
+      "assets": [
+        "服务器手册伴随视图.base"
+      ]
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "类 系统运维",
+        "项目 多服务器智能体",
+        "形态 仪表盘",
+        "SERVER OPERATION MAINTENANCE MANUAL",
+        "ATRAMENTI CONSOLE 文档汇编"
+      ],
+      "subtitle": "服务器手册伴随仪表盘 [!abstract] 这页是干什么的 主手册真源：Server Operation & Maintenance Manual 本页职责：把服务器体系相关内容按服务器、按业务模块、按真源入口组织成一个浏览层 交互视图：依赖已启用的 Bases 核心插件；主手册正文本身不再为“好..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# 服务器手册伴随仪表盘\n\n> [!abstract] 这页是干什么的\n> - 主手册真源：[Server Operation & Maintenance Manual](#server-operation-maintenance-manual)\n> - 本页职责：把服务器体系相关内容按服务器、按业务模块、按真源入口组织成一个浏览层\n> - 交互视图：依赖已启用的 Bases 核心插件；主手册正文本身不再为“好看”承担额外结构复杂度\n> - 约束：这里不复制服务器事实，不替代主手册与 repo 真源，只做入口和聚合\n\n## 一、最常用入口\n\n### 1. 主手册关键章节\n\n- [服务器配置映射表 / 真源表](#server-operation-maintenance-manual-十一-服务器配置映射表-真源表)\n- [实时在线状态复核](#server-operation-maintenance-manual-九-2026-04-19-实时在线状态复核)\n- [当前服务器角色图](#server-operation-maintenance-manual-十-当前服务器角色图-2026-04-19-复核版)\n- [前端 / 域名清单](#server-operation-maintenance-manual-当前已部署网页前端-域名清单)\n- [SSH 与密钥体系整理](#server-operation-maintenance-manual-十六-ssh-与密钥体系整理)\n- [systemd 与服务托管整理](#server-operation-maintenance-manual-十七-systemd-与服务托管整理)\n- [MySQL / database-api 接入记录](#server-operation-maintenance-manual-十二-mysql-database-api-接入记录)\n\n### 2. 同组文档\n\n- [Atramenti-Console 文档汇编](#atramenti-console-文档汇编)\n- [MCP 清单总表](#mcp-清单总表)\n- [记忆体系分工与蒸馏方案（2026-04-19）](#记忆体系分工与蒸馏方案-2026-04-19)\n\n## 二、按服务器浏览\n\n> [!tip] 124 / 控制机\n> - [机器角色](#server-operation-maintenance-manual-4-1-控制机-124-220-233)\n> - [机器详细档案](#server-operation-maintenance-manual-1-主控制机-124-220-233)\n> - [当前调度路由真相](#server-operation-maintenance-manual-1-1-当前-control-plane-调度路由真相)\n> - [对外网页入口](#server-operation-maintenance-manual-当前已部署网页前端-域名清单)\n\n> [!tip] 121 / 主运行机\n> - [机器角色](#server-operation-maintenance-manual-4-3-备用执行机-121-196-202)\n> - [机器详细档案](#server-operation-maintenance-manual-2-主运行机-121-196-202)\n> - [推荐职责](#server-operation-maintenance-manual-2-执行层-121-196-202)\n\n> [!tip] 111 / 补位实验机\n> - [机器角色](#server-operation-maintenance-manual-4-4-补位机-111-228-6)\n> - [机器详细档案](#server-operation-maintenance-manual-4-备用实验机-111-228-6)\n> - [推荐职责](#server-operation-maintenance-manual-4-备用层-111-228-6)\n\n> [!tip] 221 / 弹性算力机\n> - [机器详细档案](#server-operation-maintenance-manual-3-弹性算力机-221-5-60-2-10043-smoothcloud-wummlp)\n> - [推荐职责](#server-operation-maintenance-manual-3-弹性层-221-5-60-2-10043)\n> - [网页入口与平台域名](#server-operation-maintenance-manual-当前已部署网页前端-域名清单)\n\n> [!tip] 140 / 当前对话服务器\n> - [机器详细档案](#server-operation-maintenance-manual-5-当前对话服务器-140-143-229)\n> - [真源映射状态](#server-operation-maintenance-manual-十一-服务器配置映射表-真源表)\n\n> [!tip] Windows 工作站\n> - [机器角色](#server-operation-maintenance-manual-4-2-主执行机-windows-本机)\n> - [工作站档案](#server-operation-maintenance-manual-6-windows-工作站-neverletmego)\n> - [本机 SOP](#server-operation-maintenance-manual-13-1-启动前检查)\n\n## 三、按业务模块浏览\n\n### 1. 控制面 / 路由 / 部署\n\n- [控制机 API](#server-operation-maintenance-manual-12-1-推荐接口清单)\n- [当前角色图](#server-operation-maintenance-manual-十-当前服务器角色图-2026-04-19-复核版)\n- [配置真源映射](#server-operation-maintenance-manual-十一-服务器配置映射表-真源表)\n\n### 2. 前端 / 域名 / 网页入口\n\n- [前端 / 域名清单](#server-operation-maintenance-manual-当前已部署网页前端-域名清单)\n- [按服务器分组](#server-operation-maintenance-manual-d-双视图一-按服务器分组)\n- [按业务模块分组](#server-operation-maintenance-manual-e-双视图二-按业务模块分组)\n- [前端入口 ↔ API 前缀 ↔ 真源文件](#server-operation-maintenance-manual-f-前端入口-api-前缀-真源文件对照表)\n\n### 3. SSH / 服务托管 / 数据底座\n\n- [SSH 与密钥体系](#server-operation-maintenance-manual-十六-ssh-与密钥体系整理)\n- [systemd 与服务托管](#server-operation-maintenance-manual-十七-systemd-与服务托管整理)\n- [MySQL / database-api](#server-operation-maintenance-manual-十二-mysql-database-api-接入记录)\n\n## 四、Bases 伴随视图\n\n> [!info] 使用说明\n> - 下面三块都是 `[服务器手册伴随视图.base](#服务器手册伴随视图)` 的嵌入视图\n> - 如果你只想快速扫文档关系，用第一块\n> - 如果你想看整个 `docs/agent` 的文档面貌，用第二块\n> - 如果你想按“最近动过什么”看，用第三块\n\n### 1. 服务器手册生态\n\n<!-- Runtime embed pending migration: agent/服务器手册伴随仪表盘.md -> 服务器手册伴随视图.base#服务器手册生态 -->\n\n### 2. docs-agent 总览\n\n<!-- Runtime embed pending migration: agent/服务器手册伴随仪表盘.md -> 服务器手册伴随视图.base#docs-agent 总览 -->\n\n### 3. 最近更新\n\n<!-- Runtime embed pending migration: agent/服务器手册伴随仪表盘.md -> 服务器手册伴随视图.base#最近更新 -->\n\n## 五、Dataview 查询层\n\n> [!info] 使用说明\n> - 这一层依赖刚启用的 `Dataview` 社区插件\n> - 它只服务于仪表盘页，不反向侵入主手册正文\n> - `Bases` 更适合交互浏览，`Dataview` 更适合做“快速筛选 / 最近变更 / 文档面貌”的查询面板\n\n### 1. 服务器手册生态快速表\n\n```dataview\nTABLE file.link AS 文档, type AS 类型, updated AS 手册更新, project AS 项目\nFROM \"docs/agent\"\nWHERE file.name != \"plan\"\n  AND file.name != \"中转与账号配置（敏感）\"\n  AND (\n    project = \"多服务器智能体\"\n    OR file.name = \"服务器手册伴随仪表盘\"\n    OR file.name = \"MCP 清单总表\"\n    OR file.name = \"Atramenti-Console 文档汇编\"\n  )\nSORT file.mtime DESC\n```\n\n### 2. docs-agent 最近更新文档\n\n```dataview\nTABLE file.link AS 文档, type AS 类型, file.mtime AS 文件修改时间\nFROM \"docs/agent\"\nWHERE file.name != \"plan\"\n  AND file.name != \"中转与账号配置（敏感）\"\nSORT file.mtime DESC\nLIMIT 12\n```\n\n### 3. 多服务器智能体文档按类型聚合\n\n```dataview\nTABLE WITHOUT ID type AS 类型, rows.file.link AS 文档\nFROM \"docs/agent\"\nWHERE file.name != \"plan\"\n  AND file.name != \"中转与账号配置（敏感）\"\n  AND project = \"多服务器智能体\"\nGROUP BY type\nSORT type ASC\n```\n\n## 六、repo 真源入口速查\n\n> [!note] 这里列的是“主手册经常引用、但位于 vault 外”的 repo 真源入口。\n> 在 Obsidian 里它们主要作为路径速查，不承担新的内容真源职责。\n\n| 类别 | repo 真源入口 | 作用 |\n| --- | --- | --- |\n| 节点静态注册 | `control-plane/registry/servers.json` | 服务器静态注册与补充字段 |\n| 部署目标 | `control-plane/policy/deploy-targets.json` | 正式 deploy target 定义 |\n| control-plane 实际消费入口 | `shared/control-plane.js` | 代码层读取与汇总逻辑 |\n| 部署脚本采用的服务名 / 健康检查值 | `codex/mcps/deploy-center/scripts/deploy-openclaw-dev.ps1` | 部署脚本优先级与默认值 |\n| 运行态审计记录 | `codex/_artifacts/server-live-status-20260419.md` | 同轮运行态事实与审计结果 |\n\n## 七、后续增强位\n\n> [!todo] 如果后面要继续增强\n> - 现在已经有了 Dataview 查询层；后续若要继续增强，优先补“缺失字段 / 待同步清单 / 真源缺口”这类查询块\n> - 若手册继续扩章，优先在这里补导航，不要把主手册重新堆回大段 HTML 卡片\n> - 若 repo 真源入口再增加，优先补本页和主手册的“真源表”，而不是另建平行索引页",
+    "html": "<h1 id=\"服务器手册伴随仪表盘\">服务器手册伴随仪表盘</h1>\n<aside class=\"prose-callout prose-callout--abstract\" data-callout=\"abstract\"><p class=\"prose-callout__title\">这页是干什么的</p>\n\n<ul>\n<li>主手册真源：<a href=\"#server-operation-maintenance-manual\">Server Operation &#x26; Maintenance Manual</a></li>\n<li>本页职责：把服务器体系相关内容按服务器、按业务模块、按真源入口组织成一个浏览层</li>\n<li>交互视图：依赖已启用的 Bases 核心插件；主手册正文本身不再为“好看”承担额外结构复杂度</li>\n<li>约束：这里不复制服务器事实，不替代主手册与 repo 真源，只做入口和聚合</li>\n</ul>\n</aside>\n<h2 id=\"一最常用入口\">一、最常用入口</h2>\n<h3 id=\"1-主手册关键章节\">1. 主手册关键章节</h3>\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E4%B8%80-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%98%A0%E5%B0%84%E8%A1%A8-%E7%9C%9F%E6%BA%90%E8%A1%A8\">服务器配置映射表 / 真源表</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E4%B9%9D-2026-04-19-%E5%AE%9E%E6%97%B6%E5%9C%A8%E7%BA%BF%E7%8A%B6%E6%80%81%E5%A4%8D%E6%A0%B8\">实时在线状态复核</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81-%E5%BD%93%E5%89%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%A7%92%E8%89%B2%E5%9B%BE-2026-04-19-%E5%A4%8D%E6%A0%B8%E7%89%88\">当前服务器角色图</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%BD%93%E5%89%8D%E5%B7%B2%E9%83%A8%E7%BD%B2%E7%BD%91%E9%A1%B5%E5%89%8D%E7%AB%AF-%E5%9F%9F%E5%90%8D%E6%B8%85%E5%8D%95\">前端 / 域名清单</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E5%85%AD-ssh-%E4%B8%8E%E5%AF%86%E9%92%A5%E4%BD%93%E7%B3%BB%E6%95%B4%E7%90%86\">SSH 与密钥体系整理</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E4%B8%83-systemd-%E4%B8%8E%E6%9C%8D%E5%8A%A1%E6%89%98%E7%AE%A1%E6%95%B4%E7%90%86\">systemd 与服务托管整理</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E4%BA%8C-mysql-database-api-%E6%8E%A5%E5%85%A5%E8%AE%B0%E5%BD%95\">MySQL / database-api 接入记录</a></li>\n</ul>\n<h3 id=\"2-同组文档\">2. 同组文档</h3>\n<ul>\n<li><a href=\"#atramenti-console-%E6%96%87%E6%A1%A3%E6%B1%87%E7%BC%96\">Atramenti-Console 文档汇编</a></li>\n<li><a href=\"#mcp-%E6%B8%85%E5%8D%95%E6%80%BB%E8%A1%A8\">MCP 清单总表</a></li>\n<li><a href=\"#%E8%AE%B0%E5%BF%86%E4%BD%93%E7%B3%BB%E5%88%86%E5%B7%A5%E4%B8%8E%E8%92%B8%E9%A6%8F%E6%96%B9%E6%A1%88-2026-04-19\">记忆体系分工与蒸馏方案（2026-04-19）</a></li>\n</ul>\n<h2 id=\"二按服务器浏览\">二、按服务器浏览</h2>\n<aside class=\"prose-callout prose-callout--tip\" data-callout=\"tip\"><p class=\"prose-callout__title\">124 / 控制机</p>\n\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-4-1-%E6%8E%A7%E5%88%B6%E6%9C%BA-124-220-233\">机器角色</a></li>\n<li><a href=\"#server-operation-maintenance-manual-1-%E4%B8%BB%E6%8E%A7%E5%88%B6%E6%9C%BA-124-220-233\">机器详细档案</a></li>\n<li><a href=\"#server-operation-maintenance-manual-1-1-%E5%BD%93%E5%89%8D-control-plane-%E8%B0%83%E5%BA%A6%E8%B7%AF%E7%94%B1%E7%9C%9F%E7%9B%B8\">当前调度路由真相</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%BD%93%E5%89%8D%E5%B7%B2%E9%83%A8%E7%BD%B2%E7%BD%91%E9%A1%B5%E5%89%8D%E7%AB%AF-%E5%9F%9F%E5%90%8D%E6%B8%85%E5%8D%95\">对外网页入口</a></li>\n</ul>\n</aside>\n<aside class=\"prose-callout prose-callout--tip\" data-callout=\"tip\"><p class=\"prose-callout__title\">121 / 主运行机</p>\n\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-4-3-%E5%A4%87%E7%94%A8%E6%89%A7%E8%A1%8C%E6%9C%BA-121-196-202\">机器角色</a></li>\n<li><a href=\"#server-operation-maintenance-manual-2-%E4%B8%BB%E8%BF%90%E8%A1%8C%E6%9C%BA-121-196-202\">机器详细档案</a></li>\n<li><a href=\"#server-operation-maintenance-manual-2-%E6%89%A7%E8%A1%8C%E5%B1%82-121-196-202\">推荐职责</a></li>\n</ul>\n</aside>\n<aside class=\"prose-callout prose-callout--tip\" data-callout=\"tip\"><p class=\"prose-callout__title\">111 / 补位实验机</p>\n\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-4-4-%E8%A1%A5%E4%BD%8D%E6%9C%BA-111-228-6\">机器角色</a></li>\n<li><a href=\"#server-operation-maintenance-manual-4-%E5%A4%87%E7%94%A8%E5%AE%9E%E9%AA%8C%E6%9C%BA-111-228-6\">机器详细档案</a></li>\n<li><a href=\"#server-operation-maintenance-manual-4-%E5%A4%87%E7%94%A8%E5%B1%82-111-228-6\">推荐职责</a></li>\n</ul>\n</aside>\n<aside class=\"prose-callout prose-callout--tip\" data-callout=\"tip\"><p class=\"prose-callout__title\">221 / 弹性算力机</p>\n\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-3-%E5%BC%B9%E6%80%A7%E7%AE%97%E5%8A%9B%E6%9C%BA-221-5-60-2-10043-smoothcloud-wummlp\">机器详细档案</a></li>\n<li><a href=\"#server-operation-maintenance-manual-3-%E5%BC%B9%E6%80%A7%E5%B1%82-221-5-60-2-10043\">推荐职责</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%BD%93%E5%89%8D%E5%B7%B2%E9%83%A8%E7%BD%B2%E7%BD%91%E9%A1%B5%E5%89%8D%E7%AB%AF-%E5%9F%9F%E5%90%8D%E6%B8%85%E5%8D%95\">网页入口与平台域名</a></li>\n</ul>\n</aside>\n<aside class=\"prose-callout prose-callout--tip\" data-callout=\"tip\"><p class=\"prose-callout__title\">140 / 当前对话服务器</p>\n\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-5-%E5%BD%93%E5%89%8D%E5%AF%B9%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%99%A8-140-143-229\">机器详细档案</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E4%B8%80-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%98%A0%E5%B0%84%E8%A1%A8-%E7%9C%9F%E6%BA%90%E8%A1%A8\">真源映射状态</a></li>\n</ul>\n</aside>\n<aside class=\"prose-callout prose-callout--tip\" data-callout=\"tip\"><p class=\"prose-callout__title\">Windows 工作站</p>\n\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-4-2-%E4%B8%BB%E6%89%A7%E8%A1%8C%E6%9C%BA-windows-%E6%9C%AC%E6%9C%BA\">机器角色</a></li>\n<li><a href=\"#server-operation-maintenance-manual-6-windows-%E5%B7%A5%E4%BD%9C%E7%AB%99-neverletmego\">工作站档案</a></li>\n<li><a href=\"#server-operation-maintenance-manual-13-1-%E5%90%AF%E5%8A%A8%E5%89%8D%E6%A3%80%E6%9F%A5\">本机 SOP</a></li>\n</ul>\n</aside>\n<h2 id=\"三按业务模块浏览\">三、按业务模块浏览</h2>\n<h3 id=\"1-控制面--路由--部署\">1. 控制面 / 路由 / 部署</h3>\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-12-1-%E6%8E%A8%E8%8D%90%E6%8E%A5%E5%8F%A3%E6%B8%85%E5%8D%95\">控制机 API</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81-%E5%BD%93%E5%89%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%A7%92%E8%89%B2%E5%9B%BE-2026-04-19-%E5%A4%8D%E6%A0%B8%E7%89%88\">当前角色图</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E4%B8%80-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%98%A0%E5%B0%84%E8%A1%A8-%E7%9C%9F%E6%BA%90%E8%A1%A8\">配置真源映射</a></li>\n</ul>\n<h3 id=\"2-前端--域名--网页入口\">2. 前端 / 域名 / 网页入口</h3>\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-%E5%BD%93%E5%89%8D%E5%B7%B2%E9%83%A8%E7%BD%B2%E7%BD%91%E9%A1%B5%E5%89%8D%E7%AB%AF-%E5%9F%9F%E5%90%8D%E6%B8%85%E5%8D%95\">前端 / 域名清单</a></li>\n<li><a href=\"#server-operation-maintenance-manual-d-%E5%8F%8C%E8%A7%86%E5%9B%BE%E4%B8%80-%E6%8C%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%88%86%E7%BB%84\">按服务器分组</a></li>\n<li><a href=\"#server-operation-maintenance-manual-e-%E5%8F%8C%E8%A7%86%E5%9B%BE%E4%BA%8C-%E6%8C%89%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9D%97%E5%88%86%E7%BB%84\">按业务模块分组</a></li>\n<li><a href=\"#server-operation-maintenance-manual-f-%E5%89%8D%E7%AB%AF%E5%85%A5%E5%8F%A3-api-%E5%89%8D%E7%BC%80-%E7%9C%9F%E6%BA%90%E6%96%87%E4%BB%B6%E5%AF%B9%E7%85%A7%E8%A1%A8\">前端入口 ↔ API 前缀 ↔ 真源文件</a></li>\n</ul>\n<h3 id=\"3-ssh--服务托管--数据底座\">3. SSH / 服务托管 / 数据底座</h3>\n<ul>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E5%85%AD-ssh-%E4%B8%8E%E5%AF%86%E9%92%A5%E4%BD%93%E7%B3%BB%E6%95%B4%E7%90%86\">SSH 与密钥体系</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E4%B8%83-systemd-%E4%B8%8E%E6%9C%8D%E5%8A%A1%E6%89%98%E7%AE%A1%E6%95%B4%E7%90%86\">systemd 与服务托管</a></li>\n<li><a href=\"#server-operation-maintenance-manual-%E5%8D%81%E4%BA%8C-mysql-database-api-%E6%8E%A5%E5%85%A5%E8%AE%B0%E5%BD%95\">MySQL / database-api</a></li>\n</ul>\n<h2 id=\"四bases-伴随视图\">四、Bases 伴随视图</h2>\n<aside class=\"prose-callout prose-callout--info\" data-callout=\"info\"><p class=\"prose-callout__title\">使用说明</p>\n\n<ul>\n<li>下面三块都是 <code>[服务器手册伴随视图.base](#服务器手册伴随视图)</code> 的嵌入视图</li>\n<li>如果你只想快速扫文档关系，用第一块</li>\n<li>如果你想看整个 <code>docs/agent</code> 的文档面貌，用第二块</li>\n<li>如果你想按“最近动过什么”看，用第三块</li>\n</ul>\n</aside>\n<h3 id=\"1-服务器手册生态\">1. 服务器手册生态</h3>\n<h3 id=\"2-docs-agent-总览\">2. docs-agent 总览</h3>\n<h3 id=\"3-最近更新\">3. 最近更新</h3>\n<h2 id=\"五dataview-查询层\">五、Dataview 查询层</h2>\n<aside class=\"prose-callout prose-callout--info\" data-callout=\"info\"><p class=\"prose-callout__title\">使用说明</p>\n\n<ul>\n<li>这一层依赖刚启用的 <code>Dataview</code> 社区插件</li>\n<li>它只服务于仪表盘页，不反向侵入主手册正文</li>\n<li><code>Bases</code> 更适合交互浏览，<code>Dataview</code> 更适合做“快速筛选 / 最近变更 / 文档面貌”的查询面板</li>\n</ul>\n</aside>\n<h3 id=\"1-服务器手册生态快速表\">1. 服务器手册生态快速表</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"dataview\" data-theme=\"github-dark\"><code data-language=\"dataview\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>TABLE file.link AS 文档, type AS 类型, updated AS 手册更新, project AS 项目</span></span>\n<span data-line=\"\"><span>FROM \"docs/agent\"</span></span>\n<span data-line=\"\"><span>WHERE file.name != \"plan\"</span></span>\n<span data-line=\"\"><span>  AND file.name != \"中转与账号配置（敏感）\"</span></span>\n<span data-line=\"\"><span>  AND (</span></span>\n<span data-line=\"\"><span>    project = \"多服务器智能体\"</span></span>\n<span data-line=\"\"><span>    OR file.name = \"服务器手册伴随仪表盘\"</span></span>\n<span data-line=\"\"><span>    OR file.name = \"MCP 清单总表\"</span></span>\n<span data-line=\"\"><span>    OR file.name = \"Atramenti-Console 文档汇编\"</span></span>\n<span data-line=\"\"><span>  )</span></span>\n<span data-line=\"\"><span>SORT file.mtime DESC</span></span></code></pre></figure>\n<h3 id=\"2-docs-agent-最近更新文档\">2. docs-agent 最近更新文档</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"dataview\" data-theme=\"github-dark\"><code data-language=\"dataview\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>TABLE file.link AS 文档, type AS 类型, file.mtime AS 文件修改时间</span></span>\n<span data-line=\"\"><span>FROM \"docs/agent\"</span></span>\n<span data-line=\"\"><span>WHERE file.name != \"plan\"</span></span>\n<span data-line=\"\"><span>  AND file.name != \"中转与账号配置（敏感）\"</span></span>\n<span data-line=\"\"><span>SORT file.mtime DESC</span></span>\n<span data-line=\"\"><span>LIMIT 12</span></span></code></pre></figure>\n<h3 id=\"3-多服务器智能体文档按类型聚合\">3. 多服务器智能体文档按类型聚合</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"dataview\" data-theme=\"github-dark\"><code data-language=\"dataview\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>TABLE WITHOUT ID type AS 类型, rows.file.link AS 文档</span></span>\n<span data-line=\"\"><span>FROM \"docs/agent\"</span></span>\n<span data-line=\"\"><span>WHERE file.name != \"plan\"</span></span>\n<span data-line=\"\"><span>  AND file.name != \"中转与账号配置（敏感）\"</span></span>\n<span data-line=\"\"><span>  AND project = \"多服务器智能体\"</span></span>\n<span data-line=\"\"><span>GROUP BY type</span></span>\n<span data-line=\"\"><span>SORT type ASC</span></span></code></pre></figure>\n<h2 id=\"六repo-真源入口速查\">六、repo 真源入口速查</h2>\n<blockquote>\n<p>[!note] 这里列的是“主手册经常引用、但位于 vault 外”的 repo 真源入口。\n在 Obsidian 里它们主要作为路径速查，不承担新的内容真源职责。</p>\n</blockquote>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>类别</th>\n<th>repo 真源入口</th>\n<th>作用</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>节点静态注册</td>\n<td><code>control-plane/registry/servers.json</code></td>\n<td>服务器静态注册与补充字段</td>\n</tr>\n<tr>\n<td>部署目标</td>\n<td><code>control-plane/policy/deploy-targets.json</code></td>\n<td>正式 deploy target 定义</td>\n</tr>\n<tr>\n<td>control-plane 实际消费入口</td>\n<td><code>shared/control-plane.js</code></td>\n<td>代码层读取与汇总逻辑</td>\n</tr>\n<tr>\n<td>部署脚本采用的服务名 / 健康检查值</td>\n<td><code>codex/mcps/deploy-center/scripts/deploy-openclaw-dev.ps1</code></td>\n<td>部署脚本优先级与默认值</td>\n</tr>\n<tr>\n<td>运行态审计记录</td>\n<td><code>codex/_artifacts/server-live-status-20260419.md</code></td>\n<td>同轮运行态事实与审计结果</td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"七后续增强位\">七、后续增强位</h2>\n<aside class=\"prose-callout prose-callout--todo\" data-callout=\"todo\"><p class=\"prose-callout__title\">如果后面要继续增强</p>\n\n<ul>\n<li>现在已经有了 Dataview 查询层；后续若要继续增强，优先补“缺失字段 / 待同步清单 / 真源缺口”这类查询块</li>\n<li>若手册继续扩章，优先在这里补导航，不要把主手册重新堆回大段 HTML 卡片</li>\n<li>若 repo 真源入口再增加，优先补本页和主手册的“真源表”，而不是另建平行索引页</li>\n</ul>\n</aside>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "服务器手册伴随仪表盘",
+        "text": "服务器手册伴随仪表盘"
+      },
+      {
+        "depth": 2,
+        "slug": "一-最常用入口",
+        "text": "一、最常用入口"
+      },
+      {
+        "depth": 3,
+        "slug": "1-主手册关键章节",
+        "text": "1. 主手册关键章节"
+      },
+      {
+        "depth": 3,
+        "slug": "2-同组文档",
+        "text": "2. 同组文档"
+      },
+      {
+        "depth": 2,
+        "slug": "二-按服务器浏览",
+        "text": "二、按服务器浏览"
+      },
+      {
+        "depth": 2,
+        "slug": "三-按业务模块浏览",
+        "text": "三、按业务模块浏览"
+      },
+      {
+        "depth": 3,
+        "slug": "1-控制面-路由-部署",
+        "text": "1. 控制面 / 路由 / 部署"
+      },
+      {
+        "depth": 3,
+        "slug": "2-前端-域名-网页入口",
+        "text": "2. 前端 / 域名 / 网页入口"
+      },
+      {
+        "depth": 3,
+        "slug": "3-ssh-服务托管-数据底座",
+        "text": "3. SSH / 服务托管 / 数据底座"
+      },
+      {
+        "depth": 2,
+        "slug": "四-bases-伴随视图",
+        "text": "四、Bases 伴随视图"
+      },
+      {
+        "depth": 3,
+        "slug": "1-服务器手册生态",
+        "text": "1. 服务器手册生态"
+      },
+      {
+        "depth": 3,
+        "slug": "2-docs-agent-总览",
+        "text": "2. docs-agent 总览"
+      },
+      {
+        "depth": 3,
+        "slug": "3-最近更新",
+        "text": "3. 最近更新"
+      },
+      {
+        "depth": 2,
+        "slug": "五-dataview-查询层",
+        "text": "五、Dataview 查询层"
+      },
+      {
+        "depth": 3,
+        "slug": "1-服务器手册生态快速表",
+        "text": "1. 服务器手册生态快速表"
+      },
+      {
+        "depth": 3,
+        "slug": "2-docs-agent-最近更新文档",
+        "text": "2. docs-agent 最近更新文档"
+      },
+      {
+        "depth": 3,
+        "slug": "3-多服务器智能体文档按类型聚合",
+        "text": "3. 多服务器智能体文档按类型聚合"
+      },
+      {
+        "depth": 2,
+        "slug": "六-repo-真源入口速查",
+        "text": "六、repo 真源入口速查"
+      },
+      {
+        "depth": 2,
+        "slug": "七-后续增强位",
+        "text": "七、后续增强位"
+      }
+    ],
+    "detailPath": "articles/md_f0340fa6cc06.json"
+  }
+}

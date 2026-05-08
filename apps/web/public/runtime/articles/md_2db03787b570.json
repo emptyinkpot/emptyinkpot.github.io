@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_2db03787b570",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/%E4%BB%BB%E5%8A%A1%E5%8C%85%E4%B8%8E%E8%83%BD%E5%8A%9B%E5%88%86%E5%B1%82%E8%B7%AF%E7%94%B1%E8%A7%84%E8%8C%83.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/任务包与能力分层路由规范.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/任务包与能力分层路由规范.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/%E4%BB%BB%E5%8A%A1%E5%8C%85%E4%B8%8E%E8%83%BD%E5%8A%9B%E5%88%86%E5%B1%82%E8%B7%AF%E7%94%B1%E8%A7%84%E8%8C%83.md",
+    "slug": "agent-任务包与能力分层路由规范",
+    "title": "任务包与能力分层路由规范",
+    "summary": "任务包与能力分层路由规范 目标 这份规范是当前 Atramenti Console 的执行基线，用来把“用户一句话需求” 收口成可执行、可验证、可交接、可复用的工作流，而不是每次都从零靠即时发挥。 这轮基线先做五件事： 1. 建立任务简报 2. 建立复杂任务规格 3. 建立验证包与证据链 4. 把...",
+    "description": "任务包与能力分层路由规范 目标 这份规范是当前 Atramenti Console 的执行基线，用来把“用户一句话需求” 收口成可执行、可验证、可交接、可复用的工作流，而不是每次都从零靠即时发挥。 这轮基线先做五件事： 1. 建立任务简报 2. 建立复杂任务规格 3. 建立验证包与证据链 4. 把...",
+    "date": "2026-04-21",
+    "updated": "2026-04-21",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/任务包与能力分层路由规范.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/任务包与能力分层路由规范.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/%E4%BB%BB%E5%8A%A1%E5%8C%85%E4%B8%8E%E8%83%BD%E5%8A%9B%E5%88%86%E5%B1%82%E8%B7%AF%E7%94%B1%E8%A7%84%E8%8C%83.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "任务包与能力分层路由规范",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "任务包与能力分层路由规范"
+      ],
+      "subtitle": "任务包与能力分层路由规范 目标 这份规范是当前 Atramenti Console 的执行基线，用来把“用户一句话需求” 收口成可执行、可验证、可交接、可复用的工作流，而不是每次都从零靠即时发挥。 这轮基线先做五件事： 1. 建立任务简报 2. 建立复杂任务规格 3. 建立验证包与证据链 4. 把..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# 任务包与能力分层路由规范\n\n## 目标\n\n这份规范是当前 `Atramenti-Console` 的执行基线，用来把“用户一句话需求”\n收口成可执行、可验证、可交接、可复用的工作流，而不是每次都从零靠即时发挥。\n\n这轮基线先做五件事：\n\n1. 建立任务简报\n2. 建立复杂任务规格\n3. 建立验证包与证据链\n4. 把 `PROJECT-CONTEXT.md` / `SESSION-HANDOFF.md` / `plan.md` 绑定成三件套\n5. 建立能力分层路由，最后才考虑大规模 Skill 化\n\n## 一、任务包基线\n\n### 1.1 标准落点\n\n任务包默认落到：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\_artifacts\\task-packs\\<timestamp>-<slug>\\`\n\n标准文件：\n\n- `TASK-BRIEF.md`\n- `COMPLEX-TASK-SPEC.md`\n- `VERIFICATION-BUNDLE.md`\n- `evidence\\`\n\n创建脚本：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\skills\\task-pack-baseline\\scripts\\new-task-pack.ps1`\n\n模板目录：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\templates\\task-pack`\n\n### 1.2 什么时候必须建任务简报\n\n满足任一条件就默认要建：\n\n- 任务超过一步\n- 会改多个文件\n- 需要验证\n- 属于 review / 调研 / 排障\n- 可能跨回合继续\n\n任务简报的职责不是写长文，而是先锁定：\n\n- 用户真正要的结果\n- 本轮边界\n- 非目标\n- 立即成功标准\n\n### 1.3 什么时候必须补复杂任务规格\n\n满足任一条件就默认补：\n\n- 跨系统或跨服务\n- 涉及文档、脚本、代码、配置多种载体\n- 需要分阶段验收\n- 存在显著影响面或回滚边界\n- 后续很可能被做成稳定 workflow / Skill\n\n复杂任务规格要明确：\n\n- 影响面\n- 分层路由决策\n- 分阶段实施\n- 证据要求\n- 回滚点\n\n## 二、验证包与证据链\n\n### 2.1 验证包不是“跑过命令”\n\n验证包要回答的是：\n\n- 最终证明了什么\n- 哪些已经 verified\n- 哪些仍然 unverified\n- 哪些 failed\n- 每条结论的证据在哪里\n\n生成脚本：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\skills\\task-pack-baseline\\scripts\\task-verify.ps1`\n\n### 2.2 证据链的最小结构\n\n证据链至少要把三件事连起来：\n\n1. 结论\n2. 证据文件 / 命令 / 截图 / 日志\n3. 这条证据具体证明什么\n\n禁止只堆文件名不解释含义。\n\n### 2.3 分类口径\n\n- `verified`：关键结论已经被当前证据直接支撑\n- `unverified`：工作可能已完成，但证据仍不足\n- `failed`：明确未达成或出现阻断\n\n## 三、项目上下文 / handoff / plan 三件套\n\n### 3.1 三件套分工\n\n- `PROJECT-CONTEXT.md`：长期真源，记录站点、路径、脚本、能力根、固定约束\n- `SESSION-HANDOFF.md`：当前会话已做什么、现在是什么状态、下一步是什么\n- `plan.md`：唯一活计划台账，记录计划与状态更新\n\n这里要明确：三件套是项目 `current-state` 的唯一活入口。\n\n- 如果要判断“项目现在是什么状态、下一步应该接着做什么”，先看三件套\n- `docs/agent` 下的其它文档可以是单专题 canonical，但默认不承担项目总体 `current-state` 总台账职责\n- 本文本身是执行基线 / 流程规范，不是项目总体状态说明页\n\n### 3.2 三件套的最低同步规则\n\n非 trivial 任务完成前，至少要做到：\n\n1. `plan.md` 有计划或状态更新\n2. `SESSION-HANDOFF.md` 能让下一个代理接着干\n3. 若形成了新的长期规则或 canonical 路径，回写 `PROJECT-CONTEXT.md`\n\n### 3.3 任务包如何挂到三件套\n\n- 计划记录可以挂关联产物路径\n- handoff 里要能看出当前 task pack / verification bundle 在哪里\n- context 只登记长期会复用的模板、脚本、固定规则，不登记一次性 task pack\n\n### 3.4 plan / plan.md / SESSION-HANDOFF / experience / MCP 的最小分工\n\n- `plan`：当前回合的即时执行骨架，只负责眼前步骤、进行中的判断和局部推进。\n- `plan.md`：唯一活计划台账，负责跨回合里程碑、状态更新、关联产物与最终结果。\n- `SESSION-HANDOFF.md`：当前停在哪里、已经验证到哪、下一轮应该接什么。\n- `experience-manager`：只收可复用结论，不收每一次中间状态；它是长期经验入口，不替代 `plan.md`。\n- `MCP / 工具层`：负责搜索、执行、浏览器验证、健康检查和证据采集，不负责替代 triad 文档。\n\n判断规则：\n\n1. 只影响当前回合推进时，用 `plan`。\n2. 多步、多文件、要跨回合接续时，必须写 `plan.md`。\n3. 本轮结束需要可接续上下文时，更新 `SESSION-HANDOFF.md`。\n4. 结论未来大概率复用且已被验证时，才进入 `experience-manager`。\n5. 需要事实、工具执行或证据时，优先走 MCP / 开发者工具。\n\n### 3.5 自动回灌顺序\n\n非 trivial 任务收尾时，默认按这个顺序回灌：\n\n1. 先完成验证包与证据链\n2. 再更新 `plan.md` 状态\n3. 再更新 `SESSION-HANDOFF.md` 当前状态与下一步\n4. 若形成长期规则或固定路径，再回写 `PROJECT-CONTEXT.md`\n5. 只有满足经验准入门槛的结论，才同步到 `experience-manager`\n   - 若需要强制写入或跳过，可在 `plan.md` 状态更新里显式记录 `经验沉淀决策：record / auto / skip`\n\n这里的关键点是：\n\n- 先有验证，再有回灌\n- 先有 triad，再有长期经验\n- 经验层是压缩后的复用结论，不是逐条复制计划日志\n\n## 四、能力分层路由\n\n### 4.1 分层顺序\n\n默认从低成本层往高能力层走：\n\n1. 直接执行层\n2. 任务简报层\n3. 复杂规格层\n4. 验证包层\n5. triad 层\n6. Skill 层\n7. MCP / 工具层\n8. 子代理层\n\n### 4.2 每层负责什么\n\n#### 直接执行层\n\n适合单步、低复杂、无需完整任务包的请求。\n\n#### 任务简报层\n\n把模糊目标变成可执行边界，避免上来就改大块内容。\n\n#### 复杂规格层\n\n把复杂任务拆成可验证阶段，避免后期才发现影响面没锁住。\n\n#### 验证包层\n\n把“我觉得好了”变成有分类、有证据链的交付记录。\n\n#### triad 层\n\n把一次执行沉淀进长期上下文，而不是只留在聊天记录里。\n\n#### Skill 层\n\n当工作流已经稳定、重复出现、需要复用时，再收口为 Skill。\n\n#### MCP / 工具层\n\n当任务需要浏览器、repo 检索、结构化验证、外部页面、远程系统等强工具时启用。\n\n#### 子代理层\n\n只在用户明确允许委派或并行代理时启用，不把它当默认路径。\n\n### 4.2.1 MCP 默认优先级\n\n当任务已经进入工具层时，默认优先顺序是：\n\n1. `ripgrep-search`：文本、文件、字面搜索\n2. `dev-quality-mcp`：结构搜索、静态扫描、代码质量定位\n3. `cloud-repo-mcp`：只读仓库内容和轻量审计\n4. `workspace-toolkit-mcp` / `agent-runtime-mcp`：工作区与运行态验证\n5. `github-workflow-mcp`：PR / workflow / run 健康检查\n6. `chrome-devtools-mcp`：浏览器页面、控制台、网络与视觉验证\n7. `fetch-mcp` / `markitdown-mcp`：外部页面抓取与内容抽取\n\n目的不是死板限制工具，而是减少每次都从零决定“先打哪个 MCP”的切换成本。\n\n### 4.3 路由决策脚本\n\n当前决策脚本：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\skills\\capability-layer-routing\\scripts\\resolve-capability-route.ps1`\n\n配置文件：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\skills\\capability-layer-routing\\policy\\capability-route-map.json`\n\n这个脚本不替代判断，它负责把“这次该走到哪一层”说清楚并落盘。\n\n## 五、与 Skill 化的关系\n\n当前顺序是：\n\n1. 先有任务包\n2. 先有验证包\n3. 先有三件套同步\n4. 先有能力路由\n5. 再决定哪些模式值得做成 Skill\n\n也就是说，Skill 化应该建立在已经稳定的 brief / spec / verify / handoff / route\n基线上，而不是反过来让 Skill 承担所有治理责任。\n\n## 五点五、经验准入与验证证据\n\n### 5.5.1 什么值得进入 experience-manager\n\n默认只把下面几类结果写入长期经验：\n\n- 同类问题重复出现两次以上\n- 明显节省后续排障时间的修复路径\n- 有明确前置条件、适用边界和风险说明的方法\n- 已经有当前轮验证证据支撑的稳定结论\n- `auto` 默认只针对 `已验证` / `失败` 且带强复用信号的结果，不自动接收普通 `已完成`\n\n默认不写入长期经验的内容：\n\n- 单次试探性的中间状态\n- 还没有验证完成的猜想\n- 只对当前一次性任务有意义的局部进度\n- 只是文件已修改、但没有说明可复用价值的记录\n- routine audit / 候选核对 / feature delivery / 导航补面 / deploy-ready 打包 / 部署上线 / 删仓删除 / 目录改名 / 清理收尾这类一次性交付记录\n\n### 5.5.2 经验最小字段\n\n当结论要进入 `experience-manager` 时，至少应能回答：\n\n- 场景：在什么任务/症状下会用到\n- 解决法：实际采取了什么路径\n- 边界：前置条件、限制和风险是什么\n- 证据：哪份验证、日志、截图或产物支撑这条结论\n\n### 5.5.2.1 `auto` 的默认门槛\n\n当 `经验沉淀决策=auto` 时，默认要同时满足：\n\n- 状态是 `已验证` 或 `失败`\n- 标题不属于 routine audit / 候选核对 / feature delivery / deploy-ready / 部署上线 / 删仓删除 / 清理收尾 / 改名归档\n- 满足至少一个强复用信号：\n  - `避免重走` 非空\n  - 标题属于修复 / 根因 / 规则 / 门禁 / 真源 / 路由类 durable 主题，且状态说明里给出明确根因、默认口径、门槛或修复路径\n\n如果不满足这些条件，默认应停留在 `plan.md` / `SESSION-HANDOFF.md`，而不是自动升级为长期经验。\n\n### 5.5.3 验证包里的两个显式决策\n\n非 trivial 任务 closeout 时，验证包应尽量显式写出：\n\n- `Deploy Decision`：`deployed` / `not-needed` / `blocked`\n- `Live Verification Decision`：`passed` / `not-needed` / `blocked`\n- `经验沉淀决策`：`record` / `auto` / `skip`\n\n这样 `plan.md`、`SESSION-HANDOFF.md` 与 `experience-manager` 后续引用的是同一套 closeout 语言，而不是各写各的。\n\n## 六、本轮落地文件\n\n- `codex/templates/task-pack/README.md`\n- `codex/templates/task-pack/TASK-BRIEF.md`\n- `codex/templates/task-pack/COMPLEX-TASK-SPEC.md`\n- `codex/templates/task-pack/VERIFICATION-BUNDLE.md`\n- `codex/skills/task-pack-baseline/scripts/new-task-pack.ps1`\n- `codex/skills/task-pack-baseline/scripts/task-verify.ps1`\n- `codex/skills/plan-history-recall/scripts/append-plan.ps1`\n- `codex/skills/capability-layer-routing/scripts/resolve-capability-route.ps1`\n- `codex/skills/capability-layer-routing/policy/capability-route-map.json`\n\n## 七、默认执行顺序\n\n后续遇到非 trivial 任务时，默认按这个顺序走：\n\n1. `invoke-plan-preflight.ps1`\n2. `resolve-capability-route.ps1`\n3. `new-task-pack.ps1`\n4. 实施改动\n5. `task-verify.ps1`\n6. 更新 `plan.md`\n7. 更新 `SESSION-HANDOFF.md`\n8. 若形成长期规则，再回写 `PROJECT-CONTEXT.md`\n\n## 八、AI 时代单真源开发与交付模式\n\n这条模式现在作为默认开发基线，适用于代码、脚本、配置、内容站点、前端页面、\n自动化和大多数需要 Git 交付的工作。\n\n核心目标不是“所有东西只留一份副本”，而是：\n\n- 只有一个第一开发真源\n- 允许按需创建临时工作副本\n- 运行环境只承担运行，不再长期承担第二源码真源\n\n### 8.1 四个默认角色\n\n后续默认把开发现场拆成四个角色，而不是混成一团：\n\n1. `canonical source`\n   - 唯一第一开发真源\n   - 默认是远端 Git 仓，或该轮真正 owning repo 的可推送边界\n2. `working copy`\n   - 按需创建的本地工作副本\n   - 用来编辑、验证、构建、截图、跑测试\n   - 默认可回收，不视为长期镜像\n3. `deploy target`\n   - 服务器、容器、静态站运行目录、系统服务宿主\n   - 默认只接收运行必需内容，例如构建产物、配置、镜像\n4. `mirror / backup`\n   - 备份仓、外层 umbrella 仓、归档仓\n   - 可以吸收结果，但不是第一开发真源\n\n### 8.2 默认工作方式\n\n默认工作方式收口为：\n\n1. 找到唯一 `canonical source`\n2. 在本地创建或更新 `working copy`\n3. 只在这份工作副本里改动、验证、构建\n4. 把结果先提交并 push 回 `canonical source`\n5. 再把运行所需结果部署到 `deploy target`\n6. 最后做 live 验证与 triad 收口\n\n更短的口径就是：\n\n`单一真源 -> 临时工作副本 -> 验证 -> push -> deploy -> live 验证`\n\n当前默认工作副本根路径：\n\n- `C:\\Users\\ASUS-KL\\.codex\\.tmp\\working-copies`\n\n当前默认操作入口：\n\n- 查看 repo manifest：`github-delivery-mcp.list_repo_manifests`\n- 准备 / 刷新工作副本：`github-delivery-mcp.prepare_working_copy`\n- 查看工作副本根状态：`github-delivery-mcp.list_working_copies`\n- 回收工作副本：`github-delivery-mcp.retire_working_copy`\n- 清理旧工作副本：`github-delivery-mcp.prune_working_copies`\n\n如果某个 canonical repo 会被反复以 working-copy 方式打开，默认在：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\mcps\\github-delivery-mcp\\manifests`\n\n维护一份轻量 repo manifest，把 `repoUrl`、`branch`、`folderName`、`deployTarget`\n等默认值收口进去，避免每次任务都从聊天里重复描述。\n\n### 8.3 默认禁止项\n\n如果用户没有明确要求例外，默认不要做下面这些事：\n\n- 不把服务器上的源码仓当成长期开发现场\n- 不让“本地副本 + 服务器副本 + 远端仓”三边同时变成活真源\n- 不把长期本地镜像当成默认前提\n- 不在运行目录里直接手改源码并把它留成未回灌状态\n- 不为了图省事重新引入双写、双轨、兼容层、兜底分支\n- 不把“临时 clone / 临时 worktree”放着不管，最后变成隐性第二真源\n\n### 8.4 为什么 AI 时代更要这样做\n\n这条模式在 AI 时代要比手工开发时代更强制，原因有四个：\n\n1. AI 改动范围更大\n   - 常常一次跨多个文件、多个目录、多个文档联动修改\n   - 如果真源不唯一，漂移会被快速放大\n2. AI 更依赖可重复流程\n   - `clone -> 改 -> 验证 -> push -> deploy` 比“哪里都能改一点”更适合自动执行\n3. AI 更容易制造隐性平行实现\n   - 如果没有单真源约束，就会自然长出第二份页面、第二份脚本、第二份兼容逻辑\n4. AI 排障更依赖现场一致性\n   - 运行目录、服务器 repo、本地 repo 三边不一致时，诊断成本会明显上升\n\n### 8.5 默认交付顺序\n\n对大多数 Git 交付任务，默认顺序现在明确为：\n\n1. 预检规则、计划和 owning repo\n2. 进入或创建本地 `working copy`\n3. 搜已有实现，避免平行重写\n4. 修改 canonical 实现\n5. 跑最小必要验证\n6. 在 owning repo 完成 `status -> commit -> push`\n7. 如果任务涉及运行环境，再部署到 `deploy target`\n8. 做 live 验证\n9. 更新 `plan.md`、`SESSION-HANDOFF.md`、必要时更新 `PROJECT-CONTEXT.md`\n\n### 8.6 服务器 / 静态站 / 内容站的默认口径\n\n对于服务器、静态站、博客、前端站点，默认进一步收紧为：\n\n- 远端 Git 仓是源码真源\n- 本地只保留按需工作副本\n- 服务器只保留运行目录、容器、服务配置或构建产物\n- 如果需要重新编辑，就重新 clone 或更新工作副本，而不是直接在服务器源码仓里改\n\n### 8.7 源码 / 运行时状态 / 部署产物 / 实时数据边界\n\n以后默认把系统里的内容分成四类，不再混写：\n\n| 类型 | 默认放置位置 | 是否进入 GitHub 真源 | 说明 |\n| --- | --- | --- | --- |\n| 源码 | `canonical source` / owning repo | 是 | 前端、后端、脚本、配置模板、迁移脚本、基础文档 |\n| 运行时状态 | 数据库、缓存、队列、对象存储、日志系统 | 否 | 用户数据、任务状态、在线状态、实时统计、消息流 |\n| 部署产物 | 服务器运行目录、镜像、发布目录 | 否（可重建） | `dist`、打包产物、构建后静态文件、镜像层 |\n| 本地工作副本 | 本地 clone / worktree | 否（本体不是） | 只是开发现场，不是长期真源 |\n\n默认判断规则：\n\n- GitHub 真源负责“可再生成”的东西\n- 运行时系统负责“正在变化”的东西\n- 部署目录负责“当前正在跑”的东西\n- 本地工作副本负责“本轮正在修改”的东西\n\n不要再把这四种东西混成“反正都算项目文件”。\n\n### 8.8 实时数据的默认规则\n\n实时变化的数据并不会推翻单真源开发模式，真正要分清的是：\n\n- 实时变化的是数据，不是源码位置\n- 需要动态的是运行时链路，不是 Git 真源本身\n\n默认规则：\n\n1. 实时数据不写回 GitHub 当真源\n2. 实时数据默认放数据库 / Redis / 队列 / 实时 API / SSE / WebSocket\n3. GitHub 里可以保留：\n   - 数据模型\n   - schema / migration\n   - 初始化脚本\n   - mock / fixture / 示例数据\n   - 数据拉取与渲染逻辑\n4. GitHub 里不应保留：\n   - 当前在线人数\n   - 秒级状态面板数据\n   - 实时日志流\n   - 当前任务进度\n   - 动态缓存内容\n\n更直接地说：\n\n- GitHub 放“怎么产生数据、怎么处理数据、怎么展示数据的代码”\n- 运行时系统放“此刻的数据本身”\n\n### 8.9 静态内容与动态内容的默认分层\n\n以后默认按变化频率决定放哪一层：\n\n1. 低频变化\n   - 文章正文\n   - About\n   - 说明页\n   - 视觉壳层\n   - 大部分前端页面结构\n   - 默认静态化\n2. 中频变化\n   - 每小时 / 每天刷新一次的统计\n   - 周期性抓取的公开数据\n   - 可用“构建快照 + 页面刷新”或“定时重建”\n3. 高频变化\n   - 在线状态\n   - 任务队列\n   - 监控面板\n   - 聊天流\n   - 日志流\n   - 默认走 API / polling / SSE / WebSocket\n\n不要把高频变化的数据硬编译进静态产物里，再靠频繁整站重建假装“实时”。\n\n### 8.10 静态站里的实时能力默认做法\n\n静态站不是不能做实时，而是要按“静态壳 + 动态数据块”拆开：\n\n1. 静态部分\n   - 页面壳\n   - 布局\n   - 文本主体\n   - 低频数据快照\n2. 动态部分\n   - 客户端请求 API\n   - 周期刷新\n   - SSE\n   - WebSocket\n\n默认优先级：\n\n1. 能静态的先静态\n2. 需要最新但不必秒级的，用定时刷新\n3. 需要实时流的，再上 SSE / WebSocket\n\n### 8.11 每次新构建后旧静态文件怎么处理\n\n以后默认把“旧文件去哪了”也写清楚，不靠模糊处理：\n\n常见模式只有三种：\n\n1. 覆盖替换\n   - 新文件覆盖旧文件\n   - 最简单，但回滚能力最弱\n2. 同步替换\n   - 用 `rsync --delete` 或同类机制让部署目录和新产物完全一致\n   - 旧文件若不在新版本中，则被删除\n3. 版本化发布目录\n   - 每次发布到新目录\n   - 用软链接或切换目标目录上线\n   - 旧目录保留作回滚\n\n默认原则：\n\n- 对小型静态站，`同步替换` 通常是最干净的默认值\n- 对需要稳回滚的系统，优先 `版本化发布目录`\n- 不要长期把多代无引用旧产物堆在运行目录里\n\n### 8.12 构建产物的默认态度\n\n构建产物不是源码真源，它们默认应被视为：\n\n- 可重建\n- 可替换\n- 可删除\n- 必要时可版本化保留用于回滚\n\n不要反过来把部署目录里的构建产物当作第一编辑面。\n\n如果必须从线上产物回灌，也要明确：\n\n- 这是恢复动作，不是新的日常工作流\n- 回灌后的结果仍要回到 GitHub 真源收口\n\n### 8.13 默认决策顺序\n\n以后遇到“这个系统到底该静态、动态、还是混合”的问题，默认按这个顺序判断：\n\n1. 这是不是源码？\n   - 是 -> 去 `canonical source`\n2. 这是不是运行时状态？\n   - 是 -> 去数据库 / 缓存 / 队列 / API\n3. 这是不是部署产物？\n   - 是 -> 去 `deploy target`\n4. 这是不是本轮临时开发现场？\n   - 是 -> 去本地 `working copy`\n5. 这个页面的数据变化频率高不高？\n   - 低 -> 静态\n   - 中 -> 快照 + 刷新\n   - 高 -> 动态链路\n\n### 8.14 默认维护目标\n\n这条模式最终追求的是四个结果：\n\n1. 路径少\n   - 不到处都能改\n2. 真源清楚\n   - 永远知道该 push 哪份\n3. 运行态和源码分离\n   - 排障时不把数据问题和源码问题混在一起\n4. 回滚容易\n   - 能回滚代码、回滚部署、回滚数据策略，而不是所有东西搅成一团\n\n### 8.15 例外边界\n\n只有在用户明确要求，或任务天然属于下面这些场景时，才允许偏离这条默认模式：\n\n- 用户明确要求保留服务器源码仓\n- 该系统必须在云端直接构建，且当前没有更稳的 CI / 本地构建路径\n- 该 repo 天然就是本机专用 consumer/config 层，而不是部署型应用源码\n- 当前任务是应急修复，且必须先在 live 现场止血\n\n即便出现例外，也要做到：\n\n- 明确这只是例外，不是新的默认模式\n- 明确谁是临时真源，谁要回灌\n- 例外结束后尽快恢复到单真源口径\n\n### 8.16 默认汇报字段\n\n以后遇到这类开发 / 部署 / 收口任务，默认内部判断与对外汇报都应尽量压成下面这些字段：\n\n- `canonical source`\n- `working copy`\n- `owning repo`\n- `deploy target`\n- `runtime state`\n- `deploy artifact`\n- `data path`\n- `mirror / backup`\n- `verification`\n- `是否需要回收本地副本`\n\n这样做的目的，是让“当前到底该改哪份、推哪份、部署哪份、删哪份”始终清楚。\n\n### 8.17 编码级审查清单：默认禁止的 defensive code\n\n从这一条开始，单真源规范不只约束“仓位和路径”，也直接约束“代码里怎么写”。\n\n默认目标是：\n\n- 修契约\n- 修数据模型\n- 修真实入口\n- 修上游调用链\n\n而不是靠 defensive code 把主路径包起来继续跑。\n\n以后在代码审查里，默认先问这几个问题：\n\n1. 这个值为什么会缺？\n   - 是契约真的允许缺失\n   - 还是上游本来就写错了\n2. 这个分支是在修根因\n   - 还是只是在吞错误\n3. 这段代码是在边界层处理第三方不稳定输入\n   - 还是在核心主路径里给自己加兜底\n4. 如果删掉这层 defensive code，真正应该修哪一层？\n\n默认禁止直接引入下面这些写法，除非后面“允许条件”成立：\n\n1. `fallback` / `compat` / `downgrade` / `graceful degradation` 之类双轨语义\n2. `ensure*` 风格包装函数\n3. 没有证据支撑的 `?.` / `??`\n4. 用空对象、空数组、空字符串把缺失值直接吞掉\n5. `if (!x) return`、`return null`、`return []` 之类静默退出\n6. 只为了“别报错”而加的 retry wrapper、兼容分支、默认对象\n\n默认允许 defensive code 的条件，只能是下面这些：\n\n1. 类型、schema、协议、接口文档明确声明该字段可缺失\n2. 有真实失败证据证明外部输入天然不稳定\n   - 例如第三方 API payload、历史脏数据、跨版本迁移数据\n3. 该处理明确位于边界层\n   - 例如 adapter、parser、ingest、migration、compat import\n4. 用户明确要求短期过渡层\n5. 当前任务本身就是修复旧数据或迁移现场\n\n即便满足允许条件，也必须同时做到：\n\n- 把 defensive code 限制在边界层，不要扩散到核心主路径\n- 写清楚为什么允许缺失，而不是只写“防止报错”\n- 优先修 schema / contract / upstream，再保留最小必要防御\n\n默认不允许的说法：\n\n- “先加个 fallback 再说”\n- “先 optional chaining 一下免得炸”\n- “先给个空对象，后面就能跑了”\n- “先 ensure 一层比较保险”\n\n默认允许的说法应该更像：\n\n- “接口契约明确允许该字段为空，所以这里只在 adapter 层做一次归一化”\n- “这是第三方 payload 的历史脏数据入口，证据已确认，因此只在 parser 层收口”\n- “这是用户明确批准的短期迁移兼容层，后续要拆除”\n\n以后 review / 自查默认按下面这份执行清单过一遍：\n\n- 这段 defensive code 是否有明确契约依据？\n- 它是否被压在边界层，而不是核心业务路径？\n- 如果去掉它，是否能直接定位出真正该修的上游？\n- 它是否引入了第二条行为路径？\n- 它是否掩盖了本应失败并暴露的问题？\n- 它是否只是为了“看起来更稳”，而不是让系统结构更正确？\n\n如果以上问题里有任意一项答不上来，默认就不该加。\n\n### 8.18 自动化门禁：defensive-code guard\n\n为了不让这条规则只停留在文字层，仓内默认再加一层自动化门禁：\n\n- 新增 `codex/skills/plugin-github--git-delivery/scripts/check-defensive-code.mjs`\n- 规则真源放在 `codex/skills/plugin-github--git-delivery/policy/defensive-code-guard.json`\n- 提交闭环 `codex/skills/plugin-github--git-delivery/scripts/repo-finalize.ps1`\n  在 commit 前默认执行这道检查\n\n当前 guard 默认检查 staged 改动里的新增代码行，并重点拦截：\n\n1. `fallback` / `compat` / `downgrade` / `graceful degradation`\n2. `ensure*`\n3. `?.`\n4. `??`\n5. 空对象 / 空数组 / 空字符串式吞错默认值\n\n这道门禁默认只检查第一方代码路径，不把 docs、cache、dist、archive、vendor\n之类目录混进来。\n\n如果确实存在经过证明的例外，允许用同一行注释显式豁免：\n\n- `defensive-code-allow`\n\n但这不是鼓励常态化豁免，而是要求：\n\n- 只有契约允许缺失时才可豁免\n- 只有边界层处理时才可豁免\n- 豁免应带简短理由\n\n一句话说，这道 guard 的目标不是“让代码更难提交”，而是强制把“先修根因，\n别靠 defensive code 糊住主路径”变成默认机械动作。\n\n## 九、第二批 live smoke 与第三批垂直 lane\n\n第二批 5 条 lane 不应长期停留在“只有文本结构成立”的状态；至少要用真实任务补一轮\nlive smoke，证明这些 lane 不只是命名漂亮，而是真的能挂到当前 repo 的高频工作流上。\n\n### 9.1 第二批 lane 的 smoke 映射\n\n当前推荐用 2-3 个真实高频任务覆盖这 5 条 lane：\n\n1. `research-decision-lane`\n   - 真实任务：根据 repo 与计划台账决定下一批优先垂直 lane\n2. `frontend-closed-loop-lane`\n   - 真实任务：对真实前端或内容站点执行 build + preview + 浏览器证据\n3. `canonical-doc-workflow`\n   - 真实任务：把 smoke 结论和 lane 图谱回写到 canonical 文档\n4. `capability-implementation-lane`\n   - 真实任务：把研究结论直接落成新的垂直 lane skills\n5. `repo-delivery-closeout-lane`\n   - 真实任务：对本轮文档、skill、artifact、triad 做 scoped commit + push\n\n### 9.2 第三批优先方向\n\n在第二批通用 lane 之后，第三批默认优先补“更垂直、但仍保持 thin orchestrator”的 lane。\n\n当前优先顺序：\n\n1. `content-source-publish-lane`\n2. `server-estate-sync-lane`\n3. `mcp-capability-lifecycle-lane`\n\n选择原则：\n\n- 优先贴近 repo 里的真实高频任务，而不是继续泛化通用 orchestrator\n- 优先包装现有 canonical skills，而不是复制正文实现\n- 若某条业务线已有独立在途边界，则先避让，避免 lane 扩展和在途交付撞车",
+    "html": "<h1 id=\"任务包与能力分层路由规范\">任务包与能力分层路由规范</h1>\n<h2 id=\"目标\">目标</h2>\n<p>这份规范是当前 <code>Atramenti-Console</code> 的执行基线，用来把“用户一句话需求”\n收口成可执行、可验证、可交接、可复用的工作流，而不是每次都从零靠即时发挥。</p>\n<p>这轮基线先做五件事：</p>\n<ol>\n<li>建立任务简报</li>\n<li>建立复杂任务规格</li>\n<li>建立验证包与证据链</li>\n<li>把 <code>PROJECT-CONTEXT.md</code> / <code>SESSION-HANDOFF.md</code> / <code>plan.md</code> 绑定成三件套</li>\n<li>建立能力分层路由，最后才考虑大规模 Skill 化</li>\n</ol>\n<h2 id=\"一任务包基线\">一、任务包基线</h2>\n<h3 id=\"11-标准落点\">1.1 标准落点</h3>\n<p>任务包默认落到：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\_artifacts\\task-packs\\&#x3C;timestamp>-&#x3C;slug>\\</code></li>\n</ul>\n<p>标准文件：</p>\n<ul>\n<li><code>TASK-BRIEF.md</code></li>\n<li><code>COMPLEX-TASK-SPEC.md</code></li>\n<li><code>VERIFICATION-BUNDLE.md</code></li>\n<li><code>evidence\\</code></li>\n</ul>\n<p>创建脚本：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\skills\\task-pack-baseline\\scripts\\new-task-pack.ps1</code></li>\n</ul>\n<p>模板目录：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\templates\\task-pack</code></li>\n</ul>\n<h3 id=\"12-什么时候必须建任务简报\">1.2 什么时候必须建任务简报</h3>\n<p>满足任一条件就默认要建：</p>\n<ul>\n<li>任务超过一步</li>\n<li>会改多个文件</li>\n<li>需要验证</li>\n<li>属于 review / 调研 / 排障</li>\n<li>可能跨回合继续</li>\n</ul>\n<p>任务简报的职责不是写长文，而是先锁定：</p>\n<ul>\n<li>用户真正要的结果</li>\n<li>本轮边界</li>\n<li>非目标</li>\n<li>立即成功标准</li>\n</ul>\n<h3 id=\"13-什么时候必须补复杂任务规格\">1.3 什么时候必须补复杂任务规格</h3>\n<p>满足任一条件就默认补：</p>\n<ul>\n<li>跨系统或跨服务</li>\n<li>涉及文档、脚本、代码、配置多种载体</li>\n<li>需要分阶段验收</li>\n<li>存在显著影响面或回滚边界</li>\n<li>后续很可能被做成稳定 workflow / Skill</li>\n</ul>\n<p>复杂任务规格要明确：</p>\n<ul>\n<li>影响面</li>\n<li>分层路由决策</li>\n<li>分阶段实施</li>\n<li>证据要求</li>\n<li>回滚点</li>\n</ul>\n<h2 id=\"二验证包与证据链\">二、验证包与证据链</h2>\n<h3 id=\"21-验证包不是跑过命令\">2.1 验证包不是“跑过命令”</h3>\n<p>验证包要回答的是：</p>\n<ul>\n<li>最终证明了什么</li>\n<li>哪些已经 verified</li>\n<li>哪些仍然 unverified</li>\n<li>哪些 failed</li>\n<li>每条结论的证据在哪里</li>\n</ul>\n<p>生成脚本：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\skills\\task-pack-baseline\\scripts\\task-verify.ps1</code></li>\n</ul>\n<h3 id=\"22-证据链的最小结构\">2.2 证据链的最小结构</h3>\n<p>证据链至少要把三件事连起来：</p>\n<ol>\n<li>结论</li>\n<li>证据文件 / 命令 / 截图 / 日志</li>\n<li>这条证据具体证明什么</li>\n</ol>\n<p>禁止只堆文件名不解释含义。</p>\n<h3 id=\"23-分类口径\">2.3 分类口径</h3>\n<ul>\n<li><code>verified</code>：关键结论已经被当前证据直接支撑</li>\n<li><code>unverified</code>：工作可能已完成，但证据仍不足</li>\n<li><code>failed</code>：明确未达成或出现阻断</li>\n</ul>\n<h2 id=\"三项目上下文--handoff--plan-三件套\">三、项目上下文 / handoff / plan 三件套</h2>\n<h3 id=\"31-三件套分工\">3.1 三件套分工</h3>\n<ul>\n<li><code>PROJECT-CONTEXT.md</code>：长期真源，记录站点、路径、脚本、能力根、固定约束</li>\n<li><code>SESSION-HANDOFF.md</code>：当前会话已做什么、现在是什么状态、下一步是什么</li>\n<li><code>plan.md</code>：唯一活计划台账，记录计划与状态更新</li>\n</ul>\n<p>这里要明确：三件套是项目 <code>current-state</code> 的唯一活入口。</p>\n<ul>\n<li>如果要判断“项目现在是什么状态、下一步应该接着做什么”，先看三件套</li>\n<li><code>docs/agent</code> 下的其它文档可以是单专题 canonical，但默认不承担项目总体 <code>current-state</code> 总台账职责</li>\n<li>本文本身是执行基线 / 流程规范，不是项目总体状态说明页</li>\n</ul>\n<h3 id=\"32-三件套的最低同步规则\">3.2 三件套的最低同步规则</h3>\n<p>非 trivial 任务完成前，至少要做到：</p>\n<ol>\n<li><code>plan.md</code> 有计划或状态更新</li>\n<li><code>SESSION-HANDOFF.md</code> 能让下一个代理接着干</li>\n<li>若形成了新的长期规则或 canonical 路径，回写 <code>PROJECT-CONTEXT.md</code></li>\n</ol>\n<h3 id=\"33-任务包如何挂到三件套\">3.3 任务包如何挂到三件套</h3>\n<ul>\n<li>计划记录可以挂关联产物路径</li>\n<li>handoff 里要能看出当前 task pack / verification bundle 在哪里</li>\n<li>context 只登记长期会复用的模板、脚本、固定规则，不登记一次性 task pack</li>\n</ul>\n<h3 id=\"34-plan--planmd--session-handoff--experience--mcp-的最小分工\">3.4 plan / plan.md / SESSION-HANDOFF / experience / MCP 的最小分工</h3>\n<ul>\n<li><code>plan</code>：当前回合的即时执行骨架，只负责眼前步骤、进行中的判断和局部推进。</li>\n<li><code>plan.md</code>：唯一活计划台账，负责跨回合里程碑、状态更新、关联产物与最终结果。</li>\n<li><code>SESSION-HANDOFF.md</code>：当前停在哪里、已经验证到哪、下一轮应该接什么。</li>\n<li><code>experience-manager</code>：只收可复用结论，不收每一次中间状态；它是长期经验入口，不替代 <code>plan.md</code>。</li>\n<li><code>MCP / 工具层</code>：负责搜索、执行、浏览器验证、健康检查和证据采集，不负责替代 triad 文档。</li>\n</ul>\n<p>判断规则：</p>\n<ol>\n<li>只影响当前回合推进时，用 <code>plan</code>。</li>\n<li>多步、多文件、要跨回合接续时，必须写 <code>plan.md</code>。</li>\n<li>本轮结束需要可接续上下文时，更新 <code>SESSION-HANDOFF.md</code>。</li>\n<li>结论未来大概率复用且已被验证时，才进入 <code>experience-manager</code>。</li>\n<li>需要事实、工具执行或证据时，优先走 MCP / 开发者工具。</li>\n</ol>\n<h3 id=\"35-自动回灌顺序\">3.5 自动回灌顺序</h3>\n<p>非 trivial 任务收尾时，默认按这个顺序回灌：</p>\n<ol>\n<li>先完成验证包与证据链</li>\n<li>再更新 <code>plan.md</code> 状态</li>\n<li>再更新 <code>SESSION-HANDOFF.md</code> 当前状态与下一步</li>\n<li>若形成长期规则或固定路径，再回写 <code>PROJECT-CONTEXT.md</code></li>\n<li>只有满足经验准入门槛的结论，才同步到 <code>experience-manager</code>\n<ul>\n<li>若需要强制写入或跳过，可在 <code>plan.md</code> 状态更新里显式记录 <code>经验沉淀决策：record / auto / skip</code></li>\n</ul>\n</li>\n</ol>\n<p>这里的关键点是：</p>\n<ul>\n<li>先有验证，再有回灌</li>\n<li>先有 triad，再有长期经验</li>\n<li>经验层是压缩后的复用结论，不是逐条复制计划日志</li>\n</ul>\n<h2 id=\"四能力分层路由\">四、能力分层路由</h2>\n<h3 id=\"41-分层顺序\">4.1 分层顺序</h3>\n<p>默认从低成本层往高能力层走：</p>\n<ol>\n<li>直接执行层</li>\n<li>任务简报层</li>\n<li>复杂规格层</li>\n<li>验证包层</li>\n<li>triad 层</li>\n<li>Skill 层</li>\n<li>MCP / 工具层</li>\n<li>子代理层</li>\n</ol>\n<h3 id=\"42-每层负责什么\">4.2 每层负责什么</h3>\n<h4 id=\"直接执行层\">直接执行层</h4>\n<p>适合单步、低复杂、无需完整任务包的请求。</p>\n<h4 id=\"任务简报层\">任务简报层</h4>\n<p>把模糊目标变成可执行边界，避免上来就改大块内容。</p>\n<h4 id=\"复杂规格层\">复杂规格层</h4>\n<p>把复杂任务拆成可验证阶段，避免后期才发现影响面没锁住。</p>\n<h4 id=\"验证包层\">验证包层</h4>\n<p>把“我觉得好了”变成有分类、有证据链的交付记录。</p>\n<h4 id=\"triad-层\">triad 层</h4>\n<p>把一次执行沉淀进长期上下文，而不是只留在聊天记录里。</p>\n<h4 id=\"skill-层\">Skill 层</h4>\n<p>当工作流已经稳定、重复出现、需要复用时，再收口为 Skill。</p>\n<h4 id=\"mcp--工具层\">MCP / 工具层</h4>\n<p>当任务需要浏览器、repo 检索、结构化验证、外部页面、远程系统等强工具时启用。</p>\n<h4 id=\"子代理层\">子代理层</h4>\n<p>只在用户明确允许委派或并行代理时启用，不把它当默认路径。</p>\n<h3 id=\"421-mcp-默认优先级\">4.2.1 MCP 默认优先级</h3>\n<p>当任务已经进入工具层时，默认优先顺序是：</p>\n<ol>\n<li><code>ripgrep-search</code>：文本、文件、字面搜索</li>\n<li><code>dev-quality-mcp</code>：结构搜索、静态扫描、代码质量定位</li>\n<li><code>cloud-repo-mcp</code>：只读仓库内容和轻量审计</li>\n<li><code>workspace-toolkit-mcp</code> / <code>agent-runtime-mcp</code>：工作区与运行态验证</li>\n<li><code>github-workflow-mcp</code>：PR / workflow / run 健康检查</li>\n<li><code>chrome-devtools-mcp</code>：浏览器页面、控制台、网络与视觉验证</li>\n<li><code>fetch-mcp</code> / <code>markitdown-mcp</code>：外部页面抓取与内容抽取</li>\n</ol>\n<p>目的不是死板限制工具，而是减少每次都从零决定“先打哪个 MCP”的切换成本。</p>\n<h3 id=\"43-路由决策脚本\">4.3 路由决策脚本</h3>\n<p>当前决策脚本：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\skills\\capability-layer-routing\\scripts\\resolve-capability-route.ps1</code></li>\n</ul>\n<p>配置文件：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\skills\\capability-layer-routing\\policy\\capability-route-map.json</code></li>\n</ul>\n<p>这个脚本不替代判断，它负责把“这次该走到哪一层”说清楚并落盘。</p>\n<h2 id=\"五与-skill-化的关系\">五、与 Skill 化的关系</h2>\n<p>当前顺序是：</p>\n<ol>\n<li>先有任务包</li>\n<li>先有验证包</li>\n<li>先有三件套同步</li>\n<li>先有能力路由</li>\n<li>再决定哪些模式值得做成 Skill</li>\n</ol>\n<p>也就是说，Skill 化应该建立在已经稳定的 brief / spec / verify / handoff / route\n基线上，而不是反过来让 Skill 承担所有治理责任。</p>\n<h2 id=\"五点五经验准入与验证证据\">五点五、经验准入与验证证据</h2>\n<h3 id=\"551-什么值得进入-experience-manager\">5.5.1 什么值得进入 experience-manager</h3>\n<p>默认只把下面几类结果写入长期经验：</p>\n<ul>\n<li>同类问题重复出现两次以上</li>\n<li>明显节省后续排障时间的修复路径</li>\n<li>有明确前置条件、适用边界和风险说明的方法</li>\n<li>已经有当前轮验证证据支撑的稳定结论</li>\n<li><code>auto</code> 默认只针对 <code>已验证</code> / <code>失败</code> 且带强复用信号的结果，不自动接收普通 <code>已完成</code></li>\n</ul>\n<p>默认不写入长期经验的内容：</p>\n<ul>\n<li>单次试探性的中间状态</li>\n<li>还没有验证完成的猜想</li>\n<li>只对当前一次性任务有意义的局部进度</li>\n<li>只是文件已修改、但没有说明可复用价值的记录</li>\n<li>routine audit / 候选核对 / feature delivery / 导航补面 / deploy-ready 打包 / 部署上线 / 删仓删除 / 目录改名 / 清理收尾这类一次性交付记录</li>\n</ul>\n<h3 id=\"552-经验最小字段\">5.5.2 经验最小字段</h3>\n<p>当结论要进入 <code>experience-manager</code> 时，至少应能回答：</p>\n<ul>\n<li>场景：在什么任务/症状下会用到</li>\n<li>解决法：实际采取了什么路径</li>\n<li>边界：前置条件、限制和风险是什么</li>\n<li>证据：哪份验证、日志、截图或产物支撑这条结论</li>\n</ul>\n<h3 id=\"5521-auto-的默认门槛\">5.5.2.1 <code>auto</code> 的默认门槛</h3>\n<p>当 <code>经验沉淀决策=auto</code> 时，默认要同时满足：</p>\n<ul>\n<li>状态是 <code>已验证</code> 或 <code>失败</code></li>\n<li>标题不属于 routine audit / 候选核对 / feature delivery / deploy-ready / 部署上线 / 删仓删除 / 清理收尾 / 改名归档</li>\n<li>满足至少一个强复用信号：\n<ul>\n<li><code>避免重走</code> 非空</li>\n<li>标题属于修复 / 根因 / 规则 / 门禁 / 真源 / 路由类 durable 主题，且状态说明里给出明确根因、默认口径、门槛或修复路径</li>\n</ul>\n</li>\n</ul>\n<p>如果不满足这些条件，默认应停留在 <code>plan.md</code> / <code>SESSION-HANDOFF.md</code>，而不是自动升级为长期经验。</p>\n<h3 id=\"553-验证包里的两个显式决策\">5.5.3 验证包里的两个显式决策</h3>\n<p>非 trivial 任务 closeout 时，验证包应尽量显式写出：</p>\n<ul>\n<li><code>Deploy Decision</code>：<code>deployed</code> / <code>not-needed</code> / <code>blocked</code></li>\n<li><code>Live Verification Decision</code>：<code>passed</code> / <code>not-needed</code> / <code>blocked</code></li>\n<li><code>经验沉淀决策</code>：<code>record</code> / <code>auto</code> / <code>skip</code></li>\n</ul>\n<p>这样 <code>plan.md</code>、<code>SESSION-HANDOFF.md</code> 与 <code>experience-manager</code> 后续引用的是同一套 closeout 语言，而不是各写各的。</p>\n<h2 id=\"六本轮落地文件\">六、本轮落地文件</h2>\n<ul>\n<li><code>codex/templates/task-pack/README.md</code></li>\n<li><code>codex/templates/task-pack/TASK-BRIEF.md</code></li>\n<li><code>codex/templates/task-pack/COMPLEX-TASK-SPEC.md</code></li>\n<li><code>codex/templates/task-pack/VERIFICATION-BUNDLE.md</code></li>\n<li><code>codex/skills/task-pack-baseline/scripts/new-task-pack.ps1</code></li>\n<li><code>codex/skills/task-pack-baseline/scripts/task-verify.ps1</code></li>\n<li><code>codex/skills/plan-history-recall/scripts/append-plan.ps1</code></li>\n<li><code>codex/skills/capability-layer-routing/scripts/resolve-capability-route.ps1</code></li>\n<li><code>codex/skills/capability-layer-routing/policy/capability-route-map.json</code></li>\n</ul>\n<h2 id=\"七默认执行顺序\">七、默认执行顺序</h2>\n<p>后续遇到非 trivial 任务时，默认按这个顺序走：</p>\n<ol>\n<li><code>invoke-plan-preflight.ps1</code></li>\n<li><code>resolve-capability-route.ps1</code></li>\n<li><code>new-task-pack.ps1</code></li>\n<li>实施改动</li>\n<li><code>task-verify.ps1</code></li>\n<li>更新 <code>plan.md</code></li>\n<li>更新 <code>SESSION-HANDOFF.md</code></li>\n<li>若形成长期规则，再回写 <code>PROJECT-CONTEXT.md</code></li>\n</ol>\n<h2 id=\"八ai-时代单真源开发与交付模式\">八、AI 时代单真源开发与交付模式</h2>\n<p>这条模式现在作为默认开发基线，适用于代码、脚本、配置、内容站点、前端页面、\n自动化和大多数需要 Git 交付的工作。</p>\n<p>核心目标不是“所有东西只留一份副本”，而是：</p>\n<ul>\n<li>只有一个第一开发真源</li>\n<li>允许按需创建临时工作副本</li>\n<li>运行环境只承担运行，不再长期承担第二源码真源</li>\n</ul>\n<h3 id=\"81-四个默认角色\">8.1 四个默认角色</h3>\n<p>后续默认把开发现场拆成四个角色，而不是混成一团：</p>\n<ol>\n<li><code>canonical source</code>\n<ul>\n<li>唯一第一开发真源</li>\n<li>默认是远端 Git 仓，或该轮真正 owning repo 的可推送边界</li>\n</ul>\n</li>\n<li><code>working copy</code>\n<ul>\n<li>按需创建的本地工作副本</li>\n<li>用来编辑、验证、构建、截图、跑测试</li>\n<li>默认可回收，不视为长期镜像</li>\n</ul>\n</li>\n<li><code>deploy target</code>\n<ul>\n<li>服务器、容器、静态站运行目录、系统服务宿主</li>\n<li>默认只接收运行必需内容，例如构建产物、配置、镜像</li>\n</ul>\n</li>\n<li><code>mirror / backup</code>\n<ul>\n<li>备份仓、外层 umbrella 仓、归档仓</li>\n<li>可以吸收结果，但不是第一开发真源</li>\n</ul>\n</li>\n</ol>\n<h3 id=\"82-默认工作方式\">8.2 默认工作方式</h3>\n<p>默认工作方式收口为：</p>\n<ol>\n<li>找到唯一 <code>canonical source</code></li>\n<li>在本地创建或更新 <code>working copy</code></li>\n<li>只在这份工作副本里改动、验证、构建</li>\n<li>把结果先提交并 push 回 <code>canonical source</code></li>\n<li>再把运行所需结果部署到 <code>deploy target</code></li>\n<li>最后做 live 验证与 triad 收口</li>\n</ol>\n<p>更短的口径就是：</p>\n<p><code>单一真源 -> 临时工作副本 -> 验证 -> push -> deploy -> live 验证</code></p>\n<p>当前默认工作副本根路径：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\.tmp\\working-copies</code></li>\n</ul>\n<p>当前默认操作入口：</p>\n<ul>\n<li>查看 repo manifest：<code>github-delivery-mcp.list_repo_manifests</code></li>\n<li>准备 / 刷新工作副本：<code>github-delivery-mcp.prepare_working_copy</code></li>\n<li>查看工作副本根状态：<code>github-delivery-mcp.list_working_copies</code></li>\n<li>回收工作副本：<code>github-delivery-mcp.retire_working_copy</code></li>\n<li>清理旧工作副本：<code>github-delivery-mcp.prune_working_copies</code></li>\n</ul>\n<p>如果某个 canonical repo 会被反复以 working-copy 方式打开，默认在：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\mcps\\github-delivery-mcp\\manifests</code></li>\n</ul>\n<p>维护一份轻量 repo manifest，把 <code>repoUrl</code>、<code>branch</code>、<code>folderName</code>、<code>deployTarget</code>\n等默认值收口进去，避免每次任务都从聊天里重复描述。</p>\n<h3 id=\"83-默认禁止项\">8.3 默认禁止项</h3>\n<p>如果用户没有明确要求例外，默认不要做下面这些事：</p>\n<ul>\n<li>不把服务器上的源码仓当成长期开发现场</li>\n<li>不让“本地副本 + 服务器副本 + 远端仓”三边同时变成活真源</li>\n<li>不把长期本地镜像当成默认前提</li>\n<li>不在运行目录里直接手改源码并把它留成未回灌状态</li>\n<li>不为了图省事重新引入双写、双轨、兼容层、兜底分支</li>\n<li>不把“临时 clone / 临时 worktree”放着不管，最后变成隐性第二真源</li>\n</ul>\n<h3 id=\"84-为什么-ai-时代更要这样做\">8.4 为什么 AI 时代更要这样做</h3>\n<p>这条模式在 AI 时代要比手工开发时代更强制，原因有四个：</p>\n<ol>\n<li>AI 改动范围更大\n<ul>\n<li>常常一次跨多个文件、多个目录、多个文档联动修改</li>\n<li>如果真源不唯一，漂移会被快速放大</li>\n</ul>\n</li>\n<li>AI 更依赖可重复流程\n<ul>\n<li><code>clone -> 改 -> 验证 -> push -> deploy</code> 比“哪里都能改一点”更适合自动执行</li>\n</ul>\n</li>\n<li>AI 更容易制造隐性平行实现\n<ul>\n<li>如果没有单真源约束，就会自然长出第二份页面、第二份脚本、第二份兼容逻辑</li>\n</ul>\n</li>\n<li>AI 排障更依赖现场一致性\n<ul>\n<li>运行目录、服务器 repo、本地 repo 三边不一致时，诊断成本会明显上升</li>\n</ul>\n</li>\n</ol>\n<h3 id=\"85-默认交付顺序\">8.5 默认交付顺序</h3>\n<p>对大多数 Git 交付任务，默认顺序现在明确为：</p>\n<ol>\n<li>预检规则、计划和 owning repo</li>\n<li>进入或创建本地 <code>working copy</code></li>\n<li>搜已有实现，避免平行重写</li>\n<li>修改 canonical 实现</li>\n<li>跑最小必要验证</li>\n<li>在 owning repo 完成 <code>status -> commit -> push</code></li>\n<li>如果任务涉及运行环境，再部署到 <code>deploy target</code></li>\n<li>做 live 验证</li>\n<li>更新 <code>plan.md</code>、<code>SESSION-HANDOFF.md</code>、必要时更新 <code>PROJECT-CONTEXT.md</code></li>\n</ol>\n<h3 id=\"86-服务器--静态站--内容站的默认口径\">8.6 服务器 / 静态站 / 内容站的默认口径</h3>\n<p>对于服务器、静态站、博客、前端站点，默认进一步收紧为：</p>\n<ul>\n<li>远端 Git 仓是源码真源</li>\n<li>本地只保留按需工作副本</li>\n<li>服务器只保留运行目录、容器、服务配置或构建产物</li>\n<li>如果需要重新编辑，就重新 clone 或更新工作副本，而不是直接在服务器源码仓里改</li>\n</ul>\n<h3 id=\"87-源码--运行时状态--部署产物--实时数据边界\">8.7 源码 / 运行时状态 / 部署产物 / 实时数据边界</h3>\n<p>以后默认把系统里的内容分成四类，不再混写：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>类型</th>\n<th>默认放置位置</th>\n<th>是否进入 GitHub 真源</th>\n<th>说明</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>源码</td>\n<td><code>canonical source</code> / owning repo</td>\n<td>是</td>\n<td>前端、后端、脚本、配置模板、迁移脚本、基础文档</td>\n</tr>\n<tr>\n<td>运行时状态</td>\n<td>数据库、缓存、队列、对象存储、日志系统</td>\n<td>否</td>\n<td>用户数据、任务状态、在线状态、实时统计、消息流</td>\n</tr>\n<tr>\n<td>部署产物</td>\n<td>服务器运行目录、镜像、发布目录</td>\n<td>否（可重建）</td>\n<td><code>dist</code>、打包产物、构建后静态文件、镜像层</td>\n</tr>\n<tr>\n<td>本地工作副本</td>\n<td>本地 clone / worktree</td>\n<td>否（本体不是）</td>\n<td>只是开发现场，不是长期真源</td>\n</tr>\n</tbody>\n</table></div>\n<p>默认判断规则：</p>\n<ul>\n<li>GitHub 真源负责“可再生成”的东西</li>\n<li>运行时系统负责“正在变化”的东西</li>\n<li>部署目录负责“当前正在跑”的东西</li>\n<li>本地工作副本负责“本轮正在修改”的东西</li>\n</ul>\n<p>不要再把这四种东西混成“反正都算项目文件”。</p>\n<h3 id=\"88-实时数据的默认规则\">8.8 实时数据的默认规则</h3>\n<p>实时变化的数据并不会推翻单真源开发模式，真正要分清的是：</p>\n<ul>\n<li>实时变化的是数据，不是源码位置</li>\n<li>需要动态的是运行时链路，不是 Git 真源本身</li>\n</ul>\n<p>默认规则：</p>\n<ol>\n<li>实时数据不写回 GitHub 当真源</li>\n<li>实时数据默认放数据库 / Redis / 队列 / 实时 API / SSE / WebSocket</li>\n<li>GitHub 里可以保留：\n<ul>\n<li>数据模型</li>\n<li>schema / migration</li>\n<li>初始化脚本</li>\n<li>mock / fixture / 示例数据</li>\n<li>数据拉取与渲染逻辑</li>\n</ul>\n</li>\n<li>GitHub 里不应保留：\n<ul>\n<li>当前在线人数</li>\n<li>秒级状态面板数据</li>\n<li>实时日志流</li>\n<li>当前任务进度</li>\n<li>动态缓存内容</li>\n</ul>\n</li>\n</ol>\n<p>更直接地说：</p>\n<ul>\n<li>GitHub 放“怎么产生数据、怎么处理数据、怎么展示数据的代码”</li>\n<li>运行时系统放“此刻的数据本身”</li>\n</ul>\n<h3 id=\"89-静态内容与动态内容的默认分层\">8.9 静态内容与动态内容的默认分层</h3>\n<p>以后默认按变化频率决定放哪一层：</p>\n<ol>\n<li>低频变化\n<ul>\n<li>文章正文</li>\n<li>About</li>\n<li>说明页</li>\n<li>视觉壳层</li>\n<li>大部分前端页面结构</li>\n<li>默认静态化</li>\n</ul>\n</li>\n<li>中频变化\n<ul>\n<li>每小时 / 每天刷新一次的统计</li>\n<li>周期性抓取的公开数据</li>\n<li>可用“构建快照 + 页面刷新”或“定时重建”</li>\n</ul>\n</li>\n<li>高频变化\n<ul>\n<li>在线状态</li>\n<li>任务队列</li>\n<li>监控面板</li>\n<li>聊天流</li>\n<li>日志流</li>\n<li>默认走 API / polling / SSE / WebSocket</li>\n</ul>\n</li>\n</ol>\n<p>不要把高频变化的数据硬编译进静态产物里，再靠频繁整站重建假装“实时”。</p>\n<h3 id=\"810-静态站里的实时能力默认做法\">8.10 静态站里的实时能力默认做法</h3>\n<p>静态站不是不能做实时，而是要按“静态壳 + 动态数据块”拆开：</p>\n<ol>\n<li>静态部分\n<ul>\n<li>页面壳</li>\n<li>布局</li>\n<li>文本主体</li>\n<li>低频数据快照</li>\n</ul>\n</li>\n<li>动态部分\n<ul>\n<li>客户端请求 API</li>\n<li>周期刷新</li>\n<li>SSE</li>\n<li>WebSocket</li>\n</ul>\n</li>\n</ol>\n<p>默认优先级：</p>\n<ol>\n<li>能静态的先静态</li>\n<li>需要最新但不必秒级的，用定时刷新</li>\n<li>需要实时流的，再上 SSE / WebSocket</li>\n</ol>\n<h3 id=\"811-每次新构建后旧静态文件怎么处理\">8.11 每次新构建后旧静态文件怎么处理</h3>\n<p>以后默认把“旧文件去哪了”也写清楚，不靠模糊处理：</p>\n<p>常见模式只有三种：</p>\n<ol>\n<li>覆盖替换\n<ul>\n<li>新文件覆盖旧文件</li>\n<li>最简单，但回滚能力最弱</li>\n</ul>\n</li>\n<li>同步替换\n<ul>\n<li>用 <code>rsync --delete</code> 或同类机制让部署目录和新产物完全一致</li>\n<li>旧文件若不在新版本中，则被删除</li>\n</ul>\n</li>\n<li>版本化发布目录\n<ul>\n<li>每次发布到新目录</li>\n<li>用软链接或切换目标目录上线</li>\n<li>旧目录保留作回滚</li>\n</ul>\n</li>\n</ol>\n<p>默认原则：</p>\n<ul>\n<li>对小型静态站，<code>同步替换</code> 通常是最干净的默认值</li>\n<li>对需要稳回滚的系统，优先 <code>版本化发布目录</code></li>\n<li>不要长期把多代无引用旧产物堆在运行目录里</li>\n</ul>\n<h3 id=\"812-构建产物的默认态度\">8.12 构建产物的默认态度</h3>\n<p>构建产物不是源码真源，它们默认应被视为：</p>\n<ul>\n<li>可重建</li>\n<li>可替换</li>\n<li>可删除</li>\n<li>必要时可版本化保留用于回滚</li>\n</ul>\n<p>不要反过来把部署目录里的构建产物当作第一编辑面。</p>\n<p>如果必须从线上产物回灌，也要明确：</p>\n<ul>\n<li>这是恢复动作，不是新的日常工作流</li>\n<li>回灌后的结果仍要回到 GitHub 真源收口</li>\n</ul>\n<h3 id=\"813-默认决策顺序\">8.13 默认决策顺序</h3>\n<p>以后遇到“这个系统到底该静态、动态、还是混合”的问题，默认按这个顺序判断：</p>\n<ol>\n<li>这是不是源码？\n<ul>\n<li>是 -> 去 <code>canonical source</code></li>\n</ul>\n</li>\n<li>这是不是运行时状态？\n<ul>\n<li>是 -> 去数据库 / 缓存 / 队列 / API</li>\n</ul>\n</li>\n<li>这是不是部署产物？\n<ul>\n<li>是 -> 去 <code>deploy target</code></li>\n</ul>\n</li>\n<li>这是不是本轮临时开发现场？\n<ul>\n<li>是 -> 去本地 <code>working copy</code></li>\n</ul>\n</li>\n<li>这个页面的数据变化频率高不高？\n<ul>\n<li>低 -> 静态</li>\n<li>中 -> 快照 + 刷新</li>\n<li>高 -> 动态链路</li>\n</ul>\n</li>\n</ol>\n<h3 id=\"814-默认维护目标\">8.14 默认维护目标</h3>\n<p>这条模式最终追求的是四个结果：</p>\n<ol>\n<li>路径少\n<ul>\n<li>不到处都能改</li>\n</ul>\n</li>\n<li>真源清楚\n<ul>\n<li>永远知道该 push 哪份</li>\n</ul>\n</li>\n<li>运行态和源码分离\n<ul>\n<li>排障时不把数据问题和源码问题混在一起</li>\n</ul>\n</li>\n<li>回滚容易\n<ul>\n<li>能回滚代码、回滚部署、回滚数据策略，而不是所有东西搅成一团</li>\n</ul>\n</li>\n</ol>\n<h3 id=\"815-例外边界\">8.15 例外边界</h3>\n<p>只有在用户明确要求，或任务天然属于下面这些场景时，才允许偏离这条默认模式：</p>\n<ul>\n<li>用户明确要求保留服务器源码仓</li>\n<li>该系统必须在云端直接构建，且当前没有更稳的 CI / 本地构建路径</li>\n<li>该 repo 天然就是本机专用 consumer/config 层，而不是部署型应用源码</li>\n<li>当前任务是应急修复，且必须先在 live 现场止血</li>\n</ul>\n<p>即便出现例外，也要做到：</p>\n<ul>\n<li>明确这只是例外，不是新的默认模式</li>\n<li>明确谁是临时真源，谁要回灌</li>\n<li>例外结束后尽快恢复到单真源口径</li>\n</ul>\n<h3 id=\"816-默认汇报字段\">8.16 默认汇报字段</h3>\n<p>以后遇到这类开发 / 部署 / 收口任务，默认内部判断与对外汇报都应尽量压成下面这些字段：</p>\n<ul>\n<li><code>canonical source</code></li>\n<li><code>working copy</code></li>\n<li><code>owning repo</code></li>\n<li><code>deploy target</code></li>\n<li><code>runtime state</code></li>\n<li><code>deploy artifact</code></li>\n<li><code>data path</code></li>\n<li><code>mirror / backup</code></li>\n<li><code>verification</code></li>\n<li><code>是否需要回收本地副本</code></li>\n</ul>\n<p>这样做的目的，是让“当前到底该改哪份、推哪份、部署哪份、删哪份”始终清楚。</p>\n<h3 id=\"817-编码级审查清单默认禁止的-defensive-code\">8.17 编码级审查清单：默认禁止的 defensive code</h3>\n<p>从这一条开始，单真源规范不只约束“仓位和路径”，也直接约束“代码里怎么写”。</p>\n<p>默认目标是：</p>\n<ul>\n<li>修契约</li>\n<li>修数据模型</li>\n<li>修真实入口</li>\n<li>修上游调用链</li>\n</ul>\n<p>而不是靠 defensive code 把主路径包起来继续跑。</p>\n<p>以后在代码审查里，默认先问这几个问题：</p>\n<ol>\n<li>这个值为什么会缺？\n<ul>\n<li>是契约真的允许缺失</li>\n<li>还是上游本来就写错了</li>\n</ul>\n</li>\n<li>这个分支是在修根因\n<ul>\n<li>还是只是在吞错误</li>\n</ul>\n</li>\n<li>这段代码是在边界层处理第三方不稳定输入\n<ul>\n<li>还是在核心主路径里给自己加兜底</li>\n</ul>\n</li>\n<li>如果删掉这层 defensive code，真正应该修哪一层？</li>\n</ol>\n<p>默认禁止直接引入下面这些写法，除非后面“允许条件”成立：</p>\n<ol>\n<li><code>fallback</code> / <code>compat</code> / <code>downgrade</code> / <code>graceful degradation</code> 之类双轨语义</li>\n<li><code>ensure*</code> 风格包装函数</li>\n<li>没有证据支撑的 <code>?.</code> / <code>??</code></li>\n<li>用空对象、空数组、空字符串把缺失值直接吞掉</li>\n<li><code>if (!x) return</code>、<code>return null</code>、<code>return []</code> 之类静默退出</li>\n<li>只为了“别报错”而加的 retry wrapper、兼容分支、默认对象</li>\n</ol>\n<p>默认允许 defensive code 的条件，只能是下面这些：</p>\n<ol>\n<li>类型、schema、协议、接口文档明确声明该字段可缺失</li>\n<li>有真实失败证据证明外部输入天然不稳定\n<ul>\n<li>例如第三方 API payload、历史脏数据、跨版本迁移数据</li>\n</ul>\n</li>\n<li>该处理明确位于边界层\n<ul>\n<li>例如 adapter、parser、ingest、migration、compat import</li>\n</ul>\n</li>\n<li>用户明确要求短期过渡层</li>\n<li>当前任务本身就是修复旧数据或迁移现场</li>\n</ol>\n<p>即便满足允许条件，也必须同时做到：</p>\n<ul>\n<li>把 defensive code 限制在边界层，不要扩散到核心主路径</li>\n<li>写清楚为什么允许缺失，而不是只写“防止报错”</li>\n<li>优先修 schema / contract / upstream，再保留最小必要防御</li>\n</ul>\n<p>默认不允许的说法：</p>\n<ul>\n<li>“先加个 fallback 再说”</li>\n<li>“先 optional chaining 一下免得炸”</li>\n<li>“先给个空对象，后面就能跑了”</li>\n<li>“先 ensure 一层比较保险”</li>\n</ul>\n<p>默认允许的说法应该更像：</p>\n<ul>\n<li>“接口契约明确允许该字段为空，所以这里只在 adapter 层做一次归一化”</li>\n<li>“这是第三方 payload 的历史脏数据入口，证据已确认，因此只在 parser 层收口”</li>\n<li>“这是用户明确批准的短期迁移兼容层，后续要拆除”</li>\n</ul>\n<p>以后 review / 自查默认按下面这份执行清单过一遍：</p>\n<ul>\n<li>这段 defensive code 是否有明确契约依据？</li>\n<li>它是否被压在边界层，而不是核心业务路径？</li>\n<li>如果去掉它，是否能直接定位出真正该修的上游？</li>\n<li>它是否引入了第二条行为路径？</li>\n<li>它是否掩盖了本应失败并暴露的问题？</li>\n<li>它是否只是为了“看起来更稳”，而不是让系统结构更正确？</li>\n</ul>\n<p>如果以上问题里有任意一项答不上来，默认就不该加。</p>\n<h3 id=\"818-自动化门禁defensive-code-guard\">8.18 自动化门禁：defensive-code guard</h3>\n<p>为了不让这条规则只停留在文字层，仓内默认再加一层自动化门禁：</p>\n<ul>\n<li>新增 <code>codex/skills/plugin-github--git-delivery/scripts/check-defensive-code.mjs</code></li>\n<li>规则真源放在 <code>codex/skills/plugin-github--git-delivery/policy/defensive-code-guard.json</code></li>\n<li>提交闭环 <code>codex/skills/plugin-github--git-delivery/scripts/repo-finalize.ps1</code>\n在 commit 前默认执行这道检查</li>\n</ul>\n<p>当前 guard 默认检查 staged 改动里的新增代码行，并重点拦截：</p>\n<ol>\n<li><code>fallback</code> / <code>compat</code> / <code>downgrade</code> / <code>graceful degradation</code></li>\n<li><code>ensure*</code></li>\n<li><code>?.</code></li>\n<li><code>??</code></li>\n<li>空对象 / 空数组 / 空字符串式吞错默认值</li>\n</ol>\n<p>这道门禁默认只检查第一方代码路径，不把 docs、cache、dist、archive、vendor\n之类目录混进来。</p>\n<p>如果确实存在经过证明的例外，允许用同一行注释显式豁免：</p>\n<ul>\n<li><code>defensive-code-allow</code></li>\n</ul>\n<p>但这不是鼓励常态化豁免，而是要求：</p>\n<ul>\n<li>只有契约允许缺失时才可豁免</li>\n<li>只有边界层处理时才可豁免</li>\n<li>豁免应带简短理由</li>\n</ul>\n<p>一句话说，这道 guard 的目标不是“让代码更难提交”，而是强制把“先修根因，\n别靠 defensive code 糊住主路径”变成默认机械动作。</p>\n<h2 id=\"九第二批-live-smoke-与第三批垂直-lane\">九、第二批 live smoke 与第三批垂直 lane</h2>\n<p>第二批 5 条 lane 不应长期停留在“只有文本结构成立”的状态；至少要用真实任务补一轮\nlive smoke，证明这些 lane 不只是命名漂亮，而是真的能挂到当前 repo 的高频工作流上。</p>\n<h3 id=\"91-第二批-lane-的-smoke-映射\">9.1 第二批 lane 的 smoke 映射</h3>\n<p>当前推荐用 2-3 个真实高频任务覆盖这 5 条 lane：</p>\n<ol>\n<li><code>research-decision-lane</code>\n<ul>\n<li>真实任务：根据 repo 与计划台账决定下一批优先垂直 lane</li>\n</ul>\n</li>\n<li><code>frontend-closed-loop-lane</code>\n<ul>\n<li>真实任务：对真实前端或内容站点执行 build + preview + 浏览器证据</li>\n</ul>\n</li>\n<li><code>canonical-doc-workflow</code>\n<ul>\n<li>真实任务：把 smoke 结论和 lane 图谱回写到 canonical 文档</li>\n</ul>\n</li>\n<li><code>capability-implementation-lane</code>\n<ul>\n<li>真实任务：把研究结论直接落成新的垂直 lane skills</li>\n</ul>\n</li>\n<li><code>repo-delivery-closeout-lane</code>\n<ul>\n<li>真实任务：对本轮文档、skill、artifact、triad 做 scoped commit + push</li>\n</ul>\n</li>\n</ol>\n<h3 id=\"92-第三批优先方向\">9.2 第三批优先方向</h3>\n<p>在第二批通用 lane 之后，第三批默认优先补“更垂直、但仍保持 thin orchestrator”的 lane。</p>\n<p>当前优先顺序：</p>\n<ol>\n<li><code>content-source-publish-lane</code></li>\n<li><code>server-estate-sync-lane</code></li>\n<li><code>mcp-capability-lifecycle-lane</code></li>\n</ol>\n<p>选择原则：</p>\n<ul>\n<li>优先贴近 repo 里的真实高频任务，而不是继续泛化通用 orchestrator</li>\n<li>优先包装现有 canonical skills，而不是复制正文实现</li>\n<li>若某条业务线已有独立在途边界，则先避让，避免 lane 扩展和在途交付撞车</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "任务包与能力分层路由规范",
+        "text": "任务包与能力分层路由规范"
+      },
+      {
+        "depth": 2,
+        "slug": "目标",
+        "text": "目标"
+      },
+      {
+        "depth": 2,
+        "slug": "一-任务包基线",
+        "text": "一、任务包基线"
+      },
+      {
+        "depth": 3,
+        "slug": "1-1-标准落点",
+        "text": "1.1 标准落点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-2-什么时候必须建任务简报",
+        "text": "1.2 什么时候必须建任务简报"
+      },
+      {
+        "depth": 3,
+        "slug": "1-3-什么时候必须补复杂任务规格",
+        "text": "1.3 什么时候必须补复杂任务规格"
+      },
+      {
+        "depth": 2,
+        "slug": "二-验证包与证据链",
+        "text": "二、验证包与证据链"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-验证包不是-跑过命令",
+        "text": "2.1 验证包不是“跑过命令”"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-证据链的最小结构",
+        "text": "2.2 证据链的最小结构"
+      },
+      {
+        "depth": 3,
+        "slug": "2-3-分类口径",
+        "text": "2.3 分类口径"
+      },
+      {
+        "depth": 2,
+        "slug": "三-项目上下文-handoff-plan-三件套",
+        "text": "三、项目上下文 / handoff / plan 三件套"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-三件套分工",
+        "text": "3.1 三件套分工"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-三件套的最低同步规则",
+        "text": "3.2 三件套的最低同步规则"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-任务包如何挂到三件套",
+        "text": "3.3 任务包如何挂到三件套"
+      },
+      {
+        "depth": 3,
+        "slug": "3-4-plan-plan-md-session-handoff-experience-mcp-的最小分工",
+        "text": "3.4 plan / plan.md / SESSION-HANDOFF / experience / MCP 的最小分工"
+      },
+      {
+        "depth": 3,
+        "slug": "3-5-自动回灌顺序",
+        "text": "3.5 自动回灌顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "四-能力分层路由",
+        "text": "四、能力分层路由"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-分层顺序",
+        "text": "4.1 分层顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-每层负责什么",
+        "text": "4.2 每层负责什么"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-1-mcp-默认优先级",
+        "text": "4.2.1 MCP 默认优先级"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-路由决策脚本",
+        "text": "4.3 路由决策脚本"
+      },
+      {
+        "depth": 2,
+        "slug": "五-与-skill-化的关系",
+        "text": "五、与 Skill 化的关系"
+      },
+      {
+        "depth": 2,
+        "slug": "五点五-经验准入与验证证据",
+        "text": "五点五、经验准入与验证证据"
+      },
+      {
+        "depth": 3,
+        "slug": "5-5-1-什么值得进入-experience-manager",
+        "text": "5.5.1 什么值得进入 experience-manager"
+      },
+      {
+        "depth": 3,
+        "slug": "5-5-2-经验最小字段",
+        "text": "5.5.2 经验最小字段"
+      },
+      {
+        "depth": 3,
+        "slug": "5-5-2-1-auto-的默认门槛",
+        "text": "5.5.2.1 `auto` 的默认门槛"
+      },
+      {
+        "depth": 3,
+        "slug": "5-5-3-验证包里的两个显式决策",
+        "text": "5.5.3 验证包里的两个显式决策"
+      },
+      {
+        "depth": 2,
+        "slug": "六-本轮落地文件",
+        "text": "六、本轮落地文件"
+      },
+      {
+        "depth": 2,
+        "slug": "七-默认执行顺序",
+        "text": "七、默认执行顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "八-ai-时代单真源开发与交付模式",
+        "text": "八、AI 时代单真源开发与交付模式"
+      },
+      {
+        "depth": 3,
+        "slug": "8-1-四个默认角色",
+        "text": "8.1 四个默认角色"
+      },
+      {
+        "depth": 3,
+        "slug": "8-2-默认工作方式",
+        "text": "8.2 默认工作方式"
+      },
+      {
+        "depth": 3,
+        "slug": "8-3-默认禁止项",
+        "text": "8.3 默认禁止项"
+      },
+      {
+        "depth": 3,
+        "slug": "8-4-为什么-ai-时代更要这样做",
+        "text": "8.4 为什么 AI 时代更要这样做"
+      },
+      {
+        "depth": 3,
+        "slug": "8-5-默认交付顺序",
+        "text": "8.5 默认交付顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "8-6-服务器-静态站-内容站的默认口径",
+        "text": "8.6 服务器 / 静态站 / 内容站的默认口径"
+      },
+      {
+        "depth": 3,
+        "slug": "8-7-源码-运行时状态-部署产物-实时数据边界",
+        "text": "8.7 源码 / 运行时状态 / 部署产物 / 实时数据边界"
+      },
+      {
+        "depth": 3,
+        "slug": "8-8-实时数据的默认规则",
+        "text": "8.8 实时数据的默认规则"
+      },
+      {
+        "depth": 3,
+        "slug": "8-9-静态内容与动态内容的默认分层",
+        "text": "8.9 静态内容与动态内容的默认分层"
+      },
+      {
+        "depth": 3,
+        "slug": "8-10-静态站里的实时能力默认做法",
+        "text": "8.10 静态站里的实时能力默认做法"
+      },
+      {
+        "depth": 3,
+        "slug": "8-11-每次新构建后旧静态文件怎么处理",
+        "text": "8.11 每次新构建后旧静态文件怎么处理"
+      },
+      {
+        "depth": 3,
+        "slug": "8-12-构建产物的默认态度",
+        "text": "8.12 构建产物的默认态度"
+      },
+      {
+        "depth": 3,
+        "slug": "8-13-默认决策顺序",
+        "text": "8.13 默认决策顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "8-14-默认维护目标",
+        "text": "8.14 默认维护目标"
+      },
+      {
+        "depth": 3,
+        "slug": "8-15-例外边界",
+        "text": "8.15 例外边界"
+      },
+      {
+        "depth": 3,
+        "slug": "8-16-默认汇报字段",
+        "text": "8.16 默认汇报字段"
+      },
+      {
+        "depth": 3,
+        "slug": "8-17-编码级审查清单-默认禁止的-defensive-code",
+        "text": "8.17 编码级审查清单：默认禁止的 defensive code"
+      },
+      {
+        "depth": 3,
+        "slug": "8-18-自动化门禁-defensive-code-guard",
+        "text": "8.18 自动化门禁：defensive-code guard"
+      },
+      {
+        "depth": 2,
+        "slug": "九-第二批-live-smoke-与第三批垂直-lane",
+        "text": "九、第二批 live smoke 与第三批垂直 lane"
+      },
+      {
+        "depth": 3,
+        "slug": "9-1-第二批-lane-的-smoke-映射",
+        "text": "9.1 第二批 lane 的 smoke 映射"
+      },
+      {
+        "depth": 3,
+        "slug": "9-2-第三批优先方向",
+        "text": "9.2 第三批优先方向"
+      }
+    ],
+    "detailPath": "articles/md_2db03787b570.json"
+  }
+}

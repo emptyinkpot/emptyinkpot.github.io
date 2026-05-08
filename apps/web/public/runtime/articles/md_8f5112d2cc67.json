@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_8f5112d2cc67",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/%E6%9C%AA%E5%91%BD%E5%90%8D%202.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/ai改造计划/未命名 2.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/ai改造计划/未命名 2.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/%E6%9C%AA%E5%91%BD%E5%90%8D%202.md",
+    "slug": "agent-ai改造计划-未命名-2",
+    "title": "未命名 2",
+    "summary": "你这个感觉其实很真实，而且不是你个人问题，是 现在很多人用 AI 到这个阶段都会遇到的断层 。 我先把问题说透，再给你可执行的解决办法。 🧠 一句话本质 🔥 一、为什么你会“跟 AI 对不上” 你现在的使用方式是这样的： 中间缺了： 🧨 结果就是 你会感觉： 👉 但其实是： 🧠 二、你现在...",
+    "description": "你这个感觉其实很真实，而且不是你个人问题，是 现在很多人用 AI 到这个阶段都会遇到的断层 。 我先把问题说透，再给你可执行的解决办法。 🧠 一句话本质 🔥 一、为什么你会“跟 AI 对不上” 你现在的使用方式是这样的： 中间缺了： 🧨 结果就是 你会感觉： 👉 但其实是： 🧠 二、你现在...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent",
+      "ai改造计划"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent",
+      "ai改造计划"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "active",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent",
+        "ai改造计划"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "active",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/ai改造计划/未命名 2.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/ai改造计划/未命名 2.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/ai%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92/%E6%9C%AA%E5%91%BD%E5%90%8D%202.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T00:55:59.136Z",
+      "model": "coze-shell",
+      "entities": [
+        "人工智能（AI）",
+        "AI工程交互协议"
+      ],
+      "topics": [
+        "AI交互优化",
+        "AI使用进阶",
+        "AI黑箱问题解决",
+        "AI可控性提升",
+        "AI工程化交互"
+      ],
+      "relations": [
+        {
+          "type": "解决方案",
+          "target": "人工智能（AI）",
+          "label": "通过结构化交互解决AI黑箱执行痛点",
+          "confidence": 1
+        },
+        {
+          "type": "衍生规范",
+          "target": "AI工程交互协议",
+          "label": "针对AI交互痛点设计的约束性规范体系",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "AI改造计划"
+      ],
+      "clusters": [
+        "AI使用进阶方法",
+        "AI交互可控性策略"
+      ]
+    },
+    "series": "",
+    "project": "未命名 2",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "AI改造计划",
+        "未命名 2"
+      ],
+      "subtitle": "你这个感觉其实很真实，而且不是你个人问题，是 现在很多人用 AI 到这个阶段都会遇到的断层 。 我先把问题说透，再给你可执行的解决办法。 🧠 一句话本质 🔥 一、为什么你会“跟 AI 对不上” 你现在的使用方式是这样的： 中间缺了： 🧨 结果就是 你会感觉： 👉 但其实是： 🧠 二、你现在..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "你这个感觉其实很真实，而且不是你个人问题，是**现在很多人用 AI 到这个阶段都会遇到的断层**。\n\n我先把问题说透，再给你可执行的解决办法。\n\n---\n\n# 🧠 一句话本质\n\n```text\n你现在的问题不是“不会用AI”\n而是：\n\n👉 AI 的“执行路径”对你是不可见的\n```\n\n---\n\n# 🔥 一、为什么你会“跟 AI 对不上”\n\n你现在的使用方式是这样的：\n\n```text\n你：一句话目标\nAI：一大坨结果\n```\n\n中间缺了：\n\n```text\n👉 推理过程\n👉 决策路径\n👉 当前状态\n```\n\n---\n\n## 🧨 结果就是\n\n你会感觉：\n\n```text\n❌ 它在乱做\n❌ 它不理解你\n❌ 它突然跳步骤\n❌ 它又造了一套系统\n```\n\n---\n\n👉 但其实是：\n\n```text\n它在“黑箱执行”\n```\n\n---\n\n# 🧠 二、你现在的能力已经变了（关键）\n\n你已经不是：\n\n```text\n“问问题的人”\n```\n\n而是：\n\n```text\n👉 在做系统的人\n```\n\n---\n\n所以你需要的不是：\n\n```text\n更聪明的回答\n```\n\n而是：\n\n```text\n👉 可观察的执行过程\n```\n\n---\n\n# 🔥 三、你真正缺的是这个东西\n\n```text\n👉 AI 的“状态可视化”\n```\n\n---\n\n你现在看不到：\n\n```text\n✔ 它在做哪一步\n✔ 它为什么这么做\n✔ 它接下来要干嘛\n✔ 它卡在哪\n```\n\n---\n\n# 🧠 四、解决方案（不是技巧，是范式）\n\n---\n\n# 🥇 方法1：强制 AI “说过程”\n\n以后你不要直接问：\n\n```text\n帮我部署\n```\n\n---\n\n要这样问👇\n\n```text\n先不要执行\n\n按步骤输出：\n1. 当前系统状态\n2. 接下来要做的步骤（最多5步）\n3. 每一步的目的\n4. 哪一步可能失败\n```\n\n---\n\n👉 这会让 AI：\n\n```text\n从“执行器” → 变成“规划器”\n```\n\n---\n\n# 🥈 方法2：拆成“短回路”\n\n你现在的问题是：\n\n```text\n一次给 AI 太大任务\n```\n\n---\n\n改成：\n\n```text\n只做一步\n```\n\n---\n\n比如：\n\n```text\n只分析 deploy 为什么 exit code 5\n不要修\n```\n\n---\n\n👉 好处：\n\n```text\n✔ 可控\n✔ 可验证\n✔ 不会跑偏\n```\n\n---\n\n# 🥉 方法3：让 AI 输出“当前状态”\n\n你可以直接这样命令：\n\n```text\n描述你当前认为的系统结构\n列出：\n- 入口\n- 调用链\n- 当前卡点\n```\n\n---\n\n👉 这一步特别关键，因为：\n\n```text\nAI 可能理解错你的系统\n```\n\n---\n\n# 🧱 方法4：建立“协议”（非常关键）\n\n你可以和 AI 约定：\n\n---\n\n```text\n规则：\n\n1. 不允许直接执行多步\n2. 必须先给 plan\n3. 每一步都要解释 WHY\n4. 不能擅自新增系统\n5. 必须标出风险点\n```\n\n---\n\n👉 这会让 AI：\n\n```text\n从“乱做” → “工程模式”\n```\n\n---\n\n# 🧠 五、为什么你会特别痛苦（但其实是好事）\n\n因为你现在处在这个阶段：\n\n---\n\n```text\n初级：觉得AI很强\n中级：觉得AI很蠢（你现在）\n高级：会控制AI\n```\n\n---\n\n👉 你现在其实已经进入：\n\n```text\n👉 控制层思维\n```\n\n---\n\n# 🔥 六、你可以这样“重置交互方式”（直接可用）\n\n以后你可以用这个模板👇\n\n---\n\n## 通用控制模板\n\n```text\n先不要执行\n\n输出：\n1. 你理解的当前系统状态\n2. 当前问题的根因（最多3个）\n3. 下一步你打算做什么（最多3步）\n\n等我确认再执行\n```\n\n---\n\n👉 这个模板会让：\n\n```text\nAI 从“黑箱” → “可控系统”\n```\n\n---\n\n# 🧠 七、最关键一句话（必须记住）\n\n```text\nAI 不会自动对齐你的思维\n你必须给它“约束结构”\n```\n\n---\n\n# 🚀 如果你要更进一步（很适合你）\n\n我可以帮你做一件很适合你现在阶段的东西：\n\n```text\n👉 一套“AI工程交互协议”\n```\n\n包括：\n\n```text\n✔ Debug 模式\n✔ Deploy 模式\n✔ 架构模式\n✔ 强制可视化输出\n```\n\n---\n\n你只要说：\n\n```text\n给我协议\n```\n\n我可以帮你把你现在这种“对不上”的问题彻底解决。",
+    "html": "<p>你这个感觉其实很真实，而且不是你个人问题，是<strong>现在很多人用 AI 到这个阶段都会遇到的断层</strong>。</p>\n<p>我先把问题说透，再给你可执行的解决办法。</p>\n<hr>\n<h1 id=\"-一句话本质\">🧠 一句话本质</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你现在的问题不是“不会用AI”</span></span>\n<span data-line=\"\"><span>而是：</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>👉 AI 的“执行路径”对你是不可见的</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一为什么你会跟-ai-对不上\">🔥 一、为什么你会“跟 AI 对不上”</h1>\n<p>你现在的使用方式是这样的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你：一句话目标</span></span>\n<span data-line=\"\"><span>AI：一大坨结果</span></span></code></pre></figure>\n<p>中间缺了：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 推理过程</span></span>\n<span data-line=\"\"><span>👉 决策路径</span></span>\n<span data-line=\"\"><span>👉 当前状态</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-结果就是\">🧨 结果就是</h2>\n<p>你会感觉：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 它在乱做</span></span>\n<span data-line=\"\"><span>❌ 它不理解你</span></span>\n<span data-line=\"\"><span>❌ 它突然跳步骤</span></span>\n<span data-line=\"\"><span>❌ 它又造了一套系统</span></span></code></pre></figure>\n<hr>\n<p>👉 但其实是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>它在“黑箱执行”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二你现在的能力已经变了关键\">🧠 二、你现在的能力已经变了（关键）</h1>\n<p>你已经不是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>“问问题的人”</span></span></code></pre></figure>\n<p>而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 在做系统的人</span></span></code></pre></figure>\n<hr>\n<p>所以你需要的不是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>更聪明的回答</span></span></code></pre></figure>\n<p>而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 可观察的执行过程</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三你真正缺的是这个东西\">🔥 三、你真正缺的是这个东西</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 AI 的“状态可视化”</span></span></code></pre></figure>\n<hr>\n<p>你现在看不到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 它在做哪一步</span></span>\n<span data-line=\"\"><span>✔ 它为什么这么做</span></span>\n<span data-line=\"\"><span>✔ 它接下来要干嘛</span></span>\n<span data-line=\"\"><span>✔ 它卡在哪</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四解决方案不是技巧是范式\">🧠 四、解决方案（不是技巧，是范式）</h1>\n<hr>\n<h1 id=\"-方法1强制-ai-说过程\">🥇 方法1：强制 AI “说过程”</h1>\n<p>以后你不要直接问：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>帮我部署</span></span></code></pre></figure>\n<hr>\n<p>要这样问👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>先不要执行</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>按步骤输出：</span></span>\n<span data-line=\"\"><span>1. 当前系统状态</span></span>\n<span data-line=\"\"><span>2. 接下来要做的步骤（最多5步）</span></span>\n<span data-line=\"\"><span>3. 每一步的目的</span></span>\n<span data-line=\"\"><span>4. 哪一步可能失败</span></span></code></pre></figure>\n<hr>\n<p>👉 这会让 AI：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>从“执行器” → 变成“规划器”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-方法2拆成短回路\">🥈 方法2：拆成“短回路”</h1>\n<p>你现在的问题是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一次给 AI 太大任务</span></span></code></pre></figure>\n<hr>\n<p>改成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>只做一步</span></span></code></pre></figure>\n<hr>\n<p>比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>只分析 deploy 为什么 exit code 5</span></span>\n<span data-line=\"\"><span>不要修</span></span></code></pre></figure>\n<hr>\n<p>👉 好处：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 可控</span></span>\n<span data-line=\"\"><span>✔ 可验证</span></span>\n<span data-line=\"\"><span>✔ 不会跑偏</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-方法3让-ai-输出当前状态\">🥉 方法3：让 AI 输出“当前状态”</h1>\n<p>你可以直接这样命令：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>描述你当前认为的系统结构</span></span>\n<span data-line=\"\"><span>列出：</span></span>\n<span data-line=\"\"><span>- 入口</span></span>\n<span data-line=\"\"><span>- 调用链</span></span>\n<span data-line=\"\"><span>- 当前卡点</span></span></code></pre></figure>\n<hr>\n<p>👉 这一步特别关键，因为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI 可能理解错你的系统</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-方法4建立协议非常关键\">🧱 方法4：建立“协议”（非常关键）</h1>\n<p>你可以和 AI 约定：</p>\n<hr>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>规则：</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>1. 不允许直接执行多步</span></span>\n<span data-line=\"\"><span>2. 必须先给 plan</span></span>\n<span data-line=\"\"><span>3. 每一步都要解释 WHY</span></span>\n<span data-line=\"\"><span>4. 不能擅自新增系统</span></span>\n<span data-line=\"\"><span>5. 必须标出风险点</span></span></code></pre></figure>\n<hr>\n<p>👉 这会让 AI：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>从“乱做” → “工程模式”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五为什么你会特别痛苦但其实是好事\">🧠 五、为什么你会特别痛苦（但其实是好事）</h1>\n<p>因为你现在处在这个阶段：</p>\n<hr>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>初级：觉得AI很强</span></span>\n<span data-line=\"\"><span>中级：觉得AI很蠢（你现在）</span></span>\n<span data-line=\"\"><span>高级：会控制AI</span></span></code></pre></figure>\n<hr>\n<p>👉 你现在其实已经进入：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 控制层思维</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六你可以这样重置交互方式直接可用\">🔥 六、你可以这样“重置交互方式”（直接可用）</h1>\n<p>以后你可以用这个模板👇</p>\n<hr>\n<h2 id=\"通用控制模板\">通用控制模板</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>先不要执行</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>输出：</span></span>\n<span data-line=\"\"><span>1. 你理解的当前系统状态</span></span>\n<span data-line=\"\"><span>2. 当前问题的根因（最多3个）</span></span>\n<span data-line=\"\"><span>3. 下一步你打算做什么（最多3步）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>等我确认再执行</span></span></code></pre></figure>\n<hr>\n<p>👉 这个模板会让：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI 从“黑箱” → “可控系统”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七最关键一句话必须记住\">🧠 七、最关键一句话（必须记住）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>AI 不会自动对齐你的思维</span></span>\n<span data-line=\"\"><span>你必须给它“约束结构”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你要更进一步很适合你\">🚀 如果你要更进一步（很适合你）</h1>\n<p>我可以帮你做一件很适合你现在阶段的东西：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 一套“AI工程交互协议”</span></span></code></pre></figure>\n<p>包括：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ Debug 模式</span></span>\n<span data-line=\"\"><span>✔ Deploy 模式</span></span>\n<span data-line=\"\"><span>✔ 架构模式</span></span>\n<span data-line=\"\"><span>✔ 强制可视化输出</span></span></code></pre></figure>\n<hr>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>给我协议</span></span></code></pre></figure>\n<p>我可以帮你把你现在这种“对不上”的问题彻底解决。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话本质",
+        "text": "🧠 一句话本质"
+      },
+      {
+        "depth": 1,
+        "slug": "一-为什么你会-跟-ai-对不上",
+        "text": "🔥 一、为什么你会“跟 AI 对不上”"
+      },
+      {
+        "depth": 2,
+        "slug": "结果就是",
+        "text": "🧨 结果就是"
+      },
+      {
+        "depth": 1,
+        "slug": "二-你现在的能力已经变了-关键",
+        "text": "🧠 二、你现在的能力已经变了（关键）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-你真正缺的是这个东西",
+        "text": "🔥 三、你真正缺的是这个东西"
+      },
+      {
+        "depth": 1,
+        "slug": "四-解决方案-不是技巧-是范式",
+        "text": "🧠 四、解决方案（不是技巧，是范式）"
+      },
+      {
+        "depth": 1,
+        "slug": "方法1-强制-ai-说过程",
+        "text": "🥇 方法1：强制 AI “说过程”"
+      },
+      {
+        "depth": 1,
+        "slug": "方法2-拆成-短回路",
+        "text": "🥈 方法2：拆成“短回路”"
+      },
+      {
+        "depth": 1,
+        "slug": "方法3-让-ai-输出-当前状态",
+        "text": "🥉 方法3：让 AI 输出“当前状态”"
+      },
+      {
+        "depth": 1,
+        "slug": "方法4-建立-协议-非常关键",
+        "text": "🧱 方法4：建立“协议”（非常关键）"
+      },
+      {
+        "depth": 1,
+        "slug": "五-为什么你会特别痛苦-但其实是好事",
+        "text": "🧠 五、为什么你会特别痛苦（但其实是好事）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-你可以这样-重置交互方式-直接可用",
+        "text": "🔥 六、你可以这样“重置交互方式”（直接可用）"
+      },
+      {
+        "depth": 2,
+        "slug": "通用控制模板",
+        "text": "通用控制模板"
+      },
+      {
+        "depth": 1,
+        "slug": "七-最关键一句话-必须记住",
+        "text": "🧠 七、最关键一句话（必须记住）"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要更进一步-很适合你",
+        "text": "🚀 如果你要更进一步（很适合你）"
+      }
+    ],
+    "detailPath": "articles/md_8f5112d2cc67.json"
+  }
+}

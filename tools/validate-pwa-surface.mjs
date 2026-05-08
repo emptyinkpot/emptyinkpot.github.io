@@ -6,6 +6,7 @@ const issues = [];
 
 const manifestPath = 'apps/web/public/manifest.webmanifest';
 const serviceWorkerPath = 'apps/web/public/sw.js';
+const assetLinksPath = 'apps/web/public/.well-known/assetlinks.json';
 const baseLayoutPath = 'apps/web/src/layouts/BaseLayout.astro';
 const twaContractPath = 'apps/android-shell/twa.contract.json';
 
@@ -13,6 +14,7 @@ validateManifest();
 validateServiceWorkerBoundary();
 validateLayoutRegistration();
 validateTwaContract();
+validateAssetLinks();
 
 if (issues.length) {
   console.error(['PWA surface validation failed:', ...issues.map((issue) => `- ${issue}`)].join('\n'));
@@ -118,6 +120,11 @@ function validateTwaContract() {
   expectEqual(contract.status, 'auto-generated-twa-artifacts-verified', 'TWA contract status must match verified TWA automation readiness');
   expectEqual(contract.webManifestSource, manifestPath, 'TWA contract manifest source must match canonical path');
   expectEqual(contract.serviceWorkerSource, serviceWorkerPath, 'TWA contract service worker source must match canonical path');
+  expectEqual(contract.assetLinksSource, assetLinksPath, 'TWA contract assetlinks source must match canonical path');
+
+  if (!Array.isArray(contract.sha256CertFingerprints) || !contract.sha256CertFingerprints.length) {
+    issues.push('TWA contract must declare sha256CertFingerprints');
+  }
 
   const boundaries = contract.serviceWorkerBoundary ?? [];
   ['do not intercept /api/*', 'do not intercept /openlist/*', 'do not intercept HTTP Range requests'].forEach((boundary) => {
@@ -125,6 +132,31 @@ function validateTwaContract() {
       issues.push(`TWA contract is missing service worker boundary: ${boundary}`);
     }
   });
+}
+
+function validateAssetLinks() {
+  const contract = readJson(twaContractPath);
+  const statements = readJson(assetLinksPath);
+  if (!Array.isArray(statements)) {
+    issues.push('assetlinks.json must be a JSON array');
+    return;
+  }
+
+  const packageId = contract.packageId || 'com.tengokukk.myblog';
+  const fingerprints = contract.sha256CertFingerprints || [];
+  const matched = statements.some((statement) => {
+    const target = statement?.target || {};
+    const relation = statement?.relation || [];
+    const targetFingerprints = target.sha256_cert_fingerprints || [];
+    return target.namespace === 'android_app' &&
+      target.package_name === packageId &&
+      relation.includes('delegate_permission/common.handle_all_urls') &&
+      fingerprints.every((fingerprint) => targetFingerprints.includes(fingerprint));
+  });
+
+  if (!matched) {
+    issues.push(`assetlinks.json must trust ${packageId} with every TWA contract fingerprint`);
+  }
 }
 
 function readJson(relativePath) {

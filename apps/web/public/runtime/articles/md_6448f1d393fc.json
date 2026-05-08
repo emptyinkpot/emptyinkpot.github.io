@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_6448f1d393fc",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/PDF%E4%BF%AE%E5%A4%8D%E8%AF%B4%E6%98%8E.md",
+    "sourcePath": "/home/vault/Obsidian/docs/PDF修复说明.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/PDF修复说明.md",
+    "openlistUrl": "/openlist/Obsidian/docs/PDF%E4%BF%AE%E5%A4%8D%E8%AF%B4%E6%98%8E.md",
+    "slug": "pdf修复说明",
+    "title": "PDF修复说明",
+    "summary": "PDF 修复说明 当前论文 PDF 出现字体、字号、换行混乱，甚至局部乱码，根本原因主要有三类： 1. 来源 Markdown 过于混杂 原先用于回转的 刘高朋 毕业论文.md 中混有： 学校模板说明文字 封面占位内容 任务书 开题报告 论文正文 这些内容混在一起时，Pandoc docx PDF...",
+    "description": "PDF 修复说明 当前论文 PDF 出现字体、字号、换行混乱，甚至局部乱码，根本原因主要有三类： 1. 来源 Markdown 过于混杂 原先用于回转的 刘高朋 毕业论文.md 中混有： 学校模板说明文字 封面占位内容 任务书 开题报告 论文正文 这些内容混在一起时，Pandoc docx PDF...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "形态-规范"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/PDF修复说明.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/PDF修复说明.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/PDF%E4%BF%AE%E5%A4%8D%E8%AF%B4%E6%98%8E.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "PDF修复说明",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "形态 规范",
+        "PDF修复说明"
+      ],
+      "subtitle": "PDF 修复说明 当前论文 PDF 出现字体、字号、换行混乱，甚至局部乱码，根本原因主要有三类： 1. 来源 Markdown 过于混杂 原先用于回转的 刘高朋 毕业论文.md 中混有： 学校模板说明文字 封面占位内容 任务书 开题报告 论文正文 这些内容混在一起时，Pandoc docx PDF..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## PDF 修复说明\n\n当前论文 PDF 出现字体、字号、换行混乱，甚至局部乱码，根本原因主要有三类：\n\n### 1. 来源 Markdown 过于混杂\n\n原先用于回转的 `刘高朋_毕业论文.md` 中混有：\n\n- 学校模板说明文字\n- 封面占位内容\n- 任务书\n- 开题报告\n- 论文正文\n\n这些内容混在一起时，`Pandoc -> docx -> PDF` 的结果会出现结构断裂、样式继承混乱和不自然分页。\n\n### 2. 原始转换稿里保留了不适合回转的内容\n\n例如：\n\n- 原始图片路径和样式片段\n- HTML 表格\n- 模板中“格式要求说明”本身\n\n这些内容在 Word 回转时不一定会按学校论文正文的逻辑排版。\n\n### 3. 旧 PDF 是从“原始转换稿”生成的\n\n因此其格式问题是链路问题，不只是导出问题。\n\n### 当前修复方案\n\n- 使用 `刘高朋_毕业论文_清洗版.md` 作为默认回转来源\n- 保留原始 `docx` 作为 `reference-doc`\n- 使用 Word COM 导出 PDF\n\n### 当前更稳的输出文件\n\n- `刘高朋_毕业论文_清洗版_回转.docx`\n- `刘高朋_毕业论文_清洗版.pdf`\n\n### 仍需要人工确认的部分\n\n- 封面排版\n- 页眉页脚\n- 图表精确位置\n- 公式编号右对齐\n- 章节分页\n\n这些仍建议在 Word 中做最后一轮人工检查。",
+    "html": "<h2 id=\"pdf-修复说明\">PDF 修复说明</h2>\n<p>当前论文 PDF 出现字体、字号、换行混乱，甚至局部乱码，根本原因主要有三类：</p>\n<h3 id=\"1-来源-markdown-过于混杂\">1. 来源 Markdown 过于混杂</h3>\n<p>原先用于回转的 <code>刘高朋_毕业论文.md</code> 中混有：</p>\n<ul>\n<li>学校模板说明文字</li>\n<li>封面占位内容</li>\n<li>任务书</li>\n<li>开题报告</li>\n<li>论文正文</li>\n</ul>\n<p>这些内容混在一起时，<code>Pandoc -> docx -> PDF</code> 的结果会出现结构断裂、样式继承混乱和不自然分页。</p>\n<h3 id=\"2-原始转换稿里保留了不适合回转的内容\">2. 原始转换稿里保留了不适合回转的内容</h3>\n<p>例如：</p>\n<ul>\n<li>原始图片路径和样式片段</li>\n<li>HTML 表格</li>\n<li>模板中“格式要求说明”本身</li>\n</ul>\n<p>这些内容在 Word 回转时不一定会按学校论文正文的逻辑排版。</p>\n<h3 id=\"3-旧-pdf-是从原始转换稿生成的\">3. 旧 PDF 是从“原始转换稿”生成的</h3>\n<p>因此其格式问题是链路问题，不只是导出问题。</p>\n<h3 id=\"当前修复方案\">当前修复方案</h3>\n<ul>\n<li>使用 <code>刘高朋_毕业论文_清洗版.md</code> 作为默认回转来源</li>\n<li>保留原始 <code>docx</code> 作为 <code>reference-doc</code></li>\n<li>使用 Word COM 导出 PDF</li>\n</ul>\n<h3 id=\"当前更稳的输出文件\">当前更稳的输出文件</h3>\n<ul>\n<li><code>刘高朋_毕业论文_清洗版_回转.docx</code></li>\n<li><code>刘高朋_毕业论文_清洗版.pdf</code></li>\n</ul>\n<h3 id=\"仍需要人工确认的部分\">仍需要人工确认的部分</h3>\n<ul>\n<li>封面排版</li>\n<li>页眉页脚</li>\n<li>图表精确位置</li>\n<li>公式编号右对齐</li>\n<li>章节分页</li>\n</ul>\n<p>这些仍建议在 Word 中做最后一轮人工检查。</p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "pdf-修复说明",
+        "text": "PDF 修复说明"
+      },
+      {
+        "depth": 3,
+        "slug": "1-来源-markdown-过于混杂",
+        "text": "1. 来源 Markdown 过于混杂"
+      },
+      {
+        "depth": 3,
+        "slug": "2-原始转换稿里保留了不适合回转的内容",
+        "text": "2. 原始转换稿里保留了不适合回转的内容"
+      },
+      {
+        "depth": 3,
+        "slug": "3-旧-pdf-是从-原始转换稿-生成的",
+        "text": "3. 旧 PDF 是从“原始转换稿”生成的"
+      },
+      {
+        "depth": 3,
+        "slug": "当前修复方案",
+        "text": "当前修复方案"
+      },
+      {
+        "depth": 3,
+        "slug": "当前更稳的输出文件",
+        "text": "当前更稳的输出文件"
+      },
+      {
+        "depth": 3,
+        "slug": "仍需要人工确认的部分",
+        "text": "仍需要人工确认的部分"
+      }
+    ],
+    "detailPath": "articles/md_6448f1d393fc.json"
+  }
+}

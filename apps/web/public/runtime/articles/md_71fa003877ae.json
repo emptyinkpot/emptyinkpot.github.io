@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_71fa003877ae",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/nginx.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/nginx.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/nginx.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/nginx.md",
+    "slug": "blog-编程规范-nginx",
+    "title": "nginx",
+    "summary": "你这个判断是对的： 这条链路“逻辑是完整的，但拓扑图是不完整的” ，因为你漏掉了一个关键现实层—— 170 服务器本身在链路里的位置没有被标出来 。 ✅ 先给你标准答案 你的链路少了一层“物理宿主机层”。 🧠 正确的完整链路应该是这样： 📌 关键点解释（你漏掉的就是这个） ❗ “170 服务器在...",
+    "description": "你这个判断是对的： 这条链路“逻辑是完整的，但拓扑图是不完整的” ，因为你漏掉了一个关键现实层—— 170 服务器本身在链路里的位置没有被标出来 。 ✅ 先给你标准答案 你的链路少了一层“物理宿主机层”。 🧠 正确的完整链路应该是这样： 📌 关键点解释（你漏掉的就是这个） ❗ “170 服务器在...",
+    "date": "2026-04-25",
+    "updated": "2026-04-25",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/nginx.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/nginx.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/nginx.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "nginx",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "NGINX"
+      ],
+      "subtitle": "你这个判断是对的： 这条链路“逻辑是完整的，但拓扑图是不完整的” ，因为你漏掉了一个关键现实层—— 170 服务器本身在链路里的位置没有被标出来 。 ✅ 先给你标准答案 你的链路少了一层“物理宿主机层”。 🧠 正确的完整链路应该是这样： 📌 关键点解释（你漏掉的就是这个） ❗ “170 服务器在..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "你这个判断是对的：**这条链路“逻辑是完整的，但拓扑图是不完整的”**，因为你漏掉了一个关键现实层——**170 服务器本身在链路里的位置没有被标出来**。\n\n---\n\n# ✅ 先给你标准答案\n\n你的链路少了一层“物理宿主机层”。\n\n---\n\n# 🧠 正确的完整链路应该是这样：\n\n```text\n客户端\n↓\nhttps://key.tengokukk.com/openai/v1\n（DNS → 指向 170.106.179.226）\n↓\n170.106.179.226（真实物理服务器 / VPS / host machine）\n↓\nNginx（部署在 170 服务器上）\n↓\n127.0.0.1:3301（170 服务器本机 loopback）\n↓\nNode Token Pool runtime（同一台 170 服务器进程）\n```\n\n---\n\n# 📌 关键点解释（你漏掉的就是这个）\n\n## ❗ “170 服务器在哪里？”\n\n👉 它不是“一个步骤”，它是**整个 runtime 的宿主机**\n\n也就是说：\n\n> 170.106.179.226 = 承载 Nginx + Node runtime 的物理机器\n\n---\n\n# 🧩 用更工程化的视角看\n\n你现在其实是这个结构：\n\n## 🌐 外部视角（客户端看到的）\n\n```text\nClient\n↓\nDomain (key.tengokukk.com)\n```\n\n---\n\n## 🖥️ 网络层（DNS）\n\n```text\nkey.tengokukk.com\n→ 170.106.179.226\n```\n\n---\n\n## 🏠 服务器内部（170机器内部）\n\n```text\nNginx (public ingress)\n↓\n127.0.0.1:3301 (local service)\n↓\nNode runtime\n```\n\n---\n\n# ⚠️ 你当前图的问题本质\n\n你现在的图是：\n\n> 只画了“应用链路”，没画“物理宿主层”\n\n所以缺了一层：\n\n```\nDNS / Host Layer（170.106.179.226）\n```\n\n---\n\n# 🧠 一句话帮你纠正模型\n\n你现在应该用这个 mental model：\n\n> ❌ 你画的是 request flow  \n> ✔ 但缺的是 deployment topology\n\n---\n\n# 🔥 标准工业版正确结构（推荐你用这个当 canonical）\n\n```text\n[Client]\n   ↓\n[DNS: key.tengokukk.com]\n   ↓\n[Host: 170.106.179.226]\n   ↓\n[Nginx (ingress layer)]\n   ↓\n[127.0.0.1:3301 (private loopback)]\n   ↓\n[Node Token Pool Runtime]\n   ↓\n[Provider Pool / Upstreams]\n```\n\n---\n\n# ⚠️ 再补一个你容易忽略的点（很关键）\n\n你现在图里**还缺最后一层**：\n\n## ❗ provider 才是最终真实执行层\n\n你现在写到：\n\n> Node 服务（Token Pool runtime）\n\n但真实链路通常是：\n\n```text\nNode runtime\n↓\nProvider Pool\n↓\nOpenAI / Claude / other upstream APIs\n```\n\n---\n\n# ✔ 总结（直接结论）\n\n你问的两个点：\n\n## ❓ 链路完整吗？\n\n👉 **不完整（缺 host + provider 层）**\n\n---\n\n## ❓ 170 服务器在哪？\n\n👉 它就是：\n\n> DNS 指向的那台物理机器（170.106.179.226），承载 Nginx + Node runtime 的宿主机\n\n---\n\n# 🧠 如果你想再升级一步（建议）\n\n你现在这套已经可以升级成：\n\n> **Control Plane / Data Plane / Host Plane 三层架构图**\n\n如果你要，我可以帮你画一个：\n\n- 完整 ingress / runtime / provider topology\n    \n- 加上 failure path（502 / 429 / fallback）\n    \n- 加上 routing decision point\n    \n\n会比你现在这个图再工业级一档。\n\n\n\n\n\n\n上游 402\n  ↓\nhandleStreamRequest 进入错误分支\n  ↓\nres.write(error)\n  ↓\nres.end()\n  ↓\nfinally 又 res.end()\n  ↓\nERR_STREAM_WRITE_AFTER_END\n  ↓\nNode 抛异常\n  ↓\naiclient-2-api-mock.service 崩\n  ↓\nNginx → 502 Bad Gateway\n\n\n我给你**人话+底层原理**，一次性讲懂「为啥非要多一层 127.0.0.1」，超好理解。 --- ## 先记两个关键 1. 你项目 `.env` 里： ```ini HOST=0.0.0.0 SERVER_PORT=3301 ``` `0.0.0.0` = 本机**所有网卡**都能连（内网、外网、本地都行） 2. 但你 **Nginx 刻意写成了** ``` proxy_pass http://127.0.0.1:3301 ``` --- ## 核心问题： ### 明明可以直接用 `公网IP:3301` 为什么 Nginx 非要绕一下，发给 **127.0.0.1**？ --- # 一、最核心原因：安全（第一优先级） ### 方案A（不安全，不推荐） 直接暴露： ``` 外网 → 170.106.179.226:3301 → Node程序 ``` - 3301 端口直接裸露公网 - 任何人扫端口、暴力请求、攻击、爬虫、CC 都能直接打你程序 - Node 直接扛外网压力，容易崩、被打挂 ### 方案B（你现在的架构，标准最佳实践） ``` 外网 → Nginx(443/https) → 127.0.0.1:3301 → Node ``` - **3301 端口只允许服务器自己访问** - 外网完全碰不到你的 Node 程序 - 所有攻击、恶意流量、垃圾请求，全部先被 Nginx 挡住 👉 **127 就是一道隔离墙** --- # 二、127.0.0.1 是什么？ - `127.0.0.1` = **本机闭环地址** - 只有**这台服务器自己**能访问 - 外面设备、别的VPS、手机、电脑，**永远连不上 127** 所以： Nginx 跟 Node 都是**同一台机器内部对话**，走本地回路，不走公网，又快又安全。 --- # 三、额外好处（为啥行业全都这么干） 1. **统一管理 HTTPS/证书** 证书、域名、SSL 全部丢给 Nginx 配置，Node 不用管，省心。 2. **隐藏后端结构** 外人只看见你的域名，看不见端口、看不见你是 Node 池子、看不见架构。 3. **方便扩容/切换** 以后哪怕把 Node 改成 127:3302、3303，只改 Nginx 一行配置就行。 4. **限速、防爬、缓存、日志** 全部由 Nginx 前置处理，减轻你的 AI 池子压力。 --- # 四、举个生活化例子 - **Node 程序 = 家里保险柜** - **Nginx = 小区大门+保安亭** - **127.0.0.1 = 小区内部专属小路** 外人只能走到小区大门（域名/443） 不能直接冲到你家保险柜门口（3301公网暴露） 保安（Nginx）检查完，走内部小路送货上门。 --- # 五、直白总结回答你 1. 不是程序**只能用127**； 2. 是**人为故意**让 Nginx 用 127 内网转发； 3. 目的：**隔离外网、保护端口、安全、好管理证书**； 4. 外部用户照常通过你的域名 `key.tengokukk.com` 正常使用，毫无感知。 --- ## 你想不想看： 我给你写一份「**不用127、直接公网3301裸奔**」的对比，让你一眼看懂差别多大？",
+    "html": "<p>你这个判断是对的：<strong>这条链路“逻辑是完整的，但拓扑图是不完整的”</strong>，因为你漏掉了一个关键现实层——<strong>170 服务器本身在链路里的位置没有被标出来</strong>。</p>\n<hr>\n<h1 id=\"-先给你标准答案\">✅ 先给你标准答案</h1>\n<p>你的链路少了一层“物理宿主机层”。</p>\n<hr>\n<h1 id=\"-正确的完整链路应该是这样\">🧠 正确的完整链路应该是这样：</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>客户端</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>https://key.tengokukk.com/openai/v1</span></span>\n<span data-line=\"\"><span>（DNS → 指向 170.106.179.226）</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>170.106.179.226（真实物理服务器 / VPS / host machine）</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Nginx（部署在 170 服务器上）</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>127.0.0.1:3301（170 服务器本机 loopback）</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Node Token Pool runtime（同一台 170 服务器进程）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-关键点解释你漏掉的就是这个\">📌 关键点解释（你漏掉的就是这个）</h1>\n<h2 id=\"-170-服务器在哪里\">❗ “170 服务器在哪里？”</h2>\n<p>👉 它不是“一个步骤”，它是<strong>整个 runtime 的宿主机</strong></p>\n<p>也就是说：</p>\n<blockquote>\n<p>170.106.179.226 = 承载 Nginx + Node runtime 的物理机器</p>\n</blockquote>\n<hr>\n<h1 id=\"-用更工程化的视角看\">🧩 用更工程化的视角看</h1>\n<p>你现在其实是这个结构：</p>\n<h2 id=\"-外部视角客户端看到的\">🌐 外部视角（客户端看到的）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Domain (key.tengokukk.com)</span></span></code></pre></figure>\n<hr>\n<h2 id=\"️-网络层dns\">🖥️ 网络层（DNS）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>key.tengokukk.com</span></span>\n<span data-line=\"\"><span>→ 170.106.179.226</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-服务器内部170机器内部\">🏠 服务器内部（170机器内部）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Nginx (public ingress)</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>127.0.0.1:3301 (local service)</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Node runtime</span></span></code></pre></figure>\n<hr>\n<h1 id=\"️-你当前图的问题本质\">⚠️ 你当前图的问题本质</h1>\n<p>你现在的图是：</p>\n<blockquote>\n<p>只画了“应用链路”，没画“物理宿主层”</p>\n</blockquote>\n<p>所以缺了一层：</p>\n<pre><code>DNS / Host Layer（170.106.179.226）\n</code></pre>\n<hr>\n<h1 id=\"-一句话帮你纠正模型\">🧠 一句话帮你纠正模型</h1>\n<p>你现在应该用这个 mental model：</p>\n<blockquote>\n<p>❌ 你画的是 request flow<br>\n✔ 但缺的是 deployment topology</p>\n</blockquote>\n<hr>\n<h1 id=\"-标准工业版正确结构推荐你用这个当-canonical\">🔥 标准工业版正确结构（推荐你用这个当 canonical）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>[Client]</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>[DNS: key.tengokukk.com]</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>[Host: 170.106.179.226]</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>[Nginx (ingress layer)]</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>[127.0.0.1:3301 (private loopback)]</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>[Node Token Pool Runtime]</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>[Provider Pool / Upstreams]</span></span></code></pre></figure>\n<hr>\n<h1 id=\"️-再补一个你容易忽略的点很关键\">⚠️ 再补一个你容易忽略的点（很关键）</h1>\n<p>你现在图里<strong>还缺最后一层</strong>：</p>\n<h2 id=\"-provider-才是最终真实执行层\">❗ provider 才是最终真实执行层</h2>\n<p>你现在写到：</p>\n<blockquote>\n<p>Node 服务（Token Pool runtime）</p>\n</blockquote>\n<p>但真实链路通常是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node runtime</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>Provider Pool</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>OpenAI / Claude / other upstream APIs</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-总结直接结论\">✔ 总结（直接结论）</h1>\n<p>你问的两个点：</p>\n<h2 id=\"-链路完整吗\">❓ 链路完整吗？</h2>\n<p>👉 <strong>不完整（缺 host + provider 层）</strong></p>\n<hr>\n<h2 id=\"-170-服务器在哪\">❓ 170 服务器在哪？</h2>\n<p>👉 它就是：</p>\n<blockquote>\n<p>DNS 指向的那台物理机器（170.106.179.226），承载 Nginx + Node runtime 的宿主机</p>\n</blockquote>\n<hr>\n<h1 id=\"-如果你想再升级一步建议\">🧠 如果你想再升级一步（建议）</h1>\n<p>你现在这套已经可以升级成：</p>\n<blockquote>\n<p><strong>Control Plane / Data Plane / Host Plane 三层架构图</strong></p>\n</blockquote>\n<p>如果你要，我可以帮你画一个：</p>\n<ul>\n<li>\n<p>完整 ingress / runtime / provider topology</p>\n</li>\n<li>\n<p>加上 failure path（502 / 429 / fallback）</p>\n</li>\n<li>\n<p>加上 routing decision point</p>\n</li>\n</ul>\n<p>会比你现在这个图再工业级一档。</p>\n<p>上游 402\n↓\nhandleStreamRequest 进入错误分支\n↓\nres.write(error)\n↓\nres.end()\n↓\nfinally 又 res.end()\n↓\nERR_STREAM_WRITE_AFTER_END\n↓\nNode 抛异常\n↓\naiclient-2-api-mock.service 崩\n↓\nNginx → 502 Bad Gateway</p>\n<p>我给你<strong>人话+底层原理</strong>，一次性讲懂「为啥非要多一层 127.0.0.1」，超好理解。 --- ## 先记两个关键 1. 你项目 <code>.env</code> 里： <code>ini HOST=0.0.0.0 SERVER_PORT=3301 </code> <code>0.0.0.0</code> = 本机<strong>所有网卡</strong>都能连（内网、外网、本地都行） 2. 但你 <strong>Nginx 刻意写成了</strong> <code>proxy_pass http://127.0.0.1:3301</code> --- ## 核心问题： ### 明明可以直接用 <code>公网IP:3301</code> 为什么 Nginx 非要绕一下，发给 <strong>127.0.0.1</strong>？ --- # 一、最核心原因：安全（第一优先级） ### 方案A（不安全，不推荐） 直接暴露： <code>外网 → 170.106.179.226:3301 → Node程序</code> - 3301 端口直接裸露公网 - 任何人扫端口、暴力请求、攻击、爬虫、CC 都能直接打你程序 - Node 直接扛外网压力，容易崩、被打挂 ### 方案B（你现在的架构，标准最佳实践） <code>外网 → Nginx(443/https) → 127.0.0.1:3301 → Node</code> - <strong>3301 端口只允许服务器自己访问</strong> - 外网完全碰不到你的 Node 程序 - 所有攻击、恶意流量、垃圾请求，全部先被 Nginx 挡住 👉 <strong>127 就是一道隔离墙</strong> --- # 二、127.0.0.1 是什么？ - <code>127.0.0.1</code> = <strong>本机闭环地址</strong> - 只有<strong>这台服务器自己</strong>能访问 - 外面设备、别的VPS、手机、电脑，<strong>永远连不上 127</strong> 所以： Nginx 跟 Node 都是<strong>同一台机器内部对话</strong>，走本地回路，不走公网，又快又安全。 --- # 三、额外好处（为啥行业全都这么干） 1. <strong>统一管理 HTTPS/证书</strong> 证书、域名、SSL 全部丢给 Nginx 配置，Node 不用管，省心。 2. <strong>隐藏后端结构</strong> 外人只看见你的域名，看不见端口、看不见你是 Node 池子、看不见架构。 3. <strong>方便扩容/切换</strong> 以后哪怕把 Node 改成 127:3302、3303，只改 Nginx 一行配置就行。 4. <strong>限速、防爬、缓存、日志</strong> 全部由 Nginx 前置处理，减轻你的 AI 池子压力。 --- # 四、举个生活化例子 - <strong>Node 程序 = 家里保险柜</strong> - <strong>Nginx = 小区大门+保安亭</strong> - <strong>127.0.0.1 = 小区内部专属小路</strong> 外人只能走到小区大门（域名/443） 不能直接冲到你家保险柜门口（3301公网暴露） 保安（Nginx）检查完，走内部小路送货上门。 --- # 五、直白总结回答你 1. 不是程序<strong>只能用127</strong>； 2. 是<strong>人为故意</strong>让 Nginx 用 127 内网转发； 3. 目的：<strong>隔离外网、保护端口、安全、好管理证书</strong>； 4. 外部用户照常通过你的域名 <code>key.tengokukk.com</code> 正常使用，毫无感知。 --- ## 你想不想看： 我给你写一份「<strong>不用127、直接公网3301裸奔</strong>」的对比，让你一眼看懂差别多大？</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "先给你标准答案",
+        "text": "✅ 先给你标准答案"
+      },
+      {
+        "depth": 1,
+        "slug": "正确的完整链路应该是这样",
+        "text": "🧠 正确的完整链路应该是这样："
+      },
+      {
+        "depth": 1,
+        "slug": "关键点解释-你漏掉的就是这个",
+        "text": "📌 关键点解释（你漏掉的就是这个）"
+      },
+      {
+        "depth": 2,
+        "slug": "170-服务器在哪里",
+        "text": "❗ “170 服务器在哪里？”"
+      },
+      {
+        "depth": 1,
+        "slug": "用更工程化的视角看",
+        "text": "🧩 用更工程化的视角看"
+      },
+      {
+        "depth": 2,
+        "slug": "外部视角-客户端看到的",
+        "text": "🌐 外部视角（客户端看到的）"
+      },
+      {
+        "depth": 2,
+        "slug": "网络层-dns",
+        "text": "🖥️ 网络层（DNS）"
+      },
+      {
+        "depth": 2,
+        "slug": "服务器内部-170机器内部",
+        "text": "🏠 服务器内部（170机器内部）"
+      },
+      {
+        "depth": 1,
+        "slug": "你当前图的问题本质",
+        "text": "⚠️ 你当前图的问题本质"
+      },
+      {
+        "depth": 1,
+        "slug": "一句话帮你纠正模型",
+        "text": "🧠 一句话帮你纠正模型"
+      },
+      {
+        "depth": 1,
+        "slug": "标准工业版正确结构-推荐你用这个当-canonical",
+        "text": "🔥 标准工业版正确结构（推荐你用这个当 canonical）"
+      },
+      {
+        "depth": 1,
+        "slug": "再补一个你容易忽略的点-很关键",
+        "text": "⚠️ 再补一个你容易忽略的点（很关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "provider-才是最终真实执行层",
+        "text": "❗ provider 才是最终真实执行层"
+      },
+      {
+        "depth": 1,
+        "slug": "总结-直接结论",
+        "text": "✔ 总结（直接结论）"
+      },
+      {
+        "depth": 2,
+        "slug": "链路完整吗",
+        "text": "❓ 链路完整吗？"
+      },
+      {
+        "depth": 2,
+        "slug": "170-服务器在哪",
+        "text": "❓ 170 服务器在哪？"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你想再升级一步-建议",
+        "text": "🧠 如果你想再升级一步（建议）"
+      }
+    ],
+    "detailPath": "articles/md_71fa003877ae.json"
+  }
+}

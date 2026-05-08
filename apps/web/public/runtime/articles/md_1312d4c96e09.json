@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_1312d4c96e09",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%94%B9%E4%BB%A3%E7%A0%81%E5%88%B0%E9%83%A8%E7%BD%B2.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/改代码到部署.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/改代码到部署.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%94%B9%E4%BB%A3%E7%A0%81%E5%88%B0%E9%83%A8%E7%BD%B2.md",
+    "slug": "blog-编程规范-改代码到部署",
+    "title": "改代码到部署",
+    "summary": "好，这一条我给你整理成 一套完整、正确、以后不再出错的流程 ，从“改代码 → build → 部署 → 验证 → 接口”全部打通，一次讲清楚。 🧠 一、整体正确思路（先记住这个） 分层处理，按顺序走，任何一步不对都不能往下跳 👉 这就是完整链路 🧱 二、从修改到上线的正确流程（标准版） ✅ 第...",
+    "description": "好，这一条我给你整理成 一套完整、正确、以后不再出错的流程 ，从“改代码 → build → 部署 → 验证 → 接口”全部打通，一次讲清楚。 🧠 一、整体正确思路（先记住这个） 分层处理，按顺序走，任何一步不对都不能往下跳 👉 这就是完整链路 🧱 二、从修改到上线的正确流程（标准版） ✅ 第...",
+    "date": "2026-05-02",
+    "updated": "2026-05-02",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/改代码到部署.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/改代码到部署.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%94%B9%E4%BB%A3%E7%A0%81%E5%88%B0%E9%83%A8%E7%BD%B2.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "改代码到部署",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "改代码到部署"
+      ],
+      "subtitle": "好，这一条我给你整理成 一套完整、正确、以后不再出错的流程 ，从“改代码 → build → 部署 → 验证 → 接口”全部打通，一次讲清楚。 🧠 一、整体正确思路（先记住这个） 分层处理，按顺序走，任何一步不对都不能往下跳 👉 这就是完整链路 🧱 二、从修改到上线的正确流程（标准版） ✅ 第..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "好，这一条我给你整理成**一套完整、正确、以后不再出错的流程**，从“改代码 → build → 部署 → 验证 → 接口”全部打通，一次讲清楚。\n\n---\n\n# 🧠 一、整体正确思路（先记住这个）\n\n> **分层处理，按顺序走，任何一步不对都不能往下跳**\n\n```text\n1. 前端代码\n2. 前端 build\n3. 上传到 data/public\n4. 确认 index.html 生效（hash）\n5. 浏览器加载正确资源\n6. nginx 转发正确\n7. 后端接口正常\n8. token / 业务逻辑\n```\n\n👉 这就是完整链路\n\n---\n\n# 🧱 二、从修改到上线的正确流程（标准版）\n\n---\n\n## ✅ 第 1 步：修改前端代码\n\n```text\nfrontend/src/...\n```\n\n👉 比如：\n\n- AccountsView.vue\n    \n- DataTable.vue\n    \n\n---\n\n## ✅ 第 2 步：只从唯一入口 build\n\n```bash\ncd frontend\nnpm run build\n```\n\n---\n\n### ❗必须记住\n\n```text\n唯一产物 = frontend/dist\n```\n\n禁止：\n\n```text\n❌ backend/internal/web/dist\n❌ 手动改 JS 文件\n❌ 覆盖 hash\n```\n\n---\n\n## ✅ 第 3 步：上传到服务器\n\n```bash\nscp -r frontend/dist/* server-170:/srv/sub2api/deploy/data/public/\n```\n\n---\n\n## ✅ 第 4 步：确认 index.html 已更新（关键）\n\n```bash\nssh server-170 \"\ngrep index- /srv/sub2api/deploy/data/public/index.html\n\"\n```\n\n---\n\n### 👉 判断\n\n- ✔ 新 hash → 继续\n    \n- ❌ 旧 hash → 上传失败（停）\n    \n\n---\n\n## ✅ 第 5 步：确认线上返回的是同一份\n\n```bash\ncurl https://sub2api.tengokukk.com | grep index-\n```\n\n---\n\n👉 必须一致：\n\n```text\n本地 index.html hash = 线上返回 hash\n```\n\n---\n\n## ✅ 第 6 步：浏览器强刷\n\n```text\nCtrl + Shift + R\n```\n\n---\n\n👉 避免缓存\n\n---\n\n# 🌐 三、nginx 正确配置（你刚修好的关键）\n\n---\n\n## ❗之前错误\n\n```nginx\nlocation ^~ /api/ {\n    proxy_pass http://127.0.0.1:8080;\n}\n```\n\n👉 只转发 `/api/*`\n\n---\n\n## ✅ 正确做法（推荐）\n\n```nginx\nlocation / {\n    proxy_pass http://127.0.0.1:8080;\n\n    proxy_set_header Host $host;\n    proxy_set_header X-Real-IP $remote_addr;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n\n    proxy_http_version 1.1;\n}\n```\n\n---\n\n👉 含义：\n\n```text\n所有路径（/responses /admin /xxx）\n都转发给后端\n```\n\n---\n\n# 🔌 四、接口验证流程（防止再乱）\n\n---\n\n## ✅ 第 7 步：直接测后端\n\n```bash\ncurl -X POST http://127.0.0.1:8080/responses\n```\n\n---\n\n## ✅ 第 8 步：测域名\n\n```powershell\niwr https://sub2api.tengokukk.com/responses -Method POST\n```\n\n---\n\n### 👉 判断\n\n|返回|含义|\n|---|---|\n|405|nginx 拦了 ❌|\n|401|到后端了 ✔|\n|200|完全 OK ✔|\n\n---\n\n# 🔐 五、token / 前端请求（最后一层）\n\n---\n\n## 浏览器看：\n\n```text\nNetwork → /responses\n```\n\n检查：\n\n```text\nRequest Method: POST\nAuthorization: Bearer xxx\n```\n\n---\n\n# 💥 六、你们刚刚犯的所有错误总结\n\n---\n\n## ❌ 错误 1：build 用错目录\n\n```text\nbackend/internal/web/dist ❌\n```\n\n---\n\n## ❌ 错误 2：只传 assets，不传 index.html\n\n```text\nJS 新 + HTML 旧 → 必炸\n```\n\n---\n\n## ❌ 错误 3：手动改 hash\n\n```text\n新文件 → 覆盖旧 hash ❌\n```\n\n---\n\n## ❌ 错误 4：没确认 override 是否生效\n\n```text\n没验证 index.html 就开始改 UI ❌\n```\n\n---\n\n## ❌ 错误 5：nginx 路由错误（最致命）\n\n```text\n只代理 /api/\n→ /responses 直接 405\n```\n\n---\n\n## ❌ 错误 6：没有分层排查\n\n```text\nUI → 前端 → token → nginx（顺序完全反）\n```\n\n---\n\n# 🎯 七、最终正确“最小操作流程”（以后就用这个）\n\n只要改 UI：\n\n```bash\ncd frontend\nnpm run build\nscp -r dist/* server:/srv/sub2api/deploy/data/public/\n```\n\n然后：\n\n```bash\nssh server \"grep index- /srv/sub2api/deploy/data/public/index.html\"\n```\n\n刷新浏览器。\n\n---\n\n# 🧠 八、你必须记住的三条铁律\n\n---\n\n## 1️⃣ UI问题 ≠ 后端问题\n\n---\n\n## 2️⃣ 405 nginx 页面 = 没转发\n\n---\n\n## 3️⃣ index.html 决定一切\n\n---\n\n# 💬 最后一段总结（最重要）\n\n你这次其实经历的是：\n\n```text\n一个简单问题\n→ 被多层误判\n→ 扩散成系统级混乱\n```\n\n而正确流程其实一直很简单：\n\n> **build → 上传 → 验证 hash → 看接口 → 再看 UI**\n\n---\n\n如果你要，我可以帮你下一步直接做：\n\n👉 **一键部署 + 自动校验（不会再出错的那种）**",
+    "html": "<p>好，这一条我给你整理成<strong>一套完整、正确、以后不再出错的流程</strong>，从“改代码 → build → 部署 → 验证 → 接口”全部打通，一次讲清楚。</p>\n<hr>\n<h1 id=\"-一整体正确思路先记住这个\">🧠 一、整体正确思路（先记住这个）</h1>\n<blockquote>\n<p><strong>分层处理，按顺序走，任何一步不对都不能往下跳</strong></p>\n</blockquote>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>1. 前端代码</span></span>\n<span data-line=\"\"><span>2. 前端 build</span></span>\n<span data-line=\"\"><span>3. 上传到 data/public</span></span>\n<span data-line=\"\"><span>4. 确认 index.html 生效（hash）</span></span>\n<span data-line=\"\"><span>5. 浏览器加载正确资源</span></span>\n<span data-line=\"\"><span>6. nginx 转发正确</span></span>\n<span data-line=\"\"><span>7. 后端接口正常</span></span>\n<span data-line=\"\"><span>8. token / 业务逻辑</span></span></code></pre></figure>\n<p>👉 这就是完整链路</p>\n<hr>\n<h1 id=\"-二从修改到上线的正确流程标准版\">🧱 二、从修改到上线的正确流程（标准版）</h1>\n<hr>\n<h2 id=\"-第-1-步修改前端代码\">✅ 第 1 步：修改前端代码</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>frontend/src/...</span></span></code></pre></figure>\n<p>👉 比如：</p>\n<ul>\n<li>\n<p>AccountsView.vue</p>\n</li>\n<li>\n<p>DataTable.vue</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-第-2-步只从唯一入口-build\">✅ 第 2 步：只从唯一入口 build</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF\">cd</span><span style=\"color:#9ECBFF\"> frontend</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">npm</span><span style=\"color:#9ECBFF\"> run</span><span style=\"color:#9ECBFF\"> build</span></span></code></pre></figure>\n<hr>\n<h3 id=\"必须记住\">❗必须记住</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>唯一产物 = frontend/dist</span></span></code></pre></figure>\n<p>禁止：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ backend/internal/web/dist</span></span>\n<span data-line=\"\"><span>❌ 手动改 JS 文件</span></span>\n<span data-line=\"\"><span>❌ 覆盖 hash</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-第-3-步上传到服务器\">✅ 第 3 步：上传到服务器</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">scp</span><span style=\"color:#79B8FF\"> -r</span><span style=\"color:#9ECBFF\"> frontend/dist/</span><span style=\"color:#79B8FF\">*</span><span style=\"color:#9ECBFF\"> server-170:/srv/sub2api/deploy/data/public/</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-第-4-步确认-indexhtml-已更新关键\">✅ 第 4 步：确认 index.html 已更新（关键）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">ssh</span><span style=\"color:#9ECBFF\"> server-170</span><span style=\"color:#9ECBFF\"> \"</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">grep index- /srv/sub2api/deploy/data/public/index.html</span></span>\n<span data-line=\"\"><span style=\"color:#9ECBFF\">\"</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-判断\">👉 判断</h3>\n<ul>\n<li>\n<p>✔ 新 hash → 继续</p>\n</li>\n<li>\n<p>❌ 旧 hash → 上传失败（停）</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-第-5-步确认线上返回的是同一份\">✅ 第 5 步：确认线上返回的是同一份</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">curl</span><span style=\"color:#9ECBFF\"> https://sub2api.tengokukk.com</span><span style=\"color:#F97583\"> |</span><span style=\"color:#B392F0\"> grep</span><span style=\"color:#9ECBFF\"> index-</span></span></code></pre></figure>\n<hr>\n<p>👉 必须一致：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>本地 index.html hash = 线上返回 hash</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-第-6-步浏览器强刷\">✅ 第 6 步：浏览器强刷</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Ctrl + Shift + R</span></span></code></pre></figure>\n<hr>\n<p>👉 避免缓存</p>\n<hr>\n<h1 id=\"-三nginx-正确配置你刚修好的关键\">🌐 三、nginx 正确配置（你刚修好的关键）</h1>\n<hr>\n<h2 id=\"之前错误\">❗之前错误</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"nginx\" data-theme=\"github-dark\"><code data-language=\"nginx\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">location</span><span style=\"color:#F97583\"> ^~</span><span style=\"color:#DBEDFF\"> /api/ </span><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    proxy_pass </span><span style=\"color:#E1E4E8\">http://127.0.0.1:8080;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>👉 只转发 <code>/api/*</code></p>\n<hr>\n<h2 id=\"-正确做法推荐\">✅ 正确做法（推荐）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"nginx\" data-theme=\"github-dark\"><code data-language=\"nginx\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">location</span><span style=\"color:#B392F0\"> / </span><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    proxy_pass </span><span style=\"color:#E1E4E8\">http://127.0.0.1:8080;</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">    proxy_set_header </span><span style=\"color:#E1E4E8\">Host $host;</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    proxy_set_header </span><span style=\"color:#E1E4E8\">X-Real-IP $remote_addr;</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">    proxy_set_header </span><span style=\"color:#E1E4E8\">X-Forwarded-For $proxy_add_x_forwarded_for;</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span style=\"color:#F97583\">    proxy_http_version </span><span style=\"color:#79B8FF\">1.1</span><span style=\"color:#E1E4E8\">;</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<p>👉 含义：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>所有路径（/responses /admin /xxx）</span></span>\n<span data-line=\"\"><span>都转发给后端</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四接口验证流程防止再乱\">🔌 四、接口验证流程（防止再乱）</h1>\n<hr>\n<h2 id=\"-第-7-步直接测后端\">✅ 第 7 步：直接测后端</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">curl</span><span style=\"color:#79B8FF\"> -X</span><span style=\"color:#9ECBFF\"> POST</span><span style=\"color:#9ECBFF\"> http://127.0.0.1:8080/responses</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-第-8-步测域名\">✅ 第 8 步：测域名</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">iwr https:</span><span style=\"color:#F97583\">//</span><span style=\"color:#79B8FF\">sub2api.tengokukk.com</span><span style=\"color:#F97583\">/</span><span style=\"color:#E1E4E8\">responses </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">Method POST</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-判断-1\">👉 判断</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>返回</th>\n<th>含义</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>405</td>\n<td>nginx 拦了 ❌</td>\n</tr>\n<tr>\n<td>401</td>\n<td>到后端了 ✔</td>\n</tr>\n<tr>\n<td>200</td>\n<td>完全 OK ✔</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h1 id=\"-五token--前端请求最后一层\">🔐 五、token / 前端请求（最后一层）</h1>\n<hr>\n<h2 id=\"浏览器看\">浏览器看：</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Network → /responses</span></span></code></pre></figure>\n<p>检查：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Request Method: POST</span></span>\n<span data-line=\"\"><span>Authorization: Bearer xxx</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六你们刚刚犯的所有错误总结\">💥 六、你们刚刚犯的所有错误总结</h1>\n<hr>\n<h2 id=\"-错误-1build-用错目录\">❌ 错误 1：build 用错目录</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>backend/internal/web/dist ❌</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-错误-2只传-assets不传-indexhtml\">❌ 错误 2：只传 assets，不传 index.html</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>JS 新 + HTML 旧 → 必炸</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-错误-3手动改-hash\">❌ 错误 3：手动改 hash</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>新文件 → 覆盖旧 hash ❌</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-错误-4没确认-override-是否生效\">❌ 错误 4：没确认 override 是否生效</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>没验证 index.html 就开始改 UI ❌</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-错误-5nginx-路由错误最致命\">❌ 错误 5：nginx 路由错误（最致命）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>只代理 /api/</span></span>\n<span data-line=\"\"><span>→ /responses 直接 405</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-错误-6没有分层排查\">❌ 错误 6：没有分层排查</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>UI → 前端 → token → nginx（顺序完全反）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七最终正确最小操作流程以后就用这个\">🎯 七、最终正确“最小操作流程”（以后就用这个）</h1>\n<p>只要改 UI：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#79B8FF\">cd</span><span style=\"color:#9ECBFF\"> frontend</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">npm</span><span style=\"color:#9ECBFF\"> run</span><span style=\"color:#9ECBFF\"> build</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">scp</span><span style=\"color:#79B8FF\"> -r</span><span style=\"color:#9ECBFF\"> dist/</span><span style=\"color:#79B8FF\">*</span><span style=\"color:#9ECBFF\"> server:/srv/sub2api/deploy/data/public/</span></span></code></pre></figure>\n<p>然后：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">ssh</span><span style=\"color:#9ECBFF\"> server</span><span style=\"color:#9ECBFF\"> \"grep index- /srv/sub2api/deploy/data/public/index.html\"</span></span></code></pre></figure>\n<p>刷新浏览器。</p>\n<hr>\n<h1 id=\"-八你必须记住的三条铁律\">🧠 八、你必须记住的三条铁律</h1>\n<hr>\n<h2 id=\"1️⃣-ui问题--后端问题\">1️⃣ UI问题 ≠ 后端问题</h2>\n<hr>\n<h2 id=\"2️⃣-405-nginx-页面--没转发\">2️⃣ 405 nginx 页面 = 没转发</h2>\n<hr>\n<h2 id=\"3️⃣-indexhtml-决定一切\">3️⃣ index.html 决定一切</h2>\n<hr>\n<h1 id=\"-最后一段总结最重要\">💬 最后一段总结（最重要）</h1>\n<p>你这次其实经历的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一个简单问题</span></span>\n<span data-line=\"\"><span>→ 被多层误判</span></span>\n<span data-line=\"\"><span>→ 扩散成系统级混乱</span></span></code></pre></figure>\n<p>而正确流程其实一直很简单：</p>\n<blockquote>\n<p><strong>build → 上传 → 验证 hash → 看接口 → 再看 UI</strong></p>\n</blockquote>\n<hr>\n<p>如果你要，我可以帮你下一步直接做：</p>\n<p>👉 <strong>一键部署 + 自动校验（不会再出错的那种）</strong></p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一-整体正确思路-先记住这个",
+        "text": "🧠 一、整体正确思路（先记住这个）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-从修改到上线的正确流程-标准版",
+        "text": "🧱 二、从修改到上线的正确流程（标准版）"
+      },
+      {
+        "depth": 2,
+        "slug": "第-1-步-修改前端代码",
+        "text": "✅ 第 1 步：修改前端代码"
+      },
+      {
+        "depth": 2,
+        "slug": "第-2-步-只从唯一入口-build",
+        "text": "✅ 第 2 步：只从唯一入口 build"
+      },
+      {
+        "depth": 3,
+        "slug": "必须记住",
+        "text": "❗必须记住"
+      },
+      {
+        "depth": 2,
+        "slug": "第-3-步-上传到服务器",
+        "text": "✅ 第 3 步：上传到服务器"
+      },
+      {
+        "depth": 2,
+        "slug": "第-4-步-确认-index-html-已更新-关键",
+        "text": "✅ 第 4 步：确认 index.html 已更新（关键）"
+      },
+      {
+        "depth": 3,
+        "slug": "判断",
+        "text": "👉 判断"
+      },
+      {
+        "depth": 2,
+        "slug": "第-5-步-确认线上返回的是同一份",
+        "text": "✅ 第 5 步：确认线上返回的是同一份"
+      },
+      {
+        "depth": 2,
+        "slug": "第-6-步-浏览器强刷",
+        "text": "✅ 第 6 步：浏览器强刷"
+      },
+      {
+        "depth": 1,
+        "slug": "三-nginx-正确配置-你刚修好的关键",
+        "text": "🌐 三、nginx 正确配置（你刚修好的关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "之前错误",
+        "text": "❗之前错误"
+      },
+      {
+        "depth": 2,
+        "slug": "正确做法-推荐",
+        "text": "✅ 正确做法（推荐）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-接口验证流程-防止再乱",
+        "text": "🔌 四、接口验证流程（防止再乱）"
+      },
+      {
+        "depth": 2,
+        "slug": "第-7-步-直接测后端",
+        "text": "✅ 第 7 步：直接测后端"
+      },
+      {
+        "depth": 2,
+        "slug": "第-8-步-测域名",
+        "text": "✅ 第 8 步：测域名"
+      },
+      {
+        "depth": 3,
+        "slug": "判断",
+        "text": "👉 判断"
+      },
+      {
+        "depth": 1,
+        "slug": "五-token-前端请求-最后一层",
+        "text": "🔐 五、token / 前端请求（最后一层）"
+      },
+      {
+        "depth": 2,
+        "slug": "浏览器看",
+        "text": "浏览器看："
+      },
+      {
+        "depth": 1,
+        "slug": "六-你们刚刚犯的所有错误总结",
+        "text": "💥 六、你们刚刚犯的所有错误总结"
+      },
+      {
+        "depth": 2,
+        "slug": "错误-1-build-用错目录",
+        "text": "❌ 错误 1：build 用错目录"
+      },
+      {
+        "depth": 2,
+        "slug": "错误-2-只传-assets-不传-index",
+        "text": "❌ 错误 2：只传 assets，不传 index.html"
+      },
+      {
+        "depth": 2,
+        "slug": "错误-3-手动改-hash",
+        "text": "❌ 错误 3：手动改 hash"
+      },
+      {
+        "depth": 2,
+        "slug": "错误-4-没确认-override-是否生效",
+        "text": "❌ 错误 4：没确认 override 是否生效"
+      },
+      {
+        "depth": 2,
+        "slug": "错误-5-nginx-路由错误-最致命",
+        "text": "❌ 错误 5：nginx 路由错误（最致命）"
+      },
+      {
+        "depth": 2,
+        "slug": "错误-6-没有分层排查",
+        "text": "❌ 错误 6：没有分层排查"
+      },
+      {
+        "depth": 1,
+        "slug": "七-最终正确-最小操作流程-以后就用这个",
+        "text": "🎯 七、最终正确“最小操作流程”（以后就用这个）"
+      },
+      {
+        "depth": 1,
+        "slug": "八-你必须记住的三条铁律",
+        "text": "🧠 八、你必须记住的三条铁律"
+      },
+      {
+        "depth": 2,
+        "slug": "1-ui问题-后端问题",
+        "text": "1️⃣ UI问题 ≠ 后端问题"
+      },
+      {
+        "depth": 2,
+        "slug": "2-405-nginx-页面-没转发",
+        "text": "2️⃣ 405 nginx 页面 = 没转发"
+      },
+      {
+        "depth": 2,
+        "slug": "3-index-html-决定一切",
+        "text": "3️⃣ index.html 决定一切"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一段总结-最重要",
+        "text": "💬 最后一段总结（最重要）"
+      }
+    ],
+    "detailPath": "articles/md_1312d4c96e09.json"
+  }
+}

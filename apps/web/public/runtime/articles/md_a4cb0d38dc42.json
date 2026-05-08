@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_a4cb0d38dc42",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E6%96%87%E6%A1%A3%E7%89%88%E6%9C%AC%E7%B4%A2%E5%BC%95.md",
+    "sourcePath": "/home/vault/Obsidian/docs/文档版本索引.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/文档版本索引.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E6%96%87%E6%A1%A3%E7%89%88%E6%9C%AC%E7%B4%A2%E5%BC%95.md",
+    "slug": "文档版本索引",
+    "title": "当前版本索引",
+    "summary": "当前版本索引 论文主稿 v01 2026 04 12 v02 2026 04 12 参考 格式参考.pdf 对 Word/PDF 版式进行正规化整理，新增目录页、中图分类号、前置结构收紧和参考文献/致谢分页 v05 2026 04 12 重点扩写论文正文内容，新增“文献启发与本文设计映射”，强化配套...",
+    "description": "当前版本索引 论文主稿 v01 2026 04 12 v02 2026 04 12 参考 格式参考.pdf 对 Word/PDF 版式进行正规化整理，新增目录页、中图分类号、前置结构收紧和参考文献/致谢分页 v05 2026 04 12 重点扩写论文正文内容，新增“文献启发与本文设计映射”，强化配套...",
+    "date": "2026-04-22",
+    "updated": "2026-04-22",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-知识库治理",
+      "形态-索引"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-知识库治理",
+        "形态-索引"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/文档版本索引.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/文档版本索引.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E6%96%87%E6%A1%A3%E7%89%88%E6%9C%AC%E7%B4%A2%E5%BC%95.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "文档版本索引",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 知识库治理",
+        "形态 索引",
+        "文档版本索引"
+      ],
+      "subtitle": "当前版本索引 论文主稿 v01 2026 04 12 v02 2026 04 12 参考 格式参考.pdf 对 Word/PDF 版式进行正规化整理，新增目录页、中图分类号、前置结构收紧和参考文献/致谢分页 v05 2026 04 12 重点扩写论文正文内容，新增“文献启发与本文设计映射”，强化配套..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 当前版本索引\n\n### 论文主稿\n\n- `v01 2026-04-12`\n- `v02 2026-04-12`\n  参考 `格式参考.pdf` 对 Word/PDF 版式进行正规化整理，新增目录页、中图分类号、前置结构收紧和参考文献/致谢分页\n- `v05 2026-04-12`\n  重点扩写论文正文内容，新增“文献启发与本文设计映射”，强化配套 App、云端协同、预测预警、接口设计与测试分析等章节，并补充 `[12]-[16]` 参考文献；同步生成新的原生排版 PDF\n- `v06 2026-04-12`\n  修复 `v05` 转换链路导致的图片丢失、目录异常和 Markdown 绝对路径失效问题；以 `v04` 为底保留原图片/表格版式，并重新补入扩写后的正文与新增参考文献，生成可用的 `md/docx/pdf`\n- `v08 2026-04-12`\n  在 `v06` 基础上继续整理前置页结构，调整为封面、目录、摘要、Abstract 分页展示，去除中间空白页，保留图片与表格完整性\n- `v09 2026-04-12`\n  进一步补强“功能实现”和“系统测试”章节，增加采样流程、显示与报警设计、测试判据和答辩型结果总结；同步规范参考文献中的 `CO2` 写法，生成新的 `md/docx/pdf`\n- `v10 2026-04-12`\n  继续强化答辩版表述，补充 Cloude App 的数据流与扩展部署说明，并进一步总结测试分析章节的论文化表达；保留图片、表格与前置页结构稳定\n- `v11 2026-04-12`\n  继续降低工程说明口吻，调整 5.7 与 7.1 的表述为更正式的毕业论文风格，并同步生成新的 `md/docx/pdf`\n- `v12 2026-04-15`\n  在 `v11` 基础上补强文献与标准依据，新增 SCD41 官方资料、室内空气质量标准和低成本 IAQ 平台相关文献支撑；结合 `Cloude App` 当前实现补充系统架构图、数据流图、页面关系图及登录/首页/分析/设备/场景/个人中心截图，强化 2.2.4、5.6、5.7、6.5、6.7 与 7.2 的系统闭环论证，并同步生成新的 `md/docx/pdf`\n- `v13 2026-04-15`\n  保留 `v12` 原件不覆盖，在其基础上将 5.7 配图替换为 `Cloude App` 当前实现的真实页面截图，取消带说明框的包装式图片，保留系统架构图/数据流图/页面关系图等论文插图，并重新生成新的 `md/docx/pdf` 以适配课程作业提交场景\n\n### 开题报告整理稿\n\n- `v01 2026-04-12`\n  当前常用稿：`刘高朋开题报告（带图版）.md`\n\n### 文献综述与创新点建议\n\n- `v01 2026-04-12`\n  当前常用稿：`文献综述与创新点建议.md`\n\n### 配套系统说明\n\n- `v01 2026-04-12`\n- `v02 2026-04-15`\n  当前常用稿：`codex-knowledge\\40-product\\cloude-app-system-overview.md`\n\n### 说明\n\n该索引用于记录当前已经生成过的版本节点。\n\n本轮已删除明显重复或已被主稿替代的旧文件，不再额外保留归档副本。",
+    "html": "<h2 id=\"当前版本索引\">当前版本索引</h2>\n<h3 id=\"论文主稿\">论文主稿</h3>\n<ul>\n<li><code>v01 2026-04-12</code></li>\n<li><code>v02 2026-04-12</code>\n参考 <code>格式参考.pdf</code> 对 Word/PDF 版式进行正规化整理，新增目录页、中图分类号、前置结构收紧和参考文献/致谢分页</li>\n<li><code>v05 2026-04-12</code>\n重点扩写论文正文内容，新增“文献启发与本文设计映射”，强化配套 App、云端协同、预测预警、接口设计与测试分析等章节，并补充 <code>[12]-[16]</code> 参考文献；同步生成新的原生排版 PDF</li>\n<li><code>v06 2026-04-12</code>\n修复 <code>v05</code> 转换链路导致的图片丢失、目录异常和 Markdown 绝对路径失效问题；以 <code>v04</code> 为底保留原图片/表格版式，并重新补入扩写后的正文与新增参考文献，生成可用的 <code>md/docx/pdf</code></li>\n<li><code>v08 2026-04-12</code>\n在 <code>v06</code> 基础上继续整理前置页结构，调整为封面、目录、摘要、Abstract 分页展示，去除中间空白页，保留图片与表格完整性</li>\n<li><code>v09 2026-04-12</code>\n进一步补强“功能实现”和“系统测试”章节，增加采样流程、显示与报警设计、测试判据和答辩型结果总结；同步规范参考文献中的 <code>CO2</code> 写法，生成新的 <code>md/docx/pdf</code></li>\n<li><code>v10 2026-04-12</code>\n继续强化答辩版表述，补充 Cloude App 的数据流与扩展部署说明，并进一步总结测试分析章节的论文化表达；保留图片、表格与前置页结构稳定</li>\n<li><code>v11 2026-04-12</code>\n继续降低工程说明口吻，调整 5.7 与 7.1 的表述为更正式的毕业论文风格，并同步生成新的 <code>md/docx/pdf</code></li>\n<li><code>v12 2026-04-15</code>\n在 <code>v11</code> 基础上补强文献与标准依据，新增 SCD41 官方资料、室内空气质量标准和低成本 IAQ 平台相关文献支撑；结合 <code>Cloude App</code> 当前实现补充系统架构图、数据流图、页面关系图及登录/首页/分析/设备/场景/个人中心截图，强化 2.2.4、5.6、5.7、6.5、6.7 与 7.2 的系统闭环论证，并同步生成新的 <code>md/docx/pdf</code></li>\n<li><code>v13 2026-04-15</code>\n保留 <code>v12</code> 原件不覆盖，在其基础上将 5.7 配图替换为 <code>Cloude App</code> 当前实现的真实页面截图，取消带说明框的包装式图片，保留系统架构图/数据流图/页面关系图等论文插图，并重新生成新的 <code>md/docx/pdf</code> 以适配课程作业提交场景</li>\n</ul>\n<h3 id=\"开题报告整理稿\">开题报告整理稿</h3>\n<ul>\n<li><code>v01 2026-04-12</code>\n当前常用稿：<code>刘高朋开题报告（带图版）.md</code></li>\n</ul>\n<h3 id=\"文献综述与创新点建议\">文献综述与创新点建议</h3>\n<ul>\n<li><code>v01 2026-04-12</code>\n当前常用稿：<code>文献综述与创新点建议.md</code></li>\n</ul>\n<h3 id=\"配套系统说明\">配套系统说明</h3>\n<ul>\n<li><code>v01 2026-04-12</code></li>\n<li><code>v02 2026-04-15</code>\n当前常用稿：<code>codex-knowledge\\40-product\\cloude-app-system-overview.md</code></li>\n</ul>\n<h3 id=\"说明\">说明</h3>\n<p>该索引用于记录当前已经生成过的版本节点。</p>\n<p>本轮已删除明显重复或已被主稿替代的旧文件，不再额外保留归档副本。</p>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "当前版本索引",
+        "text": "当前版本索引"
+      },
+      {
+        "depth": 3,
+        "slug": "论文主稿",
+        "text": "论文主稿"
+      },
+      {
+        "depth": 3,
+        "slug": "开题报告整理稿",
+        "text": "开题报告整理稿"
+      },
+      {
+        "depth": 3,
+        "slug": "文献综述与创新点建议",
+        "text": "文献综述与创新点建议"
+      },
+      {
+        "depth": 3,
+        "slug": "配套系统说明",
+        "text": "配套系统说明"
+      },
+      {
+        "depth": 3,
+        "slug": "说明",
+        "text": "说明"
+      }
+    ],
+    "detailPath": "articles/md_a4cb0d38dc42.json"
+  }
+}

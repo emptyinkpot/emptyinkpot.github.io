@@ -1,13 +1,14 @@
-import { getCollection } from 'astro:content';
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import { musicItems } from '../../data/music';
-import { getExcerptFromBody, getPrimaryCategory, sortPosts } from '../../lib/content';
+import { getExcerptFromBody } from '../../lib/content';
 import { getGitHubOverview } from '../../lib/github';
-import { withBase } from '../../lib/site';
 import type { KnowledgeSearchDoc } from '../../lib/knowledge/types';
+import { getRuntimeArticles } from '../../lib/runtimeContent';
+import { withBase } from '../../lib/site';
 
 export const GET: APIRoute = async () => {
-  const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
+  const runtimeArticles = getRuntimeArticles();
   const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime()
   );
@@ -17,16 +18,16 @@ export const GET: APIRoute = async () => {
   const github = await getGitHubOverview('emptyinkpot');
 
   const docs: KnowledgeSearchDoc[] = [
-    ...posts.map((post) => ({
-      id: `post:${post.id}`,
+    ...runtimeArticles.map((article) => ({
+      id: `runtime:${article.id}`,
       type: 'post' as const,
-      title: post.data.title,
-      content: [post.data.description, post.data.summary, getExcerptFromBody(post.body, 1200)].filter(Boolean).join('\n'),
-      tags: [getPrimaryCategory(post), ...post.data.tags],
-      href: withBase(`/posts/${post.id}/`),
-      drawerId: `post:${post.id}`,
-      sourceId: post.id,
-      updatedAt: post.data.date.toISOString()
+      title: article.title,
+      content: [article.description, article.summary, article.card?.subtitle, ...article.categories, ...article.tags].filter(Boolean).join('\n'),
+      tags: [...article.categories, ...article.tags],
+      href: withBase(`/posts/${article.slug}/`),
+      drawerId: `runtime:${article.id}`,
+      sourceId: article.id,
+      updatedAt: article.updated || article.date
     })),
     ...notes.map((note) => ({
       id: `note:${note.id}`,

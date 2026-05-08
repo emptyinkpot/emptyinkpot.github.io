@@ -1,0 +1,236 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  formatRuntimeDate,
+  getRuntimeCollectionHref,
+  getRuntimeCollectionSlug,
+  getRuntimeCollections,
+  type KnowledgeCollection
+} from '../../lib/runtimeContent';
+import { withBase } from '../../lib/site';
+
+export function getStaticPaths() {
+  return getRuntimeCollections().map((collection) => ({
+    params: { slug: getRuntimeCollectionSlug(collection) },
+    props: { collection }
+  }));
+}
+
+type Props = {
+  collection: KnowledgeCollection;
+};
+
+const { collection } = Astro.props;
+const collectionHref = withBase(getRuntimeCollectionHref(collection));
+const latestUpdated = collection.stats.latestUpdated ? formatRuntimeDate(collection.stats.latestUpdated) : 'unknown';
+const sessionArticles = collection.objects;
+const firstArticle = sessionArticles[0];
+const sessionPayload = {
+  collection: {
+    id: collection.id,
+    title: collection.title,
+    href: collectionHref
+  },
+  articles: sessionArticles.map((article) => ({
+    id: article.id,
+    title: article.title,
+    summary: article.summary || '',
+    date: article.date ? formatRuntimeDate(article.date) : '',
+    kind: article.kind || 'post',
+    chips: article.chips || [],
+    href: withBase(`/posts/${encodeURIComponent(article.slug || article.id)}/`),
+    detailUrl: withBase(`/runtime/articles/${article.id}.json`),
+    html: '',
+    toc: []
+  }))
+};
+---
+
+<BaseLayout title={`${collection.title} / Knowledge Collection`} description={collection.description} canonical={collectionHref}>
+  <main class="workbench-page collection-detail-page" data-pagefind-body>
+    <section class="collection-detail-hero glass-card">
+      <div>
+        <p class="section-kicker">KnowledgeCollection / {collection.basis}</p>
+        <h1>{collection.title}</h1>
+        <p>{collection.description}</p>
+      </div>
+      <dl class="collection-detail-stats">
+        <div>
+          <dt>Objects</dt>
+          <dd>{collection.stats.objectCount}</dd>
+        </div>
+        <div>
+          <dt>Layout</dt>
+          <dd>{collection.layout}</dd>
+        </div>
+        <div>
+          <dt>Updated</dt>
+          <dd>{latestUpdated}</dd>
+        </div>
+        <div>
+          <dt>Source</dt>
+          <dd>{collection.source?.path || collection.source?.type || 'runtime'}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="collection-reading-session glass-card" data-collection-reading-session>
+      {firstArticle ? (
+        <>
+          <aside class="collection-reading-session__rail" aria-label="本集合目录">
+            <div class="collection-reading-session__rail-head">
+              <span>Reading Session</span>
+              <strong>{sessionArticles.length} articles</strong>
+            </div>
+            <div class="collection-reading-session__toc">
+              {sessionArticles.map((article, index) => (
+                <button
+                  type="button"
+                  class:list={['collection-reading-session__item', index === 0 && 'is-active']}
+                  data-session-article={article.id}
+                >
+                  <small>{article.kind || 'post'}{article.date ? ` / ${formatRuntimeDate(article.date)}` : ''}</small>
+                  <strong>{article.title}</strong>
+                </button>
+              ))}
+            </div>
+          </aside>
+          <article class="collection-reading-session__reader">
+            <div class="collection-reading-session__reader-tools">
+              <button type="button" data-session-prev>上一篇</button>
+              <button type="button" data-session-next>下一篇</button>
+            </div>
+            <header class="collection-reading-session__article-head">
+              <span data-session-kicker>{firstArticle.type || 'MarkdownObject'}</span>
+              <h2 data-session-title>{firstArticle.title}</h2>
+              <p data-session-summary>{firstArticle.summary}</p>
+              <small data-session-meta>{firstArticle.date ? formatRuntimeDate(firstArticle.date) : ''}</small>
+              {firstArticle.chips?.length ? (
+                <div class="runtime-article-card__tags" data-session-tags>
+                  {firstArticle.chips.slice(0, 6).map((tag, index) => (
+                    <>
+                      {index > 0 && <span aria-hidden="true">/</span>}
+                      <span>{tag}</span>
+                    </>
+                  ))}
+                </div>
+              ) : (
+                <div class="runtime-article-card__tags" data-session-tags></div>
+              )}
+            </header>
+            <div class="collection-reading-session__body-grid">
+              <nav class="home-article-toc collection-reading-session__article-toc" aria-label="当前文章目录" data-session-toc>
+                <strong>文章目录</strong>
+                <span>正文加载后显示</span>
+              </nav>
+              <div class="home-article-content prose-shell prose-shell--plain" data-session-body>
+                <p>正文正在加载。</p>
+              </div>
+            </div>
+          </article>
+          <script type="application/json" id="collection-reading-session-data" set:html={JSON.stringify(sessionPayload)} />
+        </>
+      ) : (
+        <div class="collection-reading-session__empty">
+          <h2>这个集合还没有可阅读正文</h2>
+          <p>当前集合只有对象索引，尚未投影出 Runtime Article detail payload。</p>
+        </div>
+      )}
+    </section>
+  </main>
+  <script>
+    const payloadElement = document.getElementById('collection-reading-session-data');
+    const sessionRoot = document.querySelector('[data-collection-reading-session]');
+    const payload = payloadElement ? JSON.parse(payloadElement.textContent || '{}') : null;
+    const articles = Array.isArray(payload?.articles) ? payload.articles : [];
+    let activeIndex = Math.max(
+      0,
+      articles.findIndex((article) => article.id === new URL(window.location.href).searchParams.get('object'))
+    );
+
+    const escapeHtml = (value) =>
+      String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+
+    const renderToc = (toc) => {
+      const target = sessionRoot?.querySelector('[data-session-toc]');
+      if (!target) return;
+      target.replaceChildren(Object.assign(document.createElement('strong'), { textContent: '文章目录' }));
+      if (!Array.isArray(toc) || !toc.length) {
+        target.append(Object.assign(document.createElement('span'), { textContent: '暂无标题' }));
+        return;
+      }
+      toc.forEach((heading) => {
+        const link = document.createElement('a');
+        link.href = `#${heading.slug}`;
+        link.className = `depth-${heading.depth}`;
+        link.textContent = heading.text;
+        target.append(link);
+      });
+    };
+
+    const renderTags = (tags) => {
+      const target = sessionRoot?.querySelector('[data-session-tags]');
+      if (!target) return;
+      target.innerHTML = (Array.isArray(tags) ? tags : [])
+        .slice(0, 6)
+        .map((tag) => `<span>${escapeHtml(tag)}</span>`)
+        .join('');
+    };
+
+    const loadArticle = async (article) => {
+      if (!article.detailUrl) return article;
+      const response = await fetch(`${article.detailUrl}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) return article;
+      const detail = await response.json();
+      return detail?.article ? { ...article, ...detail.article } : article;
+    };
+
+    const setActiveArticle = async (nextIndex, syncUrl = true) => {
+      if (!sessionRoot || !articles.length) return;
+      activeIndex = Math.max(0, Math.min(nextIndex, articles.length - 1));
+      const article = await loadArticle(articles[activeIndex]);
+      articles[activeIndex] = article;
+      sessionRoot.querySelectorAll('[data-session-article]').forEach((button) => {
+        button.classList.toggle('is-active', button.dataset.sessionArticle === article.id);
+      });
+      const title = sessionRoot.querySelector('[data-session-title]');
+      const summary = sessionRoot.querySelector('[data-session-summary]');
+      const kicker = sessionRoot.querySelector('[data-session-kicker]');
+      const meta = sessionRoot.querySelector('[data-session-meta]');
+      const body = sessionRoot.querySelector('[data-session-body]');
+      if (title) title.textContent = article.title || 'Untitled';
+      if (summary) summary.textContent = article.card?.subtitle || article.description || article.summary || '';
+      if (kicker) kicker.textContent = article.card?.eyebrow || article.kind || 'MarkdownObject';
+      if (meta) meta.textContent = [article.date, article.readingMinutes ? `${article.readingMinutes} min read` : ''].filter(Boolean).join(' / ');
+      if (body) body.innerHTML = article.html || '<p>正文正在加载。</p>';
+      renderTags(article.chips || article.card?.chips || []);
+      renderToc(article.toc || []);
+      if (syncUrl) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('object', article.id);
+        history.pushState({ collectionObject: article.id }, '', url);
+      }
+      sessionRoot.querySelector('.collection-reading-session__reader')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+
+    sessionRoot?.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const item = target.closest('[data-session-article]');
+      if (item instanceof HTMLElement) {
+        const index = articles.findIndex((article) => article.id === item.dataset.sessionArticle);
+        if (index >= 0) setActiveArticle(index);
+        return;
+      }
+      if (target.closest('[data-session-prev]')) setActiveArticle(activeIndex - 1);
+      if (target.closest('[data-session-next]')) setActiveArticle(activeIndex + 1);
+    });
+
+    if (articles.length) setActiveArticle(activeIndex, false);
+  </script>
+</BaseLayout>

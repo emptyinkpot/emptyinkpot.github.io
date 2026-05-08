@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_a6b9122a22f6",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0%E4%B8%8E%E5%88%9B%E6%96%B0%E7%82%B9%E5%BB%BA%E8%AE%AE.md",
+    "sourcePath": "/home/vault/Obsidian/docs/文献综述与创新点建议.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/文献综述与创新点建议.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0%E4%B8%8E%E5%88%9B%E6%96%B0%E7%82%B9%E5%BB%BA%E8%AE%AE.md",
+    "slug": "文献综述与创新点建议",
+    "title": "文献综述与创新点建议",
+    "summary": "文献综述与创新点建议 资料说明 本文件用于整理与“嵌入式 CO2 检测与预警 + 配套 App”相关的公开论文、综述和系统案例，并将其转化为可直接服务论文写作的创新点建议。 已整理的本地资料 可直接获取 PDF Indoor Air Quality Monitoring System for Sma...",
+    "description": "文献综述与创新点建议 资料说明 本文件用于整理与“嵌入式 CO2 检测与预警 + 配套 App”相关的公开论文、综述和系统案例，并将其转化为可直接服务论文写作的创新点建议。 已整理的本地资料 可直接获取 PDF Indoor Air Quality Monitoring System for Sma...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-论文项目",
+      "项目-毕业论文"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-论文项目",
+        "项目-毕业论文"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/文献综述与创新点建议.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/文献综述与创新点建议.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0%E4%B8%8E%E5%88%9B%E6%96%B0%E7%82%B9%E5%BB%BA%E8%AE%AE.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "毕业论文",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 论文项目",
+        "项目 毕业论文",
+        "毕业论文"
+      ],
+      "subtitle": "文献综述与创新点建议 资料说明 本文件用于整理与“嵌入式 CO2 检测与预警 + 配套 App”相关的公开论文、综述和系统案例，并将其转化为可直接服务论文写作的创新点建议。 已整理的本地资料 可直接获取 PDF Indoor Air Quality Monitoring System for Sma..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 文献综述与创新点建议\n\n### 资料说明\n\n本文件用于整理与“嵌入式 CO2 检测与预警 + 配套 App”相关的公开论文、综述和系统案例，并将其转化为可直接服务论文写作的创新点建议。\n\n### 已整理的本地资料\n\n#### 可直接获取 PDF\n\n- [Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf](../image/毕业论文__文献资料__可直接获取PDF__Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf)\n\n#### 快捷方式\n\n- [系统综述_2024.url](<资料收口/外部资料/系统综述_2024（文献资料 - 论文快捷方式）.url>)\n- [低成本监测综述_PMC8749853.url](<资料收口/外部资料/低成本监测综述_PMC8749853（文献资料 - 论文快捷方式）.url>)\n- [AirBuddy_移动端IAQ应用_2022.url](<资料收口/外部资料/AirBuddy_移动端IAQ应用_2022（文献资料 - 论文快捷方式）.url>)\n- [CO2短时预测_Attention_LSTM_2025.url](<资料收口/外部资料/CO2短时预测_Attention_LSTM_2025（文献资料 - 论文快捷方式）.url>)\n- [IoT_CO2稳态预测_LSTM_2023.url](<资料收口/外部资料/IoT_CO2稳态预测_LSTM_2023（文献资料 - 论文快捷方式）.url>)\n\n### 可直接用于论文的研究线索\n\n#### 1. 系统整体架构方向\n\n- 模块化 IoT 室内空气质量平台研究表明，实时监测系统的核心不只是传感器本身，还包括数据传输、云端管理和用户交互平台。\n- 这为你的论文提供了一个很好的提升方向：将毕业设计从“单一硬件终端”提升为“嵌入式终端 + 移动端 App + 服务端”的完整系统。\n\n#### 2. 低成本高实用方向\n\n- 低成本空气质量监测综述表明，当前研究热点不是单纯追求高端传感器，而是在成本、精度、补偿、部署和可维护性之间寻找平衡。\n- 你的课题很适合强调“民用和教学场景下的可落地性”，这比空喊高精度更像毕业设计创新点。\n\n#### 3. 预测预警方向\n\n- CO2 短时预测和 LSTM 类研究说明，未来一段时间的浓度预测可以显著提升预警提前量。\n- 如果你不打算真的把深度学习模型跑在 STM32 上，也完全可以在论文里把它写成“服务端或 App 端的扩展预测模块”，这样合理且有研究深度。\n\n#### 4. 移动端交互方向\n\n- AirBuddy 等研究表明，用户端体验、实时反馈、可视化和行为引导本身就是空气质量系统的重要组成部分。\n- 你的 `Cloude App` 正好能承接这一点，可以把 App 写成“系统交互层创新”，而不是附属品。\n\n#### 5. 联动控制方向\n\n- 智能楼宇和智能家居文献普遍强调“监测-控制-反馈闭环”。\n- 这意味着你的论文创新点可以从单纯报警升级为“CO2 超标后触发场景联动”，如联动新风、空调或窗帘控制。\n\n### 建议写进论文的创新点表达\n\n#### 已完成可写\n\n1. 构建了基于 STM32、SCD41、OLED 和 BLE/Wi-Fi 扩展模块的一体化 CO2 检测与预警系统。\n2. 引入了温湿度交叉项补偿思路，提高复杂环境下的检测稳定性。\n3. 设计了配套移动端与服务端雏形，实现设备查看、场景控制和连接管理。\n\n#### 可扩展可写\n\n1. 在服务端或 App 端加入短时预测模型，实现 CO2 浓度趋势预判。\n2. 引入基于场景的自动联动控制机制，实现通风或空调协同响应。\n3. 通过历史数据可视化与报警记录管理，提升系统长期运维价值。\n\n### 写作提醒\n\n- 不要把“未来扩展方向”写成“本文已经完成”。\n- 最稳妥的写法是：\n  “本文已完成……，并在此基础上提出……的扩展方案。”\n- 这样既保留创新点，又不会被答辩老师抓住“功能未实现”的问题。",
+    "html": "<h2 id=\"文献综述与创新点建议\">文献综述与创新点建议</h2>\n<h3 id=\"资料说明\">资料说明</h3>\n<p>本文件用于整理与“嵌入式 CO2 检测与预警 + 配套 App”相关的公开论文、综述和系统案例，并将其转化为可直接服务论文写作的创新点建议。</p>\n<h3 id=\"已整理的本地资料\">已整理的本地资料</h3>\n<h4 id=\"可直接获取-pdf\">可直接获取 PDF</h4>\n<ul>\n<li><a href=\"../image/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87__%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99__%E5%8F%AF%E7%9B%B4%E6%8E%A5%E8%8E%B7%E5%8F%96PDF__Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf\">Indoor_Air_Quality_Monitoring_System_for_Smart_Buildings.pdf</a></li>\n</ul>\n<h4 id=\"快捷方式\">快捷方式</h4>\n<ul>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/%E7%B3%BB%E7%BB%9F%E7%BB%BC%E8%BF%B0_2024%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">系统综述_2024.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/%E4%BD%8E%E6%88%90%E6%9C%AC%E7%9B%91%E6%B5%8B%E7%BB%BC%E8%BF%B0_PMC8749853%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">低成本监测综述_PMC8749853.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/AirBuddy_%E7%A7%BB%E5%8A%A8%E7%AB%AFIAQ%E5%BA%94%E7%94%A8_2022%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">AirBuddy_移动端IAQ应用_2022.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/CO2%E7%9F%AD%E6%97%B6%E9%A2%84%E6%B5%8B_Attention_LSTM_2025%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">CO2短时预测_Attention_LSTM_2025.url</a></li>\n<li><a href=\"%E8%B5%84%E6%96%99%E6%94%B6%E5%8F%A3/%E5%A4%96%E9%83%A8%E8%B5%84%E6%96%99/IoT_CO2%E7%A8%B3%E6%80%81%E9%A2%84%E6%B5%8B_LSTM_2023%EF%BC%88%E6%96%87%E7%8C%AE%E8%B5%84%E6%96%99%20-%20%E8%AE%BA%E6%96%87%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89.url\">IoT_CO2稳态预测_LSTM_2023.url</a></li>\n</ul>\n<h3 id=\"可直接用于论文的研究线索\">可直接用于论文的研究线索</h3>\n<h4 id=\"1-系统整体架构方向\">1. 系统整体架构方向</h4>\n<ul>\n<li>模块化 IoT 室内空气质量平台研究表明，实时监测系统的核心不只是传感器本身，还包括数据传输、云端管理和用户交互平台。</li>\n<li>这为你的论文提供了一个很好的提升方向：将毕业设计从“单一硬件终端”提升为“嵌入式终端 + 移动端 App + 服务端”的完整系统。</li>\n</ul>\n<h4 id=\"2-低成本高实用方向\">2. 低成本高实用方向</h4>\n<ul>\n<li>低成本空气质量监测综述表明，当前研究热点不是单纯追求高端传感器，而是在成本、精度、补偿、部署和可维护性之间寻找平衡。</li>\n<li>你的课题很适合强调“民用和教学场景下的可落地性”，这比空喊高精度更像毕业设计创新点。</li>\n</ul>\n<h4 id=\"3-预测预警方向\">3. 预测预警方向</h4>\n<ul>\n<li>CO2 短时预测和 LSTM 类研究说明，未来一段时间的浓度预测可以显著提升预警提前量。</li>\n<li>如果你不打算真的把深度学习模型跑在 STM32 上，也完全可以在论文里把它写成“服务端或 App 端的扩展预测模块”，这样合理且有研究深度。</li>\n</ul>\n<h4 id=\"4-移动端交互方向\">4. 移动端交互方向</h4>\n<ul>\n<li>AirBuddy 等研究表明，用户端体验、实时反馈、可视化和行为引导本身就是空气质量系统的重要组成部分。</li>\n<li>你的 <code>Cloude App</code> 正好能承接这一点，可以把 App 写成“系统交互层创新”，而不是附属品。</li>\n</ul>\n<h4 id=\"5-联动控制方向\">5. 联动控制方向</h4>\n<ul>\n<li>智能楼宇和智能家居文献普遍强调“监测-控制-反馈闭环”。</li>\n<li>这意味着你的论文创新点可以从单纯报警升级为“CO2 超标后触发场景联动”，如联动新风、空调或窗帘控制。</li>\n</ul>\n<h3 id=\"建议写进论文的创新点表达\">建议写进论文的创新点表达</h3>\n<h4 id=\"已完成可写\">已完成可写</h4>\n<ol>\n<li>构建了基于 STM32、SCD41、OLED 和 BLE/Wi-Fi 扩展模块的一体化 CO2 检测与预警系统。</li>\n<li>引入了温湿度交叉项补偿思路，提高复杂环境下的检测稳定性。</li>\n<li>设计了配套移动端与服务端雏形，实现设备查看、场景控制和连接管理。</li>\n</ol>\n<h4 id=\"可扩展可写\">可扩展可写</h4>\n<ol>\n<li>在服务端或 App 端加入短时预测模型，实现 CO2 浓度趋势预判。</li>\n<li>引入基于场景的自动联动控制机制，实现通风或空调协同响应。</li>\n<li>通过历史数据可视化与报警记录管理，提升系统长期运维价值。</li>\n</ol>\n<h3 id=\"写作提醒\">写作提醒</h3>\n<ul>\n<li>不要把“未来扩展方向”写成“本文已经完成”。</li>\n<li>最稳妥的写法是：\n“本文已完成……，并在此基础上提出……的扩展方案。”</li>\n<li>这样既保留创新点，又不会被答辩老师抓住“功能未实现”的问题。</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "文献综述与创新点建议",
+        "text": "文献综述与创新点建议"
+      },
+      {
+        "depth": 3,
+        "slug": "资料说明",
+        "text": "资料说明"
+      },
+      {
+        "depth": 3,
+        "slug": "已整理的本地资料",
+        "text": "已整理的本地资料"
+      },
+      {
+        "depth": 3,
+        "slug": "可直接用于论文的研究线索",
+        "text": "可直接用于论文的研究线索"
+      },
+      {
+        "depth": 3,
+        "slug": "建议写进论文的创新点表达",
+        "text": "建议写进论文的创新点表达"
+      },
+      {
+        "depth": 3,
+        "slug": "写作提醒",
+        "text": "写作提醒"
+      }
+    ],
+    "detailPath": "articles/md_a6b9122a22f6.json"
+  }
+}

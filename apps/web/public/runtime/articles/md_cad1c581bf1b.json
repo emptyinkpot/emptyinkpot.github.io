@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_cad1c581bf1b",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/document-writing-checklist.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/document-writing-checklist.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/document-writing-checklist.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/document-writing-checklist.md",
+    "slug": "codex-knowledge-document-writing-checklist",
+    "title": "文档写作检查清单",
+    "summary": "文档写作检查清单 1. 开写前 我是否先判断了文档类型：控制平面、设计、执行、规则、研究还是机器合同 我是否知道本文的目标读者是谁 我是否知道本文的 canonical 作用是什么 我是否知道本文不负责什么 我是否知道需要和哪些现有文档对齐 2. 结构检查 是否先有清晰骨架，再填内容 顶部是否有摘要...",
+    "description": "文档写作检查清单 1. 开写前 我是否先判断了文档类型：控制平面、设计、执行、规则、研究还是机器合同 我是否知道本文的目标读者是谁 我是否知道本文的 canonical 作用是什么 我是否知道本文不负责什么 我是否知道需要和哪些现有文档对齐 2. 结构检查 是否先有清晰骨架，再填内容 顶部是否有摘要...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/document-writing-checklist.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/document-writing-checklist.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/document-writing-checklist.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "document writing checklist",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [
+        "md_d92d19fbfb47",
+        "md_b6b5013cd4ae"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "DOCUMENT WRITING CHECKLIST"
+      ],
+      "subtitle": "文档写作检查清单 1. 开写前 我是否先判断了文档类型：控制平面、设计、执行、规则、研究还是机器合同 我是否知道本文的目标读者是谁 我是否知道本文的 canonical 作用是什么 我是否知道本文不负责什么 我是否知道需要和哪些现有文档对齐 2. 结构检查 是否先有清晰骨架，再填内容 顶部是否有摘要..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# 文档写作检查清单\n\n## 1. 开写前\n\n- 我是否先判断了文档类型：控制平面、设计、执行、规则、研究还是机器合同\n- 我是否知道本文的目标读者是谁\n- 我是否知道本文的 canonical 作用是什么\n- 我是否知道本文不负责什么\n- 我是否知道需要和哪些现有文档对齐\n\n## 2. 结构检查\n\n- 是否先有清晰骨架，再填内容\n- 顶部是否有摘要、定位或项目说明入口\n- 中长文是否有目录\n- 标题层级是否稳定\n- 同级章节是否同粒度\n- 是否存在“杂项”“补充说明”一类低信息量标题\n\n## 3. 事实检查\n\n- 当前事实是否放在前面\n- 关键 URL、路径、服务名、脚本名是否明确\n- 历史别名是否显式标为 legacy / compatibility\n- 是否把猜测写成了事实\n- 是否把目标态写成了当前状态\n\n## 4. 分层检查\n\n- 事实层、约束层、策略层、路线图层是否明确分开\n- 面向人和面向机器的内容是否分开\n- 主线内容和附录内容是否分开\n\n## 5. 论文级质量检查\n\n- 术语是否先定义后使用\n- 每章是否都在回答一个明确问题\n- 结论是否能追溯到事实、结构、代码边界或验证方式\n- 引用是否区分官方来源、代码来源、运行验证来源和推断来源\n- 图片是否有图题、图意说明和来源标注\n- 公式是否先定义符号，再给公式与自然语言解释\n- 是否存在大段空泛 prose\n- 是否有足够的表格、链路图、矩阵或模板来承载结构化信息\n\n## 6. README / project.json 配对检查\n\n- `README.md` 是否承担人类控制平面手册职责\n- `project.json` 是否承担机器合同职责\n- README 顶部事实是否与 `project.json` 对齐\n- `verificationScripts`、`deploymentScripts`、入口 URL、服务名是否一致\n\n## 7. 可执行性检查\n\n- 读者是否能凭这份文档知道下一步怎么做\n- 规则文档是否给出判断标准\n- 调试文档是否给出排障顺序\n- 迁移文档是否给出目标态、步骤、风险与回滚\n- 研究文档是否给出对比标准与结论\n- 如果是博客，是否在保持叙事可读性的同时仍保留术语定义、结构分层、证据基础与明确结论\n\n## 8. 风格检查\n\n- 语言是否精确、克制、事实态\n- 版式是否适合长时间阅读\n- 标题、正文、代码、引用块层级是否稳定\n- 是否有口语化含糊词\n- 是否有重复结论\n- 文件名是否足够表达用途\n- 文档是否具有跨项目复用价值",
+    "html": "<h1 id=\"文档写作检查清单\">文档写作检查清单</h1>\n<h2 id=\"1-开写前\">1. 开写前</h2>\n<ul>\n<li>我是否先判断了文档类型：控制平面、设计、执行、规则、研究还是机器合同</li>\n<li>我是否知道本文的目标读者是谁</li>\n<li>我是否知道本文的 canonical 作用是什么</li>\n<li>我是否知道本文不负责什么</li>\n<li>我是否知道需要和哪些现有文档对齐</li>\n</ul>\n<h2 id=\"2-结构检查\">2. 结构检查</h2>\n<ul>\n<li>是否先有清晰骨架，再填内容</li>\n<li>顶部是否有摘要、定位或项目说明入口</li>\n<li>中长文是否有目录</li>\n<li>标题层级是否稳定</li>\n<li>同级章节是否同粒度</li>\n<li>是否存在“杂项”“补充说明”一类低信息量标题</li>\n</ul>\n<h2 id=\"3-事实检查\">3. 事实检查</h2>\n<ul>\n<li>当前事实是否放在前面</li>\n<li>关键 URL、路径、服务名、脚本名是否明确</li>\n<li>历史别名是否显式标为 legacy / compatibility</li>\n<li>是否把猜测写成了事实</li>\n<li>是否把目标态写成了当前状态</li>\n</ul>\n<h2 id=\"4-分层检查\">4. 分层检查</h2>\n<ul>\n<li>事实层、约束层、策略层、路线图层是否明确分开</li>\n<li>面向人和面向机器的内容是否分开</li>\n<li>主线内容和附录内容是否分开</li>\n</ul>\n<h2 id=\"5-论文级质量检查\">5. 论文级质量检查</h2>\n<ul>\n<li>术语是否先定义后使用</li>\n<li>每章是否都在回答一个明确问题</li>\n<li>结论是否能追溯到事实、结构、代码边界或验证方式</li>\n<li>引用是否区分官方来源、代码来源、运行验证来源和推断来源</li>\n<li>图片是否有图题、图意说明和来源标注</li>\n<li>公式是否先定义符号，再给公式与自然语言解释</li>\n<li>是否存在大段空泛 prose</li>\n<li>是否有足够的表格、链路图、矩阵或模板来承载结构化信息</li>\n</ul>\n<h2 id=\"6-readme--projectjson-配对检查\">6. README / project.json 配对检查</h2>\n<ul>\n<li><code>README.md</code> 是否承担人类控制平面手册职责</li>\n<li><code>project.json</code> 是否承担机器合同职责</li>\n<li>README 顶部事实是否与 <code>project.json</code> 对齐</li>\n<li><code>verificationScripts</code>、<code>deploymentScripts</code>、入口 URL、服务名是否一致</li>\n</ul>\n<h2 id=\"7-可执行性检查\">7. 可执行性检查</h2>\n<ul>\n<li>读者是否能凭这份文档知道下一步怎么做</li>\n<li>规则文档是否给出判断标准</li>\n<li>调试文档是否给出排障顺序</li>\n<li>迁移文档是否给出目标态、步骤、风险与回滚</li>\n<li>研究文档是否给出对比标准与结论</li>\n<li>如果是博客，是否在保持叙事可读性的同时仍保留术语定义、结构分层、证据基础与明确结论</li>\n</ul>\n<h2 id=\"8-风格检查\">8. 风格检查</h2>\n<ul>\n<li>语言是否精确、克制、事实态</li>\n<li>版式是否适合长时间阅读</li>\n<li>标题、正文、代码、引用块层级是否稳定</li>\n<li>是否有口语化含糊词</li>\n<li>是否有重复结论</li>\n<li>文件名是否足够表达用途</li>\n<li>文档是否具有跨项目复用价值</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "文档写作检查清单",
+        "text": "文档写作检查清单"
+      },
+      {
+        "depth": 2,
+        "slug": "1-开写前",
+        "text": "1. 开写前"
+      },
+      {
+        "depth": 2,
+        "slug": "2-结构检查",
+        "text": "2. 结构检查"
+      },
+      {
+        "depth": 2,
+        "slug": "3-事实检查",
+        "text": "3. 事实检查"
+      },
+      {
+        "depth": 2,
+        "slug": "4-分层检查",
+        "text": "4. 分层检查"
+      },
+      {
+        "depth": 2,
+        "slug": "5-论文级质量检查",
+        "text": "5. 论文级质量检查"
+      },
+      {
+        "depth": 2,
+        "slug": "6-readme-project-json-配对检查",
+        "text": "6. README / project.json 配对检查"
+      },
+      {
+        "depth": 2,
+        "slug": "7-可执行性检查",
+        "text": "7. 可执行性检查"
+      },
+      {
+        "depth": 2,
+        "slug": "8-风格检查",
+        "text": "8. 风格检查"
+      }
+    ],
+    "detailPath": "articles/md_cad1c581bf1b.json"
+  }
+}

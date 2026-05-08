@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_b9d77e1f2abe",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E8%A7%84%E5%88%99.md",
+    "sourcePath": "/home/vault/Obsidian/docs/版本管理规则.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/版本管理规则.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E8%A7%84%E5%88%99.md",
+    "slug": "版本管理规则",
+    "title": "版本管理规则",
+    "summary": "版本管理规则 命名规则 后续所有更新后的文档，统一采用以下命名格式： 原文件名 v版本号 YYYY MM DD.扩展名 示例： 刘高朋 毕业论文 清洗版 v01 2026 04 12.md 刘高朋 毕业论文 原生排版 v01 2026 04 12.docx Cloude App系统说明 v01 20...",
+    "description": "版本管理规则 命名规则 后续所有更新后的文档，统一采用以下命名格式： 原文件名 v版本号 YYYY MM DD.扩展名 示例： 刘高朋 毕业论文 清洗版 v01 2026 04 12.md 刘高朋 毕业论文 原生排版 v01 2026 04 12.docx Cloude App系统说明 v01 20...",
+    "date": "2026-04-19",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-知识库治理",
+      "形态-规范"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-知识库治理",
+        "形态-规范"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/版本管理规则.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/版本管理规则.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E8%A7%84%E5%88%99.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "版本管理规则",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 知识库治理",
+        "形态 规范",
+        "版本管理规则"
+      ],
+      "subtitle": "版本管理规则 命名规则 后续所有更新后的文档，统一采用以下命名格式： 原文件名 v版本号 YYYY MM DD.扩展名 示例： 刘高朋 毕业论文 清洗版 v01 2026 04 12.md 刘高朋 毕业论文 原生排版 v01 2026 04 12.docx Cloude App系统说明 v01 20..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "## 版本管理规则\n\n### 命名规则\n\n后续所有更新后的文档，统一采用以下命名格式：\n\n`原文件名_v版本号_YYYY-MM-DD.扩展名`\n\n示例：\n\n- `刘高朋_毕业论文_清洗版_v01_2026-04-12.md`\n- `刘高朋_毕业论文_原生排版_v01_2026-04-12.docx`\n- `Cloude App系统说明_v01_2026-04-12.md`\n\n### 当前约定\n\n- 同一天内多次更新，版本号递增，例如 `v02`、`v03`\n- 不覆盖旧版本，始终新建新文件\n- 无版本号的文件保留为“工作主稿”或“当前输出”\n- 需要提交、归档、回溯时，优先查看带版本号文件\n\n### 当前首个版本日期\n\n- `2026-04-12`\n\n### 推荐维护方式\n\n1. 先更新工作主稿\n2. 完成后复制出一个带版本号和日期的新文件\n3. `docx/pdf` 与对应的 `md` 保持同版本号\n4. 对已被主稿明确替代、且确认后续不再需要回溯的旧文件，可直接删除，保持目录简洁",
+    "html": "<h2 id=\"版本管理规则\">版本管理规则</h2>\n<h3 id=\"命名规则\">命名规则</h3>\n<p>后续所有更新后的文档，统一采用以下命名格式：</p>\n<p><code>原文件名_v版本号_YYYY-MM-DD.扩展名</code></p>\n<p>示例：</p>\n<ul>\n<li><code>刘高朋_毕业论文_清洗版_v01_2026-04-12.md</code></li>\n<li><code>刘高朋_毕业论文_原生排版_v01_2026-04-12.docx</code></li>\n<li><code>Cloude App系统说明_v01_2026-04-12.md</code></li>\n</ul>\n<h3 id=\"当前约定\">当前约定</h3>\n<ul>\n<li>同一天内多次更新，版本号递增，例如 <code>v02</code>、<code>v03</code></li>\n<li>不覆盖旧版本，始终新建新文件</li>\n<li>无版本号的文件保留为“工作主稿”或“当前输出”</li>\n<li>需要提交、归档、回溯时，优先查看带版本号文件</li>\n</ul>\n<h3 id=\"当前首个版本日期\">当前首个版本日期</h3>\n<ul>\n<li><code>2026-04-12</code></li>\n</ul>\n<h3 id=\"推荐维护方式\">推荐维护方式</h3>\n<ol>\n<li>先更新工作主稿</li>\n<li>完成后复制出一个带版本号和日期的新文件</li>\n<li><code>docx/pdf</code> 与对应的 <code>md</code> 保持同版本号</li>\n<li>对已被主稿明确替代、且确认后续不再需要回溯的旧文件，可直接删除，保持目录简洁</li>\n</ol>",
+    "toc": [
+      {
+        "depth": 2,
+        "slug": "版本管理规则",
+        "text": "版本管理规则"
+      },
+      {
+        "depth": 3,
+        "slug": "命名规则",
+        "text": "命名规则"
+      },
+      {
+        "depth": 3,
+        "slug": "当前约定",
+        "text": "当前约定"
+      },
+      {
+        "depth": 3,
+        "slug": "当前首个版本日期",
+        "text": "当前首个版本日期"
+      },
+      {
+        "depth": 3,
+        "slug": "推荐维护方式",
+        "text": "推荐维护方式"
+      }
+    ],
+    "detailPath": "articles/md_b9d77e1f2abe.json"
+  }
+}

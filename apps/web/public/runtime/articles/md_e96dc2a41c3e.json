@@ -1,0 +1,1306 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_e96dc2a41c3e",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/Atramenti-Console%20%E6%96%87%E6%A1%A3%E6%B1%87%E7%BC%96.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/Atramenti-Console 文档汇编.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Atramenti-Console 文档汇编.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Atramenti-Console%20%E6%96%87%E6%A1%A3%E6%B1%87%E7%BC%96.md",
+    "slug": "codex-knowledge-atramenti-console-文档汇编",
+    "title": "Atramenti-Console 文档汇编",
+    "summary": "Atramenti Console 文档汇编 这是一份按原文件顺序进行的无删减整合文档。 目标：把原本分散的 11 份说明文档合并成一个总文档，方便连续阅读、检索、打印、继续扩写。 原则：不删减原文内容，只增加整合页头和每一章的来源标记。 注：本文保留 2026 04 17 的整合结构，但其中涉及...",
+    "description": "Atramenti Console 文档汇编 这是一份按原文件顺序进行的无删减整合文档。 目标：把原本分散的 11 份说明文档合并成一个总文档，方便连续阅读、检索、打印、继续扩写。 原则：不删减原文内容，只增加整合页头和每一章的来源标记。 注：本文保留 2026 04 17 的整合结构，但其中涉及...",
+    "date": "2026-04-23",
+    "updated": "2026-04-19",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-系统运维",
+      "项目-Atramenti-Console",
+      "形态-记录",
+      "整合文档",
+      "codex-knowledge",
+      "01-atramenti-console-总览",
+      "03-atramenti-console-架构与模块原理",
+      "04-atramenti-console-运行端口与部署拓扑",
+      "05-atramenti-console-插件-mcp-skill-注册机制",
+      "07-atramenti-console-mcp-模块索引",
+      "09-atramenti-console-当前上下文知识与排查入口",
+      "02-atramenti-console-目录索引",
+      "06-atramenti-console-apps-与-shared-索引",
+      "08-atramenti-console-skills-与知识系统索引",
+      "10-atramenti-console-control-plane-说明"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics",
+        "filesystem.folderTags",
+        "obsidian.wikilinks"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-系统运维",
+        "项目-Atramenti-Console",
+        "形态-记录"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/Atramenti-Console 文档汇编.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Atramenti-Console 文档汇编.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Atramenti-Console%20%E6%96%87%E6%A1%A3%E6%B1%87%E7%BC%96.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Atramenti-Console",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [
+        "01 - Atramenti-Console 总览",
+        "03 - Atramenti-Console 架构与模块原理",
+        "04 - Atramenti-Console 运行端口与部署拓扑",
+        "05 - Atramenti-Console 插件、MCP、Skill 注册机制",
+        "07 - Atramenti-Console MCP 模块索引",
+        "09 - Atramenti-Console 当前上下文知识与排查入口",
+        "02 - Atramenti-Console 目录索引",
+        "06 - Atramenti-Console Apps 与 Shared 索引",
+        "08 - Atramenti-Console Skills 与知识系统索引",
+        "10 - Atramenti-Console Control Plane 说明"
+      ],
+      "backlinks": [
+        "md_f0340fa6cc06"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 系统运维",
+        "项目 ATRAMENTI CONSOLE",
+        "形态 记录",
+        "整合文档"
+      ],
+      "subtitle": "Atramenti Console 文档汇编 这是一份按原文件顺序进行的无删减整合文档。 目标：把原本分散的 11 份说明文档合并成一个总文档，方便连续阅读、检索、打印、继续扩写。 原则：不删减原文内容，只增加整合页头和每一章的来源标记。 注：本文保留 2026 04 17 的整合结构，但其中涉及..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Atramenti-Console 文档汇编\n\n> 这是一份按原文件顺序进行的无删减整合文档。  \n> 目标：把原本分散的 11 份说明文档合并成一个总文档，方便连续阅读、检索、打印、继续扩写。  \n> 原则：不删减原文内容，只增加整合页头和每一章的来源标记。\n\n> 注：本文保留 2026-04-17 的整合结构，但其中涉及 MCP / Skill 真源路径的现行口径已按当前项目状态刷新到 `codex` 能力根。\n>\n> 若后续继续重排、吸收来源稿或收口这份总册，先遵循 `C:\\Users\\ASUS-KL\\.codex\\AGENTS.md` 中的文档规则层；维护说明见 `C:\\Users\\ASUS-KL\\.codex\\AGENTS.annotated.md`，不要再从它外面套新的薄导航页或平行“新版总览”。\n>\n> 边界说明：本文是 `Atramenti-Console` 主题的整合阅读总册与结构说明，不承担项目总体 `current-state` 三件套职责；如果要判断“项目现在是什么状态、下一步做什么”，优先看 `PROJECT-CONTEXT.md`、`SESSION-HANDOFF.md`、`plan.md`。\n\n## 原文件顺序\n\n1. `00 - Atramenti-Console 索引.md`\n2. `01 - Atramenti-Console 总览.md`\n3. `02 - Atramenti-Console 目录索引.md`\n4. `03 - Atramenti-Console 架构与模块原理.md`\n5. `04 - Atramenti-Console 运行端口与部署拓扑.md`\n6. `05 - Atramenti-Console 插件、MCP、Skill 注册机制.md`\n7. `06 - Atramenti-Console Apps 与 Shared 索引.md`\n8. `07 - Atramenti-Console MCP 模块索引.md`\n9. `08 - Atramenti-Console Skills 与知识系统索引.md`\n10. `09 - Atramenti-Console 当前上下文知识与排查入口.md`\n11. `10 - Atramenti-Console Control Plane 说明.md`\n\n\n---\n\n## 来源文件：00 - Atramenti-Console 索引.md\n\n# Atramenti-Console 索引\n\n> 位置：`E:\\My Project\\Atramenti-Console`\n> 文档用途：把这个项目的结构、入口、模块原理、注册机制、运行拓扑、当前上下文知识整理成 Obsidian 可持续维护的知识包。\n\n## 建议阅读顺序\n\n1. [01 - Atramenti-Console 总览](#01-atramenti-console-总览)\n2. [03 - Atramenti-Console 架构与模块原理](#03-atramenti-console-架构与模块原理)\n3. [04 - Atramenti-Console 运行端口与部署拓扑](#04-atramenti-console-运行端口与部署拓扑)\n4. [05 - Atramenti-Console 插件、MCP、Skill 注册机制](#05-atramenti-console-插件-mcp-skill-注册机制)\n5. [07 - Atramenti-Console MCP 模块索引](#07-atramenti-console-mcp-模块索引)\n6. [09 - Atramenti-Console 当前上下文知识与排查入口](#09-atramenti-console-当前上下文知识与排查入口)\n\n## 文档列表\n\n- [01 - Atramenti-Console 总览](#01-atramenti-console-总览)：项目定位、目标、当前迁移状态、核心模块\n- [02 - Atramenti-Console 目录索引](#02-atramenti-console-目录索引)：根目录到一级目录的结构解释\n- [03 - Atramenti-Console 架构与模块原理](#03-atramenti-console-架构与模块原理)：`server.mjs` / `gateway.mjs` / Next shell / legacy 页面 / 控制面关系\n- [04 - Atramenti-Console 运行端口与部署拓扑](#04-atramenti-console-运行端口与部署拓扑)：本地、云端、工作站、运行节点、端口与部署规则\n- [05 - Atramenti-Console 插件、MCP、Skill 注册机制](#05-atramenti-console-插件-mcp-skill-注册机制)：统一注册、配置、派生、扫描规则\n- [06 - Atramenti-Console Apps 与 Shared 索引](#06-atramenti-console-apps-与-shared-索引)：`apps/*` 与 `shared/*` 的职责说明\n- [07 - Atramenti-Console MCP 模块索引](#07-atramenti-console-mcp-模块索引)：主要模块的入口、路由、职责、阅读路径\n- [08 - Atramenti-Console Skills 与知识系统索引](#08-atramenti-console-skills-与知识系统索引)：skills 体系、统一来源、共享方式\n- [09 - Atramenti-Console 当前上下文知识与排查入口](#09-atramenti-console-当前上下文知识与排查入口)：我当前已经稳定掌握的项目知识点与故障排查顺序\n- [10 - Atramenti-Console Control Plane 说明](#10-atramenti-console-control-plane-说明)：控制面注册表、服务器、agent、路由策略\n\n## 一句话理解这个项目\n\nAtramenti-Console 不是“一个单纯前端项目”，它本质上是：\n\n- 一个独立运行的控制台宿主\n- 一个把多模块页面迁进统一壳层的前端母模板\n- 一个把插件、MCP、技能、控制面、云端部署、工作站执行能力串起来的工程总线\n- 一个逐步替代旧散装 HTML/脚本/临时运维入口的统一收口仓库\n\n## 当前最重要的结构性真源（不是 current-state 入口）\n\n- 项目运行主入口：`E:\\My Project\\Atramenti-Console\\server.mjs`\n- 本地插件网关：`E:\\My Project\\Atramenti-Console\\gateway.mjs`\n- 前端母模板：`E:\\My Project\\Atramenti-Console\\apps\\console-web`\n- 插件清单派生源：`E:\\My Project\\Atramenti-Console\\shared\\plugin-manifest.js`\n- 独立运行配置：`E:\\My Project\\Atramenti-Console\\atramenti.config.json`\n- 控制面注册表：`E:\\My Project\\Atramenti-Console\\control-plane`\n- MCP 真源目录：`E:\\My Project\\Atramenti-Console\\codex\\mcps`\n- Skill 真源目录：`E:\\My Project\\Atramenti-Console\\codex\\skills`\n\n\n\n---\n\n## 来源文件：01 - Atramenti-Console 总览.md\n\n# Atramenti-Console 总览\n\n## 1. 项目定位\n\nAtramenti-Console 是一个“独立运行的 OpenClaw 控制台宿主工程”。\n\n它做的不是单一业务，而是把以下几类东西收口到同一个仓库里：\n\n- 前端壳层与统一工作台\n- 多个业务模块页面\n- 模块 API / SSE / 后端服务\n- MCP 服务与包装器\n- Skill 体系\n- 控制面注册表\n- 本地 / 云端 / 工作站的运行与部署链\n\n它当前已经明确承载的核心用户面模块有：\n\n- 小说管理 `novel-manager`\n- 部署中心 `deploy-center`\n- 自我调试闭环 `self-debug-closed-loop`\n- 系统总览 `system-overview`\n- 运维观测 `ops-observer`\n- 数据库 API `database-api`\n- 经验中心 `experience-manager`\n- 文件管理 / 模型中心 / 自动化中心 / Key Guard 等辅助模块\n\n## 2. 它不是一个什么项目\n\n它不是：\n\n- 单纯 Next.js 前端站点\n- 单纯 MCP 仓库\n- 单纯技能仓库\n- 单纯部署脚本集合\n\n它是“前端壳 + 模块目录 + 控制面 + 云端运行协议 + 本地工作站桥接”的综合工程。\n\n## 3. 当前工程阶段\n\n从现有 README、模块说明和运行配置来看，项目处于“迁旧保新”的中间阶段：\n\n- 已经引入统一前端母模板：`apps/console-web`\n- 已有 native route：`/`、`/system-overview`、`/novel`\n- 仍然保留不少 legacy HTML 页面与 plugin 页面\n- `server.mjs` 负责把 native route 与 legacy route 收拢到一个宿主下\n- `gateway.mjs` 仍是本地独立插件网关的基础骨架\n\n换句话说：\n\n> 当前不是彻底新架构，也不是彻底旧架构，而是“以统一壳层和统一注册机制为中心的过渡架构”。\n\n## 4. 顶层工作模式\n\n这个仓库同时服务三种运行面：\n\n### 4.1 本地开发面\n\n- 本地直接跑 `server.mjs`\n- 本地可跑 `gateway.mjs`\n- 本地 Codex / 技能 / MCP 配置读取这套源码\n- 本地浏览器验证新壳与模块页面\n\n### 4.2 云端控制面\n\n- 主云端节点承载公开控制台、控制面和部署入口\n- 云端不应直接作为“源码真源”修改点\n- 应从源码根发布到 runtime root\n\n### 4.3 工作站执行面\n\n- Windows 工作站保留桌面绑定、浏览器绑定、本地文件绑定的执行能力\n- 这部分通过 control-plane 被正式建模，不再只是隐式桥接\n\n## 5. 当前最关键的几条原则\n\n### 5.1 真源原则\n\n- 模块元信息真源：各自 `mcps/*/module.json`\n- 插件托管派生真源：`shared/plugin-manifest.js`\n- 独立运行配置真源：`atramenti.config.json`\n- 控制面真源：`control-plane/registry` + `control-plane/policy`\n- 本地技能真源：`skills/`\n- MCP 真源：`mcps/`\n\n### 5.2 源码根与运行根分离\n\n控制面文档里已经明确：\n\n- 不要把 `/srv/atramenti-console` 当源码真源\n- 正确做法是：从 `srcRoot` 构建，再发布到 `runtimeRoot`\n\n### 5.3 页面迁移原则\n\n- 新页面尽量进入 `apps/console-web`\n- 模块入口信息不手写在前端组件里，而是从模块元信息扫描得到\n- 旧 HTML 页面仍可通过宿主代理/桥接存在，但不应再扩散为长期真源\n\n## 6. 当前比较关键的模块分组\n\n### 6.1 面向人直接操作的模块\n\n- `novel-manager`\n- `deploy-center`\n- `self-debug-closed-loop`\n- `system-overview`\n- `ops-observer`\n- `vscode-key-guard`\n- `database-api`\n- `experience-manager`\n\n### 6.2 基础设施/工具型 MCP 模块\n\n- `ripgrep-search`\n- `repo-inspector`\n- `standards-guard`\n- `orchestration-pipeline`\n- `output-guard`\n- `context-store`\n- `database-ops-mcp`（`db-readonly` 兼容层）\n- `playwright-browser`\n- `log-diagnose`\n\n### 6.3 共享层\n\n- `shared/`：独立宿主的派生逻辑、导航、控制面读取、配置读取\n- `mcps/shared/`：扩展体系里的共享导航真源\n- `control-plane/`：服务器与 agent 的统一注册与执行策略\n\n## 7. 一句话抓总\n\n如果只记一句：\n\n> Atramenti-Console = “统一壳层 + 模块真源目录 + 控制面 + 云端运行/工作站桥接 + MCP/Skill 能力仓” 的总控仓库。\n\n\n\n---\n\n## 来源文件：02 - Atramenti-Console 目录索引.md\n\n# Atramenti-Console 目录索引\n\n> 根目录：`E:\\My Project\\Atramenti-Console`\n\n## 1. 根目录一级结构\n\n### `apps`\n\n承载前端应用层。\n\n当前主要有：\n\n- `console-web`：新的统一前端母模板，Next.js 16 + React 19 + TS + Tailwind v4\n- `database-api`：数据库 API 相关应用资料目录，目前更偏文档/状态映射\n\n### `control-plane`\n\n项目级控制面。统一维护：\n\n- 服务器注册表\n- agent 注册表\n- 部署目标映射\n- 执行路由策略\n- 提升门槛/promotion gate\n\n### `cookies-accounts`\n\n账号、cookie、平台登录相关的运行态/辅助数据目录。通常与平台自动化、发布链相关。\n\n### `data`\n\n仓库级共享运行数据或快照数据。\n\n### `extensions`\n\n偏扩展开发说明、规则性文档，不是主要业务模块真源。\n\n### `mcps`\n\n本仓库最重要的能力目录之一。\n\n这里面包含：\n\n- 业务模块\n- MCP wrapper\n- 工具型服务\n- 共享扩展资源\n- 运行验收脚本与产物\n\n### `projects`\n\n项目级工作区或历史/派生目录。\n\n### `scripts`\n\n仓库级脚本，用于构建、部署、同步、诊断、辅助维护。\n\n### `shared`\n\n独立宿主共享层。包括：\n\n- `plugin-manifest.js`\n- `standalone-config.js`\n- `nav-registry.js`\n- `control-plane.js`\n- 独立 home / nav HTML\n\n### `skills`\n\n本地 Codex 技能真源目录。当前已经是比较大的统一技能仓。\n\n### `workspace`\n\n工作区、实验区、临时协作区。\n\n## 2. 根目录关键文件\n\n### `package.json`\n\n工作区脚本和总依赖入口。关键点：\n\n- `pnpm@9.15.9`\n- Node `>=20`\n- `dev` 跑 `server.mjs`\n- `gateway:dev` 跑 `gateway.mjs`\n- `ci` 走 `turbo run lint typecheck build`\n- 有 `deploy:cloud:*` 和 `agent:*` 系列脚本\n\n### `pnpm-workspace.yaml`\n\n声明 workspace 包范围：\n\n- 根目录\n- `apps/*`\n- `mcps/*`\n- `mcps/feishu-center/integrations/*`\n\n### `turbo.json`\n\n多包任务编排，当前主要有：\n\n- `build`\n- `lint`\n- `typecheck`\n\n### `server.mjs`\n\n独立宿主入口。负责：\n\n- 启动 Atramenti Console\n- 托管/代理 native route\n- 代理 legacy 模块页面/API\n- 按插件清单加载页面与模块\n\n### `gateway.mjs`\n\n本地插件网关入口。负责：\n\n- HTTP 服务\n- 插件加载\n- 模块路由注册\n- 健康检查\n- 环境根路径注入\n\n### `atramenti.config.json`\n\n独立运行配置真源。当前包含：\n\n- 浏览器运行默认参数\n- enabled plugin entries\n- 每个插件的单独配置（如 standalone、provider 等）\n\n### `RUNTIME-TOPOLOGY.md`\n\n当前运行拓扑与分工说明：\n\n- 上海主云端节点\n- 杭州运行节点\n- Windows 工作站\n- MCP 远程包装与执行分布\n\n## 3. `mcps/` 一级模块索引\n\n当前有三类内容：\n\n### 3.1 业务/管理模块\n\n- `novel-manager`\n- `deploy-center`\n- `self-debug-closed-loop`\n- `experience`\n- `database-api`\n- `ops-observer`\n- `qwen3-tts`\n- `file-manager`\n- `automation`\n- `ai-model-hub`\n- `aghub-bridge`\n- `superset-bridge`\n- `vscode-key-guard`\n- `system-overview`\n- `feishu-center`\n\n### 3.2 工具型 / MCP wrapper\n\n- `ripgrep-search`\n- `repo-inspector`\n- `standards-guard`\n- `orchestration-pipeline`\n- `playwright-browser`\n- `context-store`\n- `database-ops-mcp`（`db-readonly` 兼容层）\n- `log-diagnose`\n- `output-guard`\n- `prompt-compressor`\n- `cloud-repo-mcp`\n- `dev-quality-mcp`\n\n### 3.3 共享与模板\n\n- `_shared`\n- `_templates`\n- `shared`\n- `core`\n- `plugins`\n- `kernel`\n\n## 4. `skills/` 一级结构理解\n\n技能目录非常大，但可以按用途分：\n\n- 自我调试与前端验证：`self-debug-closed-loop`、`frontend-evidence`、`readiness-wait-gate`\n- Agent 提升与长期闭环：`agent-improvement-ops`\n- MCP / 插件 / skill 构建：`mcp-server-patterns`、`create-skill`、`create-subagent`\n- 研究与搜索：`deep-research`、`search-first`、`qmd`\n- GSD 系列项目管理技能：`gsd-*`\n- 运维与云端：`tencentcloud-ops`、`gateway-restart-safe`\n- 验收/发布：`module-acceptance`、`release-preflight`\n\n## 5. 当前最值得优先建立脑图的目录\n\n如果要最快理解整个仓库，优先看：\n\n1. `server.mjs`\n2. `gateway.mjs`\n3. `shared/`\n4. `apps/console-web/README.md`\n5. `control-plane/README.md`\n6. `mcps/novel-manager/README.md`\n7. `mcps/self-debug-closed-loop/README.md`\n8. `RUNTIME-TOPOLOGY.md`\n\n\n\n---\n\n## 来源文件：03 - Atramenti-Console 架构与模块原理.md\n\n# Atramenti-Console 架构与模块原理\n\n## 1. 总体架构\n\n这个仓库的架构可以拆成 5 层：\n\n1. 宿主层：`server.mjs`\n2. 网关层：`gateway.mjs`\n3. 前端壳层：`apps/console-web`\n4. 模块层：`mcps/*`\n5. 控制面与共享能力层：`control-plane/` + `shared/` + `skills/`\n\n## 2. `server.mjs` 的角色\n\n`server.mjs` 是 Atramenti-Console 的独立宿主入口。\n\n它当前不是“只提供静态页面”，而是做这些事：\n\n- 启动独立控制台 HTTP 服务\n- 代理部分 native route 到 `apps/console-web`\n- 代理 legacy 模块页面/API\n- 读取共享插件清单\n- 按配置加载插件页面\n- 在需要时自动拉起 `apps/console-web` 的 Next 进程\n\n### 2.1 当前已迁入 native 的路径\n\n从现有代码与 README 看，当前迁入的 native route 主要是：\n\n- `/`\n- `/system-overview`\n- `/novel`\n\n说明：\n\n- `/novel` 已迁到新壳层，但它的数据仍有明显 legacy 后端成分\n- `/novel` 首屏依赖 dashboard snapshot，增量依赖 SSE\n- 所以它是“新壳 + 旧后端聚合”的典型过渡页\n\n## 3. `gateway.mjs` 的角色\n\n`gateway.mjs` 是本地独立插件网关。\n\n它更像“插件加载器 + 路由注册器 + 本地环境桥”。\n\n它负责：\n\n- 建立 HTTP 服务\n- 加载已启用插件\n- 注册模块路由\n- 提供 `/health`\n- 注入多个运行时根路径环境变量\n\n### 3.1 它注入的环境根信息很重要\n\n从现有代码看，`gateway.mjs` 会设置类似这些根：\n\n- `OPENCLAW_PROJECT_ROOT`\n- `OPENCLAW_WORKSPACE_ROOT`\n- `OPENCLAW_RUNTIME_ROOT`\n- `NOVEL_MANAGER_WORKSPACE_ROOT`\n- `NOVEL_MANAGER_ROOT`\n\n这说明它不仅是网关，也是“路径真源协调器”。\n\n## 4. 新前端壳层 `apps/console-web`\n\n这是当前前端架构里最重要的新基座。\n\n### 4.1 它的定位\n\n不是某个业务页，而是：\n\n- 统一壳层\n- 统一模块工作台模板\n- 统一 UI 组件层\n- 后续模块迁移的母模板\n\n### 4.2 当前技术栈\n\n- Next.js 16\n- React 19\n- TypeScript\n- Tailwind CSS v4\n- Radix UI\n- CVA\n\n### 4.3 它的真源原则\n\n- 模块来源不写死在前端组件里\n- 模块入口从 `mcps/*/module.json` 扫描\n- 侧栏 / 首页 / native/legacy 状态共用同一份模块注册数据\n- 页面优先组合组件，不再散写整页 HTML/CSS\n\n### 4.4 核心代码位置\n\n- 模块扫描真源：`apps/console-web/lib/module-registry.ts`\n- 壳层真源：`apps/console-web/components/console/app-shell.tsx`\n- 业务积木层：`apps/console-web/components/console/*`\n- 小说工作台：`apps/console-web/components/novel-manager/novel-dashboard.tsx`\n\n## 5. 模块层 `mcps/*`\n\n这个仓库的模块层并不统一只有一种形态，而是多种形态并存：\n\n### 5.1 业务模块型\n\n例子：\n\n- `novel-manager`\n- `deploy-center`\n- `self-debug-closed-loop`\n- `database-api`\n- `ops-observer`\n\n典型特点：\n\n- 有 `module.json`\n- 有页面入口\n- 有 API 前缀\n- 常带 plugin 入口\n- 可能还带独立 app/backend/core/frontend 分层\n\n### 5.2 工具型 MCP wrapper\n\n例子：\n\n- `ripgrep-search`\n- `repo-inspector`\n- `standards-guard`\n- `orchestration-pipeline`\n\n典型特点：\n\n- 偏 server.mjs / wrapper 入口\n- 提供 tool 级能力\n- 适合本地 stdio 或未来远程 HTTP MCP\n\n### 5.3 共享/模板型\n\n例子：\n\n- `mcps/shared`\n- `mcps/_shared`\n- `mcps/_templates`\n- `mcps/core`\n\n这些不是直接给最终用户看的业务页，而是模块体系的底座。\n\n## 6. `novel-manager` 的模块原理\n\n`novel-manager` 是当前最复杂、最工程化的业务模块。\n\n### 6.1 它的职责链\n\n它要把这条链路收口：\n\n- 作品\n- 章节\n- 正文\n- 审核\n- 待发布\n- 自动发布\n- 平台确认\n- 前端可视化\n\n### 6.2 它内部的分层\n\n- `frontend/`：小说管理页面源码\n- `app/`：HTTP / API / SSE / dashboard 聚合入口\n- `backend/`：服务层\n- `core/fanqie/`：平台发布与平台运行时能力\n- `core/workflow/`：规则、调度、状态机\n- `core/manuscript/`：生成、润色、审核、记忆、风格\n- `tools/`：验收与平台工具\n\n### 6.3 它的核心闭环\n\n1. 页面通过 API/SSE 读 dashboard\n2. `app/index.ts` 聚合后端状态\n3. `backend/services/novel-service.ts` 与 `core/*` 提供数据/动作\n4. `SmartScheduler` 驱动调度\n5. `PublishOrchestrator` 统一发布编排\n6. `FanqiePublisher` 执行发文\n7. `PublishResultService` 回写并确认平台真源\n\n### 6.4 这说明什么\n\n`novel-manager` 不是普通 CRUD 页面，而是一个“状态机 + 调度器 + 平台自动化 + 编辑器”的复合系统。\n\n## 7. `self-debug-closed-loop` 的模块原理\n\n这个模块的重点不是页面本身，而是“统一能力目录与闭环协议”。\n\n它负责：\n\n- 扫描 `skills/` 与 `mcps/`\n- 过滤掉不适合共享的目录\n- 构建统一 catalog snapshot\n- 暴露给 agent / 管理员读写\n- 给共享技能/MCP 提供可视化查看与维护入口\n\n本质上它是：\n\n> 本仓库内部“能力目录”的管理面板。\n\n## 8. 控制面与运行节点的关系\n\n`control-plane/` 不是运行代码本体，而是：\n\n- 服务器库存\n- agent 库存\n- 部署目标映射\n- 执行路由规则\n- 提升门槛\n\n也就是说：\n\n- `server.mjs` / `gateway.mjs` 解决“怎么跑”\n- `control-plane/` 解决“应该在哪跑、以谁为真源、路由到哪里”\n\n## 9. 真正的架构关键\n\n这个项目的关键不在某个单文件，而在三组“统一”：\n\n### 9.1 统一壳层\n\n- `apps/console-web`\n- `server.mjs`\n\n### 9.2 统一模块真源\n\n- `mcps/*/module.json`\n- `shared/plugin-manifest.js`\n\n### 9.3 统一执行/部署认知\n\n- `control-plane/*`\n- `RUNTIME-TOPOLOGY.md`\n\n## 10. 最实用的理解图\n\n可以直接把项目理解成这条链：\n\n`skills/mcps/control-plane` 提供能力和规则\n-> `server.mjs` / `gateway.mjs` 负责加载和路由\n-> `apps/console-web` 提供统一前端壳\n-> `mcps/*` 提供实际模块能力\n-> 云端/工作站节点负责真实执行与验证\n\n\n\n---\n\n## 来源文件：04 - Atramenti-Console 运行端口与部署拓扑.md\n\n# Atramenti-Console 运行端口与部署拓扑\n\n## 1. 三个主要节点\n\n根据 `RUNTIME-TOPOLOGY.md` 和 control-plane 注册表，当前项目是三节点结构：\n\n### 1.1 上海主云端节点\n\n- 服务器：`124.220.233.126`\n- 角色：`console`、`control-plane`\n- SSH 用户：`ubuntu`\n- 源码根：`/home/ubuntu/atramenti-console-src`\n- 运行根：`/srv/atramenti-console`\n- 备份根：`/home/ubuntu/atramenti-console-backups`\n- 服务：`atramenti-console.service`\n\n用途：\n\n- 公开控制台入口\n- 控制面承载\n- 部署验证面\n- 对外可访问 UI/API\n\n### 1.2 杭州运行节点\n\n- 服务器：`121.196.202.114`\n- 角色：`runtime`、`mcp-offload`、`worker`\n- 运行根：`/srv/mcp-runtime`\n- MCP bundle 根：`/srv/mcp-runtime/apps/codex-portable-mcps`\n- 镜像工作区：`/srv/mcp-runtime/work`\n\n用途：\n\n- 运行重型 MCP / worker 任务\n- 提供 mirrored workspace 执行面\n\n当前阻塞：\n\n- 22 端口 TCP 可连，但 SSH banner 超时\n- 所以它还不能被当成完全可靠的主 worker\n\n### 1.3 Windows 本地工作站\n\n- 主机名：`NEVERLETMEGO`\n- 角色：`windows-workstation`、`local-file-executor`、`desktop-bound`\n- Codex 根：`C:\\Users\\ASUS-KL\\.codex`\n- OpenClaw 根：`C:\\Users\\ASUS-KL\\.openclaw`\n- 本地工具运行根：`E:\\My Project\\Atramenti-Console\\.runtime\\deploy\\local-tools`\n\n用途：\n\n- 真实桌面浏览器动作\n- 本地文件操作\n- 编辑器绑定动作\n- 本地配置读写\n\n## 2. 主要端口与地址\n\n### 2.1 Atramenti Console 宿主\n\n- 默认本地端口：`5101`\n- 启动脚本：`pnpm run dev`\n- 入口文件：`server.mjs`\n\n典型访问地址：\n\n- `http://127.0.0.1:5101/`\n- `http://127.0.0.1:5101/system-overview/`\n- `http://127.0.0.1:5101/novel/`\n\n### 2.2 本地 gateway\n\n- 默认端口：`5000`\n- 启动脚本：`pnpm run gateway:dev`\n- 入口文件：`gateway.mjs`\n\n### 2.3 console-web 内部 Next 代理端口\n\n从 `server.mjs` 现有设计可知，内部 Next 前端还有一个单独的代理端口，默认是：\n\n- `3202`\n\n它由宿主自动拉起/代理，平时用户不一定直接访问。\n\n### 2.4 控制面健康地址\n\n主云端节点已登记：\n\n- 正式公网入口：`https://console.tengokukk.com/`\n- 公网 summary：`https://console.tengokukk.com/api/console/summary`\n- 本地 summary：`http://127.0.0.1:5101/api/console/summary`\n\n## 3. 部署的正确认知\n\n### 3.1 不要把运行目录当源码真源\n\n控制面文档已经明确：\n\n- `/srv/atramenti-console` 是 runtime root\n- 不是 source of truth\n\n正确流程是：\n\n1. 在源码根修改\n2. 构建/打包\n3. 发布到运行根\n4. 验证服务与页面\n\n### 3.2 运行节点职责分工\n\n- 124：控制面、公开 UI、管理节点\n- 121：重型 runtime / worker / offload\n- Windows：桌面绑定、本地文件绑定、浏览器动作\n\n### 3.3 远程 MCP 的包装方式\n\n本地 Codex 的 remote-offloaded MCP 通过：\n\n- `C:\\Users\\ASUS-KL\\.codex\\remote-mcp.ps1`\n- `C:\\Users\\ASUS-KL\\.codex\\remote-mcp.cmd`\n\nSSH 到运行节点并启动：\n\n- `node <mcp>/server.mjs`\n\n## 4. 技能与 MCP 的实际存放/消费关系\n\n### 4.1 Skill 真源\n\n- 真正可编辑的本地 skill 源：`E:\\My Project\\Atramenti-Console\\codex\\skills`\n- `C:\\Users\\ASUS-KL\\.codex\\skills` 是指向它的 junction/消费入口\n\n### 4.2 MCP 真源\n\n- 源码真源：`E:\\My Project\\Atramenti-Console\\codex\\mcps`\n- 远程运行 bundle：`/srv/mcp-runtime/apps/codex-portable-mcps`\n\n### 4.3 镜像工作区\n\n运行节点工作区：\n\n- `/srv/mcp-runtime/work/Atramenti-Console`\n- `/srv/mcp-runtime/work/Atramenti-OpeClaw`\n\n原则：\n\n- 搜索/探测型 MCP 优先指向云端镜像工作区\n- 不直接依赖本地 Windows 路径\n\n## 5. 工作站本地桥\n\nWindows 本地执行能力依赖：\n\n- 本地 SSH listener：`127.0.0.1:22222`\n- reverse tunnel supervisor：`C:\\Users\\ASUS-KL\\.openclaw\\aliyun-reverse-ssh.ps1`\n- node supervisor：`C:\\Users\\ASUS-KL\\.openclaw\\node-supervisor.ps1`\n\n这些让控制面能把“必须发生在真实工作站上的动作”正式分发到本地，而不是假装所有事情都能在云端完成。\n\n## 6. 当前实际部署判断标准\n\n如果要判断“是否适合部署/是否部署成功”，不能只看：\n\n- HTTP 200\n- 进程活着\n- systemd running\n\n还要看：\n\n- 页面是否正确渲染\n- 路由是否能进入目标模块\n- 新壳与 legacy 是否没断\n- 关键 SSE / API 是否正常\n- 用户可见结果是否对\n\n这和项目里的 `self-debug-closed-loop` 原则是一致的。\n\n\n\n---\n\n## 来源文件：05 - Atramenti-Console 插件、MCP、Skill 注册机制.md\n\n# Atramenti-Console 插件、MCP、Skill 注册机制\n\n## 1. 先说结论\n\n这个项目不是靠单一注册文件完成所有事情，而是“多层注册、逐层派生”：\n\n1. 模块自身元信息：`mcps/*/module.json`\n2. 宿主托管清单：`shared/plugin-manifest.js`\n3. 独立运行开关与模块配置：`atramenti.config.json`\n4. 控制面服务器/agent/部署规则：`control-plane/*`\n5. Codex 侧 MCP 启用：`C:\\Users\\ASUS-KL\\.codex\\config.toml`\n6. Skill 真源与消费：`skills/` -> `C:\\Users\\ASUS-KL\\.codex\\skills`\n\n## 2. 模块注册：`module.json`\n\n每个可进入系统壳层的模块，原则上都有自己的：\n\n- `mcps/<module>/module.json`\n\n它承担的角色：\n\n- 模块元信息真源\n- 路由/壳层信息来源\n- 系统总览扫描来源\n- 模块地图与自动发现来源\n\n在 `apps/console-web` 里，模块注册读取逻辑已明确从 `mcps/*/module.json` 扫描。\n\n## 3. 宿主插件清单：`shared/plugin-manifest.js`\n\n这是当前独立宿主最核心的“托管派生清单”。\n\n它集中定义了：\n\n- `id`\n- `localName`\n- `pluginEntry`\n- `routeBase`\n- `frontendRoot`\n- `entryFile`\n- `openclawPath`\n\n### 3.1 它解决什么问题\n\n- 哪些模块可由宿主托管\n- 每个模块的路由前缀是什么\n- legacy 页面根目录在哪里\n- OpenClaw allow/load path 应该怎么自动派生\n\n### 3.2 它提供的关键派生能力\n\n- `buildAppPages(repoRoot)`：构建页面根索引\n- `getOpenClawAllowList()`：派生 allow list\n- `getOpenClawLoadPaths()`：派生 load paths\n- `getStandaloneManagedPlugins()`：输出独立宿主管理的插件集合\n\n这意味着：\n\n> `atramenti.config.json` 不再手工长期维护 `plugins.allow` / `plugins.load.paths`，而是由 manifest 派生。\n\n## 4. 独立运行配置：`atramenti.config.json`\n\n这个文件主要负责“开关”和“模块配置”，而不是替代 manifest。\n\n当前里面可见的信息包括：\n\n- 浏览器默认配置\n- enabled plugins entries\n- 某些模块的 standalone 配置\n- 某些模块的 provider 配置\n\n### 4.1 它当前启用的核心模块\n\n- `qwen3-tts`\n- `novel-manager`\n- `deploy-center`\n- `self-debug-closed-loop`\n- `vscode-key-guard`\n- `experience-manager`\n- `automation-hub`\n- `ai-model-hub`\n- `file-manager`\n- `ops-observer`\n- `aghub-bridge`\n- `superset-bridge`\n- `database-api`\n\n## 5. 顶部导航与壳层入口扫描：`shared/nav-registry.js`\n\n这个文件会扫描 `mcps/*/module.json`，提取：\n\n- top nav 项\n- shell entry\n- route prefix\n- api prefix\n- icon/group/summary/homepage 等壳层元信息\n\n### 5.1 它说明了什么\n\n说明项目现在正在把“壳层导航”从手写常量，转成“模块元信息驱动”。\n\n这件事非常关键，因为它决定：\n\n- 新增模块时先改元信息，不是先改前端死代码\n- 导航、模块首页、系统总览、迁移状态可以共源\n\n## 6. 控制面注册：`control-plane/*`\n\n这一层不是页面层注册，而是部署/执行注册。\n\n### 6.1 `registry/servers.json`\n\n定义物理/运行节点：\n\n- cloud-shanghai-01\n- cloud-hangzhou-01\n- windows-workstation-01\n\n### 6.2 `registry/agents.json`\n\n定义共享能力消费者：\n\n- `codex-local-primary`\n- `windows-local-executor`\n- `cloud-console-runtime`\n- `cloud-runtime-worker`\n\n### 6.3 `policy/*`\n\n定义：\n\n- deploy target 映射\n- execution routing\n- promotion gate\n\n这层回答的是：\n\n- 哪个任务该去哪里执行\n- 哪个部署目标对应哪台机器\n- 哪些节点消费哪些 shared capability sources\n\n## 7. Skill 注册机制\n\n### 7.1 真源\n\n- `E:\\My Project\\Atramenti-Console\\codex\\skills`\n\n### 7.2 消费入口\n\n- `C:\\Users\\ASUS-KL\\.codex\\skills`\n\n目前通过 junction/共享方式消费，所以：\n\n- 维护时改仓库里的 skill 即可\n- 本地 Codex 实际拿到的是同一套源\n\n### 7.3 特殊点\n\n`self-debug-closed-loop` 模块还会扫描技能目录并生成 catalog snapshot，所以 skill 不只是“本地模型提示词”，也成了“平台能力目录的一部分”。\n\n## 8. MCP 注册机制\n\nMCP 维度有两层：\n\n### 8.1 源码层\n\n- 真源在 `mcps/*`\n\n### 8.2 Codex 运行层\n\n- 由 `C:\\Users\\ASUS-KL\\.codex\\config.toml` 决定启用哪些 MCP\n- 远程 offload 型 MCP 通过 `remote-mcp.ps1/.cmd` 包装到云端运行\n\n### 8.3 远程 bundle 层\n\n- 运行 bundle 在 `/srv/mcp-runtime/apps/codex-portable-mcps`\n\n所以 MCP 不是单点注册，而是：\n\n- 仓库中定义\n- Codex 中启用\n- 必要时在云端 bundle 中运行\n\n## 9. 当前最实用的理解方式\n\n如果你要追一个模块“为什么会出现在页面里 / 出现在控制台里 / 被 agent 用到”，按这个顺序查：\n\n1. `mcps/<module>/module.json`\n2. `shared/plugin-manifest.js`\n3. `atramenti.config.json`\n4. `shared/nav-registry.js`\n5. `control-plane/registry/*.json`\n6. `C:\\Users\\ASUS-KL\\.codex\\config.toml`\n\n\n\n---\n\n## 来源文件：06 - Atramenti-Console Apps 与 Shared 索引.md\n\n# Atramenti-Console Apps 与 Shared 索引\n\n## 1. `apps/console-web`\n\n这是当前新的统一前端母模板。\n\n### 技术栈\n\n- Next.js 16\n- React 19\n- TypeScript\n- Tailwind CSS v4\n- Radix UI primitives\n- class-variance-authority\n\n### 目录要点\n\n- `app/`：Next app router 页面\n- `components/console/`：控制台业务积木\n- `components/ui/`：基础 UI 原件\n- `components/novel-manager/`：小说管理新壳组件\n- `components/system-overview/`：系统总览组件\n- `lib/console-api.ts`：控制台 API 调用\n- `lib/module-registry.ts`：扫描 `mcps/*/module.json`\n\n### 当前 native route\n\n- `/`\n- `/system-overview`\n- `/novel`\n\n### 当前意义\n\n它是后续前端统一迁移的真正母模板，不只是一个 demo 项目。\n\n## 2. `apps/database-api`\n\n当前更像数据库 API 相关应用材料/状态映射区，主要不是完整前端应用。\n\n可把它理解为 `database-api` 模块在 apps 侧的补充资料位。\n\n## 3. `shared/`\n\n这是独立宿主的共享层，不要和 `mcps/shared/` 混淆。\n\n### 核心文件\n\n- `plugin-manifest.js`：宿主托管插件清单真源\n- `standalone-config.js`：读取 `atramenti.config.json`\n- `nav-registry.js`：扫描模块元信息并生成壳层导航数据\n- `control-plane.js`：读取控制面注册表与策略\n- `FRONTEND_SHELL_README.md`：独立壳相关说明\n- `standalone-home.html`：独立首页模板\n- `nav-bar-standalone.html`：独立导航 HTML\n\n### 它的职责\n\n- 连接“静态配置”与“运行派生”\n- 为 `server.mjs` 提供插件和导航的中间层\n- 统一读取控制面信息，避免宿主层直接手搓路径\n\n## 4. `mcps/shared/`\n\n这是扩展体系内部的共享导航真源。\n\n核心用途：\n\n- 统一导航栏 HTML 真源\n- 服务端注入工具\n- 前端导航行为脚本\n- 共享诊断页面\n\n### 它和 `shared/` 的区别\n\n- `shared/`：Atramenti-Console 独立宿主共享层\n- `mcps/shared/`：扩展模块体系内部共享资源层\n\n## 5. 这两层为什么容易混\n\n因为它们都叫 shared，但服务对象不同：\n\n- 一个偏宿主编排\n- 一个偏扩展 UI 真源\n\n实际排查时不要混用。\n\n## 6. 最实用的排查顺序\n\n### 页面为什么没进入新壳\n\n查：\n\n1. `apps/console-web/lib/module-registry.ts`\n2. `shared/plugin-manifest.js`\n3. `server.mjs`\n\n### 顶部导航为什么不对\n\n查：\n\n1. `shared/nav-registry.js`\n2. `mcps/*/module.json`\n3. `mcps/shared/*`\n\n### 独立运行配置为什么没生效\n\n查：\n\n1. `shared/standalone-config.js`\n2. `atramenti.config.json`\n\n\n\n---\n\n## 来源文件：07 - Atramenti-Console MCP 模块索引.md\n\n# Atramenti-Console MCP 模块索引\n\n## 1. 当前主要有 `module.json` 的业务模块\n\n| 模块 ID | 展示名 | 路由前缀 | 作用 |\n| --- | --- | --- | --- |\n| `aghub-bridge` | AGHub | `/aghub` | AGHub 桥接模块 |\n| `ai-model-hub` | 模型中心 | `/ai-hub` | 模型能力管理与展示 |\n| `automation-hub` | 自动化中心 | `/automation` | 自动化任务工作台 |\n| `database-api` | 数据库 API | `/database-api` | 数据治理与受控数据库访问 |\n| `deploy-center` | 部署中心 | `/deploy-center` | 部署、监听、云端健康、状态聚合 |\n| `experience-manager` | 经验中心 | `/experience` | 经验记录、笔记、QMD/数据库治理桥 |\n| `feishu-center` | Feishu Center | `/feishu` | 飞书集成中心 |\n| `file-manager` | 文件管理 | `/file-manager` | 文件浏览/管理模块 |\n| `novel-manager` | 小说管理 | `/novel` | 小说生产、审核、发布、平台确认闭环 |\n| `ops-observer` | 运维观测中心 | `/ops-observer` | 服务状态、端口、Netdata 摘要 |\n| `qwen3-tts` | Qwen3 TTS | `/qwen3-tts` | TTS 服务骨架与调试页 |\n| `self-debug-closed-loop` | 自我调试闭环 | `/self-debug-closed-loop` | 技能/MCP 目录与闭环管理面 |\n| `superset-bridge` | Superset BI | `/superset` | Superset 桥接 |\n| `system-overview` | 系统总览 | `/system-overview` | 项目级模块地图、真源地图、架构摘要 |\n| `vscode-key-guard` | 密钥守护 | `/vscode-key-guard` | Codex / Roo / OpenClaw 真实密钥与状态展示 |\n\n## 2. 当前最关键模块说明\n\n### `novel-manager`\n\n定位：小说生产与发布闭环。\n\n关键入口：\n\n- `mcps/novel-manager/app/index.ts`\n- `mcps/novel-manager/backend/services/novel-service.ts`\n- `mcps/novel-manager/core/workflow/scheduler/SmartScheduler.ts`\n- `mcps/novel-manager/core/fanqie/publishing/*`\n- `mcps/novel-manager/frontend/pages/novel/index.html`\n\n关键理解：\n\n- 这是状态机 + 调度器 + 发布自动化 + 编辑工作台的复合系统\n- 不是简单前端模块\n\n### `deploy-center`\n\n定位：开发期远端部署链路的统一真源。\n\n承载：\n\n- 本机文件监听\n- 归档/上传\n- 远端覆盖\n- 网关重启\n- 云端健康检查\n- 本地自连辅助工具\n- 页面状态聚合\n\n### `self-debug-closed-loop`\n\n定位：共享技能/MCP 目录管理与可视化闭环模块。\n\n承载：\n\n- 扫描 `skills/` 与 `mcps/`\n- 生成 `catalog.snapshot.json`\n- 暴露 agent/admin 管理接口\n- 统一收口共享能力目录\n\n### `database-api`\n\n定位：统一数据库服务边界。\n\n承载：\n\n- schema 浏览\n- 受控资源访问\n- stats / 审计 / 状态机统计\n- 经验记录等云端治理资源\n\n### `ops-observer`\n\n定位：低耦合运维观测页。\n\n承载：\n\n- 服务状态聚合\n- 端口信息\n- Netdata 概览桥接\n\n### `system-overview`\n\n定位：项目级结构总览模块。\n\n承载：\n\n- 模块地图\n- 真源地图\n- 运行状态概览\n- 架构详情聚合\n\n## 3. 工具型 MCP/wrapper 索引\n\n### `ripgrep-search`\n\n- 用途：快速代码/文本搜索 MCP\n- 适合：本地 stdio MCP、未来远程 HTTP MCP\n\n### `repo-inspector`\n\n- 用途：仓库/目录探测 wrapper\n- 适合：验收与存在性检查\n\n### `standards-guard`\n\n- 用途：标准门禁 MCP\n- 默认动作：在目标仓库执行 `npm run check`\n\n### `orchestration-pipeline`\n\n- 用途：Roo orchestration pipeline 包装器\n- 提供：运行 pipeline 与 relay audit 验证工具\n\n### `playwright-browser`\n\n- 用途：浏览器能力 MCP wrapper\n\n### `context-store` / `database-ops-mcp` / `output-guard` / `prompt-compressor` / `log-diagnose`\n\n- 当前多为包装器/基线 MCP\n- 其中数据库检查链路的 canonical 名称已切到 `database-ops-mcp`，`db-readonly` 仅保留兼容层\n- 负责把特定能力通过统一 MCP 形态接入系统\n\n## 4. 共享/内核型目录\n\n### `mcps/core`\n\n跨模块共享数据库、配置、底层能力。\n\n### `mcps/shared`\n\n共享导航真源。\n\n### `mcps/_shared`\n\nMCP wrapper 的共用脚手架，例如 probe server。\n\n### `mcps/kernel`\n\n更偏底层/测试/运行相关的内核区。\n\n## 5. 如果要读一个模块，建议最少看四样东西\n\n1. `module.json`\n2. `README.md`\n3. 入口文件（`plugin/index.ts` 或 `app/index.ts` 或 `server.mjs`）\n4. 页面/API 主入口\n\n\n\n---\n\n## 来源文件：08 - Atramenti-Console Skills 与知识系统索引.md\n\n# Atramenti-Console Skills 与知识系统索引\n\n## 1. Skill 真源位置\n\n- 真源：`E:\\My Project\\Atramenti-Console\\codex\\skills`\n- 本地 Codex 消费入口：`C:\\Users\\ASUS-KL\\.codex\\skills`\n\n这意味着当前 skill 已经基本实现“仓库统一维护，本地直接消费”。\n\n## 2. 技能体系的实际作用\n\n这个仓库里的 skills 不是随手堆的 prompt 片段，而是项目运行方式的一部分。\n\n它们承担：\n\n- 固化稳定工作流\n- 给 agent 注入项目级约束\n- 定义验收闭环\n- 管理研究/部署/前端验证/故障排查方法\n- 逐步形成长期能力目录\n\n## 3. 当前技能的大致分层\n\n### 3.1 可见结果验证/自我调试\n\n- `self-debug-closed-loop`\n- `frontend-evidence`\n- `readiness-wait-gate`\n- `closed-loop-ops`\n- `regression-snapshot`\n\n这是最关键的一组，因为它们直接影响“页面修复是否算完成”。\n\n### 3.2 Agent 能力提升与长期闭环\n\n- `agent-improvement-ops`\n- `module-acceptance`\n- `release-preflight`\n- `api-validation-matrix`\n\n这组偏“能力进化与验证基础设施”。\n\n### 3.3 MCP/插件/技能开发\n\n- `mcp-server-patterns`\n- `create-skill`\n- `create-subagent`\n- `plugin-creator`\n- `skill-creator`\n- `skill-installer`\n\n### 3.4 研究与知识检索\n\n- `deep-research`\n- `search-first`\n- `qmd`\n- `experience-manager`\n\n### 3.5 运维与云端\n\n- `tencentcloud-ops`\n- `gateway-restart-safe`\n- `incident-triage`\n- `windows-safe-exec`\n\n### 3.6 GSD 项目管理体系\n\n- `gsd-*` 全家桶\n\n这一组是大型项目规划/执行/审计/文档/验证流程。\n\n## 4. 当前最重要的几个技能\n\n### `self-debug-closed-loop`\n\n这是当前项目最硬性的用户可见验证协议。\n\n核心要求：\n\n1. 验证运行态\n2. 验证可见结果\n3. 留下至少一个证据\n4. 给出 `verified / unverified / failed`\n\n它的意义是：\n\n- 不允许拿 HTTP 200 当页面修复完成\n- 不允许拿“服务启动了”替代“界面正确了”\n\n### `agent-improvement-ops`\n\n用于评估和推进长期自我提升栈，包括：\n\n- eval harness\n- telemetry foundation\n- 自调试/长反馈回路\n- 云端安装/共享模块\n\n### `search-first`\n\n要求先搜现成轮子、模式、仓库方案，再决定是否自己造。\n\n### `deep-research`\n\n用于需要证据链的深入研究，强调本地记忆优先，再扩展官方文档/GitHub/web。\n\n## 5. Skill 与 MCP 的关系\n\n在这个仓库里，skill 与 MCP 不是分离世界：\n\n- Skill 负责方法论、工作流、执行约束\n- MCP 负责可调用工具能力\n- `self-debug-closed-loop` 模块把这两者都纳入统一目录快照与可视化管理\n\n## 6. 为什么这个技能系统很重要\n\n因为当前项目已经不是单人手工维护小仓库，而是“多 agent / 多节点 / 多模块”协同体系。\n\n没有 skill 体系，就会出现：\n\n- 每次都重新解释工作流\n- 页面验证标准漂移\n- 部署/调试动作不一致\n- 长期经验无法沉淀\n\n## 7. 当前知识系统的几个专题真源\n\n- 代码与模块真源：`mcps/`\n- 技能真源：`skills/`\n- 控制面真源：`control-plane/`\n- 经验/记忆治理：`experience-manager` + `qmd`\n- 可视化目录：`self-debug-closed-loop`\n\n\n\n---\n\n## 来源文件：09 - Atramenti-Console 当前上下文知识与排查入口.md\n\n# Atramenti-Console 当前上下文知识与排查入口\n\n## 1. 我当前已经明确掌握的项目知识点\n\n### 1.1 项目当前是“迁旧保新”的过渡架构\n\n不是完全旧站，也不是完全新壳。\n\n当前明确已经迁入新壳的 native route：\n\n- `/`\n- `/system-overview`\n- `/novel`\n\n其中 `/novel` 仍依赖 legacy 后端的 snapshot + SSE。\n\n### 1.2 页面宿主与本地网关是两层\n\n- `server.mjs`：独立 console 宿主\n- `gateway.mjs`：本地插件网关\n\n这两个不能混为一个进程概念。\n\n### 1.3 独立宿主管理的插件清单不是散落配置，而是集中在 `shared/plugin-manifest.js`\n\n`atramenti.config.json` 主要负责启用和模块配置，不是模块路径托管真源。\n\n### 1.4 模块壳层导航正在转向 `module.json` 驱动\n\n`shared/nav-registry.js` 会扫描 `mcps/*/module.json` 提取：\n\n- top nav\n- shell entry\n- routePrefix\n- apiPrefix\n- icon/group/summary/homepage\n\n### 1.5 技能真源和仓库已经统一\n\n- skill 真源：`E:\\My Project\\Atramenti-Console\\codex\\skills`\n- Codex 消费入口：`C:\\Users\\ASUS-KL\\.codex\\skills`\n\n所以这套仓库本身已经是本地 agent 能力源之一。\n\n### 1.6 控制面已经显式建模了三节点\n\n- 上海主云端节点：控制台/控制面\n- 杭州运行节点：worker/offload\n- Windows 工作站：本地文件与桌面绑定执行\n\n### 1.7 `novel-manager` 是当前最复杂的模块\n\n它包含：\n\n- dashboard snapshot + SSE\n- 状态机\n- 调度器\n- 自动发布\n- 平台确认\n- 编辑工作台\n\n后续只要涉及小说生产/发布/平台确认问题，都应该优先从它的调度与状态机链思考，不要当普通页面看。\n\n### 1.8 `self-debug-closed-loop` 是能力目录而不只是页面\n\n它不仅是页面，也是：\n\n- skill/MCP 扫描器\n- catalog snapshot 构建器\n- agent/admin 管理入口\n\n### 1.9 部署认知已经切到“源码根 -> 运行根”\n\n不要把 `/srv/atramenti-console` 当真源；它只是 runtime root。\n\n## 2. 遇到问题时的排查入口\n\n### 2.1 页面不对/页面没进新壳\n\n先查：\n\n1. `server.mjs`\n2. `apps/console-web/lib/module-registry.ts`\n3. `shared/plugin-manifest.js`\n4. `shared/nav-registry.js`\n5. 对应模块的 `module.json`\n\n### 2.2 独立运行配置不生效\n\n先查：\n\n1. `atramenti.config.json`\n2. `shared/standalone-config.js`\n3. `server.mjs` / `gateway.mjs` 的读取点\n\n### 2.3 模块没出现在侧栏/首页\n\n先查：\n\n1. `mcps/<module>/module.json`\n2. `shared/nav-registry.js`\n3. `apps/console-web/lib/module-registry.ts`\n\n### 2.4 云端部署后表现不一致\n\n先查：\n\n1. `control-plane/registry/servers.json`\n2. `control-plane/policy/deploy-targets.json`\n3. `RUNTIME-TOPOLOGY.md`\n4. 实际运行根 vs 源码根是否混用\n\n### 2.5 MCP 能力本地可用但云端不可用\n\n先查：\n\n1. `mcps/<name>/server.mjs`\n2. `C:\\Users\\ASUS-KL\\.codex\\config.toml`\n3. `C:\\Users\\ASUS-KL\\.codex\\remote-mcp.ps1`\n4. `/srv/mcp-runtime/apps/codex-portable-mcps`\n5. 121 节点 SSH 健康\n\n### 2.6 技能改了但 agent 没拿到\n\n先查：\n\n1. `E:\\My Project\\Atramenti-Console\\codex\\skills`\n2. `C:\\Users\\ASUS-KL\\.codex\\skills`\n3. `self-debug-closed-loop` 的 catalog snapshot 是否已刷新\n\n### 2.7 小说管理异常\n\n优先顺序：\n\n1. `mcps/novel-manager/app/index.ts`\n2. `mcps/novel-manager/backend/services/novel-service.ts`\n3. `mcps/novel-manager/core/workflow/policy/*`\n4. `mcps/novel-manager/core/workflow/state-machine/*`\n5. `mcps/novel-manager/core/fanqie/publishing/*`\n6. `mcps/novel-manager/frontend/pages/novel/index.html`\n\n## 3. 当前几个最值得记住的“别搞反”\n\n- 不要把 `shared/` 和 `mcps/shared/` 混为一谈\n- 不要把 `server.mjs` 和 `gateway.mjs` 当成同一层\n- 不要把 `atramenti.config.json` 当成插件清单真源\n- 不要把云端 runtime root 当源码真源\n- 不要把 `novel-manager` 当简单前端页面模块\n\n## 4. 后续建议补充的知识文档\n\n后面如果继续扩这个知识库，建议再单独写：\n\n- `novel-manager` 深入架构图\n- `deploy-center` 云端部署链路图\n- `self-debug-closed-loop` 目录快照与 agent 注入协议\n- `control-plane` 的 execution-routing 解读\n- `apps/console-web` 的组件迁移规则\n\n\n\n---\n\n## 来源文件：10 - Atramenti-Console Control Plane 说明.md\n\n# Atramenti-Console Control Plane 说明\n\n> 编辑说明（2026-04-19）：本节保留原 `Control Plane` 说明结构，但其中“当前已登记服务器”等 live 结论已被后续 control-plane 真源扩展。现行服务器清单、deploy target 与 execution-routing 应以 `control-plane/registry/servers.json`、`control-plane/policy/deploy-targets.json`、`control-plane/policy/execution-routing.json` 以及 `docs/agent/Server Operation & Maintenance Manual.md` 为准。\n\n## 1. 定位\n\n`control-plane/` 是项目级控制面，不是页面代码本体，也不是部署脚本目录。\n\n它的职责是把这些信息统一建模：\n\n- 服务器库存\n- agent 库存\n- 部署目标\n- 执行路由\n- promotion gate\n\n## 2. 目录结构\n\n- `registry/servers.json`\n- `registry/agents.json`\n- `policy/deploy-targets.json`\n- `policy/execution-routing.json`\n- `policy/promotion-gates.json`\n\n## 3. 当前已登记服务器\n\n当前 2026-04-19 的 repo 真源补充结论：\n\n- 静态 registry 现在已覆盖 `cloud-shanghai-01`、`cloud-hangzhou-01`、`cloud-beijing-lab-01`、`smoothcloud-wummlp-01`、`windows-workstation-01`、`cloud-session-host-01`\n- 当前 `deploy-targets.json` 只有一个正式 deploy target：`console-dev -> cloud-shanghai-01`\n- 当前 `execution-routing.json` 的 dispatcher 在 `124`，default target 在 `121`，global fallback 只有 Windows；`111` 与 `221` 已登记为服务器资产，但尚未进入 execution-routing 规则\n\n### `cloud-shanghai-01`\n\n- 主云端控制台节点\n- 对外 UI/API 入口\n- `srcRoot`：`/home/ubuntu/atramenti-console-src`\n- `runtimeRoot`：`/srv/atramenti-console`\n- `backupRoot`：`/home/ubuntu/atramenti-console-backups`\n- 服务：`atramenti-console.service`\n\n### `cloud-hangzhou-01`\n\n- 运行/worker 节点\n- 目标：承担 MCP offload 与重型任务\n- 当前状态（2026-04-19 复核）：`root@121.196.202.114` 可登录，`ubuntu` 认证失败；worker 服务名已写入 registry，但当前均 `inactive`\n\n### `cloud-beijing-lab-01`\n\n- 轻量实验 / 跳板 / 备援节点\n- SSH 别名：`jd-lavm-beijing`、`jd-lavm-yp7m9xmd5l`\n- 当前已进入静态 registry，但尚未进入 execution-routing\n\n### `smoothcloud-wummlp-01`\n\n- 弹性 GPU / burst 资产\n- 当前已写入静态 registry：SSH 端口 `10043`、应用根目录 `/root/workspace/ai-office`、已知服务 `office-web` / `ai-office-worker`\n- 当前仍依赖平台认证与网关路径，尚未进入 execution-routing\n\n### `windows-workstation-01`\n\n- 本地工作站执行节点\n- 负责本地文件、配置、浏览器、桌面绑定动作\n- 这说明项目已经显式承认：不是所有任务都适合在云端执行\n- 当前仍是 `local-file` / `local-config` / `desktop-bound` 的策略目标节点，但运行态 tunnel / bridge 目前是 `degraded`\n\n### `cloud-session-host-01`\n\n- 当前会话承载宿主资产\n- 已进入静态 registry，但为 `disabled` 的 `session-host` 条目\n- 不参与当前 deploy target 或 execution-routing\n\n## 4. 当前已登记 agent\n\n### `codex-local-primary`\n\n本地 Codex 主消费端，消费这些共享能力源：\n\n- `skills`\n- `mcps`\n- `control-plane/registry`\n- `self-debug-closed-loop`\n\n### `windows-local-executor`\n\n工作站执行器，消费：\n\n- `skills`\n- `mcps`\n- `control-plane/registry`\n- `control-plane/policy`\n- `self-debug-closed-loop`\n\n### `cloud-console-runtime`\n\n云端控制台运行时，消费：\n\n- `control-plane/registry`\n- `control-plane/policy`\n- `self-debug-closed-loop`\n\n### `cloud-runtime-worker`\n\n云端 worker，消费：\n\n- `control-plane/registry`\n- `control-plane/policy`\n\n## 5. 它真正解决的问题\n\n### 5.1 统一服务器库存\n\n以后新增节点，不应该散落在脚本里，而应先进入 `servers.json`。\n\n### 5.2 统一执行路由\n\n不是所有事都发去云端；有些事情必须发去 Windows 工作站。\n\n### 5.3 统一部署目标\n\n应用目标应该绑定某个 server，而不是脚本里硬编码 host/path。\n\n### 5.4 统一 promotion gate\n\n让“什么情况下允许推进”不只靠口头约定。\n\n## 6. 当前最重要的一条规则\n\n控制面 README 里已经写死：\n\n> 不要把 `/srv/atramenti-console` 当 source of truth。应该从 source root 构建，再发布到 runtime root。\n\n这条规则是整个部署纪律的核心。\n\n## 7. 和宿主层/模块层的关系\n\n- `server.mjs` / `gateway.mjs`：负责运行与加载\n- `mcps/*`：负责具体模块能力\n- `control-plane/*`：负责“谁来跑、在哪跑、如何路由、如何提升”的编排规则\n\n## 8. 实操上怎么用它\n\n如果要接入新服务器或新 agent，推荐顺序：\n\n1. 增加 `registry/servers.json` 记录\n2. 增加/修改 `registry/agents.json`\n3. 更新 `policy/deploy-targets.json`\n4. 更新 `policy/execution-routing.json`\n5. 必要时补 `promotion-gates.json`\n6. 再让 `deploy-center` 或运行时读取这些新规则\n\n## 9. 为什么这个目录对后续很重要\n\n因为随着项目越来越像“多 agent + 多节点 + 多模块”的系统，没有控制面，所有执行目标都会重新散落回：\n\n- 脚本常量\n- 人脑记忆\n- 临时 shell 命令\n- 不可追踪的运维习惯\n\n而 control-plane 的作用，就是把这些从“习惯”变成“显式结构”。",
+    "html": "<h1 id=\"atramenti-console-文档汇编\">Atramenti-Console 文档汇编</h1>\n<blockquote>\n<p>这是一份按原文件顺序进行的无删减整合文档。<br>\n目标：把原本分散的 11 份说明文档合并成一个总文档，方便连续阅读、检索、打印、继续扩写。<br>\n原则：不删减原文内容，只增加整合页头和每一章的来源标记。</p>\n</blockquote>\n<blockquote>\n<p>注：本文保留 2026-04-17 的整合结构，但其中涉及 MCP / Skill 真源路径的现行口径已按当前项目状态刷新到 <code>codex</code> 能力根。</p>\n<p>若后续继续重排、吸收来源稿或收口这份总册，先遵循 <code>C:\\Users\\ASUS-KL\\.codex\\AGENTS.md</code> 中的文档规则层；维护说明见 <code>C:\\Users\\ASUS-KL\\.codex\\AGENTS.annotated.md</code>，不要再从它外面套新的薄导航页或平行“新版总览”。</p>\n<p>边界说明：本文是 <code>Atramenti-Console</code> 主题的整合阅读总册与结构说明，不承担项目总体 <code>current-state</code> 三件套职责；如果要判断“项目现在是什么状态、下一步做什么”，优先看 <code>PROJECT-CONTEXT.md</code>、<code>SESSION-HANDOFF.md</code>、<code>plan.md</code>。</p>\n</blockquote>\n<h2 id=\"原文件顺序\">原文件顺序</h2>\n<ol>\n<li><code>00 - Atramenti-Console 索引.md</code></li>\n<li><code>01 - Atramenti-Console 总览.md</code></li>\n<li><code>02 - Atramenti-Console 目录索引.md</code></li>\n<li><code>03 - Atramenti-Console 架构与模块原理.md</code></li>\n<li><code>04 - Atramenti-Console 运行端口与部署拓扑.md</code></li>\n<li><code>05 - Atramenti-Console 插件、MCP、Skill 注册机制.md</code></li>\n<li><code>06 - Atramenti-Console Apps 与 Shared 索引.md</code></li>\n<li><code>07 - Atramenti-Console MCP 模块索引.md</code></li>\n<li><code>08 - Atramenti-Console Skills 与知识系统索引.md</code></li>\n<li><code>09 - Atramenti-Console 当前上下文知识与排查入口.md</code></li>\n<li><code>10 - Atramenti-Console Control Plane 说明.md</code></li>\n</ol>\n<hr>\n<h2 id=\"来源文件00---atramenti-console-索引md\">来源文件：00 - Atramenti-Console 索引.md</h2>\n<h1 id=\"atramenti-console-索引\">Atramenti-Console 索引</h1>\n<blockquote>\n<p>位置：<code>E:\\My Project\\Atramenti-Console</code>\n文档用途：把这个项目的结构、入口、模块原理、注册机制、运行拓扑、当前上下文知识整理成 Obsidian 可持续维护的知识包。</p>\n</blockquote>\n<h2 id=\"建议阅读顺序\">建议阅读顺序</h2>\n<ol>\n<li><a href=\"#01-atramenti-console-%E6%80%BB%E8%A7%88\">01 - Atramenti-Console 总览</a></li>\n<li><a href=\"#03-atramenti-console-%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8E%9F%E7%90%86\">03 - Atramenti-Console 架构与模块原理</a></li>\n<li><a href=\"#04-atramenti-console-%E8%BF%90%E8%A1%8C%E7%AB%AF%E5%8F%A3%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8B%93%E6%89%91\">04 - Atramenti-Console 运行端口与部署拓扑</a></li>\n<li><a href=\"#05-atramenti-console-%E6%8F%92%E4%BB%B6-mcp-skill-%E6%B3%A8%E5%86%8C%E6%9C%BA%E5%88%B6\">05 - Atramenti-Console 插件、MCP、Skill 注册机制</a></li>\n<li><a href=\"#07-atramenti-console-mcp-%E6%A8%A1%E5%9D%97%E7%B4%A2%E5%BC%95\">07 - Atramenti-Console MCP 模块索引</a></li>\n<li><a href=\"#09-atramenti-console-%E5%BD%93%E5%89%8D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E6%8E%92%E6%9F%A5%E5%85%A5%E5%8F%A3\">09 - Atramenti-Console 当前上下文知识与排查入口</a></li>\n</ol>\n<h2 id=\"文档列表\">文档列表</h2>\n<ul>\n<li><a href=\"#01-atramenti-console-%E6%80%BB%E8%A7%88\">01 - Atramenti-Console 总览</a>：项目定位、目标、当前迁移状态、核心模块</li>\n<li><a href=\"#02-atramenti-console-%E7%9B%AE%E5%BD%95%E7%B4%A2%E5%BC%95\">02 - Atramenti-Console 目录索引</a>：根目录到一级目录的结构解释</li>\n<li><a href=\"#03-atramenti-console-%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8E%9F%E7%90%86\">03 - Atramenti-Console 架构与模块原理</a>：<code>server.mjs</code> / <code>gateway.mjs</code> / Next shell / legacy 页面 / 控制面关系</li>\n<li><a href=\"#04-atramenti-console-%E8%BF%90%E8%A1%8C%E7%AB%AF%E5%8F%A3%E4%B8%8E%E9%83%A8%E7%BD%B2%E6%8B%93%E6%89%91\">04 - Atramenti-Console 运行端口与部署拓扑</a>：本地、云端、工作站、运行节点、端口与部署规则</li>\n<li><a href=\"#05-atramenti-console-%E6%8F%92%E4%BB%B6-mcp-skill-%E6%B3%A8%E5%86%8C%E6%9C%BA%E5%88%B6\">05 - Atramenti-Console 插件、MCP、Skill 注册机制</a>：统一注册、配置、派生、扫描规则</li>\n<li><a href=\"#06-atramenti-console-apps-%E4%B8%8E-shared-%E7%B4%A2%E5%BC%95\">06 - Atramenti-Console Apps 与 Shared 索引</a>：<code>apps/*</code> 与 <code>shared/*</code> 的职责说明</li>\n<li><a href=\"#07-atramenti-console-mcp-%E6%A8%A1%E5%9D%97%E7%B4%A2%E5%BC%95\">07 - Atramenti-Console MCP 模块索引</a>：主要模块的入口、路由、职责、阅读路径</li>\n<li><a href=\"#08-atramenti-console-skills-%E4%B8%8E%E7%9F%A5%E8%AF%86%E7%B3%BB%E7%BB%9F%E7%B4%A2%E5%BC%95\">08 - Atramenti-Console Skills 与知识系统索引</a>：skills 体系、统一来源、共享方式</li>\n<li><a href=\"#09-atramenti-console-%E5%BD%93%E5%89%8D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%9F%A5%E8%AF%86%E4%B8%8E%E6%8E%92%E6%9F%A5%E5%85%A5%E5%8F%A3\">09 - Atramenti-Console 当前上下文知识与排查入口</a>：我当前已经稳定掌握的项目知识点与故障排查顺序</li>\n<li><a href=\"#10-atramenti-console-control-plane-%E8%AF%B4%E6%98%8E\">10 - Atramenti-Console Control Plane 说明</a>：控制面注册表、服务器、agent、路由策略</li>\n</ul>\n<h2 id=\"一句话理解这个项目\">一句话理解这个项目</h2>\n<p>Atramenti-Console 不是“一个单纯前端项目”，它本质上是：</p>\n<ul>\n<li>一个独立运行的控制台宿主</li>\n<li>一个把多模块页面迁进统一壳层的前端母模板</li>\n<li>一个把插件、MCP、技能、控制面、云端部署、工作站执行能力串起来的工程总线</li>\n<li>一个逐步替代旧散装 HTML/脚本/临时运维入口的统一收口仓库</li>\n</ul>\n<h2 id=\"当前最重要的结构性真源不是-current-state-入口\">当前最重要的结构性真源（不是 current-state 入口）</h2>\n<ul>\n<li>项目运行主入口：<code>E:\\My Project\\Atramenti-Console\\server.mjs</code></li>\n<li>本地插件网关：<code>E:\\My Project\\Atramenti-Console\\gateway.mjs</code></li>\n<li>前端母模板：<code>E:\\My Project\\Atramenti-Console\\apps\\console-web</code></li>\n<li>插件清单派生源：<code>E:\\My Project\\Atramenti-Console\\shared\\plugin-manifest.js</code></li>\n<li>独立运行配置：<code>E:\\My Project\\Atramenti-Console\\atramenti.config.json</code></li>\n<li>控制面注册表：<code>E:\\My Project\\Atramenti-Console\\control-plane</code></li>\n<li>MCP 真源目录：<code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code></li>\n<li>Skill 真源目录：<code>E:\\My Project\\Atramenti-Console\\codex\\skills</code></li>\n</ul>\n<hr>\n<h2 id=\"来源文件01---atramenti-console-总览md\">来源文件：01 - Atramenti-Console 总览.md</h2>\n<h1 id=\"atramenti-console-总览\">Atramenti-Console 总览</h1>\n<h2 id=\"1-项目定位\">1. 项目定位</h2>\n<p>Atramenti-Console 是一个“独立运行的 OpenClaw 控制台宿主工程”。</p>\n<p>它做的不是单一业务，而是把以下几类东西收口到同一个仓库里：</p>\n<ul>\n<li>前端壳层与统一工作台</li>\n<li>多个业务模块页面</li>\n<li>模块 API / SSE / 后端服务</li>\n<li>MCP 服务与包装器</li>\n<li>Skill 体系</li>\n<li>控制面注册表</li>\n<li>本地 / 云端 / 工作站的运行与部署链</li>\n</ul>\n<p>它当前已经明确承载的核心用户面模块有：</p>\n<ul>\n<li>小说管理 <code>novel-manager</code></li>\n<li>部署中心 <code>deploy-center</code></li>\n<li>自我调试闭环 <code>self-debug-closed-loop</code></li>\n<li>系统总览 <code>system-overview</code></li>\n<li>运维观测 <code>ops-observer</code></li>\n<li>数据库 API <code>database-api</code></li>\n<li>经验中心 <code>experience-manager</code></li>\n<li>文件管理 / 模型中心 / 自动化中心 / Key Guard 等辅助模块</li>\n</ul>\n<h2 id=\"2-它不是一个什么项目\">2. 它不是一个什么项目</h2>\n<p>它不是：</p>\n<ul>\n<li>单纯 Next.js 前端站点</li>\n<li>单纯 MCP 仓库</li>\n<li>单纯技能仓库</li>\n<li>单纯部署脚本集合</li>\n</ul>\n<p>它是“前端壳 + 模块目录 + 控制面 + 云端运行协议 + 本地工作站桥接”的综合工程。</p>\n<h2 id=\"3-当前工程阶段\">3. 当前工程阶段</h2>\n<p>从现有 README、模块说明和运行配置来看，项目处于“迁旧保新”的中间阶段：</p>\n<ul>\n<li>已经引入统一前端母模板：<code>apps/console-web</code></li>\n<li>已有 native route：<code>/</code>、<code>/system-overview</code>、<code>/novel</code></li>\n<li>仍然保留不少 legacy HTML 页面与 plugin 页面</li>\n<li><code>server.mjs</code> 负责把 native route 与 legacy route 收拢到一个宿主下</li>\n<li><code>gateway.mjs</code> 仍是本地独立插件网关的基础骨架</li>\n</ul>\n<p>换句话说：</p>\n<blockquote>\n<p>当前不是彻底新架构，也不是彻底旧架构，而是“以统一壳层和统一注册机制为中心的过渡架构”。</p>\n</blockquote>\n<h2 id=\"4-顶层工作模式\">4. 顶层工作模式</h2>\n<p>这个仓库同时服务三种运行面：</p>\n<h3 id=\"41-本地开发面\">4.1 本地开发面</h3>\n<ul>\n<li>本地直接跑 <code>server.mjs</code></li>\n<li>本地可跑 <code>gateway.mjs</code></li>\n<li>本地 Codex / 技能 / MCP 配置读取这套源码</li>\n<li>本地浏览器验证新壳与模块页面</li>\n</ul>\n<h3 id=\"42-云端控制面\">4.2 云端控制面</h3>\n<ul>\n<li>主云端节点承载公开控制台、控制面和部署入口</li>\n<li>云端不应直接作为“源码真源”修改点</li>\n<li>应从源码根发布到 runtime root</li>\n</ul>\n<h3 id=\"43-工作站执行面\">4.3 工作站执行面</h3>\n<ul>\n<li>Windows 工作站保留桌面绑定、浏览器绑定、本地文件绑定的执行能力</li>\n<li>这部分通过 control-plane 被正式建模，不再只是隐式桥接</li>\n</ul>\n<h2 id=\"5-当前最关键的几条原则\">5. 当前最关键的几条原则</h2>\n<h3 id=\"51-真源原则\">5.1 真源原则</h3>\n<ul>\n<li>模块元信息真源：各自 <code>mcps/*/module.json</code></li>\n<li>插件托管派生真源：<code>shared/plugin-manifest.js</code></li>\n<li>独立运行配置真源：<code>atramenti.config.json</code></li>\n<li>控制面真源：<code>control-plane/registry</code> + <code>control-plane/policy</code></li>\n<li>本地技能真源：<code>skills/</code></li>\n<li>MCP 真源：<code>mcps/</code></li>\n</ul>\n<h3 id=\"52-源码根与运行根分离\">5.2 源码根与运行根分离</h3>\n<p>控制面文档里已经明确：</p>\n<ul>\n<li>不要把 <code>/srv/atramenti-console</code> 当源码真源</li>\n<li>正确做法是：从 <code>srcRoot</code> 构建，再发布到 <code>runtimeRoot</code></li>\n</ul>\n<h3 id=\"53-页面迁移原则\">5.3 页面迁移原则</h3>\n<ul>\n<li>新页面尽量进入 <code>apps/console-web</code></li>\n<li>模块入口信息不手写在前端组件里，而是从模块元信息扫描得到</li>\n<li>旧 HTML 页面仍可通过宿主代理/桥接存在，但不应再扩散为长期真源</li>\n</ul>\n<h2 id=\"6-当前比较关键的模块分组\">6. 当前比较关键的模块分组</h2>\n<h3 id=\"61-面向人直接操作的模块\">6.1 面向人直接操作的模块</h3>\n<ul>\n<li><code>novel-manager</code></li>\n<li><code>deploy-center</code></li>\n<li><code>self-debug-closed-loop</code></li>\n<li><code>system-overview</code></li>\n<li><code>ops-observer</code></li>\n<li><code>vscode-key-guard</code></li>\n<li><code>database-api</code></li>\n<li><code>experience-manager</code></li>\n</ul>\n<h3 id=\"62-基础设施工具型-mcp-模块\">6.2 基础设施/工具型 MCP 模块</h3>\n<ul>\n<li><code>ripgrep-search</code></li>\n<li><code>repo-inspector</code></li>\n<li><code>standards-guard</code></li>\n<li><code>orchestration-pipeline</code></li>\n<li><code>output-guard</code></li>\n<li><code>context-store</code></li>\n<li><code>database-ops-mcp</code>（<code>db-readonly</code> 兼容层）</li>\n<li><code>playwright-browser</code></li>\n<li><code>log-diagnose</code></li>\n</ul>\n<h3 id=\"63-共享层\">6.3 共享层</h3>\n<ul>\n<li><code>shared/</code>：独立宿主的派生逻辑、导航、控制面读取、配置读取</li>\n<li><code>mcps/shared/</code>：扩展体系里的共享导航真源</li>\n<li><code>control-plane/</code>：服务器与 agent 的统一注册与执行策略</li>\n</ul>\n<h2 id=\"7-一句话抓总\">7. 一句话抓总</h2>\n<p>如果只记一句：</p>\n<blockquote>\n<p>Atramenti-Console = “统一壳层 + 模块真源目录 + 控制面 + 云端运行/工作站桥接 + MCP/Skill 能力仓” 的总控仓库。</p>\n</blockquote>\n<hr>\n<h2 id=\"来源文件02---atramenti-console-目录索引md\">来源文件：02 - Atramenti-Console 目录索引.md</h2>\n<h1 id=\"atramenti-console-目录索引\">Atramenti-Console 目录索引</h1>\n<blockquote>\n<p>根目录：<code>E:\\My Project\\Atramenti-Console</code></p>\n</blockquote>\n<h2 id=\"1-根目录一级结构\">1. 根目录一级结构</h2>\n<h3 id=\"apps\"><code>apps</code></h3>\n<p>承载前端应用层。</p>\n<p>当前主要有：</p>\n<ul>\n<li><code>console-web</code>：新的统一前端母模板，Next.js 16 + React 19 + TS + Tailwind v4</li>\n<li><code>database-api</code>：数据库 API 相关应用资料目录，目前更偏文档/状态映射</li>\n</ul>\n<h3 id=\"control-plane\"><code>control-plane</code></h3>\n<p>项目级控制面。统一维护：</p>\n<ul>\n<li>服务器注册表</li>\n<li>agent 注册表</li>\n<li>部署目标映射</li>\n<li>执行路由策略</li>\n<li>提升门槛/promotion gate</li>\n</ul>\n<h3 id=\"cookies-accounts\"><code>cookies-accounts</code></h3>\n<p>账号、cookie、平台登录相关的运行态/辅助数据目录。通常与平台自动化、发布链相关。</p>\n<h3 id=\"data\"><code>data</code></h3>\n<p>仓库级共享运行数据或快照数据。</p>\n<h3 id=\"extensions\"><code>extensions</code></h3>\n<p>偏扩展开发说明、规则性文档，不是主要业务模块真源。</p>\n<h3 id=\"mcps\"><code>mcps</code></h3>\n<p>本仓库最重要的能力目录之一。</p>\n<p>这里面包含：</p>\n<ul>\n<li>业务模块</li>\n<li>MCP wrapper</li>\n<li>工具型服务</li>\n<li>共享扩展资源</li>\n<li>运行验收脚本与产物</li>\n</ul>\n<h3 id=\"projects\"><code>projects</code></h3>\n<p>项目级工作区或历史/派生目录。</p>\n<h3 id=\"scripts\"><code>scripts</code></h3>\n<p>仓库级脚本，用于构建、部署、同步、诊断、辅助维护。</p>\n<h3 id=\"shared\"><code>shared</code></h3>\n<p>独立宿主共享层。包括：</p>\n<ul>\n<li><code>plugin-manifest.js</code></li>\n<li><code>standalone-config.js</code></li>\n<li><code>nav-registry.js</code></li>\n<li><code>control-plane.js</code></li>\n<li>独立 home / nav HTML</li>\n</ul>\n<h3 id=\"skills\"><code>skills</code></h3>\n<p>本地 Codex 技能真源目录。当前已经是比较大的统一技能仓。</p>\n<h3 id=\"workspace\"><code>workspace</code></h3>\n<p>工作区、实验区、临时协作区。</p>\n<h2 id=\"2-根目录关键文件\">2. 根目录关键文件</h2>\n<h3 id=\"packagejson\"><code>package.json</code></h3>\n<p>工作区脚本和总依赖入口。关键点：</p>\n<ul>\n<li><code>pnpm@9.15.9</code></li>\n<li>Node <code>>=20</code></li>\n<li><code>dev</code> 跑 <code>server.mjs</code></li>\n<li><code>gateway:dev</code> 跑 <code>gateway.mjs</code></li>\n<li><code>ci</code> 走 <code>turbo run lint typecheck build</code></li>\n<li>有 <code>deploy:cloud:*</code> 和 <code>agent:*</code> 系列脚本</li>\n</ul>\n<h3 id=\"pnpm-workspaceyaml\"><code>pnpm-workspace.yaml</code></h3>\n<p>声明 workspace 包范围：</p>\n<ul>\n<li>根目录</li>\n<li><code>apps/*</code></li>\n<li><code>mcps/*</code></li>\n<li><code>mcps/feishu-center/integrations/*</code></li>\n</ul>\n<h3 id=\"turbojson\"><code>turbo.json</code></h3>\n<p>多包任务编排，当前主要有：</p>\n<ul>\n<li><code>build</code></li>\n<li><code>lint</code></li>\n<li><code>typecheck</code></li>\n</ul>\n<h3 id=\"servermjs\"><code>server.mjs</code></h3>\n<p>独立宿主入口。负责：</p>\n<ul>\n<li>启动 Atramenti Console</li>\n<li>托管/代理 native route</li>\n<li>代理 legacy 模块页面/API</li>\n<li>按插件清单加载页面与模块</li>\n</ul>\n<h3 id=\"gatewaymjs\"><code>gateway.mjs</code></h3>\n<p>本地插件网关入口。负责：</p>\n<ul>\n<li>HTTP 服务</li>\n<li>插件加载</li>\n<li>模块路由注册</li>\n<li>健康检查</li>\n<li>环境根路径注入</li>\n</ul>\n<h3 id=\"atramenticonfigjson\"><code>atramenti.config.json</code></h3>\n<p>独立运行配置真源。当前包含：</p>\n<ul>\n<li>浏览器运行默认参数</li>\n<li>enabled plugin entries</li>\n<li>每个插件的单独配置（如 standalone、provider 等）</li>\n</ul>\n<h3 id=\"runtime-topologymd\"><code>RUNTIME-TOPOLOGY.md</code></h3>\n<p>当前运行拓扑与分工说明：</p>\n<ul>\n<li>上海主云端节点</li>\n<li>杭州运行节点</li>\n<li>Windows 工作站</li>\n<li>MCP 远程包装与执行分布</li>\n</ul>\n<h2 id=\"3-mcps-一级模块索引\">3. <code>mcps/</code> 一级模块索引</h2>\n<p>当前有三类内容：</p>\n<h3 id=\"31-业务管理模块\">3.1 业务/管理模块</h3>\n<ul>\n<li><code>novel-manager</code></li>\n<li><code>deploy-center</code></li>\n<li><code>self-debug-closed-loop</code></li>\n<li><code>experience</code></li>\n<li><code>database-api</code></li>\n<li><code>ops-observer</code></li>\n<li><code>qwen3-tts</code></li>\n<li><code>file-manager</code></li>\n<li><code>automation</code></li>\n<li><code>ai-model-hub</code></li>\n<li><code>aghub-bridge</code></li>\n<li><code>superset-bridge</code></li>\n<li><code>vscode-key-guard</code></li>\n<li><code>system-overview</code></li>\n<li><code>feishu-center</code></li>\n</ul>\n<h3 id=\"32-工具型--mcp-wrapper\">3.2 工具型 / MCP wrapper</h3>\n<ul>\n<li><code>ripgrep-search</code></li>\n<li><code>repo-inspector</code></li>\n<li><code>standards-guard</code></li>\n<li><code>orchestration-pipeline</code></li>\n<li><code>playwright-browser</code></li>\n<li><code>context-store</code></li>\n<li><code>database-ops-mcp</code>（<code>db-readonly</code> 兼容层）</li>\n<li><code>log-diagnose</code></li>\n<li><code>output-guard</code></li>\n<li><code>prompt-compressor</code></li>\n<li><code>cloud-repo-mcp</code></li>\n<li><code>dev-quality-mcp</code></li>\n</ul>\n<h3 id=\"33-共享与模板\">3.3 共享与模板</h3>\n<ul>\n<li><code>_shared</code></li>\n<li><code>_templates</code></li>\n<li><code>shared</code></li>\n<li><code>core</code></li>\n<li><code>plugins</code></li>\n<li><code>kernel</code></li>\n</ul>\n<h2 id=\"4-skills-一级结构理解\">4. <code>skills/</code> 一级结构理解</h2>\n<p>技能目录非常大，但可以按用途分：</p>\n<ul>\n<li>自我调试与前端验证：<code>self-debug-closed-loop</code>、<code>frontend-evidence</code>、<code>readiness-wait-gate</code></li>\n<li>Agent 提升与长期闭环：<code>agent-improvement-ops</code></li>\n<li>MCP / 插件 / skill 构建：<code>mcp-server-patterns</code>、<code>create-skill</code>、<code>create-subagent</code></li>\n<li>研究与搜索：<code>deep-research</code>、<code>search-first</code>、<code>qmd</code></li>\n<li>GSD 系列项目管理技能：<code>gsd-*</code></li>\n<li>运维与云端：<code>tencentcloud-ops</code>、<code>gateway-restart-safe</code></li>\n<li>验收/发布：<code>module-acceptance</code>、<code>release-preflight</code></li>\n</ul>\n<h2 id=\"5-当前最值得优先建立脑图的目录\">5. 当前最值得优先建立脑图的目录</h2>\n<p>如果要最快理解整个仓库，优先看：</p>\n<ol>\n<li><code>server.mjs</code></li>\n<li><code>gateway.mjs</code></li>\n<li><code>shared/</code></li>\n<li><code>apps/console-web/README.md</code></li>\n<li><code>control-plane/README.md</code></li>\n<li><code>mcps/novel-manager/README.md</code></li>\n<li><code>mcps/self-debug-closed-loop/README.md</code></li>\n<li><code>RUNTIME-TOPOLOGY.md</code></li>\n</ol>\n<hr>\n<h2 id=\"来源文件03---atramenti-console-架构与模块原理md\">来源文件：03 - Atramenti-Console 架构与模块原理.md</h2>\n<h1 id=\"atramenti-console-架构与模块原理\">Atramenti-Console 架构与模块原理</h1>\n<h2 id=\"1-总体架构\">1. 总体架构</h2>\n<p>这个仓库的架构可以拆成 5 层：</p>\n<ol>\n<li>宿主层：<code>server.mjs</code></li>\n<li>网关层：<code>gateway.mjs</code></li>\n<li>前端壳层：<code>apps/console-web</code></li>\n<li>模块层：<code>mcps/*</code></li>\n<li>控制面与共享能力层：<code>control-plane/</code> + <code>shared/</code> + <code>skills/</code></li>\n</ol>\n<h2 id=\"2-servermjs-的角色\">2. <code>server.mjs</code> 的角色</h2>\n<p><code>server.mjs</code> 是 Atramenti-Console 的独立宿主入口。</p>\n<p>它当前不是“只提供静态页面”，而是做这些事：</p>\n<ul>\n<li>启动独立控制台 HTTP 服务</li>\n<li>代理部分 native route 到 <code>apps/console-web</code></li>\n<li>代理 legacy 模块页面/API</li>\n<li>读取共享插件清单</li>\n<li>按配置加载插件页面</li>\n<li>在需要时自动拉起 <code>apps/console-web</code> 的 Next 进程</li>\n</ul>\n<h3 id=\"21-当前已迁入-native-的路径\">2.1 当前已迁入 native 的路径</h3>\n<p>从现有代码与 README 看，当前迁入的 native route 主要是：</p>\n<ul>\n<li><code>/</code></li>\n<li><code>/system-overview</code></li>\n<li><code>/novel</code></li>\n</ul>\n<p>说明：</p>\n<ul>\n<li><code>/novel</code> 已迁到新壳层，但它的数据仍有明显 legacy 后端成分</li>\n<li><code>/novel</code> 首屏依赖 dashboard snapshot，增量依赖 SSE</li>\n<li>所以它是“新壳 + 旧后端聚合”的典型过渡页</li>\n</ul>\n<h2 id=\"3-gatewaymjs-的角色\">3. <code>gateway.mjs</code> 的角色</h2>\n<p><code>gateway.mjs</code> 是本地独立插件网关。</p>\n<p>它更像“插件加载器 + 路由注册器 + 本地环境桥”。</p>\n<p>它负责：</p>\n<ul>\n<li>建立 HTTP 服务</li>\n<li>加载已启用插件</li>\n<li>注册模块路由</li>\n<li>提供 <code>/health</code></li>\n<li>注入多个运行时根路径环境变量</li>\n</ul>\n<h3 id=\"31-它注入的环境根信息很重要\">3.1 它注入的环境根信息很重要</h3>\n<p>从现有代码看，<code>gateway.mjs</code> 会设置类似这些根：</p>\n<ul>\n<li><code>OPENCLAW_PROJECT_ROOT</code></li>\n<li><code>OPENCLAW_WORKSPACE_ROOT</code></li>\n<li><code>OPENCLAW_RUNTIME_ROOT</code></li>\n<li><code>NOVEL_MANAGER_WORKSPACE_ROOT</code></li>\n<li><code>NOVEL_MANAGER_ROOT</code></li>\n</ul>\n<p>这说明它不仅是网关，也是“路径真源协调器”。</p>\n<h2 id=\"4-新前端壳层-appsconsole-web\">4. 新前端壳层 <code>apps/console-web</code></h2>\n<p>这是当前前端架构里最重要的新基座。</p>\n<h3 id=\"41-它的定位\">4.1 它的定位</h3>\n<p>不是某个业务页，而是：</p>\n<ul>\n<li>统一壳层</li>\n<li>统一模块工作台模板</li>\n<li>统一 UI 组件层</li>\n<li>后续模块迁移的母模板</li>\n</ul>\n<h3 id=\"42-当前技术栈\">4.2 当前技术栈</h3>\n<ul>\n<li>Next.js 16</li>\n<li>React 19</li>\n<li>TypeScript</li>\n<li>Tailwind CSS v4</li>\n<li>Radix UI</li>\n<li>CVA</li>\n</ul>\n<h3 id=\"43-它的真源原则\">4.3 它的真源原则</h3>\n<ul>\n<li>模块来源不写死在前端组件里</li>\n<li>模块入口从 <code>mcps/*/module.json</code> 扫描</li>\n<li>侧栏 / 首页 / native/legacy 状态共用同一份模块注册数据</li>\n<li>页面优先组合组件，不再散写整页 HTML/CSS</li>\n</ul>\n<h3 id=\"44-核心代码位置\">4.4 核心代码位置</h3>\n<ul>\n<li>模块扫描真源：<code>apps/console-web/lib/module-registry.ts</code></li>\n<li>壳层真源：<code>apps/console-web/components/console/app-shell.tsx</code></li>\n<li>业务积木层：<code>apps/console-web/components/console/*</code></li>\n<li>小说工作台：<code>apps/console-web/components/novel-manager/novel-dashboard.tsx</code></li>\n</ul>\n<h2 id=\"5-模块层-mcps\">5. 模块层 <code>mcps/*</code></h2>\n<p>这个仓库的模块层并不统一只有一种形态，而是多种形态并存：</p>\n<h3 id=\"51-业务模块型\">5.1 业务模块型</h3>\n<p>例子：</p>\n<ul>\n<li><code>novel-manager</code></li>\n<li><code>deploy-center</code></li>\n<li><code>self-debug-closed-loop</code></li>\n<li><code>database-api</code></li>\n<li><code>ops-observer</code></li>\n</ul>\n<p>典型特点：</p>\n<ul>\n<li>有 <code>module.json</code></li>\n<li>有页面入口</li>\n<li>有 API 前缀</li>\n<li>常带 plugin 入口</li>\n<li>可能还带独立 app/backend/core/frontend 分层</li>\n</ul>\n<h3 id=\"52-工具型-mcp-wrapper\">5.2 工具型 MCP wrapper</h3>\n<p>例子：</p>\n<ul>\n<li><code>ripgrep-search</code></li>\n<li><code>repo-inspector</code></li>\n<li><code>standards-guard</code></li>\n<li><code>orchestration-pipeline</code></li>\n</ul>\n<p>典型特点：</p>\n<ul>\n<li>偏 server.mjs / wrapper 入口</li>\n<li>提供 tool 级能力</li>\n<li>适合本地 stdio 或未来远程 HTTP MCP</li>\n</ul>\n<h3 id=\"53-共享模板型\">5.3 共享/模板型</h3>\n<p>例子：</p>\n<ul>\n<li><code>mcps/shared</code></li>\n<li><code>mcps/_shared</code></li>\n<li><code>mcps/_templates</code></li>\n<li><code>mcps/core</code></li>\n</ul>\n<p>这些不是直接给最终用户看的业务页，而是模块体系的底座。</p>\n<h2 id=\"6-novel-manager-的模块原理\">6. <code>novel-manager</code> 的模块原理</h2>\n<p><code>novel-manager</code> 是当前最复杂、最工程化的业务模块。</p>\n<h3 id=\"61-它的职责链\">6.1 它的职责链</h3>\n<p>它要把这条链路收口：</p>\n<ul>\n<li>作品</li>\n<li>章节</li>\n<li>正文</li>\n<li>审核</li>\n<li>待发布</li>\n<li>自动发布</li>\n<li>平台确认</li>\n<li>前端可视化</li>\n</ul>\n<h3 id=\"62-它内部的分层\">6.2 它内部的分层</h3>\n<ul>\n<li><code>frontend/</code>：小说管理页面源码</li>\n<li><code>app/</code>：HTTP / API / SSE / dashboard 聚合入口</li>\n<li><code>backend/</code>：服务层</li>\n<li><code>core/fanqie/</code>：平台发布与平台运行时能力</li>\n<li><code>core/workflow/</code>：规则、调度、状态机</li>\n<li><code>core/manuscript/</code>：生成、润色、审核、记忆、风格</li>\n<li><code>tools/</code>：验收与平台工具</li>\n</ul>\n<h3 id=\"63-它的核心闭环\">6.3 它的核心闭环</h3>\n<ol>\n<li>页面通过 API/SSE 读 dashboard</li>\n<li><code>app/index.ts</code> 聚合后端状态</li>\n<li><code>backend/services/novel-service.ts</code> 与 <code>core/*</code> 提供数据/动作</li>\n<li><code>SmartScheduler</code> 驱动调度</li>\n<li><code>PublishOrchestrator</code> 统一发布编排</li>\n<li><code>FanqiePublisher</code> 执行发文</li>\n<li><code>PublishResultService</code> 回写并确认平台真源</li>\n</ol>\n<h3 id=\"64-这说明什么\">6.4 这说明什么</h3>\n<p><code>novel-manager</code> 不是普通 CRUD 页面，而是一个“状态机 + 调度器 + 平台自动化 + 编辑器”的复合系统。</p>\n<h2 id=\"7-self-debug-closed-loop-的模块原理\">7. <code>self-debug-closed-loop</code> 的模块原理</h2>\n<p>这个模块的重点不是页面本身，而是“统一能力目录与闭环协议”。</p>\n<p>它负责：</p>\n<ul>\n<li>扫描 <code>skills/</code> 与 <code>mcps/</code></li>\n<li>过滤掉不适合共享的目录</li>\n<li>构建统一 catalog snapshot</li>\n<li>暴露给 agent / 管理员读写</li>\n<li>给共享技能/MCP 提供可视化查看与维护入口</li>\n</ul>\n<p>本质上它是：</p>\n<blockquote>\n<p>本仓库内部“能力目录”的管理面板。</p>\n</blockquote>\n<h2 id=\"8-控制面与运行节点的关系\">8. 控制面与运行节点的关系</h2>\n<p><code>control-plane/</code> 不是运行代码本体，而是：</p>\n<ul>\n<li>服务器库存</li>\n<li>agent 库存</li>\n<li>部署目标映射</li>\n<li>执行路由规则</li>\n<li>提升门槛</li>\n</ul>\n<p>也就是说：</p>\n<ul>\n<li><code>server.mjs</code> / <code>gateway.mjs</code> 解决“怎么跑”</li>\n<li><code>control-plane/</code> 解决“应该在哪跑、以谁为真源、路由到哪里”</li>\n</ul>\n<h2 id=\"9-真正的架构关键\">9. 真正的架构关键</h2>\n<p>这个项目的关键不在某个单文件，而在三组“统一”：</p>\n<h3 id=\"91-统一壳层\">9.1 统一壳层</h3>\n<ul>\n<li><code>apps/console-web</code></li>\n<li><code>server.mjs</code></li>\n</ul>\n<h3 id=\"92-统一模块真源\">9.2 统一模块真源</h3>\n<ul>\n<li><code>mcps/*/module.json</code></li>\n<li><code>shared/plugin-manifest.js</code></li>\n</ul>\n<h3 id=\"93-统一执行部署认知\">9.3 统一执行/部署认知</h3>\n<ul>\n<li><code>control-plane/*</code></li>\n<li><code>RUNTIME-TOPOLOGY.md</code></li>\n</ul>\n<h2 id=\"10-最实用的理解图\">10. 最实用的理解图</h2>\n<p>可以直接把项目理解成这条链：</p>\n<p><code>skills/mcps/control-plane</code> 提供能力和规则\n-> <code>server.mjs</code> / <code>gateway.mjs</code> 负责加载和路由\n-> <code>apps/console-web</code> 提供统一前端壳\n-> <code>mcps/*</code> 提供实际模块能力\n-> 云端/工作站节点负责真实执行与验证</p>\n<hr>\n<h2 id=\"来源文件04---atramenti-console-运行端口与部署拓扑md\">来源文件：04 - Atramenti-Console 运行端口与部署拓扑.md</h2>\n<h1 id=\"atramenti-console-运行端口与部署拓扑\">Atramenti-Console 运行端口与部署拓扑</h1>\n<h2 id=\"1-三个主要节点\">1. 三个主要节点</h2>\n<p>根据 <code>RUNTIME-TOPOLOGY.md</code> 和 control-plane 注册表，当前项目是三节点结构：</p>\n<h3 id=\"11-上海主云端节点\">1.1 上海主云端节点</h3>\n<ul>\n<li>服务器：<code>124.220.233.126</code></li>\n<li>角色：<code>console</code>、<code>control-plane</code></li>\n<li>SSH 用户：<code>ubuntu</code></li>\n<li>源码根：<code>/home/ubuntu/atramenti-console-src</code></li>\n<li>运行根：<code>/srv/atramenti-console</code></li>\n<li>备份根：<code>/home/ubuntu/atramenti-console-backups</code></li>\n<li>服务：<code>atramenti-console.service</code></li>\n</ul>\n<p>用途：</p>\n<ul>\n<li>公开控制台入口</li>\n<li>控制面承载</li>\n<li>部署验证面</li>\n<li>对外可访问 UI/API</li>\n</ul>\n<h3 id=\"12-杭州运行节点\">1.2 杭州运行节点</h3>\n<ul>\n<li>服务器：<code>121.196.202.114</code></li>\n<li>角色：<code>runtime</code>、<code>mcp-offload</code>、<code>worker</code></li>\n<li>运行根：<code>/srv/mcp-runtime</code></li>\n<li>MCP bundle 根：<code>/srv/mcp-runtime/apps/codex-portable-mcps</code></li>\n<li>镜像工作区：<code>/srv/mcp-runtime/work</code></li>\n</ul>\n<p>用途：</p>\n<ul>\n<li>运行重型 MCP / worker 任务</li>\n<li>提供 mirrored workspace 执行面</li>\n</ul>\n<p>当前阻塞：</p>\n<ul>\n<li>22 端口 TCP 可连，但 SSH banner 超时</li>\n<li>所以它还不能被当成完全可靠的主 worker</li>\n</ul>\n<h3 id=\"13-windows-本地工作站\">1.3 Windows 本地工作站</h3>\n<ul>\n<li>主机名：<code>NEVERLETMEGO</code></li>\n<li>角色：<code>windows-workstation</code>、<code>local-file-executor</code>、<code>desktop-bound</code></li>\n<li>Codex 根：<code>C:\\Users\\ASUS-KL\\.codex</code></li>\n<li>OpenClaw 根：<code>C:\\Users\\ASUS-KL\\.openclaw</code></li>\n<li>本地工具运行根：<code>E:\\My Project\\Atramenti-Console\\.runtime\\deploy\\local-tools</code></li>\n</ul>\n<p>用途：</p>\n<ul>\n<li>真实桌面浏览器动作</li>\n<li>本地文件操作</li>\n<li>编辑器绑定动作</li>\n<li>本地配置读写</li>\n</ul>\n<h2 id=\"2-主要端口与地址\">2. 主要端口与地址</h2>\n<h3 id=\"21-atramenti-console-宿主\">2.1 Atramenti Console 宿主</h3>\n<ul>\n<li>默认本地端口：<code>5101</code></li>\n<li>启动脚本：<code>pnpm run dev</code></li>\n<li>入口文件：<code>server.mjs</code></li>\n</ul>\n<p>典型访问地址：</p>\n<ul>\n<li><code>http://127.0.0.1:5101/</code></li>\n<li><code>http://127.0.0.1:5101/system-overview/</code></li>\n<li><code>http://127.0.0.1:5101/novel/</code></li>\n</ul>\n<h3 id=\"22-本地-gateway\">2.2 本地 gateway</h3>\n<ul>\n<li>默认端口：<code>5000</code></li>\n<li>启动脚本：<code>pnpm run gateway:dev</code></li>\n<li>入口文件：<code>gateway.mjs</code></li>\n</ul>\n<h3 id=\"23-console-web-内部-next-代理端口\">2.3 console-web 内部 Next 代理端口</h3>\n<p>从 <code>server.mjs</code> 现有设计可知，内部 Next 前端还有一个单独的代理端口，默认是：</p>\n<ul>\n<li><code>3202</code></li>\n</ul>\n<p>它由宿主自动拉起/代理，平时用户不一定直接访问。</p>\n<h3 id=\"24-控制面健康地址\">2.4 控制面健康地址</h3>\n<p>主云端节点已登记：</p>\n<ul>\n<li>正式公网入口：<code>https://console.tengokukk.com/</code></li>\n<li>公网 summary：<code>https://console.tengokukk.com/api/console/summary</code></li>\n<li>本地 summary：<code>http://127.0.0.1:5101/api/console/summary</code></li>\n</ul>\n<h2 id=\"3-部署的正确认知\">3. 部署的正确认知</h2>\n<h3 id=\"31-不要把运行目录当源码真源\">3.1 不要把运行目录当源码真源</h3>\n<p>控制面文档已经明确：</p>\n<ul>\n<li><code>/srv/atramenti-console</code> 是 runtime root</li>\n<li>不是 source of truth</li>\n</ul>\n<p>正确流程是：</p>\n<ol>\n<li>在源码根修改</li>\n<li>构建/打包</li>\n<li>发布到运行根</li>\n<li>验证服务与页面</li>\n</ol>\n<h3 id=\"32-运行节点职责分工\">3.2 运行节点职责分工</h3>\n<ul>\n<li>124：控制面、公开 UI、管理节点</li>\n<li>121：重型 runtime / worker / offload</li>\n<li>Windows：桌面绑定、本地文件绑定、浏览器动作</li>\n</ul>\n<h3 id=\"33-远程-mcp-的包装方式\">3.3 远程 MCP 的包装方式</h3>\n<p>本地 Codex 的 remote-offloaded MCP 通过：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\remote-mcp.ps1</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\remote-mcp.cmd</code></li>\n</ul>\n<p>SSH 到运行节点并启动：</p>\n<ul>\n<li><code>node &#x3C;mcp>/server.mjs</code></li>\n</ul>\n<h2 id=\"4-技能与-mcp-的实际存放消费关系\">4. 技能与 MCP 的实际存放/消费关系</h2>\n<h3 id=\"41-skill-真源\">4.1 Skill 真源</h3>\n<ul>\n<li>真正可编辑的本地 skill 源：<code>E:\\My Project\\Atramenti-Console\\codex\\skills</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\skills</code> 是指向它的 junction/消费入口</li>\n</ul>\n<h3 id=\"42-mcp-真源\">4.2 MCP 真源</h3>\n<ul>\n<li>源码真源：<code>E:\\My Project\\Atramenti-Console\\codex\\mcps</code></li>\n<li>远程运行 bundle：<code>/srv/mcp-runtime/apps/codex-portable-mcps</code></li>\n</ul>\n<h3 id=\"43-镜像工作区\">4.3 镜像工作区</h3>\n<p>运行节点工作区：</p>\n<ul>\n<li><code>/srv/mcp-runtime/work/Atramenti-Console</code></li>\n<li><code>/srv/mcp-runtime/work/Atramenti-OpeClaw</code></li>\n</ul>\n<p>原则：</p>\n<ul>\n<li>搜索/探测型 MCP 优先指向云端镜像工作区</li>\n<li>不直接依赖本地 Windows 路径</li>\n</ul>\n<h2 id=\"5-工作站本地桥\">5. 工作站本地桥</h2>\n<p>Windows 本地执行能力依赖：</p>\n<ul>\n<li>本地 SSH listener：<code>127.0.0.1:22222</code></li>\n<li>reverse tunnel supervisor：<code>C:\\Users\\ASUS-KL\\.openclaw\\aliyun-reverse-ssh.ps1</code></li>\n<li>node supervisor：<code>C:\\Users\\ASUS-KL\\.openclaw\\node-supervisor.ps1</code></li>\n</ul>\n<p>这些让控制面能把“必须发生在真实工作站上的动作”正式分发到本地，而不是假装所有事情都能在云端完成。</p>\n<h2 id=\"6-当前实际部署判断标准\">6. 当前实际部署判断标准</h2>\n<p>如果要判断“是否适合部署/是否部署成功”，不能只看：</p>\n<ul>\n<li>HTTP 200</li>\n<li>进程活着</li>\n<li>systemd running</li>\n</ul>\n<p>还要看：</p>\n<ul>\n<li>页面是否正确渲染</li>\n<li>路由是否能进入目标模块</li>\n<li>新壳与 legacy 是否没断</li>\n<li>关键 SSE / API 是否正常</li>\n<li>用户可见结果是否对</li>\n</ul>\n<p>这和项目里的 <code>self-debug-closed-loop</code> 原则是一致的。</p>\n<hr>\n<h2 id=\"来源文件05---atramenti-console-插件mcpskill-注册机制md\">来源文件：05 - Atramenti-Console 插件、MCP、Skill 注册机制.md</h2>\n<h1 id=\"atramenti-console-插件mcpskill-注册机制\">Atramenti-Console 插件、MCP、Skill 注册机制</h1>\n<h2 id=\"1-先说结论\">1. 先说结论</h2>\n<p>这个项目不是靠单一注册文件完成所有事情，而是“多层注册、逐层派生”：</p>\n<ol>\n<li>模块自身元信息：<code>mcps/*/module.json</code></li>\n<li>宿主托管清单：<code>shared/plugin-manifest.js</code></li>\n<li>独立运行开关与模块配置：<code>atramenti.config.json</code></li>\n<li>控制面服务器/agent/部署规则：<code>control-plane/*</code></li>\n<li>Codex 侧 MCP 启用：<code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n<li>Skill 真源与消费：<code>skills/</code> -> <code>C:\\Users\\ASUS-KL\\.codex\\skills</code></li>\n</ol>\n<h2 id=\"2-模块注册modulejson\">2. 模块注册：<code>module.json</code></h2>\n<p>每个可进入系统壳层的模块，原则上都有自己的：</p>\n<ul>\n<li><code>mcps/&#x3C;module>/module.json</code></li>\n</ul>\n<p>它承担的角色：</p>\n<ul>\n<li>模块元信息真源</li>\n<li>路由/壳层信息来源</li>\n<li>系统总览扫描来源</li>\n<li>模块地图与自动发现来源</li>\n</ul>\n<p>在 <code>apps/console-web</code> 里，模块注册读取逻辑已明确从 <code>mcps/*/module.json</code> 扫描。</p>\n<h2 id=\"3-宿主插件清单sharedplugin-manifestjs\">3. 宿主插件清单：<code>shared/plugin-manifest.js</code></h2>\n<p>这是当前独立宿主最核心的“托管派生清单”。</p>\n<p>它集中定义了：</p>\n<ul>\n<li><code>id</code></li>\n<li><code>localName</code></li>\n<li><code>pluginEntry</code></li>\n<li><code>routeBase</code></li>\n<li><code>frontendRoot</code></li>\n<li><code>entryFile</code></li>\n<li><code>openclawPath</code></li>\n</ul>\n<h3 id=\"31-它解决什么问题\">3.1 它解决什么问题</h3>\n<ul>\n<li>哪些模块可由宿主托管</li>\n<li>每个模块的路由前缀是什么</li>\n<li>legacy 页面根目录在哪里</li>\n<li>OpenClaw allow/load path 应该怎么自动派生</li>\n</ul>\n<h3 id=\"32-它提供的关键派生能力\">3.2 它提供的关键派生能力</h3>\n<ul>\n<li><code>buildAppPages(repoRoot)</code>：构建页面根索引</li>\n<li><code>getOpenClawAllowList()</code>：派生 allow list</li>\n<li><code>getOpenClawLoadPaths()</code>：派生 load paths</li>\n<li><code>getStandaloneManagedPlugins()</code>：输出独立宿主管理的插件集合</li>\n</ul>\n<p>这意味着：</p>\n<blockquote>\n<p><code>atramenti.config.json</code> 不再手工长期维护 <code>plugins.allow</code> / <code>plugins.load.paths</code>，而是由 manifest 派生。</p>\n</blockquote>\n<h2 id=\"4-独立运行配置atramenticonfigjson\">4. 独立运行配置：<code>atramenti.config.json</code></h2>\n<p>这个文件主要负责“开关”和“模块配置”，而不是替代 manifest。</p>\n<p>当前里面可见的信息包括：</p>\n<ul>\n<li>浏览器默认配置</li>\n<li>enabled plugins entries</li>\n<li>某些模块的 standalone 配置</li>\n<li>某些模块的 provider 配置</li>\n</ul>\n<h3 id=\"41-它当前启用的核心模块\">4.1 它当前启用的核心模块</h3>\n<ul>\n<li><code>qwen3-tts</code></li>\n<li><code>novel-manager</code></li>\n<li><code>deploy-center</code></li>\n<li><code>self-debug-closed-loop</code></li>\n<li><code>vscode-key-guard</code></li>\n<li><code>experience-manager</code></li>\n<li><code>automation-hub</code></li>\n<li><code>ai-model-hub</code></li>\n<li><code>file-manager</code></li>\n<li><code>ops-observer</code></li>\n<li><code>aghub-bridge</code></li>\n<li><code>superset-bridge</code></li>\n<li><code>database-api</code></li>\n</ul>\n<h2 id=\"5-顶部导航与壳层入口扫描sharednav-registryjs\">5. 顶部导航与壳层入口扫描：<code>shared/nav-registry.js</code></h2>\n<p>这个文件会扫描 <code>mcps/*/module.json</code>，提取：</p>\n<ul>\n<li>top nav 项</li>\n<li>shell entry</li>\n<li>route prefix</li>\n<li>api prefix</li>\n<li>icon/group/summary/homepage 等壳层元信息</li>\n</ul>\n<h3 id=\"51-它说明了什么\">5.1 它说明了什么</h3>\n<p>说明项目现在正在把“壳层导航”从手写常量，转成“模块元信息驱动”。</p>\n<p>这件事非常关键，因为它决定：</p>\n<ul>\n<li>新增模块时先改元信息，不是先改前端死代码</li>\n<li>导航、模块首页、系统总览、迁移状态可以共源</li>\n</ul>\n<h2 id=\"6-控制面注册control-plane\">6. 控制面注册：<code>control-plane/*</code></h2>\n<p>这一层不是页面层注册，而是部署/执行注册。</p>\n<h3 id=\"61-registryserversjson\">6.1 <code>registry/servers.json</code></h3>\n<p>定义物理/运行节点：</p>\n<ul>\n<li>cloud-shanghai-01</li>\n<li>cloud-hangzhou-01</li>\n<li>windows-workstation-01</li>\n</ul>\n<h3 id=\"62-registryagentsjson\">6.2 <code>registry/agents.json</code></h3>\n<p>定义共享能力消费者：</p>\n<ul>\n<li><code>codex-local-primary</code></li>\n<li><code>windows-local-executor</code></li>\n<li><code>cloud-console-runtime</code></li>\n<li><code>cloud-runtime-worker</code></li>\n</ul>\n<h3 id=\"63-policy\">6.3 <code>policy/*</code></h3>\n<p>定义：</p>\n<ul>\n<li>deploy target 映射</li>\n<li>execution routing</li>\n<li>promotion gate</li>\n</ul>\n<p>这层回答的是：</p>\n<ul>\n<li>哪个任务该去哪里执行</li>\n<li>哪个部署目标对应哪台机器</li>\n<li>哪些节点消费哪些 shared capability sources</li>\n</ul>\n<h2 id=\"7-skill-注册机制\">7. Skill 注册机制</h2>\n<h3 id=\"71-真源\">7.1 真源</h3>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\skills</code></li>\n</ul>\n<h3 id=\"72-消费入口\">7.2 消费入口</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\skills</code></li>\n</ul>\n<p>目前通过 junction/共享方式消费，所以：</p>\n<ul>\n<li>维护时改仓库里的 skill 即可</li>\n<li>本地 Codex 实际拿到的是同一套源</li>\n</ul>\n<h3 id=\"73-特殊点\">7.3 特殊点</h3>\n<p><code>self-debug-closed-loop</code> 模块还会扫描技能目录并生成 catalog snapshot，所以 skill 不只是“本地模型提示词”，也成了“平台能力目录的一部分”。</p>\n<h2 id=\"8-mcp-注册机制\">8. MCP 注册机制</h2>\n<p>MCP 维度有两层：</p>\n<h3 id=\"81-源码层\">8.1 源码层</h3>\n<ul>\n<li>真源在 <code>mcps/*</code></li>\n</ul>\n<h3 id=\"82-codex-运行层\">8.2 Codex 运行层</h3>\n<ul>\n<li>由 <code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code> 决定启用哪些 MCP</li>\n<li>远程 offload 型 MCP 通过 <code>remote-mcp.ps1/.cmd</code> 包装到云端运行</li>\n</ul>\n<h3 id=\"83-远程-bundle-层\">8.3 远程 bundle 层</h3>\n<ul>\n<li>运行 bundle 在 <code>/srv/mcp-runtime/apps/codex-portable-mcps</code></li>\n</ul>\n<p>所以 MCP 不是单点注册，而是：</p>\n<ul>\n<li>仓库中定义</li>\n<li>Codex 中启用</li>\n<li>必要时在云端 bundle 中运行</li>\n</ul>\n<h2 id=\"9-当前最实用的理解方式\">9. 当前最实用的理解方式</h2>\n<p>如果你要追一个模块“为什么会出现在页面里 / 出现在控制台里 / 被 agent 用到”，按这个顺序查：</p>\n<ol>\n<li><code>mcps/&#x3C;module>/module.json</code></li>\n<li><code>shared/plugin-manifest.js</code></li>\n<li><code>atramenti.config.json</code></li>\n<li><code>shared/nav-registry.js</code></li>\n<li><code>control-plane/registry/*.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n</ol>\n<hr>\n<h2 id=\"来源文件06---atramenti-console-apps-与-shared-索引md\">来源文件：06 - Atramenti-Console Apps 与 Shared 索引.md</h2>\n<h1 id=\"atramenti-console-apps-与-shared-索引\">Atramenti-Console Apps 与 Shared 索引</h1>\n<h2 id=\"1-appsconsole-web\">1. <code>apps/console-web</code></h2>\n<p>这是当前新的统一前端母模板。</p>\n<h3 id=\"技术栈\">技术栈</h3>\n<ul>\n<li>Next.js 16</li>\n<li>React 19</li>\n<li>TypeScript</li>\n<li>Tailwind CSS v4</li>\n<li>Radix UI primitives</li>\n<li>class-variance-authority</li>\n</ul>\n<h3 id=\"目录要点\">目录要点</h3>\n<ul>\n<li><code>app/</code>：Next app router 页面</li>\n<li><code>components/console/</code>：控制台业务积木</li>\n<li><code>components/ui/</code>：基础 UI 原件</li>\n<li><code>components/novel-manager/</code>：小说管理新壳组件</li>\n<li><code>components/system-overview/</code>：系统总览组件</li>\n<li><code>lib/console-api.ts</code>：控制台 API 调用</li>\n<li><code>lib/module-registry.ts</code>：扫描 <code>mcps/*/module.json</code></li>\n</ul>\n<h3 id=\"当前-native-route\">当前 native route</h3>\n<ul>\n<li><code>/</code></li>\n<li><code>/system-overview</code></li>\n<li><code>/novel</code></li>\n</ul>\n<h3 id=\"当前意义\">当前意义</h3>\n<p>它是后续前端统一迁移的真正母模板，不只是一个 demo 项目。</p>\n<h2 id=\"2-appsdatabase-api\">2. <code>apps/database-api</code></h2>\n<p>当前更像数据库 API 相关应用材料/状态映射区，主要不是完整前端应用。</p>\n<p>可把它理解为 <code>database-api</code> 模块在 apps 侧的补充资料位。</p>\n<h2 id=\"3-shared\">3. <code>shared/</code></h2>\n<p>这是独立宿主的共享层，不要和 <code>mcps/shared/</code> 混淆。</p>\n<h3 id=\"核心文件\">核心文件</h3>\n<ul>\n<li><code>plugin-manifest.js</code>：宿主托管插件清单真源</li>\n<li><code>standalone-config.js</code>：读取 <code>atramenti.config.json</code></li>\n<li><code>nav-registry.js</code>：扫描模块元信息并生成壳层导航数据</li>\n<li><code>control-plane.js</code>：读取控制面注册表与策略</li>\n<li><code>FRONTEND_SHELL_README.md</code>：独立壳相关说明</li>\n<li><code>standalone-home.html</code>：独立首页模板</li>\n<li><code>nav-bar-standalone.html</code>：独立导航 HTML</li>\n</ul>\n<h3 id=\"它的职责\">它的职责</h3>\n<ul>\n<li>连接“静态配置”与“运行派生”</li>\n<li>为 <code>server.mjs</code> 提供插件和导航的中间层</li>\n<li>统一读取控制面信息，避免宿主层直接手搓路径</li>\n</ul>\n<h2 id=\"4-mcpsshared\">4. <code>mcps/shared/</code></h2>\n<p>这是扩展体系内部的共享导航真源。</p>\n<p>核心用途：</p>\n<ul>\n<li>统一导航栏 HTML 真源</li>\n<li>服务端注入工具</li>\n<li>前端导航行为脚本</li>\n<li>共享诊断页面</li>\n</ul>\n<h3 id=\"它和-shared-的区别\">它和 <code>shared/</code> 的区别</h3>\n<ul>\n<li><code>shared/</code>：Atramenti-Console 独立宿主共享层</li>\n<li><code>mcps/shared/</code>：扩展模块体系内部共享资源层</li>\n</ul>\n<h2 id=\"5-这两层为什么容易混\">5. 这两层为什么容易混</h2>\n<p>因为它们都叫 shared，但服务对象不同：</p>\n<ul>\n<li>一个偏宿主编排</li>\n<li>一个偏扩展 UI 真源</li>\n</ul>\n<p>实际排查时不要混用。</p>\n<h2 id=\"6-最实用的排查顺序\">6. 最实用的排查顺序</h2>\n<h3 id=\"页面为什么没进入新壳\">页面为什么没进入新壳</h3>\n<p>查：</p>\n<ol>\n<li><code>apps/console-web/lib/module-registry.ts</code></li>\n<li><code>shared/plugin-manifest.js</code></li>\n<li><code>server.mjs</code></li>\n</ol>\n<h3 id=\"顶部导航为什么不对\">顶部导航为什么不对</h3>\n<p>查：</p>\n<ol>\n<li><code>shared/nav-registry.js</code></li>\n<li><code>mcps/*/module.json</code></li>\n<li><code>mcps/shared/*</code></li>\n</ol>\n<h3 id=\"独立运行配置为什么没生效\">独立运行配置为什么没生效</h3>\n<p>查：</p>\n<ol>\n<li><code>shared/standalone-config.js</code></li>\n<li><code>atramenti.config.json</code></li>\n</ol>\n<hr>\n<h2 id=\"来源文件07---atramenti-console-mcp-模块索引md\">来源文件：07 - Atramenti-Console MCP 模块索引.md</h2>\n<h1 id=\"atramenti-console-mcp-模块索引\">Atramenti-Console MCP 模块索引</h1>\n<h2 id=\"1-当前主要有-modulejson-的业务模块\">1. 当前主要有 <code>module.json</code> 的业务模块</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>模块 ID</th>\n<th>展示名</th>\n<th>路由前缀</th>\n<th>作用</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>aghub-bridge</code></td>\n<td>AGHub</td>\n<td><code>/aghub</code></td>\n<td>AGHub 桥接模块</td>\n</tr>\n<tr>\n<td><code>ai-model-hub</code></td>\n<td>模型中心</td>\n<td><code>/ai-hub</code></td>\n<td>模型能力管理与展示</td>\n</tr>\n<tr>\n<td><code>automation-hub</code></td>\n<td>自动化中心</td>\n<td><code>/automation</code></td>\n<td>自动化任务工作台</td>\n</tr>\n<tr>\n<td><code>database-api</code></td>\n<td>数据库 API</td>\n<td><code>/database-api</code></td>\n<td>数据治理与受控数据库访问</td>\n</tr>\n<tr>\n<td><code>deploy-center</code></td>\n<td>部署中心</td>\n<td><code>/deploy-center</code></td>\n<td>部署、监听、云端健康、状态聚合</td>\n</tr>\n<tr>\n<td><code>experience-manager</code></td>\n<td>经验中心</td>\n<td><code>/experience</code></td>\n<td>经验记录、笔记、QMD/数据库治理桥</td>\n</tr>\n<tr>\n<td><code>feishu-center</code></td>\n<td>Feishu Center</td>\n<td><code>/feishu</code></td>\n<td>飞书集成中心</td>\n</tr>\n<tr>\n<td><code>file-manager</code></td>\n<td>文件管理</td>\n<td><code>/file-manager</code></td>\n<td>文件浏览/管理模块</td>\n</tr>\n<tr>\n<td><code>novel-manager</code></td>\n<td>小说管理</td>\n<td><code>/novel</code></td>\n<td>小说生产、审核、发布、平台确认闭环</td>\n</tr>\n<tr>\n<td><code>ops-observer</code></td>\n<td>运维观测中心</td>\n<td><code>/ops-observer</code></td>\n<td>服务状态、端口、Netdata 摘要</td>\n</tr>\n<tr>\n<td><code>qwen3-tts</code></td>\n<td>Qwen3 TTS</td>\n<td><code>/qwen3-tts</code></td>\n<td>TTS 服务骨架与调试页</td>\n</tr>\n<tr>\n<td><code>self-debug-closed-loop</code></td>\n<td>自我调试闭环</td>\n<td><code>/self-debug-closed-loop</code></td>\n<td>技能/MCP 目录与闭环管理面</td>\n</tr>\n<tr>\n<td><code>superset-bridge</code></td>\n<td>Superset BI</td>\n<td><code>/superset</code></td>\n<td>Superset 桥接</td>\n</tr>\n<tr>\n<td><code>system-overview</code></td>\n<td>系统总览</td>\n<td><code>/system-overview</code></td>\n<td>项目级模块地图、真源地图、架构摘要</td>\n</tr>\n<tr>\n<td><code>vscode-key-guard</code></td>\n<td>密钥守护</td>\n<td><code>/vscode-key-guard</code></td>\n<td>Codex / Roo / OpenClaw 真实密钥与状态展示</td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"2-当前最关键模块说明\">2. 当前最关键模块说明</h2>\n<h3 id=\"novel-manager\"><code>novel-manager</code></h3>\n<p>定位：小说生产与发布闭环。</p>\n<p>关键入口：</p>\n<ul>\n<li><code>mcps/novel-manager/app/index.ts</code></li>\n<li><code>mcps/novel-manager/backend/services/novel-service.ts</code></li>\n<li><code>mcps/novel-manager/core/workflow/scheduler/SmartScheduler.ts</code></li>\n<li><code>mcps/novel-manager/core/fanqie/publishing/*</code></li>\n<li><code>mcps/novel-manager/frontend/pages/novel/index.html</code></li>\n</ul>\n<p>关键理解：</p>\n<ul>\n<li>这是状态机 + 调度器 + 发布自动化 + 编辑工作台的复合系统</li>\n<li>不是简单前端模块</li>\n</ul>\n<h3 id=\"deploy-center\"><code>deploy-center</code></h3>\n<p>定位：开发期远端部署链路的统一真源。</p>\n<p>承载：</p>\n<ul>\n<li>本机文件监听</li>\n<li>归档/上传</li>\n<li>远端覆盖</li>\n<li>网关重启</li>\n<li>云端健康检查</li>\n<li>本地自连辅助工具</li>\n<li>页面状态聚合</li>\n</ul>\n<h3 id=\"self-debug-closed-loop\"><code>self-debug-closed-loop</code></h3>\n<p>定位：共享技能/MCP 目录管理与可视化闭环模块。</p>\n<p>承载：</p>\n<ul>\n<li>扫描 <code>skills/</code> 与 <code>mcps/</code></li>\n<li>生成 <code>catalog.snapshot.json</code></li>\n<li>暴露 agent/admin 管理接口</li>\n<li>统一收口共享能力目录</li>\n</ul>\n<h3 id=\"database-api\"><code>database-api</code></h3>\n<p>定位：统一数据库服务边界。</p>\n<p>承载：</p>\n<ul>\n<li>schema 浏览</li>\n<li>受控资源访问</li>\n<li>stats / 审计 / 状态机统计</li>\n<li>经验记录等云端治理资源</li>\n</ul>\n<h3 id=\"ops-observer\"><code>ops-observer</code></h3>\n<p>定位：低耦合运维观测页。</p>\n<p>承载：</p>\n<ul>\n<li>服务状态聚合</li>\n<li>端口信息</li>\n<li>Netdata 概览桥接</li>\n</ul>\n<h3 id=\"system-overview\"><code>system-overview</code></h3>\n<p>定位：项目级结构总览模块。</p>\n<p>承载：</p>\n<ul>\n<li>模块地图</li>\n<li>真源地图</li>\n<li>运行状态概览</li>\n<li>架构详情聚合</li>\n</ul>\n<h2 id=\"3-工具型-mcpwrapper-索引\">3. 工具型 MCP/wrapper 索引</h2>\n<h3 id=\"ripgrep-search\"><code>ripgrep-search</code></h3>\n<ul>\n<li>用途：快速代码/文本搜索 MCP</li>\n<li>适合：本地 stdio MCP、未来远程 HTTP MCP</li>\n</ul>\n<h3 id=\"repo-inspector\"><code>repo-inspector</code></h3>\n<ul>\n<li>用途：仓库/目录探测 wrapper</li>\n<li>适合：验收与存在性检查</li>\n</ul>\n<h3 id=\"standards-guard\"><code>standards-guard</code></h3>\n<ul>\n<li>用途：标准门禁 MCP</li>\n<li>默认动作：在目标仓库执行 <code>npm run check</code></li>\n</ul>\n<h3 id=\"orchestration-pipeline\"><code>orchestration-pipeline</code></h3>\n<ul>\n<li>用途：Roo orchestration pipeline 包装器</li>\n<li>提供：运行 pipeline 与 relay audit 验证工具</li>\n</ul>\n<h3 id=\"playwright-browser\"><code>playwright-browser</code></h3>\n<ul>\n<li>用途：浏览器能力 MCP wrapper</li>\n</ul>\n<h3 id=\"context-store--database-ops-mcp--output-guard--prompt-compressor--log-diagnose\"><code>context-store</code> / <code>database-ops-mcp</code> / <code>output-guard</code> / <code>prompt-compressor</code> / <code>log-diagnose</code></h3>\n<ul>\n<li>当前多为包装器/基线 MCP</li>\n<li>其中数据库检查链路的 canonical 名称已切到 <code>database-ops-mcp</code>，<code>db-readonly</code> 仅保留兼容层</li>\n<li>负责把特定能力通过统一 MCP 形态接入系统</li>\n</ul>\n<h2 id=\"4-共享内核型目录\">4. 共享/内核型目录</h2>\n<h3 id=\"mcpscore\"><code>mcps/core</code></h3>\n<p>跨模块共享数据库、配置、底层能力。</p>\n<h3 id=\"mcpsshared\"><code>mcps/shared</code></h3>\n<p>共享导航真源。</p>\n<h3 id=\"mcps_shared\"><code>mcps/_shared</code></h3>\n<p>MCP wrapper 的共用脚手架，例如 probe server。</p>\n<h3 id=\"mcpskernel\"><code>mcps/kernel</code></h3>\n<p>更偏底层/测试/运行相关的内核区。</p>\n<h2 id=\"5-如果要读一个模块建议最少看四样东西\">5. 如果要读一个模块，建议最少看四样东西</h2>\n<ol>\n<li><code>module.json</code></li>\n<li><code>README.md</code></li>\n<li>入口文件（<code>plugin/index.ts</code> 或 <code>app/index.ts</code> 或 <code>server.mjs</code>）</li>\n<li>页面/API 主入口</li>\n</ol>\n<hr>\n<h2 id=\"来源文件08---atramenti-console-skills-与知识系统索引md\">来源文件：08 - Atramenti-Console Skills 与知识系统索引.md</h2>\n<h1 id=\"atramenti-console-skills-与知识系统索引\">Atramenti-Console Skills 与知识系统索引</h1>\n<h2 id=\"1-skill-真源位置\">1. Skill 真源位置</h2>\n<ul>\n<li>真源：<code>E:\\My Project\\Atramenti-Console\\codex\\skills</code></li>\n<li>本地 Codex 消费入口：<code>C:\\Users\\ASUS-KL\\.codex\\skills</code></li>\n</ul>\n<p>这意味着当前 skill 已经基本实现“仓库统一维护，本地直接消费”。</p>\n<h2 id=\"2-技能体系的实际作用\">2. 技能体系的实际作用</h2>\n<p>这个仓库里的 skills 不是随手堆的 prompt 片段，而是项目运行方式的一部分。</p>\n<p>它们承担：</p>\n<ul>\n<li>固化稳定工作流</li>\n<li>给 agent 注入项目级约束</li>\n<li>定义验收闭环</li>\n<li>管理研究/部署/前端验证/故障排查方法</li>\n<li>逐步形成长期能力目录</li>\n</ul>\n<h2 id=\"3-当前技能的大致分层\">3. 当前技能的大致分层</h2>\n<h3 id=\"31-可见结果验证自我调试\">3.1 可见结果验证/自我调试</h3>\n<ul>\n<li><code>self-debug-closed-loop</code></li>\n<li><code>frontend-evidence</code></li>\n<li><code>readiness-wait-gate</code></li>\n<li><code>closed-loop-ops</code></li>\n<li><code>regression-snapshot</code></li>\n</ul>\n<p>这是最关键的一组，因为它们直接影响“页面修复是否算完成”。</p>\n<h3 id=\"32-agent-能力提升与长期闭环\">3.2 Agent 能力提升与长期闭环</h3>\n<ul>\n<li><code>agent-improvement-ops</code></li>\n<li><code>module-acceptance</code></li>\n<li><code>release-preflight</code></li>\n<li><code>api-validation-matrix</code></li>\n</ul>\n<p>这组偏“能力进化与验证基础设施”。</p>\n<h3 id=\"33-mcp插件技能开发\">3.3 MCP/插件/技能开发</h3>\n<ul>\n<li><code>mcp-server-patterns</code></li>\n<li><code>create-skill</code></li>\n<li><code>create-subagent</code></li>\n<li><code>plugin-creator</code></li>\n<li><code>skill-creator</code></li>\n<li><code>skill-installer</code></li>\n</ul>\n<h3 id=\"34-研究与知识检索\">3.4 研究与知识检索</h3>\n<ul>\n<li><code>deep-research</code></li>\n<li><code>search-first</code></li>\n<li><code>qmd</code></li>\n<li><code>experience-manager</code></li>\n</ul>\n<h3 id=\"35-运维与云端\">3.5 运维与云端</h3>\n<ul>\n<li><code>tencentcloud-ops</code></li>\n<li><code>gateway-restart-safe</code></li>\n<li><code>incident-triage</code></li>\n<li><code>windows-safe-exec</code></li>\n</ul>\n<h3 id=\"36-gsd-项目管理体系\">3.6 GSD 项目管理体系</h3>\n<ul>\n<li><code>gsd-*</code> 全家桶</li>\n</ul>\n<p>这一组是大型项目规划/执行/审计/文档/验证流程。</p>\n<h2 id=\"4-当前最重要的几个技能\">4. 当前最重要的几个技能</h2>\n<h3 id=\"self-debug-closed-loop-1\"><code>self-debug-closed-loop</code></h3>\n<p>这是当前项目最硬性的用户可见验证协议。</p>\n<p>核心要求：</p>\n<ol>\n<li>验证运行态</li>\n<li>验证可见结果</li>\n<li>留下至少一个证据</li>\n<li>给出 <code>verified / unverified / failed</code></li>\n</ol>\n<p>它的意义是：</p>\n<ul>\n<li>不允许拿 HTTP 200 当页面修复完成</li>\n<li>不允许拿“服务启动了”替代“界面正确了”</li>\n</ul>\n<h3 id=\"agent-improvement-ops\"><code>agent-improvement-ops</code></h3>\n<p>用于评估和推进长期自我提升栈，包括：</p>\n<ul>\n<li>eval harness</li>\n<li>telemetry foundation</li>\n<li>自调试/长反馈回路</li>\n<li>云端安装/共享模块</li>\n</ul>\n<h3 id=\"search-first\"><code>search-first</code></h3>\n<p>要求先搜现成轮子、模式、仓库方案，再决定是否自己造。</p>\n<h3 id=\"deep-research\"><code>deep-research</code></h3>\n<p>用于需要证据链的深入研究，强调本地记忆优先，再扩展官方文档/GitHub/web。</p>\n<h2 id=\"5-skill-与-mcp-的关系\">5. Skill 与 MCP 的关系</h2>\n<p>在这个仓库里，skill 与 MCP 不是分离世界：</p>\n<ul>\n<li>Skill 负责方法论、工作流、执行约束</li>\n<li>MCP 负责可调用工具能力</li>\n<li><code>self-debug-closed-loop</code> 模块把这两者都纳入统一目录快照与可视化管理</li>\n</ul>\n<h2 id=\"6-为什么这个技能系统很重要\">6. 为什么这个技能系统很重要</h2>\n<p>因为当前项目已经不是单人手工维护小仓库，而是“多 agent / 多节点 / 多模块”协同体系。</p>\n<p>没有 skill 体系，就会出现：</p>\n<ul>\n<li>每次都重新解释工作流</li>\n<li>页面验证标准漂移</li>\n<li>部署/调试动作不一致</li>\n<li>长期经验无法沉淀</li>\n</ul>\n<h2 id=\"7-当前知识系统的几个专题真源\">7. 当前知识系统的几个专题真源</h2>\n<ul>\n<li>代码与模块真源：<code>mcps/</code></li>\n<li>技能真源：<code>skills/</code></li>\n<li>控制面真源：<code>control-plane/</code></li>\n<li>经验/记忆治理：<code>experience-manager</code> + <code>qmd</code></li>\n<li>可视化目录：<code>self-debug-closed-loop</code></li>\n</ul>\n<hr>\n<h2 id=\"来源文件09---atramenti-console-当前上下文知识与排查入口md\">来源文件：09 - Atramenti-Console 当前上下文知识与排查入口.md</h2>\n<h1 id=\"atramenti-console-当前上下文知识与排查入口\">Atramenti-Console 当前上下文知识与排查入口</h1>\n<h2 id=\"1-我当前已经明确掌握的项目知识点\">1. 我当前已经明确掌握的项目知识点</h2>\n<h3 id=\"11-项目当前是迁旧保新的过渡架构\">1.1 项目当前是“迁旧保新”的过渡架构</h3>\n<p>不是完全旧站，也不是完全新壳。</p>\n<p>当前明确已经迁入新壳的 native route：</p>\n<ul>\n<li><code>/</code></li>\n<li><code>/system-overview</code></li>\n<li><code>/novel</code></li>\n</ul>\n<p>其中 <code>/novel</code> 仍依赖 legacy 后端的 snapshot + SSE。</p>\n<h3 id=\"12-页面宿主与本地网关是两层\">1.2 页面宿主与本地网关是两层</h3>\n<ul>\n<li><code>server.mjs</code>：独立 console 宿主</li>\n<li><code>gateway.mjs</code>：本地插件网关</li>\n</ul>\n<p>这两个不能混为一个进程概念。</p>\n<h3 id=\"13-独立宿主管理的插件清单不是散落配置而是集中在-sharedplugin-manifestjs\">1.3 独立宿主管理的插件清单不是散落配置，而是集中在 <code>shared/plugin-manifest.js</code></h3>\n<p><code>atramenti.config.json</code> 主要负责启用和模块配置，不是模块路径托管真源。</p>\n<h3 id=\"14-模块壳层导航正在转向-modulejson-驱动\">1.4 模块壳层导航正在转向 <code>module.json</code> 驱动</h3>\n<p><code>shared/nav-registry.js</code> 会扫描 <code>mcps/*/module.json</code> 提取：</p>\n<ul>\n<li>top nav</li>\n<li>shell entry</li>\n<li>routePrefix</li>\n<li>apiPrefix</li>\n<li>icon/group/summary/homepage</li>\n</ul>\n<h3 id=\"15-技能真源和仓库已经统一\">1.5 技能真源和仓库已经统一</h3>\n<ul>\n<li>skill 真源：<code>E:\\My Project\\Atramenti-Console\\codex\\skills</code></li>\n<li>Codex 消费入口：<code>C:\\Users\\ASUS-KL\\.codex\\skills</code></li>\n</ul>\n<p>所以这套仓库本身已经是本地 agent 能力源之一。</p>\n<h3 id=\"16-控制面已经显式建模了三节点\">1.6 控制面已经显式建模了三节点</h3>\n<ul>\n<li>上海主云端节点：控制台/控制面</li>\n<li>杭州运行节点：worker/offload</li>\n<li>Windows 工作站：本地文件与桌面绑定执行</li>\n</ul>\n<h3 id=\"17-novel-manager-是当前最复杂的模块\">1.7 <code>novel-manager</code> 是当前最复杂的模块</h3>\n<p>它包含：</p>\n<ul>\n<li>dashboard snapshot + SSE</li>\n<li>状态机</li>\n<li>调度器</li>\n<li>自动发布</li>\n<li>平台确认</li>\n<li>编辑工作台</li>\n</ul>\n<p>后续只要涉及小说生产/发布/平台确认问题，都应该优先从它的调度与状态机链思考，不要当普通页面看。</p>\n<h3 id=\"18-self-debug-closed-loop-是能力目录而不只是页面\">1.8 <code>self-debug-closed-loop</code> 是能力目录而不只是页面</h3>\n<p>它不仅是页面，也是：</p>\n<ul>\n<li>skill/MCP 扫描器</li>\n<li>catalog snapshot 构建器</li>\n<li>agent/admin 管理入口</li>\n</ul>\n<h3 id=\"19-部署认知已经切到源码根---运行根\">1.9 部署认知已经切到“源码根 -> 运行根”</h3>\n<p>不要把 <code>/srv/atramenti-console</code> 当真源；它只是 runtime root。</p>\n<h2 id=\"2-遇到问题时的排查入口\">2. 遇到问题时的排查入口</h2>\n<h3 id=\"21-页面不对页面没进新壳\">2.1 页面不对/页面没进新壳</h3>\n<p>先查：</p>\n<ol>\n<li><code>server.mjs</code></li>\n<li><code>apps/console-web/lib/module-registry.ts</code></li>\n<li><code>shared/plugin-manifest.js</code></li>\n<li><code>shared/nav-registry.js</code></li>\n<li>对应模块的 <code>module.json</code></li>\n</ol>\n<h3 id=\"22-独立运行配置不生效\">2.2 独立运行配置不生效</h3>\n<p>先查：</p>\n<ol>\n<li><code>atramenti.config.json</code></li>\n<li><code>shared/standalone-config.js</code></li>\n<li><code>server.mjs</code> / <code>gateway.mjs</code> 的读取点</li>\n</ol>\n<h3 id=\"23-模块没出现在侧栏首页\">2.3 模块没出现在侧栏/首页</h3>\n<p>先查：</p>\n<ol>\n<li><code>mcps/&#x3C;module>/module.json</code></li>\n<li><code>shared/nav-registry.js</code></li>\n<li><code>apps/console-web/lib/module-registry.ts</code></li>\n</ol>\n<h3 id=\"24-云端部署后表现不一致\">2.4 云端部署后表现不一致</h3>\n<p>先查：</p>\n<ol>\n<li><code>control-plane/registry/servers.json</code></li>\n<li><code>control-plane/policy/deploy-targets.json</code></li>\n<li><code>RUNTIME-TOPOLOGY.md</code></li>\n<li>实际运行根 vs 源码根是否混用</li>\n</ol>\n<h3 id=\"25-mcp-能力本地可用但云端不可用\">2.5 MCP 能力本地可用但云端不可用</h3>\n<p>先查：</p>\n<ol>\n<li><code>mcps/&#x3C;name>/server.mjs</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\remote-mcp.ps1</code></li>\n<li><code>/srv/mcp-runtime/apps/codex-portable-mcps</code></li>\n<li>121 节点 SSH 健康</li>\n</ol>\n<h3 id=\"26-技能改了但-agent-没拿到\">2.6 技能改了但 agent 没拿到</h3>\n<p>先查：</p>\n<ol>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\skills</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\skills</code></li>\n<li><code>self-debug-closed-loop</code> 的 catalog snapshot 是否已刷新</li>\n</ol>\n<h3 id=\"27-小说管理异常\">2.7 小说管理异常</h3>\n<p>优先顺序：</p>\n<ol>\n<li><code>mcps/novel-manager/app/index.ts</code></li>\n<li><code>mcps/novel-manager/backend/services/novel-service.ts</code></li>\n<li><code>mcps/novel-manager/core/workflow/policy/*</code></li>\n<li><code>mcps/novel-manager/core/workflow/state-machine/*</code></li>\n<li><code>mcps/novel-manager/core/fanqie/publishing/*</code></li>\n<li><code>mcps/novel-manager/frontend/pages/novel/index.html</code></li>\n</ol>\n<h2 id=\"3-当前几个最值得记住的别搞反\">3. 当前几个最值得记住的“别搞反”</h2>\n<ul>\n<li>不要把 <code>shared/</code> 和 <code>mcps/shared/</code> 混为一谈</li>\n<li>不要把 <code>server.mjs</code> 和 <code>gateway.mjs</code> 当成同一层</li>\n<li>不要把 <code>atramenti.config.json</code> 当成插件清单真源</li>\n<li>不要把云端 runtime root 当源码真源</li>\n<li>不要把 <code>novel-manager</code> 当简单前端页面模块</li>\n</ul>\n<h2 id=\"4-后续建议补充的知识文档\">4. 后续建议补充的知识文档</h2>\n<p>后面如果继续扩这个知识库，建议再单独写：</p>\n<ul>\n<li><code>novel-manager</code> 深入架构图</li>\n<li><code>deploy-center</code> 云端部署链路图</li>\n<li><code>self-debug-closed-loop</code> 目录快照与 agent 注入协议</li>\n<li><code>control-plane</code> 的 execution-routing 解读</li>\n<li><code>apps/console-web</code> 的组件迁移规则</li>\n</ul>\n<hr>\n<h2 id=\"来源文件10---atramenti-console-control-plane-说明md\">来源文件：10 - Atramenti-Console Control Plane 说明.md</h2>\n<h1 id=\"atramenti-console-control-plane-说明\">Atramenti-Console Control Plane 说明</h1>\n<blockquote>\n<p>编辑说明（2026-04-19）：本节保留原 <code>Control Plane</code> 说明结构，但其中“当前已登记服务器”等 live 结论已被后续 control-plane 真源扩展。现行服务器清单、deploy target 与 execution-routing 应以 <code>control-plane/registry/servers.json</code>、<code>control-plane/policy/deploy-targets.json</code>、<code>control-plane/policy/execution-routing.json</code> 以及 <code>docs/agent/Server Operation &#x26; Maintenance Manual.md</code> 为准。</p>\n</blockquote>\n<h2 id=\"1-定位\">1. 定位</h2>\n<p><code>control-plane/</code> 是项目级控制面，不是页面代码本体，也不是部署脚本目录。</p>\n<p>它的职责是把这些信息统一建模：</p>\n<ul>\n<li>服务器库存</li>\n<li>agent 库存</li>\n<li>部署目标</li>\n<li>执行路由</li>\n<li>promotion gate</li>\n</ul>\n<h2 id=\"2-目录结构\">2. 目录结构</h2>\n<ul>\n<li><code>registry/servers.json</code></li>\n<li><code>registry/agents.json</code></li>\n<li><code>policy/deploy-targets.json</code></li>\n<li><code>policy/execution-routing.json</code></li>\n<li><code>policy/promotion-gates.json</code></li>\n</ul>\n<h2 id=\"3-当前已登记服务器\">3. 当前已登记服务器</h2>\n<p>当前 2026-04-19 的 repo 真源补充结论：</p>\n<ul>\n<li>静态 registry 现在已覆盖 <code>cloud-shanghai-01</code>、<code>cloud-hangzhou-01</code>、<code>cloud-beijing-lab-01</code>、<code>smoothcloud-wummlp-01</code>、<code>windows-workstation-01</code>、<code>cloud-session-host-01</code></li>\n<li>当前 <code>deploy-targets.json</code> 只有一个正式 deploy target：<code>console-dev -> cloud-shanghai-01</code></li>\n<li>当前 <code>execution-routing.json</code> 的 dispatcher 在 <code>124</code>，default target 在 <code>121</code>，global fallback 只有 Windows；<code>111</code> 与 <code>221</code> 已登记为服务器资产，但尚未进入 execution-routing 规则</li>\n</ul>\n<h3 id=\"cloud-shanghai-01\"><code>cloud-shanghai-01</code></h3>\n<ul>\n<li>主云端控制台节点</li>\n<li>对外 UI/API 入口</li>\n<li><code>srcRoot</code>：<code>/home/ubuntu/atramenti-console-src</code></li>\n<li><code>runtimeRoot</code>：<code>/srv/atramenti-console</code></li>\n<li><code>backupRoot</code>：<code>/home/ubuntu/atramenti-console-backups</code></li>\n<li>服务：<code>atramenti-console.service</code></li>\n</ul>\n<h3 id=\"cloud-hangzhou-01\"><code>cloud-hangzhou-01</code></h3>\n<ul>\n<li>运行/worker 节点</li>\n<li>目标：承担 MCP offload 与重型任务</li>\n<li>当前状态（2026-04-19 复核）：<code>root@121.196.202.114</code> 可登录，<code>ubuntu</code> 认证失败；worker 服务名已写入 registry，但当前均 <code>inactive</code></li>\n</ul>\n<h3 id=\"cloud-beijing-lab-01\"><code>cloud-beijing-lab-01</code></h3>\n<ul>\n<li>轻量实验 / 跳板 / 备援节点</li>\n<li>SSH 别名：<code>jd-lavm-beijing</code>、<code>jd-lavm-yp7m9xmd5l</code></li>\n<li>当前已进入静态 registry，但尚未进入 execution-routing</li>\n</ul>\n<h3 id=\"smoothcloud-wummlp-01\"><code>smoothcloud-wummlp-01</code></h3>\n<ul>\n<li>弹性 GPU / burst 资产</li>\n<li>当前已写入静态 registry：SSH 端口 <code>10043</code>、应用根目录 <code>/root/workspace/ai-office</code>、已知服务 <code>office-web</code> / <code>ai-office-worker</code></li>\n<li>当前仍依赖平台认证与网关路径，尚未进入 execution-routing</li>\n</ul>\n<h3 id=\"windows-workstation-01\"><code>windows-workstation-01</code></h3>\n<ul>\n<li>本地工作站执行节点</li>\n<li>负责本地文件、配置、浏览器、桌面绑定动作</li>\n<li>这说明项目已经显式承认：不是所有任务都适合在云端执行</li>\n<li>当前仍是 <code>local-file</code> / <code>local-config</code> / <code>desktop-bound</code> 的策略目标节点，但运行态 tunnel / bridge 目前是 <code>degraded</code></li>\n</ul>\n<h3 id=\"cloud-session-host-01\"><code>cloud-session-host-01</code></h3>\n<ul>\n<li>当前会话承载宿主资产</li>\n<li>已进入静态 registry，但为 <code>disabled</code> 的 <code>session-host</code> 条目</li>\n<li>不参与当前 deploy target 或 execution-routing</li>\n</ul>\n<h2 id=\"4-当前已登记-agent\">4. 当前已登记 agent</h2>\n<h3 id=\"codex-local-primary\"><code>codex-local-primary</code></h3>\n<p>本地 Codex 主消费端，消费这些共享能力源：</p>\n<ul>\n<li><code>skills</code></li>\n<li><code>mcps</code></li>\n<li><code>control-plane/registry</code></li>\n<li><code>self-debug-closed-loop</code></li>\n</ul>\n<h3 id=\"windows-local-executor\"><code>windows-local-executor</code></h3>\n<p>工作站执行器，消费：</p>\n<ul>\n<li><code>skills</code></li>\n<li><code>mcps</code></li>\n<li><code>control-plane/registry</code></li>\n<li><code>control-plane/policy</code></li>\n<li><code>self-debug-closed-loop</code></li>\n</ul>\n<h3 id=\"cloud-console-runtime\"><code>cloud-console-runtime</code></h3>\n<p>云端控制台运行时，消费：</p>\n<ul>\n<li><code>control-plane/registry</code></li>\n<li><code>control-plane/policy</code></li>\n<li><code>self-debug-closed-loop</code></li>\n</ul>\n<h3 id=\"cloud-runtime-worker\"><code>cloud-runtime-worker</code></h3>\n<p>云端 worker，消费：</p>\n<ul>\n<li><code>control-plane/registry</code></li>\n<li><code>control-plane/policy</code></li>\n</ul>\n<h2 id=\"5-它真正解决的问题\">5. 它真正解决的问题</h2>\n<h3 id=\"51-统一服务器库存\">5.1 统一服务器库存</h3>\n<p>以后新增节点，不应该散落在脚本里，而应先进入 <code>servers.json</code>。</p>\n<h3 id=\"52-统一执行路由\">5.2 统一执行路由</h3>\n<p>不是所有事都发去云端；有些事情必须发去 Windows 工作站。</p>\n<h3 id=\"53-统一部署目标\">5.3 统一部署目标</h3>\n<p>应用目标应该绑定某个 server，而不是脚本里硬编码 host/path。</p>\n<h3 id=\"54-统一-promotion-gate\">5.4 统一 promotion gate</h3>\n<p>让“什么情况下允许推进”不只靠口头约定。</p>\n<h2 id=\"6-当前最重要的一条规则\">6. 当前最重要的一条规则</h2>\n<p>控制面 README 里已经写死：</p>\n<blockquote>\n<p>不要把 <code>/srv/atramenti-console</code> 当 source of truth。应该从 source root 构建，再发布到 runtime root。</p>\n</blockquote>\n<p>这条规则是整个部署纪律的核心。</p>\n<h2 id=\"7-和宿主层模块层的关系\">7. 和宿主层/模块层的关系</h2>\n<ul>\n<li><code>server.mjs</code> / <code>gateway.mjs</code>：负责运行与加载</li>\n<li><code>mcps/*</code>：负责具体模块能力</li>\n<li><code>control-plane/*</code>：负责“谁来跑、在哪跑、如何路由、如何提升”的编排规则</li>\n</ul>\n<h2 id=\"8-实操上怎么用它\">8. 实操上怎么用它</h2>\n<p>如果要接入新服务器或新 agent，推荐顺序：</p>\n<ol>\n<li>增加 <code>registry/servers.json</code> 记录</li>\n<li>增加/修改 <code>registry/agents.json</code></li>\n<li>更新 <code>policy/deploy-targets.json</code></li>\n<li>更新 <code>policy/execution-routing.json</code></li>\n<li>必要时补 <code>promotion-gates.json</code></li>\n<li>再让 <code>deploy-center</code> 或运行时读取这些新规则</li>\n</ol>\n<h2 id=\"9-为什么这个目录对后续很重要\">9. 为什么这个目录对后续很重要</h2>\n<p>因为随着项目越来越像“多 agent + 多节点 + 多模块”的系统，没有控制面，所有执行目标都会重新散落回：</p>\n<ul>\n<li>脚本常量</li>\n<li>人脑记忆</li>\n<li>临时 shell 命令</li>\n<li>不可追踪的运维习惯</li>\n</ul>\n<p>而 control-plane 的作用，就是把这些从“习惯”变成“显式结构”。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "atramenti-console-文档汇编",
+        "text": "Atramenti-Console 文档汇编"
+      },
+      {
+        "depth": 2,
+        "slug": "原文件顺序",
+        "text": "原文件顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-00-atramenti-console-索引",
+        "text": "来源文件：00 - Atramenti-Console 索引.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-索引",
+        "text": "Atramenti-Console 索引"
+      },
+      {
+        "depth": 2,
+        "slug": "建议阅读顺序",
+        "text": "建议阅读顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "文档列表",
+        "text": "文档列表"
+      },
+      {
+        "depth": 2,
+        "slug": "一句话理解这个项目",
+        "text": "一句话理解这个项目"
+      },
+      {
+        "depth": 2,
+        "slug": "当前最重要的结构性真源-不是-current-state-入口",
+        "text": "当前最重要的结构性真源（不是 current-state 入口）"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-01-atramenti-console-总览",
+        "text": "来源文件：01 - Atramenti-Console 总览.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-总览",
+        "text": "Atramenti-Console 总览"
+      },
+      {
+        "depth": 2,
+        "slug": "1-项目定位",
+        "text": "1. 项目定位"
+      },
+      {
+        "depth": 2,
+        "slug": "2-它不是一个什么项目",
+        "text": "2. 它不是一个什么项目"
+      },
+      {
+        "depth": 2,
+        "slug": "3-当前工程阶段",
+        "text": "3. 当前工程阶段"
+      },
+      {
+        "depth": 2,
+        "slug": "4-顶层工作模式",
+        "text": "4. 顶层工作模式"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-本地开发面",
+        "text": "4.1 本地开发面"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-云端控制面",
+        "text": "4.2 云端控制面"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-工作站执行面",
+        "text": "4.3 工作站执行面"
+      },
+      {
+        "depth": 2,
+        "slug": "5-当前最关键的几条原则",
+        "text": "5. 当前最关键的几条原则"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-真源原则",
+        "text": "5.1 真源原则"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-源码根与运行根分离",
+        "text": "5.2 源码根与运行根分离"
+      },
+      {
+        "depth": 3,
+        "slug": "5-3-页面迁移原则",
+        "text": "5.3 页面迁移原则"
+      },
+      {
+        "depth": 2,
+        "slug": "6-当前比较关键的模块分组",
+        "text": "6. 当前比较关键的模块分组"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-面向人直接操作的模块",
+        "text": "6.1 面向人直接操作的模块"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-基础设施-工具型-mcp-模块",
+        "text": "6.2 基础设施/工具型 MCP 模块"
+      },
+      {
+        "depth": 3,
+        "slug": "6-3-共享层",
+        "text": "6.3 共享层"
+      },
+      {
+        "depth": 2,
+        "slug": "7-一句话抓总",
+        "text": "7. 一句话抓总"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-02-atramenti-console-目录索引",
+        "text": "来源文件：02 - Atramenti-Console 目录索引.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-目录索引",
+        "text": "Atramenti-Console 目录索引"
+      },
+      {
+        "depth": 2,
+        "slug": "1-根目录一级结构",
+        "text": "1. 根目录一级结构"
+      },
+      {
+        "depth": 3,
+        "slug": "apps",
+        "text": "`apps`"
+      },
+      {
+        "depth": 3,
+        "slug": "control-plane",
+        "text": "`control-plane`"
+      },
+      {
+        "depth": 3,
+        "slug": "cookies-accounts",
+        "text": "`cookies-accounts`"
+      },
+      {
+        "depth": 3,
+        "slug": "data",
+        "text": "`data`"
+      },
+      {
+        "depth": 3,
+        "slug": "extensions",
+        "text": "`extensions`"
+      },
+      {
+        "depth": 3,
+        "slug": "mcps",
+        "text": "`mcps`"
+      },
+      {
+        "depth": 3,
+        "slug": "projects",
+        "text": "`projects`"
+      },
+      {
+        "depth": 3,
+        "slug": "scripts",
+        "text": "`scripts`"
+      },
+      {
+        "depth": 3,
+        "slug": "shared",
+        "text": "`shared`"
+      },
+      {
+        "depth": 3,
+        "slug": "skills",
+        "text": "`skills`"
+      },
+      {
+        "depth": 3,
+        "slug": "workspace",
+        "text": "`workspace`"
+      },
+      {
+        "depth": 2,
+        "slug": "2-根目录关键文件",
+        "text": "2. 根目录关键文件"
+      },
+      {
+        "depth": 3,
+        "slug": "package-json",
+        "text": "`package.json`"
+      },
+      {
+        "depth": 3,
+        "slug": "pnpm-workspace-yaml",
+        "text": "`pnpm-workspace.yaml`"
+      },
+      {
+        "depth": 3,
+        "slug": "turbo-json",
+        "text": "`turbo.json`"
+      },
+      {
+        "depth": 3,
+        "slug": "server-mjs",
+        "text": "`server.mjs`"
+      },
+      {
+        "depth": 3,
+        "slug": "gateway-mjs",
+        "text": "`gateway.mjs`"
+      },
+      {
+        "depth": 3,
+        "slug": "atramenti-config-json",
+        "text": "`atramenti.config.json`"
+      },
+      {
+        "depth": 3,
+        "slug": "runtime-topology-md",
+        "text": "`RUNTIME-TOPOLOGY.md`"
+      },
+      {
+        "depth": 2,
+        "slug": "3-mcps-一级模块索引",
+        "text": "3. `mcps/` 一级模块索引"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-业务-管理模块",
+        "text": "3.1 业务/管理模块"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-工具型-mcp-wrapper",
+        "text": "3.2 工具型 / MCP wrapper"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-共享与模板",
+        "text": "3.3 共享与模板"
+      },
+      {
+        "depth": 2,
+        "slug": "4-skills-一级结构理解",
+        "text": "4. `skills/` 一级结构理解"
+      },
+      {
+        "depth": 2,
+        "slug": "5-当前最值得优先建立脑图的目录",
+        "text": "5. 当前最值得优先建立脑图的目录"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-03-atramenti-console-架构与模块原理",
+        "text": "来源文件：03 - Atramenti-Console 架构与模块原理.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-架构与模块原理",
+        "text": "Atramenti-Console 架构与模块原理"
+      },
+      {
+        "depth": 2,
+        "slug": "1-总体架构",
+        "text": "1. 总体架构"
+      },
+      {
+        "depth": 2,
+        "slug": "2-server-mjs-的角色",
+        "text": "2. `server.mjs` 的角色"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-当前已迁入-native-的路径",
+        "text": "2.1 当前已迁入 native 的路径"
+      },
+      {
+        "depth": 2,
+        "slug": "3-gateway-mjs-的角色",
+        "text": "3. `gateway.mjs` 的角色"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-它注入的环境根信息很重要",
+        "text": "3.1 它注入的环境根信息很重要"
+      },
+      {
+        "depth": 2,
+        "slug": "4-新前端壳层-apps-console-web",
+        "text": "4. 新前端壳层 `apps/console-web`"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-它的定位",
+        "text": "4.1 它的定位"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-当前技术栈",
+        "text": "4.2 当前技术栈"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-它的真源原则",
+        "text": "4.3 它的真源原则"
+      },
+      {
+        "depth": 3,
+        "slug": "4-4-核心代码位置",
+        "text": "4.4 核心代码位置"
+      },
+      {
+        "depth": 2,
+        "slug": "5-模块层-mcps",
+        "text": "5. 模块层 `mcps/*`"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-业务模块型",
+        "text": "5.1 业务模块型"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-工具型-mcp-wrapper",
+        "text": "5.2 工具型 MCP wrapper"
+      },
+      {
+        "depth": 3,
+        "slug": "5-3-共享-模板型",
+        "text": "5.3 共享/模板型"
+      },
+      {
+        "depth": 2,
+        "slug": "6-novel-manager-的模块原理",
+        "text": "6. `novel-manager` 的模块原理"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-它的职责链",
+        "text": "6.1 它的职责链"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-它内部的分层",
+        "text": "6.2 它内部的分层"
+      },
+      {
+        "depth": 3,
+        "slug": "6-3-它的核心闭环",
+        "text": "6.3 它的核心闭环"
+      },
+      {
+        "depth": 3,
+        "slug": "6-4-这说明什么",
+        "text": "6.4 这说明什么"
+      },
+      {
+        "depth": 2,
+        "slug": "7-self-debug-closed-loop-的模块原理",
+        "text": "7. `self-debug-closed-loop` 的模块原理"
+      },
+      {
+        "depth": 2,
+        "slug": "8-控制面与运行节点的关系",
+        "text": "8. 控制面与运行节点的关系"
+      },
+      {
+        "depth": 2,
+        "slug": "9-真正的架构关键",
+        "text": "9. 真正的架构关键"
+      },
+      {
+        "depth": 3,
+        "slug": "9-1-统一壳层",
+        "text": "9.1 统一壳层"
+      },
+      {
+        "depth": 3,
+        "slug": "9-2-统一模块真源",
+        "text": "9.2 统一模块真源"
+      },
+      {
+        "depth": 3,
+        "slug": "9-3-统一执行-部署认知",
+        "text": "9.3 统一执行/部署认知"
+      },
+      {
+        "depth": 2,
+        "slug": "10-最实用的理解图",
+        "text": "10. 最实用的理解图"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-04-atramenti-console-运行端口与部署拓扑",
+        "text": "来源文件：04 - Atramenti-Console 运行端口与部署拓扑.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-运行端口与部署拓扑",
+        "text": "Atramenti-Console 运行端口与部署拓扑"
+      },
+      {
+        "depth": 2,
+        "slug": "1-三个主要节点",
+        "text": "1. 三个主要节点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-1-上海主云端节点",
+        "text": "1.1 上海主云端节点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-2-杭州运行节点",
+        "text": "1.2 杭州运行节点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-3-windows-本地工作站",
+        "text": "1.3 Windows 本地工作站"
+      },
+      {
+        "depth": 2,
+        "slug": "2-主要端口与地址",
+        "text": "2. 主要端口与地址"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-atramenti-console-宿主",
+        "text": "2.1 Atramenti Console 宿主"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-本地-gateway",
+        "text": "2.2 本地 gateway"
+      },
+      {
+        "depth": 3,
+        "slug": "2-3-console-web-内部-next-代理端口",
+        "text": "2.3 console-web 内部 Next 代理端口"
+      },
+      {
+        "depth": 3,
+        "slug": "2-4-控制面健康地址",
+        "text": "2.4 控制面健康地址"
+      },
+      {
+        "depth": 2,
+        "slug": "3-部署的正确认知",
+        "text": "3. 部署的正确认知"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-不要把运行目录当源码真源",
+        "text": "3.1 不要把运行目录当源码真源"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-运行节点职责分工",
+        "text": "3.2 运行节点职责分工"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-远程-mcp-的包装方式",
+        "text": "3.3 远程 MCP 的包装方式"
+      },
+      {
+        "depth": 2,
+        "slug": "4-技能与-mcp-的实际存放-消费关系",
+        "text": "4. 技能与 MCP 的实际存放/消费关系"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-skill-真源",
+        "text": "4.1 Skill 真源"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-mcp-真源",
+        "text": "4.2 MCP 真源"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-镜像工作区",
+        "text": "4.3 镜像工作区"
+      },
+      {
+        "depth": 2,
+        "slug": "5-工作站本地桥",
+        "text": "5. 工作站本地桥"
+      },
+      {
+        "depth": 2,
+        "slug": "6-当前实际部署判断标准",
+        "text": "6. 当前实际部署判断标准"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-05-atramenti-console-插件-mcp-skill-注册机制",
+        "text": "来源文件：05 - Atramenti-Console 插件、MCP、Skill 注册机制.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-插件-mcp-skill-注册机制",
+        "text": "Atramenti-Console 插件、MCP、Skill 注册机制"
+      },
+      {
+        "depth": 2,
+        "slug": "1-先说结论",
+        "text": "1. 先说结论"
+      },
+      {
+        "depth": 2,
+        "slug": "2-模块注册-module-json",
+        "text": "2. 模块注册：`module.json`"
+      },
+      {
+        "depth": 2,
+        "slug": "3-宿主插件清单-shared-plugin-manifest-js",
+        "text": "3. 宿主插件清单：`shared/plugin-manifest.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-它解决什么问题",
+        "text": "3.1 它解决什么问题"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-它提供的关键派生能力",
+        "text": "3.2 它提供的关键派生能力"
+      },
+      {
+        "depth": 2,
+        "slug": "4-独立运行配置-atramenti-config-json",
+        "text": "4. 独立运行配置：`atramenti.config.json`"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-它当前启用的核心模块",
+        "text": "4.1 它当前启用的核心模块"
+      },
+      {
+        "depth": 2,
+        "slug": "5-顶部导航与壳层入口扫描-shared-nav-registry-js",
+        "text": "5. 顶部导航与壳层入口扫描：`shared/nav-registry.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-它说明了什么",
+        "text": "5.1 它说明了什么"
+      },
+      {
+        "depth": 2,
+        "slug": "6-控制面注册-control-plane",
+        "text": "6. 控制面注册：`control-plane/*`"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-registry-servers-json",
+        "text": "6.1 `registry/servers.json`"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-registry-agents-json",
+        "text": "6.2 `registry/agents.json`"
+      },
+      {
+        "depth": 3,
+        "slug": "6-3-policy",
+        "text": "6.3 `policy/*`"
+      },
+      {
+        "depth": 2,
+        "slug": "7-skill-注册机制",
+        "text": "7. Skill 注册机制"
+      },
+      {
+        "depth": 3,
+        "slug": "7-1-真源",
+        "text": "7.1 真源"
+      },
+      {
+        "depth": 3,
+        "slug": "7-2-消费入口",
+        "text": "7.2 消费入口"
+      },
+      {
+        "depth": 3,
+        "slug": "7-3-特殊点",
+        "text": "7.3 特殊点"
+      },
+      {
+        "depth": 2,
+        "slug": "8-mcp-注册机制",
+        "text": "8. MCP 注册机制"
+      },
+      {
+        "depth": 3,
+        "slug": "8-1-源码层",
+        "text": "8.1 源码层"
+      },
+      {
+        "depth": 3,
+        "slug": "8-2-codex-运行层",
+        "text": "8.2 Codex 运行层"
+      },
+      {
+        "depth": 3,
+        "slug": "8-3-远程-bundle-层",
+        "text": "8.3 远程 bundle 层"
+      },
+      {
+        "depth": 2,
+        "slug": "9-当前最实用的理解方式",
+        "text": "9. 当前最实用的理解方式"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-06-atramenti-console-apps-与-shared-索引",
+        "text": "来源文件：06 - Atramenti-Console Apps 与 Shared 索引.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-apps-与-shared-索引",
+        "text": "Atramenti-Console Apps 与 Shared 索引"
+      },
+      {
+        "depth": 2,
+        "slug": "1-apps-console-web",
+        "text": "1. `apps/console-web`"
+      },
+      {
+        "depth": 3,
+        "slug": "技术栈",
+        "text": "技术栈"
+      },
+      {
+        "depth": 3,
+        "slug": "目录要点",
+        "text": "目录要点"
+      },
+      {
+        "depth": 3,
+        "slug": "当前-native-route",
+        "text": "当前 native route"
+      },
+      {
+        "depth": 3,
+        "slug": "当前意义",
+        "text": "当前意义"
+      },
+      {
+        "depth": 2,
+        "slug": "2-apps-database-api",
+        "text": "2. `apps/database-api`"
+      },
+      {
+        "depth": 2,
+        "slug": "3-shared",
+        "text": "3. `shared/`"
+      },
+      {
+        "depth": 3,
+        "slug": "核心文件",
+        "text": "核心文件"
+      },
+      {
+        "depth": 3,
+        "slug": "它的职责",
+        "text": "它的职责"
+      },
+      {
+        "depth": 2,
+        "slug": "4-mcps-shared",
+        "text": "4. `mcps/shared/`"
+      },
+      {
+        "depth": 3,
+        "slug": "它和-shared-的区别",
+        "text": "它和 `shared/` 的区别"
+      },
+      {
+        "depth": 2,
+        "slug": "5-这两层为什么容易混",
+        "text": "5. 这两层为什么容易混"
+      },
+      {
+        "depth": 2,
+        "slug": "6-最实用的排查顺序",
+        "text": "6. 最实用的排查顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "页面为什么没进入新壳",
+        "text": "页面为什么没进入新壳"
+      },
+      {
+        "depth": 3,
+        "slug": "顶部导航为什么不对",
+        "text": "顶部导航为什么不对"
+      },
+      {
+        "depth": 3,
+        "slug": "独立运行配置为什么没生效",
+        "text": "独立运行配置为什么没生效"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-07-atramenti-console-mcp-模块索引",
+        "text": "来源文件：07 - Atramenti-Console MCP 模块索引.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-mcp-模块索引",
+        "text": "Atramenti-Console MCP 模块索引"
+      },
+      {
+        "depth": 2,
+        "slug": "1-当前主要有-module-json-的业务模块",
+        "text": "1. 当前主要有 `module.json` 的业务模块"
+      },
+      {
+        "depth": 2,
+        "slug": "2-当前最关键模块说明",
+        "text": "2. 当前最关键模块说明"
+      },
+      {
+        "depth": 3,
+        "slug": "novel-manager",
+        "text": "`novel-manager`"
+      },
+      {
+        "depth": 3,
+        "slug": "deploy-center",
+        "text": "`deploy-center`"
+      },
+      {
+        "depth": 3,
+        "slug": "self-debug-closed-loop",
+        "text": "`self-debug-closed-loop`"
+      },
+      {
+        "depth": 3,
+        "slug": "database-api",
+        "text": "`database-api`"
+      },
+      {
+        "depth": 3,
+        "slug": "ops-observer",
+        "text": "`ops-observer`"
+      },
+      {
+        "depth": 3,
+        "slug": "system-overview",
+        "text": "`system-overview`"
+      },
+      {
+        "depth": 2,
+        "slug": "3-工具型-mcp-wrapper-索引",
+        "text": "3. 工具型 MCP/wrapper 索引"
+      },
+      {
+        "depth": 3,
+        "slug": "ripgrep-search",
+        "text": "`ripgrep-search`"
+      },
+      {
+        "depth": 3,
+        "slug": "repo-inspector",
+        "text": "`repo-inspector`"
+      },
+      {
+        "depth": 3,
+        "slug": "standards-guard",
+        "text": "`standards-guard`"
+      },
+      {
+        "depth": 3,
+        "slug": "orchestration-pipeline",
+        "text": "`orchestration-pipeline`"
+      },
+      {
+        "depth": 3,
+        "slug": "playwright-browser",
+        "text": "`playwright-browser`"
+      },
+      {
+        "depth": 3,
+        "slug": "context-store-database-ops-mcp-output-guard-prompt-compressor-log-diagnose",
+        "text": "`context-store` / `database-ops-mcp` / `output-guard` / `prompt-compressor` / `log-diagnose`"
+      },
+      {
+        "depth": 2,
+        "slug": "4-共享-内核型目录",
+        "text": "4. 共享/内核型目录"
+      },
+      {
+        "depth": 3,
+        "slug": "mcps-core",
+        "text": "`mcps/core`"
+      },
+      {
+        "depth": 3,
+        "slug": "mcps-shared",
+        "text": "`mcps/shared`"
+      },
+      {
+        "depth": 3,
+        "slug": "mcps-shared",
+        "text": "`mcps/_shared`"
+      },
+      {
+        "depth": 3,
+        "slug": "mcps-kernel",
+        "text": "`mcps/kernel`"
+      },
+      {
+        "depth": 2,
+        "slug": "5-如果要读一个模块-建议最少看四样东西",
+        "text": "5. 如果要读一个模块，建议最少看四样东西"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-08-atramenti-console-skills-与知识系统索引",
+        "text": "来源文件：08 - Atramenti-Console Skills 与知识系统索引.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-skills-与知识系统索引",
+        "text": "Atramenti-Console Skills 与知识系统索引"
+      },
+      {
+        "depth": 2,
+        "slug": "1-skill-真源位置",
+        "text": "1. Skill 真源位置"
+      },
+      {
+        "depth": 2,
+        "slug": "2-技能体系的实际作用",
+        "text": "2. 技能体系的实际作用"
+      },
+      {
+        "depth": 2,
+        "slug": "3-当前技能的大致分层",
+        "text": "3. 当前技能的大致分层"
+      },
+      {
+        "depth": 3,
+        "slug": "3-1-可见结果验证-自我调试",
+        "text": "3.1 可见结果验证/自我调试"
+      },
+      {
+        "depth": 3,
+        "slug": "3-2-agent-能力提升与长期闭环",
+        "text": "3.2 Agent 能力提升与长期闭环"
+      },
+      {
+        "depth": 3,
+        "slug": "3-3-mcp-插件-技能开发",
+        "text": "3.3 MCP/插件/技能开发"
+      },
+      {
+        "depth": 3,
+        "slug": "3-4-研究与知识检索",
+        "text": "3.4 研究与知识检索"
+      },
+      {
+        "depth": 3,
+        "slug": "3-5-运维与云端",
+        "text": "3.5 运维与云端"
+      },
+      {
+        "depth": 3,
+        "slug": "3-6-gsd-项目管理体系",
+        "text": "3.6 GSD 项目管理体系"
+      },
+      {
+        "depth": 2,
+        "slug": "4-当前最重要的几个技能",
+        "text": "4. 当前最重要的几个技能"
+      },
+      {
+        "depth": 3,
+        "slug": "self-debug-closed-loop",
+        "text": "`self-debug-closed-loop`"
+      },
+      {
+        "depth": 3,
+        "slug": "agent-improvement-ops",
+        "text": "`agent-improvement-ops`"
+      },
+      {
+        "depth": 3,
+        "slug": "search-first",
+        "text": "`search-first`"
+      },
+      {
+        "depth": 3,
+        "slug": "deep-research",
+        "text": "`deep-research`"
+      },
+      {
+        "depth": 2,
+        "slug": "5-skill-与-mcp-的关系",
+        "text": "5. Skill 与 MCP 的关系"
+      },
+      {
+        "depth": 2,
+        "slug": "6-为什么这个技能系统很重要",
+        "text": "6. 为什么这个技能系统很重要"
+      },
+      {
+        "depth": 2,
+        "slug": "7-当前知识系统的几个专题真源",
+        "text": "7. 当前知识系统的几个专题真源"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-09-atramenti-console-当前上下文知识与排查入口",
+        "text": "来源文件：09 - Atramenti-Console 当前上下文知识与排查入口.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-当前上下文知识与排查入口",
+        "text": "Atramenti-Console 当前上下文知识与排查入口"
+      },
+      {
+        "depth": 2,
+        "slug": "1-我当前已经明确掌握的项目知识点",
+        "text": "1. 我当前已经明确掌握的项目知识点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-1-项目当前是-迁旧保新-的过渡架构",
+        "text": "1.1 项目当前是“迁旧保新”的过渡架构"
+      },
+      {
+        "depth": 3,
+        "slug": "1-2-页面宿主与本地网关是两层",
+        "text": "1.2 页面宿主与本地网关是两层"
+      },
+      {
+        "depth": 3,
+        "slug": "1-3-独立宿主管理的插件清单不是散落配置-而是集中在-shared-plugin-manifest-js",
+        "text": "1.3 独立宿主管理的插件清单不是散落配置，而是集中在 `shared/plugin-manifest.js`"
+      },
+      {
+        "depth": 3,
+        "slug": "1-4-模块壳层导航正在转向-module-json-驱动",
+        "text": "1.4 模块壳层导航正在转向 `module.json` 驱动"
+      },
+      {
+        "depth": 3,
+        "slug": "1-5-技能真源和仓库已经统一",
+        "text": "1.5 技能真源和仓库已经统一"
+      },
+      {
+        "depth": 3,
+        "slug": "1-6-控制面已经显式建模了三节点",
+        "text": "1.6 控制面已经显式建模了三节点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-7-novel-manager-是当前最复杂的模块",
+        "text": "1.7 `novel-manager` 是当前最复杂的模块"
+      },
+      {
+        "depth": 3,
+        "slug": "1-8-self-debug-closed-loop-是能力目录而不只是页面",
+        "text": "1.8 `self-debug-closed-loop` 是能力目录而不只是页面"
+      },
+      {
+        "depth": 3,
+        "slug": "1-9-部署认知已经切到-源码根-运行根",
+        "text": "1.9 部署认知已经切到“源码根 -> 运行根”"
+      },
+      {
+        "depth": 2,
+        "slug": "2-遇到问题时的排查入口",
+        "text": "2. 遇到问题时的排查入口"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-页面不对-页面没进新壳",
+        "text": "2.1 页面不对/页面没进新壳"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-独立运行配置不生效",
+        "text": "2.2 独立运行配置不生效"
+      },
+      {
+        "depth": 3,
+        "slug": "2-3-模块没出现在侧栏-首页",
+        "text": "2.3 模块没出现在侧栏/首页"
+      },
+      {
+        "depth": 3,
+        "slug": "2-4-云端部署后表现不一致",
+        "text": "2.4 云端部署后表现不一致"
+      },
+      {
+        "depth": 3,
+        "slug": "2-5-mcp-能力本地可用但云端不可用",
+        "text": "2.5 MCP 能力本地可用但云端不可用"
+      },
+      {
+        "depth": 3,
+        "slug": "2-6-技能改了但-agent-没拿到",
+        "text": "2.6 技能改了但 agent 没拿到"
+      },
+      {
+        "depth": 3,
+        "slug": "2-7-小说管理异常",
+        "text": "2.7 小说管理异常"
+      },
+      {
+        "depth": 2,
+        "slug": "3-当前几个最值得记住的-别搞反",
+        "text": "3. 当前几个最值得记住的“别搞反”"
+      },
+      {
+        "depth": 2,
+        "slug": "4-后续建议补充的知识文档",
+        "text": "4. 后续建议补充的知识文档"
+      },
+      {
+        "depth": 2,
+        "slug": "来源文件-10-atramenti-console-control-plane-说明",
+        "text": "来源文件：10 - Atramenti-Console Control Plane 说明.md"
+      },
+      {
+        "depth": 1,
+        "slug": "atramenti-console-control-plane-说明",
+        "text": "Atramenti-Console Control Plane 说明"
+      },
+      {
+        "depth": 2,
+        "slug": "1-定位",
+        "text": "1. 定位"
+      },
+      {
+        "depth": 2,
+        "slug": "2-目录结构",
+        "text": "2. 目录结构"
+      },
+      {
+        "depth": 2,
+        "slug": "3-当前已登记服务器",
+        "text": "3. 当前已登记服务器"
+      },
+      {
+        "depth": 3,
+        "slug": "cloud-shanghai-01",
+        "text": "`cloud-shanghai-01`"
+      },
+      {
+        "depth": 3,
+        "slug": "cloud-hangzhou-01",
+        "text": "`cloud-hangzhou-01`"
+      },
+      {
+        "depth": 3,
+        "slug": "cloud-beijing-lab-01",
+        "text": "`cloud-beijing-lab-01`"
+      },
+      {
+        "depth": 3,
+        "slug": "smoothcloud-wummlp-01",
+        "text": "`smoothcloud-wummlp-01`"
+      },
+      {
+        "depth": 3,
+        "slug": "windows-workstation-01",
+        "text": "`windows-workstation-01`"
+      },
+      {
+        "depth": 3,
+        "slug": "cloud-session-host-01",
+        "text": "`cloud-session-host-01`"
+      },
+      {
+        "depth": 2,
+        "slug": "4-当前已登记-agent",
+        "text": "4. 当前已登记 agent"
+      },
+      {
+        "depth": 3,
+        "slug": "codex-local-primary",
+        "text": "`codex-local-primary`"
+      },
+      {
+        "depth": 3,
+        "slug": "windows-local-executor",
+        "text": "`windows-local-executor`"
+      },
+      {
+        "depth": 3,
+        "slug": "cloud-console-runtime",
+        "text": "`cloud-console-runtime`"
+      },
+      {
+        "depth": 3,
+        "slug": "cloud-runtime-worker",
+        "text": "`cloud-runtime-worker`"
+      },
+      {
+        "depth": 2,
+        "slug": "5-它真正解决的问题",
+        "text": "5. 它真正解决的问题"
+      },
+      {
+        "depth": 3,
+        "slug": "5-1-统一服务器库存",
+        "text": "5.1 统一服务器库存"
+      },
+      {
+        "depth": 3,
+        "slug": "5-2-统一执行路由",
+        "text": "5.2 统一执行路由"
+      },
+      {
+        "depth": 3,
+        "slug": "5-3-统一部署目标",
+        "text": "5.3 统一部署目标"
+      },
+      {
+        "depth": 3,
+        "slug": "5-4-统一-promotion-gate",
+        "text": "5.4 统一 promotion gate"
+      },
+      {
+        "depth": 2,
+        "slug": "6-当前最重要的一条规则",
+        "text": "6. 当前最重要的一条规则"
+      },
+      {
+        "depth": 2,
+        "slug": "7-和宿主层-模块层的关系",
+        "text": "7. 和宿主层/模块层的关系"
+      },
+      {
+        "depth": 2,
+        "slug": "8-实操上怎么用它",
+        "text": "8. 实操上怎么用它"
+      },
+      {
+        "depth": 2,
+        "slug": "9-为什么这个目录对后续很重要",
+        "text": "9. 为什么这个目录对后续很重要"
+      }
+    ],
+    "detailPath": "articles/md_e96dc2a41c3e.json"
+  }
+}

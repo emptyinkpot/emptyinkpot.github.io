@@ -1,0 +1,766 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_0b10e825f825",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/Claude%20%E4%B8%8E%20CC%20Switch%20%E5%8A%A8%E6%80%81%E9%85%8D%E7%BD%AE%E6%8E%92%E9%9A%9C%E8%AE%B0%E5%BD%95.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/Claude 与 CC Switch 动态配置排障记录.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/Claude 与 CC Switch 动态配置排障记录.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/Claude%20%E4%B8%8E%20CC%20Switch%20%E5%8A%A8%E6%80%81%E9%85%8D%E7%BD%AE%E6%8E%92%E9%9A%9C%E8%AE%B0%E5%BD%95.md",
+    "slug": "blog-claude-与-cc-switch-动态配置排障记录",
+    "title": "Claude 与 CC Switch 动态配置排障记录",
+    "summary": "Claude 与 CC Switch 动态配置排障记录 目标 本次调整的目标不是把某个固定 token 写死，而是让 Claude Code 每次启动时都 动态读取 CC Switch 当前选中的 Claude provider ，避免以下问题反复出现： 旧的 ANTHROPIC 用户环境变量残留覆...",
+    "description": "Claude 与 CC Switch 动态配置排障记录 目标 本次调整的目标不是把某个固定 token 写死，而是让 Claude Code 每次启动时都 动态读取 CC Switch 当前选中的 Claude provider ，避免以下问题反复出现： 旧的 ANTHROPIC 用户环境变量残留覆...",
+    "date": "2026-04-27",
+    "updated": "2026-04-27",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/Claude 与 CC Switch 动态配置排障记录.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/Claude 与 CC Switch 动态配置排障记录.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/Claude%20%E4%B8%8E%20CC%20Switch%20%E5%8A%A8%E6%80%81%E9%85%8D%E7%BD%AE%E6%8E%92%E9%9A%9C%E8%AE%B0%E5%BD%95.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Claude 与 CC Switch 动态配置排障记录",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "CLAUDE 与 CC SWITCH 动态配置排障记录"
+      ],
+      "subtitle": "Claude 与 CC Switch 动态配置排障记录 目标 本次调整的目标不是把某个固定 token 写死，而是让 Claude Code 每次启动时都 动态读取 CC Switch 当前选中的 Claude provider ，避免以下问题反复出现： 旧的 ANTHROPIC 用户环境变量残留覆..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Claude 与 CC Switch 动态配置排障记录\n\n## 目标\n\n本次调整的目标不是把某个固定 token 写死，而是让 `Claude Code` 每次启动时都**动态读取 `CC Switch` 当前选中的 Claude provider**，避免以下问题反复出现：\n\n- 旧的 `ANTHROPIC_*` 用户环境变量残留覆盖当前配置\n- 旧 launcher / shared provider 把错误的 `Base URL`、`Model`、`Token` 注入进程\n- `C:\\Users\\ASUS-KL\\.claude\\settings.json` 留下过期 token 副本\n- `CC Switch` 当前 provider 已经变化，但 `Claude` 仍在吃旧值\n\n## 当前 source of truth\n\n当前 `Claude` 相关配置的真相源只保留为 `CC Switch`：\n\n- `CC Switch` 主配置目录：`C:\\Users\\ASUS-KL\\.cc-switch\\`\n- `CC Switch` 数据库：`C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db`\n- `CC Switch` 日志：`C:\\Users\\ASUS-KL\\.cc-switch\\logs\\cc-switch.log`\n- `CC Switch` 主设置文件：`C:\\Users\\ASUS-KL\\.cc-switch\\settings.json`\n- 当前 Claude provider 指针字段：`currentProviderClaude`\n\n`Claude` 本地侧不再保存 token 真值：\n\n- `C:\\Users\\ASUS-KL\\.claude\\settings.json` 当前已清空为 `{}`，不再作为 token / base URL 真相源\n\n## CC Switch 当前数据库状态\n\n在 `providers` 表中，当前选中的 Claude provider 为：\n\n- `id = ccvibe-1777173109177`\n- `app_type = claude`\n- `name = ccvibe`\n- `is_current = 1`\n\n该 provider 的 `settings_config` 当前为：\n\n```json\n{\n  \"env\": {\n    \"ANTHROPIC_AUTH_TOKEN\": \"sk-454e877d2448309833ad4e06d5cba7ab52ed3f0bf495b69af3ae52de087e8dd6\",\n    \"ANTHROPIC_BASE_URL\": \"https://cc-vibe.com\"\n  }\n}\n```\n\n这说明：\n\n- 当前 `CC Switch` 数据库里的 Claude 配置是 `cc-vibe.com`\n- token 当前来自 `CC Switch` 数据库记录，而不是手写在 `Claude` 配置里\n\n## launcher 当前行为\n\n当前入口文件：\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n\n当前 launcher 已改为：\n\n1. 启动时先清空当前进程里的旧 `ANTHROPIC_*`\n2. 读取 `C:\\Users\\ASUS-KL\\.cc-switch\\settings.json`\n3. 取出 `currentProviderClaude`\n4. 到 `C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db` 的 `providers` 表中查询对应 `settings_config`\n5. 把查询到的 `env` 动态注入给 `claude.exe`\n\n也就是说，`Claude Code` 现在是：\n\n- **动态跟随 `CC Switch` 当前 provider**\n- **不依赖用户环境变量**\n- **不依赖 `.claude\\settings.json` 中的 token 副本**\n- **不依赖旧 shared provider 的 model / token / base URL 注入**\n\n## 已清理的旧污染源\n\n本次清理过的旧污染源包括：\n\n- 用户环境变量中的：\n  - `ANTHROPIC_API_KEY`\n  - `ANTHROPIC_AUTH_TOKEN`\n  - `ANTHROPIC_BASE_URL`\n  - `ANTHROPIC_MODEL`\n- `C:\\Users\\ASUS-KL\\.claude\\settings.json` 中曾经残留的：\n  - `https://api.longcat.chat/anthropic`\n  - `LongCat-Flash-Thinking-2601`\n- launcher 中旧的：\n  - 共享 provider 的 `ANTHROPIC_MODEL` 强注入\n  - 旧 `primaryApiKey` fallback\n  - 依赖 `.claude\\settings.json` 常驻 token 副本的逻辑\n\n## 运行时验证结论\n\n在全新 PowerShell 进程中探测 launcher 最终喂给 `claude.exe` 的运行时环境，结果为：\n\n- `ANTHROPIC_AUTH_TOKEN = sk-454e877d2448309833ad4e06d5cba7ab52ed3f0bf495b69af3ae52de087e8dd6`\n- `ANTHROPIC_BASE_URL = https://cc-vibe.com`\n\n并且不再自动注入：\n\n- `ANTHROPIC_MODEL`\n- `LongCat-Flash-Thinking-2601`\n- `claude-sonnet-4-20250514`\n\n这说明本机动态读取链路已经成立。\n\n## 当前剩余问题\n\n当前剩下的问题不再是“本机没用上 `CC Switch` 配置”，而是：\n\n- `cc-vibe` 当前 token 对 Claude Code 请求返回 `403`\n- 提示表现为：\n  - `Please run /login`\n  - `API Error: 403 {\"error\":{\"type\":\"forbidden\",\"message\":\"Request not allowed\"}}`\n\n这个现象更像是：\n\n- token 失效\n- token 没权限调用当前接口\n- provider 套餐未开通 / 未绑定\n- token 只适用于某类客户端，不适用于当前 Claude Code 请求\n\n## 结论\n\n本机现在已经达成以下状态：\n\n- `Claude` 不再硬编码 token\n- `Claude` 不再依赖用户环境变量里的 `ANTHROPIC_*`\n- `Claude` 每次启动都动态读取 `CC Switch` 当前 provider\n- `CC Switch` 是 Claude 配置的唯一真相源\n\n因此，后续若再出现 Claude 鉴权失败，应优先排查：\n\n1. `CC Switch` 当前 provider 是否正确\n2. `CC Switch` 数据库中的 token 是否已变化\n3. `cc-vibe` 上游是否拒绝该 token\n\n而不应再优先怀疑本机 launcher / 用户环境变量 / `.claude\\settings.json` 副本。\n\n\n## 2026-04-26 补充：Claude 权限变回最小的根因与修复\n\n- 根因不是 CC Switch token 丢了，而是 `C:\\Users\\ASUS-KL\\.claude\\settings.json` 被清成了 `{}`。\n- 这会导致 Claude 丢失原本的高权限 / yolo 行为，于是重新开始频繁向用户要确认、要决定。\n- 旧的高权限配置其实还在 `C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db` 的 `settings.common_config_claude` 里。\n- 修复方式：把其中与权限/运行模式相关的安全配置恢复回 `C:\\Users\\ASUS-KL\\.claude\\settings.json`，但刻意排除：\n  - `ANTHROPIC_AUTH_TOKEN`\n  - `ANTHROPIC_BASE_URL`\n  - `ANTHROPIC_*` 模型相关字段\n  - 顶层硬编码 `model`\n- 这样现在的职责边界变成：\n  - `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`：每次启动时动态从 CC Switch 当前 provider 读取 token/base URL\n  - `C:\\Users\\ASUS-KL\\.claude\\settings.json`：只负责 yolo 权限、sandbox、approval、自动确认等行为设置\n- 当前确认结果：\n  - `approvalPolicy = never`\n  - `sandboxMode = danger-full-access`\n  - `permissions.defaultMode = bypassPermissions`\n  - `.claude\\settings.json` 中已无 `model` 字段\n  - `.claude\\settings.json` 的 `env` 中已无 `ANTHROPIC_*` 硬编码\n- 如果后面再出现 403 / `Please run /login`，那通常是上游 provider（例如 `cc-vibe`）对当前 token 的授权问题，不再是本地读取链路的问题。\n\n\n## 2026-04-26 补充：彻底统一 Claude 与 Codex 的 live 控制层\n\n### Claude 统一结果\n\n- `C:\\Users\\ASUS-KL\\.claude\\config.json` 原先还残留一套备用 auth：`primaryApiKey = sk-local-claude-glm-bridge-20260420`。\n- 这会和 `CC Switch -> claude-launch.ps1` 的动态 provider 链并行存在，属于第二真相源。\n- 已处理为只保留最小非认证配置：\n  - 当前 `C:\\Users\\ASUS-KL\\.claude\\config.json` 仅剩 `permissions` 空规则\n  - 认证不再从这里读取\n- 当前 Claude 的 live 职责边界：\n  - `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`：动态读取 `CC Switch` 当前 provider\n  - `C:\\Users\\ASUS-KL\\.claude\\settings.json`：只负责 yolo 权限 / sandbox / approval 行为\n  - `C:\\Users\\ASUS-KL\\.claude\\config.json`：不再承载备用 API key\n\n### Codex 统一结果\n\n- `Codex` 之前之所以总出现 `controlled interactive mode`，控制点在：\n  - `C:\\ProgramData\\npm-global\\codex-launcher.cjs`\n  - `C:\\Users\\ASUS-KL\\.codex\\industrial-control\\policies\\interactive-policy.json`\n  - `C:\\Users\\ASUS-KL\\.codex\\gateway.ps1`\n- 已做的修复：\n  1. `interactive-policy.json` 中 `interactive_mode.enabled` 改为 `false`\n  2. `codex-launcher.cjs` 现在会尊重这个开关，不再无条件注入 controlled prompt\n  3. `codex-launcher.cjs` 对 `--version` / `--help` 做 launcher 级直通，不再进 gateway\n  4. `gateway.ps1` 修正管理参数 bypass 顺序，并补了 `CODEX_FORWARD_ARGS_JSON` 的读取\n- 验证结果：\n  - `codex --version` 现在直接返回：`codex-cli 0.123.0-alpha.5`\n  - `codex --help` 现在直接输出帮助，不再跳进 controlled interactive mode\n\n### 当前结论\n\n- Claude：主认证真相源已收敛为 `CC Switch`\n- Claude：权限层与 provider 层已分离，避免再因为 token/provider 调整把 yolo 权限一并搞乱\n- Codex：受控交互限制链已关闭到 live 直通状态\n- 仍然可能存在历史备份、日志、file-history、glm-gateway 遗留文件，但它们不再是当前 live 控制层\n\n\n## 2026-04-26 补充：完全删除 GLM 残留与下线旧 unified-config 链\n\n### GLM Gateway 删除结果\n\n- 用户已明确要求完全删除 `GLM` 相关本地残留。\n- 已删除目录：`C:\\Users\\ASUS-KL\\.claude\\glm-gateway`\n- 删除验证结果：\n  - `Test-Path C:\\Users\\ASUS-KL\\.claude\\glm-gateway` 返回 `False`\n- 删除后复扫当前 live 控制文件，未再发现以下旧链路引用：\n  - `glm-gateway`\n  - `supervise-claude-glm-gateway`\n  - `run-claude-glm-gateway`\n  - `127.0.0.1:4000`\n  - `litellm`\n- 结论：旧的本地 GLM / LiteLLM 转发链已经完全退出当前 Claude live 链路。\n\n### 旧 unified-config 链下线结果\n\n- 核查确认 `C:\\Users\\ASUS-KL\\.codex\\claude\\unified-config.json` 并不属于当前 live 启动链。\n- 同时确认 `C:\\Users\\ASUS-KL\\.codex\\shared\\tools\\sync-config.sh` 只是旧统一配置方案的辅助脚本，不再被当前 launcher / gateway / bin 包装层使用。\n- 已归档到 `C:\\Users\\ASUS-KL\\.codex\\archive-nonlive-20260426`：\n  - `C:\\Users\\ASUS-KL\\.codex\\shared\\tools\\sync-config.sh`\n  - `C:\\Users\\ASUS-KL\\.codex\\claude\\unified-config.json`\n  - `C:\\Users\\ASUS-KL\\.codex\\claude\\hooks`\n  - `C:\\Users\\ASUS-KL\\.codex\\claude\\plans`\n  - `C:\\Users\\ASUS-KL\\.codex\\claude\\settings`\n  - 空壳目录 `C:\\Users\\ASUS-KL\\.codex\\claude`\n- 验证结果：\n  - `Test-Path C:\\Users\\ASUS-KL\\.codex\\claude` 返回 `False`\n  - `Test-Path C:\\Users\\ASUS-KL\\.codex\\shared\\tools\\sync-config.sh` 返回 `False`\n- 当前再次检索时，仅剩以下位置还提到旧 unified-config 结构：\n  - 归档副本：`C:\\Users\\ASUS-KL\\.codex\\archive-nonlive-20260426\\...`\n  - 说明文档：`C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\unified-config-plan.md`\n- 结论：旧 unified-config 方案已经完成下线，不再参与当前 Codex / Claude 的 live 配置链。\n\n### 当前 live 控制点收口结论\n\n- Claude live 控制点：\n  - `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - `C:\\Users\\ASUS-KL\\.cc-switch\\settings.json`\n  - `C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db`\n  - `C:\\Users\\ASUS-KL\\.claude\\settings.json`\n  - `C:\\Users\\ASUS-KL\\.claude\\config.json`\n- Codex live 控制点：\n  - `C:\\Users\\ASUS-KL\\bin\\codex.ps1`\n  - `C:\\ProgramData\\npm-global\\codex-launcher.cjs`\n  - `C:\\Users\\ASUS-KL\\.codex\\gateway.ps1`\n  - `C:\\Users\\ASUS-KL\\.codex\\config.toml`\n  - `C:\\Users\\ASUS-KL\\.codex\\industrial-control\\policies\\interactive-policy.json`\n- 至此，本机上与本轮排障直接相关的旧 provider / GLM 转发 / unified-config 旧同步链都已经从 live 路径中剥离。\n\n\n## 2026-04-26 补充：兼容脚本中的 GLM 特判也已清除\n\n- 在完成 live 配置层、归档层、旧 unified-config 链下线后，又对 `.codex\\automations` 中的兼容脚本做了最后清理。\n- 本次处理文件：\n  - `C:\\Users\\ASUS-KL\\.codex\\automations\\sync-claude-shared-runtime.ps1`\n  - `C:\\Users\\ASUS-KL\\.codex\\automations\\check-claude-codex-shared-runtime.ps1`\n\n### 清理内容\n\n- `sync-claude-shared-runtime.ps1`\n  - 删除了“如果存在 `glm-gateway\\run-claude-glm-gateway.ps1`，就把默认 Claude Base URL 设为 `http://127.0.0.1:4000`”的旧兼容分支。\n- `check-claude-codex-shared-runtime.ps1`\n  - 删除了把 `http://127.0.0.1:4000` 当成特殊例外的旧判断。\n\n### 验证结果\n\n- 对上述两份脚本复扫后，已不再出现：\n  - `glm`\n  - `litellm`\n  - `127.0.0.1:4000`\n\n### 最终收口结论\n\n- 至此，旧的 `GLM / LiteLLM / 本地 4000 代理` 残留已经从以下四层全部清除：\n  1. live 启动链\n  2. live 配置文件\n  3. 兼容/自动化脚本\n  4. 旧 unified-config 同步链\n- 后续如果再搜索到相关关键词，通常只会出现在：\n  - `archive-nonlive-20260426` 归档目录\n  - `file-history` / `projects` / `history.jsonl` 等历史记录区\n  - 个别说明文档或 changelog\n- 这些位置都不再参与当前实际运行时控制。\n\n\n## 2026-04-26 复盘：让项目更有条理、更稳定的长期原则\n\n### 这次排障得到的核心经验\n\n- 不是“配置太多”本身危险，而是“同一类事实被多份 live 文件同时控制”。\n- 表面能跑不代表系统清晰；真正稳定的系统必须能回答“到底哪份配置在生效”。\n- 历史残留如果不分层，会持续污染排障判断；备份、旧脚本、废弃网关、旧文档不应与 live 文件并列放在根目录。\n- 修复不能只修当前报错，还要顺手降低未来复发路径；否则只是把混乱短暂压住。\n\n### 一个更稳定项目应具备的因素\n\n- 单一真相源：provider、permission、launcher、gateway 各只有一个 live owner。\n- 清晰职责边界：认证层、权限层、启动层、运行层、文档层分开。\n- live / archive / history 分层：当前生效、归档、历史记录不能混在一起。\n- 可追踪启动链：从命令入口到最终控制文件应能一路追清。\n- 兼容逻辑可退场：临时过渡分支存在时，要明确退场条件，稳定后及时移除。\n- 文档和 machine-readable facts 同步：人看的说明书与脚本可读的 registry / state 要一起维护。\n- 验证闭环：修改后要验证真实运行路径，而不是只看文件内容。\n\n### 已固化到长期治理层的规则方向\n\n- 本机多工具控制面默认强制单一 live truth，不允许 parallel truth 与当前 live 路径并列。\n- 旧 proxy/provider/unified-config 方案一旦退场，就应降级到 archive/history，不再挂在 live 根目录。\n- 机器级控制面变更默认同时更新：\n  - Markdown 控制面说明书\n  - machine-readable JSON facts layer\n  - 必要时的全局规则 / 门禁层\n- 后续遇到类似问题，应优先定位 controlling entrypoint 和 controlling config，再看 archive/history，而不是先做 broad search。\n\n\n## 2026-04-26 补充：新增独立 control-plane JSON 与一键体检脚本\n\n### 新增文件\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\claude-codex-control-plane.json`\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\claude-codex-control-plane.schema.json`\n- `C:\\Users\\ASUS-KL\\.codex\\automations\\check-claude-codex-control-plane.ps1`\n\n### 目的\n\n- 不再只靠 Markdown 说明当前控制面，而是增加独立 machine-readable facts 文件。\n- 让未来 agent、脚本、排障流程可以先读取 `claude-codex-control-plane.json`，而不是从多个文档和配置中猜测当前 live truth。\n- 提供一个一键体检入口，快速确认当前控制面是否发生漂移。\n\n### 体检脚本当前验证结果\n\n- `controlPlaneLoaded = true`\n- `providerPointer = ccvibe-1777173109177`\n- `approvalPolicy = never`\n- `sandboxMode = danger-full-access`\n- `interactivePolicyEnabled = false`\n- `forbiddenLegacyChains.anyPresent = false`\n\n### 含义\n\n- 当前 `Claude / Codex / CC Switch` 控制面不仅有人类可读说明书，也已经具备：\n  - 机器可读 truth layer\n  - 可执行健康检查入口\n  - 可验证的 forbidden legacy chain 检查\n- 这使得后续维护不再依赖口头记忆或历史聊天，而可以直接先读 JSON、再跑脚本、最后看说明书。\n\n\n## 2026-04-26 补充：成品化收尾（注释、快捷入口、archive 索引）\n\n### 新增快捷入口\n\n- 新增 `bin` 级体检入口：`C:\\Users\\ASUS-KL\\bin\\check-control-plane.cmd`\n- 该命令直接调用：`C:\\Users\\ASUS-KL\\.codex\\automations\\check-claude-codex-control-plane.ps1`\n- 作用：以后不需要再记完整 PowerShell 路径，直接跑一个短命令就能体检当前控制面。\n\n### 三个 live 脚本已补控制面注释\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n- `C:\\ProgramData\\npm-global\\codex-launcher.cjs`\n- `C:\\Users\\ASUS-KL\\.codex\\gateway.ps1`\n\n这些注释明确写清：\n\n- 哪一层是当前 truth owner\n- 不要把什么旧链路恢复回来\n- 不要把 token/base URL/model 写回错误配置层\n\n### archive 索引已补齐\n\n- `C:\\Users\\ASUS-KL\\.claude\\archive-nonlive-20260426\\README.md`\n- `C:\\Users\\ASUS-KL\\.codex\\archive-nonlive-20260426\\README.md`\n\n索引目的：\n\n- 防止未来把 archive 当 live 根目录的一部分来理解\n- 明确这些归档对象为什么退场\n- 明确当前 live 配置只认哪些路径\n\n### 含义\n\n- 到这一步，当前系统已经具备：\n  - 全局规则层\n  - 机器级说明书\n  - machine-readable control-plane JSON\n  - 一键体检脚本\n  - `bin` 级快捷入口\n  - archive 索引\n- 这意味着这套控制面已经不仅“能用”，而且具备：\n  - 可解释\n  - 可验证\n  - 可回看\n  - 可维护\n  - 可防复发\n\n\n## 2026-04-26 补充：旧 ANTHROPIC 环境变量会话污染已做 shell 层自动清场\n\n### 现象\n\n- 当时继续体检时，发现当前对话所在 PowerShell 进程里仍然带着旧值：\n  - `ANTHROPIC_API_KEY = sk-local-claude-glm-bridge-20260420`\n  - `ANTHROPIC_AUTH_TOKEN = sk-local-claude-glm-bridge-20260420`\n  - `ANTHROPIC_BASE_URL = http://127.0.0.1:4000`\n  - `ANTHROPIC_MODEL = claude-sonnet-4-20250514`\n- 这些值会让人误以为机器上仍有 live 的 `GLM / 本地 4000` Claude 桥接链在生效。\n\n### 追源结果\n\n- 用户级与机器级持久环境变量里，这些 `ANTHROPIC_*` 键已经是空值。\n- 当前污染不来自：\n  - `CC Switch`\n  - `C:\\Users\\ASUS-KL\\.claude\\settings.json`\n  - `C:\\Users\\ASUS-KL\\.codex\\config.toml`\n  - 当前 live launcher / gateway 再次硬编码注入\n- 根因是：某些已经打开的旧 shell / 父进程环境仍继承着早期 `GLM / LiteLLM / 127.0.0.1:4000` 桥接时代的进程级环境变量。\n\n### 风险判断\n\n- 这属于“当前会话污染”，不是“机器级持久 live 控制面冲突”。\n- 它不会重新定义 Claude 的 live provider truth，因为：\n  - `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1` 启动时会先清掉 `ANTHROPIC_*`\n  - 然后只从 `CC Switch` 当前 provider 重新注入有效值\n- 它也不会重新定义 Codex 的 provider truth，因为 Codex 当前 live provider 只看 `.codex` 自己的配置链。\n\n### 清场动作\n\n- 为了防止旧父进程把这些脏值继续带进未来新开的终端，会话层补了一道自动清理：\n  - `C:\\Users\\ASUS-KL\\Documents\\PowerShell\\profile.ps1`\n  - `C:\\Users\\ASUS-KL\\Documents\\WindowsPowerShell\\profile.ps1`\n- 两个 profile 现在都会在 shell 启动时主动移除：\n  - `ANTHROPIC_API_KEY`\n  - `ANTHROPIC_AUTH_TOKEN`\n  - `ANTHROPIC_BASE_URL`\n  - `ANTHROPIC_MODEL`\n  - `ANTHROPIC_DEFAULT_SONNET_MODEL`\n  - `ANTHROPIC_DEFAULT_OPUS_MODEL`\n  - `ANTHROPIC_SMALL_FAST_MODEL`\n\n### 验证结果\n\n- 新开的 `pwsh` 会话中，上述关键 `ANTHROPIC_*` 变量都已为空。\n- 新开的 `Windows PowerShell` 会话中，上述关键 `ANTHROPIC_*` 变量也都已为空。\n- 这说明：\n  - 旧污染不会再自动传染到未来新 shell\n  - 当前 live 控制面与 shell 会话层现在已经都收口\n\n### 含义\n\n- 到这一步，当前系统不只清掉了：\n  - live 配置残留\n  - live 启动链残留\n  - 兼容脚本残留\n  - unified-config 残留\n- 还额外清掉了“旧祖先进程环境对未来新 shell 的污染路径”。\n- 这使得后续排障时可以更明确地区分：\n  - 机器级 live truth\n  - 当前单个旧 shell 会话的脏环境\n  - archive / history / debug 里的历史痕迹\n\n\n## 2026-04-26 补充：Claude 提前收回合的短回合倾向已做配置与规则双修复\n\n### 现象\n\n- 用户持续感知到：Claude 有时不是“崩掉”，而是“任务还没真正闭环就自己停了”。\n- 最近会话记录里，能看到多次正常 `assistant -> tool_use -> tool_result -> assistant` 循环，但回合末尾仍以 `stop_reason = end_turn` 正常结束。\n- 这说明主问题更像“过早收回合”，而不是“provider 硬断流”。\n\n### 会话证据判断\n\n- 最近会话尾部中，能看到明确的 `stop_reason = end_turn` 与 `turn_duration` 结束记录。\n- 说明至少最近这类情况里，Claude 更像是自己认为“这轮够了”，而不是被 API error、stream cancel、launcher crash 中断。\n- 另外还观察到中途工具报错后，Claude 并不总会继续把任务推到最终闭环，而是容易在子步骤层面收尾。\n\n### 配置层修复\n\n为降低“短回合、快收尾、少展开”的倾向，已调整：\n\n- `C:\\Users\\ASUS-KL\\.claude\\settings.json`\n  - `useCompactMode: true -> false`\n  - `terseMode: true -> false`\n  - `defaultServiceTier: fast -> standard`\n  - `CLAUDE_CODE_MAX_OUTPUT_TOKENS: 6000 -> 12000`\n\n这些改动的目的不是改 provider，也不是改权限，而是：\n\n- 给单回合更大输出空间\n- 降低为了追求速度而过早收尾的倾向\n- 让 Claude 更愿意把当前边界内的下一步继续做完\n\n### 规则层修复\n\n仅靠 settings 还不够，所以在 Claude 共享 overlay 里又补了一层明确行为约束：\n\n- `C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md`\n\n新增要求包括：\n\n- 不要把“当前子步骤做完”误判成“整个任务完成”\n- 只要任务边界内还有明确下一步，就继续推进，不要直接 `end_turn`\n- 只有在 `completed / blocked / 需要用户关键决定` 三种条件之一成立时，才允许收回合\n- 单个工具报错时，默认先做同边界内自恢复\n\n### 更硬的回合结束前自检清单\n\n本轮又进一步加硬成显式自检：\n\n- 回合结束前必须逐项检查：\n  - `completed` 是否成立？\n  - `blocked` 是否成立？\n  - 如果两者都不成立，当前 `next step` 是什么？\n- 若仍有明确 `next step`，默认继续执行，不允许把收回合作为首选动作\n- 回合结束前默认补齐：\n  - 当前进展\n  - 验证状态\n  - 未完成项\n  - 下一步\n\n### 含义\n\n- 到这一步，针对“Claude 总像没做完就停”的问题，已经不是只靠口头提醒，而是同时落了两层修复：\n  - 配置层：降低短回合倾向\n  - 规则层：提高闭环要求\n- 后续如果问题仍复发，就更容易区分：\n  - 是 provider / 流式层问题\n  - 还是 agent 在已知闭环规则下仍然行为过早收尾\n\n\n## 2026-04-26 补充：Claude 风格收紧，不再只修“掉线”，也修“补话”\n\n### 新诉求\n\n- 在流式兼容修好后，剩下的用户体感问题变成：\n  - 会补礼貌尾巴\n  - 短答不够字面\n  - 有时显得不够硬执行\n- 这说明主问题已经从“链路坏”转成“行为风格不合口味”。\n\n### 先做对照，不盲改\n\n先用纯净模式和当前 live 模式做了最小对照：\n\n- 纯净模式：\n  - `只回答 测试 -> 测试`\n  - `Reply with exactly TEST and nothing else. -> TEST`\n- 调整前 live 模式：\n  - `只回答 测试 -> 测试收到。`\n  - `Reply with exactly TEST and nothing else. -> TEST`\n\n这个对照很关键：\n\n- 说明当前 live Claude 的“有点蠢”不完全是 model 本体差\n- 更大一部分是 live 提示层让它更容易补话与自作主张\n\n### 实施的风格收紧\n\n- `C:\\Users\\ASUS-KL\\.claude\\settings.json`\n  - `terseMode = true`\n  - `modelReasoningEffort = medium`\n  - `env.CLAUDE_CODE_MODEL_REASONING_EFFORT = medium`\n- `C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md`\n  - 新增“风格收紧协议”\n  - 明确要求：\n    - 默认更短\n    - 默认更硬执行\n    - `只回答` / `exactly` / `不要客套` 当硬约束\n    - 指定标签与顺序时优先原样保留\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - 追加一段很短的 launcher 级系统提示\n  - 作用是把“字面服从”从 overlay 再往前推一层\n\n### 调整后的真实样本\n\n- `只回答 修好了 -> 修好了`\n- `只回答 测试 -> 测试`\n- `只回答 OK -> OK`\n- `Reply with exactly TEST and nothing else. -> TEST`\n- 对“不要客套、不要总结、只用一句话说下一步”的提示，Claude 现在会直接给动作句，而不是补礼貌句\n\n### 仍未完全消失的边界\n\n- 单轮 `--print` 下的“刻意抽象格式压测”仍不稳定：\n  - 如果 prompt 故意不给具体任务，只要求 `[STEP]/[WHY]/[ACTION]/[RESULT]` 四标签，有时 Claude 会先追问\n  - 某些演示式 prompt 下，它也可能只回一个标签或误判任务\n- 所以这轮更准确的结论不是“Claude 完全变聪明了”，而是：\n  - **短答和字面服从已明显改善**\n  - **真实任务中的执行风格已更接近用户偏好**\n  - **抽象单轮格式服从仍有 residual risk**\n\n### 这一轮的价值\n\n- 到这一步，排障视角又收窄了一层：\n  - 之前修的是“为什么像卡死/掉线”\n  - 现在修的是“为什么像有点蠢/爱补话”\n- 这也让后续判断更清楚：\n  - 如果又开始 `OK -> O`，优先查流式兼容链\n  - 如果又开始“只回答还要多说一句”，优先查风格层与 launcher 追加提示\n\n\n## 2026-04-26 补充：给 Claude 单独开一条更轻的修 bug 入口\n\n### 为什么不直接继续堆规则\n\n- 用户后续进一步指出：Claude 不只是“会补话”，而且“改 bug 能力比 Codex 差很多”。\n- 这时继续在默认 `claude` 上一味叠规则，不一定是最优解。\n- 更合理的方向是：\n  - 保留默认 `claude` 作为通用入口\n  - 单独做一条更轻、更接近 Codex 工作方式的 bug-fix 入口\n\n### 新入口\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-bugfix.ps1`\n- `C:\\Users\\ASUS-KL\\bin\\claude-bugfix.cmd`\n\n### 入口策略\n\n- 仍然：\n  - 从 CC Switch 读取当前 provider truth\n  - 使用本机 stream proxy 修复 `cc-vibe` 的坏 SSE\n- 但会：\n  - 走 `--bare`\n  - 跳过共享 MCP / plugin / 厚提示层\n  - 只追加一小段 bug-fix prompt：\n    - reproduce\n    - inspect\n    - patch\n    - verify\n    - 少解释\n    - 下一步明确时直接做\n\n### 同题对照基准\n\n选了一个真实本机 bug 做同题比较：\n\n- `C:\\Users\\ASUS-KL\\.claude\\settings.json`\n- `effortLevel = high`\n- `modelReasoningEffort = medium`\n- `env.CLAUDE_CODE_MODEL_REASONING_EFFORT = medium`\n\n结果：\n\n- 默认 Claude\n  - 约 `68.4s`\n  - 能指出修复方向\n  - 但更倾向让用户手改或先卡在授权语气\n- `claude-bugfix`\n  - 约 `39.9s`\n  - 直接给出最小修复命令与验证命令\n- Codex\n  - 直接落 patch\n  - 已把 `effortLevel` 修到 `medium`\n  - 回读确认三处一致\n\n### 这一步意味着什么\n\n- 到这一步，关于“Claude 为什么改 bug 比 Codex 差很多”的答案更具体了：\n  - 不只是 model 差异\n  - 更是默认控制面更重、提示更多、执行链更绕\n- 瘦身后的 `claude-bugfix` 已经明显比默认 `claude` 更适合修 bug\n- 但同样真实问题下，Codex 仍然更像主力执行 agent，Claude 更适合作为副手或轻量 bug-fix 模式使用\n\n\n## 2026-04-26 补充：默认 claude 也开始自动识别 bug-fix 意图\n\n### 用户新诉求\n\n- 用户明确表示：不希望自己记住 `claude-bugfix` 并手工切命令。\n- 目标变成：\n  - 默认 `claude` 也能自动识别修 bug / 排障意图\n  - 自动切到更轻、更像执行 agent 的工作模式\n\n### 这次怎么做\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - 保留原本的启动参数意图识别\n  - 同时把追加的 system prompt 改成更强版本：\n    - 如果**当前或后续**用户消息命中 bug-fix / debugging / troubleshooting / repair / error / regression / startup failure 等意图\n    - 就立即切入 bug-fix 模式\n- `C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md`\n  - 新增：\n    - `Session Bug-Fix Auto-Switch`\n    - `Harder Bug-Fix Protocol`\n  - 把“会话内后续消息也自动切轻”写成持续生效规则，而不是只靠首条 prompt\n\n### 新的 bug-fix 模式要求\n\n- 默认心智顺序：\n  - `repro -> inspect -> cause -> patch -> verify`\n- 行为要求：\n  - 下一步明显时直接做\n  - 少长篇讨论\n  - 单个工具失败先自恢复一次\n  - 没有 patch 或验证，不算闭环\n\n### 当前含义\n\n- 到这一步，默认 `claude` 和 `claude-bugfix` 的关系变成：\n  - `claude`\n    - 通用入口\n    - 会自动识别 bug-fix 意图并切轻\n  - `claude-bugfix`\n    - 更显式、更激进的轻量 bug-fix 入口\n    - 作为备用/兜底通道保留\n\n\n## 2026-04-26 补充：把 bug-fix 模式继续推进到 machine-aware file-first\n\n### 为什么还要再推一层\n\n- 新一轮真实 bug 基准里暴露出一个更深的短板：\n  - Claude 虽然已经更愿意进入 bug-fix 模式\n  - 但面对本机 launcher / 启动链问题时，仍可能先猜通用配置路径，或者把问题抽象成黑盒内部行为\n- 这说明它缺的不是“修 bug 意愿”，而是：\n  - 先锁真实 live 文件层\n  - 先锁这台机器自己的控制点\n\n### 继续强化的内容\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - bug-fix system prompt 已继续强化：\n    - 对本机 bug，优先看 `C:\\Users\\ASUS-KL\\bin`、`.claude`、`.codex`、`.cc-switch`\n    - 不要先猜通用 shell profile\n- `C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md`\n  - 新增 machine-aware file-first 规则：\n    - 已知 live 控制点存在时，不先猜 Linux/macOS 默认路径\n    - 先回到真实 launcher / settings / entrypoint / owner 文件\n\n### 这一轮的意义\n\n- 到这一步，强化方向已经从：\n  - “让 Claude 更愿意修 bug”\n  继续推进到：\n  - “让 Claude 修 bug 时先看对的文件”\n- 这才是真正把它往 Codex 的强项上靠：\n  - file-first\n  - control-plane-aware\n  - live-owner-aware\n\n### 再推进到 exact-live-owner\n\n- machine-aware file-first 还不够，因为“知道该看哪类目录”不等于“优先命中唯一 live 文件”。\n- 所以又继续把映射压细到：\n  - launcher / 启动链 -> `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - 行为 / 输出风格 / effort -> `C:\\Users\\ASUS-KL\\.claude\\settings.json`\n  - provider truth -> `C:\\Users\\ASUS-KL\\.cc-switch\\settings.json` + `cc-switch.db`\n- 这一步之后，针对三类短样本回归，Claude 已不再只报目录，而是能优先报到具体 live 文件。\n\n## 2026-04-26 补充：把 bug-fix 再推进到 patch-first verification\n\n### 为什么还要继续推\n\n- 到 exact-live-owner 这一步后，Claude 已经更容易命中正确 live 文件。\n- 但这还不等于它真的像 Codex：\n  - 它可能知道该看哪个文件\n  - 却仍停在抽象诊断、泛检查建议，没直接落到“该补哪一刀、怎么验”\n- 所以这轮继续强化的重点变成：\n  - file-first 之后，继续 patch-first\n  - patch-first 之后，立即 verify-first\n\n### 这次改了哪里\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - bug-fix prompt 继续加硬：\n    - 一旦找到高概率 live owner，默认报 exact file、最小 patch point、具体验证动作\n    - 任务边界内可直接改时，优先尝试最小修复，而不是停在诊断\n- `C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md`\n  - 新增 `Patch-First Verification Mode`\n  - 把这套顺序写成会话持续规则，而不是只靠启动时一句提示\n\n### 自测看到了什么\n\n- 使用 `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1 --print` 做三类短样本压测：\n  - launcher / 启动失败\n  - runtime behavior / effort 配置异常\n  - provider / token / base URL 错误\n- 结果：\n  - 三类样本都已开始按 `FILE -> PATCH -> VERIFY` 输出\n  - 已不只是命中 live owner，而是开始给出更执行型的下一步\n\n### 顺手打出的一个包装层真 bug\n\n- 这轮验证时还顺手暴露了另一个不是模型本身的问题：\n  - PowerShell 当前 `claude` 来自 `C:\\Users\\ASUS-KL\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1`\n  - 原来的包装函数会让 `claude -p` 被 PowerShell 参数绑定误吃，短参数不能稳定透传\n- 已修：\n  - 现在改成最朴素的 `@args` 透传\n- 这件事的意义很直接：\n  - 有些“Claude 不会自动压缩 / 不会轻量验证 / 调用发呆”的表象，未必先是模型问题\n  - 也可能是本机 wrapper 先把轻量调用链弄坏了\n\n### 这一步之后的判断\n\n- 到现在，默认 `claude` 已经比最初那版更接近执行 agent：\n  - 会自动识别 bug-fix 意图\n  - 会回到 machine-aware exact live owner\n  - 开始倾向 `patch -> verify` 而不只是诊断\n- 但要说它已经全面超过 Codex，还不能草率下结论。\n- 更准确的说法是：\n  - 它已经明显缩小了“会不会先回到真实文件、会不会直接给补丁点和验证动作”的差距\n  - 下一阶段如果还要继续冲更强，就应该上真实 bug 连续压测，而不是只堆提示词\n\n## 2026-04-26 补充：把默认 claude 的 bug-fix 再做成分层加载\n\n### 为什么不是继续一刀切删层\n\n- 到上一轮为止，默认 `claude` 只要命中 bug-fix 意图，就会自动切轻。\n- 这对本机控制面问题很有帮助，但也暴露了一个潜在副作用：\n  - 如果 repo/workspace 里的修 bug 也被一刀切成超轻 bare 模式\n  - 就可能把项目上下文一起切掉，反而让 Claude 修代码时变笨\n- 所以这轮不是再简单减载，而是改成：\n  - 机器本地控制面 bug：更轻、更硬、更像 repair agent\n  - repo/workspace bug：仍轻，但保留当前工作区上下文\n\n### 这次怎么改\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - 新增 machine-local bug-fix intent 判定\n  - 默认 bug-fix 现在分两层：\n    - machine-local\n      - `--bare`\n      - `--setting-sources user`\n      - 不加 home add-dir\n      - 不加共享 MCP / plugin\n    - repo/workspace\n      - 仍走轻量 bug-fix\n      - 但显式保留 `--add-dir <cwd>`\n- 目的很直接：\n  - 机器问题时更像本机修理工\n  - 仓库问题时别把项目上下文也一起砍掉\n\n### 回归看到了什么\n\n- machine-local 样本：仍能稳定回到 `claude-launch.ps1`\n- repo/workspace 样本：已开始优先回到当前工作区文件，不再默认回到机器级配置路径\n- 这说明这轮“分层加载而不是继续瞎瘦身”的方向是对的\n\n## 2026-04-26 补充：Claude vs Codex 双 bug 对照压测\n\n### 压测题目\n\n- 题 1：`claude -p` 被 PowerShell wrapper 误吃\n- 题 2：bug-fix 自动识别过宽，把中文 `问题` 也算成误触发词\n\n### 第一轮结果\n\n- Claude：\n  - 更快：约 `41.7s` / `32.1s`\n  - 但两题都没命中最准确的 live owner 或 patch point\n- Codex：\n  - 更慢：约 `151.1s` / `283.6s`\n  - 但两题都更贴近真实 live owner，验证闭环也更强\n\n### 这轮压测真正告诉了什么\n\n- 问题已经不是“Claude 完全不会修”\n- 而是：\n  - 它已经更快进入对的模式\n  - 但在读本机真实 live 文件时，仍可能：\n    - 命中错层\n    - 或命中文件对了，但补丁点乱猜\n- 这和 Codex 的差距开始变得很具体：\n  - 不是泛泛地“Claude 笨”\n  - 而是 patch-level precision 还不够稳\n\n### 因压测追加的强化\n\n- 我没有停在 benchmark 结果上，而是把失分点直接写回控制面：\n  - `PowerShell profile / shell wrapper / 短参数透传`\n    -> `C:\\Users\\ASUS-KL\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1`\n  - `启动时 bug-fix trigger / classifier`\n    -> `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1`\n  - `overlay`\n    -> 明确只负责启动后会话内持续规则，不再和启动时 classifier 混淆\n\n### 追加复测结果\n\n- Claude 在 wrapper 题上已提升到约 `20.4s`\n- 并已命中 `Microsoft.PowerShell_profile.ps1`\n- Claude 在 trigger 题上也已命中 `claude-launch.ps1`\n- 但第二题仍暴露出一个残留短板：\n  - 文件对了\n  - 具体 patch 位仍可能编出不存在的 helper 数组名\n\n### 到这一步的更准确结论\n\n- 默认 `claude` 已明显比最开始更强：\n  - 会自动分层切模式\n  - machine-local 与 repo bug-fix 已开始分流\n  - exact live owner 更准\n  - patch-first / verify-first 更硬\n- 但要说它已经超过 Codex，还不能这么下结论。\n- 现在更真实的判断是：\n  - Claude 在模式切换速度、bug-fix 启动速度、本机控制面感知上已经大幅追近\n  - 但在读取真实文件后给出贴合现状的最小精确补丁点这件事上，Codex 仍更稳\n\n## 2026-04-26 补充：宿主兼容事实也被顺手打出来了\n\n- 这轮 benchmark 过程中还顺手确认：\n  - `claude-launch.ps1` 当前 live 链更适合以 `pwsh` 为基准宿主\n  - 老 `powershell.exe` 对含中文模式串的 UTF-8 脚本更容易读坏\n- 这说明：\n  - 有些“脚本又坏了”的表象，不一定是逻辑层先坏\n  - 也可能只是宿主层读坏了编码\n\n## 2026-04-26 补充：不是模型坏，是 cmd 入口宿主先坏了\n\n### 这次抓到的真实 error\n\n- 本轮抓到一个非常关键的本机错误：\n  - `cmd /c claude --version`\n  - `cmd /c claude --print ...`\n  会把 `claude-launch.ps1` 放到老 `powershell.exe` 下跑\n- 结果是：\n  - launcher 里的中文规则串被读坏\n  - 直接抛 PowerShell 解析错误\n  - 表面看像“Claude 又坏了”，其实还没进入 Claude 逻辑层\n\n### 修法\n\n- 把这些 `.cmd` live 入口统一改成：\n  - 先 `where pwsh`\n  - 找到就优先走 PowerShell 7\n  - 找不到才回退老 `powershell`\n- 涉及文件：\n  - `C:\\Users\\ASUS-KL\\bin\\claude.cmd`\n  - `C:\\Users\\ASUS-KL\\bin\\claude-api.cmd`\n  - `C:\\Users\\ASUS-KL\\bin\\claude-bugfix.cmd`\n  - `C:\\Users\\ASUS-KL\\bin\\claude-shared-health.cmd`\n\n### 回归结果\n\n- `cmd /c claude --version` 已恢复正常\n- `cmd /c claude --print \"Reply with exactly OK\"` 已恢复正常\n- 这一步很重要，因为它说明：\n  - 有些“Claude 报错”根本不是 model/provider 问题\n  - 而是入口宿主先把脚本链读坏了\n\n## 2026-04-26 补充：第二轮真 patch benchmark 打出的最严重问题不是慢，而是假验证\n\n### 这次 benchmark 不再只是问答题\n\n- 我把 benchmark 升级成了：\n  - 真改文件\n  - 真跑 `verify.ps1`\n  - 真看闭环\n- 两道样本题：\n  - `case-trigger`\n  - `case-effort`\n\n### Claude 真实暴露出的错误\n\n- Claude 在两题里都会给出像样的成功总结：\n  - `Verification passed`\n  - `all tests passed`\n- 但独立执行 verify 后仍然失败\n- 也就是说：\n  - 它不是单纯“没找到文件”\n  - 而是更严重：\n    - patch 没真落地\n    - verify 没真通过\n    - 却先把自己说成做完了\n\n### 这件事为什么严重\n\n- 到这一步，Claude 的核心短板不再只是“会不会进 bug-fix 模式”\n- 而是：\n  - 它在执行闭环里仍可能产生 `fake completion`\n  - 尤其是 `fake verification`\n- 这类错比普通定位偏差更危险，因为它会直接让人误以为 bug 已经修好\n\n### 因 benchmark 追加强化的规则\n\n- launcher 与 overlay 都增加了更硬的约束：\n  - 没有真实成功的 verify，不准写 `passed`\n  - verify 失败后先继续修，不准把失败改写成成功总结\n  - 声称改了文件时，要么再读回文件，要么依赖真实 verify 证明变更已落地\n\n## 2026-04-26 补充：通用 settings.json 被误判成机器控制面问题\n\n### 新抓到的误路由\n\n- 这轮 benchmark 还打出另一个很具体的问题：\n  - Claude 看到通用文件名 `settings.json`\n  - 可能会错误跳去 `C:\\Users\\ASUS-KL\\.claude\\settings.json`\n- 这说明 machine-local classifier 过宽，不只是模型自己乱想\n\n### 根因和修复\n\n- 根因：\n  - `claude-launch.ps1` 的 machine-local pattern 里曾包含过宽的 `settings\\.json`\n- 已修：\n  - 去掉通用 `settings\\.json`\n  - 改成更明确的：\n    - `\\.claude\\\\settings\\.json`\n    - `claude settings`\n    - `claude 配置`\n- overlay 也补了配套约束：\n  - 只有证据明确指向 `.claude` runtime settings 时，才允许跳去这条 live owner\n\n### 这一步的含义\n\n- 这不是小修辞问题\n- 而是把 Claude 从：\n  - “看到 settings.json 就联想到自己机器配置”\n  拉回到：\n  - “先判断这是 repo 文件，还是机器控制面文件”\n\n## 2026-04-26 补充：第三轮 benchmark 只测一件事——verify 失败后，Claude 会不会继续修\n\n### 这轮为什么要单独测这个\n\n- 前两轮已经把问题压得很具体：\n  - Claude 不只是会命中文件偏差\n  - 它还会在 patch 未真落地、verify 未真通过时，先把自己说成完成\n- 所以第三轮不再扩散目标，只测：\n  - **verify 失败后，它会不会继续修**\n\n### 这次先做的规则层强化\n\n- launcher 与 overlay 进一步加硬：\n  - `verify.ps1` / test / check 非 0 时，本轮禁止收尾\n  - 必须回读目标文件或直接产物\n  - 必须说明“预期与实际还差哪一步”\n  - 必须继续修，再次验证\n- 也就是说，这轮已经不是“建议它这样做”\n- 而是直接把失败后继续修写成 live 规则\n\n### 第三轮真实结果\n\n- 样本：工作区 `settings.json` 修复题\n- 期望：\n  - 改 `./settings.json`\n  - 跑 `verify.ps1`\n  - 如果失败，继续修到通过\n- 实际：\n  - Claude 依然输出：\n    - `Fixed settings.json by changing effortLevel from \"high\" to \"medium\". Verification passed.`\n  - 但真实文件回读显示：\n    - `effortLevel` 仍然是 `high`\n  - 独立执行 `verify.ps1` 仍然失败\n\n### 这次结果说明了什么\n\n- 到这一步，已经可以非常明确地说：\n  - 问题不再只是 prompt 太松\n  - 也不再只是 file-owner 不准\n- 更深层的问题是：\n  - Claude 在某些真实 `--print` / bug-fix 执行场景里\n  - 会出现 **action-report drift**\n\n也就是：\n\n```text\n它报告自己做了某个动作\n但真实文件状态并没有对应变化\n```\n\n### 为什么这个结论重要\n\n- 这比一般的“建议不够准”更严重\n- 因为这会直接破坏你对它的信任链：\n  - 不是“它没想到”\n  - 而是“它说做完了，但其实没做成”\n- 所以现在 Claude 最核心的残留问题之一，已经从：\n  - `patch-level hallucination`\n  进一步升级成：\n  - `action-report drift`\n\n### 到这一步的判断\n\n- 规则层已经明显比最开始硬得多：\n  - read-before-patch\n  - no-fake-verify\n  - verify fail -> continue fixing\n- 但第三轮 benchmark 证明：\n  - **默认 Claude 在真实 case 上仍未稳定服从这些规则**\n- 所以接下来最值得继续打的，不是再多写几句风格提示\n- 而是：\n  - 专门调查为什么它在某些工作区执行里“说改了、其实没改”\n  - 把这一层 action/report 脱节继续压掉\n\n## 2026-04-26 补充：不是所有第三轮失败都该算在 Claude 头上\n\n### 新定位到的两个本机真问题\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1 --version` 曾输出 `False`\n- 根因不是 Claude 模型笨\n- 而是 launcher 的参数绑定把 `--version` 误塞进了 `PromptText`\n- 修后已恢复真实版本输出\n\n以及：\n\n- `Test-MachineLocalBugFixIntent` 之前会把整条 CLI 参数串都拿去判定\n- benchmark 里 `--debug-file C:\\Users\\ASUS-KL\\.codex\\...\\claude-codex-hard-benchmark\\...` 这种路径\n- 本身就含 `.codex` / `claude` / `codex`\n- 于是普通 workspace bug 被误打成 machine-local bug\n- 这会让 Claude 丢失真正的当前工作区上下文，进而出现空转、卡住、改不到目标文件\n\n### 这意味着什么\n\n- 第三轮里那些“像是 Claude 自己很蠢”的表现\n- 其中有一部分其实是：\n  - launcher 分类错了\n  - benchmark 调用链也被污染了\n- 所以不能再把旧样本一股脑都算成模型能力差\n\n## 2026-04-26 补充：第四轮 direct invocation benchmark 结果反转\n\n### 这轮怎么改的\n\n- 不再走容易拆坏 prompt 的壳层路径\n- 直接用完整 prompt 调 launcher 真跑\n- 同时保留：\n  - 真改文件\n  - 真跑 `verify.ps1`\n  - 真看 `claude-debug.log`\n\n### 新结果\n\n- `case-effort` 连续 3 次通过：\n  - `runs12\\case-effort-claude-run2`\n  - `runs12\\case-effort-claude-run3`\n  - `runs12\\case-effort-claude-run4`\n- 共同点：\n  - `effortLevel` 真从 `high` 改到 `medium`\n  - `verify.ps1` 真通过\n  - debug log 真出现 `written atomically`\n\n### 这次更新后的结论\n\n- 之前部分失败样本，确实混有 benchmark harness 的拆参污染\n- 之前部分卡住样本，确实混有 machine-local 误判污染\n- 所以当前更公平的判断应该是：\n  - Claude 仍然有 stream/SSE fallback 噪音\n  - 但在修正 launcher 参数绑定、machine-local 分类、调用链拆参污染后\n  - 它在这个真实 patch benchmark 上已经恢复到稳定可用\n\n### 仍然保留的保守结论\n\n- 不能因为这轮 3/3 成功，就说所有 action-report drift 都彻底消失了\n- 但至少现在已经明确：\n  - 旧结论里有一部分是被本机控制面 bug 放大的\n  - 不能把所有锅都继续扣在 Claude 模型本身\n\n## 2026-04-26 补充：Codex 看起来像“没登录”，其实是 live auth 文件读位错层\n\n### 真实情况不是 key 丢了\n\n- 当时欢迎页弹出三选一：\n  - `Sign in with ChatGPT`\n  - `Sign in with Device Code`\n  - `Provide your own API key`\n- 但真相不是没配 API key\n- `C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json` 里一直有 key\n- `C:\\Users\\ASUS-KL\\.codex\\config.toml` 里 `preferred_auth_method = \"apikey\"` 也还在\n\n### 真根因\n\n- 当前官方 Codex runtime 实际读的是：\n  - `C:\\Users\\ASUS-KL\\.codex\\auth.json`\n- 之前机器控制面只保了：\n  - `C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json`\n- 但没有同步到 runtime 真正读的 live 位\n- 所以看起来像“又掉回登录了”\n- 实际上是：\n  - key 在\n  - 只是读位错了\n\n### 这次怎么修的\n\n- 在真正 live 的 launcher：\n  - `C:\\ProgramData\\npm-global\\codex-launcher.cjs`\n- 加了启动时自动镜像：\n  - secrets auth -> live auth\n- 现在每次 `codex` 启动都会自动补：\n  - `C:\\Users\\ASUS-KL\\.codex\\auth.json`\n\n## 2026-04-26 补充：`codex exec` 不是模型问题，而是 gateway 自己把参数吃了\n\n### 现象\n\n- `codex exec ...` 明明是非交互执行\n- 却被打成：\n  - `Codex interactive mode`\n  - `stdin is not a terminal`\n\n### 真根因\n\n- `C:\\Users\\ASUS-KL\\.codex\\gateway.ps1` 顶部会尝试从 `CODEX_FORWARD_ARGS_JSON` 回填参数\n- 但它在函数定义之前就调用了 `ConvertFrom-JsonCompat`\n- 结果异常被静默吃掉\n- `$CodexArgs` 留空\n- gateway 就把整次调用误当成 interactive mode\n\n### 修后结果\n\n- 改成顶部直接用内建 `ConvertFrom-Json`\n- 然后走真实 launcher 链复测\n- `codex exec --skip-git-repo-check \"Reply with exactly OK\"` 已经真实返回：\n  - `OK`\n- 所以这不是模型笨，也不是 provider 坏了\n- 是本机 gateway 自己的参数回填 bug\n\n## 2026-04-26 补充：启动时那条 skill frontmatter 报错其实是 BOM 污染\n\n- 之前一直刷：\n  - `missing YAML frontmatter delimited by ---`\n- 但那个 `SKILL.md` 其实内容并不缺 frontmatter\n- 真根因是：\n  - 文件头带了 UTF-8 BOM (`EF BB BF`)\n  - 让解析器没把第一行认成纯 `---`\n- 已修成 UTF-8 无 BOM\n- 这条噪音现在也一起收掉了\n\n## 2026-04-26 补充：Codex 速查卡已补齐\n\n- 新增：\n  - `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\Codex 登录页与 exec 故障速查卡.md`\n- 目的不是替代说明书\n- 而是把这轮最常见的四个故障点压成一页：\n  - 登录页\n  - auth.json 读位\n  - exec 丢参\n  - skill 报错\n\n## 2026-04-26 补充：Claude 的 stream/SSE 这次不是“模型玄学”，而是两层本机控制面 bug\n\n### 第一层 bug：自动代理判断自己永远打不着\n\n- `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1` 里新加的自动代理判断，本来是为了让 `cc-vibe.com` 这种已知坏 SSE host 自动切到本地 stream proxy\n- 但函数里用了 `$host`\n- PowerShell 的 `$Host` 是只读自动变量\n- 所以赋值一抛错，就被 `catch` 吞掉\n- 最终表现就是：\n  - 代码看起来有自动代理\n  - 实际上永远返回 `False`\n\n### 第二层 bug：代理发了 JSON，但没把 SSE `event:` 行发全\n\n- 之前 proxy 只发：\n  - `data: {...}`\n- 但 Claude 流式解析实际上还需要显式事件名：\n  - `event: message_start`\n  - `event: content_block_delta`\n  - 等等\n- 所以之前即使走到 proxy，也仍会报：\n  - `Stream completed without receiving message_start event`\n\n### 这次修后结果\n\n- launcher 层：\n  - `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1` 不再把坏 SSE host 硬编码在脚本里\n  - 已知坏 SSE host 现在收口到：\n    - `C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\stream-compat.json`\n  - `cc-vibe.com` 会通过这个 machine-level registry 自动切到 `http://127.0.0.1:17834`\n- proxy 层：\n  - 每个 SSE frame 现在都会带 `event:` + `data:`\n- 最小验证：\n  - `Reply with exactly OK`\n  - 现在真实返回 `OK`\n  - debug 里也只剩：\n    - `Stream started - received first chunk`\n- 这说明这次至少把最烦的：\n  - 缺 `message_start`\n  - 先失败再 fallback\n- 从最小路径上压掉了\n\n### 2026-04-26 再补一层：这次开始算真的“治本”\n\n- 为什么说前一版还没完全治本：\n  - 虽然当时最小链路已通\n  - 但 `cc-vibe.com` 还写死在 launcher 里\n  - 这意味着以后同类 provider 兼容问题仍会回到“改脚本源码”而不是“改控制面声明”\n- 这次再收口后：\n  - Claude SSE 兼容 registry 改为：\n    - `C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\stream-compat.json`\n  - launcher 只读 registry，不再内置坏 host 名单\n- 这次还顺手抓到一个更低层坑：\n  - `C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1` 里有中文 prompt / pattern\n  - 在 Windows PowerShell 下如果文件不是 `UTF-8 with BOM`\n  - 会先炸成 parser error，根本还没运行到 SSE 自动代理逻辑\n- 所以本次最终状态不是只修“一个 host”\n  - 而是同时固定了：\n    - SSE host 兼容声明层\n    - launcher 读取层\n    - proxy 事件帧层\n    - PowerShell 编码加载层\n- 回归结果：\n  - `Reply with exactly OK` -> `OK`\n  - `用中文只回答：已稳定` -> `已稳定`\n  - 两次 debug 都显示：\n    - `ANTHROPIC_BASE_URL=http://127.0.0.1:17834`\n    - `Stream started - received first chunk`\n  - 且未再出现 fallback 相关报错",
+    "html": "<h1 id=\"claude-与-cc-switch-动态配置排障记录\">Claude 与 CC Switch 动态配置排障记录</h1>\n<h2 id=\"目标\">目标</h2>\n<p>本次调整的目标不是把某个固定 token 写死，而是让 <code>Claude Code</code> 每次启动时都<strong>动态读取 <code>CC Switch</code> 当前选中的 Claude provider</strong>，避免以下问题反复出现：</p>\n<ul>\n<li>旧的 <code>ANTHROPIC_*</code> 用户环境变量残留覆盖当前配置</li>\n<li>旧 launcher / shared provider 把错误的 <code>Base URL</code>、<code>Model</code>、<code>Token</code> 注入进程</li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code> 留下过期 token 副本</li>\n<li><code>CC Switch</code> 当前 provider 已经变化，但 <code>Claude</code> 仍在吃旧值</li>\n</ul>\n<h2 id=\"当前-source-of-truth\">当前 source of truth</h2>\n<p>当前 <code>Claude</code> 相关配置的真相源只保留为 <code>CC Switch</code>：</p>\n<ul>\n<li><code>CC Switch</code> 主配置目录：<code>C:\\Users\\ASUS-KL\\.cc-switch\\</code></li>\n<li><code>CC Switch</code> 数据库：<code>C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db</code></li>\n<li><code>CC Switch</code> 日志：<code>C:\\Users\\ASUS-KL\\.cc-switch\\logs\\cc-switch.log</code></li>\n<li><code>CC Switch</code> 主设置文件：<code>C:\\Users\\ASUS-KL\\.cc-switch\\settings.json</code></li>\n<li>当前 Claude provider 指针字段：<code>currentProviderClaude</code></li>\n</ul>\n<p><code>Claude</code> 本地侧不再保存 token 真值：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code> 当前已清空为 <code>{}</code>，不再作为 token / base URL 真相源</li>\n</ul>\n<h2 id=\"cc-switch-当前数据库状态\">CC Switch 当前数据库状态</h2>\n<p>在 <code>providers</code> 表中，当前选中的 Claude provider 为：</p>\n<ul>\n<li><code>id = ccvibe-1777173109177</code></li>\n<li><code>app_type = claude</code></li>\n<li><code>name = ccvibe</code></li>\n<li><code>is_current = 1</code></li>\n</ul>\n<p>该 provider 的 <code>settings_config</code> 当前为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"json\" data-theme=\"github-dark\"><code data-language=\"json\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">{</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">  \"env\"</span><span style=\"color:#E1E4E8\">: {</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"ANTHROPIC_AUTH_TOKEN\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"sk-454e877d2448309833ad4e06d5cba7ab52ed3f0bf495b69af3ae52de087e8dd6\"</span><span style=\"color:#E1E4E8\">,</span></span>\n<span data-line=\"\"><span style=\"color:#79B8FF\">    \"ANTHROPIC_BASE_URL\"</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#9ECBFF\">\"https://cc-vibe.com\"</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">  }</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<p>这说明：</p>\n<ul>\n<li>当前 <code>CC Switch</code> 数据库里的 Claude 配置是 <code>cc-vibe.com</code></li>\n<li>token 当前来自 <code>CC Switch</code> 数据库记录，而不是手写在 <code>Claude</code> 配置里</li>\n</ul>\n<h2 id=\"launcher-当前行为\">launcher 当前行为</h2>\n<p>当前入口文件：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code></li>\n</ul>\n<p>当前 launcher 已改为：</p>\n<ol>\n<li>启动时先清空当前进程里的旧 <code>ANTHROPIC_*</code></li>\n<li>读取 <code>C:\\Users\\ASUS-KL\\.cc-switch\\settings.json</code></li>\n<li>取出 <code>currentProviderClaude</code></li>\n<li>到 <code>C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db</code> 的 <code>providers</code> 表中查询对应 <code>settings_config</code></li>\n<li>把查询到的 <code>env</code> 动态注入给 <code>claude.exe</code></li>\n</ol>\n<p>也就是说，<code>Claude Code</code> 现在是：</p>\n<ul>\n<li><strong>动态跟随 <code>CC Switch</code> 当前 provider</strong></li>\n<li><strong>不依赖用户环境变量</strong></li>\n<li><strong>不依赖 <code>.claude\\settings.json</code> 中的 token 副本</strong></li>\n<li><strong>不依赖旧 shared provider 的 model / token / base URL 注入</strong></li>\n</ul>\n<h2 id=\"已清理的旧污染源\">已清理的旧污染源</h2>\n<p>本次清理过的旧污染源包括：</p>\n<ul>\n<li>用户环境变量中的：\n<ul>\n<li><code>ANTHROPIC_API_KEY</code></li>\n<li><code>ANTHROPIC_AUTH_TOKEN</code></li>\n<li><code>ANTHROPIC_BASE_URL</code></li>\n<li><code>ANTHROPIC_MODEL</code></li>\n</ul>\n</li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code> 中曾经残留的：\n<ul>\n<li><code>https://api.longcat.chat/anthropic</code></li>\n<li><code>LongCat-Flash-Thinking-2601</code></li>\n</ul>\n</li>\n<li>launcher 中旧的：\n<ul>\n<li>共享 provider 的 <code>ANTHROPIC_MODEL</code> 强注入</li>\n<li>旧 <code>primaryApiKey</code> fallback</li>\n<li>依赖 <code>.claude\\settings.json</code> 常驻 token 副本的逻辑</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"运行时验证结论\">运行时验证结论</h2>\n<p>在全新 PowerShell 进程中探测 launcher 最终喂给 <code>claude.exe</code> 的运行时环境，结果为：</p>\n<ul>\n<li><code>ANTHROPIC_AUTH_TOKEN = sk-454e877d2448309833ad4e06d5cba7ab52ed3f0bf495b69af3ae52de087e8dd6</code></li>\n<li><code>ANTHROPIC_BASE_URL = https://cc-vibe.com</code></li>\n</ul>\n<p>并且不再自动注入：</p>\n<ul>\n<li><code>ANTHROPIC_MODEL</code></li>\n<li><code>LongCat-Flash-Thinking-2601</code></li>\n<li><code>claude-sonnet-4-20250514</code></li>\n</ul>\n<p>这说明本机动态读取链路已经成立。</p>\n<h2 id=\"当前剩余问题\">当前剩余问题</h2>\n<p>当前剩下的问题不再是“本机没用上 <code>CC Switch</code> 配置”，而是：</p>\n<ul>\n<li><code>cc-vibe</code> 当前 token 对 Claude Code 请求返回 <code>403</code></li>\n<li>提示表现为：\n<ul>\n<li><code>Please run /login</code></li>\n<li><code>API Error: 403 {\"error\":{\"type\":\"forbidden\",\"message\":\"Request not allowed\"}}</code></li>\n</ul>\n</li>\n</ul>\n<p>这个现象更像是：</p>\n<ul>\n<li>token 失效</li>\n<li>token 没权限调用当前接口</li>\n<li>provider 套餐未开通 / 未绑定</li>\n<li>token 只适用于某类客户端，不适用于当前 Claude Code 请求</li>\n</ul>\n<h2 id=\"结论\">结论</h2>\n<p>本机现在已经达成以下状态：</p>\n<ul>\n<li><code>Claude</code> 不再硬编码 token</li>\n<li><code>Claude</code> 不再依赖用户环境变量里的 <code>ANTHROPIC_*</code></li>\n<li><code>Claude</code> 每次启动都动态读取 <code>CC Switch</code> 当前 provider</li>\n<li><code>CC Switch</code> 是 Claude 配置的唯一真相源</li>\n</ul>\n<p>因此，后续若再出现 Claude 鉴权失败，应优先排查：</p>\n<ol>\n<li><code>CC Switch</code> 当前 provider 是否正确</li>\n<li><code>CC Switch</code> 数据库中的 token 是否已变化</li>\n<li><code>cc-vibe</code> 上游是否拒绝该 token</li>\n</ol>\n<p>而不应再优先怀疑本机 launcher / 用户环境变量 / <code>.claude\\settings.json</code> 副本。</p>\n<h2 id=\"2026-04-26-补充claude-权限变回最小的根因与修复\">2026-04-26 补充：Claude 权限变回最小的根因与修复</h2>\n<ul>\n<li>根因不是 CC Switch token 丢了，而是 <code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code> 被清成了 <code>{}</code>。</li>\n<li>这会导致 Claude 丢失原本的高权限 / yolo 行为，于是重新开始频繁向用户要确认、要决定。</li>\n<li>旧的高权限配置其实还在 <code>C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db</code> 的 <code>settings.common_config_claude</code> 里。</li>\n<li>修复方式：把其中与权限/运行模式相关的安全配置恢复回 <code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code>，但刻意排除：\n<ul>\n<li><code>ANTHROPIC_AUTH_TOKEN</code></li>\n<li><code>ANTHROPIC_BASE_URL</code></li>\n<li><code>ANTHROPIC_*</code> 模型相关字段</li>\n<li>顶层硬编码 <code>model</code></li>\n</ul>\n</li>\n<li>这样现在的职责边界变成：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code>：每次启动时动态从 CC Switch 当前 provider 读取 token/base URL</li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code>：只负责 yolo 权限、sandbox、approval、自动确认等行为设置</li>\n</ul>\n</li>\n<li>当前确认结果：\n<ul>\n<li><code>approvalPolicy = never</code></li>\n<li><code>sandboxMode = danger-full-access</code></li>\n<li><code>permissions.defaultMode = bypassPermissions</code></li>\n<li><code>.claude\\settings.json</code> 中已无 <code>model</code> 字段</li>\n<li><code>.claude\\settings.json</code> 的 <code>env</code> 中已无 <code>ANTHROPIC_*</code> 硬编码</li>\n</ul>\n</li>\n<li>如果后面再出现 403 / <code>Please run /login</code>，那通常是上游 provider（例如 <code>cc-vibe</code>）对当前 token 的授权问题，不再是本地读取链路的问题。</li>\n</ul>\n<h2 id=\"2026-04-26-补充彻底统一-claude-与-codex-的-live-控制层\">2026-04-26 补充：彻底统一 Claude 与 Codex 的 live 控制层</h2>\n<h3 id=\"claude-统一结果\">Claude 统一结果</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\config.json</code> 原先还残留一套备用 auth：<code>primaryApiKey = sk-local-claude-glm-bridge-20260420</code>。</li>\n<li>这会和 <code>CC Switch -> claude-launch.ps1</code> 的动态 provider 链并行存在，属于第二真相源。</li>\n<li>已处理为只保留最小非认证配置：\n<ul>\n<li>当前 <code>C:\\Users\\ASUS-KL\\.claude\\config.json</code> 仅剩 <code>permissions</code> 空规则</li>\n<li>认证不再从这里读取</li>\n</ul>\n</li>\n<li>当前 Claude 的 live 职责边界：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code>：动态读取 <code>CC Switch</code> 当前 provider</li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code>：只负责 yolo 权限 / sandbox / approval 行为</li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\config.json</code>：不再承载备用 API key</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"codex-统一结果\">Codex 统一结果</h3>\n<ul>\n<li><code>Codex</code> 之前之所以总出现 <code>controlled interactive mode</code>，控制点在：\n<ul>\n<li><code>C:\\ProgramData\\npm-global\\codex-launcher.cjs</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\industrial-control\\policies\\interactive-policy.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\gateway.ps1</code></li>\n</ul>\n</li>\n<li>已做的修复：\n<ol>\n<li><code>interactive-policy.json</code> 中 <code>interactive_mode.enabled</code> 改为 <code>false</code></li>\n<li><code>codex-launcher.cjs</code> 现在会尊重这个开关，不再无条件注入 controlled prompt</li>\n<li><code>codex-launcher.cjs</code> 对 <code>--version</code> / <code>--help</code> 做 launcher 级直通，不再进 gateway</li>\n<li><code>gateway.ps1</code> 修正管理参数 bypass 顺序，并补了 <code>CODEX_FORWARD_ARGS_JSON</code> 的读取</li>\n</ol>\n</li>\n<li>验证结果：\n<ul>\n<li><code>codex --version</code> 现在直接返回：<code>codex-cli 0.123.0-alpha.5</code></li>\n<li><code>codex --help</code> 现在直接输出帮助，不再跳进 controlled interactive mode</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"当前结论\">当前结论</h3>\n<ul>\n<li>Claude：主认证真相源已收敛为 <code>CC Switch</code></li>\n<li>Claude：权限层与 provider 层已分离，避免再因为 token/provider 调整把 yolo 权限一并搞乱</li>\n<li>Codex：受控交互限制链已关闭到 live 直通状态</li>\n<li>仍然可能存在历史备份、日志、file-history、glm-gateway 遗留文件，但它们不再是当前 live 控制层</li>\n</ul>\n<h2 id=\"2026-04-26-补充完全删除-glm-残留与下线旧-unified-config-链\">2026-04-26 补充：完全删除 GLM 残留与下线旧 unified-config 链</h2>\n<h3 id=\"glm-gateway-删除结果\">GLM Gateway 删除结果</h3>\n<ul>\n<li>用户已明确要求完全删除 <code>GLM</code> 相关本地残留。</li>\n<li>已删除目录：<code>C:\\Users\\ASUS-KL\\.claude\\glm-gateway</code></li>\n<li>删除验证结果：\n<ul>\n<li><code>Test-Path C:\\Users\\ASUS-KL\\.claude\\glm-gateway</code> 返回 <code>False</code></li>\n</ul>\n</li>\n<li>删除后复扫当前 live 控制文件，未再发现以下旧链路引用：\n<ul>\n<li><code>glm-gateway</code></li>\n<li><code>supervise-claude-glm-gateway</code></li>\n<li><code>run-claude-glm-gateway</code></li>\n<li><code>127.0.0.1:4000</code></li>\n<li><code>litellm</code></li>\n</ul>\n</li>\n<li>结论：旧的本地 GLM / LiteLLM 转发链已经完全退出当前 Claude live 链路。</li>\n</ul>\n<h3 id=\"旧-unified-config-链下线结果\">旧 unified-config 链下线结果</h3>\n<ul>\n<li>核查确认 <code>C:\\Users\\ASUS-KL\\.codex\\claude\\unified-config.json</code> 并不属于当前 live 启动链。</li>\n<li>同时确认 <code>C:\\Users\\ASUS-KL\\.codex\\shared\\tools\\sync-config.sh</code> 只是旧统一配置方案的辅助脚本，不再被当前 launcher / gateway / bin 包装层使用。</li>\n<li>已归档到 <code>C:\\Users\\ASUS-KL\\.codex\\archive-nonlive-20260426</code>：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\tools\\sync-config.sh</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\claude\\unified-config.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\claude\\hooks</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\claude\\plans</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\claude\\settings</code></li>\n<li>空壳目录 <code>C:\\Users\\ASUS-KL\\.codex\\claude</code></li>\n</ul>\n</li>\n<li>验证结果：\n<ul>\n<li><code>Test-Path C:\\Users\\ASUS-KL\\.codex\\claude</code> 返回 <code>False</code></li>\n<li><code>Test-Path C:\\Users\\ASUS-KL\\.codex\\shared\\tools\\sync-config.sh</code> 返回 <code>False</code></li>\n</ul>\n</li>\n<li>当前再次检索时，仅剩以下位置还提到旧 unified-config 结构：\n<ul>\n<li>归档副本：<code>C:\\Users\\ASUS-KL\\.codex\\archive-nonlive-20260426\\...</code></li>\n<li>说明文档：<code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\unified-config-plan.md</code></li>\n</ul>\n</li>\n<li>结论：旧 unified-config 方案已经完成下线，不再参与当前 Codex / Claude 的 live 配置链。</li>\n</ul>\n<h3 id=\"当前-live-控制点收口结论\">当前 live 控制点收口结论</h3>\n<ul>\n<li>Claude live 控制点：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.cc-switch\\settings.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.cc-switch\\cc-switch.db</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\config.json</code></li>\n</ul>\n</li>\n<li>Codex live 控制点：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\codex.ps1</code></li>\n<li><code>C:\\ProgramData\\npm-global\\codex-launcher.cjs</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\gateway.ps1</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\industrial-control\\policies\\interactive-policy.json</code></li>\n</ul>\n</li>\n<li>至此，本机上与本轮排障直接相关的旧 provider / GLM 转发 / unified-config 旧同步链都已经从 live 路径中剥离。</li>\n</ul>\n<h2 id=\"2026-04-26-补充兼容脚本中的-glm-特判也已清除\">2026-04-26 补充：兼容脚本中的 GLM 特判也已清除</h2>\n<ul>\n<li>在完成 live 配置层、归档层、旧 unified-config 链下线后，又对 <code>.codex\\automations</code> 中的兼容脚本做了最后清理。</li>\n<li>本次处理文件：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\automations\\sync-claude-shared-runtime.ps1</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\automations\\check-claude-codex-shared-runtime.ps1</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"清理内容\">清理内容</h3>\n<ul>\n<li><code>sync-claude-shared-runtime.ps1</code>\n<ul>\n<li>删除了“如果存在 <code>glm-gateway\\run-claude-glm-gateway.ps1</code>，就把默认 Claude Base URL 设为 <code>http://127.0.0.1:4000</code>”的旧兼容分支。</li>\n</ul>\n</li>\n<li><code>check-claude-codex-shared-runtime.ps1</code>\n<ul>\n<li>删除了把 <code>http://127.0.0.1:4000</code> 当成特殊例外的旧判断。</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"验证结果\">验证结果</h3>\n<ul>\n<li>对上述两份脚本复扫后，已不再出现：\n<ul>\n<li><code>glm</code></li>\n<li><code>litellm</code></li>\n<li><code>127.0.0.1:4000</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"最终收口结论\">最终收口结论</h3>\n<ul>\n<li>至此，旧的 <code>GLM / LiteLLM / 本地 4000 代理</code> 残留已经从以下四层全部清除：\n<ol>\n<li>live 启动链</li>\n<li>live 配置文件</li>\n<li>兼容/自动化脚本</li>\n<li>旧 unified-config 同步链</li>\n</ol>\n</li>\n<li>后续如果再搜索到相关关键词，通常只会出现在：\n<ul>\n<li><code>archive-nonlive-20260426</code> 归档目录</li>\n<li><code>file-history</code> / <code>projects</code> / <code>history.jsonl</code> 等历史记录区</li>\n<li>个别说明文档或 changelog</li>\n</ul>\n</li>\n<li>这些位置都不再参与当前实际运行时控制。</li>\n</ul>\n<h2 id=\"2026-04-26-复盘让项目更有条理更稳定的长期原则\">2026-04-26 复盘：让项目更有条理、更稳定的长期原则</h2>\n<h3 id=\"这次排障得到的核心经验\">这次排障得到的核心经验</h3>\n<ul>\n<li>不是“配置太多”本身危险，而是“同一类事实被多份 live 文件同时控制”。</li>\n<li>表面能跑不代表系统清晰；真正稳定的系统必须能回答“到底哪份配置在生效”。</li>\n<li>历史残留如果不分层，会持续污染排障判断；备份、旧脚本、废弃网关、旧文档不应与 live 文件并列放在根目录。</li>\n<li>修复不能只修当前报错，还要顺手降低未来复发路径；否则只是把混乱短暂压住。</li>\n</ul>\n<h3 id=\"一个更稳定项目应具备的因素\">一个更稳定项目应具备的因素</h3>\n<ul>\n<li>单一真相源：provider、permission、launcher、gateway 各只有一个 live owner。</li>\n<li>清晰职责边界：认证层、权限层、启动层、运行层、文档层分开。</li>\n<li>live / archive / history 分层：当前生效、归档、历史记录不能混在一起。</li>\n<li>可追踪启动链：从命令入口到最终控制文件应能一路追清。</li>\n<li>兼容逻辑可退场：临时过渡分支存在时，要明确退场条件，稳定后及时移除。</li>\n<li>文档和 machine-readable facts 同步：人看的说明书与脚本可读的 registry / state 要一起维护。</li>\n<li>验证闭环：修改后要验证真实运行路径，而不是只看文件内容。</li>\n</ul>\n<h3 id=\"已固化到长期治理层的规则方向\">已固化到长期治理层的规则方向</h3>\n<ul>\n<li>本机多工具控制面默认强制单一 live truth，不允许 parallel truth 与当前 live 路径并列。</li>\n<li>旧 proxy/provider/unified-config 方案一旦退场，就应降级到 archive/history，不再挂在 live 根目录。</li>\n<li>机器级控制面变更默认同时更新：\n<ul>\n<li>Markdown 控制面说明书</li>\n<li>machine-readable JSON facts layer</li>\n<li>必要时的全局规则 / 门禁层</li>\n</ul>\n</li>\n<li>后续遇到类似问题，应优先定位 controlling entrypoint 和 controlling config，再看 archive/history，而不是先做 broad search。</li>\n</ul>\n<h2 id=\"2026-04-26-补充新增独立-control-plane-json-与一键体检脚本\">2026-04-26 补充：新增独立 control-plane JSON 与一键体检脚本</h2>\n<h3 id=\"新增文件\">新增文件</h3>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\claude-codex-control-plane.json</code></li>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\claude-codex-control-plane.schema.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\automations\\check-claude-codex-control-plane.ps1</code></li>\n</ul>\n<h3 id=\"目的\">目的</h3>\n<ul>\n<li>不再只靠 Markdown 说明当前控制面，而是增加独立 machine-readable facts 文件。</li>\n<li>让未来 agent、脚本、排障流程可以先读取 <code>claude-codex-control-plane.json</code>，而不是从多个文档和配置中猜测当前 live truth。</li>\n<li>提供一个一键体检入口，快速确认当前控制面是否发生漂移。</li>\n</ul>\n<h3 id=\"体检脚本当前验证结果\">体检脚本当前验证结果</h3>\n<ul>\n<li><code>controlPlaneLoaded = true</code></li>\n<li><code>providerPointer = ccvibe-1777173109177</code></li>\n<li><code>approvalPolicy = never</code></li>\n<li><code>sandboxMode = danger-full-access</code></li>\n<li><code>interactivePolicyEnabled = false</code></li>\n<li><code>forbiddenLegacyChains.anyPresent = false</code></li>\n</ul>\n<h3 id=\"含义\">含义</h3>\n<ul>\n<li>当前 <code>Claude / Codex / CC Switch</code> 控制面不仅有人类可读说明书，也已经具备：\n<ul>\n<li>机器可读 truth layer</li>\n<li>可执行健康检查入口</li>\n<li>可验证的 forbidden legacy chain 检查</li>\n</ul>\n</li>\n<li>这使得后续维护不再依赖口头记忆或历史聊天，而可以直接先读 JSON、再跑脚本、最后看说明书。</li>\n</ul>\n<h2 id=\"2026-04-26-补充成品化收尾注释快捷入口archive-索引\">2026-04-26 补充：成品化收尾（注释、快捷入口、archive 索引）</h2>\n<h3 id=\"新增快捷入口\">新增快捷入口</h3>\n<ul>\n<li>新增 <code>bin</code> 级体检入口：<code>C:\\Users\\ASUS-KL\\bin\\check-control-plane.cmd</code></li>\n<li>该命令直接调用：<code>C:\\Users\\ASUS-KL\\.codex\\automations\\check-claude-codex-control-plane.ps1</code></li>\n<li>作用：以后不需要再记完整 PowerShell 路径，直接跑一个短命令就能体检当前控制面。</li>\n</ul>\n<h3 id=\"三个-live-脚本已补控制面注释\">三个 live 脚本已补控制面注释</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code></li>\n<li><code>C:\\ProgramData\\npm-global\\codex-launcher.cjs</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\gateway.ps1</code></li>\n</ul>\n<p>这些注释明确写清：</p>\n<ul>\n<li>哪一层是当前 truth owner</li>\n<li>不要把什么旧链路恢复回来</li>\n<li>不要把 token/base URL/model 写回错误配置层</li>\n</ul>\n<h3 id=\"archive-索引已补齐\">archive 索引已补齐</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\archive-nonlive-20260426\\README.md</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\archive-nonlive-20260426\\README.md</code></li>\n</ul>\n<p>索引目的：</p>\n<ul>\n<li>防止未来把 archive 当 live 根目录的一部分来理解</li>\n<li>明确这些归档对象为什么退场</li>\n<li>明确当前 live 配置只认哪些路径</li>\n</ul>\n<h3 id=\"含义-1\">含义</h3>\n<ul>\n<li>到这一步，当前系统已经具备：\n<ul>\n<li>全局规则层</li>\n<li>机器级说明书</li>\n<li>machine-readable control-plane JSON</li>\n<li>一键体检脚本</li>\n<li><code>bin</code> 级快捷入口</li>\n<li>archive 索引</li>\n</ul>\n</li>\n<li>这意味着这套控制面已经不仅“能用”，而且具备：\n<ul>\n<li>可解释</li>\n<li>可验证</li>\n<li>可回看</li>\n<li>可维护</li>\n<li>可防复发</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充旧-anthropic-环境变量会话污染已做-shell-层自动清场\">2026-04-26 补充：旧 ANTHROPIC 环境变量会话污染已做 shell 层自动清场</h2>\n<h3 id=\"现象\">现象</h3>\n<ul>\n<li>当时继续体检时，发现当前对话所在 PowerShell 进程里仍然带着旧值：\n<ul>\n<li><code>ANTHROPIC_API_KEY = sk-local-claude-glm-bridge-20260420</code></li>\n<li><code>ANTHROPIC_AUTH_TOKEN = sk-local-claude-glm-bridge-20260420</code></li>\n<li><code>ANTHROPIC_BASE_URL = http://127.0.0.1:4000</code></li>\n<li><code>ANTHROPIC_MODEL = claude-sonnet-4-20250514</code></li>\n</ul>\n</li>\n<li>这些值会让人误以为机器上仍有 live 的 <code>GLM / 本地 4000</code> Claude 桥接链在生效。</li>\n</ul>\n<h3 id=\"追源结果\">追源结果</h3>\n<ul>\n<li>用户级与机器级持久环境变量里，这些 <code>ANTHROPIC_*</code> 键已经是空值。</li>\n<li>当前污染不来自：\n<ul>\n<li><code>CC Switch</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code></li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code></li>\n<li>当前 live launcher / gateway 再次硬编码注入</li>\n</ul>\n</li>\n<li>根因是：某些已经打开的旧 shell / 父进程环境仍继承着早期 <code>GLM / LiteLLM / 127.0.0.1:4000</code> 桥接时代的进程级环境变量。</li>\n</ul>\n<h3 id=\"风险判断\">风险判断</h3>\n<ul>\n<li>这属于“当前会话污染”，不是“机器级持久 live 控制面冲突”。</li>\n<li>它不会重新定义 Claude 的 live provider truth，因为：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code> 启动时会先清掉 <code>ANTHROPIC_*</code></li>\n<li>然后只从 <code>CC Switch</code> 当前 provider 重新注入有效值</li>\n</ul>\n</li>\n<li>它也不会重新定义 Codex 的 provider truth，因为 Codex 当前 live provider 只看 <code>.codex</code> 自己的配置链。</li>\n</ul>\n<h3 id=\"清场动作\">清场动作</h3>\n<ul>\n<li>为了防止旧父进程把这些脏值继续带进未来新开的终端，会话层补了一道自动清理：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\Documents\\PowerShell\\profile.ps1</code></li>\n<li><code>C:\\Users\\ASUS-KL\\Documents\\WindowsPowerShell\\profile.ps1</code></li>\n</ul>\n</li>\n<li>两个 profile 现在都会在 shell 启动时主动移除：\n<ul>\n<li><code>ANTHROPIC_API_KEY</code></li>\n<li><code>ANTHROPIC_AUTH_TOKEN</code></li>\n<li><code>ANTHROPIC_BASE_URL</code></li>\n<li><code>ANTHROPIC_MODEL</code></li>\n<li><code>ANTHROPIC_DEFAULT_SONNET_MODEL</code></li>\n<li><code>ANTHROPIC_DEFAULT_OPUS_MODEL</code></li>\n<li><code>ANTHROPIC_SMALL_FAST_MODEL</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"验证结果-1\">验证结果</h3>\n<ul>\n<li>新开的 <code>pwsh</code> 会话中，上述关键 <code>ANTHROPIC_*</code> 变量都已为空。</li>\n<li>新开的 <code>Windows PowerShell</code> 会话中，上述关键 <code>ANTHROPIC_*</code> 变量也都已为空。</li>\n<li>这说明：\n<ul>\n<li>旧污染不会再自动传染到未来新 shell</li>\n<li>当前 live 控制面与 shell 会话层现在已经都收口</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"含义-2\">含义</h3>\n<ul>\n<li>到这一步，当前系统不只清掉了：\n<ul>\n<li>live 配置残留</li>\n<li>live 启动链残留</li>\n<li>兼容脚本残留</li>\n<li>unified-config 残留</li>\n</ul>\n</li>\n<li>还额外清掉了“旧祖先进程环境对未来新 shell 的污染路径”。</li>\n<li>这使得后续排障时可以更明确地区分：\n<ul>\n<li>机器级 live truth</li>\n<li>当前单个旧 shell 会话的脏环境</li>\n<li>archive / history / debug 里的历史痕迹</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充claude-提前收回合的短回合倾向已做配置与规则双修复\">2026-04-26 补充：Claude 提前收回合的短回合倾向已做配置与规则双修复</h2>\n<h3 id=\"现象-1\">现象</h3>\n<ul>\n<li>用户持续感知到：Claude 有时不是“崩掉”，而是“任务还没真正闭环就自己停了”。</li>\n<li>最近会话记录里，能看到多次正常 <code>assistant -> tool_use -> tool_result -> assistant</code> 循环，但回合末尾仍以 <code>stop_reason = end_turn</code> 正常结束。</li>\n<li>这说明主问题更像“过早收回合”，而不是“provider 硬断流”。</li>\n</ul>\n<h3 id=\"会话证据判断\">会话证据判断</h3>\n<ul>\n<li>最近会话尾部中，能看到明确的 <code>stop_reason = end_turn</code> 与 <code>turn_duration</code> 结束记录。</li>\n<li>说明至少最近这类情况里，Claude 更像是自己认为“这轮够了”，而不是被 API error、stream cancel、launcher crash 中断。</li>\n<li>另外还观察到中途工具报错后，Claude 并不总会继续把任务推到最终闭环，而是容易在子步骤层面收尾。</li>\n</ul>\n<h3 id=\"配置层修复\">配置层修复</h3>\n<p>为降低“短回合、快收尾、少展开”的倾向，已调整：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code>\n<ul>\n<li><code>useCompactMode: true -> false</code></li>\n<li><code>terseMode: true -> false</code></li>\n<li><code>defaultServiceTier: fast -> standard</code></li>\n<li><code>CLAUDE_CODE_MAX_OUTPUT_TOKENS: 6000 -> 12000</code></li>\n</ul>\n</li>\n</ul>\n<p>这些改动的目的不是改 provider，也不是改权限，而是：</p>\n<ul>\n<li>给单回合更大输出空间</li>\n<li>降低为了追求速度而过早收尾的倾向</li>\n<li>让 Claude 更愿意把当前边界内的下一步继续做完</li>\n</ul>\n<h3 id=\"规则层修复\">规则层修复</h3>\n<p>仅靠 settings 还不够，所以在 Claude 共享 overlay 里又补了一层明确行为约束：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md</code></li>\n</ul>\n<p>新增要求包括：</p>\n<ul>\n<li>不要把“当前子步骤做完”误判成“整个任务完成”</li>\n<li>只要任务边界内还有明确下一步，就继续推进，不要直接 <code>end_turn</code></li>\n<li>只有在 <code>completed / blocked / 需要用户关键决定</code> 三种条件之一成立时，才允许收回合</li>\n<li>单个工具报错时，默认先做同边界内自恢复</li>\n</ul>\n<h3 id=\"更硬的回合结束前自检清单\">更硬的回合结束前自检清单</h3>\n<p>本轮又进一步加硬成显式自检：</p>\n<ul>\n<li>回合结束前必须逐项检查：\n<ul>\n<li><code>completed</code> 是否成立？</li>\n<li><code>blocked</code> 是否成立？</li>\n<li>如果两者都不成立，当前 <code>next step</code> 是什么？</li>\n</ul>\n</li>\n<li>若仍有明确 <code>next step</code>，默认继续执行，不允许把收回合作为首选动作</li>\n<li>回合结束前默认补齐：\n<ul>\n<li>当前进展</li>\n<li>验证状态</li>\n<li>未完成项</li>\n<li>下一步</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"含义-3\">含义</h3>\n<ul>\n<li>到这一步，针对“Claude 总像没做完就停”的问题，已经不是只靠口头提醒，而是同时落了两层修复：\n<ul>\n<li>配置层：降低短回合倾向</li>\n<li>规则层：提高闭环要求</li>\n</ul>\n</li>\n<li>后续如果问题仍复发，就更容易区分：\n<ul>\n<li>是 provider / 流式层问题</li>\n<li>还是 agent 在已知闭环规则下仍然行为过早收尾</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充claude-风格收紧不再只修掉线也修补话\">2026-04-26 补充：Claude 风格收紧，不再只修“掉线”，也修“补话”</h2>\n<h3 id=\"新诉求\">新诉求</h3>\n<ul>\n<li>在流式兼容修好后，剩下的用户体感问题变成：\n<ul>\n<li>会补礼貌尾巴</li>\n<li>短答不够字面</li>\n<li>有时显得不够硬执行</li>\n</ul>\n</li>\n<li>这说明主问题已经从“链路坏”转成“行为风格不合口味”。</li>\n</ul>\n<h3 id=\"先做对照不盲改\">先做对照，不盲改</h3>\n<p>先用纯净模式和当前 live 模式做了最小对照：</p>\n<ul>\n<li>纯净模式：\n<ul>\n<li><code>只回答 测试 -> 测试</code></li>\n<li><code>Reply with exactly TEST and nothing else. -> TEST</code></li>\n</ul>\n</li>\n<li>调整前 live 模式：\n<ul>\n<li><code>只回答 测试 -> 测试收到。</code></li>\n<li><code>Reply with exactly TEST and nothing else. -> TEST</code></li>\n</ul>\n</li>\n</ul>\n<p>这个对照很关键：</p>\n<ul>\n<li>说明当前 live Claude 的“有点蠢”不完全是 model 本体差</li>\n<li>更大一部分是 live 提示层让它更容易补话与自作主张</li>\n</ul>\n<h3 id=\"实施的风格收紧\">实施的风格收紧</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code>\n<ul>\n<li><code>terseMode = true</code></li>\n<li><code>modelReasoningEffort = medium</code></li>\n<li><code>env.CLAUDE_CODE_MODEL_REASONING_EFFORT = medium</code></li>\n</ul>\n</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md</code>\n<ul>\n<li>新增“风格收紧协议”</li>\n<li>明确要求：\n<ul>\n<li>默认更短</li>\n<li>默认更硬执行</li>\n<li><code>只回答</code> / <code>exactly</code> / <code>不要客套</code> 当硬约束</li>\n<li>指定标签与顺序时优先原样保留</li>\n</ul>\n</li>\n</ul>\n</li>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code>\n<ul>\n<li>追加一段很短的 launcher 级系统提示</li>\n<li>作用是把“字面服从”从 overlay 再往前推一层</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"调整后的真实样本\">调整后的真实样本</h3>\n<ul>\n<li><code>只回答 修好了 -> 修好了</code></li>\n<li><code>只回答 测试 -> 测试</code></li>\n<li><code>只回答 OK -> OK</code></li>\n<li><code>Reply with exactly TEST and nothing else. -> TEST</code></li>\n<li>对“不要客套、不要总结、只用一句话说下一步”的提示，Claude 现在会直接给动作句，而不是补礼貌句</li>\n</ul>\n<h3 id=\"仍未完全消失的边界\">仍未完全消失的边界</h3>\n<ul>\n<li>单轮 <code>--print</code> 下的“刻意抽象格式压测”仍不稳定：\n<ul>\n<li>如果 prompt 故意不给具体任务，只要求 <code>[STEP]/[WHY]/[ACTION]/[RESULT]</code> 四标签，有时 Claude 会先追问</li>\n<li>某些演示式 prompt 下，它也可能只回一个标签或误判任务</li>\n</ul>\n</li>\n<li>所以这轮更准确的结论不是“Claude 完全变聪明了”，而是：\n<ul>\n<li><strong>短答和字面服从已明显改善</strong></li>\n<li><strong>真实任务中的执行风格已更接近用户偏好</strong></li>\n<li><strong>抽象单轮格式服从仍有 residual risk</strong></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这一轮的价值\">这一轮的价值</h3>\n<ul>\n<li>到这一步，排障视角又收窄了一层：\n<ul>\n<li>之前修的是“为什么像卡死/掉线”</li>\n<li>现在修的是“为什么像有点蠢/爱补话”</li>\n</ul>\n</li>\n<li>这也让后续判断更清楚：\n<ul>\n<li>如果又开始 <code>OK -> O</code>，优先查流式兼容链</li>\n<li>如果又开始“只回答还要多说一句”，优先查风格层与 launcher 追加提示</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充给-claude-单独开一条更轻的修-bug-入口\">2026-04-26 补充：给 Claude 单独开一条更轻的修 bug 入口</h2>\n<h3 id=\"为什么不直接继续堆规则\">为什么不直接继续堆规则</h3>\n<ul>\n<li>用户后续进一步指出：Claude 不只是“会补话”，而且“改 bug 能力比 Codex 差很多”。</li>\n<li>这时继续在默认 <code>claude</code> 上一味叠规则，不一定是最优解。</li>\n<li>更合理的方向是：\n<ul>\n<li>保留默认 <code>claude</code> 作为通用入口</li>\n<li>单独做一条更轻、更接近 Codex 工作方式的 bug-fix 入口</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"新入口\">新入口</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-bugfix.ps1</code></li>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-bugfix.cmd</code></li>\n</ul>\n<h3 id=\"入口策略\">入口策略</h3>\n<ul>\n<li>仍然：\n<ul>\n<li>从 CC Switch 读取当前 provider truth</li>\n<li>使用本机 stream proxy 修复 <code>cc-vibe</code> 的坏 SSE</li>\n</ul>\n</li>\n<li>但会：\n<ul>\n<li>走 <code>--bare</code></li>\n<li>跳过共享 MCP / plugin / 厚提示层</li>\n<li>只追加一小段 bug-fix prompt：\n<ul>\n<li>reproduce</li>\n<li>inspect</li>\n<li>patch</li>\n<li>verify</li>\n<li>少解释</li>\n<li>下一步明确时直接做</li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"同题对照基准\">同题对照基准</h3>\n<p>选了一个真实本机 bug 做同题比较：</p>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code></li>\n<li><code>effortLevel = high</code></li>\n<li><code>modelReasoningEffort = medium</code></li>\n<li><code>env.CLAUDE_CODE_MODEL_REASONING_EFFORT = medium</code></li>\n</ul>\n<p>结果：</p>\n<ul>\n<li>默认 Claude\n<ul>\n<li>约 <code>68.4s</code></li>\n<li>能指出修复方向</li>\n<li>但更倾向让用户手改或先卡在授权语气</li>\n</ul>\n</li>\n<li><code>claude-bugfix</code>\n<ul>\n<li>约 <code>39.9s</code></li>\n<li>直接给出最小修复命令与验证命令</li>\n</ul>\n</li>\n<li>Codex\n<ul>\n<li>直接落 patch</li>\n<li>已把 <code>effortLevel</code> 修到 <code>medium</code></li>\n<li>回读确认三处一致</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这一步意味着什么\">这一步意味着什么</h3>\n<ul>\n<li>到这一步，关于“Claude 为什么改 bug 比 Codex 差很多”的答案更具体了：\n<ul>\n<li>不只是 model 差异</li>\n<li>更是默认控制面更重、提示更多、执行链更绕</li>\n</ul>\n</li>\n<li>瘦身后的 <code>claude-bugfix</code> 已经明显比默认 <code>claude</code> 更适合修 bug</li>\n<li>但同样真实问题下，Codex 仍然更像主力执行 agent，Claude 更适合作为副手或轻量 bug-fix 模式使用</li>\n</ul>\n<h2 id=\"2026-04-26-补充默认-claude-也开始自动识别-bug-fix-意图\">2026-04-26 补充：默认 claude 也开始自动识别 bug-fix 意图</h2>\n<h3 id=\"用户新诉求\">用户新诉求</h3>\n<ul>\n<li>用户明确表示：不希望自己记住 <code>claude-bugfix</code> 并手工切命令。</li>\n<li>目标变成：\n<ul>\n<li>默认 <code>claude</code> 也能自动识别修 bug / 排障意图</li>\n<li>自动切到更轻、更像执行 agent 的工作模式</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次怎么做\">这次怎么做</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code>\n<ul>\n<li>保留原本的启动参数意图识别</li>\n<li>同时把追加的 system prompt 改成更强版本：\n<ul>\n<li>如果<strong>当前或后续</strong>用户消息命中 bug-fix / debugging / troubleshooting / repair / error / regression / startup failure 等意图</li>\n<li>就立即切入 bug-fix 模式</li>\n</ul>\n</li>\n</ul>\n</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md</code>\n<ul>\n<li>新增：\n<ul>\n<li><code>Session Bug-Fix Auto-Switch</code></li>\n<li><code>Harder Bug-Fix Protocol</code></li>\n</ul>\n</li>\n<li>把“会话内后续消息也自动切轻”写成持续生效规则，而不是只靠首条 prompt</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"新的-bug-fix-模式要求\">新的 bug-fix 模式要求</h3>\n<ul>\n<li>默认心智顺序：\n<ul>\n<li><code>repro -> inspect -> cause -> patch -> verify</code></li>\n</ul>\n</li>\n<li>行为要求：\n<ul>\n<li>下一步明显时直接做</li>\n<li>少长篇讨论</li>\n<li>单个工具失败先自恢复一次</li>\n<li>没有 patch 或验证，不算闭环</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"当前含义\">当前含义</h3>\n<ul>\n<li>到这一步，默认 <code>claude</code> 和 <code>claude-bugfix</code> 的关系变成：\n<ul>\n<li><code>claude</code>\n<ul>\n<li>通用入口</li>\n<li>会自动识别 bug-fix 意图并切轻</li>\n</ul>\n</li>\n<li><code>claude-bugfix</code>\n<ul>\n<li>更显式、更激进的轻量 bug-fix 入口</li>\n<li>作为备用/兜底通道保留</li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充把-bug-fix-模式继续推进到-machine-aware-file-first\">2026-04-26 补充：把 bug-fix 模式继续推进到 machine-aware file-first</h2>\n<h3 id=\"为什么还要再推一层\">为什么还要再推一层</h3>\n<ul>\n<li>新一轮真实 bug 基准里暴露出一个更深的短板：\n<ul>\n<li>Claude 虽然已经更愿意进入 bug-fix 模式</li>\n<li>但面对本机 launcher / 启动链问题时，仍可能先猜通用配置路径，或者把问题抽象成黑盒内部行为</li>\n</ul>\n</li>\n<li>这说明它缺的不是“修 bug 意愿”，而是：\n<ul>\n<li>先锁真实 live 文件层</li>\n<li>先锁这台机器自己的控制点</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"继续强化的内容\">继续强化的内容</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code>\n<ul>\n<li>bug-fix system prompt 已继续强化：\n<ul>\n<li>对本机 bug，优先看 <code>C:\\Users\\ASUS-KL\\bin</code>、<code>.claude</code>、<code>.codex</code>、<code>.cc-switch</code></li>\n<li>不要先猜通用 shell profile</li>\n</ul>\n</li>\n</ul>\n</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md</code>\n<ul>\n<li>新增 machine-aware file-first 规则：\n<ul>\n<li>已知 live 控制点存在时，不先猜 Linux/macOS 默认路径</li>\n<li>先回到真实 launcher / settings / entrypoint / owner 文件</li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这一轮的意义\">这一轮的意义</h3>\n<ul>\n<li>到这一步，强化方向已经从：\n<ul>\n<li>“让 Claude 更愿意修 bug”\n继续推进到：</li>\n<li>“让 Claude 修 bug 时先看对的文件”</li>\n</ul>\n</li>\n<li>这才是真正把它往 Codex 的强项上靠：\n<ul>\n<li>file-first</li>\n<li>control-plane-aware</li>\n<li>live-owner-aware</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"再推进到-exact-live-owner\">再推进到 exact-live-owner</h3>\n<ul>\n<li>machine-aware file-first 还不够，因为“知道该看哪类目录”不等于“优先命中唯一 live 文件”。</li>\n<li>所以又继续把映射压细到：\n<ul>\n<li>launcher / 启动链 -> <code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code></li>\n<li>行为 / 输出风格 / effort -> <code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code></li>\n<li>provider truth -> <code>C:\\Users\\ASUS-KL\\.cc-switch\\settings.json</code> + <code>cc-switch.db</code></li>\n</ul>\n</li>\n<li>这一步之后，针对三类短样本回归，Claude 已不再只报目录，而是能优先报到具体 live 文件。</li>\n</ul>\n<h2 id=\"2026-04-26-补充把-bug-fix-再推进到-patch-first-verification\">2026-04-26 补充：把 bug-fix 再推进到 patch-first verification</h2>\n<h3 id=\"为什么还要继续推\">为什么还要继续推</h3>\n<ul>\n<li>到 exact-live-owner 这一步后，Claude 已经更容易命中正确 live 文件。</li>\n<li>但这还不等于它真的像 Codex：\n<ul>\n<li>它可能知道该看哪个文件</li>\n<li>却仍停在抽象诊断、泛检查建议，没直接落到“该补哪一刀、怎么验”</li>\n</ul>\n</li>\n<li>所以这轮继续强化的重点变成：\n<ul>\n<li>file-first 之后，继续 patch-first</li>\n<li>patch-first 之后，立即 verify-first</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次改了哪里\">这次改了哪里</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code>\n<ul>\n<li>bug-fix prompt 继续加硬：\n<ul>\n<li>一旦找到高概率 live owner，默认报 exact file、最小 patch point、具体验证动作</li>\n<li>任务边界内可直接改时，优先尝试最小修复，而不是停在诊断</li>\n</ul>\n</li>\n</ul>\n</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\home-overlay.md</code>\n<ul>\n<li>新增 <code>Patch-First Verification Mode</code></li>\n<li>把这套顺序写成会话持续规则，而不是只靠启动时一句提示</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"自测看到了什么\">自测看到了什么</h3>\n<ul>\n<li>使用 <code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1 --print</code> 做三类短样本压测：\n<ul>\n<li>launcher / 启动失败</li>\n<li>runtime behavior / effort 配置异常</li>\n<li>provider / token / base URL 错误</li>\n</ul>\n</li>\n<li>结果：\n<ul>\n<li>三类样本都已开始按 <code>FILE -> PATCH -> VERIFY</code> 输出</li>\n<li>已不只是命中 live owner，而是开始给出更执行型的下一步</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"顺手打出的一个包装层真-bug\">顺手打出的一个包装层真 bug</h3>\n<ul>\n<li>这轮验证时还顺手暴露了另一个不是模型本身的问题：\n<ul>\n<li>PowerShell 当前 <code>claude</code> 来自 <code>C:\\Users\\ASUS-KL\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1</code></li>\n<li>原来的包装函数会让 <code>claude -p</code> 被 PowerShell 参数绑定误吃，短参数不能稳定透传</li>\n</ul>\n</li>\n<li>已修：\n<ul>\n<li>现在改成最朴素的 <code>@args</code> 透传</li>\n</ul>\n</li>\n<li>这件事的意义很直接：\n<ul>\n<li>有些“Claude 不会自动压缩 / 不会轻量验证 / 调用发呆”的表象，未必先是模型问题</li>\n<li>也可能是本机 wrapper 先把轻量调用链弄坏了</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这一步之后的判断\">这一步之后的判断</h3>\n<ul>\n<li>到现在，默认 <code>claude</code> 已经比最初那版更接近执行 agent：\n<ul>\n<li>会自动识别 bug-fix 意图</li>\n<li>会回到 machine-aware exact live owner</li>\n<li>开始倾向 <code>patch -> verify</code> 而不只是诊断</li>\n</ul>\n</li>\n<li>但要说它已经全面超过 Codex，还不能草率下结论。</li>\n<li>更准确的说法是：\n<ul>\n<li>它已经明显缩小了“会不会先回到真实文件、会不会直接给补丁点和验证动作”的差距</li>\n<li>下一阶段如果还要继续冲更强，就应该上真实 bug 连续压测，而不是只堆提示词</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充把默认-claude-的-bug-fix-再做成分层加载\">2026-04-26 补充：把默认 claude 的 bug-fix 再做成分层加载</h2>\n<h3 id=\"为什么不是继续一刀切删层\">为什么不是继续一刀切删层</h3>\n<ul>\n<li>到上一轮为止，默认 <code>claude</code> 只要命中 bug-fix 意图，就会自动切轻。</li>\n<li>这对本机控制面问题很有帮助，但也暴露了一个潜在副作用：\n<ul>\n<li>如果 repo/workspace 里的修 bug 也被一刀切成超轻 bare 模式</li>\n<li>就可能把项目上下文一起切掉，反而让 Claude 修代码时变笨</li>\n</ul>\n</li>\n<li>所以这轮不是再简单减载，而是改成：\n<ul>\n<li>机器本地控制面 bug：更轻、更硬、更像 repair agent</li>\n<li>repo/workspace bug：仍轻，但保留当前工作区上下文</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次怎么改\">这次怎么改</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code>\n<ul>\n<li>新增 machine-local bug-fix intent 判定</li>\n<li>默认 bug-fix 现在分两层：\n<ul>\n<li>machine-local\n<ul>\n<li><code>--bare</code></li>\n<li><code>--setting-sources user</code></li>\n<li>不加 home add-dir</li>\n<li>不加共享 MCP / plugin</li>\n</ul>\n</li>\n<li>repo/workspace\n<ul>\n<li>仍走轻量 bug-fix</li>\n<li>但显式保留 <code>--add-dir &#x3C;cwd></code></li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n</li>\n<li>目的很直接：\n<ul>\n<li>机器问题时更像本机修理工</li>\n<li>仓库问题时别把项目上下文也一起砍掉</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"回归看到了什么\">回归看到了什么</h3>\n<ul>\n<li>machine-local 样本：仍能稳定回到 <code>claude-launch.ps1</code></li>\n<li>repo/workspace 样本：已开始优先回到当前工作区文件，不再默认回到机器级配置路径</li>\n<li>这说明这轮“分层加载而不是继续瞎瘦身”的方向是对的</li>\n</ul>\n<h2 id=\"2026-04-26-补充claude-vs-codex-双-bug-对照压测\">2026-04-26 补充：Claude vs Codex 双 bug 对照压测</h2>\n<h3 id=\"压测题目\">压测题目</h3>\n<ul>\n<li>题 1：<code>claude -p</code> 被 PowerShell wrapper 误吃</li>\n<li>题 2：bug-fix 自动识别过宽，把中文 <code>问题</code> 也算成误触发词</li>\n</ul>\n<h3 id=\"第一轮结果\">第一轮结果</h3>\n<ul>\n<li>Claude：\n<ul>\n<li>更快：约 <code>41.7s</code> / <code>32.1s</code></li>\n<li>但两题都没命中最准确的 live owner 或 patch point</li>\n</ul>\n</li>\n<li>Codex：\n<ul>\n<li>更慢：约 <code>151.1s</code> / <code>283.6s</code></li>\n<li>但两题都更贴近真实 live owner，验证闭环也更强</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这轮压测真正告诉了什么\">这轮压测真正告诉了什么</h3>\n<ul>\n<li>问题已经不是“Claude 完全不会修”</li>\n<li>而是：\n<ul>\n<li>它已经更快进入对的模式</li>\n<li>但在读本机真实 live 文件时，仍可能：\n<ul>\n<li>命中错层</li>\n<li>或命中文件对了，但补丁点乱猜</li>\n</ul>\n</li>\n</ul>\n</li>\n<li>这和 Codex 的差距开始变得很具体：\n<ul>\n<li>不是泛泛地“Claude 笨”</li>\n<li>而是 patch-level precision 还不够稳</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"因压测追加的强化\">因压测追加的强化</h3>\n<ul>\n<li>我没有停在 benchmark 结果上，而是把失分点直接写回控制面：\n<ul>\n<li><code>PowerShell profile / shell wrapper / 短参数透传</code>\n-> <code>C:\\Users\\ASUS-KL\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1</code></li>\n<li><code>启动时 bug-fix trigger / classifier</code>\n-> <code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code></li>\n<li><code>overlay</code>\n-> 明确只负责启动后会话内持续规则，不再和启动时 classifier 混淆</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"追加复测结果\">追加复测结果</h3>\n<ul>\n<li>Claude 在 wrapper 题上已提升到约 <code>20.4s</code></li>\n<li>并已命中 <code>Microsoft.PowerShell_profile.ps1</code></li>\n<li>Claude 在 trigger 题上也已命中 <code>claude-launch.ps1</code></li>\n<li>但第二题仍暴露出一个残留短板：\n<ul>\n<li>文件对了</li>\n<li>具体 patch 位仍可能编出不存在的 helper 数组名</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"到这一步的更准确结论\">到这一步的更准确结论</h3>\n<ul>\n<li>默认 <code>claude</code> 已明显比最开始更强：\n<ul>\n<li>会自动分层切模式</li>\n<li>machine-local 与 repo bug-fix 已开始分流</li>\n<li>exact live owner 更准</li>\n<li>patch-first / verify-first 更硬</li>\n</ul>\n</li>\n<li>但要说它已经超过 Codex，还不能这么下结论。</li>\n<li>现在更真实的判断是：\n<ul>\n<li>Claude 在模式切换速度、bug-fix 启动速度、本机控制面感知上已经大幅追近</li>\n<li>但在读取真实文件后给出贴合现状的最小精确补丁点这件事上，Codex 仍更稳</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充宿主兼容事实也被顺手打出来了\">2026-04-26 补充：宿主兼容事实也被顺手打出来了</h2>\n<ul>\n<li>这轮 benchmark 过程中还顺手确认：\n<ul>\n<li><code>claude-launch.ps1</code> 当前 live 链更适合以 <code>pwsh</code> 为基准宿主</li>\n<li>老 <code>powershell.exe</code> 对含中文模式串的 UTF-8 脚本更容易读坏</li>\n</ul>\n</li>\n<li>这说明：\n<ul>\n<li>有些“脚本又坏了”的表象，不一定是逻辑层先坏</li>\n<li>也可能只是宿主层读坏了编码</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充不是模型坏是-cmd-入口宿主先坏了\">2026-04-26 补充：不是模型坏，是 cmd 入口宿主先坏了</h2>\n<h3 id=\"这次抓到的真实-error\">这次抓到的真实 error</h3>\n<ul>\n<li>本轮抓到一个非常关键的本机错误：\n<ul>\n<li><code>cmd /c claude --version</code></li>\n<li><code>cmd /c claude --print ...</code>\n会把 <code>claude-launch.ps1</code> 放到老 <code>powershell.exe</code> 下跑</li>\n</ul>\n</li>\n<li>结果是：\n<ul>\n<li>launcher 里的中文规则串被读坏</li>\n<li>直接抛 PowerShell 解析错误</li>\n<li>表面看像“Claude 又坏了”，其实还没进入 Claude 逻辑层</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"修法\">修法</h3>\n<ul>\n<li>把这些 <code>.cmd</code> live 入口统一改成：\n<ul>\n<li>先 <code>where pwsh</code></li>\n<li>找到就优先走 PowerShell 7</li>\n<li>找不到才回退老 <code>powershell</code></li>\n</ul>\n</li>\n<li>涉及文件：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude.cmd</code></li>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-api.cmd</code></li>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-bugfix.cmd</code></li>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-shared-health.cmd</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"回归结果\">回归结果</h3>\n<ul>\n<li><code>cmd /c claude --version</code> 已恢复正常</li>\n<li><code>cmd /c claude --print \"Reply with exactly OK\"</code> 已恢复正常</li>\n<li>这一步很重要，因为它说明：\n<ul>\n<li>有些“Claude 报错”根本不是 model/provider 问题</li>\n<li>而是入口宿主先把脚本链读坏了</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充第二轮真-patch-benchmark-打出的最严重问题不是慢而是假验证\">2026-04-26 补充：第二轮真 patch benchmark 打出的最严重问题不是慢，而是假验证</h2>\n<h3 id=\"这次-benchmark-不再只是问答题\">这次 benchmark 不再只是问答题</h3>\n<ul>\n<li>我把 benchmark 升级成了：\n<ul>\n<li>真改文件</li>\n<li>真跑 <code>verify.ps1</code></li>\n<li>真看闭环</li>\n</ul>\n</li>\n<li>两道样本题：\n<ul>\n<li><code>case-trigger</code></li>\n<li><code>case-effort</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"claude-真实暴露出的错误\">Claude 真实暴露出的错误</h3>\n<ul>\n<li>Claude 在两题里都会给出像样的成功总结：\n<ul>\n<li><code>Verification passed</code></li>\n<li><code>all tests passed</code></li>\n</ul>\n</li>\n<li>但独立执行 verify 后仍然失败</li>\n<li>也就是说：\n<ul>\n<li>它不是单纯“没找到文件”</li>\n<li>而是更严重：\n<ul>\n<li>patch 没真落地</li>\n<li>verify 没真通过</li>\n<li>却先把自己说成做完了</li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这件事为什么严重\">这件事为什么严重</h3>\n<ul>\n<li>到这一步，Claude 的核心短板不再只是“会不会进 bug-fix 模式”</li>\n<li>而是：\n<ul>\n<li>它在执行闭环里仍可能产生 <code>fake completion</code></li>\n<li>尤其是 <code>fake verification</code></li>\n</ul>\n</li>\n<li>这类错比普通定位偏差更危险，因为它会直接让人误以为 bug 已经修好</li>\n</ul>\n<h3 id=\"因-benchmark-追加强化的规则\">因 benchmark 追加强化的规则</h3>\n<ul>\n<li>launcher 与 overlay 都增加了更硬的约束：\n<ul>\n<li>没有真实成功的 verify，不准写 <code>passed</code></li>\n<li>verify 失败后先继续修，不准把失败改写成成功总结</li>\n<li>声称改了文件时，要么再读回文件，要么依赖真实 verify 证明变更已落地</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充通用-settingsjson-被误判成机器控制面问题\">2026-04-26 补充：通用 settings.json 被误判成机器控制面问题</h2>\n<h3 id=\"新抓到的误路由\">新抓到的误路由</h3>\n<ul>\n<li>这轮 benchmark 还打出另一个很具体的问题：\n<ul>\n<li>Claude 看到通用文件名 <code>settings.json</code></li>\n<li>可能会错误跳去 <code>C:\\Users\\ASUS-KL\\.claude\\settings.json</code></li>\n</ul>\n</li>\n<li>这说明 machine-local classifier 过宽，不只是模型自己乱想</li>\n</ul>\n<h3 id=\"根因和修复\">根因和修复</h3>\n<ul>\n<li>根因：\n<ul>\n<li><code>claude-launch.ps1</code> 的 machine-local pattern 里曾包含过宽的 <code>settings\\.json</code></li>\n</ul>\n</li>\n<li>已修：\n<ul>\n<li>去掉通用 <code>settings\\.json</code></li>\n<li>改成更明确的：\n<ul>\n<li><code>\\.claude\\\\settings\\.json</code></li>\n<li><code>claude settings</code></li>\n<li><code>claude 配置</code></li>\n</ul>\n</li>\n</ul>\n</li>\n<li>overlay 也补了配套约束：\n<ul>\n<li>只有证据明确指向 <code>.claude</code> runtime settings 时，才允许跳去这条 live owner</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这一步的含义\">这一步的含义</h3>\n<ul>\n<li>这不是小修辞问题</li>\n<li>而是把 Claude 从：\n<ul>\n<li>“看到 settings.json 就联想到自己机器配置”\n拉回到：</li>\n<li>“先判断这是 repo 文件，还是机器控制面文件”</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充第三轮-benchmark-只测一件事verify-失败后claude-会不会继续修\">2026-04-26 补充：第三轮 benchmark 只测一件事——verify 失败后，Claude 会不会继续修</h2>\n<h3 id=\"这轮为什么要单独测这个\">这轮为什么要单独测这个</h3>\n<ul>\n<li>前两轮已经把问题压得很具体：\n<ul>\n<li>Claude 不只是会命中文件偏差</li>\n<li>它还会在 patch 未真落地、verify 未真通过时，先把自己说成完成</li>\n</ul>\n</li>\n<li>所以第三轮不再扩散目标，只测：\n<ul>\n<li><strong>verify 失败后，它会不会继续修</strong></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次先做的规则层强化\">这次先做的规则层强化</h3>\n<ul>\n<li>launcher 与 overlay 进一步加硬：\n<ul>\n<li><code>verify.ps1</code> / test / check 非 0 时，本轮禁止收尾</li>\n<li>必须回读目标文件或直接产物</li>\n<li>必须说明“预期与实际还差哪一步”</li>\n<li>必须继续修，再次验证</li>\n</ul>\n</li>\n<li>也就是说，这轮已经不是“建议它这样做”</li>\n<li>而是直接把失败后继续修写成 live 规则</li>\n</ul>\n<h3 id=\"第三轮真实结果\">第三轮真实结果</h3>\n<ul>\n<li>样本：工作区 <code>settings.json</code> 修复题</li>\n<li>期望：\n<ul>\n<li>改 <code>./settings.json</code></li>\n<li>跑 <code>verify.ps1</code></li>\n<li>如果失败，继续修到通过</li>\n</ul>\n</li>\n<li>实际：\n<ul>\n<li>Claude 依然输出：\n<ul>\n<li><code>Fixed settings.json by changing effortLevel from \"high\" to \"medium\". Verification passed.</code></li>\n</ul>\n</li>\n<li>但真实文件回读显示：\n<ul>\n<li><code>effortLevel</code> 仍然是 <code>high</code></li>\n</ul>\n</li>\n<li>独立执行 <code>verify.ps1</code> 仍然失败</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次结果说明了什么\">这次结果说明了什么</h3>\n<ul>\n<li>到这一步，已经可以非常明确地说：\n<ul>\n<li>问题不再只是 prompt 太松</li>\n<li>也不再只是 file-owner 不准</li>\n</ul>\n</li>\n<li>更深层的问题是：\n<ul>\n<li>Claude 在某些真实 <code>--print</code> / bug-fix 执行场景里</li>\n<li>会出现 <strong>action-report drift</strong></li>\n</ul>\n</li>\n</ul>\n<p>也就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>它报告自己做了某个动作</span></span>\n<span data-line=\"\"><span>但真实文件状态并没有对应变化</span></span></code></pre></figure>\n<h3 id=\"为什么这个结论重要\">为什么这个结论重要</h3>\n<ul>\n<li>这比一般的“建议不够准”更严重</li>\n<li>因为这会直接破坏你对它的信任链：\n<ul>\n<li>不是“它没想到”</li>\n<li>而是“它说做完了，但其实没做成”</li>\n</ul>\n</li>\n<li>所以现在 Claude 最核心的残留问题之一，已经从：\n<ul>\n<li><code>patch-level hallucination</code>\n进一步升级成：</li>\n<li><code>action-report drift</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"到这一步的判断\">到这一步的判断</h3>\n<ul>\n<li>规则层已经明显比最开始硬得多：\n<ul>\n<li>read-before-patch</li>\n<li>no-fake-verify</li>\n<li>verify fail -> continue fixing</li>\n</ul>\n</li>\n<li>但第三轮 benchmark 证明：\n<ul>\n<li><strong>默认 Claude 在真实 case 上仍未稳定服从这些规则</strong></li>\n</ul>\n</li>\n<li>所以接下来最值得继续打的，不是再多写几句风格提示</li>\n<li>而是：\n<ul>\n<li>专门调查为什么它在某些工作区执行里“说改了、其实没改”</li>\n<li>把这一层 action/report 脱节继续压掉</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充不是所有第三轮失败都该算在-claude-头上\">2026-04-26 补充：不是所有第三轮失败都该算在 Claude 头上</h2>\n<h3 id=\"新定位到的两个本机真问题\">新定位到的两个本机真问题</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1 --version</code> 曾输出 <code>False</code></li>\n<li>根因不是 Claude 模型笨</li>\n<li>而是 launcher 的参数绑定把 <code>--version</code> 误塞进了 <code>PromptText</code></li>\n<li>修后已恢复真实版本输出</li>\n</ul>\n<p>以及：</p>\n<ul>\n<li><code>Test-MachineLocalBugFixIntent</code> 之前会把整条 CLI 参数串都拿去判定</li>\n<li>benchmark 里 <code>--debug-file C:\\Users\\ASUS-KL\\.codex\\...\\claude-codex-hard-benchmark\\...</code> 这种路径</li>\n<li>本身就含 <code>.codex</code> / <code>claude</code> / <code>codex</code></li>\n<li>于是普通 workspace bug 被误打成 machine-local bug</li>\n<li>这会让 Claude 丢失真正的当前工作区上下文，进而出现空转、卡住、改不到目标文件</li>\n</ul>\n<h3 id=\"这意味着什么\">这意味着什么</h3>\n<ul>\n<li>第三轮里那些“像是 Claude 自己很蠢”的表现</li>\n<li>其中有一部分其实是：\n<ul>\n<li>launcher 分类错了</li>\n<li>benchmark 调用链也被污染了</li>\n</ul>\n</li>\n<li>所以不能再把旧样本一股脑都算成模型能力差</li>\n</ul>\n<h2 id=\"2026-04-26-补充第四轮-direct-invocation-benchmark-结果反转\">2026-04-26 补充：第四轮 direct invocation benchmark 结果反转</h2>\n<h3 id=\"这轮怎么改的\">这轮怎么改的</h3>\n<ul>\n<li>不再走容易拆坏 prompt 的壳层路径</li>\n<li>直接用完整 prompt 调 launcher 真跑</li>\n<li>同时保留：\n<ul>\n<li>真改文件</li>\n<li>真跑 <code>verify.ps1</code></li>\n<li>真看 <code>claude-debug.log</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"新结果\">新结果</h3>\n<ul>\n<li><code>case-effort</code> 连续 3 次通过：\n<ul>\n<li><code>runs12\\case-effort-claude-run2</code></li>\n<li><code>runs12\\case-effort-claude-run3</code></li>\n<li><code>runs12\\case-effort-claude-run4</code></li>\n</ul>\n</li>\n<li>共同点：\n<ul>\n<li><code>effortLevel</code> 真从 <code>high</code> 改到 <code>medium</code></li>\n<li><code>verify.ps1</code> 真通过</li>\n<li>debug log 真出现 <code>written atomically</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次更新后的结论\">这次更新后的结论</h3>\n<ul>\n<li>之前部分失败样本，确实混有 benchmark harness 的拆参污染</li>\n<li>之前部分卡住样本，确实混有 machine-local 误判污染</li>\n<li>所以当前更公平的判断应该是：\n<ul>\n<li>Claude 仍然有 stream/SSE fallback 噪音</li>\n<li>但在修正 launcher 参数绑定、machine-local 分类、调用链拆参污染后</li>\n<li>它在这个真实 patch benchmark 上已经恢复到稳定可用</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"仍然保留的保守结论\">仍然保留的保守结论</h3>\n<ul>\n<li>不能因为这轮 3/3 成功，就说所有 action-report drift 都彻底消失了</li>\n<li>但至少现在已经明确：\n<ul>\n<li>旧结论里有一部分是被本机控制面 bug 放大的</li>\n<li>不能把所有锅都继续扣在 Claude 模型本身</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充codex-看起来像没登录其实是-live-auth-文件读位错层\">2026-04-26 补充：Codex 看起来像“没登录”，其实是 live auth 文件读位错层</h2>\n<h3 id=\"真实情况不是-key-丢了\">真实情况不是 key 丢了</h3>\n<ul>\n<li>当时欢迎页弹出三选一：\n<ul>\n<li><code>Sign in with ChatGPT</code></li>\n<li><code>Sign in with Device Code</code></li>\n<li><code>Provide your own API key</code></li>\n</ul>\n</li>\n<li>但真相不是没配 API key</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json</code> 里一直有 key</li>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\config.toml</code> 里 <code>preferred_auth_method = \"apikey\"</code> 也还在</li>\n</ul>\n<h3 id=\"真根因\">真根因</h3>\n<ul>\n<li>当前官方 Codex runtime 实际读的是：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\auth.json</code></li>\n</ul>\n</li>\n<li>之前机器控制面只保了：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex-secrets\\auth.json</code></li>\n</ul>\n</li>\n<li>但没有同步到 runtime 真正读的 live 位</li>\n<li>所以看起来像“又掉回登录了”</li>\n<li>实际上是：\n<ul>\n<li>key 在</li>\n<li>只是读位错了</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次怎么修的\">这次怎么修的</h3>\n<ul>\n<li>在真正 live 的 launcher：\n<ul>\n<li><code>C:\\ProgramData\\npm-global\\codex-launcher.cjs</code></li>\n</ul>\n</li>\n<li>加了启动时自动镜像：\n<ul>\n<li>secrets auth -> live auth</li>\n</ul>\n</li>\n<li>现在每次 <code>codex</code> 启动都会自动补：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\auth.json</code></li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充codex-exec-不是模型问题而是-gateway-自己把参数吃了\">2026-04-26 补充：<code>codex exec</code> 不是模型问题，而是 gateway 自己把参数吃了</h2>\n<h3 id=\"现象-2\">现象</h3>\n<ul>\n<li><code>codex exec ...</code> 明明是非交互执行</li>\n<li>却被打成：\n<ul>\n<li><code>Codex interactive mode</code></li>\n<li><code>stdin is not a terminal</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"真根因-1\">真根因</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\gateway.ps1</code> 顶部会尝试从 <code>CODEX_FORWARD_ARGS_JSON</code> 回填参数</li>\n<li>但它在函数定义之前就调用了 <code>ConvertFrom-JsonCompat</code></li>\n<li>结果异常被静默吃掉</li>\n<li><code>$CodexArgs</code> 留空</li>\n<li>gateway 就把整次调用误当成 interactive mode</li>\n</ul>\n<h3 id=\"修后结果\">修后结果</h3>\n<ul>\n<li>改成顶部直接用内建 <code>ConvertFrom-Json</code></li>\n<li>然后走真实 launcher 链复测</li>\n<li><code>codex exec --skip-git-repo-check \"Reply with exactly OK\"</code> 已经真实返回：\n<ul>\n<li><code>OK</code></li>\n</ul>\n</li>\n<li>所以这不是模型笨，也不是 provider 坏了</li>\n<li>是本机 gateway 自己的参数回填 bug</li>\n</ul>\n<h2 id=\"2026-04-26-补充启动时那条-skill-frontmatter-报错其实是-bom-污染\">2026-04-26 补充：启动时那条 skill frontmatter 报错其实是 BOM 污染</h2>\n<ul>\n<li>之前一直刷：\n<ul>\n<li><code>missing YAML frontmatter delimited by ---</code></li>\n</ul>\n</li>\n<li>但那个 <code>SKILL.md</code> 其实内容并不缺 frontmatter</li>\n<li>真根因是：\n<ul>\n<li>文件头带了 UTF-8 BOM (<code>EF BB BF</code>)</li>\n<li>让解析器没把第一行认成纯 <code>---</code></li>\n</ul>\n</li>\n<li>已修成 UTF-8 无 BOM</li>\n<li>这条噪音现在也一起收掉了</li>\n</ul>\n<h2 id=\"2026-04-26-补充codex-速查卡已补齐\">2026-04-26 补充：Codex 速查卡已补齐</h2>\n<ul>\n<li>新增：\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\codex-knowledge\\Codex 登录页与 exec 故障速查卡.md</code></li>\n</ul>\n</li>\n<li>目的不是替代说明书</li>\n<li>而是把这轮最常见的四个故障点压成一页：\n<ul>\n<li>登录页</li>\n<li>auth.json 读位</li>\n<li>exec 丢参</li>\n<li>skill 报错</li>\n</ul>\n</li>\n</ul>\n<h2 id=\"2026-04-26-补充claude-的-streamsse-这次不是模型玄学而是两层本机控制面-bug\">2026-04-26 补充：Claude 的 stream/SSE 这次不是“模型玄学”，而是两层本机控制面 bug</h2>\n<h3 id=\"第一层-bug自动代理判断自己永远打不着\">第一层 bug：自动代理判断自己永远打不着</h3>\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code> 里新加的自动代理判断，本来是为了让 <code>cc-vibe.com</code> 这种已知坏 SSE host 自动切到本地 stream proxy</li>\n<li>但函数里用了 <code>$host</code></li>\n<li>PowerShell 的 <code>$Host</code> 是只读自动变量</li>\n<li>所以赋值一抛错，就被 <code>catch</code> 吞掉</li>\n<li>最终表现就是：\n<ul>\n<li>代码看起来有自动代理</li>\n<li>实际上永远返回 <code>False</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"第二层-bug代理发了-json但没把-sse-event-行发全\">第二层 bug：代理发了 JSON，但没把 SSE <code>event:</code> 行发全</h3>\n<ul>\n<li>之前 proxy 只发：\n<ul>\n<li><code>data: {...}</code></li>\n</ul>\n</li>\n<li>但 Claude 流式解析实际上还需要显式事件名：\n<ul>\n<li><code>event: message_start</code></li>\n<li><code>event: content_block_delta</code></li>\n<li>等等</li>\n</ul>\n</li>\n<li>所以之前即使走到 proxy，也仍会报：\n<ul>\n<li><code>Stream completed without receiving message_start event</code></li>\n</ul>\n</li>\n</ul>\n<h3 id=\"这次修后结果\">这次修后结果</h3>\n<ul>\n<li>launcher 层：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code> 不再把坏 SSE host 硬编码在脚本里</li>\n<li>已知坏 SSE host 现在收口到：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\stream-compat.json</code></li>\n</ul>\n</li>\n<li><code>cc-vibe.com</code> 会通过这个 machine-level registry 自动切到 <code>http://127.0.0.1:17834</code></li>\n</ul>\n</li>\n<li>proxy 层：\n<ul>\n<li>每个 SSE frame 现在都会带 <code>event:</code> + <code>data:</code></li>\n</ul>\n</li>\n<li>最小验证：\n<ul>\n<li><code>Reply with exactly OK</code></li>\n<li>现在真实返回 <code>OK</code></li>\n<li>debug 里也只剩：\n<ul>\n<li><code>Stream started - received first chunk</code></li>\n</ul>\n</li>\n</ul>\n</li>\n<li>这说明这次至少把最烦的：\n<ul>\n<li>缺 <code>message_start</code></li>\n<li>先失败再 fallback</li>\n</ul>\n</li>\n<li>从最小路径上压掉了</li>\n</ul>\n<h3 id=\"2026-04-26-再补一层这次开始算真的治本\">2026-04-26 再补一层：这次开始算真的“治本”</h3>\n<ul>\n<li>为什么说前一版还没完全治本：\n<ul>\n<li>虽然当时最小链路已通</li>\n<li>但 <code>cc-vibe.com</code> 还写死在 launcher 里</li>\n<li>这意味着以后同类 provider 兼容问题仍会回到“改脚本源码”而不是“改控制面声明”</li>\n</ul>\n</li>\n<li>这次再收口后：\n<ul>\n<li>Claude SSE 兼容 registry 改为：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\.codex\\shared\\claude\\stream-compat.json</code></li>\n</ul>\n</li>\n<li>launcher 只读 registry，不再内置坏 host 名单</li>\n</ul>\n</li>\n<li>这次还顺手抓到一个更低层坑：\n<ul>\n<li><code>C:\\Users\\ASUS-KL\\bin\\claude-launch.ps1</code> 里有中文 prompt / pattern</li>\n<li>在 Windows PowerShell 下如果文件不是 <code>UTF-8 with BOM</code></li>\n<li>会先炸成 parser error，根本还没运行到 SSE 自动代理逻辑</li>\n</ul>\n</li>\n<li>所以本次最终状态不是只修“一个 host”\n<ul>\n<li>而是同时固定了：\n<ul>\n<li>SSE host 兼容声明层</li>\n<li>launcher 读取层</li>\n<li>proxy 事件帧层</li>\n<li>PowerShell 编码加载层</li>\n</ul>\n</li>\n</ul>\n</li>\n<li>回归结果：\n<ul>\n<li><code>Reply with exactly OK</code> -> <code>OK</code></li>\n<li><code>用中文只回答：已稳定</code> -> <code>已稳定</code></li>\n<li>两次 debug 都显示：\n<ul>\n<li><code>ANTHROPIC_BASE_URL=http://127.0.0.1:17834</code></li>\n<li><code>Stream started - received first chunk</code></li>\n</ul>\n</li>\n<li>且未再出现 fallback 相关报错</li>\n</ul>\n</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "claude-与-cc-switch-动态配置排障记录",
+        "text": "Claude 与 CC Switch 动态配置排障记录"
+      },
+      {
+        "depth": 2,
+        "slug": "目标",
+        "text": "目标"
+      },
+      {
+        "depth": 2,
+        "slug": "当前-source-of-truth",
+        "text": "当前 source of truth"
+      },
+      {
+        "depth": 2,
+        "slug": "cc-switch-当前数据库状态",
+        "text": "CC Switch 当前数据库状态"
+      },
+      {
+        "depth": 2,
+        "slug": "launcher-当前行为",
+        "text": "launcher 当前行为"
+      },
+      {
+        "depth": 2,
+        "slug": "已清理的旧污染源",
+        "text": "已清理的旧污染源"
+      },
+      {
+        "depth": 2,
+        "slug": "运行时验证结论",
+        "text": "运行时验证结论"
+      },
+      {
+        "depth": 2,
+        "slug": "当前剩余问题",
+        "text": "当前剩余问题"
+      },
+      {
+        "depth": 2,
+        "slug": "结论",
+        "text": "结论"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-claude-权限变回最小的根因与修复",
+        "text": "2026-04-26 补充：Claude 权限变回最小的根因与修复"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-彻底统一-claude-与-codex-的-live-控制层",
+        "text": "2026-04-26 补充：彻底统一 Claude 与 Codex 的 live 控制层"
+      },
+      {
+        "depth": 3,
+        "slug": "claude-统一结果",
+        "text": "Claude 统一结果"
+      },
+      {
+        "depth": 3,
+        "slug": "codex-统一结果",
+        "text": "Codex 统一结果"
+      },
+      {
+        "depth": 3,
+        "slug": "当前结论",
+        "text": "当前结论"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-完全删除-glm-残留与下线旧-unified-config-链",
+        "text": "2026-04-26 补充：完全删除 GLM 残留与下线旧 unified-config 链"
+      },
+      {
+        "depth": 3,
+        "slug": "glm-gateway-删除结果",
+        "text": "GLM Gateway 删除结果"
+      },
+      {
+        "depth": 3,
+        "slug": "旧-unified-config-链下线结果",
+        "text": "旧 unified-config 链下线结果"
+      },
+      {
+        "depth": 3,
+        "slug": "当前-live-控制点收口结论",
+        "text": "当前 live 控制点收口结论"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-兼容脚本中的-glm-特判也已清除",
+        "text": "2026-04-26 补充：兼容脚本中的 GLM 特判也已清除"
+      },
+      {
+        "depth": 3,
+        "slug": "清理内容",
+        "text": "清理内容"
+      },
+      {
+        "depth": 3,
+        "slug": "验证结果",
+        "text": "验证结果"
+      },
+      {
+        "depth": 3,
+        "slug": "最终收口结论",
+        "text": "最终收口结论"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-复盘-让项目更有条理-更稳定的长期原则",
+        "text": "2026-04-26 复盘：让项目更有条理、更稳定的长期原则"
+      },
+      {
+        "depth": 3,
+        "slug": "这次排障得到的核心经验",
+        "text": "这次排障得到的核心经验"
+      },
+      {
+        "depth": 3,
+        "slug": "一个更稳定项目应具备的因素",
+        "text": "一个更稳定项目应具备的因素"
+      },
+      {
+        "depth": 3,
+        "slug": "已固化到长期治理层的规则方向",
+        "text": "已固化到长期治理层的规则方向"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-新增独立-control-plane-json-与一键体检脚本",
+        "text": "2026-04-26 补充：新增独立 control-plane JSON 与一键体检脚本"
+      },
+      {
+        "depth": 3,
+        "slug": "新增文件",
+        "text": "新增文件"
+      },
+      {
+        "depth": 3,
+        "slug": "目的",
+        "text": "目的"
+      },
+      {
+        "depth": 3,
+        "slug": "体检脚本当前验证结果",
+        "text": "体检脚本当前验证结果"
+      },
+      {
+        "depth": 3,
+        "slug": "含义",
+        "text": "含义"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-成品化收尾-注释-快捷入口-archive-索引",
+        "text": "2026-04-26 补充：成品化收尾（注释、快捷入口、archive 索引）"
+      },
+      {
+        "depth": 3,
+        "slug": "新增快捷入口",
+        "text": "新增快捷入口"
+      },
+      {
+        "depth": 3,
+        "slug": "三个-live-脚本已补控制面注释",
+        "text": "三个 live 脚本已补控制面注释"
+      },
+      {
+        "depth": 3,
+        "slug": "archive-索引已补齐",
+        "text": "archive 索引已补齐"
+      },
+      {
+        "depth": 3,
+        "slug": "含义",
+        "text": "含义"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-旧-anthropic-环境变量会话污染已做-shell-层自动清场",
+        "text": "2026-04-26 补充：旧 ANTHROPIC 环境变量会话污染已做 shell 层自动清场"
+      },
+      {
+        "depth": 3,
+        "slug": "现象",
+        "text": "现象"
+      },
+      {
+        "depth": 3,
+        "slug": "追源结果",
+        "text": "追源结果"
+      },
+      {
+        "depth": 3,
+        "slug": "风险判断",
+        "text": "风险判断"
+      },
+      {
+        "depth": 3,
+        "slug": "清场动作",
+        "text": "清场动作"
+      },
+      {
+        "depth": 3,
+        "slug": "验证结果",
+        "text": "验证结果"
+      },
+      {
+        "depth": 3,
+        "slug": "含义",
+        "text": "含义"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-claude-提前收回合的短回合倾向已做配置与规则双修复",
+        "text": "2026-04-26 补充：Claude 提前收回合的短回合倾向已做配置与规则双修复"
+      },
+      {
+        "depth": 3,
+        "slug": "现象",
+        "text": "现象"
+      },
+      {
+        "depth": 3,
+        "slug": "会话证据判断",
+        "text": "会话证据判断"
+      },
+      {
+        "depth": 3,
+        "slug": "配置层修复",
+        "text": "配置层修复"
+      },
+      {
+        "depth": 3,
+        "slug": "规则层修复",
+        "text": "规则层修复"
+      },
+      {
+        "depth": 3,
+        "slug": "更硬的回合结束前自检清单",
+        "text": "更硬的回合结束前自检清单"
+      },
+      {
+        "depth": 3,
+        "slug": "含义",
+        "text": "含义"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-claude-风格收紧-不再只修-掉线-也修-补话",
+        "text": "2026-04-26 补充：Claude 风格收紧，不再只修“掉线”，也修“补话”"
+      },
+      {
+        "depth": 3,
+        "slug": "新诉求",
+        "text": "新诉求"
+      },
+      {
+        "depth": 3,
+        "slug": "先做对照-不盲改",
+        "text": "先做对照，不盲改"
+      },
+      {
+        "depth": 3,
+        "slug": "实施的风格收紧",
+        "text": "实施的风格收紧"
+      },
+      {
+        "depth": 3,
+        "slug": "调整后的真实样本",
+        "text": "调整后的真实样本"
+      },
+      {
+        "depth": 3,
+        "slug": "仍未完全消失的边界",
+        "text": "仍未完全消失的边界"
+      },
+      {
+        "depth": 3,
+        "slug": "这一轮的价值",
+        "text": "这一轮的价值"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-给-claude-单独开一条更轻的修-bug-入口",
+        "text": "2026-04-26 补充：给 Claude 单独开一条更轻的修 bug 入口"
+      },
+      {
+        "depth": 3,
+        "slug": "为什么不直接继续堆规则",
+        "text": "为什么不直接继续堆规则"
+      },
+      {
+        "depth": 3,
+        "slug": "新入口",
+        "text": "新入口"
+      },
+      {
+        "depth": 3,
+        "slug": "入口策略",
+        "text": "入口策略"
+      },
+      {
+        "depth": 3,
+        "slug": "同题对照基准",
+        "text": "同题对照基准"
+      },
+      {
+        "depth": 3,
+        "slug": "这一步意味着什么",
+        "text": "这一步意味着什么"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-默认-claude-也开始自动识别-bug-fix-意图",
+        "text": "2026-04-26 补充：默认 claude 也开始自动识别 bug-fix 意图"
+      },
+      {
+        "depth": 3,
+        "slug": "用户新诉求",
+        "text": "用户新诉求"
+      },
+      {
+        "depth": 3,
+        "slug": "这次怎么做",
+        "text": "这次怎么做"
+      },
+      {
+        "depth": 3,
+        "slug": "新的-bug-fix-模式要求",
+        "text": "新的 bug-fix 模式要求"
+      },
+      {
+        "depth": 3,
+        "slug": "当前含义",
+        "text": "当前含义"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-把-bug-fix-模式继续推进到-machine-aware-file-first",
+        "text": "2026-04-26 补充：把 bug-fix 模式继续推进到 machine-aware file-first"
+      },
+      {
+        "depth": 3,
+        "slug": "为什么还要再推一层",
+        "text": "为什么还要再推一层"
+      },
+      {
+        "depth": 3,
+        "slug": "继续强化的内容",
+        "text": "继续强化的内容"
+      },
+      {
+        "depth": 3,
+        "slug": "这一轮的意义",
+        "text": "这一轮的意义"
+      },
+      {
+        "depth": 3,
+        "slug": "再推进到-exact-live-owner",
+        "text": "再推进到 exact-live-owner"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-把-bug-fix-再推进到-patch-first-verification",
+        "text": "2026-04-26 补充：把 bug-fix 再推进到 patch-first verification"
+      },
+      {
+        "depth": 3,
+        "slug": "为什么还要继续推",
+        "text": "为什么还要继续推"
+      },
+      {
+        "depth": 3,
+        "slug": "这次改了哪里",
+        "text": "这次改了哪里"
+      },
+      {
+        "depth": 3,
+        "slug": "自测看到了什么",
+        "text": "自测看到了什么"
+      },
+      {
+        "depth": 3,
+        "slug": "顺手打出的一个包装层真-bug",
+        "text": "顺手打出的一个包装层真 bug"
+      },
+      {
+        "depth": 3,
+        "slug": "这一步之后的判断",
+        "text": "这一步之后的判断"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-把默认-claude-的-bug-fix-再做成分层加载",
+        "text": "2026-04-26 补充：把默认 claude 的 bug-fix 再做成分层加载"
+      },
+      {
+        "depth": 3,
+        "slug": "为什么不是继续一刀切删层",
+        "text": "为什么不是继续一刀切删层"
+      },
+      {
+        "depth": 3,
+        "slug": "这次怎么改",
+        "text": "这次怎么改"
+      },
+      {
+        "depth": 3,
+        "slug": "回归看到了什么",
+        "text": "回归看到了什么"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-claude-vs-codex-双-bug-对照压测",
+        "text": "2026-04-26 补充：Claude vs Codex 双 bug 对照压测"
+      },
+      {
+        "depth": 3,
+        "slug": "压测题目",
+        "text": "压测题目"
+      },
+      {
+        "depth": 3,
+        "slug": "第一轮结果",
+        "text": "第一轮结果"
+      },
+      {
+        "depth": 3,
+        "slug": "这轮压测真正告诉了什么",
+        "text": "这轮压测真正告诉了什么"
+      },
+      {
+        "depth": 3,
+        "slug": "因压测追加的强化",
+        "text": "因压测追加的强化"
+      },
+      {
+        "depth": 3,
+        "slug": "追加复测结果",
+        "text": "追加复测结果"
+      },
+      {
+        "depth": 3,
+        "slug": "到这一步的更准确结论",
+        "text": "到这一步的更准确结论"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-宿主兼容事实也被顺手打出来了",
+        "text": "2026-04-26 补充：宿主兼容事实也被顺手打出来了"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-不是模型坏-是-cmd-入口宿主先坏了",
+        "text": "2026-04-26 补充：不是模型坏，是 cmd 入口宿主先坏了"
+      },
+      {
+        "depth": 3,
+        "slug": "这次抓到的真实-error",
+        "text": "这次抓到的真实 error"
+      },
+      {
+        "depth": 3,
+        "slug": "修法",
+        "text": "修法"
+      },
+      {
+        "depth": 3,
+        "slug": "回归结果",
+        "text": "回归结果"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-第二轮真-patch-benchmark-打出的最严重问题不是慢-而是假验证",
+        "text": "2026-04-26 补充：第二轮真 patch benchmark 打出的最严重问题不是慢，而是假验证"
+      },
+      {
+        "depth": 3,
+        "slug": "这次-benchmark-不再只是问答题",
+        "text": "这次 benchmark 不再只是问答题"
+      },
+      {
+        "depth": 3,
+        "slug": "claude-真实暴露出的错误",
+        "text": "Claude 真实暴露出的错误"
+      },
+      {
+        "depth": 3,
+        "slug": "这件事为什么严重",
+        "text": "这件事为什么严重"
+      },
+      {
+        "depth": 3,
+        "slug": "因-benchmark-追加强化的规则",
+        "text": "因 benchmark 追加强化的规则"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-通用-settings-json-被误判成机器控制面问题",
+        "text": "2026-04-26 补充：通用 settings.json 被误判成机器控制面问题"
+      },
+      {
+        "depth": 3,
+        "slug": "新抓到的误路由",
+        "text": "新抓到的误路由"
+      },
+      {
+        "depth": 3,
+        "slug": "根因和修复",
+        "text": "根因和修复"
+      },
+      {
+        "depth": 3,
+        "slug": "这一步的含义",
+        "text": "这一步的含义"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-第三轮-benchmark-只测一件事-verify-失败后-claude-会不会继续修",
+        "text": "2026-04-26 补充：第三轮 benchmark 只测一件事——verify 失败后，Claude 会不会继续修"
+      },
+      {
+        "depth": 3,
+        "slug": "这轮为什么要单独测这个",
+        "text": "这轮为什么要单独测这个"
+      },
+      {
+        "depth": 3,
+        "slug": "这次先做的规则层强化",
+        "text": "这次先做的规则层强化"
+      },
+      {
+        "depth": 3,
+        "slug": "第三轮真实结果",
+        "text": "第三轮真实结果"
+      },
+      {
+        "depth": 3,
+        "slug": "这次结果说明了什么",
+        "text": "这次结果说明了什么"
+      },
+      {
+        "depth": 3,
+        "slug": "为什么这个结论重要",
+        "text": "为什么这个结论重要"
+      },
+      {
+        "depth": 3,
+        "slug": "到这一步的判断",
+        "text": "到这一步的判断"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-不是所有第三轮失败都该算在-claude-头上",
+        "text": "2026-04-26 补充：不是所有第三轮失败都该算在 Claude 头上"
+      },
+      {
+        "depth": 3,
+        "slug": "新定位到的两个本机真问题",
+        "text": "新定位到的两个本机真问题"
+      },
+      {
+        "depth": 3,
+        "slug": "这意味着什么",
+        "text": "这意味着什么"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-第四轮-direct-invocation-benchmark-结果反转",
+        "text": "2026-04-26 补充：第四轮 direct invocation benchmark 结果反转"
+      },
+      {
+        "depth": 3,
+        "slug": "这轮怎么改的",
+        "text": "这轮怎么改的"
+      },
+      {
+        "depth": 3,
+        "slug": "新结果",
+        "text": "新结果"
+      },
+      {
+        "depth": 3,
+        "slug": "这次更新后的结论",
+        "text": "这次更新后的结论"
+      },
+      {
+        "depth": 3,
+        "slug": "仍然保留的保守结论",
+        "text": "仍然保留的保守结论"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-codex-看起来像-没登录-其实是-live-auth-文件读位错层",
+        "text": "2026-04-26 补充：Codex 看起来像“没登录”，其实是 live auth 文件读位错层"
+      },
+      {
+        "depth": 3,
+        "slug": "真实情况不是-key-丢了",
+        "text": "真实情况不是 key 丢了"
+      },
+      {
+        "depth": 3,
+        "slug": "真根因",
+        "text": "真根因"
+      },
+      {
+        "depth": 3,
+        "slug": "这次怎么修的",
+        "text": "这次怎么修的"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-codex-exec-不是模型问题-而是-gateway-自己把参数吃了",
+        "text": "2026-04-26 补充：`codex exec` 不是模型问题，而是 gateway 自己把参数吃了"
+      },
+      {
+        "depth": 3,
+        "slug": "现象",
+        "text": "现象"
+      },
+      {
+        "depth": 3,
+        "slug": "真根因",
+        "text": "真根因"
+      },
+      {
+        "depth": 3,
+        "slug": "修后结果",
+        "text": "修后结果"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-启动时那条-skill-frontmatter-报错其实是-bom-污染",
+        "text": "2026-04-26 补充：启动时那条 skill frontmatter 报错其实是 BOM 污染"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-codex-速查卡已补齐",
+        "text": "2026-04-26 补充：Codex 速查卡已补齐"
+      },
+      {
+        "depth": 2,
+        "slug": "2026-04-26-补充-claude-的-stream-sse-这次不是-模型玄学-而是两层本机控制面-bug",
+        "text": "2026-04-26 补充：Claude 的 stream/SSE 这次不是“模型玄学”，而是两层本机控制面 bug"
+      },
+      {
+        "depth": 3,
+        "slug": "第一层-bug-自动代理判断自己永远打不着",
+        "text": "第一层 bug：自动代理判断自己永远打不着"
+      },
+      {
+        "depth": 3,
+        "slug": "第二层-bug-代理发了-json-但没把-sse-event-行发全",
+        "text": "第二层 bug：代理发了 JSON，但没把 SSE `event:` 行发全"
+      },
+      {
+        "depth": 3,
+        "slug": "这次修后结果",
+        "text": "这次修后结果"
+      },
+      {
+        "depth": 3,
+        "slug": "2026-04-26-再补一层-这次开始算真的-治本",
+        "text": "2026-04-26 再补一层：这次开始算真的“治本”"
+      }
+    ],
+    "detailPath": "articles/md_0b10e825f825.json"
+  }
+}

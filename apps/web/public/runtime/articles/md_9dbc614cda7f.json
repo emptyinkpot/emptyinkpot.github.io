@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_9dbc614cda7f",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/%E6%B1%82%E8%81%8C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9.md",
+    "sourcePath": "/home/vault/Obsidian/docs/求职基础知识点.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/求职基础知识点.md",
+    "openlistUrl": "/openlist/Obsidian/docs/%E6%B1%82%E8%81%8C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9.md",
+    "slug": "求职基础知识点",
+    "title": "求职基础知识点",
+    "summary": "CAN stm32的 需要学习： 电路的基本知识，什么是晶体管，什么是二极管 半导体二极管（D）、双极结型晶体管（BJT，简称 “晶体管”）、场效应管（FET，主要为CMOS电路）、运算放大器（Op Amp，简称 “运放”） 大棚： ESP01s 本质是 ESP8266 芯片的迷你模块， 目标路由器...",
+    "description": "CAN stm32的 需要学习： 电路的基本知识，什么是晶体管，什么是二极管 半导体二极管（D）、双极结型晶体管（BJT，简称 “晶体管”）、场效应管（FET，主要为CMOS电路）、运算放大器（Op Amp，简称 “运放”） 大棚： ESP01s 本质是 ESP8266 芯片的迷你模块， 目标路由器...",
+    "date": "2026-04-29",
+    "updated": "2026-04-29",
+    "kind": "note",
+    "folder": {
+      "key": "__docs_root__",
+      "label": "docs root",
+      "path": ""
+    },
+    "tags": [
+      "类-个人文本",
+      "项目-求职",
+      "求职资料"
+    ],
+    "categories": [
+      "note"
+    ],
+    "folderTags": [],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "frontmatter.topics"
+      ],
+      "folderTags": [],
+      "explicitTags": [
+        "类-个人文本",
+        "项目-求职"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/求职基础知识点.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/求职基础知识点.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/%E6%B1%82%E8%81%8C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "求职",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "NOTE",
+      "chips": [
+        "NOTE",
+        "类 个人文本",
+        "项目 求职",
+        "求职资料",
+        "求职"
+      ],
+      "subtitle": "CAN stm32的 需要学习： 电路的基本知识，什么是晶体管，什么是二极管 半导体二极管（D）、双极结型晶体管（BJT，简称 “晶体管”）、场效应管（FET，主要为CMOS电路）、运算放大器（Op Amp，简称 “运放”） 大棚： ESP01s 本质是 ESP8266 芯片的迷你模块， 目标路由器..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "CAN\n\nstm32的\n\n需要学习：\n电路的基本知识，什么是晶体管，什么是二极管\n\n半导体二极管（D）、双极结型晶体管（BJT，简称 “晶体管”）、场效应管（FET，主要为CMOS电路）、运算放大器（Op-Amp，简称 “运放”）\n\n\n---\n大棚：\nESP01s 本质是 ESP8266 芯片的迷你模块，\n目标路由器的 **SSID（Wi-Fi 名称）**- 打开串口监视器：`Tools → Serial Monitor`，设置波特率为 **115200**，即可看到 Wi-Fi 连接过程的日志（如 “正在连接 Wi-Fi...”“连接成功！IP: 192.168.1.100”）。\n\n2.5hz\n\n\n代码上：\n配置wifi的SSID，初始化路由器密码\n配置产品id、设备名、,在mqtt中将秘钥\n\n传感器\nMQ2 烟雾传感器是基于半导体气 semiconductor 气敏敏电阻原理工作的检测器件，核心为二氧化锡（SnO₂）半导体气敏材料，搭配内置加热丝。工作时，加热丝通电将气敏材料加热至 200~300℃以激活其敏感性：无烟雾 / 可燃气体时，气敏材料吸附空气中氧分子形成高电阻状态；接触烟雾颗粒或甲烷、丙烷等可燃气体后，气体与氧分子反应释放自由电子，使气敏材料电阻显著降低（浓度越高电阻越低）。通过外部分压电路，可将电阻变化转化为电压信号（电阻降低则输出电压升高），最终通过检测电压变化间接判断烟雾 / 可燃气体的浓度，实现报警或监测功能，广泛用于家庭、工业等场景的烟雾及可燃气体检测。\n\n\n\n\n①基本信息，面试首先介绍自己的名字籍贯，然后是学校专业毕业时间：\n“面试官您好，我叫刘高朋，来自河南安阳林州市，是华北水利水电大学26届电子信息工程专业的学生，主修课程为数模电/嵌入式&单片机&操作系统等，”\n②学习方面：“在学习方面，我曾获得学业奖学金、国家励志奖学金，无挂科记录，绩点3.87，专业共128人排名第10，学习态度认真，有良好的知识基础，”\n③专业技能方面：“在英语方面通过英语四级，计算机方面是计算机二级，有一个蓝桥杯省二”\n④校园经历方面：“在校期间曾担任社团部门采编和组策，参与组织社团迎新活动、社团知识比赛活动、社团宣传活动，负责组织、撰稿、剪视频和物资准备，锻炼了自身的组织能力、记录能力和表现能力；”\n\n\n\n\n\n1. **STM32 与传感器 / 执行器通讯**\n    \n    - 数字传感器：多采用 GPIO 直接连接（如 PIR 人体感应）\n    - 模拟传感器：通过 ADC 接口读取（如光敏电阻）\n    - 智能传感器：采用 I2C（如温湿度传感器 SHT30）或 SPI 总线\n    - 执行设备：通过 GPIO 连接继电器模块控制家电\n2. **STM32 与 ESP8266 通讯**\n    \n    - 主要通过 UART 串口通讯（TTL 电平）\n    - 采用 AT 指令集控制 ESP8266 的 WiFi 功能\n    - 数据传输格式通常为自定义协议的 JSON 或二进制数据\n3. **ESP8266 与服务器 / 手机 APP 通讯**\n    \n    - 采用 WiFi 无线通信（802.11 b/g/n 协议）\n    - 与服务器：多使用 MQTT 协议或 HTTP/HTTPS 协议\n    - 与手机 APP：可通过局域网 TCP/UDP 直连，或通过云端转发\n4. **手机 APP 与外设控制链路**\n    \n    - 控制指令流程：APP→WiFi→ESP8266→UART→STM32→外设\n    - 状态反馈流程：外设→STM32→UART→ESP8266→WiFi→APP",
+    "html": "<p>CAN</p>\n<p>stm32的</p>\n<p>需要学习：\n电路的基本知识，什么是晶体管，什么是二极管</p>\n<p>半导体二极管（D）、双极结型晶体管（BJT，简称 “晶体管”）、场效应管（FET，主要为CMOS电路）、运算放大器（Op-Amp，简称 “运放”）</p>\n<hr>\n<p>大棚：\nESP01s 本质是 ESP8266 芯片的迷你模块，\n目标路由器的 <strong>SSID（Wi-Fi 名称）</strong>- 打开串口监视器：<code>Tools → Serial Monitor</code>，设置波特率为 <strong>115200</strong>，即可看到 Wi-Fi 连接过程的日志（如 “正在连接 Wi-Fi...”“连接成功！IP: 192.168.1.100”）。</p>\n<p>2.5hz</p>\n<p>代码上：\n配置wifi的SSID，初始化路由器密码\n配置产品id、设备名、,在mqtt中将秘钥</p>\n<p>传感器\nMQ2 烟雾传感器是基于半导体气 semiconductor 气敏敏电阻原理工作的检测器件，核心为二氧化锡（SnO₂）半导体气敏材料，搭配内置加热丝。工作时，加热丝通电将气敏材料加热至 200~300℃以激活其敏感性：无烟雾 / 可燃气体时，气敏材料吸附空气中氧分子形成高电阻状态；接触烟雾颗粒或甲烷、丙烷等可燃气体后，气体与氧分子反应释放自由电子，使气敏材料电阻显著降低（浓度越高电阻越低）。通过外部分压电路，可将电阻变化转化为电压信号（电阻降低则输出电压升高），最终通过检测电压变化间接判断烟雾 / 可燃气体的浓度，实现报警或监测功能，广泛用于家庭、工业等场景的烟雾及可燃气体检测。</p>\n<p>①基本信息，面试首先介绍自己的名字籍贯，然后是学校专业毕业时间：\n“面试官您好，我叫刘高朋，来自河南安阳林州市，是华北水利水电大学26届电子信息工程专业的学生，主修课程为数模电/嵌入式&#x26;单片机&#x26;操作系统等，”\n②学习方面：“在学习方面，我曾获得学业奖学金、国家励志奖学金，无挂科记录，绩点3.87，专业共128人排名第10，学习态度认真，有良好的知识基础，”\n③专业技能方面：“在英语方面通过英语四级，计算机方面是计算机二级，有一个蓝桥杯省二”\n④校园经历方面：“在校期间曾担任社团部门采编和组策，参与组织社团迎新活动、社团知识比赛活动、社团宣传活动，负责组织、撰稿、剪视频和物资准备，锻炼了自身的组织能力、记录能力和表现能力；”</p>\n<ol>\n<li>\n<p><strong>STM32 与传感器 / 执行器通讯</strong></p>\n<ul>\n<li>数字传感器：多采用 GPIO 直接连接（如 PIR 人体感应）</li>\n<li>模拟传感器：通过 ADC 接口读取（如光敏电阻）</li>\n<li>智能传感器：采用 I2C（如温湿度传感器 SHT30）或 SPI 总线</li>\n<li>执行设备：通过 GPIO 连接继电器模块控制家电</li>\n</ul>\n</li>\n<li>\n<p><strong>STM32 与 ESP8266 通讯</strong></p>\n<ul>\n<li>主要通过 UART 串口通讯（TTL 电平）</li>\n<li>采用 AT 指令集控制 ESP8266 的 WiFi 功能</li>\n<li>数据传输格式通常为自定义协议的 JSON 或二进制数据</li>\n</ul>\n</li>\n<li>\n<p><strong>ESP8266 与服务器 / 手机 APP 通讯</strong></p>\n<ul>\n<li>采用 WiFi 无线通信（802.11 b/g/n 协议）</li>\n<li>与服务器：多使用 MQTT 协议或 HTTP/HTTPS 协议</li>\n<li>与手机 APP：可通过局域网 TCP/UDP 直连，或通过云端转发</li>\n</ul>\n</li>\n<li>\n<p><strong>手机 APP 与外设控制链路</strong></p>\n<ul>\n<li>控制指令流程：APP→WiFi→ESP8266→UART→STM32→外设</li>\n<li>状态反馈流程：外设→STM32→UART→ESP8266→WiFi→APP</li>\n</ul>\n</li>\n</ol>",
+    "toc": [],
+    "detailPath": "articles/md_9dbc614cda7f.json"
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_153e9b8e59f4",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/%E5%BD%92%E6%A1%A3%20-%20%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%8E%E4%BA%BA%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%AC%94%E8%AE%B0.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/归档 - 浏览器自动化与人机验证笔记.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/归档 - 浏览器自动化与人机验证笔记.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E5%BD%92%E6%A1%A3%20-%20%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%8E%E4%BA%BA%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%AC%94%E8%AE%B0.md",
+    "slug": "codex-knowledge-归档-浏览器自动化与人机验证笔记",
+    "title": "归档 - 浏览器自动化与人机验证笔记",
+    "summary": "这个情况很正常，而且你现在已经踩到 真正难点了 ，不是代码问题。 我先把本质讲清楚，然后给你 能用的解决路径 （不绕弯）： 🔥 一、为什么会一直人机验证 你现在这套： 在网站眼里是： 🧠 ChatGPT（以及类似站）的检测点 它不是只看一个东西，而是组合判断： 🧨 1️⃣ 浏览器指纹异常 🧨...",
+    "description": "这个情况很正常，而且你现在已经踩到 真正难点了 ，不是代码问题。 我先把本质讲清楚，然后给你 能用的解决路径 （不绕弯）： 🔥 一、为什么会一直人机验证 你现在这套： 在网站眼里是： 🧠 ChatGPT（以及类似站）的检测点 它不是只看一个东西，而是组合判断： 🧨 1️⃣ 浏览器指纹异常 🧨...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-工具工作流",
+      "形态-草稿",
+      "状态-归档",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-工具工作流",
+        "形态-草稿",
+        "状态-归档"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/归档 - 浏览器自动化与人机验证笔记.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/归档 - 浏览器自动化与人机验证笔记.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/%E5%BD%92%E6%A1%A3%20-%20%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%8E%E4%BA%BA%E6%9C%BA%E9%AA%8C%E8%AF%81%E7%AC%94%E8%AE%B0.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "归档   浏览器自动化与人机验证笔记",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 工具工作流",
+        "形态 草稿",
+        "状态 归档",
+        "归档 浏览器自动化与人机验证笔记"
+      ],
+      "subtitle": "这个情况很正常，而且你现在已经踩到 真正难点了 ，不是代码问题。 我先把本质讲清楚，然后给你 能用的解决路径 （不绕弯）： 🔥 一、为什么会一直人机验证 你现在这套： 在网站眼里是： 🧠 ChatGPT（以及类似站）的检测点 它不是只看一个东西，而是组合判断： 🧨 1️⃣ 浏览器指纹异常 🧨..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "这个情况很正常，而且你现在已经踩到**真正难点了**，不是代码问题。\n\n我先把本质讲清楚，然后给你**能用的解决路径**（不绕弯）：\n\n---\n\n# 🔥 一、为什么会一直人机验证\n\n你现在这套：\n\n```text\nPlaywright / CDP → 自动控制浏览器\n```\n\n在网站眼里是：\n\n```text\n👉 自动化行为（bot）\n```\n\n---\n\n## 🧠 ChatGPT（以及类似站）的检测点\n\n它不是只看一个东西，而是组合判断：\n\n---\n\n### 🧨 1️⃣ 浏览器指纹异常\n\n```text\nnavigator.webdriver = true ❌\n缺插件 / 字体 / GPU ❌\n```\n\n---\n\n### 🧨 2️⃣ 行为异常\n\n```text\n瞬间输入\n无鼠标移动\n无滚动\n```\n\n---\n\n### 🧨 3️⃣ 环境异常\n\n```text\n新 profile\n新设备\n新 IP\n```\n\n---\n\n### 🧨 4️⃣ CDP / 自动化痕迹\n\n```text\nDevTools protocol 被检测\n```\n\n---\n\n👉 所以结果就是：\n\n> ❗你一连上 → 直接 challenge（人机验证）\n\n---\n\n# 🔥 二、为什么“手动浏览器没事，你这个就炸”\n\n因为你现在用的是：\n\n```text\n--user-data-dir=新目录\n```\n\n👉 在系统眼里：\n\n```text\n全新设备 + 自动化行为 = 高风险\n```\n\n---\n\n# 🔥 三、真正有效的解决思路（重点）\n\n我给你分三档：\n\n---\n\n# 🥇 方案A（你现在最该用的）✅\n\n## 👉 用“真实日常浏览器”+ attach\n\n---\n\n### ❗不要用：\n\n```bash\n--user-data-dir=新目录 ❌\n```\n\n---\n\n### ✅ 正确方式：\n\n直接启动你平时用的 Chrome：\n\n```bash\nchrome.exe --remote-debugging-port=9222\n```\n\n（不加 user-data-dir）\n\n---\n\n👉 然后：\n\n```js\nchromium.connectOverCDP(\"http://127.0.0.1:9222\")\n```\n\n---\n\n## 👉 效果\n\n```text\n✔ 用你真实登录态\n✔ 有历史记录\n✔ 有行为轨迹\n✔ 更像真人\n```\n\n---\n\n👉 人机验证概率会大幅下降（不是100%消失）\n\n---\n\n# 🥈 方案B（进阶）⚠️\n\n## 👉 加“人类行为模拟”\n\n比如：\n\n```js\nawait page.mouse.move(300, 500)\nawait page.waitForTimeout(500)\nawait page.mouse.move(600, 400)\n```\n\n---\n\n输入不要：\n\n```js\nfill() ❌\n```\n\n改成：\n\n```js\nfor (const char of text) {\n  await page.keyboard.type(char, { delay: 50 + Math.random()*50 })\n}\n```\n\n---\n\n滚动：\n\n```js\nawait page.mouse.wheel(0, 300)\n```\n\n---\n\n👉 目的：\n\n```text\n让行为像人\n```\n\n---\n\n# 🥉 方案C（生产级）🔥\n\n## 👉 多账号 + 长期养号\n\n```text\n一个账号长期用\n固定 IP\n固定浏览器\n稳定行为\n```\n\n---\n\n👉 这才是 Soxio 那类系统的核心：\n\n```text\n不是技术牛\n是环境“像人”\n```\n\n---\n\n# ❌ 四、你现在这条“copy profile”路线为什么死\n\n你之前做的：\n\n```text\n复制 Chrome Profile\n```\n\n👉 问题：\n\n```text\n✔ 加密问题\n✔ 指纹不一致\n✔ session 不完整\n```\n\n👉 最终：\n\n```text\n❌ 直接触发风控\n```\n\n---\n\n# 🧠 五、你现在应该怎么改（最关键）\n\n我帮你定路线👇\n\n---\n\n## 👉 你现在用这个组合：\n\n```text\n✔ 真实 Chrome（你的日常）\n✔ remote-debugging-port\n✔ connectOverCDP\n```\n\n---\n\n## 👉 并且改两点：\n\n---\n\n### 1️⃣ 不要 headless\n\n```js\nheadless: false\n```\n\n---\n\n### 2️⃣ 不要秒操作\n\n加延迟：\n\n```js\nawait page.waitForTimeout(2000)\n```\n\n---\n\n# 🔥 六、现实一句话总结\n\n> ❗你现在不是在“写代码”  \n> 而是在：\n\n> **和风控系统博弈**\n\n---\n\n# 🧠 最后一刀（最重要）\n\n> **不是“怎么绕过验证”**  \n> 而是：\n\n> **怎么让系统觉得你是正常用户**\n\n---\n\n# 🚀 如果你要继续往上走\n\n我可以帮你做：\n\n- 浏览器指纹伪装方案（工程级）\n    \n- session养号策略\n    \n- 多浏览器调度（不被封版）\n    \n- provider稳定化\n    \n\n你现在已经进入“真正难的部分”了，这一步才是分水岭。",
+    "html": "<p>这个情况很正常，而且你现在已经踩到<strong>真正难点了</strong>，不是代码问题。</p>\n<p>我先把本质讲清楚，然后给你<strong>能用的解决路径</strong>（不绕弯）：</p>\n<hr>\n<h1 id=\"-一为什么会一直人机验证\">🔥 一、为什么会一直人机验证</h1>\n<p>你现在这套：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Playwright / CDP → 自动控制浏览器</span></span></code></pre></figure>\n<p>在网站眼里是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 自动化行为（bot）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-chatgpt以及类似站的检测点\">🧠 ChatGPT（以及类似站）的检测点</h2>\n<p>它不是只看一个东西，而是组合判断：</p>\n<hr>\n<h3 id=\"-1️⃣-浏览器指纹异常\">🧨 1️⃣ 浏览器指纹异常</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>navigator.webdriver = true ❌</span></span>\n<span data-line=\"\"><span>缺插件 / 字体 / GPU ❌</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-2️⃣-行为异常\">🧨 2️⃣ 行为异常</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>瞬间输入</span></span>\n<span data-line=\"\"><span>无鼠标移动</span></span>\n<span data-line=\"\"><span>无滚动</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-3️⃣-环境异常\">🧨 3️⃣ 环境异常</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>新 profile</span></span>\n<span data-line=\"\"><span>新设备</span></span>\n<span data-line=\"\"><span>新 IP</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-4️⃣-cdp--自动化痕迹\">🧨 4️⃣ CDP / 自动化痕迹</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>DevTools protocol 被检测</span></span></code></pre></figure>\n<hr>\n<p>👉 所以结果就是：</p>\n<blockquote>\n<p>❗你一连上 → 直接 challenge（人机验证）</p>\n</blockquote>\n<hr>\n<h1 id=\"-二为什么手动浏览器没事你这个就炸\">🔥 二、为什么“手动浏览器没事，你这个就炸”</h1>\n<p>因为你现在用的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>--user-data-dir=新目录</span></span></code></pre></figure>\n<p>👉 在系统眼里：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>全新设备 + 自动化行为 = 高风险</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三真正有效的解决思路重点\">🔥 三、真正有效的解决思路（重点）</h1>\n<p>我给你分三档：</p>\n<hr>\n<h1 id=\"-方案a你现在最该用的\">🥇 方案A（你现在最该用的）✅</h1>\n<h2 id=\"-用真实日常浏览器-attach\">👉 用“真实日常浏览器”+ attach</h2>\n<hr>\n<h3 id=\"不要用\">❗不要用：</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">--user-data-dir</span><span style=\"color:#F97583\">=</span><span style=\"color:#9ECBFF\">新目录</span><span style=\"color:#B392F0\"> ❌</span></span></code></pre></figure>\n<hr>\n<h3 id=\"-正确方式\">✅ 正确方式：</h3>\n<p>直接启动你平时用的 Chrome：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">chrome.exe</span><span style=\"color:#79B8FF\"> --remote-debugging-port=9222</span></span></code></pre></figure>\n<p>（不加 user-data-dir）</p>\n<hr>\n<p>👉 然后：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">chromium.</span><span style=\"color:#B392F0\">connectOverCDP</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#9ECBFF\">\"http://127.0.0.1:9222\"</span><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-效果\">👉 效果</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 用你真实登录态</span></span>\n<span data-line=\"\"><span>✔ 有历史记录</span></span>\n<span data-line=\"\"><span>✔ 有行为轨迹</span></span>\n<span data-line=\"\"><span>✔ 更像真人</span></span></code></pre></figure>\n<hr>\n<p>👉 人机验证概率会大幅下降（不是100%消失）</p>\n<hr>\n<h1 id=\"-方案b进阶️\">🥈 方案B（进阶）⚠️</h1>\n<h2 id=\"-加人类行为模拟\">👉 加“人类行为模拟”</h2>\n<p>比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">await</span><span style=\"color:#E1E4E8\"> page.mouse.</span><span style=\"color:#B392F0\">move</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">300</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#79B8FF\">500</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">await</span><span style=\"color:#E1E4E8\"> page.</span><span style=\"color:#B392F0\">waitForTimeout</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">500</span><span style=\"color:#E1E4E8\">)</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">await</span><span style=\"color:#E1E4E8\"> page.mouse.</span><span style=\"color:#B392F0\">move</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">600</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#79B8FF\">400</span><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<hr>\n<p>输入不要：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">fill</span><span style=\"color:#E1E4E8\">() ❌</span></span></code></pre></figure>\n<p>改成：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">for</span><span style=\"color:#E1E4E8\"> (</span><span style=\"color:#F97583\">const</span><span style=\"color:#79B8FF\"> char</span><span style=\"color:#F97583\"> of</span><span style=\"color:#E1E4E8\"> text) {</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">  await</span><span style=\"color:#E1E4E8\"> page.keyboard.</span><span style=\"color:#B392F0\">type</span><span style=\"color:#E1E4E8\">(char, { delay: </span><span style=\"color:#79B8FF\">50</span><span style=\"color:#F97583\"> +</span><span style=\"color:#E1E4E8\"> Math.</span><span style=\"color:#B392F0\">random</span><span style=\"color:#E1E4E8\">()</span><span style=\"color:#F97583\">*</span><span style=\"color:#79B8FF\">50</span><span style=\"color:#E1E4E8\"> })</span></span>\n<span data-line=\"\"><span style=\"color:#E1E4E8\">}</span></span></code></pre></figure>\n<hr>\n<p>滚动：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">await</span><span style=\"color:#E1E4E8\"> page.mouse.</span><span style=\"color:#B392F0\">wheel</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">0</span><span style=\"color:#E1E4E8\">, </span><span style=\"color:#79B8FF\">300</span><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<hr>\n<p>👉 目的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>让行为像人</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-方案c生产级\">🥉 方案C（生产级）🔥</h1>\n<h2 id=\"-多账号--长期养号\">👉 多账号 + 长期养号</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一个账号长期用</span></span>\n<span data-line=\"\"><span>固定 IP</span></span>\n<span data-line=\"\"><span>固定浏览器</span></span>\n<span data-line=\"\"><span>稳定行为</span></span></code></pre></figure>\n<hr>\n<p>👉 这才是 Soxio 那类系统的核心：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>不是技术牛</span></span>\n<span data-line=\"\"><span>是环境“像人”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四你现在这条copy-profile路线为什么死\">❌ 四、你现在这条“copy profile”路线为什么死</h1>\n<p>你之前做的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>复制 Chrome Profile</span></span></code></pre></figure>\n<p>👉 问题：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 加密问题</span></span>\n<span data-line=\"\"><span>✔ 指纹不一致</span></span>\n<span data-line=\"\"><span>✔ session 不完整</span></span></code></pre></figure>\n<p>👉 最终：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 直接触发风控</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五你现在应该怎么改最关键\">🧠 五、你现在应该怎么改（最关键）</h1>\n<p>我帮你定路线👇</p>\n<hr>\n<h2 id=\"-你现在用这个组合\">👉 你现在用这个组合：</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 真实 Chrome（你的日常）</span></span>\n<span data-line=\"\"><span>✔ remote-debugging-port</span></span>\n<span data-line=\"\"><span>✔ connectOverCDP</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-并且改两点\">👉 并且改两点：</h2>\n<hr>\n<h3 id=\"1️⃣-不要-headless\">1️⃣ 不要 headless</h3>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">headless</span><span style=\"color:#E1E4E8\">: </span><span style=\"color:#79B8FF\">false</span></span></code></pre></figure>\n<hr>\n<h3 id=\"2️⃣-不要秒操作\">2️⃣ 不要秒操作</h3>\n<p>加延迟：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#F97583\">await</span><span style=\"color:#E1E4E8\"> page.</span><span style=\"color:#B392F0\">waitForTimeout</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#79B8FF\">2000</span><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六现实一句话总结\">🔥 六、现实一句话总结</h1>\n<blockquote>\n<p>❗你现在不是在“写代码”<br>\n而是在：</p>\n</blockquote>\n<blockquote>\n<p><strong>和风控系统博弈</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-最后一刀最重要\">🧠 最后一刀（最重要）</h1>\n<blockquote>\n<p><strong>不是“怎么绕过验证”</strong><br>\n而是：</p>\n</blockquote>\n<blockquote>\n<p><strong>怎么让系统觉得你是正常用户</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"-如果你要继续往上走\">🚀 如果你要继续往上走</h1>\n<p>我可以帮你做：</p>\n<ul>\n<li>\n<p>浏览器指纹伪装方案（工程级）</p>\n</li>\n<li>\n<p>session养号策略</p>\n</li>\n<li>\n<p>多浏览器调度（不被封版）</p>\n</li>\n<li>\n<p>provider稳定化</p>\n</li>\n</ul>\n<p>你现在已经进入“真正难的部分”了，这一步才是分水岭。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一-为什么会一直人机验证",
+        "text": "🔥 一、为什么会一直人机验证"
+      },
+      {
+        "depth": 2,
+        "slug": "chatgpt-以及类似站-的检测点",
+        "text": "🧠 ChatGPT（以及类似站）的检测点"
+      },
+      {
+        "depth": 3,
+        "slug": "1-浏览器指纹异常",
+        "text": "🧨 1️⃣ 浏览器指纹异常"
+      },
+      {
+        "depth": 3,
+        "slug": "2-行为异常",
+        "text": "🧨 2️⃣ 行为异常"
+      },
+      {
+        "depth": 3,
+        "slug": "3-环境异常",
+        "text": "🧨 3️⃣ 环境异常"
+      },
+      {
+        "depth": 3,
+        "slug": "4-cdp-自动化痕迹",
+        "text": "🧨 4️⃣ CDP / 自动化痕迹"
+      },
+      {
+        "depth": 1,
+        "slug": "二-为什么-手动浏览器没事-你这个就炸",
+        "text": "🔥 二、为什么“手动浏览器没事，你这个就炸”"
+      },
+      {
+        "depth": 1,
+        "slug": "三-真正有效的解决思路-重点",
+        "text": "🔥 三、真正有效的解决思路（重点）"
+      },
+      {
+        "depth": 1,
+        "slug": "方案a-你现在最该用的",
+        "text": "🥇 方案A（你现在最该用的）✅"
+      },
+      {
+        "depth": 2,
+        "slug": "用-真实日常浏览器-attach",
+        "text": "👉 用“真实日常浏览器”+ attach"
+      },
+      {
+        "depth": 3,
+        "slug": "不要用",
+        "text": "❗不要用："
+      },
+      {
+        "depth": 3,
+        "slug": "正确方式",
+        "text": "✅ 正确方式："
+      },
+      {
+        "depth": 2,
+        "slug": "效果",
+        "text": "👉 效果"
+      },
+      {
+        "depth": 1,
+        "slug": "方案b-进阶",
+        "text": "🥈 方案B（进阶）⚠️"
+      },
+      {
+        "depth": 2,
+        "slug": "加-人类行为模拟",
+        "text": "👉 加“人类行为模拟”"
+      },
+      {
+        "depth": 1,
+        "slug": "方案c-生产级",
+        "text": "🥉 方案C（生产级）🔥"
+      },
+      {
+        "depth": 2,
+        "slug": "多账号-长期养号",
+        "text": "👉 多账号 + 长期养号"
+      },
+      {
+        "depth": 1,
+        "slug": "四-你现在这条-copy-profile-路线为什么死",
+        "text": "❌ 四、你现在这条“copy profile”路线为什么死"
+      },
+      {
+        "depth": 1,
+        "slug": "五-你现在应该怎么改-最关键",
+        "text": "🧠 五、你现在应该怎么改（最关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "你现在用这个组合",
+        "text": "👉 你现在用这个组合："
+      },
+      {
+        "depth": 2,
+        "slug": "并且改两点",
+        "text": "👉 并且改两点："
+      },
+      {
+        "depth": 3,
+        "slug": "1-不要-headless",
+        "text": "1️⃣ 不要 headless"
+      },
+      {
+        "depth": 3,
+        "slug": "2-不要秒操作",
+        "text": "2️⃣ 不要秒操作"
+      },
+      {
+        "depth": 1,
+        "slug": "六-现实一句话总结",
+        "text": "🔥 六、现实一句话总结"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀-最重要",
+        "text": "🧠 最后一刀（最重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要继续往上走",
+        "text": "🚀 如果你要继续往上走"
+      }
+    ],
+    "detailPath": "articles/md_153e9b8e59f4.json"
+  }
+}

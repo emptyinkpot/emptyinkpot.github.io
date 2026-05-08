@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_816bcf576a83",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%9C%80%E5%B0%8F%E9%97%AD%E7%8E%AF%E7%8A%B6%E6%80%81%E6%9C%BA%20MVP.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程规范/最小闭环状态机 MVP.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/最小闭环状态机 MVP.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%9C%80%E5%B0%8F%E9%97%AD%E7%8E%AF%E7%8A%B6%E6%80%81%E6%9C%BA%20MVP.md",
+    "slug": "blog-编程规范-最小闭环状态机-mvp",
+    "title": "最小闭环状态机 MVP",
+    "summary": "这个问题你现在问到的是“工程是否成型”的本质，而不是某个模块怎么修。可以给你一个 比较工业化的收敛答案 ：一个项目要“成型”，其实不靠状态机多，而是靠 边界清晰 + 最小闭环 + 可控失败模型 。 我拆成三层说清楚。 1️⃣ 一个项目“成型”的必要步骤（不是功能列表，是结构阶段） ① 闭环验证（Pr...",
+    "description": "这个问题你现在问到的是“工程是否成型”的本质，而不是某个模块怎么修。可以给你一个 比较工业化的收敛答案 ：一个项目要“成型”，其实不靠状态机多，而是靠 边界清晰 + 最小闭环 + 可控失败模型 。 我拆成三层说清楚。 1️⃣ 一个项目“成型”的必要步骤（不是功能列表，是结构阶段） ① 闭环验证（Pr...",
+    "date": "2026-04-27",
+    "updated": "2026-04-27",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程规范"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程规范"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程规范"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程规范/最小闭环状态机 MVP.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程规范/最小闭环状态机 MVP.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/%E6%9C%80%E5%B0%8F%E9%97%AD%E7%8E%AF%E7%8A%B6%E6%80%81%E6%9C%BA%20MVP.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "最小闭环状态机 MVP",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程规范",
+        "最小闭环状态机 MVP"
+      ],
+      "subtitle": "这个问题你现在问到的是“工程是否成型”的本质，而不是某个模块怎么修。可以给你一个 比较工业化的收敛答案 ：一个项目要“成型”，其实不靠状态机多，而是靠 边界清晰 + 最小闭环 + 可控失败模型 。 我拆成三层说清楚。 1️⃣ 一个项目“成型”的必要步骤（不是功能列表，是结构阶段） ① 闭环验证（Pr..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "这个问题你现在问到的是“工程是否成型”的本质，而不是某个模块怎么修。可以给你一个**比较工业化的收敛答案**：一个项目要“成型”，其实不靠状态机多，而是靠**边界清晰 + 最小闭环 + 可控失败模型**。\n\n我拆成三层说清楚。\n\n---\n\n# 1️⃣ 一个项目“成型”的必要步骤（不是功能列表，是结构阶段）\n\n## ① 闭环验证（Proof of Flow）\n\n目标只有一个：\n\n> 一条完整路径能跑通（哪怕成功率很低）\n\n例如：\n\n```\ninput → process → output\n```\n\n特点：\n\n- 不优化\n    \n- 不分支\n    \n- 不做复杂错误处理\n    \n- 只求“能走完”\n    \n\n👉 你现在做的 MVP 就属于这个阶段\n\n---\n\n## ② 稳定化（Deterministic Collapse）\n\n目标：\n\n> 所有失败必须收敛为有限类别\n\n不是修 bug，而是做“失败归一化”\n\n例如：\n\n```\nSUCCESS\nRETRYABLE_FAIL\nFATAL_FAIL\n```\n\n关键点：\n\n- 不允许 20 种 error\n    \n- 不允许 deep nested retry\n    \n- 不允许局部状态修复\n    \n\n👉 这是你刚刚在做 “RETRY_SESSION” 的本质\n\n---\n\n## ③ 控制层（Orchestration Layer）\n\n目标：\n\n> 把“不确定性”从执行层移走\n\n结构变成：\n\n```\nOrchestrator（决策）\n    ↓\nRunner（无状态执行）\n    ↓\nResult（标准输出）\n```\n\n这一层负责：\n\n- retry\n    \n- session reset\n    \n- worker调度\n    \n- rate limit  \n    -失败重试策略\n    \n\n---\n\n## ④ 扩展层（Scale Layer）\n\n目标：\n\n> 从“能跑”变成“能并发跑”\n\n加入：\n\n- queue\n    \n- worker pool\n    \n- job scheduling\n    \n- isolation\n    \n\n---\n\n# 2️⃣ 一个“成型系统”真正需要的状态机数量\n\n这里是关键认知纠正：\n\n> ❗ 成型系统 ≠ 状态机多  \n> ❗ 成型系统 = 状态机少 + 边界清晰\n\n---\n\n## ✔ 实际工业标准（核心）\n\n通常只需要 **2～4个状态机**：\n\n---\n\n## （1）Execution State Machine（执行状态机）\n\n```text\nRUNNING\nSUCCESS\nFAILED\nRETRYABLE\n```\n\n👉 这是唯一“必须存在”的状态机\n\n---\n\n## （2）Session State Machine（会话状态）\n\n```text\nNEW_SESSION\nACTIVE\nBURNED\nRESETTING\n```\n\n👉 用于控制“是否整段重来”\n\n---\n\n## （3）Task Lifecycle（任务生命周期）\n\n```text\nPENDING\nRUNNING\nDONE\nFAILED\nRETRYING\n```\n\n👉 orchestrator 用\n\n---\n\n## （4）（可选）Resource State（资源状态）\n\n```text\nPROXY_OK / PROXY_BAD\nFINGERPRINT_OK / BURNED\nRATE_LIMITED\n```\n\n---\n\n# ❗ 关键结论：\n\n> 工业系统的稳定性来自：  \n> **少状态机 + 强约束，而不是多状态机**\n\n---\n\n# 3️⃣ 一个项目“必须有”的机制（真正核心）\n\n这个比状态机重要得多。\n\n---\n\n## ✔ ① Failure Collapse Mechanism（失败收敛机制）\n\n所有错误必须变成：\n\n```\nretryable / non-retryable\n```\n\n不能保留“长尾错误语义”。\n\n---\n\n## ✔ ② Stateless Execution Model（无状态执行）\n\n每次执行必须：\n\n- 不依赖上一次 UI / DOM / session\n    \n- 不继承局部浏览器状态\n    \n- 失败即丢弃\n    \n\n---\n\n## ✔ ③ Orchestrator / Runner 分离\n\n这是工业级分水岭：\n\n|层|职责|\n|---|---|\n|Orchestrator|决策（重试 / 资源 /调度）|\n|Runner|做事（无状态执行）|\n\n---\n\n## ✔ ④ Retry Budget（重试预算）\n\n避免无限循环：\n\n```\nmax_attempts = N\nbackoff = exponential or fixed\n```\n\n---\n\n## ✔ ⑤ Hard Reset Mechanism（强重置）\n\n每次 retry 必须：\n\n- new session\n    \n- new browser context\n    \n- new headers\n    \n- new fingerprint (optional)\n    \n\n---\n\n## ✔ ⑥ Observability（可观测性）\n\n必须有：\n\n- structured logs\n    \n- state snapshot\n    \n- failure reason classification\n    \n\n否则你会回到“感觉调试”\n\n---\n\n# 4️⃣ 最关键的一句话（帮你收敛认知）\n\n一个系统是否“成型”，看的是：\n\n> ❗失败是否被压缩成有限集合 + 是否能无状态重跑\n\n而不是：\n\n> ❌你有没有写 Cloudflare bypass  \n> ❌你有没有 session ended 修复  \n> ❌你有没有 retry loop\n\n---\n\n# 5️⃣ 用一句话总结你的当前阶段\n\n你现在已经完成：\n\n> ✔ MVP闭环  \n> ✔ 失败归一化  \n> ✔ 初级 orchestrator\n\n你还缺的是：\n\n> 👉 工业级 execution boundary（runner / orchestrator 分层）\n\n---\n\n如果你下一步要继续，我可以帮你把整个系统直接升级成：\n\n> ✔ “无状态执行 + 可水平扩展 job system（接近生产级架构）”\n\n那一层开始，你的系统才真正“不靠修 bug 活着”。\n\n\n\n\n\n\n\n### 👉 “全流程 session retry”\n\n就是：\n\n任何一步失败 = throw session away\n\n然后：\n\nnew browser context  \n→ 从 step 1 重新跑\n\n---\n\n## 它的核心思想（非常关键）\n\n不是“修问题”，而是：\n\n> ❌ 不信任当前 session  \n> ✔ 直接重建一个新的执行环境\n\n---\n\n## 为什么它比你现在的方案更“能跑”\n\n因为你现在遇到的是：\n\n- Cloudflare state machine（不可控）\n- session token 污染\n- challenge 状态不可逆\n- 页面 DOM 延迟释放\n\n这些东西有一个共同特点：\n\n> ❌ 不是 bug，是“环境状态不可预测”\n\n---\n\n## 所以 MVP 的结构其实是：\n\n### 外层（orchestrator）\n\nfor i in retry:  \n    run full_flow()  \n    if success:  \n        break\n\n---\n\n### 内层（runner）\n\nrun_full_flow():  \n    open_browser()  \n    step1()  \n    step2()  \n    step3()  \n    return success/fail\n\n---\n\n## ✔ 关键差别（你现在卡住的点）\n\n|你现在|MVP|\n|---|---|\n|修 session ended|直接丢 session|\n|修 Cloudflare|换浏览器|\n|修 DOM 等待|重跑流程|\n|复杂状态机|无状态 runner|\n\n---\n\n## 一句话总结\n\n> “session retry”不是优化，是**放弃局部修复，改成失败即重启**\n\n---\n\n## 为什么我之前说你“过度建模”\n\n因为你现在的问题已经是：\n\n> 外部系统（Cloudflare + auth flow）不是确定性系统\n\n所以：\n\n- 状态机 ≠ 提升稳定性\n- 反而增加“污染累积”\n\n---\n\n\n\n全流程 session retry 失败一次即重试全部\n\n\n状态机设计不收敛 是程序设计灾难的开始\n\n\n\n不明白状态边界，无限制扩架构，建模过头\n\n\n---\n# 最小闭环状态机 + MVP 完整通俗拆解（工程 / 自动化 / 脚本架构通用，适配你注册、会话、OTP 项目）\n\n## 一、先拆两个核心名词\n\n### 1. 状态机（State Machine）\n\n任何程序、任务、流程，**永远只处在某一个固定状态**，按规则切换：\n\n- 例：空闲 → 初始化 → 请求 OTP → 等待验证码 → 校验成功 / 失败\n- 每一步**只依赖当前状态**，不乱跑、不越序、不并发混乱\n\n### 2. 最小闭环\n\n- **最小**：只保留核心必要逻辑，砍掉冗余、无用分支、多余判断\n- **闭环**：\n    \n    任务无论**成功 / 失败 / 报错 / 限流 429 / 代理断连**\n    \n    最终都能**回到初始状态**，可复用、可重试、不卡死、不内存泄漏\n\n### 3. MVP 此处不是产品 MVP\n\n在**状态机 / 工程架构**里：\n\n**MVP = Minimum Viable Process**\n\n最小可行流程\n\n不是「最小可行产品」，是：\n\n**能跑通全链路、能容错、能闭环的最简流程骨架**\n\n---\n\n## 二、完整定义\n\n### 最小闭环状态机（MVP 架构理论）\n\n> 以**有限状态机**为核心，\n> \n> 剥离一切非必要功能，只保留业务核心流转；\n> \n> 所有异常（报错、超时、限流、断连）都被状态机统一接管；\n> \n> 任意分支走完**必闭环回归初始态**，\n> \n> 实现：最简、稳定、可重试、可横向扩容的轻量化任务架构。\n\n---\n\n## 三、核心四大理论特征（重点）\n\n1. **状态唯一**\n    \n    同一时间只会有一个状态，杜绝逻辑混乱、嵌套爆炸、并发冲突\n    \n    （解决你：session 炸裂、服务初始化报错、多流程串扰）\n    \n2. **流程单向约束**\n    \n    不能跳步，比如：没初始化完成，绝不允许直接发 OTP 请求\n    \n    专治：风控特征混乱、请求顺序异常被拦截\n    \n3. **全链路闭环兜底**\n    \n    正常走完→回归空闲\n    \n    报错 / 429 / 代理挂了 / 超时→触发降级 fallback→清理资源→回归空闲\n    \n    **不会卡死、不会僵死、不会无限忙等**\n    \n4. **最小化设计**\n    \n    砍掉多余缓存、无效检测、重复初始化；\n    \n    只保留「干活 + 报错回收」核心逻辑，资源占用极低。\n    \n\n---\n\n## 四、结合你的项目（注册 / OTP / 代理 / 会话）实例\n\n### 一套标准最小闭环状态流转\n\nplaintext\n\n```\n[IDLE 空闲]\n    ↓\n[BOOTSTRAP 初始化会话/代理/fingerprint]\n    ↓ 正常\n[REQUEST_OTP 请求验证码]\n    ↓\n[PROBE_LOOP 状态轮询等待码]\n    ↓ 成功\n[VERIFY 校验通过] → 回收资源 → 回到 IDLE\n    ↓ 失败/429/代理断连\n[FALLBACK 降级冷却/销毁session] → 强制闭环 → 回到 IDLE\n```\n\n完美解决你现实问题：\n\n- OTP 429 限流 → 状态机切冷却状态，不暴力重试\n- session 创建失败 → 直接进入异常闭环，不崩溃退出\n- state probe loop 等待超时 → 自动终止，回收连接\n\n---\n\n## 五、和普通烂代码的区别\n\n表格\n\n|普通流水代码|最小闭环状态机 (MVP)|\n|---|---|\n|顺序硬写，报错直接崩|所有异常被状态拦截，容错强|\n|容易忙等、死循环、内存泄漏|强制闭环，资源必释放|\n|并发一多就乱序、风控拉满|状态锁序，流程稳定|\n|改一处全崩|模块化状态，易扩展、易维护|\n\n---\n\n## 六、一句话终极总结\n\n**最小闭环状态机（MVP）**\n\n= 用最简的状态流转管住全流程，\n\n正常走流程、报错有兜底、走完必回收，\n\n是自动化脚本、爬虫、批量注册、接口服务**最稳的底层架构设计理论**。\n\n\n\n---\n\n\n1. **MVP = Minimum Viable Product**\n    \n    最小可行产品（互联网 / 产品经理）\n\n---\n\n## 2. 你这里：**架构 / 状态机 专属缩写**\n\n### MVP\n\n**M**inimum **V**iable **P**rocess\n\n👉 **最小可行流程**\n\n搭配全称：\n\n**最小闭环状态机 + MVP（最小可行流程）**\n\n---\n\n## 3. 人话翻译（贴合你代码）\n\n- **最小**：代码最简、逻辑最少、不写冗余垃圾代码\n- **可行**：能正常跑、能处理报错、能扛 429、能断连兜底\n- **流程**：一整套完整链路：初始化→请求→等待→成功 / 失败→资源回收→回归空闲\n\n### 核心一句话\n\n这里的 **MVP = 能稳定跑通、带异常兜底、能闭环复位的「最简完整流程」**\n\n---\n\n## 4. 对应你之前的名词串起来\n\n- bootstrap 初始化\n- session 会话\n- loop 循环\n- probe 探测\n- fallback 降级兜底\n- **MVP 最小可行流程**\n- 状态机 管控所有步骤",
+    "html": "<p>这个问题你现在问到的是“工程是否成型”的本质，而不是某个模块怎么修。可以给你一个<strong>比较工业化的收敛答案</strong>：一个项目要“成型”，其实不靠状态机多，而是靠<strong>边界清晰 + 最小闭环 + 可控失败模型</strong>。</p>\n<p>我拆成三层说清楚。</p>\n<hr>\n<h1 id=\"1️⃣-一个项目成型的必要步骤不是功能列表是结构阶段\">1️⃣ 一个项目“成型”的必要步骤（不是功能列表，是结构阶段）</h1>\n<h2 id=\"-闭环验证proof-of-flow\">① 闭环验证（Proof of Flow）</h2>\n<p>目标只有一个：</p>\n<blockquote>\n<p>一条完整路径能跑通（哪怕成功率很低）</p>\n</blockquote>\n<p>例如：</p>\n<pre><code>input → process → output\n</code></pre>\n<p>特点：</p>\n<ul>\n<li>\n<p>不优化</p>\n</li>\n<li>\n<p>不分支</p>\n</li>\n<li>\n<p>不做复杂错误处理</p>\n</li>\n<li>\n<p>只求“能走完”</p>\n</li>\n</ul>\n<p>👉 你现在做的 MVP 就属于这个阶段</p>\n<hr>\n<h2 id=\"-稳定化deterministic-collapse\">② 稳定化（Deterministic Collapse）</h2>\n<p>目标：</p>\n<blockquote>\n<p>所有失败必须收敛为有限类别</p>\n</blockquote>\n<p>不是修 bug，而是做“失败归一化”</p>\n<p>例如：</p>\n<pre><code>SUCCESS\nRETRYABLE_FAIL\nFATAL_FAIL\n</code></pre>\n<p>关键点：</p>\n<ul>\n<li>\n<p>不允许 20 种 error</p>\n</li>\n<li>\n<p>不允许 deep nested retry</p>\n</li>\n<li>\n<p>不允许局部状态修复</p>\n</li>\n</ul>\n<p>👉 这是你刚刚在做 “RETRY_SESSION” 的本质</p>\n<hr>\n<h2 id=\"-控制层orchestration-layer\">③ 控制层（Orchestration Layer）</h2>\n<p>目标：</p>\n<blockquote>\n<p>把“不确定性”从执行层移走</p>\n</blockquote>\n<p>结构变成：</p>\n<pre><code>Orchestrator（决策）\n    ↓\nRunner（无状态执行）\n    ↓\nResult（标准输出）\n</code></pre>\n<p>这一层负责：</p>\n<ul>\n<li>\n<p>retry</p>\n</li>\n<li>\n<p>session reset</p>\n</li>\n<li>\n<p>worker调度</p>\n</li>\n<li>\n<p>rate limit<br>\n-失败重试策略</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"-扩展层scale-layer\">④ 扩展层（Scale Layer）</h2>\n<p>目标：</p>\n<blockquote>\n<p>从“能跑”变成“能并发跑”</p>\n</blockquote>\n<p>加入：</p>\n<ul>\n<li>\n<p>queue</p>\n</li>\n<li>\n<p>worker pool</p>\n</li>\n<li>\n<p>job scheduling</p>\n</li>\n<li>\n<p>isolation</p>\n</li>\n</ul>\n<hr>\n<h1 id=\"2️⃣-一个成型系统真正需要的状态机数量\">2️⃣ 一个“成型系统”真正需要的状态机数量</h1>\n<p>这里是关键认知纠正：</p>\n<blockquote>\n<p>❗ 成型系统 ≠ 状态机多<br>\n❗ 成型系统 = 状态机少 + 边界清晰</p>\n</blockquote>\n<hr>\n<h2 id=\"-实际工业标准核心\">✔ 实际工业标准（核心）</h2>\n<p>通常只需要 <strong>2～4个状态机</strong>：</p>\n<hr>\n<h2 id=\"1execution-state-machine执行状态机\">（1）Execution State Machine（执行状态机）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>RUNNING</span></span>\n<span data-line=\"\"><span>SUCCESS</span></span>\n<span data-line=\"\"><span>FAILED</span></span>\n<span data-line=\"\"><span>RETRYABLE</span></span></code></pre></figure>\n<p>👉 这是唯一“必须存在”的状态机</p>\n<hr>\n<h2 id=\"2session-state-machine会话状态\">（2）Session State Machine（会话状态）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>NEW_SESSION</span></span>\n<span data-line=\"\"><span>ACTIVE</span></span>\n<span data-line=\"\"><span>BURNED</span></span>\n<span data-line=\"\"><span>RESETTING</span></span></code></pre></figure>\n<p>👉 用于控制“是否整段重来”</p>\n<hr>\n<h2 id=\"3task-lifecycle任务生命周期\">（3）Task Lifecycle（任务生命周期）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>PENDING</span></span>\n<span data-line=\"\"><span>RUNNING</span></span>\n<span data-line=\"\"><span>DONE</span></span>\n<span data-line=\"\"><span>FAILED</span></span>\n<span data-line=\"\"><span>RETRYING</span></span></code></pre></figure>\n<p>👉 orchestrator 用</p>\n<hr>\n<h2 id=\"4可选resource-state资源状态\">（4）（可选）Resource State（资源状态）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>PROXY_OK / PROXY_BAD</span></span>\n<span data-line=\"\"><span>FINGERPRINT_OK / BURNED</span></span>\n<span data-line=\"\"><span>RATE_LIMITED</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-关键结论\">❗ 关键结论：</h1>\n<blockquote>\n<p>工业系统的稳定性来自：<br>\n<strong>少状态机 + 强约束，而不是多状态机</strong></p>\n</blockquote>\n<hr>\n<h1 id=\"3️⃣-一个项目必须有的机制真正核心\">3️⃣ 一个项目“必须有”的机制（真正核心）</h1>\n<p>这个比状态机重要得多。</p>\n<hr>\n<h2 id=\"--failure-collapse-mechanism失败收敛机制\">✔ ① Failure Collapse Mechanism（失败收敛机制）</h2>\n<p>所有错误必须变成：</p>\n<pre><code>retryable / non-retryable\n</code></pre>\n<p>不能保留“长尾错误语义”。</p>\n<hr>\n<h2 id=\"--stateless-execution-model无状态执行\">✔ ② Stateless Execution Model（无状态执行）</h2>\n<p>每次执行必须：</p>\n<ul>\n<li>\n<p>不依赖上一次 UI / DOM / session</p>\n</li>\n<li>\n<p>不继承局部浏览器状态</p>\n</li>\n<li>\n<p>失败即丢弃</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"--orchestrator--runner-分离\">✔ ③ Orchestrator / Runner 分离</h2>\n<p>这是工业级分水岭：</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>层</th>\n<th>职责</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Orchestrator</td>\n<td>决策（重试 / 资源 /调度）</td>\n</tr>\n<tr>\n<td>Runner</td>\n<td>做事（无状态执行）</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h2 id=\"--retry-budget重试预算\">✔ ④ Retry Budget（重试预算）</h2>\n<p>避免无限循环：</p>\n<pre><code>max_attempts = N\nbackoff = exponential or fixed\n</code></pre>\n<hr>\n<h2 id=\"--hard-reset-mechanism强重置\">✔ ⑤ Hard Reset Mechanism（强重置）</h2>\n<p>每次 retry 必须：</p>\n<ul>\n<li>\n<p>new session</p>\n</li>\n<li>\n<p>new browser context</p>\n</li>\n<li>\n<p>new headers</p>\n</li>\n<li>\n<p>new fingerprint (optional)</p>\n</li>\n</ul>\n<hr>\n<h2 id=\"--observability可观测性\">✔ ⑥ Observability（可观测性）</h2>\n<p>必须有：</p>\n<ul>\n<li>\n<p>structured logs</p>\n</li>\n<li>\n<p>state snapshot</p>\n</li>\n<li>\n<p>failure reason classification</p>\n</li>\n</ul>\n<p>否则你会回到“感觉调试”</p>\n<hr>\n<h1 id=\"4️⃣-最关键的一句话帮你收敛认知\">4️⃣ 最关键的一句话（帮你收敛认知）</h1>\n<p>一个系统是否“成型”，看的是：</p>\n<blockquote>\n<p>❗失败是否被压缩成有限集合 + 是否能无状态重跑</p>\n</blockquote>\n<p>而不是：</p>\n<blockquote>\n<p>❌你有没有写 Cloudflare bypass<br>\n❌你有没有 session ended 修复<br>\n❌你有没有 retry loop</p>\n</blockquote>\n<hr>\n<h1 id=\"5️⃣-用一句话总结你的当前阶段\">5️⃣ 用一句话总结你的当前阶段</h1>\n<p>你现在已经完成：</p>\n<blockquote>\n<p>✔ MVP闭环<br>\n✔ 失败归一化<br>\n✔ 初级 orchestrator</p>\n</blockquote>\n<p>你还缺的是：</p>\n<blockquote>\n<p>👉 工业级 execution boundary（runner / orchestrator 分层）</p>\n</blockquote>\n<hr>\n<p>如果你下一步要继续，我可以帮你把整个系统直接升级成：</p>\n<blockquote>\n<p>✔ “无状态执行 + 可水平扩展 job system（接近生产级架构）”</p>\n</blockquote>\n<p>那一层开始，你的系统才真正“不靠修 bug 活着”。</p>\n<h3 id=\"-全流程-session-retry\">👉 “全流程 session retry”</h3>\n<p>就是：</p>\n<p>任何一步失败 = throw session away</p>\n<p>然后：</p>\n<p>new browser context<br>\n→ 从 step 1 重新跑</p>\n<hr>\n<h2 id=\"它的核心思想非常关键\">它的核心思想（非常关键）</h2>\n<p>不是“修问题”，而是：</p>\n<blockquote>\n<p>❌ 不信任当前 session<br>\n✔ 直接重建一个新的执行环境</p>\n</blockquote>\n<hr>\n<h2 id=\"为什么它比你现在的方案更能跑\">为什么它比你现在的方案更“能跑”</h2>\n<p>因为你现在遇到的是：</p>\n<ul>\n<li>Cloudflare state machine（不可控）</li>\n<li>session token 污染</li>\n<li>challenge 状态不可逆</li>\n<li>页面 DOM 延迟释放</li>\n</ul>\n<p>这些东西有一个共同特点：</p>\n<blockquote>\n<p>❌ 不是 bug，是“环境状态不可预测”</p>\n</blockquote>\n<hr>\n<h2 id=\"所以-mvp-的结构其实是\">所以 MVP 的结构其实是：</h2>\n<h3 id=\"外层orchestrator\">外层（orchestrator）</h3>\n<p>for i in retry:<br>\nrun full_flow()<br>\nif success:<br>\nbreak</p>\n<hr>\n<h3 id=\"内层runner\">内层（runner）</h3>\n<p>run_full_flow():<br>\nopen_browser()<br>\nstep1()<br>\nstep2()<br>\nstep3()<br>\nreturn success/fail</p>\n<hr>\n<h2 id=\"-关键差别你现在卡住的点\">✔ 关键差别（你现在卡住的点）</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>你现在</th>\n<th>MVP</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>修 session ended</td>\n<td>直接丢 session</td>\n</tr>\n<tr>\n<td>修 Cloudflare</td>\n<td>换浏览器</td>\n</tr>\n<tr>\n<td>修 DOM 等待</td>\n<td>重跑流程</td>\n</tr>\n<tr>\n<td>复杂状态机</td>\n<td>无状态 runner</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h2 id=\"一句话总结\">一句话总结</h2>\n<blockquote>\n<p>“session retry”不是优化，是<strong>放弃局部修复，改成失败即重启</strong></p>\n</blockquote>\n<hr>\n<h2 id=\"为什么我之前说你过度建模\">为什么我之前说你“过度建模”</h2>\n<p>因为你现在的问题已经是：</p>\n<blockquote>\n<p>外部系统（Cloudflare + auth flow）不是确定性系统</p>\n</blockquote>\n<p>所以：</p>\n<ul>\n<li>状态机 ≠ 提升稳定性</li>\n<li>反而增加“污染累积”</li>\n</ul>\n<hr>\n<p>全流程 session retry 失败一次即重试全部</p>\n<p>状态机设计不收敛 是程序设计灾难的开始</p>\n<p>不明白状态边界，无限制扩架构，建模过头</p>\n<hr>\n<h1 id=\"最小闭环状态机--mvp-完整通俗拆解工程--自动化--脚本架构通用适配你注册会话otp-项目\">最小闭环状态机 + MVP 完整通俗拆解（工程 / 自动化 / 脚本架构通用，适配你注册、会话、OTP 项目）</h1>\n<h2 id=\"一先拆两个核心名词\">一、先拆两个核心名词</h2>\n<h3 id=\"1-状态机state-machine\">1. 状态机（State Machine）</h3>\n<p>任何程序、任务、流程，<strong>永远只处在某一个固定状态</strong>，按规则切换：</p>\n<ul>\n<li>例：空闲 → 初始化 → 请求 OTP → 等待验证码 → 校验成功 / 失败</li>\n<li>每一步<strong>只依赖当前状态</strong>，不乱跑、不越序、不并发混乱</li>\n</ul>\n<h3 id=\"2-最小闭环\">2. 最小闭环</h3>\n<ul>\n<li>\n<p><strong>最小</strong>：只保留核心必要逻辑，砍掉冗余、无用分支、多余判断</p>\n</li>\n<li>\n<p><strong>闭环</strong>：</p>\n<p>任务无论<strong>成功 / 失败 / 报错 / 限流 429 / 代理断连</strong></p>\n<p>最终都能<strong>回到初始状态</strong>，可复用、可重试、不卡死、不内存泄漏</p>\n</li>\n</ul>\n<h3 id=\"3-mvp-此处不是产品-mvp\">3. MVP 此处不是产品 MVP</h3>\n<p>在<strong>状态机 / 工程架构</strong>里：</p>\n<p><strong>MVP = Minimum Viable Process</strong></p>\n<p>最小可行流程</p>\n<p>不是「最小可行产品」，是：</p>\n<p><strong>能跑通全链路、能容错、能闭环的最简流程骨架</strong></p>\n<hr>\n<h2 id=\"二完整定义\">二、完整定义</h2>\n<h3 id=\"最小闭环状态机mvp-架构理论\">最小闭环状态机（MVP 架构理论）</h3>\n<blockquote>\n<p>以<strong>有限状态机</strong>为核心，</p>\n<p>剥离一切非必要功能，只保留业务核心流转；</p>\n<p>所有异常（报错、超时、限流、断连）都被状态机统一接管；</p>\n<p>任意分支走完<strong>必闭环回归初始态</strong>，</p>\n<p>实现：最简、稳定、可重试、可横向扩容的轻量化任务架构。</p>\n</blockquote>\n<hr>\n<h2 id=\"三核心四大理论特征重点\">三、核心四大理论特征（重点）</h2>\n<ol>\n<li>\n<p><strong>状态唯一</strong></p>\n<p>同一时间只会有一个状态，杜绝逻辑混乱、嵌套爆炸、并发冲突</p>\n<p>（解决你：session 炸裂、服务初始化报错、多流程串扰）</p>\n</li>\n<li>\n<p><strong>流程单向约束</strong></p>\n<p>不能跳步，比如：没初始化完成，绝不允许直接发 OTP 请求</p>\n<p>专治：风控特征混乱、请求顺序异常被拦截</p>\n</li>\n<li>\n<p><strong>全链路闭环兜底</strong></p>\n<p>正常走完→回归空闲</p>\n<p>报错 / 429 / 代理挂了 / 超时→触发降级 fallback→清理资源→回归空闲</p>\n<p><strong>不会卡死、不会僵死、不会无限忙等</strong></p>\n</li>\n<li>\n<p><strong>最小化设计</strong></p>\n<p>砍掉多余缓存、无效检测、重复初始化；</p>\n<p>只保留「干活 + 报错回收」核心逻辑，资源占用极低。</p>\n</li>\n</ol>\n<hr>\n<h2 id=\"四结合你的项目注册--otp--代理--会话实例\">四、结合你的项目（注册 / OTP / 代理 / 会话）实例</h2>\n<h3 id=\"一套标准最小闭环状态流转\">一套标准最小闭环状态流转</h3>\n<p>plaintext</p>\n<pre><code>[IDLE 空闲]\n    ↓\n[BOOTSTRAP 初始化会话/代理/fingerprint]\n    ↓ 正常\n[REQUEST_OTP 请求验证码]\n    ↓\n[PROBE_LOOP 状态轮询等待码]\n    ↓ 成功\n[VERIFY 校验通过] → 回收资源 → 回到 IDLE\n    ↓ 失败/429/代理断连\n[FALLBACK 降级冷却/销毁session] → 强制闭环 → 回到 IDLE\n</code></pre>\n<p>完美解决你现实问题：</p>\n<ul>\n<li>OTP 429 限流 → 状态机切冷却状态，不暴力重试</li>\n<li>session 创建失败 → 直接进入异常闭环，不崩溃退出</li>\n<li>state probe loop 等待超时 → 自动终止，回收连接</li>\n</ul>\n<hr>\n<h2 id=\"五和普通烂代码的区别\">五、和普通烂代码的区别</h2>\n<p>表格</p>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>普通流水代码</th>\n<th>最小闭环状态机 (MVP)</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>顺序硬写，报错直接崩</td>\n<td>所有异常被状态拦截，容错强</td>\n</tr>\n<tr>\n<td>容易忙等、死循环、内存泄漏</td>\n<td>强制闭环，资源必释放</td>\n</tr>\n<tr>\n<td>并发一多就乱序、风控拉满</td>\n<td>状态锁序，流程稳定</td>\n</tr>\n<tr>\n<td>改一处全崩</td>\n<td>模块化状态，易扩展、易维护</td>\n</tr>\n</tbody>\n</table></div>\n<hr>\n<h2 id=\"六一句话终极总结\">六、一句话终极总结</h2>\n<p><strong>最小闭环状态机（MVP）</strong></p>\n<p>= 用最简的状态流转管住全流程，</p>\n<p>正常走流程、报错有兜底、走完必回收，</p>\n<p>是自动化脚本、爬虫、批量注册、接口服务<strong>最稳的底层架构设计理论</strong>。</p>\n<hr>\n<ol>\n<li>\n<p><strong>MVP = Minimum Viable Product</strong></p>\n<p>最小可行产品（互联网 / 产品经理）</p>\n</li>\n</ol>\n<hr>\n<h2 id=\"2-你这里架构--状态机-专属缩写\">2. 你这里：<strong>架构 / 状态机 专属缩写</strong></h2>\n<h3 id=\"mvp\">MVP</h3>\n<p><strong>M</strong>inimum <strong>V</strong>iable <strong>P</strong>rocess</p>\n<p>👉 <strong>最小可行流程</strong></p>\n<p>搭配全称：</p>\n<p><strong>最小闭环状态机 + MVP（最小可行流程）</strong></p>\n<hr>\n<h2 id=\"3-人话翻译贴合你代码\">3. 人话翻译（贴合你代码）</h2>\n<ul>\n<li><strong>最小</strong>：代码最简、逻辑最少、不写冗余垃圾代码</li>\n<li><strong>可行</strong>：能正常跑、能处理报错、能扛 429、能断连兜底</li>\n<li><strong>流程</strong>：一整套完整链路：初始化→请求→等待→成功 / 失败→资源回收→回归空闲</li>\n</ul>\n<h3 id=\"核心一句话\">核心一句话</h3>\n<p>这里的 <strong>MVP = 能稳定跑通、带异常兜底、能闭环复位的「最简完整流程」</strong></p>\n<hr>\n<h2 id=\"4-对应你之前的名词串起来\">4. 对应你之前的名词串起来</h2>\n<ul>\n<li>bootstrap 初始化</li>\n<li>session 会话</li>\n<li>loop 循环</li>\n<li>probe 探测</li>\n<li>fallback 降级兜底</li>\n<li><strong>MVP 最小可行流程</strong></li>\n<li>状态机 管控所有步骤</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "1-一个项目-成型-的必要步骤-不是功能列表-是结构阶段",
+        "text": "1️⃣ 一个项目“成型”的必要步骤（不是功能列表，是结构阶段）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-闭环验证-proof-of-flow",
+        "text": "① 闭环验证（Proof of Flow）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-稳定化-deterministic-collapse",
+        "text": "② 稳定化（Deterministic Collapse）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-控制层-orchestration-layer",
+        "text": "③ 控制层（Orchestration Layer）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-扩展层-scale-layer",
+        "text": "④ 扩展层（Scale Layer）"
+      },
+      {
+        "depth": 1,
+        "slug": "2-一个-成型系统-真正需要的状态机数量",
+        "text": "2️⃣ 一个“成型系统”真正需要的状态机数量"
+      },
+      {
+        "depth": 2,
+        "slug": "实际工业标准-核心",
+        "text": "✔ 实际工业标准（核心）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-execution-state-machine-执行状态机",
+        "text": "（1）Execution State Machine（执行状态机）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-session-state-machine-会话状态",
+        "text": "（2）Session State Machine（会话状态）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-task-lifecycle-任务生命周期",
+        "text": "（3）Task Lifecycle（任务生命周期）"
+      },
+      {
+        "depth": 2,
+        "slug": "4-可选-resource-state-资源状态",
+        "text": "（4）（可选）Resource State（资源状态）"
+      },
+      {
+        "depth": 1,
+        "slug": "关键结论",
+        "text": "❗ 关键结论："
+      },
+      {
+        "depth": 1,
+        "slug": "3-一个项目-必须有-的机制-真正核心",
+        "text": "3️⃣ 一个项目“必须有”的机制（真正核心）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-failure-collapse-mechanism-失败收敛机制",
+        "text": "✔ ① Failure Collapse Mechanism（失败收敛机制）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-stateless-execution-model-无状态执行",
+        "text": "✔ ② Stateless Execution Model（无状态执行）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-orchestrator-runner-分离",
+        "text": "✔ ③ Orchestrator / Runner 分离"
+      },
+      {
+        "depth": 2,
+        "slug": "4-retry-budget-重试预算",
+        "text": "✔ ④ Retry Budget（重试预算）"
+      },
+      {
+        "depth": 2,
+        "slug": "5-hard-reset-mechanism-强重置",
+        "text": "✔ ⑤ Hard Reset Mechanism（强重置）"
+      },
+      {
+        "depth": 2,
+        "slug": "6-observability-可观测性",
+        "text": "✔ ⑥ Observability（可观测性）"
+      },
+      {
+        "depth": 1,
+        "slug": "4-最关键的一句话-帮你收敛认知",
+        "text": "4️⃣ 最关键的一句话（帮你收敛认知）"
+      },
+      {
+        "depth": 1,
+        "slug": "5-用一句话总结你的当前阶段",
+        "text": "5️⃣ 用一句话总结你的当前阶段"
+      },
+      {
+        "depth": 3,
+        "slug": "全流程-session-retry",
+        "text": "👉 “全流程 session retry”"
+      },
+      {
+        "depth": 2,
+        "slug": "它的核心思想-非常关键",
+        "text": "它的核心思想（非常关键）"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么它比你现在的方案更-能跑",
+        "text": "为什么它比你现在的方案更“能跑”"
+      },
+      {
+        "depth": 2,
+        "slug": "所以-mvp-的结构其实是",
+        "text": "所以 MVP 的结构其实是："
+      },
+      {
+        "depth": 3,
+        "slug": "外层-orchestrator",
+        "text": "外层（orchestrator）"
+      },
+      {
+        "depth": 3,
+        "slug": "内层-runner",
+        "text": "内层（runner）"
+      },
+      {
+        "depth": 2,
+        "slug": "关键差别-你现在卡住的点",
+        "text": "✔ 关键差别（你现在卡住的点）"
+      },
+      {
+        "depth": 2,
+        "slug": "一句话总结",
+        "text": "一句话总结"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么我之前说你-过度建模",
+        "text": "为什么我之前说你“过度建模”"
+      },
+      {
+        "depth": 1,
+        "slug": "最小闭环状态机-mvp-完整通俗拆解-工程-自动化-脚本架构通用-适配你注册-会话-otp-项目",
+        "text": "最小闭环状态机 + MVP 完整通俗拆解（工程 / 自动化 / 脚本架构通用，适配你注册、会话、OTP 项目）"
+      },
+      {
+        "depth": 2,
+        "slug": "一-先拆两个核心名词",
+        "text": "一、先拆两个核心名词"
+      },
+      {
+        "depth": 3,
+        "slug": "1-状态机-state-machine",
+        "text": "1. 状态机（State Machine）"
+      },
+      {
+        "depth": 3,
+        "slug": "2-最小闭环",
+        "text": "2. 最小闭环"
+      },
+      {
+        "depth": 3,
+        "slug": "3-mvp-此处不是产品-mvp",
+        "text": "3. MVP 此处不是产品 MVP"
+      },
+      {
+        "depth": 2,
+        "slug": "二-完整定义",
+        "text": "二、完整定义"
+      },
+      {
+        "depth": 3,
+        "slug": "最小闭环状态机-mvp-架构理论",
+        "text": "最小闭环状态机（MVP 架构理论）"
+      },
+      {
+        "depth": 2,
+        "slug": "三-核心四大理论特征-重点",
+        "text": "三、核心四大理论特征（重点）"
+      },
+      {
+        "depth": 2,
+        "slug": "四-结合你的项目-注册-otp-代理-会话-实例",
+        "text": "四、结合你的项目（注册 / OTP / 代理 / 会话）实例"
+      },
+      {
+        "depth": 3,
+        "slug": "一套标准最小闭环状态流转",
+        "text": "一套标准最小闭环状态流转"
+      },
+      {
+        "depth": 2,
+        "slug": "五-和普通烂代码的区别",
+        "text": "五、和普通烂代码的区别"
+      },
+      {
+        "depth": 2,
+        "slug": "六-一句话终极总结",
+        "text": "六、一句话终极总结"
+      },
+      {
+        "depth": 2,
+        "slug": "2-你这里-架构-状态机-专属缩写",
+        "text": "2. 你这里：**架构 / 状态机 专属缩写**"
+      },
+      {
+        "depth": 3,
+        "slug": "mvp",
+        "text": "MVP"
+      },
+      {
+        "depth": 2,
+        "slug": "3-人话翻译-贴合你代码",
+        "text": "3. 人话翻译（贴合你代码）"
+      },
+      {
+        "depth": 3,
+        "slug": "核心一句话",
+        "text": "核心一句话"
+      },
+      {
+        "depth": 2,
+        "slug": "4-对应你之前的名词串起来",
+        "text": "4. 对应你之前的名词串起来"
+      }
+    ],
+    "detailPath": "articles/md_816bcf576a83.json"
+  }
+}

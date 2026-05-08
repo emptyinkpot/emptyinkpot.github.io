@@ -1,0 +1,540 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_9e8adb41949b",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/Frontend%20Design%20Specs.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/Frontend Design Specs.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/Frontend Design Specs.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/Frontend%20Design%20Specs.md",
+    "slug": "agent-frontend-design-specs",
+    "title": "Frontend Design Specs",
+    "summary": "Frontend Design Specs 适用范围 适用于需要做前端设计、前端改版、后台工作台界面、信息型管理页、产品页、落地页、设计系统收口、界面重构的任务。 这份文档是默认前端设计规范。除非用户明确给出更强的项目规范、现成设计系统或直接视觉方向，否则前端设计应严格参考本规范执行。 规则优先级...",
+    "description": "Frontend Design Specs 适用范围 适用于需要做前端设计、前端改版、后台工作台界面、信息型管理页、产品页、落地页、设计系统收口、界面重构的任务。 这份文档是默认前端设计规范。除非用户明确给出更强的项目规范、现成设计系统或直接视觉方向，否则前端设计应严格参考本规范执行。 规则优先级...",
+    "date": "2026-04-23",
+    "updated": "2026-04-23",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "active",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "active",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/Frontend Design Specs.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/Frontend Design Specs.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/Frontend%20Design%20Specs.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:25:54.597Z",
+      "model": "coze-shell",
+      "entities": [
+        "Atramenti-Console",
+        "console-web",
+        "design-system",
+        "ui-system",
+        "uiverse-io/galaxy",
+        "Inter",
+        "Roboto"
+      ],
+      "topics": [
+        "前端设计规范",
+        "界面设计系统构建",
+        "控制台/工作台界面设计",
+        "产品页/功能页设计",
+        "落地页/营销页设计",
+        "交互设计原则",
+        "视觉层级设计",
+        "响应式布局规范",
+        "组件复用策略"
+      ],
+      "relations": [
+        {
+          "type": "belongs_to",
+          "target": "Atramenti-Console",
+          "label": "子项目",
+          "confidence": 1
+        },
+        {
+          "type": "contains",
+          "target": "design-system",
+          "label": "设计规范模块",
+          "confidence": 1
+        },
+        {
+          "type": "contains",
+          "target": "ui-system",
+          "label": "组件实现模块",
+          "confidence": 1
+        },
+        {
+          "type": "references",
+          "target": "uiverse-io/galaxy",
+          "label": "参考设计方案",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "前端设计规范",
+          "label": "核心规范文档",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "前端设计规范集合",
+        "产品界面设计知识库"
+      ],
+      "clusters": [
+        "前端设计规范",
+        "企业级界面设计",
+        "交互设计指南",
+        "视觉系统规范"
+      ]
+    },
+    "series": "",
+    "project": "Frontend Design Specs",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "FRONTEND DESIGN SPECS"
+      ],
+      "subtitle": "Frontend Design Specs 适用范围 适用于需要做前端设计、前端改版、后台工作台界面、信息型管理页、产品页、落地页、设计系统收口、界面重构的任务。 这份文档是默认前端设计规范。除非用户明确给出更强的项目规范、现成设计系统或直接视觉方向，否则前端设计应严格参考本规范执行。 规则优先级..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Frontend Design Specs\n\n## 适用范围\n\n适用于需要做前端设计、前端改版、后台工作台界面、信息型管理页、产品页、落地页、设计系统收口、界面重构的任务。\n\n这份文档是默认前端设计规范。除非用户明确给出更强的项目规范、现成设计系统或直接视觉方向，否则前端设计应严格参考本规范执行。\n\n### 规则优先级\n\n发生冲突时，按下面顺序裁决：\n\n1. 用户本轮任务明确给出的视觉方向、业务目标、品牌要求\n2. 当前项目已经存在并且仍然有效的设计系统 / 组件系统 / 规范化品牌规则\n3. 本文中针对特定 surface 的专门规则\n4. 本文中的默认规则\n\n如果项目已有稳定设计系统，优先保持既有语言，不要为了套用本文而破坏现有系统一致性。\n\n### Surface 分类\n\n开始设计前，先判断当前任务属于哪一类 surface：\n\n1. 控制台 / 工作台 / 运维面 / dense admin list\n2. 信息型管理页 / 设置页 / 数据页\n3. 产品页 / 功能承载页\n4. 落地页 / 营销页 / 叙事页\n5. 混合面\n\n不要把某一类 surface 的语言硬套到另一类 surface 上。\n\n其中：\n\n- 控制台 / 运维面默认强调信息密度、扫读效率、状态判断、直接操作\n- 产品页默认强调主任务路径、模块节奏、价值理解、操作转化\n- 落地页默认允许更明确的视觉主张，但仍然不能落入模板站拼装感\n\n### console-web 实施落点\n\n对于 `E:\\My Project\\Atramenti-Console\\codex\\apps\\console-web`，当前可执行模板层已经固定在：\n\n- `codex/apps/console-web/design-system/`\n- `codex/apps/console-web/modules/ui-system/`\n\n约定：\n\n- `design-system/` 负责 contracts / patterns / states / mapping / ai / checklist\n- `modules/ui-system/` 负责 tokens / lint / components / patterns 的实现收口\n- 页面若需要新增 reusable UI 规则，优先先补 `design-system/`，再补 `modules/ui-system/`\n\n### dense admin list 触发条件\n\n如果页面属于运维、控制面、监控、服务管理、部署、域名、运行时、设置面板等场景，或页面的主目标是：\n\n- 快速扫读事实\n- 对比对象状态\n- 发现异常\n- 快速操作\n- 高频录入与筛选\n\n则视为 dense admin list 场景，必须额外遵守本文中的 dense admin list 规则，不要退化成营销卡片墙。\n\n## 一、核心立场\n\n### 1. 总原则\n\n1. 优先产品原生感，不优先“单次看起来惊艳”的装饰感\n2. 优先信息与交互效率，不优先无意义留白\n3. 优先单层结构，不优先多层包裹\n4. 优先清晰层级，不优先堆砌组件\n5. 优先内容驱动布局，不优先模板驱动布局\n6. 优先统一产品语言，不优先局部 showcase 感\n7. 优先长期可演化，不优先一次性的视觉噱头\n\n一句话：先把信息组织对，再考虑样式；先像真实产品，再像设计展示稿。\n\n### 2. 组件搜源优先原则\n\n在设计组件、局部交互、视觉细节、微动效、输入控件、反馈样式时，默认不要第一反应从零空想。\n\n默认优先顺序应当是：\n\n1. 先看当前项目里是否已有可复用的 canonical 组件或成熟局部模式\n2. 若项目内没有合适基础，优先参考 `https://github.com/uiverse-io/galaxy`\n3. 再去找已经存在的优秀开源方案，以及高水平产品团队公开放出的实现\n4. 吸收之后，再按当前产品的单一视觉语言做收口，而不是把来源原样拼接进来\n\n默认借鉴方式应当是：\n\n- 借结构，不先借表皮\n- 借细节，不借整页拼装\n- 借节奏，不借装饰堆砌\n- 借成熟交互反馈，不借模板站的整套视觉噪声\n\n禁止把多个来源直接拼成视觉杂烩，也禁止因为“来源高级”就无条件照搬到不匹配的场景。\n\n### 3. 默认统一气质\n\n后续设计默认统一收口到下面这套方向，除非用户明确给出更强视觉方向：\n\n- 克制\n- 冷静\n- 专业\n- 原生产品感\n- 强结构\n- 弱装饰\n- 高完成度工具感\n\n默认目标不是“像模板站”，也不是“像展示页”，而是像一套真正长期演化中的成熟产品。\n\n### 4. 默认视觉方向\n\n在没有更强项目约束时，默认要先明确下面 4 个方向，并在页面中保持一致。\n\n#### Typography\n\n- 必须显式选择字体策略，不要把 `Inter`、`Roboto`、`Arial`、泛 system UI 当成默认答案\n- 控制台 / 工具页优先选择中性、清晰、密度友好的字体系统\n- 产品页 / 落地页允许更强识别度的标题字，但正文仍要保证长时间阅读稳定\n- 同一页面只允许一个主标题体系和一个正文字体系，不要混成字体拼盘\n\n#### Color\n\n- 一个主品牌强调色即可，不要同时有多个主角颜色\n- 中性色负责结构与层级，状态色负责状态语义，品牌色负责品牌或主动作，不混用职责\n- 默认优先低到中饱和度的稳定配色，不做紫色优先、不做无解释的暗色偏执\n\n#### Background\n\n- 控制台 / 信息页优先分层背景、浅对比 surface、细腻材质感，不优先纯平单色空白页\n- 产品页 / 落地页允许更明确的大气氛背景，但背景必须服务内容，不可吞掉信息层级\n- 背景变化应来自层次、光感、纹理、区块组织，而不是纯粹堆叠花哨渐变\n\n#### Motion\n\n- 动效默认只承担状态反馈、层级切换、焦点引导、局部展开 / 收起\n- 不做炫技、不做戏剧化、不做为了“显高级”而存在的表演型动效\n- 页面进入、模块显现、筛选反馈可以有，但要轻、短、结构化\n\n## 二、固定前端设计顺序\n\n以后做前端设计时，默认固定按下面顺序走，不再临场乱跳：\n\n1. 定 surface 类型\n   - 先判断这是控制台、工作台、信息页、产品页、落地页，还是混合面\n   - 先判断主目标是扫读、操作、比较、录入，还是展示、转化、叙事\n2. 定主职责与层级\n   - 先确定 header、sidebar、summary、content、warning、action 各自负责什么\n   - 先把一级信息、二级信息、次级说明分清\n3. 定系统层基础\n   - 先确定字体、颜色、背景、动效的统一口径\n   - 先确定 spacing、grid、breakpoint、radius、border 的基础尺度\n4. 搜现成成熟方案\n   - 先查项目内 canonical\n   - 再查 `https://github.com/uiverse-io/galaxy`\n   - 再查高质量开源产品与成熟设计系统实现\n5. 抽结构，不抄表皮\n   - 只提炼布局骨架、比例、反馈、节奏、状态表达\n   - 不整套搬运别人视觉皮肤\n6. 统一视觉语言\n   - 统一圆角、边框、阴影、字号、密度、颜色、动效\n   - 保证新模块像同一个产品里长出来的\n7. 再补组件与细节\n   - 在结构成立后再补按钮、输入框、卡片、状态条、空态、hover、折叠等局部细节\n   - 不允许局部细节反过来绑架页面结构\n8. 最后做收口自检\n   - 是否像成熟产品，不像模板站\n   - 是否主信息最先被看到\n   - 是否有多来源拼盘感\n   - 是否有过度装饰、过度动效、过度卡片化\n   - 是否通过移动端与可访问性检查\n\n一句话顺序版：\n\n**定类型 -> 定职责 -> 定系统层 -> 搜成熟方案 -> 抽结构 -> 统一语言 -> 补细节 -> 做收口自检**\n\n## 三、系统层基础规范\n\n这部分不是可选补充，而是落地时必须明确的执行层约束。\n\n### 1. Spacing Scale\n\n默认使用统一 spacing scale，不允许页面内部随意漂移。\n\n推荐默认间距节奏：\n\n- `4`：极小间距、图标与文本、紧贴性内边距\n- `8`：紧凑控件内边距、小型组件间距\n- `12`：常规紧凑布局的单元间距\n- `16`：标准模块内边距 / 表单字段间距\n- `24`：模块级分组间距\n- `32`：区块级分隔\n- `48-64`：页面大区块节奏\n\n规则：\n\n- 优先复用已有尺度，不随手造 `13`、`18`、`22` 这类漂移值\n- dense admin list 优先 `8 / 12 / 16 / 24` 节奏，不要无意义拉大\n- 产品页 / 落地页可用更大节奏，但必须服务层级与叙事，不服务空洞感\n\n### 2. Grid 与容器\n\n默认要求：\n\n- 桌面端优先稳定栅格，不靠目测摆放\n- 控制台 / 工作台优先 12 栏或等价的内容轨道系统\n- 信息页优先单主列或双列 facts 结构\n- dense admin list 优先横向阅读带，而不是纵向堆叠盒子\n- 手机端优先单列，必要时保留有限横向滚动，不要强行塞满桌面结构\n\n### 3. Typography Scale\n\n默认至少定义下面 5 层：\n\n- 标签层：`11px-12px`\n- 正文层：`13px-14px`\n- 强调正文 / 主值层：`15px-16px`\n- 区块标题层：`18px-20px`\n- 页面标题层：`24px-32px`\n\n同时遵守：\n\n- 标题只比下一级高一档，不靠巨大字号硬拉层级\n- 备注层必须弱于主值，不与主信息抢层级\n- 行高优先可读和稳定：正文约 `1.45-1.6`，标题约 `1.2-1.35`\n- 不允许同一页面里出现多套彼此无关的字号逻辑\n\n### 4. Color Tokens\n\n至少定义下面 4 组语义色：\n\n1. 中性色：承担背景、边框、正文、弱文本、分隔线\n2. 品牌色：承担主按钮、主链接、品牌强调\n3. 状态色：success / warning / danger / info\n4. 焦点色：focus ring 与键盘可见反馈\n\n规则：\n\n- 状态色只表达状态，不额外承载新的复杂语义\n- 品牌色不替代危险态和警告态\n- 背景色优先表达层次，不表达热闹\n- 任何状态都不允许只靠颜色表达，必须有文字、图标或结构辅助\n\n### 5. Radius / Border / Shadow\n\n默认建议控制在有限层级：\n\n- `radius-sm`：`6px`\n- `radius-md`：`10px`\n- `radius-lg`：`14px`\n\n边框与阴影规则：\n\n- 优先用分隔线表达结构\n- 只在真正需要强分组的地方保留完整边框\n- 不允许连续两层完整边框表达同一层级\n- 阴影只做微弱层次区分，不做厚重浮空感\n- dense 页面宁可减少盒子，也不要增加大圆角容器\n\n### 6. Motion Tokens\n\n默认时长范围：\n\n- `120ms-180ms`：hover、focus、状态切换\n- `180ms-240ms`：局部展开 / 收起、轻量进入\n- `240ms+`：慎用，只限确有结构意义的转场\n\n默认优先：\n\n- `opacity`\n- `color`\n- `translateY`\n- `height`\n- `transform` 的轻量变化\n\n默认不优先：\n\n- 弹跳\n- 甩动\n- 重 easing\n- 夸张 scale\n- 与结构无关的循环动画\n\n## 四、Surface 结构原则\n\n### 1. 页面级结构\n\n默认按下面顺序组织页面：\n\n1. 页头：标题、状态、关键动作\n2. 摘要层：少量关键数字 / 关键状态\n3. 主体层：核心内容模块\n4. 次级层：备注、补充说明、帮助信息\n\n### 2. 模块级结构\n\n模块默认应尽量简单：\n\n- 标题\n- 很短的说明（可无）\n- 单层内容区\n\n禁止默认写成：\n\n- 外卡片 + 内卡片\n- 外容器 + 子容器 + 子子容器\n- 同一层信息被拆成很多视觉盒子\n\n### 3. 界面职责单一原则\n\n每个界面元素默认只承担一种主职责，不要让多个元素争抢同一种语义。\n\n- sidebar：一级导航\n- header：页面身份、页面状态、主动作\n- breadcrumb：路径上下文\n- tabs：当前页面内部的子视图切换\n- content：事实、数据、说明、检查项\n- warning / banner：风险提示\n\n禁止默认出现这些情况：\n\n- 用 header tabs 重复 sidebar 已承担的一级导航\n- 用内容卡片承担导航语义\n- 用 badge 承担布局主体\n- 用备注区承担主信息解释\n\n### 4. Surface Ownership 原则\n\n开始画页面之前，先定义每个 surface 的拥有权，再决定往里面放什么。\n\n至少先回答：\n\n1. 谁拥有一级导航权\n2. 谁拥有页面身份表达权\n3. 谁拥有主动作入口\n4. 谁拥有事实信息承载权\n5. 谁拥有风险提示权\n\n如果某个元素不拥有这项职责，就不要把对应内容硬塞进去。\n\n### 5. 层级一致性原则\n\n信息层级、交互层级、视觉层级必须一致。\n\n- 最显眼的元素，必须也是语义上最重要的元素\n- 一级入口只能有一个一级入口源\n- 次级说明不能比主信息更抢眼\n- 视觉分组不能超过真实语义分组\n\n如果用户先看到的是导航重复、边框层级、备注块、装饰块，而不是页面当前状态与主信息，说明层级设计失败。\n\n### 6. 控制台 / dense admin list 的首选结构\n\n对于运维、控制台、设置、数据、管理类页面，默认优先：\n\n- list\n- table\n- dense grid\n- key/value facts\n- section + divide lines\n- 单行概览带 / 紧凑摘要条\n\n而不是：\n\n- marketing cards\n- feature cards\n- showroom tiles\n- 大块图文面板\n- 一排平均宽度的小统计卡\n\n页头下状态条的职责默认是：\n\n- 只给页面级摘要\n- 只给少量关键计数 / 聚合状态 / 风险数量\n- 只做扫读，不做展开解释\n\n不要把正文模块已经会完整展开的子项，先在状态条里逐条重复一遍。\n\n### 7. 产品页 / 功能承载页的额外要求\n\n产品页默认不能照搬 dense admin list 的冷硬布局，也不能退化成模板站。\n\n默认要求：\n\n- 先定义单一主路径：理解 -> 相信 -> 操作\n- 允许更明确的标题层级、节奏变化和局部视觉记忆点\n- 允许有主视觉区，但主视觉必须服务核心信息，不可遮挡主任务\n- 可以使用更有性格的排版与背景，但仍需保持统一产品语言\n\n不允许：\n\n- 用一堆 feature cards 代替真实信息结构\n- 用多个风格各异的 showcase 模块拼页面\n- 为了“高级感”牺牲信息到达速度和按钮辨识度\n\n### 8. 落地页 / 叙事页的额外要求\n\n落地页可以比控制台更有氛围，但必须保持节制。\n\n默认要求：\n\n- 必须有清晰 hero 区、价值解释区、证据区、行动区\n- 背景、插图、渐变、排版对比要为叙事服务，不是为装饰存在\n- 允许更强的字体态度和更大区块节奏，但全页仍然只允许一种主视觉语言\n- 移动端必须保住主信息和主 CTA，不允许只在桌面端成立\n\n## 五、内容组织原则\n\n### 1. 去重与去竞争原则\n\n同一信息、同一入口、同一状态，不要在同一屏重复表达，除非它们承担不同语义。\n\n常见需要避免的重复包括：\n\n- sidebar 已有一级导航，header 又重复一遍同级 tabs\n- 页头已经给出当前状态，正文摘要区再次重复同一状态\n- 同一个对象在多个模块重复做完整介绍\n- 同一路径、归属、目标节点在多个平行区块重复展开\n- 页头下状态条已经做了页面级摘要，正文模块又把同一组摘要 facts 原样重复一遍\n- 为了“概览完整”而在状态条里重复正文模块即将展开的子状态\n\n默认要求是：一项信息只保留一个主表达位，其他位置如果必须出现，只能做弱引用或上下文补充。\n\n### 2. 主信息优先\n\n用户应该先看到：\n\n- 当前状态\n- 关键值\n- 关键对象\n- 关键动作\n\n而不是先看到：\n\n- 大段说明\n- 装饰性空白\n- 无意义图标墙\n\n### 3. 备注降级\n\n- 备注永远是辅助层\n- 备注不能压过主值、状态、目标、路径、归属\n- 长备注要么弱化为次级文本，要么折叠，不要默认占据强视觉区域\n- 在 dense admin list 中，长备注默认优先折叠成次级说明，不要继续做成常展开说明块\n\n### 4. 路径与事实信息\n\n路径、ID、域名、目标节点、服务名、运行根等事实型信息，默认使用：\n\n- 紧凑 key/value\n- 固定 label 宽度\n- 可换行 value\n- 横向栅格对齐\n\n不要把每条 facts 拆成独立小卡。\n\n## 六、视觉层级原则\n\n### 1. 结构优先于装饰\n\n- 优先用布局、对齐、留白、字号、分隔线建立层级\n- 不要靠堆边框、堆阴影、堆圆角制造结构感\n- 一个页面里真正需要“强视觉容器”的地方应当很少\n\n### 2. 边框与背景\n\n- 优先用轻边框和分隔线表达结构\n- 背景色只用来表达层次，不用来堆热闹\n- 不要连续出现多个强对比 surface 抢同一层级\n- 不要用大面积花哨底色替代真实的信息组织\n\n### 3. 圆角\n\n- 轻圆角即可\n- 不要靠厚重圆角制造“模块感”\n- dense 页面里宁可减少盒子，也不要增加大圆角容器\n\n### 4. 图标与插画\n\n- 图标只做识别辅助，不承担主层级结构\n- 状态图标应与文本或 badge 联合表达，不做唯一载体\n- 插画只在空态、引导、品牌叙事确有必要时使用，不随手塞进信息页主体\n\n## 七、交互原则\n\n### 1. 动作要少而明确\n\n- 顶部动作只放真正常用动作\n- 不要把所有操作堆进页头\n- 不要为了“功能完整”牺牲辨识度\n- 危险动作默认二次确认，常用动作默认直达\n\n### 2. 展开与折叠\n\n- 只有当信息明显过长或次级时才折叠\n- 默认先把一眼必须知道的东西直接展开\n- 折叠是为了降噪，不是为了制造交互\n\n### 3. 反馈\n\n- 状态 badge 只做辅助，不承担排版主体\n- 错误 / 风险 / warning 应独立且短，不写成长解释块\n- 成功、失败、处理中都必须有清晰反馈，不允许静默失败\n\n### 4. 导航去重原则\n\n同一组 sibling pages 在同一视图中默认只能有一个主导航源。\n\n- 如果 sidebar 已承担一级导航，header 不得再重复放同级 tabs\n- header 默认只放标题、状态、主动作、breadcrumb\n- 只有在顶部导航承担不同层级切换时，才允许保留 tabs\n- 如果顶部和侧边都存在导航，必须能明确证明它们不是同一层级\n\n不要让用户在进入页面后先判断“两套导航有什么区别”。\n\n### 5. 压缩型可视化原则\n\n在 dense admin list、控制面、运维页、状态页中，如果需要引入可视化，默认应遵循压缩型可视化原则：允许用更紧凑的图形表达替代一部分重复文字，但前提是它必须比纯文字更直观、更省空间，而不是生成新的展示层。\n\n压缩型可视化默认优先：\n\n- 状态分布条\n- 比例条 / bullet bar\n- 微型 sparkline\n- uptime 小格 / heartbeat strip\n- 嵌入在事实带或状态条中的微型可视化\n\n而不是：\n\n- 独立的大图表卡片\n- 带重图例、重坐标轴、重装饰的 dashboard 图表\n- 为了“看起来高级”而放的图表模块\n- 需要用户停下来理解图例和交互方式的复杂可视化\n\n页头下状态条里的可视化，默认只能表达页面级摘要：\n\n- 关键计数\n- 聚合状态\n- 风险数量\n- 启用比例\n\n如果没有可靠的历史数据，就不要伪造趋势表达。\n\n### 6. 压缩型交互原则\n\n如果需要加交互，默认应符合当前风格：静默、直达、局部展开，不制造第二层界面。\n\n交互默认应当服务：\n\n- 降噪\n- 定位\n- 对比\n- 快速到达目标对象\n\n而不是服务：\n\n- 炫技\n- 演示感\n- 层层 drilldown\n- 额外的界面戏剧性\n\n默认优先的交互方式：\n\n- 行内展开 / 收起，用来承载长备注、次级说明、补充路径映射\n- 点击状态项、分布条、比例条后，在同页做筛选、聚焦、高亮或锚点跳转\n- hover 只做增强信息，如精确值、更新时间、状态定义，不承担唯一信息载体\n- 针对主对象提供直接动作，如打开、复制、跳转、定位到对应行\n\n默认不优先的交互方式：\n\n- 为普通 facts 单独弹 modal 或 drawer\n- tabs 套 tabs、accordion 套 accordion、图表再套 drilldown\n- 只有 hover 才能看到关键信息\n- 为了“高级感”加入多段交互状态切换\n\n## 八、核心组件 Contract\n\n以下不是组件样式图册，而是组件的职责与结构 contract。\n\n### 1. Navigation\n\n- sidebar 承担一级导航\n- breadcrumb 承担路径上下文\n- tabs 只承担当前页面内部的同级子视图切换\n- 不允许同一层级出现双导航源\n\n### 2. Page Header\n\n页头默认只承载：\n\n- 页面标题\n- 当前状态\n- 主动作\n- 必要的 breadcrumb / 次级描述\n\n不要把页头扩成第二个控制面板。\n\n### 3. Summary Strip / 概览带\n\n适合承载：\n\n- 关键计数\n- 聚合状态\n- 风险概览\n- 启用比例\n- 小型压缩可视化\n\n不适合承载：\n\n- 正文模块即将详细展开的完整子项\n- 复杂解释\n- 二级导航\n\n### 4. List / Table / Dense Grid\n\n默认要求：\n\n- 优先支持扫读、比较、排序、筛选\n- 一条记录尽量保留在同一阅读带内\n- 列定义要稳定，不随意漂移\n- 关键状态、归属、目标、动作的相对位置要稳定\n\n不允许：\n\n- 一条记录拆成多张卡片\n- 每条记录都变成一个自成体系的小页面\n\n### 5. Facts / Key-Value Block\n\n默认要求：\n\n- label 宽度稳定\n- value 可以换行但不乱跳\n- 相邻 facts 对齐\n- 适合路径、域名、ID、节点、来源等事实型信息\n\n### 6. Form\n\n默认要求：\n\n- 标签、输入、帮助信息、错误信息层级明确\n- 必填、选填、危险设置要被直接理解\n- 错误信息紧贴字段，不靠全局弹窗替代\n- 提交前后状态清楚：可提交、提交中、成功、失败\n\n### 7. Filter / Search / Sort\n\n默认要求：\n\n- 高优先筛选放在离列表最近的位置\n- 默认值与当前筛选态可见\n- 已生效的筛选必须可逆、可一键清空\n- 移动端可以折叠收纳，但不能隐藏当前已激活条件\n\n### 8. Empty / Loading / Error State\n\n必须覆盖：\n\n- 无数据\n- 首次加载\n- 局部刷新\n- 请求失败\n- 权限不足或无结果\n\n规则：\n\n- 空态要解释“为什么空”和“下一步能做什么”\n- loading 不要只剩骨架而没有上下文\n- error 要给短解释和恢复动作，不要只有红字\n\n### 9. Warning / Risk / Status\n\n- warning 是风险提示，不是新主体\n- status badge 只做辅助，不承担布局骨架\n- 高风险项优先做紧凑分隔行或集中风险区，不做一条一块的小提示卡\n\n### 10. Modal / Drawer\n\n默认只在下面场景使用：\n\n- 确认型危险操作\n- 脱离上下文会更清楚的集中编辑\n- 多步骤但仍短流程的辅助操作\n\n不要为普通 facts、普通查看态、普通说明硬开 modal / drawer。\n\n## 九、响应式与多端规则\n\n这是前端规范的必备部分，不可省略。\n\n### 1. Breakpoint 基线\n\n默认至少覆盖：\n\n- Mobile：`< 768px`\n- Tablet：`768px - 1199px`\n- Desktop：`>= 1200px`\n\n如果项目已有更细 breakpoints，可复用，但必须有同等清晰度。\n\n### 2. 响应式原则\n\n- 手机端优先保住主信息、主状态、主 CTA\n- 不把桌面端的三列、四列结构机械压扁到手机端\n- 概览带可以换行，但优先保持摘要语义，而不是变成卡片墙\n- 表格在小屏要么转成可横滑的稳定表格，要么转成分组 facts 结构，不要直接挤爆\n- 筛选区在小屏可以折叠，但当前已生效的筛选条件必须可见\n- 不允许依赖 hover 才完成关键操作或理解关键信息\n\n### 3. 移动端检查底线\n\n每次 user-visible 前端改动，至少自检：\n\n- 首屏是否先看到主信息\n- 主 CTA 是否一眼可见\n- 触控目标是否足够大\n- 文字是否可读且不会挤成碎片\n- 横向滚动是否仅出现在确有必要的表格区域\n\n## 十、可访问性规范\n\n这是合格前端规范的一部分，不是额外加分项。\n\n### 1. 对比度\n\n默认要求：\n\n- 正文文本与背景对比度至少达到 `4.5:1`\n- 大号文本、关键图形、边框、焦点环至少达到 `3:1`\n- 浅灰字配浅灰底的“高级感”默认判为不合格\n\n### 2. 键盘可达性\n\n默认要求：\n\n- 所有关键操作都可通过键盘完成\n- 焦点顺序符合阅读和操作逻辑\n- 不允许焦点陷阱和看不见的 focus state\n\n### 3. Focus Visible\n\n- 每个可交互元素都必须有清晰 focus 可见反馈\n- focus ring 颜色不能与品牌色、危险色冲突到不可辨识\n- 不允许仅在 hover 有反馈，focus 却无反馈\n\n### 4. 触控与点击区\n\n- 关键交互目标应有足够点击面积，默认不小于 `40px-44px`\n- 不要把多个危险动作挤在过小的点击区内\n\n### 5. 状态表达\n\n- 不能只靠颜色表达 success / warning / danger\n- 至少结合文字、图标、位置或结构中的一种辅助方式\n\n### 6. Reduced Motion\n\n- 当系统或项目启用 `prefers-reduced-motion` 或等价 reduced motion 时，应关闭非必要运动\n- 保留必要状态反馈，但去掉表演型过渡\n\n## 十一、禁止项\n\n以下做法默认判为不合格，除非用户明确要求：\n\n- 框里套框\n- 卡里套卡\n- 同层事实拆成多个平行小盒子\n- 检查项一条一块垂直卡片堆叠\n- 为了显得“精致”而加入无信息增益的边框、底色、阴影、圆角层\n- 让页面更像后台模板市场 demo，而不是现有产品的一部分\n- 为同一组同级页面同时提供 sidebar 导航和 header 同级导航\n- 让两个以上模块同时争抢同一个职责\n- 使用默认安全模板感的字体、配色、背景与布局却没有明确理由\n- 依赖 hover 才能理解关键信息\n- 没做移动端检查就交付 user-visible 页面\n- 没做 focus / keyboard / contrast 检查就声称规范完成\n\n## 十二、评审与验收标准\n\n前端设计完成后，至少满足下面三层检查。\n\n### 1. 设计层检查\n\n1. 当前页面属于哪类 surface，是否用了对应规则\n2. 是否先看到主信息，而不是装饰、备注或重复导航\n3. 是否只有一个一级导航源\n4. 是否维持单一视觉语言，没有多来源拼盘感\n5. Typography、Color、Background、Motion 是否已经明确并统一\n\n### 2. 组件与实现层检查\n\n1. spacing、grid、radius、border、motion 是否使用统一尺度\n2. 关键组件是否覆盖正常态、hover、focus、disabled、loading、error\n3. 表单是否有字段级错误反馈\n4. 空态、加载态、错误态是否完整\n5. 是否存在只有颜色没有文字辅助的状态表达\n\n### 3. 运行与体验层检查\n\n1. 桌面端是否成立\n2. 移动端是否成立\n3. 键盘路径是否成立\n4. focus 是否可见\n5. 用户是否能在最短路径内完成主任务\n\n如果以上任一层明显失败，就不应判为规范完成。\n\n## 十三、规范回写与一致性\n\n前端实现与设计规范之间，默认必须保持同周期收口。\n\n1. 如果这次 UI 更新形成了新的可复用设计指导，而且它不违背当前规范文本，就必须在同一工作周期内反向回写到本规范\n2. 这种回写应当是补强、抽象、举例、收口，不应绕开当前规范另起一套隐性规则\n3. 不允许先落地一个违背规范文本的 UI，再把“结果如此”当成既成事实\n4. 如果实现方向与当前规范真的冲突，先把规范改写成新的单一一致文本，再推广实现，不允许让实现长期跑在规范前面\n5. AGENTS.md 负责声明“必须参考并回写这份规范”，具体 UI 规则正文只放在本文件\n\n## 十四、针对 dense admin list 的额外要求\n\n如果页面属于运维、控制面、监控、服务管理、部署、域名、运行时、设置面板等 dense admin list 场景，则额外要求：\n\n1. 默认优先列表，而不是卡片墙\n2. 默认优先横向对齐，而不是纵向解释块\n3. 默认优先单层信息区，而不是嵌套模块\n4. 路径、归属、目标、状态、检查应尽量放进同一阅读带\n5. 备注必须降权，不能主导布局\n6. 可视化优先嵌入式压缩表达，而不是独立 dashboard 卡片\n7. 概览带只保留页面级摘要，不重复正文细项\n\n## 十五、当前已验证的落地方向\n\n这份规范当前已经在 Mortis 运维面板中验证过以下方向有效：\n\n- 顶部摘要去卡片化\n- 真源区改成边界 facts list\n- 执行路由改成更接近 table / list 的整块列表\n- 服务器 / 部署 / 域名改成更紧凑的横向 dense grid\n- 备注区继续降权，避免形成大块说明面板\n- 检查项统一改成单层表格式结构\n- 左侧导航保留为唯一一级导航源，页头移除重复同级导航\n- overview 顶部摘要优先收成单行概览带，而不是再做第二层 summary 模块\n- servers / deployments 的长备注优先折叠成次级说明，而不是常展开说明块\n- warning / risk 区优先做紧凑分隔行而不是一条一块的小提示卡\n- 需要引入可视化时，优先使用嵌入式压缩型可视化，而不是独立大图表模块\n\n## 十六、文档位置\n\n本规范固定放在：\n\n- `E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent\\Frontend Design Specs.md`\n\n后续每次前端设计、前端改版、信息型页面重构，都应优先更新和复用这份文档，而不是再散落写新的临时设计规范。",
+    "html": "<h1 id=\"frontend-design-specs\">Frontend Design Specs</h1>\n<h2 id=\"适用范围\">适用范围</h2>\n<p>适用于需要做前端设计、前端改版、后台工作台界面、信息型管理页、产品页、落地页、设计系统收口、界面重构的任务。</p>\n<p>这份文档是默认前端设计规范。除非用户明确给出更强的项目规范、现成设计系统或直接视觉方向，否则前端设计应严格参考本规范执行。</p>\n<h3 id=\"规则优先级\">规则优先级</h3>\n<p>发生冲突时，按下面顺序裁决：</p>\n<ol>\n<li>用户本轮任务明确给出的视觉方向、业务目标、品牌要求</li>\n<li>当前项目已经存在并且仍然有效的设计系统 / 组件系统 / 规范化品牌规则</li>\n<li>本文中针对特定 surface 的专门规则</li>\n<li>本文中的默认规则</li>\n</ol>\n<p>如果项目已有稳定设计系统，优先保持既有语言，不要为了套用本文而破坏现有系统一致性。</p>\n<h3 id=\"surface-分类\">Surface 分类</h3>\n<p>开始设计前，先判断当前任务属于哪一类 surface：</p>\n<ol>\n<li>控制台 / 工作台 / 运维面 / dense admin list</li>\n<li>信息型管理页 / 设置页 / 数据页</li>\n<li>产品页 / 功能承载页</li>\n<li>落地页 / 营销页 / 叙事页</li>\n<li>混合面</li>\n</ol>\n<p>不要把某一类 surface 的语言硬套到另一类 surface 上。</p>\n<p>其中：</p>\n<ul>\n<li>控制台 / 运维面默认强调信息密度、扫读效率、状态判断、直接操作</li>\n<li>产品页默认强调主任务路径、模块节奏、价值理解、操作转化</li>\n<li>落地页默认允许更明确的视觉主张，但仍然不能落入模板站拼装感</li>\n</ul>\n<h3 id=\"console-web-实施落点\">console-web 实施落点</h3>\n<p>对于 <code>E:\\My Project\\Atramenti-Console\\codex\\apps\\console-web</code>，当前可执行模板层已经固定在：</p>\n<ul>\n<li><code>codex/apps/console-web/design-system/</code></li>\n<li><code>codex/apps/console-web/modules/ui-system/</code></li>\n</ul>\n<p>约定：</p>\n<ul>\n<li><code>design-system/</code> 负责 contracts / patterns / states / mapping / ai / checklist</li>\n<li><code>modules/ui-system/</code> 负责 tokens / lint / components / patterns 的实现收口</li>\n<li>页面若需要新增 reusable UI 规则，优先先补 <code>design-system/</code>，再补 <code>modules/ui-system/</code></li>\n</ul>\n<h3 id=\"dense-admin-list-触发条件\">dense admin list 触发条件</h3>\n<p>如果页面属于运维、控制面、监控、服务管理、部署、域名、运行时、设置面板等场景，或页面的主目标是：</p>\n<ul>\n<li>快速扫读事实</li>\n<li>对比对象状态</li>\n<li>发现异常</li>\n<li>快速操作</li>\n<li>高频录入与筛选</li>\n</ul>\n<p>则视为 dense admin list 场景，必须额外遵守本文中的 dense admin list 规则，不要退化成营销卡片墙。</p>\n<h2 id=\"一核心立场\">一、核心立场</h2>\n<h3 id=\"1-总原则\">1. 总原则</h3>\n<ol>\n<li>优先产品原生感，不优先“单次看起来惊艳”的装饰感</li>\n<li>优先信息与交互效率，不优先无意义留白</li>\n<li>优先单层结构，不优先多层包裹</li>\n<li>优先清晰层级，不优先堆砌组件</li>\n<li>优先内容驱动布局，不优先模板驱动布局</li>\n<li>优先统一产品语言，不优先局部 showcase 感</li>\n<li>优先长期可演化，不优先一次性的视觉噱头</li>\n</ol>\n<p>一句话：先把信息组织对，再考虑样式；先像真实产品，再像设计展示稿。</p>\n<h3 id=\"2-组件搜源优先原则\">2. 组件搜源优先原则</h3>\n<p>在设计组件、局部交互、视觉细节、微动效、输入控件、反馈样式时，默认不要第一反应从零空想。</p>\n<p>默认优先顺序应当是：</p>\n<ol>\n<li>先看当前项目里是否已有可复用的 canonical 组件或成熟局部模式</li>\n<li>若项目内没有合适基础，优先参考 <code>https://github.com/uiverse-io/galaxy</code></li>\n<li>再去找已经存在的优秀开源方案，以及高水平产品团队公开放出的实现</li>\n<li>吸收之后，再按当前产品的单一视觉语言做收口，而不是把来源原样拼接进来</li>\n</ol>\n<p>默认借鉴方式应当是：</p>\n<ul>\n<li>借结构，不先借表皮</li>\n<li>借细节，不借整页拼装</li>\n<li>借节奏，不借装饰堆砌</li>\n<li>借成熟交互反馈，不借模板站的整套视觉噪声</li>\n</ul>\n<p>禁止把多个来源直接拼成视觉杂烩，也禁止因为“来源高级”就无条件照搬到不匹配的场景。</p>\n<h3 id=\"3-默认统一气质\">3. 默认统一气质</h3>\n<p>后续设计默认统一收口到下面这套方向，除非用户明确给出更强视觉方向：</p>\n<ul>\n<li>克制</li>\n<li>冷静</li>\n<li>专业</li>\n<li>原生产品感</li>\n<li>强结构</li>\n<li>弱装饰</li>\n<li>高完成度工具感</li>\n</ul>\n<p>默认目标不是“像模板站”，也不是“像展示页”，而是像一套真正长期演化中的成熟产品。</p>\n<h3 id=\"4-默认视觉方向\">4. 默认视觉方向</h3>\n<p>在没有更强项目约束时，默认要先明确下面 4 个方向，并在页面中保持一致。</p>\n<h4 id=\"typography\">Typography</h4>\n<ul>\n<li>必须显式选择字体策略，不要把 <code>Inter</code>、<code>Roboto</code>、<code>Arial</code>、泛 system UI 当成默认答案</li>\n<li>控制台 / 工具页优先选择中性、清晰、密度友好的字体系统</li>\n<li>产品页 / 落地页允许更强识别度的标题字，但正文仍要保证长时间阅读稳定</li>\n<li>同一页面只允许一个主标题体系和一个正文字体系，不要混成字体拼盘</li>\n</ul>\n<h4 id=\"color\">Color</h4>\n<ul>\n<li>一个主品牌强调色即可，不要同时有多个主角颜色</li>\n<li>中性色负责结构与层级，状态色负责状态语义，品牌色负责品牌或主动作，不混用职责</li>\n<li>默认优先低到中饱和度的稳定配色，不做紫色优先、不做无解释的暗色偏执</li>\n</ul>\n<h4 id=\"background\">Background</h4>\n<ul>\n<li>控制台 / 信息页优先分层背景、浅对比 surface、细腻材质感，不优先纯平单色空白页</li>\n<li>产品页 / 落地页允许更明确的大气氛背景，但背景必须服务内容，不可吞掉信息层级</li>\n<li>背景变化应来自层次、光感、纹理、区块组织，而不是纯粹堆叠花哨渐变</li>\n</ul>\n<h4 id=\"motion\">Motion</h4>\n<ul>\n<li>动效默认只承担状态反馈、层级切换、焦点引导、局部展开 / 收起</li>\n<li>不做炫技、不做戏剧化、不做为了“显高级”而存在的表演型动效</li>\n<li>页面进入、模块显现、筛选反馈可以有，但要轻、短、结构化</li>\n</ul>\n<h2 id=\"二固定前端设计顺序\">二、固定前端设计顺序</h2>\n<p>以后做前端设计时，默认固定按下面顺序走，不再临场乱跳：</p>\n<ol>\n<li>定 surface 类型\n<ul>\n<li>先判断这是控制台、工作台、信息页、产品页、落地页，还是混合面</li>\n<li>先判断主目标是扫读、操作、比较、录入，还是展示、转化、叙事</li>\n</ul>\n</li>\n<li>定主职责与层级\n<ul>\n<li>先确定 header、sidebar、summary、content、warning、action 各自负责什么</li>\n<li>先把一级信息、二级信息、次级说明分清</li>\n</ul>\n</li>\n<li>定系统层基础\n<ul>\n<li>先确定字体、颜色、背景、动效的统一口径</li>\n<li>先确定 spacing、grid、breakpoint、radius、border 的基础尺度</li>\n</ul>\n</li>\n<li>搜现成成熟方案\n<ul>\n<li>先查项目内 canonical</li>\n<li>再查 <code>https://github.com/uiverse-io/galaxy</code></li>\n<li>再查高质量开源产品与成熟设计系统实现</li>\n</ul>\n</li>\n<li>抽结构，不抄表皮\n<ul>\n<li>只提炼布局骨架、比例、反馈、节奏、状态表达</li>\n<li>不整套搬运别人视觉皮肤</li>\n</ul>\n</li>\n<li>统一视觉语言\n<ul>\n<li>统一圆角、边框、阴影、字号、密度、颜色、动效</li>\n<li>保证新模块像同一个产品里长出来的</li>\n</ul>\n</li>\n<li>再补组件与细节\n<ul>\n<li>在结构成立后再补按钮、输入框、卡片、状态条、空态、hover、折叠等局部细节</li>\n<li>不允许局部细节反过来绑架页面结构</li>\n</ul>\n</li>\n<li>最后做收口自检\n<ul>\n<li>是否像成熟产品，不像模板站</li>\n<li>是否主信息最先被看到</li>\n<li>是否有多来源拼盘感</li>\n<li>是否有过度装饰、过度动效、过度卡片化</li>\n<li>是否通过移动端与可访问性检查</li>\n</ul>\n</li>\n</ol>\n<p>一句话顺序版：</p>\n<p><strong>定类型 -> 定职责 -> 定系统层 -> 搜成熟方案 -> 抽结构 -> 统一语言 -> 补细节 -> 做收口自检</strong></p>\n<h2 id=\"三系统层基础规范\">三、系统层基础规范</h2>\n<p>这部分不是可选补充，而是落地时必须明确的执行层约束。</p>\n<h3 id=\"1-spacing-scale\">1. Spacing Scale</h3>\n<p>默认使用统一 spacing scale，不允许页面内部随意漂移。</p>\n<p>推荐默认间距节奏：</p>\n<ul>\n<li><code>4</code>：极小间距、图标与文本、紧贴性内边距</li>\n<li><code>8</code>：紧凑控件内边距、小型组件间距</li>\n<li><code>12</code>：常规紧凑布局的单元间距</li>\n<li><code>16</code>：标准模块内边距 / 表单字段间距</li>\n<li><code>24</code>：模块级分组间距</li>\n<li><code>32</code>：区块级分隔</li>\n<li><code>48-64</code>：页面大区块节奏</li>\n</ul>\n<p>规则：</p>\n<ul>\n<li>优先复用已有尺度，不随手造 <code>13</code>、<code>18</code>、<code>22</code> 这类漂移值</li>\n<li>dense admin list 优先 <code>8 / 12 / 16 / 24</code> 节奏，不要无意义拉大</li>\n<li>产品页 / 落地页可用更大节奏，但必须服务层级与叙事，不服务空洞感</li>\n</ul>\n<h3 id=\"2-grid-与容器\">2. Grid 与容器</h3>\n<p>默认要求：</p>\n<ul>\n<li>桌面端优先稳定栅格，不靠目测摆放</li>\n<li>控制台 / 工作台优先 12 栏或等价的内容轨道系统</li>\n<li>信息页优先单主列或双列 facts 结构</li>\n<li>dense admin list 优先横向阅读带，而不是纵向堆叠盒子</li>\n<li>手机端优先单列，必要时保留有限横向滚动，不要强行塞满桌面结构</li>\n</ul>\n<h3 id=\"3-typography-scale\">3. Typography Scale</h3>\n<p>默认至少定义下面 5 层：</p>\n<ul>\n<li>标签层：<code>11px-12px</code></li>\n<li>正文层：<code>13px-14px</code></li>\n<li>强调正文 / 主值层：<code>15px-16px</code></li>\n<li>区块标题层：<code>18px-20px</code></li>\n<li>页面标题层：<code>24px-32px</code></li>\n</ul>\n<p>同时遵守：</p>\n<ul>\n<li>标题只比下一级高一档，不靠巨大字号硬拉层级</li>\n<li>备注层必须弱于主值，不与主信息抢层级</li>\n<li>行高优先可读和稳定：正文约 <code>1.45-1.6</code>，标题约 <code>1.2-1.35</code></li>\n<li>不允许同一页面里出现多套彼此无关的字号逻辑</li>\n</ul>\n<h3 id=\"4-color-tokens\">4. Color Tokens</h3>\n<p>至少定义下面 4 组语义色：</p>\n<ol>\n<li>中性色：承担背景、边框、正文、弱文本、分隔线</li>\n<li>品牌色：承担主按钮、主链接、品牌强调</li>\n<li>状态色：success / warning / danger / info</li>\n<li>焦点色：focus ring 与键盘可见反馈</li>\n</ol>\n<p>规则：</p>\n<ul>\n<li>状态色只表达状态，不额外承载新的复杂语义</li>\n<li>品牌色不替代危险态和警告态</li>\n<li>背景色优先表达层次，不表达热闹</li>\n<li>任何状态都不允许只靠颜色表达，必须有文字、图标或结构辅助</li>\n</ul>\n<h3 id=\"5-radius--border--shadow\">5. Radius / Border / Shadow</h3>\n<p>默认建议控制在有限层级：</p>\n<ul>\n<li><code>radius-sm</code>：<code>6px</code></li>\n<li><code>radius-md</code>：<code>10px</code></li>\n<li><code>radius-lg</code>：<code>14px</code></li>\n</ul>\n<p>边框与阴影规则：</p>\n<ul>\n<li>优先用分隔线表达结构</li>\n<li>只在真正需要强分组的地方保留完整边框</li>\n<li>不允许连续两层完整边框表达同一层级</li>\n<li>阴影只做微弱层次区分，不做厚重浮空感</li>\n<li>dense 页面宁可减少盒子，也不要增加大圆角容器</li>\n</ul>\n<h3 id=\"6-motion-tokens\">6. Motion Tokens</h3>\n<p>默认时长范围：</p>\n<ul>\n<li><code>120ms-180ms</code>：hover、focus、状态切换</li>\n<li><code>180ms-240ms</code>：局部展开 / 收起、轻量进入</li>\n<li><code>240ms+</code>：慎用，只限确有结构意义的转场</li>\n</ul>\n<p>默认优先：</p>\n<ul>\n<li><code>opacity</code></li>\n<li><code>color</code></li>\n<li><code>translateY</code></li>\n<li><code>height</code></li>\n<li><code>transform</code> 的轻量变化</li>\n</ul>\n<p>默认不优先：</p>\n<ul>\n<li>弹跳</li>\n<li>甩动</li>\n<li>重 easing</li>\n<li>夸张 scale</li>\n<li>与结构无关的循环动画</li>\n</ul>\n<h2 id=\"四surface-结构原则\">四、Surface 结构原则</h2>\n<h3 id=\"1-页面级结构\">1. 页面级结构</h3>\n<p>默认按下面顺序组织页面：</p>\n<ol>\n<li>页头：标题、状态、关键动作</li>\n<li>摘要层：少量关键数字 / 关键状态</li>\n<li>主体层：核心内容模块</li>\n<li>次级层：备注、补充说明、帮助信息</li>\n</ol>\n<h3 id=\"2-模块级结构\">2. 模块级结构</h3>\n<p>模块默认应尽量简单：</p>\n<ul>\n<li>标题</li>\n<li>很短的说明（可无）</li>\n<li>单层内容区</li>\n</ul>\n<p>禁止默认写成：</p>\n<ul>\n<li>外卡片 + 内卡片</li>\n<li>外容器 + 子容器 + 子子容器</li>\n<li>同一层信息被拆成很多视觉盒子</li>\n</ul>\n<h3 id=\"3-界面职责单一原则\">3. 界面职责单一原则</h3>\n<p>每个界面元素默认只承担一种主职责，不要让多个元素争抢同一种语义。</p>\n<ul>\n<li>sidebar：一级导航</li>\n<li>header：页面身份、页面状态、主动作</li>\n<li>breadcrumb：路径上下文</li>\n<li>tabs：当前页面内部的子视图切换</li>\n<li>content：事实、数据、说明、检查项</li>\n<li>warning / banner：风险提示</li>\n</ul>\n<p>禁止默认出现这些情况：</p>\n<ul>\n<li>用 header tabs 重复 sidebar 已承担的一级导航</li>\n<li>用内容卡片承担导航语义</li>\n<li>用 badge 承担布局主体</li>\n<li>用备注区承担主信息解释</li>\n</ul>\n<h3 id=\"4-surface-ownership-原则\">4. Surface Ownership 原则</h3>\n<p>开始画页面之前，先定义每个 surface 的拥有权，再决定往里面放什么。</p>\n<p>至少先回答：</p>\n<ol>\n<li>谁拥有一级导航权</li>\n<li>谁拥有页面身份表达权</li>\n<li>谁拥有主动作入口</li>\n<li>谁拥有事实信息承载权</li>\n<li>谁拥有风险提示权</li>\n</ol>\n<p>如果某个元素不拥有这项职责，就不要把对应内容硬塞进去。</p>\n<h3 id=\"5-层级一致性原则\">5. 层级一致性原则</h3>\n<p>信息层级、交互层级、视觉层级必须一致。</p>\n<ul>\n<li>最显眼的元素，必须也是语义上最重要的元素</li>\n<li>一级入口只能有一个一级入口源</li>\n<li>次级说明不能比主信息更抢眼</li>\n<li>视觉分组不能超过真实语义分组</li>\n</ul>\n<p>如果用户先看到的是导航重复、边框层级、备注块、装饰块，而不是页面当前状态与主信息，说明层级设计失败。</p>\n<h3 id=\"6-控制台--dense-admin-list-的首选结构\">6. 控制台 / dense admin list 的首选结构</h3>\n<p>对于运维、控制台、设置、数据、管理类页面，默认优先：</p>\n<ul>\n<li>list</li>\n<li>table</li>\n<li>dense grid</li>\n<li>key/value facts</li>\n<li>section + divide lines</li>\n<li>单行概览带 / 紧凑摘要条</li>\n</ul>\n<p>而不是：</p>\n<ul>\n<li>marketing cards</li>\n<li>feature cards</li>\n<li>showroom tiles</li>\n<li>大块图文面板</li>\n<li>一排平均宽度的小统计卡</li>\n</ul>\n<p>页头下状态条的职责默认是：</p>\n<ul>\n<li>只给页面级摘要</li>\n<li>只给少量关键计数 / 聚合状态 / 风险数量</li>\n<li>只做扫读，不做展开解释</li>\n</ul>\n<p>不要把正文模块已经会完整展开的子项，先在状态条里逐条重复一遍。</p>\n<h3 id=\"7-产品页--功能承载页的额外要求\">7. 产品页 / 功能承载页的额外要求</h3>\n<p>产品页默认不能照搬 dense admin list 的冷硬布局，也不能退化成模板站。</p>\n<p>默认要求：</p>\n<ul>\n<li>先定义单一主路径：理解 -> 相信 -> 操作</li>\n<li>允许更明确的标题层级、节奏变化和局部视觉记忆点</li>\n<li>允许有主视觉区，但主视觉必须服务核心信息，不可遮挡主任务</li>\n<li>可以使用更有性格的排版与背景，但仍需保持统一产品语言</li>\n</ul>\n<p>不允许：</p>\n<ul>\n<li>用一堆 feature cards 代替真实信息结构</li>\n<li>用多个风格各异的 showcase 模块拼页面</li>\n<li>为了“高级感”牺牲信息到达速度和按钮辨识度</li>\n</ul>\n<h3 id=\"8-落地页--叙事页的额外要求\">8. 落地页 / 叙事页的额外要求</h3>\n<p>落地页可以比控制台更有氛围，但必须保持节制。</p>\n<p>默认要求：</p>\n<ul>\n<li>必须有清晰 hero 区、价值解释区、证据区、行动区</li>\n<li>背景、插图、渐变、排版对比要为叙事服务，不是为装饰存在</li>\n<li>允许更强的字体态度和更大区块节奏，但全页仍然只允许一种主视觉语言</li>\n<li>移动端必须保住主信息和主 CTA，不允许只在桌面端成立</li>\n</ul>\n<h2 id=\"五内容组织原则\">五、内容组织原则</h2>\n<h3 id=\"1-去重与去竞争原则\">1. 去重与去竞争原则</h3>\n<p>同一信息、同一入口、同一状态，不要在同一屏重复表达，除非它们承担不同语义。</p>\n<p>常见需要避免的重复包括：</p>\n<ul>\n<li>sidebar 已有一级导航，header 又重复一遍同级 tabs</li>\n<li>页头已经给出当前状态，正文摘要区再次重复同一状态</li>\n<li>同一个对象在多个模块重复做完整介绍</li>\n<li>同一路径、归属、目标节点在多个平行区块重复展开</li>\n<li>页头下状态条已经做了页面级摘要，正文模块又把同一组摘要 facts 原样重复一遍</li>\n<li>为了“概览完整”而在状态条里重复正文模块即将展开的子状态</li>\n</ul>\n<p>默认要求是：一项信息只保留一个主表达位，其他位置如果必须出现，只能做弱引用或上下文补充。</p>\n<h3 id=\"2-主信息优先\">2. 主信息优先</h3>\n<p>用户应该先看到：</p>\n<ul>\n<li>当前状态</li>\n<li>关键值</li>\n<li>关键对象</li>\n<li>关键动作</li>\n</ul>\n<p>而不是先看到：</p>\n<ul>\n<li>大段说明</li>\n<li>装饰性空白</li>\n<li>无意义图标墙</li>\n</ul>\n<h3 id=\"3-备注降级\">3. 备注降级</h3>\n<ul>\n<li>备注永远是辅助层</li>\n<li>备注不能压过主值、状态、目标、路径、归属</li>\n<li>长备注要么弱化为次级文本，要么折叠，不要默认占据强视觉区域</li>\n<li>在 dense admin list 中，长备注默认优先折叠成次级说明，不要继续做成常展开说明块</li>\n</ul>\n<h3 id=\"4-路径与事实信息\">4. 路径与事实信息</h3>\n<p>路径、ID、域名、目标节点、服务名、运行根等事实型信息，默认使用：</p>\n<ul>\n<li>紧凑 key/value</li>\n<li>固定 label 宽度</li>\n<li>可换行 value</li>\n<li>横向栅格对齐</li>\n</ul>\n<p>不要把每条 facts 拆成独立小卡。</p>\n<h2 id=\"六视觉层级原则\">六、视觉层级原则</h2>\n<h3 id=\"1-结构优先于装饰\">1. 结构优先于装饰</h3>\n<ul>\n<li>优先用布局、对齐、留白、字号、分隔线建立层级</li>\n<li>不要靠堆边框、堆阴影、堆圆角制造结构感</li>\n<li>一个页面里真正需要“强视觉容器”的地方应当很少</li>\n</ul>\n<h3 id=\"2-边框与背景\">2. 边框与背景</h3>\n<ul>\n<li>优先用轻边框和分隔线表达结构</li>\n<li>背景色只用来表达层次，不用来堆热闹</li>\n<li>不要连续出现多个强对比 surface 抢同一层级</li>\n<li>不要用大面积花哨底色替代真实的信息组织</li>\n</ul>\n<h3 id=\"3-圆角\">3. 圆角</h3>\n<ul>\n<li>轻圆角即可</li>\n<li>不要靠厚重圆角制造“模块感”</li>\n<li>dense 页面里宁可减少盒子，也不要增加大圆角容器</li>\n</ul>\n<h3 id=\"4-图标与插画\">4. 图标与插画</h3>\n<ul>\n<li>图标只做识别辅助，不承担主层级结构</li>\n<li>状态图标应与文本或 badge 联合表达，不做唯一载体</li>\n<li>插画只在空态、引导、品牌叙事确有必要时使用，不随手塞进信息页主体</li>\n</ul>\n<h2 id=\"七交互原则\">七、交互原则</h2>\n<h3 id=\"1-动作要少而明确\">1. 动作要少而明确</h3>\n<ul>\n<li>顶部动作只放真正常用动作</li>\n<li>不要把所有操作堆进页头</li>\n<li>不要为了“功能完整”牺牲辨识度</li>\n<li>危险动作默认二次确认，常用动作默认直达</li>\n</ul>\n<h3 id=\"2-展开与折叠\">2. 展开与折叠</h3>\n<ul>\n<li>只有当信息明显过长或次级时才折叠</li>\n<li>默认先把一眼必须知道的东西直接展开</li>\n<li>折叠是为了降噪，不是为了制造交互</li>\n</ul>\n<h3 id=\"3-反馈\">3. 反馈</h3>\n<ul>\n<li>状态 badge 只做辅助，不承担排版主体</li>\n<li>错误 / 风险 / warning 应独立且短，不写成长解释块</li>\n<li>成功、失败、处理中都必须有清晰反馈，不允许静默失败</li>\n</ul>\n<h3 id=\"4-导航去重原则\">4. 导航去重原则</h3>\n<p>同一组 sibling pages 在同一视图中默认只能有一个主导航源。</p>\n<ul>\n<li>如果 sidebar 已承担一级导航，header 不得再重复放同级 tabs</li>\n<li>header 默认只放标题、状态、主动作、breadcrumb</li>\n<li>只有在顶部导航承担不同层级切换时，才允许保留 tabs</li>\n<li>如果顶部和侧边都存在导航，必须能明确证明它们不是同一层级</li>\n</ul>\n<p>不要让用户在进入页面后先判断“两套导航有什么区别”。</p>\n<h3 id=\"5-压缩型可视化原则\">5. 压缩型可视化原则</h3>\n<p>在 dense admin list、控制面、运维页、状态页中，如果需要引入可视化，默认应遵循压缩型可视化原则：允许用更紧凑的图形表达替代一部分重复文字，但前提是它必须比纯文字更直观、更省空间，而不是生成新的展示层。</p>\n<p>压缩型可视化默认优先：</p>\n<ul>\n<li>状态分布条</li>\n<li>比例条 / bullet bar</li>\n<li>微型 sparkline</li>\n<li>uptime 小格 / heartbeat strip</li>\n<li>嵌入在事实带或状态条中的微型可视化</li>\n</ul>\n<p>而不是：</p>\n<ul>\n<li>独立的大图表卡片</li>\n<li>带重图例、重坐标轴、重装饰的 dashboard 图表</li>\n<li>为了“看起来高级”而放的图表模块</li>\n<li>需要用户停下来理解图例和交互方式的复杂可视化</li>\n</ul>\n<p>页头下状态条里的可视化，默认只能表达页面级摘要：</p>\n<ul>\n<li>关键计数</li>\n<li>聚合状态</li>\n<li>风险数量</li>\n<li>启用比例</li>\n</ul>\n<p>如果没有可靠的历史数据，就不要伪造趋势表达。</p>\n<h3 id=\"6-压缩型交互原则\">6. 压缩型交互原则</h3>\n<p>如果需要加交互，默认应符合当前风格：静默、直达、局部展开，不制造第二层界面。</p>\n<p>交互默认应当服务：</p>\n<ul>\n<li>降噪</li>\n<li>定位</li>\n<li>对比</li>\n<li>快速到达目标对象</li>\n</ul>\n<p>而不是服务：</p>\n<ul>\n<li>炫技</li>\n<li>演示感</li>\n<li>层层 drilldown</li>\n<li>额外的界面戏剧性</li>\n</ul>\n<p>默认优先的交互方式：</p>\n<ul>\n<li>行内展开 / 收起，用来承载长备注、次级说明、补充路径映射</li>\n<li>点击状态项、分布条、比例条后，在同页做筛选、聚焦、高亮或锚点跳转</li>\n<li>hover 只做增强信息，如精确值、更新时间、状态定义，不承担唯一信息载体</li>\n<li>针对主对象提供直接动作，如打开、复制、跳转、定位到对应行</li>\n</ul>\n<p>默认不优先的交互方式：</p>\n<ul>\n<li>为普通 facts 单独弹 modal 或 drawer</li>\n<li>tabs 套 tabs、accordion 套 accordion、图表再套 drilldown</li>\n<li>只有 hover 才能看到关键信息</li>\n<li>为了“高级感”加入多段交互状态切换</li>\n</ul>\n<h2 id=\"八核心组件-contract\">八、核心组件 Contract</h2>\n<p>以下不是组件样式图册，而是组件的职责与结构 contract。</p>\n<h3 id=\"1-navigation\">1. Navigation</h3>\n<ul>\n<li>sidebar 承担一级导航</li>\n<li>breadcrumb 承担路径上下文</li>\n<li>tabs 只承担当前页面内部的同级子视图切换</li>\n<li>不允许同一层级出现双导航源</li>\n</ul>\n<h3 id=\"2-page-header\">2. Page Header</h3>\n<p>页头默认只承载：</p>\n<ul>\n<li>页面标题</li>\n<li>当前状态</li>\n<li>主动作</li>\n<li>必要的 breadcrumb / 次级描述</li>\n</ul>\n<p>不要把页头扩成第二个控制面板。</p>\n<h3 id=\"3-summary-strip--概览带\">3. Summary Strip / 概览带</h3>\n<p>适合承载：</p>\n<ul>\n<li>关键计数</li>\n<li>聚合状态</li>\n<li>风险概览</li>\n<li>启用比例</li>\n<li>小型压缩可视化</li>\n</ul>\n<p>不适合承载：</p>\n<ul>\n<li>正文模块即将详细展开的完整子项</li>\n<li>复杂解释</li>\n<li>二级导航</li>\n</ul>\n<h3 id=\"4-list--table--dense-grid\">4. List / Table / Dense Grid</h3>\n<p>默认要求：</p>\n<ul>\n<li>优先支持扫读、比较、排序、筛选</li>\n<li>一条记录尽量保留在同一阅读带内</li>\n<li>列定义要稳定，不随意漂移</li>\n<li>关键状态、归属、目标、动作的相对位置要稳定</li>\n</ul>\n<p>不允许：</p>\n<ul>\n<li>一条记录拆成多张卡片</li>\n<li>每条记录都变成一个自成体系的小页面</li>\n</ul>\n<h3 id=\"5-facts--key-value-block\">5. Facts / Key-Value Block</h3>\n<p>默认要求：</p>\n<ul>\n<li>label 宽度稳定</li>\n<li>value 可以换行但不乱跳</li>\n<li>相邻 facts 对齐</li>\n<li>适合路径、域名、ID、节点、来源等事实型信息</li>\n</ul>\n<h3 id=\"6-form\">6. Form</h3>\n<p>默认要求：</p>\n<ul>\n<li>标签、输入、帮助信息、错误信息层级明确</li>\n<li>必填、选填、危险设置要被直接理解</li>\n<li>错误信息紧贴字段，不靠全局弹窗替代</li>\n<li>提交前后状态清楚：可提交、提交中、成功、失败</li>\n</ul>\n<h3 id=\"7-filter--search--sort\">7. Filter / Search / Sort</h3>\n<p>默认要求：</p>\n<ul>\n<li>高优先筛选放在离列表最近的位置</li>\n<li>默认值与当前筛选态可见</li>\n<li>已生效的筛选必须可逆、可一键清空</li>\n<li>移动端可以折叠收纳，但不能隐藏当前已激活条件</li>\n</ul>\n<h3 id=\"8-empty--loading--error-state\">8. Empty / Loading / Error State</h3>\n<p>必须覆盖：</p>\n<ul>\n<li>无数据</li>\n<li>首次加载</li>\n<li>局部刷新</li>\n<li>请求失败</li>\n<li>权限不足或无结果</li>\n</ul>\n<p>规则：</p>\n<ul>\n<li>空态要解释“为什么空”和“下一步能做什么”</li>\n<li>loading 不要只剩骨架而没有上下文</li>\n<li>error 要给短解释和恢复动作，不要只有红字</li>\n</ul>\n<h3 id=\"9-warning--risk--status\">9. Warning / Risk / Status</h3>\n<ul>\n<li>warning 是风险提示，不是新主体</li>\n<li>status badge 只做辅助，不承担布局骨架</li>\n<li>高风险项优先做紧凑分隔行或集中风险区，不做一条一块的小提示卡</li>\n</ul>\n<h3 id=\"10-modal--drawer\">10. Modal / Drawer</h3>\n<p>默认只在下面场景使用：</p>\n<ul>\n<li>确认型危险操作</li>\n<li>脱离上下文会更清楚的集中编辑</li>\n<li>多步骤但仍短流程的辅助操作</li>\n</ul>\n<p>不要为普通 facts、普通查看态、普通说明硬开 modal / drawer。</p>\n<h2 id=\"九响应式与多端规则\">九、响应式与多端规则</h2>\n<p>这是前端规范的必备部分，不可省略。</p>\n<h3 id=\"1-breakpoint-基线\">1. Breakpoint 基线</h3>\n<p>默认至少覆盖：</p>\n<ul>\n<li>Mobile：<code>&#x3C; 768px</code></li>\n<li>Tablet：<code>768px - 1199px</code></li>\n<li>Desktop：<code>>= 1200px</code></li>\n</ul>\n<p>如果项目已有更细 breakpoints，可复用，但必须有同等清晰度。</p>\n<h3 id=\"2-响应式原则\">2. 响应式原则</h3>\n<ul>\n<li>手机端优先保住主信息、主状态、主 CTA</li>\n<li>不把桌面端的三列、四列结构机械压扁到手机端</li>\n<li>概览带可以换行，但优先保持摘要语义，而不是变成卡片墙</li>\n<li>表格在小屏要么转成可横滑的稳定表格，要么转成分组 facts 结构，不要直接挤爆</li>\n<li>筛选区在小屏可以折叠，但当前已生效的筛选条件必须可见</li>\n<li>不允许依赖 hover 才完成关键操作或理解关键信息</li>\n</ul>\n<h3 id=\"3-移动端检查底线\">3. 移动端检查底线</h3>\n<p>每次 user-visible 前端改动，至少自检：</p>\n<ul>\n<li>首屏是否先看到主信息</li>\n<li>主 CTA 是否一眼可见</li>\n<li>触控目标是否足够大</li>\n<li>文字是否可读且不会挤成碎片</li>\n<li>横向滚动是否仅出现在确有必要的表格区域</li>\n</ul>\n<h2 id=\"十可访问性规范\">十、可访问性规范</h2>\n<p>这是合格前端规范的一部分，不是额外加分项。</p>\n<h3 id=\"1-对比度\">1. 对比度</h3>\n<p>默认要求：</p>\n<ul>\n<li>正文文本与背景对比度至少达到 <code>4.5:1</code></li>\n<li>大号文本、关键图形、边框、焦点环至少达到 <code>3:1</code></li>\n<li>浅灰字配浅灰底的“高级感”默认判为不合格</li>\n</ul>\n<h3 id=\"2-键盘可达性\">2. 键盘可达性</h3>\n<p>默认要求：</p>\n<ul>\n<li>所有关键操作都可通过键盘完成</li>\n<li>焦点顺序符合阅读和操作逻辑</li>\n<li>不允许焦点陷阱和看不见的 focus state</li>\n</ul>\n<h3 id=\"3-focus-visible\">3. Focus Visible</h3>\n<ul>\n<li>每个可交互元素都必须有清晰 focus 可见反馈</li>\n<li>focus ring 颜色不能与品牌色、危险色冲突到不可辨识</li>\n<li>不允许仅在 hover 有反馈，focus 却无反馈</li>\n</ul>\n<h3 id=\"4-触控与点击区\">4. 触控与点击区</h3>\n<ul>\n<li>关键交互目标应有足够点击面积，默认不小于 <code>40px-44px</code></li>\n<li>不要把多个危险动作挤在过小的点击区内</li>\n</ul>\n<h3 id=\"5-状态表达\">5. 状态表达</h3>\n<ul>\n<li>不能只靠颜色表达 success / warning / danger</li>\n<li>至少结合文字、图标、位置或结构中的一种辅助方式</li>\n</ul>\n<h3 id=\"6-reduced-motion\">6. Reduced Motion</h3>\n<ul>\n<li>当系统或项目启用 <code>prefers-reduced-motion</code> 或等价 reduced motion 时，应关闭非必要运动</li>\n<li>保留必要状态反馈，但去掉表演型过渡</li>\n</ul>\n<h2 id=\"十一禁止项\">十一、禁止项</h2>\n<p>以下做法默认判为不合格，除非用户明确要求：</p>\n<ul>\n<li>框里套框</li>\n<li>卡里套卡</li>\n<li>同层事实拆成多个平行小盒子</li>\n<li>检查项一条一块垂直卡片堆叠</li>\n<li>为了显得“精致”而加入无信息增益的边框、底色、阴影、圆角层</li>\n<li>让页面更像后台模板市场 demo，而不是现有产品的一部分</li>\n<li>为同一组同级页面同时提供 sidebar 导航和 header 同级导航</li>\n<li>让两个以上模块同时争抢同一个职责</li>\n<li>使用默认安全模板感的字体、配色、背景与布局却没有明确理由</li>\n<li>依赖 hover 才能理解关键信息</li>\n<li>没做移动端检查就交付 user-visible 页面</li>\n<li>没做 focus / keyboard / contrast 检查就声称规范完成</li>\n</ul>\n<h2 id=\"十二评审与验收标准\">十二、评审与验收标准</h2>\n<p>前端设计完成后，至少满足下面三层检查。</p>\n<h3 id=\"1-设计层检查\">1. 设计层检查</h3>\n<ol>\n<li>当前页面属于哪类 surface，是否用了对应规则</li>\n<li>是否先看到主信息，而不是装饰、备注或重复导航</li>\n<li>是否只有一个一级导航源</li>\n<li>是否维持单一视觉语言，没有多来源拼盘感</li>\n<li>Typography、Color、Background、Motion 是否已经明确并统一</li>\n</ol>\n<h3 id=\"2-组件与实现层检查\">2. 组件与实现层检查</h3>\n<ol>\n<li>spacing、grid、radius、border、motion 是否使用统一尺度</li>\n<li>关键组件是否覆盖正常态、hover、focus、disabled、loading、error</li>\n<li>表单是否有字段级错误反馈</li>\n<li>空态、加载态、错误态是否完整</li>\n<li>是否存在只有颜色没有文字辅助的状态表达</li>\n</ol>\n<h3 id=\"3-运行与体验层检查\">3. 运行与体验层检查</h3>\n<ol>\n<li>桌面端是否成立</li>\n<li>移动端是否成立</li>\n<li>键盘路径是否成立</li>\n<li>focus 是否可见</li>\n<li>用户是否能在最短路径内完成主任务</li>\n</ol>\n<p>如果以上任一层明显失败，就不应判为规范完成。</p>\n<h2 id=\"十三规范回写与一致性\">十三、规范回写与一致性</h2>\n<p>前端实现与设计规范之间，默认必须保持同周期收口。</p>\n<ol>\n<li>如果这次 UI 更新形成了新的可复用设计指导，而且它不违背当前规范文本，就必须在同一工作周期内反向回写到本规范</li>\n<li>这种回写应当是补强、抽象、举例、收口，不应绕开当前规范另起一套隐性规则</li>\n<li>不允许先落地一个违背规范文本的 UI，再把“结果如此”当成既成事实</li>\n<li>如果实现方向与当前规范真的冲突，先把规范改写成新的单一一致文本，再推广实现，不允许让实现长期跑在规范前面</li>\n<li>AGENTS.md 负责声明“必须参考并回写这份规范”，具体 UI 规则正文只放在本文件</li>\n</ol>\n<h2 id=\"十四针对-dense-admin-list-的额外要求\">十四、针对 dense admin list 的额外要求</h2>\n<p>如果页面属于运维、控制面、监控、服务管理、部署、域名、运行时、设置面板等 dense admin list 场景，则额外要求：</p>\n<ol>\n<li>默认优先列表，而不是卡片墙</li>\n<li>默认优先横向对齐，而不是纵向解释块</li>\n<li>默认优先单层信息区，而不是嵌套模块</li>\n<li>路径、归属、目标、状态、检查应尽量放进同一阅读带</li>\n<li>备注必须降权，不能主导布局</li>\n<li>可视化优先嵌入式压缩表达，而不是独立 dashboard 卡片</li>\n<li>概览带只保留页面级摘要，不重复正文细项</li>\n</ol>\n<h2 id=\"十五当前已验证的落地方向\">十五、当前已验证的落地方向</h2>\n<p>这份规范当前已经在 Mortis 运维面板中验证过以下方向有效：</p>\n<ul>\n<li>顶部摘要去卡片化</li>\n<li>真源区改成边界 facts list</li>\n<li>执行路由改成更接近 table / list 的整块列表</li>\n<li>服务器 / 部署 / 域名改成更紧凑的横向 dense grid</li>\n<li>备注区继续降权，避免形成大块说明面板</li>\n<li>检查项统一改成单层表格式结构</li>\n<li>左侧导航保留为唯一一级导航源，页头移除重复同级导航</li>\n<li>overview 顶部摘要优先收成单行概览带，而不是再做第二层 summary 模块</li>\n<li>servers / deployments 的长备注优先折叠成次级说明，而不是常展开说明块</li>\n<li>warning / risk 区优先做紧凑分隔行而不是一条一块的小提示卡</li>\n<li>需要引入可视化时，优先使用嵌入式压缩型可视化，而不是独立大图表模块</li>\n</ul>\n<h2 id=\"十六文档位置\">十六、文档位置</h2>\n<p>本规范固定放在：</p>\n<ul>\n<li><code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent\\Frontend Design Specs.md</code></li>\n</ul>\n<p>后续每次前端设计、前端改版、信息型页面重构，都应优先更新和复用这份文档，而不是再散落写新的临时设计规范。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "frontend-design-specs",
+        "text": "Frontend Design Specs"
+      },
+      {
+        "depth": 2,
+        "slug": "适用范围",
+        "text": "适用范围"
+      },
+      {
+        "depth": 3,
+        "slug": "规则优先级",
+        "text": "规则优先级"
+      },
+      {
+        "depth": 3,
+        "slug": "surface-分类",
+        "text": "Surface 分类"
+      },
+      {
+        "depth": 3,
+        "slug": "console-web-实施落点",
+        "text": "console-web 实施落点"
+      },
+      {
+        "depth": 3,
+        "slug": "dense-admin-list-触发条件",
+        "text": "dense admin list 触发条件"
+      },
+      {
+        "depth": 2,
+        "slug": "一-核心立场",
+        "text": "一、核心立场"
+      },
+      {
+        "depth": 3,
+        "slug": "1-总原则",
+        "text": "1. 总原则"
+      },
+      {
+        "depth": 3,
+        "slug": "2-组件搜源优先原则",
+        "text": "2. 组件搜源优先原则"
+      },
+      {
+        "depth": 3,
+        "slug": "3-默认统一气质",
+        "text": "3. 默认统一气质"
+      },
+      {
+        "depth": 3,
+        "slug": "4-默认视觉方向",
+        "text": "4. 默认视觉方向"
+      },
+      {
+        "depth": 2,
+        "slug": "二-固定前端设计顺序",
+        "text": "二、固定前端设计顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "三-系统层基础规范",
+        "text": "三、系统层基础规范"
+      },
+      {
+        "depth": 3,
+        "slug": "1-spacing-scale",
+        "text": "1. Spacing Scale"
+      },
+      {
+        "depth": 3,
+        "slug": "2-grid-与容器",
+        "text": "2. Grid 与容器"
+      },
+      {
+        "depth": 3,
+        "slug": "3-typography-scale",
+        "text": "3. Typography Scale"
+      },
+      {
+        "depth": 3,
+        "slug": "4-color-tokens",
+        "text": "4. Color Tokens"
+      },
+      {
+        "depth": 3,
+        "slug": "5-radius-border-shadow",
+        "text": "5. Radius / Border / Shadow"
+      },
+      {
+        "depth": 3,
+        "slug": "6-motion-tokens",
+        "text": "6. Motion Tokens"
+      },
+      {
+        "depth": 2,
+        "slug": "四-surface-结构原则",
+        "text": "四、Surface 结构原则"
+      },
+      {
+        "depth": 3,
+        "slug": "1-页面级结构",
+        "text": "1. 页面级结构"
+      },
+      {
+        "depth": 3,
+        "slug": "2-模块级结构",
+        "text": "2. 模块级结构"
+      },
+      {
+        "depth": 3,
+        "slug": "3-界面职责单一原则",
+        "text": "3. 界面职责单一原则"
+      },
+      {
+        "depth": 3,
+        "slug": "4-surface-ownership-原则",
+        "text": "4. Surface Ownership 原则"
+      },
+      {
+        "depth": 3,
+        "slug": "5-层级一致性原则",
+        "text": "5. 层级一致性原则"
+      },
+      {
+        "depth": 3,
+        "slug": "6-控制台-dense-admin-list-的首选结构",
+        "text": "6. 控制台 / dense admin list 的首选结构"
+      },
+      {
+        "depth": 3,
+        "slug": "7-产品页-功能承载页的额外要求",
+        "text": "7. 产品页 / 功能承载页的额外要求"
+      },
+      {
+        "depth": 3,
+        "slug": "8-落地页-叙事页的额外要求",
+        "text": "8. 落地页 / 叙事页的额外要求"
+      },
+      {
+        "depth": 2,
+        "slug": "五-内容组织原则",
+        "text": "五、内容组织原则"
+      },
+      {
+        "depth": 3,
+        "slug": "1-去重与去竞争原则",
+        "text": "1. 去重与去竞争原则"
+      },
+      {
+        "depth": 3,
+        "slug": "2-主信息优先",
+        "text": "2. 主信息优先"
+      },
+      {
+        "depth": 3,
+        "slug": "3-备注降级",
+        "text": "3. 备注降级"
+      },
+      {
+        "depth": 3,
+        "slug": "4-路径与事实信息",
+        "text": "4. 路径与事实信息"
+      },
+      {
+        "depth": 2,
+        "slug": "六-视觉层级原则",
+        "text": "六、视觉层级原则"
+      },
+      {
+        "depth": 3,
+        "slug": "1-结构优先于装饰",
+        "text": "1. 结构优先于装饰"
+      },
+      {
+        "depth": 3,
+        "slug": "2-边框与背景",
+        "text": "2. 边框与背景"
+      },
+      {
+        "depth": 3,
+        "slug": "3-圆角",
+        "text": "3. 圆角"
+      },
+      {
+        "depth": 3,
+        "slug": "4-图标与插画",
+        "text": "4. 图标与插画"
+      },
+      {
+        "depth": 2,
+        "slug": "七-交互原则",
+        "text": "七、交互原则"
+      },
+      {
+        "depth": 3,
+        "slug": "1-动作要少而明确",
+        "text": "1. 动作要少而明确"
+      },
+      {
+        "depth": 3,
+        "slug": "2-展开与折叠",
+        "text": "2. 展开与折叠"
+      },
+      {
+        "depth": 3,
+        "slug": "3-反馈",
+        "text": "3. 反馈"
+      },
+      {
+        "depth": 3,
+        "slug": "4-导航去重原则",
+        "text": "4. 导航去重原则"
+      },
+      {
+        "depth": 3,
+        "slug": "5-压缩型可视化原则",
+        "text": "5. 压缩型可视化原则"
+      },
+      {
+        "depth": 3,
+        "slug": "6-压缩型交互原则",
+        "text": "6. 压缩型交互原则"
+      },
+      {
+        "depth": 2,
+        "slug": "八-核心组件-contract",
+        "text": "八、核心组件 Contract"
+      },
+      {
+        "depth": 3,
+        "slug": "1-navigation",
+        "text": "1. Navigation"
+      },
+      {
+        "depth": 3,
+        "slug": "2-page-header",
+        "text": "2. Page Header"
+      },
+      {
+        "depth": 3,
+        "slug": "3-summary-strip-概览带",
+        "text": "3. Summary Strip / 概览带"
+      },
+      {
+        "depth": 3,
+        "slug": "4-list-table-dense-grid",
+        "text": "4. List / Table / Dense Grid"
+      },
+      {
+        "depth": 3,
+        "slug": "5-facts-key-value-block",
+        "text": "5. Facts / Key-Value Block"
+      },
+      {
+        "depth": 3,
+        "slug": "6-form",
+        "text": "6. Form"
+      },
+      {
+        "depth": 3,
+        "slug": "7-filter-search-sort",
+        "text": "7. Filter / Search / Sort"
+      },
+      {
+        "depth": 3,
+        "slug": "8-empty-loading-error-state",
+        "text": "8. Empty / Loading / Error State"
+      },
+      {
+        "depth": 3,
+        "slug": "9-warning-risk-status",
+        "text": "9. Warning / Risk / Status"
+      },
+      {
+        "depth": 3,
+        "slug": "10-modal-drawer",
+        "text": "10. Modal / Drawer"
+      },
+      {
+        "depth": 2,
+        "slug": "九-响应式与多端规则",
+        "text": "九、响应式与多端规则"
+      },
+      {
+        "depth": 3,
+        "slug": "1-breakpoint-基线",
+        "text": "1. Breakpoint 基线"
+      },
+      {
+        "depth": 3,
+        "slug": "2-响应式原则",
+        "text": "2. 响应式原则"
+      },
+      {
+        "depth": 3,
+        "slug": "3-移动端检查底线",
+        "text": "3. 移动端检查底线"
+      },
+      {
+        "depth": 2,
+        "slug": "十-可访问性规范",
+        "text": "十、可访问性规范"
+      },
+      {
+        "depth": 3,
+        "slug": "1-对比度",
+        "text": "1. 对比度"
+      },
+      {
+        "depth": 3,
+        "slug": "2-键盘可达性",
+        "text": "2. 键盘可达性"
+      },
+      {
+        "depth": 3,
+        "slug": "3-focus-visible",
+        "text": "3. Focus Visible"
+      },
+      {
+        "depth": 3,
+        "slug": "4-触控与点击区",
+        "text": "4. 触控与点击区"
+      },
+      {
+        "depth": 3,
+        "slug": "5-状态表达",
+        "text": "5. 状态表达"
+      },
+      {
+        "depth": 3,
+        "slug": "6-reduced-motion",
+        "text": "6. Reduced Motion"
+      },
+      {
+        "depth": 2,
+        "slug": "十一-禁止项",
+        "text": "十一、禁止项"
+      },
+      {
+        "depth": 2,
+        "slug": "十二-评审与验收标准",
+        "text": "十二、评审与验收标准"
+      },
+      {
+        "depth": 3,
+        "slug": "1-设计层检查",
+        "text": "1. 设计层检查"
+      },
+      {
+        "depth": 3,
+        "slug": "2-组件与实现层检查",
+        "text": "2. 组件与实现层检查"
+      },
+      {
+        "depth": 3,
+        "slug": "3-运行与体验层检查",
+        "text": "3. 运行与体验层检查"
+      },
+      {
+        "depth": 2,
+        "slug": "十三-规范回写与一致性",
+        "text": "十三、规范回写与一致性"
+      },
+      {
+        "depth": 2,
+        "slug": "十四-针对-dense-admin-list-的额外要求",
+        "text": "十四、针对 dense admin list 的额外要求"
+      },
+      {
+        "depth": 2,
+        "slug": "十五-当前已验证的落地方向",
+        "text": "十五、当前已验证的落地方向"
+      },
+      {
+        "depth": 2,
+        "slug": "十六-文档位置",
+        "text": "十六、文档位置"
+      }
+    ],
+    "detailPath": "articles/md_9e8adb41949b.json"
+  }
+}

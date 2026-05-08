@@ -1,0 +1,495 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_a389df02ba83",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/nodejs%20Next.js%20build%20restart%20systemd.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/编程学习之路/nodejs Next.js build restart systemd.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/nodejs Next.js build restart systemd.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/nodejs%20Next.js%20build%20restart%20systemd.md",
+    "slug": "blog-编程学习之路-nodejs-next-js-build-restart-systemd",
+    "title": "nodejs Next.js build restart systemd",
+    "summary": "20分钟入门 Node.js ｜后端开发｜全栈开发｜Mongo DB 哔哩哔哩 bilibili 好，这个问题我不给你讲“官方定义”，我直接用你现在做的系统来讲清楚。 🧠 一句话理解 或者更直白一点： 🔥 一、它到底是干嘛的 如果不用 Next.js，你要这样做： 用了 Next.js： 👉...",
+    "description": "20分钟入门 Node.js ｜后端开发｜全栈开发｜Mongo DB 哔哩哔哩 bilibili 好，这个问题我不给你讲“官方定义”，我直接用你现在做的系统来讲清楚。 🧠 一句话理解 或者更直白一点： 🔥 一、它到底是干嘛的 如果不用 Next.js，你要这样做： 用了 Next.js： 👉...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog",
+      "编程学习之路"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog",
+        "编程学习之路"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/编程学习之路/nodejs Next.js build restart systemd.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/编程学习之路/nodejs Next.js build restart systemd.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/nodejs%20Next.js%20build%20restart%20systemd.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "nodejs Next js build restart systemd",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "编程学习之路",
+        "NODEJS NEXT JS BUILD RESTART SYSTEMD"
+      ],
+      "subtitle": "20分钟入门 Node.js ｜后端开发｜全栈开发｜Mongo DB 哔哩哔哩 bilibili 好，这个问题我不给你讲“官方定义”，我直接用你现在做的系统来讲清楚。 🧠 一句话理解 或者更直白一点： 🔥 一、它到底是干嘛的 如果不用 Next.js，你要这样做： 用了 Next.js： 👉..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "[20分钟入门 Node.js ｜后端开发｜全栈开发｜Mongo DB_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1vVyeYMEAs/?spm_id_from=333.337.search-card.all.click&vd_source=d0f06297298e29cbb0157ebb2606d08d)\n\n\n好，这个问题我不给你讲“官方定义”，我直接用你现在做的系统来讲清楚。\n\n---\n\n# 🧠 一句话理解\n\n```text\nNext.js = 一个“带服务器的 React 框架”\n```\n\n或者更直白一点：\n\n```text\nNext.js = 前端 + 一个轻量后端 + 构建工具\n```\n\n---\n\n# 🔥 一、它到底是干嘛的\n\n如果不用 Next.js，你要这样做：\n\n```text\nReact（前端）\n  ↓\n浏览器请求\n  ↓\nNode / Java / Python（后端接口）\n```\n\n---\n\n用了 Next.js：\n\n```text\n一个项目里：\n✔ 页面\n✔ 接口\n✔ 构建\n全都有\n```\n\n---\n\n👉 所以它解决的是：\n\n```text\n👉 “前端 + 后端 + 构建”整合问题\n```\n\n---\n\n# 🧱 二、它内部其实长这样（核心）\n\n```text\n浏览器\n   ↓\nNext.js Server（Node.js）\n   ↓\n你的代码\n```\n\n---\n\n👉 这个 server 会干两件事：\n\n---\n\n## 🟢 1. 返回页面（你看到的 UI）\n\n```text\n访问 /\n→ 返回 HTML 页面\n```\n\n---\n\n## 🔵 2. 提供接口（API）\n\n```text\n访问 /api/*\n→ 返回 JSON\n```\n\n---\n\n👉 所以你才会看到：\n\n```text\nNext.js 居然也有接口\n```\n\n---\n\n# 🧠 三、你现在项目里的真实位置\n\n你现在系统其实是：\n\n```text\n浏览器\n   ↓\nNext.js（3001）\n   ↓\n你的 Node 服务（5101）\n   ↓\nAI / pool\n```\n\n---\n\n👉 这里：\n\n```text\nNext.js = 前端 + “小后端”\n你的 Node 服务 = 真后端\n```\n\n---\n\n# 🔥 四、Next.js 比 React 多了什么\n\n普通 React：\n\n```text\n❌ 没服务器\n❌ 没接口\n❌ 没 SSR\n```\n\n---\n\nNext.js：\n\n```text\n✔ 自带服务器\n✔ 可以写 API\n✔ 可以服务端渲染（SSR）\n✔ 自带构建（next build）\n```\n\n---\n\n# 🧠 五、为什么会有 next build / next start\n\n---\n\n## 🟡 next build\n\n```text\n把代码编译成生产版本\n```\n\n---\n\n## 🟢 next start\n\n```text\n启动一个 Node 服务来跑网站\n```\n\n---\n\n👉 所以你看到：\n\n```text\nCreating an optimized production build ...\n```\n\n其实是在：\n\n```text\n编译网站\n```\n\n---\n\n# 🔥 六、Next.js 本质不是“前端工具”\n\n很多人误解：\n\n```text\nNext.js = 前端框架 ❌\n```\n\n---\n\n更准确是：\n\n```text\nNext.js = 全栈框架（Fullstack Framework）✔\n```\n\n---\n\n# 🧠 七、你现在为什么会困惑\n\n因为你现在系统里有：\n\n```text\nNext.js（带后端）\n+\n你自己写的 Node 后端\n```\n\n---\n\n👉 相当于：\n\n```text\n两个后端\n```\n\n---\n\n所以你会问：\n\n```text\n为什么 Next.js 也有接口？\n```\n\n---\n\n# 🔥 八、正确分工（你接下来必须这样理解）\n\n---\n\n## 🟢 Next.js\n\n```text\n负责：\n页面\nUI\n简单 API（登录 / UI逻辑）\n```\n\n---\n\n## 🔴 你的 Node 服务\n\n```text\n负责：\nAI调用\nkey池\n调度\n网关\n```\n\n---\n\n👉 记住一句：\n\n```text\nNext.js 不该承载“核心业务”\n```\n\n---\n\n# 🧠 九、最重要一句话\n\n```text\nNext.js 是一个“帮你快速做网站的服务器框架”\n```\n\n---\n\n# 🚀 十、用你现在的项目再压一句\n\n```text\nNext.js = 你的网站外壳（UI + 页面）\nNode 服务 = 你真正的系统（AI + 逻辑）\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\nReact：只负责页面\nNext.js：页面 + 服务器 + API\n```\n\n---\n\n如果你想彻底不混，我可以帮你画一个：\n\n```text\nNext.js + Node + AI Gateway + Pool\n```\n\n的**完整结构图（非常适合你现在）**。\n\n你只要说：\n\n```text\n画图\n```\n\n我直接给你一个你现在系统的“全景图”。\n\n\n这个问题你要是现在搞清楚，后面**前端 / 后端 / 网关 / AI系统**就不会再混了。\n\n我不给你讲空话，直接用你现在的系统讲👇\n\n---\n\n# 🧠 一句话区别（最重要）\n\n```text\nNode.js = 运行环境（能让 JS 在服务器跑）\n\nNext.js = 一个基于 Node.js 的框架（帮你快速做网站）\n```\n\n---\n\n# 🔥 一、用现实类比（最容易懂）\n\n```text\nNode.js = 操作系统 / 引擎\nNext.js = 应用程序（建在 Node.js 上）\n```\n\n---\n\n再换个更贴近你现在的：\n\n```text\nNode.js = 服务器能力\nNext.js = 网站框架\n```\n\n---\n\n# 🧱 二、结构关系（非常关键）\n\n```text\n浏览器\n   ↓\nNext.js（运行在 Node.js 上）\n   ↓\nNode.js runtime\n   ↓\n操作系统\n```\n\n---\n\n👉 所以：\n\n```text\nNext.js 离不开 Node.js\nNode.js 不需要 Next.js\n```\n\n---\n\n# 🔥 三、它们分别干什么\n\n---\n\n## 🟢 Node.js（底层能力）\n\n你用它可以写：\n\n```text\n✔ API 服务（Express / Koa）\n✔ AI Gateway\n✔ key 池 / 调度器\n✔ WebSocket 服务\n✔ 任意后端逻辑\n```\n\n---\n\n👉 你现在的：\n\n```text\n5101 服务（AI / 网关）\n```\n\n就是 Node.js 写的\n\n---\n\n## 🔵 Next.js（上层框架）\n\n你用它可以：\n\n```text\n✔ 写网页（React）\n✔ 写简单 API\n✔ 做 SSR（服务端渲染）\n✔ 一键 build + start\n```\n\n---\n\n👉 你现在的：\n\n```text\n3001 console-web\n```\n\n就是 Next.js\n\n---\n\n# 🧠 四、核心差异（本质区别）\n\n---\n\n## 1️⃣ 抽象层级\n\n```text\nNode.js：底层（啥都能干）\nNext.js：高层（专门做网站）\n```\n\n---\n\n## 2️⃣ 灵活性\n\n```text\nNode.js：完全自由（但复杂）\nNext.js：帮你封装好（但有边界）\n```\n\n---\n\n## 3️⃣ 使用方式\n\nNode.js：\n\n```js\nhttp.createServer(...)\n```\n\nNext.js：\n\n```text\nnpm run dev\nnext build\nnext start\n```\n\n---\n\n## 4️⃣ 是否自带“网站能力”\n\n```text\nNode.js：❌ 没有\nNext.js：✔ 自带\n```\n\n---\n\n# 🔥 五、用你当前系统对比（最清晰）\n\n---\n\n## 🟢 Next.js（3001）\n\n```text\n作用：\n✔ 页面\n✔ UI\n✔ 简单接口\n\n特点：\n✔ 快速开发\n❌ 不适合复杂逻辑\n```\n\n---\n\n## 🔴 Node.js（5101）\n\n```text\n作用：\n✔ AI调用\n✔ key池\n✔ 调度\n✔ 网关\n\n特点：\n✔ 强大\n✔ 可扩展\n```\n\n---\n\n# 🧠 六、你现在为什么会混\n\n因为你现在系统是：\n\n```text\nNext.js（带后端）\n+\nNode.js（真正后端）\n```\n\n---\n\n👉 所以你会感觉：\n\n```text\n“怎么两个都能写接口？”\n```\n\n---\n\n# 🔥 七、正确分工（你必须这样记）\n\n---\n\n## 🟢 Next.js\n\n```text\n👉 面向用户（UI层）\n```\n\n---\n\n## 🔴 Node.js\n\n```text\n👉 面向系统（逻辑层）\n```\n\n---\n\n👉 一句话：\n\n```text\nNext.js 给人看\nNode.js 干活\n```\n\n---\n\n# 🧠 八、最重要认知（必须记住）\n\n```text\nNext.js 是“用 Node.js 写的一个工具”\n不是 Node.js 的替代品\n```\n\n---\n\n# 🚀 九、你现在的系统应该这样理解\n\n```text\n浏览器\n   ↓\nNext.js（UI + 页面）\n   ↓\nNode.js（AI + 逻辑）\n   ↓\n模型 / key池\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\nNode.js：让 JS 能当后端用\nNext.js：帮你快速做一个网站\n```\n\n---\n\n# 🚀 如果你要彻底不混（推荐）\n\n我可以帮你画一张你现在的：\n\n```text\nNext.js + Node.js + AI Gateway + Pool\n```\n\n**完整结构图（非常适合你当前阶段）**\n\n---\n\n\n\n\n```text\n[ Client Layer ]                   意思是：所有“用户直接操作的入口”\n浏览器 / UI\n\n        ↓\n\n[ Presentation Layer ]           \nNext.js（页面 + API）\n\n        ↓\n\n[ Control Layer ⭐ ]\nNode Backend（你写的）\n调度 / 网关 / 逻辑\n\n        ↓\n\n[ Resource Layer ]\nKey Pool / Providers\n\n        ↓\n\n[ Adapter Layer ]\nAIClient2API\n\n        ↓\n\n[ Execution Layer ]\nAI 模型\n\n\n\n注释：\n**“逐层注释版 + 一句话作用 + 你现在项目里的对应”**\n---\n\n# 🧠 全结构（带注释）\n\n```text\n[ Client Layer ]\n意思：所有“用户直接操作的入口”\n（谁在发起请求）\n\n浏览器 / UI（你看到的页面、按钮、输入框）\n👉 作用：触发请求 + 展示结果\n👉 特点：不做核心逻辑\n👉 你现在：Next.js 页面（浏览器里运行的那部分）\n\n        ↓（HTTP / fetch 请求）\n\n[ Presentation Layer ]\n意思：展示层 / 接入层（离用户最近的服务器）\n\nNext.js（页面 + API）\n👉 作用：\n   - 渲染页面（SSR / CSR）\n   - 提供轻量 API（如登录、UI逻辑）\n👉 特点：\n   - 更偏“前端服务器”\n   - 不承载复杂业务\n👉 你现在：\n   - 3001 端口的 console-web\n   - app/api/* 这些接口\n\n        ↓（调用后端接口）\n\n[ Control Layer ⭐ ]\n意思：控制层 / 核心大脑（你真正的系统）\n\nNode Backend（你写的）\n👉 作用：\n   - AI 请求入口\n   - key池调度\n   - 路由分发\n   - 业务逻辑（最核心）\n👉 特点：\n   - 决定“请求去哪、用哪个key、用哪个模型”\n👉 你现在：\n   - 5101 端口的 atramenti-console\n   - 你正在构建的 AI Gateway\n\n        ↓（选择资源 / 分发）\n\n[ Resource Layer ]\n意思：资源层（可用的“能力池”）\n\nKey Pool / Providers\n👉 作用：\n   - 存放所有可用资源（API key / 模型服务）\n   - 提供“可调度的资源”\n👉 特点：\n   - 本身不处理逻辑\n   - 只提供能力\n👉 你现在：\n   - OpenAI key\n   - 第三方 API key\n   - tengokukk 这种入口\n\n        ↓（必要时做协议转换）\n\n[ Adapter Layer ]\n意思：适配层（协议转换）\n\nAIClient2API\n👉 作用：\n   - 把不同接口 → 转成统一格式（类似 OpenAI）\n👉 特点：\n   - 不做决策\n   - 只是“翻译”\n👉 你现在：\n   - AIClient2API 就在这一层\n👉 关键认知：\n   - 它不是核心\n   - 只是兼容工具\n\n        ↓（真正执行）\n\n[ Execution Layer ]\n意思：执行层（真正干活）\n\nAI 模型（GPT / Claude / 本地模型）\n👉 作用：\n   - 处理请求\n   - 生成结果\n👉 特点：\n   - 最底层\n   - 不受你完全控制\n👉 你现在：\n   - OpenAI / 其他模型\n```\n\n---\n\n# 🧠 一张“角色总结图”（压缩理解）\n\n```text\nClient Layer        👉 用户（点按钮）\nPresentation Layer  👉 页面服务器（Next.js）\nControl Layer ⭐     👉 大脑（你写的后端）\nResource Layer      👉 资源池（key / provider）\nAdapter Layer       👉 翻译器（AIClient2API）\nExecution Layer     👉 工人（AI模型）\n```\n\n---\n\n# 🔥 最关键的三层（你必须记住）\n\n---\n\n## 🟢 1. Client Layer\n\n```text\n只负责：\n👉 发请求\n👉 显示结果\n```\n\n---\n\n## 🔴 2. Control Layer（你现在的核心）\n\n```text\n负责：\n👉 决策\n👉 调度\n👉 控制\n```\n\n👉 这是你现在正在构建的能力\n\n---\n\n## 🔵 3. Execution Layer\n\n```text\n负责：\n👉 真正计算\n```\n\n---\n\n# 🧠 用一句话串起来（非常重要）\n\n```text\n用户点击 → Next.js接收 → 你后端决定 → 选key/模型 → AI执行 → 返回结果\n```\n\n---\n\n# 🧠 你现在的阶段（给你定位）\n\n你已经在：\n\n```text\n❌ 不再是“写页面的人”\n👉 而是在做 Control Layer（系统控制者）\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\nClient：谁在用\nPresentation：怎么展示\nControl：怎么决策 ⭐\nResource：有什么资源\nAdapter：怎么兼容\nExecution：谁干活\n```\n\n---\n\n# 🚀 如果你继续往上走（建议）\n\n下一步你会开始做这些👇\n\n```text\n✔ 限流（防止key爆）\n✔ 熔断（某个provider挂了自动切）\n✔ 日志（知道谁在用什么）\n✔ 监控（系统状态）\n```\n\n👉 这些全部都发生在：\n\n```text\nControl Layer\n```\n\n---\n\n如果你想，我可以帮你把：\n\n```text\nControl Layer（你现在这层）\n```\n\n单独拆成一个**工业级结构图（调度 + 池子 + 限流 + fallback）**，那才是真正“高手级”的那一层。\n\n你只要说：\n\n```text\n控制层展开\n```\n\n好，这三个你必须彻底搞明白，它们就是你现在 deploy 卡住的核心三件事。我直接用**最简单 + 你当前项目对应**给你讲清楚。\n\n---\n\n# 🧠 一句话总览\n\n```text\nbuild = 把代码变成“可运行产物”\nrestart = 把服务重新启动\nsystemd = 让服务长期托管运行\n```\n\n---\n\n# 🧱 一、build（构建）\n\n## 是什么\n\n```text\n把源码 → 转换成可以在服务器运行的版本\n```\n\n---\n\n## 你现在项目里的表现\n\n```bash\nnext build\n```\n\n你看到的：\n\n```text\nCreating an optimized production build ...\n```\n\n---\n\n## 实际发生了什么\n\n```text\n你的 Next.js 代码\n↓\n打包 / 压缩 / 编译\n↓\n生成 .next 文件夹（运行用）\n```\n\n---\n\n## 类比\n\n```text\n写代码 = 写菜谱\nbuild = 做好菜\n```\n\n---\n\n## 特点\n\n```text\n✔ 一次性操作\n✔ 可能比较慢（正常）\n❌ 不会一直运行\n```\n\n---\n\n# 🔁 二、restart（重启）\n\n## 是什么\n\n```text\n把正在运行的服务关掉 → 再启动一次\n```\n\n---\n\n## 为什么要 restart\n\n因为：\n\n```text\n你改了代码\n↓\n服务还在跑旧版本\n↓\n必须重启才能生效\n```\n\n---\n\n## 你现在做的\n\n```bash\nsystemctl restart atramenti-console.service\n```\n\n---\n\n## 实际发生了什么\n\n```text\n旧进程 ❌ 杀掉\n新进程 ✔ 启动\n```\n\n---\n\n## 类比\n\n```text\nrestart = 重新开机\n```\n\n---\n\n## 特点\n\n```text\n✔ 会中断服务一瞬间\n✔ 是 deploy 最关键一步之一\n```\n\n---\n\n# ⚙️ 三、systemd（系统托管）\n\n这是最关键的，也是你现在最容易混的。\n\n---\n\n## 是什么\n\n```text\nLinux 系统里的“服务管理器”\n```\n\n---\n\n👉 它干的事：\n\n```text\n帮你管理程序，让它一直活着\n```\n\n---\n\n## 你现在写的这个👇\n\n```ini\n[Service]\nExecStart=node server.mjs --port 5101\nRestart=always\n```\n\n---\n\n## 它的作用\n\n```text\n✔ 开机自动启动\n✔ 挂了自动重启\n✔ 后台运行（不用开终端）\n```\n\n---\n\n## 你用的命令\n\n```bash\nsystemctl --user start xxx\nsystemctl --user restart xxx\nsystemctl --user status xxx\n```\n\n---\n\n## 类比\n\n```text\nsystemd = 物业管理\n你的服务 = 店铺\n\n物业保证：\n✔ 店铺一直开\n✔ 出问题自动恢复\n```\n\n---\n\n# 🧠 四、把三者连起来（最重要）\n\n你现在 deploy 实际流程是：\n\n```text\n1️⃣ build（做菜）\n2️⃣ restart（换新菜）\n3️⃣ systemd（保证一直卖）\n```\n\n---\n\n# 🔥 五、用你当前系统完整串起来\n\n```text\n代码改了\n ↓\nbuild（生成新版本）\n ↓\nsystemd restart（替换旧服务）\n ↓\nsystemd 托管（长期运行）\n```\n\n---\n\n# 🧠 六、你为什么会“卡住”\n\n你现在卡的原因就是：\n\n```text\n不知道现在卡在：\n\nbuild？\n还是 restart？\n还是 systemd？\n```\n\n---\n\n👉 所以你才会感觉：\n\n```text\n“怎么又卡住了？”\n```\n\n---\n\n# 🔧 七、给你一个排查口诀（非常实用）\n\n以后卡住就按这个查👇\n\n---\n\n## 1️⃣ 看是不是 build\n\n```text\nCreating an optimized production build ...\n```\n\n👉 ✔ 正常（慢）\n\n---\n\n## 2️⃣ 看是不是 restart\n\n```bash\nsystemctl restart xxx\n```\n\n👉 看有没有报错\n\n---\n\n## 3️⃣ 看 systemd 状态\n\n```bash\nsystemctl --user status xxx\n```\n\n👉 看：\n\n```text\nactive (running) ✔\nfailed ❌\n```\n\n---\n\n# 🧠 最后一刀总结\n\n```text\nbuild = 生成运行版本\nrestart = 切换到新版本\nsystemd = 保证一直运行\n```\n\n---\n\n# 🚀 如果你想彻底不再卡（推荐）\n\n我可以帮你做一版：\n\n```text\n✔ deploy 每一步都有日志\n✔ 明确显示：现在在 build / restart / systemd\n✔ 自动判断成功失败\n```\n\n让你以后看到：\n\n```text\n👉 卡在哪一步，一眼就知道\n```\n\n---\n\n你只要说：\n\n```text\ndeploy流程可视化\n```\n\n我给你一版**不会再迷路的执行流程图 + 脚本模板**。",
+    "html": "<p><a href=\"https://www.bilibili.com/video/BV1vVyeYMEAs/?spm_id_from=333.337.search-card.all.click&#x26;vd_source=d0f06297298e29cbb0157ebb2606d08d\">20分钟入门 Node.js ｜后端开发｜全栈开发｜Mongo DB_哔哩哔哩_bilibili</a></p>\n<p>好，这个问题我不给你讲“官方定义”，我直接用你现在做的系统来讲清楚。</p>\n<hr>\n<h1 id=\"-一句话理解\">🧠 一句话理解</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js = 一个“带服务器的 React 框架”</span></span></code></pre></figure>\n<p>或者更直白一点：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js = 前端 + 一个轻量后端 + 构建工具</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一它到底是干嘛的\">🔥 一、它到底是干嘛的</h1>\n<p>如果不用 Next.js，你要这样做：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>React（前端）</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>浏览器请求</span></span>\n<span data-line=\"\"><span>  ↓</span></span>\n<span data-line=\"\"><span>Node / Java / Python（后端接口）</span></span></code></pre></figure>\n<hr>\n<p>用了 Next.js：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>一个项目里：</span></span>\n<span data-line=\"\"><span>✔ 页面</span></span>\n<span data-line=\"\"><span>✔ 接口</span></span>\n<span data-line=\"\"><span>✔ 构建</span></span>\n<span data-line=\"\"><span>全都有</span></span></code></pre></figure>\n<hr>\n<p>👉 所以它解决的是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 “前端 + 后端 + 构建”整合问题</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二它内部其实长这样核心\">🧱 二、它内部其实长这样（核心）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>浏览器</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Next.js Server（Node.js）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>你的代码</span></span></code></pre></figure>\n<hr>\n<p>👉 这个 server 会干两件事：</p>\n<hr>\n<h2 id=\"-1-返回页面你看到的-ui\">🟢 1. 返回页面（你看到的 UI）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>访问 /</span></span>\n<span data-line=\"\"><span>→ 返回 HTML 页面</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-2-提供接口api\">🔵 2. 提供接口（API）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>访问 /api/*</span></span>\n<span data-line=\"\"><span>→ 返回 JSON</span></span></code></pre></figure>\n<hr>\n<p>👉 所以你才会看到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js 居然也有接口</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三你现在项目里的真实位置\">🧠 三、你现在项目里的真实位置</h1>\n<p>你现在系统其实是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>浏览器</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Next.js（3001）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>你的 Node 服务（5101）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>AI / pool</span></span></code></pre></figure>\n<hr>\n<p>👉 这里：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js = 前端 + “小后端”</span></span>\n<span data-line=\"\"><span>你的 Node 服务 = 真后端</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四nextjs-比-react-多了什么\">🔥 四、Next.js 比 React 多了什么</h1>\n<p>普通 React：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 没服务器</span></span>\n<span data-line=\"\"><span>❌ 没接口</span></span>\n<span data-line=\"\"><span>❌ 没 SSR</span></span></code></pre></figure>\n<hr>\n<p>Next.js：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 自带服务器</span></span>\n<span data-line=\"\"><span>✔ 可以写 API</span></span>\n<span data-line=\"\"><span>✔ 可以服务端渲染（SSR）</span></span>\n<span data-line=\"\"><span>✔ 自带构建（next build）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五为什么会有-next-build--next-start\">🧠 五、为什么会有 next build / next start</h1>\n<hr>\n<h2 id=\"-next-build\">🟡 next build</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>把代码编译成生产版本</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-next-start\">🟢 next start</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>启动一个 Node 服务来跑网站</span></span></code></pre></figure>\n<hr>\n<p>👉 所以你看到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Creating an optimized production build ...</span></span></code></pre></figure>\n<p>其实是在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>编译网站</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六nextjs-本质不是前端工具\">🔥 六、Next.js 本质不是“前端工具”</h1>\n<p>很多人误解：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js = 前端框架 ❌</span></span></code></pre></figure>\n<hr>\n<p>更准确是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js = 全栈框架（Fullstack Framework）✔</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七你现在为什么会困惑\">🧠 七、你现在为什么会困惑</h1>\n<p>因为你现在系统里有：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js（带后端）</span></span>\n<span data-line=\"\"><span>+</span></span>\n<span data-line=\"\"><span>你自己写的 Node 后端</span></span></code></pre></figure>\n<hr>\n<p>👉 相当于：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>两个后端</span></span></code></pre></figure>\n<hr>\n<p>所以你会问：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>为什么 Next.js 也有接口？</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-八正确分工你接下来必须这样理解\">🔥 八、正确分工（你接下来必须这样理解）</h1>\n<hr>\n<h2 id=\"-nextjs\">🟢 Next.js</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>负责：</span></span>\n<span data-line=\"\"><span>页面</span></span>\n<span data-line=\"\"><span>UI</span></span>\n<span data-line=\"\"><span>简单 API（登录 / UI逻辑）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-你的-node-服务\">🔴 你的 Node 服务</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>负责：</span></span>\n<span data-line=\"\"><span>AI调用</span></span>\n<span data-line=\"\"><span>key池</span></span>\n<span data-line=\"\"><span>调度</span></span>\n<span data-line=\"\"><span>网关</span></span></code></pre></figure>\n<hr>\n<p>👉 记住一句：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js 不该承载“核心业务”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-九最重要一句话\">🧠 九、最重要一句话</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js 是一个“帮你快速做网站的服务器框架”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-十用你现在的项目再压一句\">🚀 十、用你现在的项目再压一句</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js = 你的网站外壳（UI + 页面）</span></span>\n<span data-line=\"\"><span>Node 服务 = 你真正的系统（AI + 逻辑）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>React：只负责页面</span></span>\n<span data-line=\"\"><span>Next.js：页面 + 服务器 + API</span></span></code></pre></figure>\n<hr>\n<p>如果你想彻底不混，我可以帮你画一个：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js + Node + AI Gateway + Pool</span></span></code></pre></figure>\n<p>的<strong>完整结构图（非常适合你现在）</strong>。</p>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>画图</span></span></code></pre></figure>\n<p>我直接给你一个你现在系统的“全景图”。</p>\n<p>这个问题你要是现在搞清楚，后面<strong>前端 / 后端 / 网关 / AI系统</strong>就不会再混了。</p>\n<p>我不给你讲空话，直接用你现在的系统讲👇</p>\n<hr>\n<h1 id=\"-一句话区别最重要\">🧠 一句话区别（最重要）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node.js = 运行环境（能让 JS 在服务器跑）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Next.js = 一个基于 Node.js 的框架（帮你快速做网站）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一用现实类比最容易懂\">🔥 一、用现实类比（最容易懂）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node.js = 操作系统 / 引擎</span></span>\n<span data-line=\"\"><span>Next.js = 应用程序（建在 Node.js 上）</span></span></code></pre></figure>\n<hr>\n<p>再换个更贴近你现在的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node.js = 服务器能力</span></span>\n<span data-line=\"\"><span>Next.js = 网站框架</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二结构关系非常关键\">🧱 二、结构关系（非常关键）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>浏览器</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Next.js（运行在 Node.js 上）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Node.js runtime</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>操作系统</span></span></code></pre></figure>\n<hr>\n<p>👉 所以：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js 离不开 Node.js</span></span>\n<span data-line=\"\"><span>Node.js 不需要 Next.js</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-三它们分别干什么\">🔥 三、它们分别干什么</h1>\n<hr>\n<h2 id=\"-nodejs底层能力\">🟢 Node.js（底层能力）</h2>\n<p>你用它可以写：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ API 服务（Express / Koa）</span></span>\n<span data-line=\"\"><span>✔ AI Gateway</span></span>\n<span data-line=\"\"><span>✔ key 池 / 调度器</span></span>\n<span data-line=\"\"><span>✔ WebSocket 服务</span></span>\n<span data-line=\"\"><span>✔ 任意后端逻辑</span></span></code></pre></figure>\n<hr>\n<p>👉 你现在的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>5101 服务（AI / 网关）</span></span></code></pre></figure>\n<p>就是 Node.js 写的</p>\n<hr>\n<h2 id=\"-nextjs上层框架\">🔵 Next.js（上层框架）</h2>\n<p>你用它可以：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 写网页（React）</span></span>\n<span data-line=\"\"><span>✔ 写简单 API</span></span>\n<span data-line=\"\"><span>✔ 做 SSR（服务端渲染）</span></span>\n<span data-line=\"\"><span>✔ 一键 build + start</span></span></code></pre></figure>\n<hr>\n<p>👉 你现在的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>3001 console-web</span></span></code></pre></figure>\n<p>就是 Next.js</p>\n<hr>\n<h1 id=\"-四核心差异本质区别\">🧠 四、核心差异（本质区别）</h1>\n<hr>\n<h2 id=\"1️⃣-抽象层级\">1️⃣ 抽象层级</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node.js：底层（啥都能干）</span></span>\n<span data-line=\"\"><span>Next.js：高层（专门做网站）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2️⃣-灵活性\">2️⃣ 灵活性</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node.js：完全自由（但复杂）</span></span>\n<span data-line=\"\"><span>Next.js：帮你封装好（但有边界）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"3️⃣-使用方式\">3️⃣ 使用方式</h2>\n<p>Node.js：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"js\" data-theme=\"github-dark\"><code data-language=\"js\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">http.</span><span style=\"color:#B392F0\">createServer</span><span style=\"color:#E1E4E8\">(</span><span style=\"color:#F97583\">...</span><span style=\"color:#E1E4E8\">)</span></span></code></pre></figure>\n<p>Next.js：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>npm run dev</span></span>\n<span data-line=\"\"><span>next build</span></span>\n<span data-line=\"\"><span>next start</span></span></code></pre></figure>\n<hr>\n<h2 id=\"4️⃣-是否自带网站能力\">4️⃣ 是否自带“网站能力”</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node.js：❌ 没有</span></span>\n<span data-line=\"\"><span>Next.js：✔ 自带</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五用你当前系统对比最清晰\">🔥 五、用你当前系统对比（最清晰）</h1>\n<hr>\n<h2 id=\"-nextjs3001\">🟢 Next.js（3001）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>作用：</span></span>\n<span data-line=\"\"><span>✔ 页面</span></span>\n<span data-line=\"\"><span>✔ UI</span></span>\n<span data-line=\"\"><span>✔ 简单接口</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>特点：</span></span>\n<span data-line=\"\"><span>✔ 快速开发</span></span>\n<span data-line=\"\"><span>❌ 不适合复杂逻辑</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-nodejs5101\">🔴 Node.js（5101）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>作用：</span></span>\n<span data-line=\"\"><span>✔ AI调用</span></span>\n<span data-line=\"\"><span>✔ key池</span></span>\n<span data-line=\"\"><span>✔ 调度</span></span>\n<span data-line=\"\"><span>✔ 网关</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>特点：</span></span>\n<span data-line=\"\"><span>✔ 强大</span></span>\n<span data-line=\"\"><span>✔ 可扩展</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六你现在为什么会混\">🧠 六、你现在为什么会混</h1>\n<p>因为你现在系统是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js（带后端）</span></span>\n<span data-line=\"\"><span>+</span></span>\n<span data-line=\"\"><span>Node.js（真正后端）</span></span></code></pre></figure>\n<hr>\n<p>👉 所以你会感觉：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>“怎么两个都能写接口？”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七正确分工你必须这样记\">🔥 七、正确分工（你必须这样记）</h1>\n<hr>\n<h2 id=\"-nextjs-1\">🟢 Next.js</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 面向用户（UI层）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-nodejs\">🔴 Node.js</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 面向系统（逻辑层）</span></span></code></pre></figure>\n<hr>\n<p>👉 一句话：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js 给人看</span></span>\n<span data-line=\"\"><span>Node.js 干活</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-八最重要认知必须记住\">🧠 八、最重要认知（必须记住）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js 是“用 Node.js 写的一个工具”</span></span>\n<span data-line=\"\"><span>不是 Node.js 的替代品</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-九你现在的系统应该这样理解\">🚀 九、你现在的系统应该这样理解</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>浏览器</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Next.js（UI + 页面）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>Node.js（AI + 逻辑）</span></span>\n<span data-line=\"\"><span>   ↓</span></span>\n<span data-line=\"\"><span>模型 / key池</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结-1\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Node.js：让 JS 能当后端用</span></span>\n<span data-line=\"\"><span>Next.js：帮你快速做一个网站</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你要彻底不混推荐\">🚀 如果你要彻底不混（推荐）</h1>\n<p>我可以帮你画一张你现在的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Next.js + Node.js + AI Gateway + Pool</span></span></code></pre></figure>\n<p><strong>完整结构图（非常适合你当前阶段）</strong></p>\n<hr>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>[ Client Layer ]                   意思是：所有“用户直接操作的入口”</span></span>\n<span data-line=\"\"><span>浏览器 / UI</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Presentation Layer ]           </span></span>\n<span data-line=\"\"><span>Next.js（页面 + API）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Control Layer ⭐ ]</span></span>\n<span data-line=\"\"><span>Node Backend（你写的）</span></span>\n<span data-line=\"\"><span>调度 / 网关 / 逻辑</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Resource Layer ]</span></span>\n<span data-line=\"\"><span>Key Pool / Providers</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Adapter Layer ]</span></span>\n<span data-line=\"\"><span>AIClient2API</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Execution Layer ]</span></span>\n<span data-line=\"\"><span>AI 模型</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>注释：</span></span>\n<span data-line=\"\"><span>**“逐层注释版 + 一句话作用 + 你现在项目里的对应”**</span></span>\n<span data-line=\"\"><span>---</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span># 🧠 全结构（带注释）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>```text</span></span>\n<span data-line=\"\"><span>[ Client Layer ]</span></span>\n<span data-line=\"\"><span>意思：所有“用户直接操作的入口”</span></span>\n<span data-line=\"\"><span>（谁在发起请求）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>浏览器 / UI（你看到的页面、按钮、输入框）</span></span>\n<span data-line=\"\"><span>👉 作用：触发请求 + 展示结果</span></span>\n<span data-line=\"\"><span>👉 特点：不做核心逻辑</span></span>\n<span data-line=\"\"><span>👉 你现在：Next.js 页面（浏览器里运行的那部分）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓（HTTP / fetch 请求）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Presentation Layer ]</span></span>\n<span data-line=\"\"><span>意思：展示层 / 接入层（离用户最近的服务器）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Next.js（页面 + API）</span></span>\n<span data-line=\"\"><span>👉 作用：</span></span>\n<span data-line=\"\"><span>   - 渲染页面（SSR / CSR）</span></span>\n<span data-line=\"\"><span>   - 提供轻量 API（如登录、UI逻辑）</span></span>\n<span data-line=\"\"><span>👉 特点：</span></span>\n<span data-line=\"\"><span>   - 更偏“前端服务器”</span></span>\n<span data-line=\"\"><span>   - 不承载复杂业务</span></span>\n<span data-line=\"\"><span>👉 你现在：</span></span>\n<span data-line=\"\"><span>   - 3001 端口的 console-web</span></span>\n<span data-line=\"\"><span>   - app/api/* 这些接口</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓（调用后端接口）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Control Layer ⭐ ]</span></span>\n<span data-line=\"\"><span>意思：控制层 / 核心大脑（你真正的系统）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Node Backend（你写的）</span></span>\n<span data-line=\"\"><span>👉 作用：</span></span>\n<span data-line=\"\"><span>   - AI 请求入口</span></span>\n<span data-line=\"\"><span>   - key池调度</span></span>\n<span data-line=\"\"><span>   - 路由分发</span></span>\n<span data-line=\"\"><span>   - 业务逻辑（最核心）</span></span>\n<span data-line=\"\"><span>👉 特点：</span></span>\n<span data-line=\"\"><span>   - 决定“请求去哪、用哪个key、用哪个模型”</span></span>\n<span data-line=\"\"><span>👉 你现在：</span></span>\n<span data-line=\"\"><span>   - 5101 端口的 atramenti-console</span></span>\n<span data-line=\"\"><span>   - 你正在构建的 AI Gateway</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓（选择资源 / 分发）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Resource Layer ]</span></span>\n<span data-line=\"\"><span>意思：资源层（可用的“能力池”）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>Key Pool / Providers</span></span>\n<span data-line=\"\"><span>👉 作用：</span></span>\n<span data-line=\"\"><span>   - 存放所有可用资源（API key / 模型服务）</span></span>\n<span data-line=\"\"><span>   - 提供“可调度的资源”</span></span>\n<span data-line=\"\"><span>👉 特点：</span></span>\n<span data-line=\"\"><span>   - 本身不处理逻辑</span></span>\n<span data-line=\"\"><span>   - 只提供能力</span></span>\n<span data-line=\"\"><span>👉 你现在：</span></span>\n<span data-line=\"\"><span>   - OpenAI key</span></span>\n<span data-line=\"\"><span>   - 第三方 API key</span></span>\n<span data-line=\"\"><span>   - tengokukk 这种入口</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓（必要时做协议转换）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Adapter Layer ]</span></span>\n<span data-line=\"\"><span>意思：适配层（协议转换）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>AIClient2API</span></span>\n<span data-line=\"\"><span>👉 作用：</span></span>\n<span data-line=\"\"><span>   - 把不同接口 → 转成统一格式（类似 OpenAI）</span></span>\n<span data-line=\"\"><span>👉 特点：</span></span>\n<span data-line=\"\"><span>   - 不做决策</span></span>\n<span data-line=\"\"><span>   - 只是“翻译”</span></span>\n<span data-line=\"\"><span>👉 你现在：</span></span>\n<span data-line=\"\"><span>   - AIClient2API 就在这一层</span></span>\n<span data-line=\"\"><span>👉 关键认知：</span></span>\n<span data-line=\"\"><span>   - 它不是核心</span></span>\n<span data-line=\"\"><span>   - 只是兼容工具</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>        ↓（真正执行）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>[ Execution Layer ]</span></span>\n<span data-line=\"\"><span>意思：执行层（真正干活）</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>AI 模型（GPT / Claude / 本地模型）</span></span>\n<span data-line=\"\"><span>👉 作用：</span></span>\n<span data-line=\"\"><span>   - 处理请求</span></span>\n<span data-line=\"\"><span>   - 生成结果</span></span>\n<span data-line=\"\"><span>👉 特点：</span></span>\n<span data-line=\"\"><span>   - 最底层</span></span>\n<span data-line=\"\"><span>   - 不受你完全控制</span></span>\n<span data-line=\"\"><span>👉 你现在：</span></span>\n<span data-line=\"\"><span>   - OpenAI / 其他模型</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一张角色总结图压缩理解\">🧠 一张“角色总结图”（压缩理解）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client Layer        👉 用户（点按钮）</span></span>\n<span data-line=\"\"><span>Presentation Layer  👉 页面服务器（Next.js）</span></span>\n<span data-line=\"\"><span>Control Layer ⭐     👉 大脑（你写的后端）</span></span>\n<span data-line=\"\"><span>Resource Layer      👉 资源池（key / provider）</span></span>\n<span data-line=\"\"><span>Adapter Layer       👉 翻译器（AIClient2API）</span></span>\n<span data-line=\"\"><span>Execution Layer     👉 工人（AI模型）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最关键的三层你必须记住\">🔥 最关键的三层（你必须记住）</h1>\n<hr>\n<h2 id=\"-1-client-layer\">🟢 1. Client Layer</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>只负责：</span></span>\n<span data-line=\"\"><span>👉 发请求</span></span>\n<span data-line=\"\"><span>👉 显示结果</span></span></code></pre></figure>\n<hr>\n<h2 id=\"-2-control-layer你现在的核心\">🔴 2. Control Layer（你现在的核心）</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>负责：</span></span>\n<span data-line=\"\"><span>👉 决策</span></span>\n<span data-line=\"\"><span>👉 调度</span></span>\n<span data-line=\"\"><span>👉 控制</span></span></code></pre></figure>\n<p>👉 这是你现在正在构建的能力</p>\n<hr>\n<h2 id=\"-3-execution-layer\">🔵 3. Execution Layer</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>负责：</span></span>\n<span data-line=\"\"><span>👉 真正计算</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-用一句话串起来非常重要\">🧠 用一句话串起来（非常重要）</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>用户点击 → Next.js接收 → 你后端决定 → 选key/模型 → AI执行 → 返回结果</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-你现在的阶段给你定位\">🧠 你现在的阶段（给你定位）</h1>\n<p>你已经在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>❌ 不再是“写页面的人”</span></span>\n<span data-line=\"\"><span>👉 而是在做 Control Layer（系统控制者）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结-2\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Client：谁在用</span></span>\n<span data-line=\"\"><span>Presentation：怎么展示</span></span>\n<span data-line=\"\"><span>Control：怎么决策 ⭐</span></span>\n<span data-line=\"\"><span>Resource：有什么资源</span></span>\n<span data-line=\"\"><span>Adapter：怎么兼容</span></span>\n<span data-line=\"\"><span>Execution：谁干活</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你继续往上走建议\">🚀 如果你继续往上走（建议）</h1>\n<p>下一步你会开始做这些👇</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 限流（防止key爆）</span></span>\n<span data-line=\"\"><span>✔ 熔断（某个provider挂了自动切）</span></span>\n<span data-line=\"\"><span>✔ 日志（知道谁在用什么）</span></span>\n<span data-line=\"\"><span>✔ 监控（系统状态）</span></span></code></pre></figure>\n<p>👉 这些全部都发生在：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Control Layer</span></span></code></pre></figure>\n<hr>\n<p>如果你想，我可以帮你把：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Control Layer（你现在这层）</span></span></code></pre></figure>\n<p>单独拆成一个<strong>工业级结构图（调度 + 池子 + 限流 + fallback）</strong>，那才是真正“高手级”的那一层。</p>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>控制层展开</span></span></code></pre></figure>\n<p>好，这三个你必须彻底搞明白，它们就是你现在 deploy 卡住的核心三件事。我直接用<strong>最简单 + 你当前项目对应</strong>给你讲清楚。</p>\n<hr>\n<h1 id=\"-一句话总览\">🧠 一句话总览</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>build = 把代码变成“可运行产物”</span></span>\n<span data-line=\"\"><span>restart = 把服务重新启动</span></span>\n<span data-line=\"\"><span>systemd = 让服务长期托管运行</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-一build构建\">🧱 一、build（构建）</h1>\n<h2 id=\"是什么\">是什么</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>把源码 → 转换成可以在服务器运行的版本</span></span></code></pre></figure>\n<hr>\n<h2 id=\"你现在项目里的表现\">你现在项目里的表现</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">next</span><span style=\"color:#9ECBFF\"> build</span></span></code></pre></figure>\n<p>你看到的：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Creating an optimized production build ...</span></span></code></pre></figure>\n<hr>\n<h2 id=\"实际发生了什么\">实际发生了什么</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你的 Next.js 代码</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>打包 / 压缩 / 编译</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>生成 .next 文件夹（运行用）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"类比\">类比</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>写代码 = 写菜谱</span></span>\n<span data-line=\"\"><span>build = 做好菜</span></span></code></pre></figure>\n<hr>\n<h2 id=\"特点\">特点</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 一次性操作</span></span>\n<span data-line=\"\"><span>✔ 可能比较慢（正常）</span></span>\n<span data-line=\"\"><span>❌ 不会一直运行</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-二restart重启\">🔁 二、restart（重启）</h1>\n<h2 id=\"是什么-1\">是什么</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>把正在运行的服务关掉 → 再启动一次</span></span></code></pre></figure>\n<hr>\n<h2 id=\"为什么要-restart\">为什么要 restart</h2>\n<p>因为：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>你改了代码</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>服务还在跑旧版本</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>必须重启才能生效</span></span></code></pre></figure>\n<hr>\n<h2 id=\"你现在做的\">你现在做的</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#9ECBFF\"> restart</span><span style=\"color:#9ECBFF\"> atramenti-console.service</span></span></code></pre></figure>\n<hr>\n<h2 id=\"实际发生了什么-1\">实际发生了什么</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>旧进程 ❌ 杀掉</span></span>\n<span data-line=\"\"><span>新进程 ✔ 启动</span></span></code></pre></figure>\n<hr>\n<h2 id=\"类比-1\">类比</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>restart = 重新开机</span></span></code></pre></figure>\n<hr>\n<h2 id=\"特点-1\">特点</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 会中断服务一瞬间</span></span>\n<span data-line=\"\"><span>✔ 是 deploy 最关键一步之一</span></span></code></pre></figure>\n<hr>\n<h1 id=\"️-三systemd系统托管\">⚙️ 三、systemd（系统托管）</h1>\n<p>这是最关键的，也是你现在最容易混的。</p>\n<hr>\n<h2 id=\"是什么-2\">是什么</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Linux 系统里的“服务管理器”</span></span></code></pre></figure>\n<hr>\n<p>👉 它干的事：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>帮你管理程序，让它一直活着</span></span></code></pre></figure>\n<hr>\n<h2 id=\"你现在写的这个\">你现在写的这个👇</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ini\" data-theme=\"github-dark\"><code data-language=\"ini\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">[Service]</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">ExecStart</span><span style=\"color:#E1E4E8\">=node server.mjs --port 5101</span></span>\n<span data-line=\"\"><span style=\"color:#F97583\">Restart</span><span style=\"color:#E1E4E8\">=always</span></span></code></pre></figure>\n<hr>\n<h2 id=\"它的作用\">它的作用</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ 开机自动启动</span></span>\n<span data-line=\"\"><span>✔ 挂了自动重启</span></span>\n<span data-line=\"\"><span>✔ 后台运行（不用开终端）</span></span></code></pre></figure>\n<hr>\n<h2 id=\"你用的命令\">你用的命令</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#79B8FF\"> --user</span><span style=\"color:#9ECBFF\"> start</span><span style=\"color:#9ECBFF\"> xxx</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#79B8FF\"> --user</span><span style=\"color:#9ECBFF\"> restart</span><span style=\"color:#9ECBFF\"> xxx</span></span>\n<span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#79B8FF\"> --user</span><span style=\"color:#9ECBFF\"> status</span><span style=\"color:#9ECBFF\"> xxx</span></span></code></pre></figure>\n<hr>\n<h2 id=\"类比-2\">类比</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>systemd = 物业管理</span></span>\n<span data-line=\"\"><span>你的服务 = 店铺</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>物业保证：</span></span>\n<span data-line=\"\"><span>✔ 店铺一直开</span></span>\n<span data-line=\"\"><span>✔ 出问题自动恢复</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-四把三者连起来最重要\">🧠 四、把三者连起来（最重要）</h1>\n<p>你现在 deploy 实际流程是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>1️⃣ build（做菜）</span></span>\n<span data-line=\"\"><span>2️⃣ restart（换新菜）</span></span>\n<span data-line=\"\"><span>3️⃣ systemd（保证一直卖）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-五用你当前系统完整串起来\">🔥 五、用你当前系统完整串起来</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>代码改了</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>build（生成新版本）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>systemd restart（替换旧服务）</span></span>\n<span data-line=\"\"><span> ↓</span></span>\n<span data-line=\"\"><span>systemd 托管（长期运行）</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-六你为什么会卡住\">🧠 六、你为什么会“卡住”</h1>\n<p>你现在卡的原因就是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>不知道现在卡在：</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>build？</span></span>\n<span data-line=\"\"><span>还是 restart？</span></span>\n<span data-line=\"\"><span>还是 systemd？</span></span></code></pre></figure>\n<hr>\n<p>👉 所以你才会感觉：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>“怎么又卡住了？”</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-七给你一个排查口诀非常实用\">🔧 七、给你一个排查口诀（非常实用）</h1>\n<p>以后卡住就按这个查👇</p>\n<hr>\n<h2 id=\"1️⃣-看是不是-build\">1️⃣ 看是不是 build</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>Creating an optimized production build ...</span></span></code></pre></figure>\n<p>👉 ✔ 正常（慢）</p>\n<hr>\n<h2 id=\"2️⃣-看是不是-restart\">2️⃣ 看是不是 restart</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#9ECBFF\"> restart</span><span style=\"color:#9ECBFF\"> xxx</span></span></code></pre></figure>\n<p>👉 看有没有报错</p>\n<hr>\n<h2 id=\"3️⃣-看-systemd-状态\">3️⃣ 看 systemd 状态</h2>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"bash\" data-theme=\"github-dark\"><code data-language=\"bash\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#B392F0\">systemctl</span><span style=\"color:#79B8FF\"> --user</span><span style=\"color:#9ECBFF\"> status</span><span style=\"color:#9ECBFF\"> xxx</span></span></code></pre></figure>\n<p>👉 看：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>active (running) ✔</span></span>\n<span data-line=\"\"><span>failed ❌</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-最后一刀总结-3\">🧠 最后一刀总结</h1>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>build = 生成运行版本</span></span>\n<span data-line=\"\"><span>restart = 切换到新版本</span></span>\n<span data-line=\"\"><span>systemd = 保证一直运行</span></span></code></pre></figure>\n<hr>\n<h1 id=\"-如果你想彻底不再卡推荐\">🚀 如果你想彻底不再卡（推荐）</h1>\n<p>我可以帮你做一版：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>✔ deploy 每一步都有日志</span></span>\n<span data-line=\"\"><span>✔ 明确显示：现在在 build / restart / systemd</span></span>\n<span data-line=\"\"><span>✔ 自动判断成功失败</span></span></code></pre></figure>\n<p>让你以后看到：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>👉 卡在哪一步，一眼就知道</span></span></code></pre></figure>\n<hr>\n<p>你只要说：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"text\" data-theme=\"github-dark\"><code data-language=\"text\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>deploy流程可视化</span></span></code></pre></figure>\n<p>我给你一版<strong>不会再迷路的执行流程图 + 脚本模板</strong>。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "一句话理解",
+        "text": "🧠 一句话理解"
+      },
+      {
+        "depth": 1,
+        "slug": "一-它到底是干嘛的",
+        "text": "🔥 一、它到底是干嘛的"
+      },
+      {
+        "depth": 1,
+        "slug": "二-它内部其实长这样-核心",
+        "text": "🧱 二、它内部其实长这样（核心）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-返回页面-你看到的-ui",
+        "text": "🟢 1. 返回页面（你看到的 UI）"
+      },
+      {
+        "depth": 2,
+        "slug": "2-提供接口-api",
+        "text": "🔵 2. 提供接口（API）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-你现在项目里的真实位置",
+        "text": "🧠 三、你现在项目里的真实位置"
+      },
+      {
+        "depth": 1,
+        "slug": "四-next-js-比-react-多了什么",
+        "text": "🔥 四、Next.js 比 React 多了什么"
+      },
+      {
+        "depth": 1,
+        "slug": "五-为什么会有-next-build-next-start",
+        "text": "🧠 五、为什么会有 next build / next start"
+      },
+      {
+        "depth": 2,
+        "slug": "next-build",
+        "text": "🟡 next build"
+      },
+      {
+        "depth": 2,
+        "slug": "next-start",
+        "text": "🟢 next start"
+      },
+      {
+        "depth": 1,
+        "slug": "六-next-js-本质不是-前端工具",
+        "text": "🔥 六、Next.js 本质不是“前端工具”"
+      },
+      {
+        "depth": 1,
+        "slug": "七-你现在为什么会困惑",
+        "text": "🧠 七、你现在为什么会困惑"
+      },
+      {
+        "depth": 1,
+        "slug": "八-正确分工-你接下来必须这样理解",
+        "text": "🔥 八、正确分工（你接下来必须这样理解）"
+      },
+      {
+        "depth": 2,
+        "slug": "next",
+        "text": "🟢 Next.js"
+      },
+      {
+        "depth": 2,
+        "slug": "你的-node-服务",
+        "text": "🔴 你的 Node 服务"
+      },
+      {
+        "depth": 1,
+        "slug": "九-最重要一句话",
+        "text": "🧠 九、最重要一句话"
+      },
+      {
+        "depth": 1,
+        "slug": "十-用你现在的项目再压一句",
+        "text": "🚀 十、用你现在的项目再压一句"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "一句话区别-最重要",
+        "text": "🧠 一句话区别（最重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "一-用现实类比-最容易懂",
+        "text": "🔥 一、用现实类比（最容易懂）"
+      },
+      {
+        "depth": 1,
+        "slug": "二-结构关系-非常关键",
+        "text": "🧱 二、结构关系（非常关键）"
+      },
+      {
+        "depth": 1,
+        "slug": "三-它们分别干什么",
+        "text": "🔥 三、它们分别干什么"
+      },
+      {
+        "depth": 2,
+        "slug": "node-js-底层能力",
+        "text": "🟢 Node.js（底层能力）"
+      },
+      {
+        "depth": 2,
+        "slug": "next-js-上层框架",
+        "text": "🔵 Next.js（上层框架）"
+      },
+      {
+        "depth": 1,
+        "slug": "四-核心差异-本质区别",
+        "text": "🧠 四、核心差异（本质区别）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-抽象层级",
+        "text": "1️⃣ 抽象层级"
+      },
+      {
+        "depth": 2,
+        "slug": "2-灵活性",
+        "text": "2️⃣ 灵活性"
+      },
+      {
+        "depth": 2,
+        "slug": "3-使用方式",
+        "text": "3️⃣ 使用方式"
+      },
+      {
+        "depth": 2,
+        "slug": "4-是否自带-网站能力",
+        "text": "4️⃣ 是否自带“网站能力”"
+      },
+      {
+        "depth": 1,
+        "slug": "五-用你当前系统对比-最清晰",
+        "text": "🔥 五、用你当前系统对比（最清晰）"
+      },
+      {
+        "depth": 2,
+        "slug": "next-js-3001",
+        "text": "🟢 Next.js（3001）"
+      },
+      {
+        "depth": 2,
+        "slug": "node-js-5101",
+        "text": "🔴 Node.js（5101）"
+      },
+      {
+        "depth": 1,
+        "slug": "六-你现在为什么会混",
+        "text": "🧠 六、你现在为什么会混"
+      },
+      {
+        "depth": 1,
+        "slug": "七-正确分工-你必须这样记",
+        "text": "🔥 七、正确分工（你必须这样记）"
+      },
+      {
+        "depth": 2,
+        "slug": "next",
+        "text": "🟢 Next.js"
+      },
+      {
+        "depth": 2,
+        "slug": "node",
+        "text": "🔴 Node.js"
+      },
+      {
+        "depth": 1,
+        "slug": "八-最重要认知-必须记住",
+        "text": "🧠 八、最重要认知（必须记住）"
+      },
+      {
+        "depth": 1,
+        "slug": "九-你现在的系统应该这样理解",
+        "text": "🚀 九、你现在的系统应该这样理解"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你要彻底不混-推荐",
+        "text": "🚀 如果你要彻底不混（推荐）"
+      },
+      {
+        "depth": 1,
+        "slug": "全结构-带注释",
+        "text": "🧠 全结构（带注释）"
+      },
+      {
+        "depth": 1,
+        "slug": "一张-角色总结图-压缩理解",
+        "text": "🧠 一张“角色总结图”（压缩理解）"
+      },
+      {
+        "depth": 1,
+        "slug": "最关键的三层-你必须记住",
+        "text": "🔥 最关键的三层（你必须记住）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-client-layer",
+        "text": "🟢 1. Client Layer"
+      },
+      {
+        "depth": 2,
+        "slug": "2-control-layer-你现在的核心",
+        "text": "🔴 2. Control Layer（你现在的核心）"
+      },
+      {
+        "depth": 2,
+        "slug": "3-execution-layer",
+        "text": "🔵 3. Execution Layer"
+      },
+      {
+        "depth": 1,
+        "slug": "用一句话串起来-非常重要",
+        "text": "🧠 用一句话串起来（非常重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "你现在的阶段-给你定位",
+        "text": "🧠 你现在的阶段（给你定位）"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你继续往上走-建议",
+        "text": "🚀 如果你继续往上走（建议）"
+      },
+      {
+        "depth": 1,
+        "slug": "一句话总览",
+        "text": "🧠 一句话总览"
+      },
+      {
+        "depth": 1,
+        "slug": "一-build-构建",
+        "text": "🧱 一、build（构建）"
+      },
+      {
+        "depth": 2,
+        "slug": "是什么",
+        "text": "是什么"
+      },
+      {
+        "depth": 2,
+        "slug": "你现在项目里的表现",
+        "text": "你现在项目里的表现"
+      },
+      {
+        "depth": 2,
+        "slug": "实际发生了什么",
+        "text": "实际发生了什么"
+      },
+      {
+        "depth": 2,
+        "slug": "类比",
+        "text": "类比"
+      },
+      {
+        "depth": 2,
+        "slug": "特点",
+        "text": "特点"
+      },
+      {
+        "depth": 1,
+        "slug": "二-restart-重启",
+        "text": "🔁 二、restart（重启）"
+      },
+      {
+        "depth": 2,
+        "slug": "是什么",
+        "text": "是什么"
+      },
+      {
+        "depth": 2,
+        "slug": "为什么要-restart",
+        "text": "为什么要 restart"
+      },
+      {
+        "depth": 2,
+        "slug": "你现在做的",
+        "text": "你现在做的"
+      },
+      {
+        "depth": 2,
+        "slug": "实际发生了什么",
+        "text": "实际发生了什么"
+      },
+      {
+        "depth": 2,
+        "slug": "类比",
+        "text": "类比"
+      },
+      {
+        "depth": 2,
+        "slug": "特点",
+        "text": "特点"
+      },
+      {
+        "depth": 1,
+        "slug": "三-systemd-系统托管",
+        "text": "⚙️ 三、systemd（系统托管）"
+      },
+      {
+        "depth": 2,
+        "slug": "是什么",
+        "text": "是什么"
+      },
+      {
+        "depth": 2,
+        "slug": "你现在写的这个",
+        "text": "你现在写的这个👇"
+      },
+      {
+        "depth": 2,
+        "slug": "它的作用",
+        "text": "它的作用"
+      },
+      {
+        "depth": 2,
+        "slug": "你用的命令",
+        "text": "你用的命令"
+      },
+      {
+        "depth": 2,
+        "slug": "类比",
+        "text": "类比"
+      },
+      {
+        "depth": 1,
+        "slug": "四-把三者连起来-最重要",
+        "text": "🧠 四、把三者连起来（最重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "五-用你当前系统完整串起来",
+        "text": "🔥 五、用你当前系统完整串起来"
+      },
+      {
+        "depth": 1,
+        "slug": "六-你为什么会-卡住",
+        "text": "🧠 六、你为什么会“卡住”"
+      },
+      {
+        "depth": 1,
+        "slug": "七-给你一个排查口诀-非常实用",
+        "text": "🔧 七、给你一个排查口诀（非常实用）"
+      },
+      {
+        "depth": 2,
+        "slug": "1-看是不是-build",
+        "text": "1️⃣ 看是不是 build"
+      },
+      {
+        "depth": 2,
+        "slug": "2-看是不是-restart",
+        "text": "2️⃣ 看是不是 restart"
+      },
+      {
+        "depth": 2,
+        "slug": "3-看-systemd-状态",
+        "text": "3️⃣ 看 systemd 状态"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一刀总结",
+        "text": "🧠 最后一刀总结"
+      },
+      {
+        "depth": 1,
+        "slug": "如果你想彻底不再卡-推荐",
+        "text": "🚀 如果你想彻底不再卡（推荐）"
+      }
+    ],
+    "detailPath": "articles/md_a389df02ba83.json"
+  }
+}

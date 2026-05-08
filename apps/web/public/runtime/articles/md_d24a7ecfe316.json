@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_d24a7ecfe316",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/blog/%E6%9F%A5%E8%AF%A2%E7%9C%9F%E5%85%83%E6%8C%87%E4%BB%A4.md",
+    "sourcePath": "/home/vault/Obsidian/docs/blog/查询真元指令.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/blog/查询真元指令.md",
+    "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%9F%A5%E8%AF%A2%E7%9C%9F%E5%85%83%E6%8C%87%E4%BB%A4.md",
+    "slug": "blog-查询真元指令",
+    "title": "查询真元指令",
+    "summary": "你这个问题本质上是在问： “系统有没有 canonical source / single source of truth（SSOT）” 但很多 AI 不会主动做 architecture audit。 你得用一种会逼它： 追数据流 查入口 查 fallback 查 shadow state 查 d...",
+    "description": "你这个问题本质上是在问： “系统有没有 canonical source / single source of truth（SSOT）” 但很多 AI 不会主动做 architecture audit。 你得用一种会逼它： 追数据流 查入口 查 fallback 查 shadow state 查 d...",
+    "date": "2026-05-07",
+    "updated": "2026-05-07",
+    "kind": "post",
+    "folder": {
+      "key": "blog",
+      "label": "blog",
+      "path": "blog"
+    },
+    "tags": [
+      "blog"
+    ],
+    "categories": [
+      "blog"
+    ],
+    "folderTags": [
+      "blog"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "blog"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/blog/查询真元指令.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/blog/查询真元指令.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/blog/%E6%9F%A5%E8%AF%A2%E7%9C%9F%E5%85%83%E6%8C%87%E4%BB%A4.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "查询真元指令",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "BLOG",
+      "chips": [
+        "BLOG",
+        "查询真元指令"
+      ],
+      "subtitle": "你这个问题本质上是在问： “系统有没有 canonical source / single source of truth（SSOT）” 但很多 AI 不会主动做 architecture audit。 你得用一种会逼它： 追数据流 查入口 查 fallback 查 shadow state 查 d..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "你这个问题本质上是在问：\n\n# “系统有没有 canonical source / single source of truth（SSOT）”\n\n但很多 AI 不会主动做 architecture audit。  \n你得用一种会逼它：\n\n- 追数据流\n    \n- 查入口\n    \n- 查 fallback\n    \n- 查 shadow state\n    \n- 查 duplicated truth\n    \n\n的问法。\n\n否则它只会：\n\n```txt\n已更新 README\n已同步代码\n```\n\n但根本没验证：\n\n```txt\n真正运行时是不是还存在第二真源\n```\n\n---\n\n# 最有效的一句（直接复制）\n\n请不要只检查文档和声明。\n\n我要你做的是：\n\n“唯一真源（Single Source of Truth / Canonical Source）审计”。\n\n请逐层验证：\n\n1. 当前功能真正的 runtime source 是什么\n    \n2. 是否还存在：\n    \n    - fallback source\n        \n    - duplicated state\n        \n    - shadow cache\n        \n    - legacy path\n        \n    - derived snapshot 被误当真源\n        \n    - UI 仍引用旧入口\n        \n    - build artifacts 残留旧逻辑\n        \n3. 哪些文件仍然能绕过 canonical path\n    \n4. 是否存在：\n    \n    - README 已更新但运行时未切换\n        \n    - 页面入口已改但内部组件仍直连旧数据\n        \n    - embed 已上线但旧 external link 仍可见\n        \n    - 新状态和旧状态同时生效\n        \n5. 请明确输出：\n    \n    - canonical source\n        \n    - deprecated source\n        \n    - compatibility layer\n        \n    - runtime mirror\n        \n    - cache layer\n        \n    - generated artifact\n        \n6. 不要只 grep 名字。  \n    要沿着：  \n    用户入口 → state → data flow → render → runtime behavior  \n    实际追踪。\n    \n7. 最后给我：\n    \n    - 仍违反唯一真源原则的位置\n        \n    - 可以删除的旧路径\n        \n    - 还没真正完成迁移的部分\n        \n    - 哪些只是“文档完成”但系统实际上没完成\n        \n\n---\n\n# 为什么这句有效\n\n因为它强迫 AI：\n\n从：\n\n```txt\n“代码存在”\n```\n\n变成：\n\n# “系统真实运行行为”\n\n这是两个完全不同的层级。\n\n---\n\n# 你还可以加一句（非常重要）\n\n不要把：\n\n“新系统已经存在”\n\n误判为：\n\n“旧系统已经失效”。\n\n我要的是：  \n验证旧路径是否真的已经失去 runtime authority。\n\n这个特别关键。\n\n很多 AI 会犯：\n\n```txt\n发现新逻辑存在\n=\n认为迁移完成\n```\n\n但实际上：\n\n```txt\n旧逻辑还在运行\n```\n\n---\n\n# 再高级一点的问法（强烈推荐）\n\n这是架构师级 prompt。\n\n请做 canonical architecture audit。\n\n目标不是“代码是否存在”，  \n而是：\n\n系统当前到底由什么在真正驱动。\n\n请找出：\n\n- source of truth\n    \n- runtime authority\n    \n- derived data\n    \n- synchronization layer\n    \n- cache mirror\n    \n- compatibility adapter\n    \n- stale path\n    \n- dead path\n    \n- hidden coupling\n    \n- implicit fallback\n    \n\n尤其检查：\n\n“表面迁移完成，  \n但 runtime authority 仍在旧系统”\n\n的问题。\n\n---\n\n# 你这个项目现在最容易出的问题\n\n你已经开始：\n\n- Pinterest shell\n    \n- visual partition\n    \n- runtime mirror\n    \n- visual manifest\n    \n- embed layer\n    \n- OpenList layer\n    \n\n这种系统。\n\n所以最危险的是：\n\n# “看起来改完了，其实 authority 还在旧地方”\n\n例如：\n\n```txt\nREADME:\nPinterest 是 canonical\n\n实际上：\n/visuals/ 还在读 static JSON\n```\n\n或者：\n\n```txt\n首页按钮:\nPinterest embed\n\n实际上：\nCommand Palette 还在 external link\n```\n\n---\n\n# 你应该重点让 AI 查的\n\n## 1. Runtime authority\n\n真正驱动页面的是谁？\n\n不是：\n\n```txt\n谁定义了 schema\n```\n\n而是：\n\n```txt\n谁最后 render 了 UI\n```\n\n---\n\n## 2. Derived snapshot\n\n很多项目会：\n\n```txt\nDB\n↓\nsnapshot.json\n↓\nUI\n```\n\n结果：\n\nsnapshot 变成了真源。\n\n这是经典灾难。\n\n---\n\n## 3. Compatibility layer\n\n很多：\n\n```txt\nvisualItems\n```\n\n名义是 compatibility。\n\n但：\n\n某个组件还在直接引用。\n\n于是：\n\n它又重新变成真源。\n\n---\n\n## 4. Hidden fallback\n\n最容易漏。\n\n比如：\n\n```ts\npins || localPins || staticPins\n```\n\n你以为 Pinterest 是真源。\n\n其实：\n\n运行时 fallback 到 localPins。\n\n---\n\n# 最后一条（非常关键）\n\n你一定要逼 AI：\n\n# “列出仍可删除的旧路径”\n\n因为：\n\n真正完成迁移的系统，\n\n一定会出现：\n\n```txt\n这些东西已经能删了\n```\n\n如果 AI 不敢删：\n\n说明它也知道：\n\n# authority 还没真正迁走。",
+    "html": "<p>你这个问题本质上是在问：</p>\n<h1 id=\"系统有没有-canonical-source--single-source-of-truthssot\">“系统有没有 canonical source / single source of truth（SSOT）”</h1>\n<p>但很多 AI 不会主动做 architecture audit。<br>\n你得用一种会逼它：</p>\n<ul>\n<li>\n<p>追数据流</p>\n</li>\n<li>\n<p>查入口</p>\n</li>\n<li>\n<p>查 fallback</p>\n</li>\n<li>\n<p>查 shadow state</p>\n</li>\n<li>\n<p>查 duplicated truth</p>\n</li>\n</ul>\n<p>的问法。</p>\n<p>否则它只会：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>已更新 README</span></span>\n<span data-line=\"\"><span>已同步代码</span></span></code></pre></figure>\n<p>但根本没验证：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>真正运行时是不是还存在第二真源</span></span></code></pre></figure>\n<hr>\n<h1 id=\"最有效的一句直接复制\">最有效的一句（直接复制）</h1>\n<p>请不要只检查文档和声明。</p>\n<p>我要你做的是：</p>\n<p>“唯一真源（Single Source of Truth / Canonical Source）审计”。</p>\n<p>请逐层验证：</p>\n<ol>\n<li>\n<p>当前功能真正的 runtime source 是什么</p>\n</li>\n<li>\n<p>是否还存在：</p>\n<ul>\n<li>\n<p>fallback source</p>\n</li>\n<li>\n<p>duplicated state</p>\n</li>\n<li>\n<p>shadow cache</p>\n</li>\n<li>\n<p>legacy path</p>\n</li>\n<li>\n<p>derived snapshot 被误当真源</p>\n</li>\n<li>\n<p>UI 仍引用旧入口</p>\n</li>\n<li>\n<p>build artifacts 残留旧逻辑</p>\n</li>\n</ul>\n</li>\n<li>\n<p>哪些文件仍然能绕过 canonical path</p>\n</li>\n<li>\n<p>是否存在：</p>\n<ul>\n<li>\n<p>README 已更新但运行时未切换</p>\n</li>\n<li>\n<p>页面入口已改但内部组件仍直连旧数据</p>\n</li>\n<li>\n<p>embed 已上线但旧 external link 仍可见</p>\n</li>\n<li>\n<p>新状态和旧状态同时生效</p>\n</li>\n</ul>\n</li>\n<li>\n<p>请明确输出：</p>\n<ul>\n<li>\n<p>canonical source</p>\n</li>\n<li>\n<p>deprecated source</p>\n</li>\n<li>\n<p>compatibility layer</p>\n</li>\n<li>\n<p>runtime mirror</p>\n</li>\n<li>\n<p>cache layer</p>\n</li>\n<li>\n<p>generated artifact</p>\n</li>\n</ul>\n</li>\n<li>\n<p>不要只 grep 名字。<br>\n要沿着：<br>\n用户入口 → state → data flow → render → runtime behavior<br>\n实际追踪。</p>\n</li>\n<li>\n<p>最后给我：</p>\n<ul>\n<li>\n<p>仍违反唯一真源原则的位置</p>\n</li>\n<li>\n<p>可以删除的旧路径</p>\n</li>\n<li>\n<p>还没真正完成迁移的部分</p>\n</li>\n<li>\n<p>哪些只是“文档完成”但系统实际上没完成</p>\n</li>\n</ul>\n</li>\n</ol>\n<hr>\n<h1 id=\"为什么这句有效\">为什么这句有效</h1>\n<p>因为它强迫 AI：</p>\n<p>从：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>“代码存在”</span></span></code></pre></figure>\n<p>变成：</p>\n<h1 id=\"系统真实运行行为\">“系统真实运行行为”</h1>\n<p>这是两个完全不同的层级。</p>\n<hr>\n<h1 id=\"你还可以加一句非常重要\">你还可以加一句（非常重要）</h1>\n<p>不要把：</p>\n<p>“新系统已经存在”</p>\n<p>误判为：</p>\n<p>“旧系统已经失效”。</p>\n<p>我要的是：<br>\n验证旧路径是否真的已经失去 runtime authority。</p>\n<p>这个特别关键。</p>\n<p>很多 AI 会犯：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>发现新逻辑存在</span></span>\n<span data-line=\"\"><span>=</span></span>\n<span data-line=\"\"><span>认为迁移完成</span></span></code></pre></figure>\n<p>但实际上：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>旧逻辑还在运行</span></span></code></pre></figure>\n<hr>\n<h1 id=\"再高级一点的问法强烈推荐\">再高级一点的问法（强烈推荐）</h1>\n<p>这是架构师级 prompt。</p>\n<p>请做 canonical architecture audit。</p>\n<p>目标不是“代码是否存在”，<br>\n而是：</p>\n<p>系统当前到底由什么在真正驱动。</p>\n<p>请找出：</p>\n<ul>\n<li>\n<p>source of truth</p>\n</li>\n<li>\n<p>runtime authority</p>\n</li>\n<li>\n<p>derived data</p>\n</li>\n<li>\n<p>synchronization layer</p>\n</li>\n<li>\n<p>cache mirror</p>\n</li>\n<li>\n<p>compatibility adapter</p>\n</li>\n<li>\n<p>stale path</p>\n</li>\n<li>\n<p>dead path</p>\n</li>\n<li>\n<p>hidden coupling</p>\n</li>\n<li>\n<p>implicit fallback</p>\n</li>\n</ul>\n<p>尤其检查：</p>\n<p>“表面迁移完成，<br>\n但 runtime authority 仍在旧系统”</p>\n<p>的问题。</p>\n<hr>\n<h1 id=\"你这个项目现在最容易出的问题\">你这个项目现在最容易出的问题</h1>\n<p>你已经开始：</p>\n<ul>\n<li>\n<p>Pinterest shell</p>\n</li>\n<li>\n<p>visual partition</p>\n</li>\n<li>\n<p>runtime mirror</p>\n</li>\n<li>\n<p>visual manifest</p>\n</li>\n<li>\n<p>embed layer</p>\n</li>\n<li>\n<p>OpenList layer</p>\n</li>\n</ul>\n<p>这种系统。</p>\n<p>所以最危险的是：</p>\n<h1 id=\"看起来改完了其实-authority-还在旧地方\">“看起来改完了，其实 authority 还在旧地方”</h1>\n<p>例如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>README:</span></span>\n<span data-line=\"\"><span>Pinterest 是 canonical</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>实际上：</span></span>\n<span data-line=\"\"><span>/visuals/ 还在读 static JSON</span></span></code></pre></figure>\n<p>或者：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>首页按钮:</span></span>\n<span data-line=\"\"><span>Pinterest embed</span></span>\n<span data-line=\"\"> </span>\n<span data-line=\"\"><span>实际上：</span></span>\n<span data-line=\"\"><span>Command Palette 还在 external link</span></span></code></pre></figure>\n<hr>\n<h1 id=\"你应该重点让-ai-查的\">你应该重点让 AI 查的</h1>\n<h2 id=\"1-runtime-authority\">1. Runtime authority</h2>\n<p>真正驱动页面的是谁？</p>\n<p>不是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>谁定义了 schema</span></span></code></pre></figure>\n<p>而是：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>谁最后 render 了 UI</span></span></code></pre></figure>\n<hr>\n<h2 id=\"2-derived-snapshot\">2. Derived snapshot</h2>\n<p>很多项目会：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>DB</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>snapshot.json</span></span>\n<span data-line=\"\"><span>↓</span></span>\n<span data-line=\"\"><span>UI</span></span></code></pre></figure>\n<p>结果：</p>\n<p>snapshot 变成了真源。</p>\n<p>这是经典灾难。</p>\n<hr>\n<h2 id=\"3-compatibility-layer\">3. Compatibility layer</h2>\n<p>很多：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>visualItems</span></span></code></pre></figure>\n<p>名义是 compatibility。</p>\n<p>但：</p>\n<p>某个组件还在直接引用。</p>\n<p>于是：</p>\n<p>它又重新变成真源。</p>\n<hr>\n<h2 id=\"4-hidden-fallback\">4. Hidden fallback</h2>\n<p>最容易漏。</p>\n<p>比如：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"ts\" data-theme=\"github-dark\"><code data-language=\"ts\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">pins </span><span style=\"color:#F97583\">||</span><span style=\"color:#E1E4E8\"> localPins </span><span style=\"color:#F97583\">||</span><span style=\"color:#E1E4E8\"> staticPins</span></span></code></pre></figure>\n<p>你以为 Pinterest 是真源。</p>\n<p>其实：</p>\n<p>运行时 fallback 到 localPins。</p>\n<hr>\n<h1 id=\"最后一条非常关键\">最后一条（非常关键）</h1>\n<p>你一定要逼 AI：</p>\n<h1 id=\"列出仍可删除的旧路径\">“列出仍可删除的旧路径”</h1>\n<p>因为：</p>\n<p>真正完成迁移的系统，</p>\n<p>一定会出现：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"txt\" data-theme=\"github-dark\"><code data-language=\"txt\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span>这些东西已经能删了</span></span></code></pre></figure>\n<p>如果 AI 不敢删：</p>\n<p>说明它也知道：</p>\n<h1 id=\"authority-还没真正迁走\">authority 还没真正迁走。</h1>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "系统有没有-canonical-source-single-source-of-truth-ssot",
+        "text": "“系统有没有 canonical source / single source of truth（SSOT）”"
+      },
+      {
+        "depth": 1,
+        "slug": "最有效的一句-直接复制",
+        "text": "最有效的一句（直接复制）"
+      },
+      {
+        "depth": 1,
+        "slug": "为什么这句有效",
+        "text": "为什么这句有效"
+      },
+      {
+        "depth": 1,
+        "slug": "系统真实运行行为",
+        "text": "“系统真实运行行为”"
+      },
+      {
+        "depth": 1,
+        "slug": "你还可以加一句-非常重要",
+        "text": "你还可以加一句（非常重要）"
+      },
+      {
+        "depth": 1,
+        "slug": "再高级一点的问法-强烈推荐",
+        "text": "再高级一点的问法（强烈推荐）"
+      },
+      {
+        "depth": 1,
+        "slug": "你这个项目现在最容易出的问题",
+        "text": "你这个项目现在最容易出的问题"
+      },
+      {
+        "depth": 1,
+        "slug": "看起来改完了-其实-authority-还在旧地方",
+        "text": "“看起来改完了，其实 authority 还在旧地方”"
+      },
+      {
+        "depth": 1,
+        "slug": "你应该重点让-ai-查的",
+        "text": "你应该重点让 AI 查的"
+      },
+      {
+        "depth": 2,
+        "slug": "1-runtime-authority",
+        "text": "1. Runtime authority"
+      },
+      {
+        "depth": 2,
+        "slug": "2-derived-snapshot",
+        "text": "2. Derived snapshot"
+      },
+      {
+        "depth": 2,
+        "slug": "3-compatibility-layer",
+        "text": "3. Compatibility layer"
+      },
+      {
+        "depth": 2,
+        "slug": "4-hidden-fallback",
+        "text": "4. Hidden fallback"
+      },
+      {
+        "depth": 1,
+        "slug": "最后一条-非常关键",
+        "text": "最后一条（非常关键）"
+      },
+      {
+        "depth": 1,
+        "slug": "列出仍可删除的旧路径",
+        "text": "“列出仍可删除的旧路径”"
+      },
+      {
+        "depth": 1,
+        "slug": "authority-还没真正迁走",
+        "text": "authority 还没真正迁走。"
+      }
+    ],
+    "detailPath": "articles/md_d24a7ecfe316.json"
+  }
+}

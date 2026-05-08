@@ -1,6 +1,6 @@
 import type { BookStatus } from '../lib/books/types';
 
-export const openListOriginalBooksPath = '/夸克网盘/obsidian/data/docs/books/original';
+export const openListOriginalBooksPath = '/Obsidian/docs/books/original';
 
 export type BookMetadataOverlay = {
   category?: string;

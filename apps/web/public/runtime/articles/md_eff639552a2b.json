@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_eff639552a2b",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/Mortis%20%E9%A1%B5%E9%9D%A2%E6%89%A9%E5%B1%95%E4%B8%8E%E4%B8%8A%E7%BA%BF%E6%93%8D%E4%BD%9C%E7%BB%8F%E9%AA%8C%EF%BC%882026-04-20%EF%BC%89.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/Mortis 页面扩展与上线操作经验（2026-04-20）.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Mortis 页面扩展与上线操作经验（2026-04-20）.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Mortis%20%E9%A1%B5%E9%9D%A2%E6%89%A9%E5%B1%95%E4%B8%8E%E4%B8%8A%E7%BA%BF%E6%93%8D%E4%BD%9C%E7%BB%8F%E9%AA%8C%EF%BC%882026-04-20%EF%BC%89.md",
+    "slug": "codex-knowledge-mortis-页面扩展与上线操作经验-2026-04-20",
+    "title": "Mortis 页面扩展与上线操作经验（2026-04-20）",
+    "summary": "Mortis 页面扩展与上线操作经验（2026 04 20） 适用范围 本文记录本轮 https://mortis.tengokukk.com 的页面扩展、零星英文清理、真源仓库提交、服务器部署与浏览器验收过程，供后续继续维护 Mortis 私有站时直接复用。 一、先确认真源，不要在镜像或临时副本里...",
+    "description": "Mortis 页面扩展与上线操作经验（2026 04 20） 适用范围 本文记录本轮 https://mortis.tengokukk.com 的页面扩展、零星英文清理、真源仓库提交、服务器部署与浏览器验收过程，供后续继续维护 Mortis 私有站时直接复用。 一、先确认真源，不要在镜像或临时副本里...",
+    "date": "2026-04-24",
+    "updated": "2026-04-24",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "目录-codex-knowledge",
+      "类-产品方案",
+      "项目-Mortis",
+      "形态-记录",
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "frontmatter.tags",
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [
+        "目录-codex-knowledge",
+        "类-产品方案",
+        "项目-Mortis",
+        "形态-记录"
+      ],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/Mortis 页面扩展与上线操作经验（2026-04-20）.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/Mortis 页面扩展与上线操作经验（2026-04-20）.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/Mortis%20%E9%A1%B5%E9%9D%A2%E6%89%A9%E5%B1%95%E4%B8%8E%E4%B8%8A%E7%BA%BF%E6%93%8D%E4%BD%9C%E7%BB%8F%E9%AA%8C%EF%BC%882026-04-20%EF%BC%89.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "Mortis 页面扩展与上线操作经验（2026 04 20）",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "目录 CODEX KNOWLEDGE",
+        "类 产品方案",
+        "项目 MORTIS",
+        "形态 记录",
+        "MORTIS 页面扩展与上线操作经验（2026 04 20）"
+      ],
+      "subtitle": "Mortis 页面扩展与上线操作经验（2026 04 20） 适用范围 本文记录本轮 https://mortis.tengokukk.com 的页面扩展、零星英文清理、真源仓库提交、服务器部署与浏览器验收过程，供后续继续维护 Mortis 私有站时直接复用。 一、先确认真源，不要在镜像或临时副本里..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# Mortis 页面扩展与上线操作经验（2026-04-20）\n\n## 适用范围\n\n本文记录本轮 `https://mortis.tengokukk.com` 的页面扩展、零星英文清理、真源仓库提交、服务器部署与浏览器验收过程，供后续继续维护 Mortis 私有站时直接复用。\n\n## 一、先确认真源，不要在镜像或临时副本里误改\n\n本轮 Mortis 的真实开发边界不在 `Atramenti-Console` 主仓，而在独立真源仓库：\n\n- 真源仓库：`C:\\Users\\ASUS-KL\\.codex\\.tmp\\mortis-multica-source-working`\n- 线上部署目录：`/srv/multica`\n- 站点地址：`https://mortis.tengokukk.com`\n\n实操原则：\n\n1. 先确认被改文件属于哪个 repo，再开始编辑。\n2. 不要因为当前 shell 停在别的目录，就顺手在父仓或备份仓里改同名文件。\n3. 如果本地存在多个 Mortis 副本，先用 `git remote -v`、`git status`、目标文件实际路径三件套确认真实 owning repo。\n4. 提交和推送也必须在这个真源仓库内完成，不能只改本地快照。\n\n## 二、开始改之前，先看边界，避免混入无关改动\n\n本轮用户目标很明确：继续清理 Mortis 站内残留英文，并保持页面正常上线。因此边界应限制在：\n\n- 文案配置\n- 页面 copy\n- 必要的状态标签映射\n- 与本轮汉化直接相关的视图文件\n\n建议流程：\n\n1. 先看 `git status --short`，识别已有改动。\n2. 只读取与当前页面、当前文案直接相关的文件。\n3. 若仓库里已有别的未收口改动，不回滚、不顺手重构，也不要把无关文件一起提交。\n4. 提交前用路径级 `git diff -- <path>` 再确认一次本轮边界。\n\n本轮实践证明，这一步非常重要。Mortis 真源仓库可能同时承载其他开发中的改动，如果不先收紧边界，很容易把不相关工作一起带上。\n\n## 三、定位未汉化文案的高效方式\n\n### 1. 先从线上可见页面反查\n\n优先浏览这些页面：\n\n- `/mortis/overview`\n- `/mortis/servers`\n- `/mortis/deployments`\n- `/mortis/domains`\n- `/mortis/settings`\n- `/mortis/agents`\n\n做法：\n\n1. 用浏览器逐页查看是否存在明显英文标签、按钮、说明文字、状态值。\n2. 先记“用户直接能看到、会造成割裂感”的英文，再回仓库定位。\n3. 不要一开始就全仓盲搜英文单词，否则噪音很大。\n\n### 2. 再回代码搜关键英文\n\n定位残留文案时，优先搜索这些模式：\n\n- 页面标题或 tab 名称\n- 表单 label\n- button 文案\n- toast 提示\n- badge / status label\n- note / warning / helper text\n- 配置枚举映射\n\n本轮有效命中点包括：\n\n- `packages/views/settings/components/account-tab.tsx`\n- `packages/views/agents/config.ts`\n- `packages/views/control-plane/components/control-plane-page.tsx`\n\n### 3. 优先查“映射层”而不是只查 JSX 表面文本\n\n很多页面不是把英文直接写在页面结构里，而是来自：\n\n- 状态映射表\n- 配置对象\n- 统一 label 函数\n- control-plane summary 的展示映射\n\n本轮智能体状态和控制面标签就属于这种情况。如果只在页面组件里搜字符串，容易漏掉真正的 copy 来源。\n\n## 四、哪些内容不要机械翻译\n\n不是所有英文都应该一股脑改成中文。后续维护时，默认按下面规则处理：\n\n### 应优先汉化的内容\n\n- 页面标题\n- 导航项\n- 表单字段名\n- 按钮文字\n- toast / 提示\n- 说明性副文案\n- 面向操作者的状态标签\n\n### 应保留英文或谨慎处理的内容\n\n- 品牌名、产品名、专有名词，例如 `Mortis`、`Codex`、`OpenClaw`、`NapCat`\n- 任务类型 key、配置 key、路径、URL、协议字段\n- 真实执行产出、日志片段、错误原文\n- 用户正文、评论正文、任务描述正文\n- 运行时标识、短 ID、host key、deploy key 等工程主键\n\n判断原则：\n\n- 面向人阅读的操作文案，优先中文。\n- 面向系统识别的标识与结构字段，优先保留原文。\n- 如果一段文字同时承担“显示 + 主键”双重作用，优先不要翻译 key，只翻译展示层。\n\n## 五、本轮实际清理掉的残留英文类型\n\n本轮已收口的典型内容包括：\n\n- 设置页 `Profile`、头像上传提示、`Name`、更新资料按钮与 toast\n- 智能体状态：`Idle / Working / Blocked / Error / Offline`\n- 任务分发状态：`Queued / Dispatched / Running / Completed / Failed / Cancelled`\n- 控制面页中的说明文案、告警文案、摘要标签、owner type 展示名\n- `Repo Root / Control Plane Root / Dispatcher / Target / Fallback / Host / URL / DERIVED` 等关键展示标签\n\n对应提交：\n\n- Mortis 真源仓库提交：`49dfc21`\n- 提交说明：`fix: localize mortis control plane copy`\n\n## 六、修改后的本地校验方式\n\n前端 copy 修改后，至少要做一轮最小类型校验，避免因为文案改动牵出 TS 问题。\n\n本轮使用：\n\n```powershell\npnpm --filter @multica/views typecheck\n```\n\n经验：\n\n1. 文案改动虽然看似简单，但 control-plane 页面常有复杂对象映射，容易被类型系统卡住。\n2. 优先跑最小作用域的 package 校验，比全仓构建更快，更适合 copy 收尾。\n3. 如果只是某个页面的映射层改动，先保证 typecheck 过，再决定要不要补更重的验证。\n\n## 七、服务器部署流程\n\nMortis 当前线上更新流程已经比较固定，可直接复用：\n\n```powershell\nssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new ubuntu@124.220.233.126 \"set -e; cd /srv/multica; git fetch origin main; git checkout main; git pull --ff-only origin main; sudo docker compose -f docker-compose.selfhost.yml build frontend; sudo docker compose -f docker-compose.selfhost.yml up -d frontend\"\n```\n\n要点：\n\n1. 先 `git fetch` + `git pull --ff-only`，避免在服务器上产生额外合并提交。\n2. 仅重建 `frontend`，不要无关扩散到整套 compose。\n3. 用 `up -d frontend` 让页面更新落到在线容器。\n4. 如果远端 `main` 领先于本地预期，不要惊慌；先确认这是不是远端正常已有提交，再继续部署。\n\n本轮就出现过服务器 `git pull` 一次性拉到不止一个提交的情况，属于远端现状，不应误判为异常。\n\n## 八、浏览器验收流程\n\nMortis 这种用户可见页面，不能只看构建成功或 HTTP 200。\n\n本轮验收遵循：\n\n1. 刷新目标页面。\n2. 等页面真正渲染出主内容，而不是只看到页头。\n3. 直接检查用户可见文案是否已变成中文。\n4. 对关键页做快照留证。\n\n建议至少验这些页：\n\n- `/mortis/settings`\n- `/mortis/servers`\n- `/mortis/overview`\n- `/mortis/agents`\n\n本轮已明确看到并确认生效的例子：\n\n- 设置页：`个人资料`、`点击上传头像`、`名称`、`更新资料`\n- 服务器页：`主机`、`公网控制台摘要`、中文化后的备注说明、缺失状态提示\n- 总览页：控制面摘要和接入状态说明已为中文展示\n\n## 九、本轮踩坑与经验\n\n### 1. 不要假设英文一定写在页面组件表层\n\n控制面页面的大量英文实际来自映射表和 summary label 组合层，而不是单个 JSX 节点。遇到页面零星英文时，优先追配置映射和 helper 层。\n\n### 2. 浏览器 reload 后可能暂时只剩页头\n\nMortis 某些页面在 reload 后会短暂只显示壳层，主内容稍后才回来。验收时不要只因为第一次 snapshot 看起来空，就立即判定页面坏了；应配合等待正文文本出现。\n\n### 3. `agents` 页可能受数据状态影响\n\n`/mortis/agents` 最后一次浏览器 reload 时出现过空 main 区域，但本地映射文案已经修改完成。遇到这种情况，应区分：\n\n- 是 copy 没改到\n- 还是页面数据当下没渲染出来\n\n不要把数据瞬时态误判成汉化失败。\n\n### 4. 部署阶段不要把远端快进误认为脏状态\n\n服务器 `git pull` 过程中如果 fast-forward 到多个 commit，先确认是否只是远端本来就比本地预期多几个提交。只要是正常远端历史，就继续部署，不要贸然回滚。\n\n## 十、后续继续扫 Mortis 零星英文时的推荐顺序\n\n建议固定按下面顺序继续：\n\n1. 线上逐页巡检，先记可见问题。\n2. 回真源仓库搜对应页面与映射层。\n3. 只改展示层，不动 key 与结构字段。\n4. 跑最小 typecheck。\n5. 提交并推送真源仓库。\n6. 到服务器拉取并重建 frontend。\n7. 用浏览器做可见验收并留证。\n\n## 十一、可直接复用的收尾检查清单\n\n每次 Mortis 页面 copy / 扩展完成后，至少确认：\n\n- 真源仓库是否确认正确\n- 本轮 diff 是否只包含当前任务边界\n- 本地 typecheck 是否通过\n- 真源仓库是否已经 commit + push\n- 服务器是否已经完成 `git pull --ff-only`\n- `frontend` 是否已经 build + up -d\n- 浏览器可见页面是否已验证\n- 是否留下了必要的验收证据或说明\n\n## 十二、本次相关关键路径\n\n- Mortis 真源仓库：`C:\\Users\\ASUS-KL\\.codex\\.tmp\\mortis-multica-source-working`\n- 经验文档目录：`E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent`\n- 线上站点：`https://mortis.tengokukk.com`\n- 部署主机：`ubuntu@124.220.233.126`\n- 部署目录：`/srv/multica`\n\n## 十三、后续维护结论\n\n后续凡是 Mortis 页面扩展、文案补全、控制面 copy 收口这类任务，默认都应遵守下面这条主线：\n\n先确认真源 -> 只改展示边界 -> 本地最小校验 -> 真源提交推送 -> 服务器更新 frontend -> 浏览器可见验收。\n\n这样做可以最大限度避免改错仓、混入无关改动、部署后未验证，以及“本地看起来改了但线上没落地”的常见问题。\n\n## 十四、控制面 / 运维面板 UI 改造经验\n\n这轮新增的经验，不是汉化问题，而是控制面扩展页的结构问题：虽然内容接进去了，但一开始的 UI 过度卡片化，和 Mortis 原生工作台风格明显不一致。\n\n### 1. 在 Mortis 里，运维页默认应偏“工作台 / 清单 / 状态面板”，而不是“营销式卡片集合”\n\n这次最直观的问题是：\n\n- `SectionCard` 里套 `MetricCard`\n- 大卡片里再套多层子卡片\n- 检查项逐条块状堆叠\n- 同一块信息被切成很多小容器\n\n结果就是：\n\n- 视觉层级很重\n- 可扫描性反而下降\n- 页面一眼看过去像外挂模块，不像 Mortis 原生页面\n\n以后只要是在 Mortis 里做运维页、清单页、控制面页，默认先避免“卡片套卡片套卡片”的写法。\n\n### 2. 优先压平层级，而不是继续加装饰\n\n本轮有效的做法不是继续“美化”，而是做减法：\n\n- `MetricCard` 改成更小、更扁的统计块\n- `SectionCard` 去掉厚重分层，改成轻量头部 + 内容区\n- `WarningPanel` 从整块说明卡改成扁平警告条\n- `CheckList` 从一条一块改成表格式行列表\n- 新增 `FactTable` 把散落字段压成密一点的事实表\n\n核心原则：\n\n- 同一层信息尽量放进同一视觉层\n- 先保证“一屏能扫到多少有效信息”，再考虑装饰感\n- 能用表格 / 行列表表达的，不再拆成很多小卡片\n\n### 3. Mortis 原生风格更接近“轻边框 + 紧凑排布 + 明确标签”\n\n这次改完之后，比较贴 Mortis 自身风格的元素是：\n\n- 小尺寸圆角，而不是厚重大圆角\n- 轻边框和轻分隔线，而不是深层阴影\n- 标签、状态、事实字段都靠近内容本体\n- 标题区尽量短，主体区尽量承载信息\n\n判断是否“像原生”的简单方法：\n\n1. 左侧导航和主内容放在一起看，是否像同一套产品。\n2. 是否能一眼扫到状态、路径、归属、检查结果，而不是先读很多容器。\n3. 页面主体是否更像“可操作工作台”，而不是“展示型专题页”。\n\n### 4. 运维页的优先级应是信息密度，不是留白密度\n\n对于 `/mortis/overview`、`/mortis/servers`、`/mortis/deployments`、`/mortis/domains` 这类页，后续默认优先保证：\n\n- 状态一眼可见\n- 路径和目标节点一眼可见\n- 检查结果能直接横向对比\n- 不需要频繁展开 / 跳转 / 读长段说明才知道系统现在怎样\n\n可接受的留白是为了分组，不是为了把信息拆散。\n\n### 5. 控制面页适合的结构顺序\n\n后续再扩这几页时，优先按这个顺序组织：\n\n1. 页头：当前页名、接入状态、刷新动作\n2. 顶部摘要：少量关键数字或关键状态\n3. 风险条：当前未收口问题\n4. 主体清单：服务器 / 部署 / 域名 / 路由\n5. 每个主体块内固定用“事实区 + 检查区”\n\n不要再把“摘要卡 -> 子卡 -> 子子卡 -> 检查卡”这种层层包裹结构加回来。\n\n### 6. 这类 UI 改造必须用浏览器看成品，不能只看代码\n\n这轮如果只看代码，很容易误以为“已经有样式、有组件、结构也完整”，但真正打开页面后，问题非常明显：\n\n- 纵向滚动压力大\n- 视觉层级不自然\n- 同类信息不够成组\n- 与 Mortis 原生页明显割裂\n\n因此以后凡是 Mortis 内部页样式改造，最少都要浏览器实际看这几页：\n\n- `/mortis/overview`\n- `/mortis/servers`\n- `/mortis/deployments`\n- `/mortis/domains`\n\n并至少留一份截图或快照证据。",
+    "html": "<h1 id=\"mortis-页面扩展与上线操作经验2026-04-20\">Mortis 页面扩展与上线操作经验（2026-04-20）</h1>\n<h2 id=\"适用范围\">适用范围</h2>\n<p>本文记录本轮 <code>https://mortis.tengokukk.com</code> 的页面扩展、零星英文清理、真源仓库提交、服务器部署与浏览器验收过程，供后续继续维护 Mortis 私有站时直接复用。</p>\n<h2 id=\"一先确认真源不要在镜像或临时副本里误改\">一、先确认真源，不要在镜像或临时副本里误改</h2>\n<p>本轮 Mortis 的真实开发边界不在 <code>Atramenti-Console</code> 主仓，而在独立真源仓库：</p>\n<ul>\n<li>真源仓库：<code>C:\\Users\\ASUS-KL\\.codex\\.tmp\\mortis-multica-source-working</code></li>\n<li>线上部署目录：<code>/srv/multica</code></li>\n<li>站点地址：<code>https://mortis.tengokukk.com</code></li>\n</ul>\n<p>实操原则：</p>\n<ol>\n<li>先确认被改文件属于哪个 repo，再开始编辑。</li>\n<li>不要因为当前 shell 停在别的目录，就顺手在父仓或备份仓里改同名文件。</li>\n<li>如果本地存在多个 Mortis 副本，先用 <code>git remote -v</code>、<code>git status</code>、目标文件实际路径三件套确认真实 owning repo。</li>\n<li>提交和推送也必须在这个真源仓库内完成，不能只改本地快照。</li>\n</ol>\n<h2 id=\"二开始改之前先看边界避免混入无关改动\">二、开始改之前，先看边界，避免混入无关改动</h2>\n<p>本轮用户目标很明确：继续清理 Mortis 站内残留英文，并保持页面正常上线。因此边界应限制在：</p>\n<ul>\n<li>文案配置</li>\n<li>页面 copy</li>\n<li>必要的状态标签映射</li>\n<li>与本轮汉化直接相关的视图文件</li>\n</ul>\n<p>建议流程：</p>\n<ol>\n<li>先看 <code>git status --short</code>，识别已有改动。</li>\n<li>只读取与当前页面、当前文案直接相关的文件。</li>\n<li>若仓库里已有别的未收口改动，不回滚、不顺手重构，也不要把无关文件一起提交。</li>\n<li>提交前用路径级 <code>git diff -- &#x3C;path></code> 再确认一次本轮边界。</li>\n</ol>\n<p>本轮实践证明，这一步非常重要。Mortis 真源仓库可能同时承载其他开发中的改动，如果不先收紧边界，很容易把不相关工作一起带上。</p>\n<h2 id=\"三定位未汉化文案的高效方式\">三、定位未汉化文案的高效方式</h2>\n<h3 id=\"1-先从线上可见页面反查\">1. 先从线上可见页面反查</h3>\n<p>优先浏览这些页面：</p>\n<ul>\n<li><code>/mortis/overview</code></li>\n<li><code>/mortis/servers</code></li>\n<li><code>/mortis/deployments</code></li>\n<li><code>/mortis/domains</code></li>\n<li><code>/mortis/settings</code></li>\n<li><code>/mortis/agents</code></li>\n</ul>\n<p>做法：</p>\n<ol>\n<li>用浏览器逐页查看是否存在明显英文标签、按钮、说明文字、状态值。</li>\n<li>先记“用户直接能看到、会造成割裂感”的英文，再回仓库定位。</li>\n<li>不要一开始就全仓盲搜英文单词，否则噪音很大。</li>\n</ol>\n<h3 id=\"2-再回代码搜关键英文\">2. 再回代码搜关键英文</h3>\n<p>定位残留文案时，优先搜索这些模式：</p>\n<ul>\n<li>页面标题或 tab 名称</li>\n<li>表单 label</li>\n<li>button 文案</li>\n<li>toast 提示</li>\n<li>badge / status label</li>\n<li>note / warning / helper text</li>\n<li>配置枚举映射</li>\n</ul>\n<p>本轮有效命中点包括：</p>\n<ul>\n<li><code>packages/views/settings/components/account-tab.tsx</code></li>\n<li><code>packages/views/agents/config.ts</code></li>\n<li><code>packages/views/control-plane/components/control-plane-page.tsx</code></li>\n</ul>\n<h3 id=\"3-优先查映射层而不是只查-jsx-表面文本\">3. 优先查“映射层”而不是只查 JSX 表面文本</h3>\n<p>很多页面不是把英文直接写在页面结构里，而是来自：</p>\n<ul>\n<li>状态映射表</li>\n<li>配置对象</li>\n<li>统一 label 函数</li>\n<li>control-plane summary 的展示映射</li>\n</ul>\n<p>本轮智能体状态和控制面标签就属于这种情况。如果只在页面组件里搜字符串，容易漏掉真正的 copy 来源。</p>\n<h2 id=\"四哪些内容不要机械翻译\">四、哪些内容不要机械翻译</h2>\n<p>不是所有英文都应该一股脑改成中文。后续维护时，默认按下面规则处理：</p>\n<h3 id=\"应优先汉化的内容\">应优先汉化的内容</h3>\n<ul>\n<li>页面标题</li>\n<li>导航项</li>\n<li>表单字段名</li>\n<li>按钮文字</li>\n<li>toast / 提示</li>\n<li>说明性副文案</li>\n<li>面向操作者的状态标签</li>\n</ul>\n<h3 id=\"应保留英文或谨慎处理的内容\">应保留英文或谨慎处理的内容</h3>\n<ul>\n<li>品牌名、产品名、专有名词，例如 <code>Mortis</code>、<code>Codex</code>、<code>OpenClaw</code>、<code>NapCat</code></li>\n<li>任务类型 key、配置 key、路径、URL、协议字段</li>\n<li>真实执行产出、日志片段、错误原文</li>\n<li>用户正文、评论正文、任务描述正文</li>\n<li>运行时标识、短 ID、host key、deploy key 等工程主键</li>\n</ul>\n<p>判断原则：</p>\n<ul>\n<li>面向人阅读的操作文案，优先中文。</li>\n<li>面向系统识别的标识与结构字段，优先保留原文。</li>\n<li>如果一段文字同时承担“显示 + 主键”双重作用，优先不要翻译 key，只翻译展示层。</li>\n</ul>\n<h2 id=\"五本轮实际清理掉的残留英文类型\">五、本轮实际清理掉的残留英文类型</h2>\n<p>本轮已收口的典型内容包括：</p>\n<ul>\n<li>设置页 <code>Profile</code>、头像上传提示、<code>Name</code>、更新资料按钮与 toast</li>\n<li>智能体状态：<code>Idle / Working / Blocked / Error / Offline</code></li>\n<li>任务分发状态：<code>Queued / Dispatched / Running / Completed / Failed / Cancelled</code></li>\n<li>控制面页中的说明文案、告警文案、摘要标签、owner type 展示名</li>\n<li><code>Repo Root / Control Plane Root / Dispatcher / Target / Fallback / Host / URL / DERIVED</code> 等关键展示标签</li>\n</ul>\n<p>对应提交：</p>\n<ul>\n<li>Mortis 真源仓库提交：<code>49dfc21</code></li>\n<li>提交说明：<code>fix: localize mortis control plane copy</code></li>\n</ul>\n<h2 id=\"六修改后的本地校验方式\">六、修改后的本地校验方式</h2>\n<p>前端 copy 修改后，至少要做一轮最小类型校验，避免因为文案改动牵出 TS 问题。</p>\n<p>本轮使用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">pnpm </span><span style=\"color:#F97583\">--</span><span style=\"color:#E1E4E8\">filter @multica</span><span style=\"color:#F97583\">/</span><span style=\"color:#E1E4E8\">views typecheck</span></span></code></pre></figure>\n<p>经验：</p>\n<ol>\n<li>文案改动虽然看似简单，但 control-plane 页面常有复杂对象映射，容易被类型系统卡住。</li>\n<li>优先跑最小作用域的 package 校验，比全仓构建更快，更适合 copy 收尾。</li>\n<li>如果只是某个页面的映射层改动，先保证 typecheck 过，再决定要不要补更重的验证。</li>\n</ol>\n<h2 id=\"七服务器部署流程\">七、服务器部署流程</h2>\n<p>Mortis 当前线上更新流程已经比较固定，可直接复用：</p>\n<figure data-rehype-pretty-code-figure=\"\"><pre tabindex=\"0\" data-language=\"powershell\" data-theme=\"github-dark\"><code data-language=\"powershell\" data-theme=\"github-dark\" style=\"display: grid;\"><span data-line=\"\"><span style=\"color:#E1E4E8\">ssh </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">o BatchMode</span><span style=\"color:#F97583\">=</span><span style=\"color:#E1E4E8\">yes </span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">o StrictHostKeyChecking</span><span style=\"color:#F97583\">=</span><span style=\"color:#E1E4E8\">accept</span><span style=\"color:#F97583\">-</span><span style=\"color:#E1E4E8\">new ubuntu@124.220.233.126 </span><span style=\"color:#9ECBFF\">\"set -e; cd /srv/multica; git fetch origin main; git checkout main; git pull --ff-only origin main; sudo docker compose -f docker-compose.selfhost.yml build frontend; sudo docker compose -f docker-compose.selfhost.yml up -d frontend\"</span></span></code></pre></figure>\n<p>要点：</p>\n<ol>\n<li>先 <code>git fetch</code> + <code>git pull --ff-only</code>，避免在服务器上产生额外合并提交。</li>\n<li>仅重建 <code>frontend</code>，不要无关扩散到整套 compose。</li>\n<li>用 <code>up -d frontend</code> 让页面更新落到在线容器。</li>\n<li>如果远端 <code>main</code> 领先于本地预期，不要惊慌；先确认这是不是远端正常已有提交，再继续部署。</li>\n</ol>\n<p>本轮就出现过服务器 <code>git pull</code> 一次性拉到不止一个提交的情况，属于远端现状，不应误判为异常。</p>\n<h2 id=\"八浏览器验收流程\">八、浏览器验收流程</h2>\n<p>Mortis 这种用户可见页面，不能只看构建成功或 HTTP 200。</p>\n<p>本轮验收遵循：</p>\n<ol>\n<li>刷新目标页面。</li>\n<li>等页面真正渲染出主内容，而不是只看到页头。</li>\n<li>直接检查用户可见文案是否已变成中文。</li>\n<li>对关键页做快照留证。</li>\n</ol>\n<p>建议至少验这些页：</p>\n<ul>\n<li><code>/mortis/settings</code></li>\n<li><code>/mortis/servers</code></li>\n<li><code>/mortis/overview</code></li>\n<li><code>/mortis/agents</code></li>\n</ul>\n<p>本轮已明确看到并确认生效的例子：</p>\n<ul>\n<li>设置页：<code>个人资料</code>、<code>点击上传头像</code>、<code>名称</code>、<code>更新资料</code></li>\n<li>服务器页：<code>主机</code>、<code>公网控制台摘要</code>、中文化后的备注说明、缺失状态提示</li>\n<li>总览页：控制面摘要和接入状态说明已为中文展示</li>\n</ul>\n<h2 id=\"九本轮踩坑与经验\">九、本轮踩坑与经验</h2>\n<h3 id=\"1-不要假设英文一定写在页面组件表层\">1. 不要假设英文一定写在页面组件表层</h3>\n<p>控制面页面的大量英文实际来自映射表和 summary label 组合层，而不是单个 JSX 节点。遇到页面零星英文时，优先追配置映射和 helper 层。</p>\n<h3 id=\"2-浏览器-reload-后可能暂时只剩页头\">2. 浏览器 reload 后可能暂时只剩页头</h3>\n<p>Mortis 某些页面在 reload 后会短暂只显示壳层，主内容稍后才回来。验收时不要只因为第一次 snapshot 看起来空，就立即判定页面坏了；应配合等待正文文本出现。</p>\n<h3 id=\"3-agents-页可能受数据状态影响\">3. <code>agents</code> 页可能受数据状态影响</h3>\n<p><code>/mortis/agents</code> 最后一次浏览器 reload 时出现过空 main 区域，但本地映射文案已经修改完成。遇到这种情况，应区分：</p>\n<ul>\n<li>是 copy 没改到</li>\n<li>还是页面数据当下没渲染出来</li>\n</ul>\n<p>不要把数据瞬时态误判成汉化失败。</p>\n<h3 id=\"4-部署阶段不要把远端快进误认为脏状态\">4. 部署阶段不要把远端快进误认为脏状态</h3>\n<p>服务器 <code>git pull</code> 过程中如果 fast-forward 到多个 commit，先确认是否只是远端本来就比本地预期多几个提交。只要是正常远端历史，就继续部署，不要贸然回滚。</p>\n<h2 id=\"十后续继续扫-mortis-零星英文时的推荐顺序\">十、后续继续扫 Mortis 零星英文时的推荐顺序</h2>\n<p>建议固定按下面顺序继续：</p>\n<ol>\n<li>线上逐页巡检，先记可见问题。</li>\n<li>回真源仓库搜对应页面与映射层。</li>\n<li>只改展示层，不动 key 与结构字段。</li>\n<li>跑最小 typecheck。</li>\n<li>提交并推送真源仓库。</li>\n<li>到服务器拉取并重建 frontend。</li>\n<li>用浏览器做可见验收并留证。</li>\n</ol>\n<h2 id=\"十一可直接复用的收尾检查清单\">十一、可直接复用的收尾检查清单</h2>\n<p>每次 Mortis 页面 copy / 扩展完成后，至少确认：</p>\n<ul>\n<li>真源仓库是否确认正确</li>\n<li>本轮 diff 是否只包含当前任务边界</li>\n<li>本地 typecheck 是否通过</li>\n<li>真源仓库是否已经 commit + push</li>\n<li>服务器是否已经完成 <code>git pull --ff-only</code></li>\n<li><code>frontend</code> 是否已经 build + up -d</li>\n<li>浏览器可见页面是否已验证</li>\n<li>是否留下了必要的验收证据或说明</li>\n</ul>\n<h2 id=\"十二本次相关关键路径\">十二、本次相关关键路径</h2>\n<ul>\n<li>Mortis 真源仓库：<code>C:\\Users\\ASUS-KL\\.codex\\.tmp\\mortis-multica-source-working</code></li>\n<li>经验文档目录：<code>E:\\My Project\\Atramenti-Console\\codex\\plugins\\obsidian\\data\\docs\\agent</code></li>\n<li>线上站点：<code>https://mortis.tengokukk.com</code></li>\n<li>部署主机：<code>ubuntu@124.220.233.126</code></li>\n<li>部署目录：<code>/srv/multica</code></li>\n</ul>\n<h2 id=\"十三后续维护结论\">十三、后续维护结论</h2>\n<p>后续凡是 Mortis 页面扩展、文案补全、控制面 copy 收口这类任务，默认都应遵守下面这条主线：</p>\n<p>先确认真源 -> 只改展示边界 -> 本地最小校验 -> 真源提交推送 -> 服务器更新 frontend -> 浏览器可见验收。</p>\n<p>这样做可以最大限度避免改错仓、混入无关改动、部署后未验证，以及“本地看起来改了但线上没落地”的常见问题。</p>\n<h2 id=\"十四控制面--运维面板-ui-改造经验\">十四、控制面 / 运维面板 UI 改造经验</h2>\n<p>这轮新增的经验，不是汉化问题，而是控制面扩展页的结构问题：虽然内容接进去了，但一开始的 UI 过度卡片化，和 Mortis 原生工作台风格明显不一致。</p>\n<h3 id=\"1-在-mortis-里运维页默认应偏工作台--清单--状态面板而不是营销式卡片集合\">1. 在 Mortis 里，运维页默认应偏“工作台 / 清单 / 状态面板”，而不是“营销式卡片集合”</h3>\n<p>这次最直观的问题是：</p>\n<ul>\n<li><code>SectionCard</code> 里套 <code>MetricCard</code></li>\n<li>大卡片里再套多层子卡片</li>\n<li>检查项逐条块状堆叠</li>\n<li>同一块信息被切成很多小容器</li>\n</ul>\n<p>结果就是：</p>\n<ul>\n<li>视觉层级很重</li>\n<li>可扫描性反而下降</li>\n<li>页面一眼看过去像外挂模块，不像 Mortis 原生页面</li>\n</ul>\n<p>以后只要是在 Mortis 里做运维页、清单页、控制面页，默认先避免“卡片套卡片套卡片”的写法。</p>\n<h3 id=\"2-优先压平层级而不是继续加装饰\">2. 优先压平层级，而不是继续加装饰</h3>\n<p>本轮有效的做法不是继续“美化”，而是做减法：</p>\n<ul>\n<li><code>MetricCard</code> 改成更小、更扁的统计块</li>\n<li><code>SectionCard</code> 去掉厚重分层，改成轻量头部 + 内容区</li>\n<li><code>WarningPanel</code> 从整块说明卡改成扁平警告条</li>\n<li><code>CheckList</code> 从一条一块改成表格式行列表</li>\n<li>新增 <code>FactTable</code> 把散落字段压成密一点的事实表</li>\n</ul>\n<p>核心原则：</p>\n<ul>\n<li>同一层信息尽量放进同一视觉层</li>\n<li>先保证“一屏能扫到多少有效信息”，再考虑装饰感</li>\n<li>能用表格 / 行列表表达的，不再拆成很多小卡片</li>\n</ul>\n<h3 id=\"3-mortis-原生风格更接近轻边框--紧凑排布--明确标签\">3. Mortis 原生风格更接近“轻边框 + 紧凑排布 + 明确标签”</h3>\n<p>这次改完之后，比较贴 Mortis 自身风格的元素是：</p>\n<ul>\n<li>小尺寸圆角，而不是厚重大圆角</li>\n<li>轻边框和轻分隔线，而不是深层阴影</li>\n<li>标签、状态、事实字段都靠近内容本体</li>\n<li>标题区尽量短，主体区尽量承载信息</li>\n</ul>\n<p>判断是否“像原生”的简单方法：</p>\n<ol>\n<li>左侧导航和主内容放在一起看，是否像同一套产品。</li>\n<li>是否能一眼扫到状态、路径、归属、检查结果，而不是先读很多容器。</li>\n<li>页面主体是否更像“可操作工作台”，而不是“展示型专题页”。</li>\n</ol>\n<h3 id=\"4-运维页的优先级应是信息密度不是留白密度\">4. 运维页的优先级应是信息密度，不是留白密度</h3>\n<p>对于 <code>/mortis/overview</code>、<code>/mortis/servers</code>、<code>/mortis/deployments</code>、<code>/mortis/domains</code> 这类页，后续默认优先保证：</p>\n<ul>\n<li>状态一眼可见</li>\n<li>路径和目标节点一眼可见</li>\n<li>检查结果能直接横向对比</li>\n<li>不需要频繁展开 / 跳转 / 读长段说明才知道系统现在怎样</li>\n</ul>\n<p>可接受的留白是为了分组，不是为了把信息拆散。</p>\n<h3 id=\"5-控制面页适合的结构顺序\">5. 控制面页适合的结构顺序</h3>\n<p>后续再扩这几页时，优先按这个顺序组织：</p>\n<ol>\n<li>页头：当前页名、接入状态、刷新动作</li>\n<li>顶部摘要：少量关键数字或关键状态</li>\n<li>风险条：当前未收口问题</li>\n<li>主体清单：服务器 / 部署 / 域名 / 路由</li>\n<li>每个主体块内固定用“事实区 + 检查区”</li>\n</ol>\n<p>不要再把“摘要卡 -> 子卡 -> 子子卡 -> 检查卡”这种层层包裹结构加回来。</p>\n<h3 id=\"6-这类-ui-改造必须用浏览器看成品不能只看代码\">6. 这类 UI 改造必须用浏览器看成品，不能只看代码</h3>\n<p>这轮如果只看代码，很容易误以为“已经有样式、有组件、结构也完整”，但真正打开页面后，问题非常明显：</p>\n<ul>\n<li>纵向滚动压力大</li>\n<li>视觉层级不自然</li>\n<li>同类信息不够成组</li>\n<li>与 Mortis 原生页明显割裂</li>\n</ul>\n<p>因此以后凡是 Mortis 内部页样式改造，最少都要浏览器实际看这几页：</p>\n<ul>\n<li><code>/mortis/overview</code></li>\n<li><code>/mortis/servers</code></li>\n<li><code>/mortis/deployments</code></li>\n<li><code>/mortis/domains</code></li>\n</ul>\n<p>并至少留一份截图或快照证据。</p>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "mortis-页面扩展与上线操作经验-2026-04-20",
+        "text": "Mortis 页面扩展与上线操作经验（2026-04-20）"
+      },
+      {
+        "depth": 2,
+        "slug": "适用范围",
+        "text": "适用范围"
+      },
+      {
+        "depth": 2,
+        "slug": "一-先确认真源-不要在镜像或临时副本里误改",
+        "text": "一、先确认真源，不要在镜像或临时副本里误改"
+      },
+      {
+        "depth": 2,
+        "slug": "二-开始改之前-先看边界-避免混入无关改动",
+        "text": "二、开始改之前，先看边界，避免混入无关改动"
+      },
+      {
+        "depth": 2,
+        "slug": "三-定位未汉化文案的高效方式",
+        "text": "三、定位未汉化文案的高效方式"
+      },
+      {
+        "depth": 3,
+        "slug": "1-先从线上可见页面反查",
+        "text": "1. 先从线上可见页面反查"
+      },
+      {
+        "depth": 3,
+        "slug": "2-再回代码搜关键英文",
+        "text": "2. 再回代码搜关键英文"
+      },
+      {
+        "depth": 3,
+        "slug": "3-优先查-映射层-而不是只查-jsx-表面文本",
+        "text": "3. 优先查“映射层”而不是只查 JSX 表面文本"
+      },
+      {
+        "depth": 2,
+        "slug": "四-哪些内容不要机械翻译",
+        "text": "四、哪些内容不要机械翻译"
+      },
+      {
+        "depth": 3,
+        "slug": "应优先汉化的内容",
+        "text": "应优先汉化的内容"
+      },
+      {
+        "depth": 3,
+        "slug": "应保留英文或谨慎处理的内容",
+        "text": "应保留英文或谨慎处理的内容"
+      },
+      {
+        "depth": 2,
+        "slug": "五-本轮实际清理掉的残留英文类型",
+        "text": "五、本轮实际清理掉的残留英文类型"
+      },
+      {
+        "depth": 2,
+        "slug": "六-修改后的本地校验方式",
+        "text": "六、修改后的本地校验方式"
+      },
+      {
+        "depth": 2,
+        "slug": "七-服务器部署流程",
+        "text": "七、服务器部署流程"
+      },
+      {
+        "depth": 2,
+        "slug": "八-浏览器验收流程",
+        "text": "八、浏览器验收流程"
+      },
+      {
+        "depth": 2,
+        "slug": "九-本轮踩坑与经验",
+        "text": "九、本轮踩坑与经验"
+      },
+      {
+        "depth": 3,
+        "slug": "1-不要假设英文一定写在页面组件表层",
+        "text": "1. 不要假设英文一定写在页面组件表层"
+      },
+      {
+        "depth": 3,
+        "slug": "2-浏览器-reload-后可能暂时只剩页头",
+        "text": "2. 浏览器 reload 后可能暂时只剩页头"
+      },
+      {
+        "depth": 3,
+        "slug": "3-agents-页可能受数据状态影响",
+        "text": "3. `agents` 页可能受数据状态影响"
+      },
+      {
+        "depth": 3,
+        "slug": "4-部署阶段不要把远端快进误认为脏状态",
+        "text": "4. 部署阶段不要把远端快进误认为脏状态"
+      },
+      {
+        "depth": 2,
+        "slug": "十-后续继续扫-mortis-零星英文时的推荐顺序",
+        "text": "十、后续继续扫 Mortis 零星英文时的推荐顺序"
+      },
+      {
+        "depth": 2,
+        "slug": "十一-可直接复用的收尾检查清单",
+        "text": "十一、可直接复用的收尾检查清单"
+      },
+      {
+        "depth": 2,
+        "slug": "十二-本次相关关键路径",
+        "text": "十二、本次相关关键路径"
+      },
+      {
+        "depth": 2,
+        "slug": "十三-后续维护结论",
+        "text": "十三、后续维护结论"
+      },
+      {
+        "depth": 2,
+        "slug": "十四-控制面-运维面板-ui-改造经验",
+        "text": "十四、控制面 / 运维面板 UI 改造经验"
+      },
+      {
+        "depth": 3,
+        "slug": "1-在-mortis-里-运维页默认应偏-工作台-清单-状态面板-而不是-营销式卡片集合",
+        "text": "1. 在 Mortis 里，运维页默认应偏“工作台 / 清单 / 状态面板”，而不是“营销式卡片集合”"
+      },
+      {
+        "depth": 3,
+        "slug": "2-优先压平层级-而不是继续加装饰",
+        "text": "2. 优先压平层级，而不是继续加装饰"
+      },
+      {
+        "depth": 3,
+        "slug": "3-mortis-原生风格更接近-轻边框-紧凑排布-明确标签",
+        "text": "3. Mortis 原生风格更接近“轻边框 + 紧凑排布 + 明确标签”"
+      },
+      {
+        "depth": 3,
+        "slug": "4-运维页的优先级应是信息密度-不是留白密度",
+        "text": "4. 运维页的优先级应是信息密度，不是留白密度"
+      },
+      {
+        "depth": 3,
+        "slug": "5-控制面页适合的结构顺序",
+        "text": "5. 控制面页适合的结构顺序"
+      },
+      {
+        "depth": 3,
+        "slug": "6-这类-ui-改造必须用浏览器看成品-不能只看代码",
+        "text": "6. 这类 UI 改造必须用浏览器看成品，不能只看代码"
+      }
+    ],
+    "detailPath": "articles/md_eff639552a2b.json"
+  }
+}

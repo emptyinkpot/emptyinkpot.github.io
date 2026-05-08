@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_1641565293e9",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/agent/auth/openai-registration-attempt-2026-04-26-050115.md",
+    "sourcePath": "/home/vault/Obsidian/docs/agent/auth/openai-registration-attempt-2026-04-26-050115.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/agent/auth/openai-registration-attempt-2026-04-26-050115.md",
+    "openlistUrl": "/openlist/Obsidian/docs/agent/auth/openai-registration-attempt-2026-04-26-050115.md",
+    "slug": "agent-auth-openai-registration-attempt-2026-04-26-050115",
+    "title": "openai-registration-attempt-2026-04-26-050115",
+    "summary": "OpenAI 注册尝试记录 2026 04 26 05:01:15 状态：失败 失败阶段：邮箱验证码验证 任务 UUID：d591ff20 26e4 4b95 8ba6 bebd414cfdc5 邮箱服务：luckmail（ID 1） 注册邮箱：melissamartinulwm@outlook.c...",
+    "description": "OpenAI 注册尝试记录 2026 04 26 05:01:15 状态：失败 失败阶段：邮箱验证码验证 任务 UUID：d591ff20 26e4 4b95 8ba6 bebd414cfdc5 邮箱服务：luckmail（ID 1） 注册邮箱：melissamartinulwm@outlook.c...",
+    "date": "2026-04-28",
+    "updated": "2026-04-28",
+    "kind": "note",
+    "folder": {
+      "key": "agent",
+      "label": "agent",
+      "path": "agent"
+    },
+    "tags": [
+      "agent",
+      "auth"
+    ],
+    "categories": [
+      "agent"
+    ],
+    "folderTags": [
+      "agent",
+      "auth"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "active",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "agent",
+        "auth"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "active",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/agent/auth/openai-registration-attempt-2026-04-26-050115.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/agent/auth/openai-registration-attempt-2026-04-26-050115.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/agent/auth/openai-registration-attempt-2026-04-26-050115.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:22:07.570Z",
+      "model": "coze-shell",
+      "entities": [
+        "OpenAI",
+        "LuckMail",
+        "Outlook",
+        "United States (US)",
+        "China (CN)",
+        "Socks5 Proxy"
+      ],
+      "topics": [
+        "OpenAI Registration",
+        "Email Verification Failure",
+        "Geo-block Bypass",
+        "Proxy Configuration",
+        "Email Service Reliability"
+      ],
+      "relations": [
+        {
+          "type": "registration_attempt_for",
+          "target": "OpenAI",
+          "label": "Target Service",
+          "confidence": 1
+        },
+        {
+          "type": "utilized_service",
+          "target": "LuckMail",
+          "label": "Email Provider",
+          "confidence": 1
+        },
+        {
+          "type": "utilized_tool",
+          "target": "Socks5 Proxy",
+          "label": "Network Proxy",
+          "confidence": 1
+        },
+        {
+          "type": "bypassed_restriction",
+          "target": "China (CN)",
+          "label": "Geo-block",
+          "confidence": 1
+        },
+        {
+          "type": "targeted_region",
+          "target": "United States (US)",
+          "label": "Allowed Geo-region",
+          "confidence": 1
+        },
+        {
+          "type": "failure_root_cause",
+          "target": "LuckMail",
+          "label": "Unreceived Verification Code",
+          "confidence": 0.9
+        },
+        {
+          "type": "failed_process_stage",
+          "target": "OpenAI",
+          "label": "Email Verification Step",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "OpenAI Registration Attempt Logs",
+        "Automated Account Creation Records"
+      ],
+      "clusters": [
+        "OpenAI Registration Failures",
+        "Email Service Reception Issues",
+        "Geo-block Bypass Attempts"
+      ]
+    },
+    "series": "",
+    "project": "openai registration attempt 2026 04 26 050115",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "AGENT",
+      "chips": [
+        "AGENT",
+        "AUTH",
+        "OPENAI REGISTRATION ATTEMPT 2026 04 26 050115"
+      ],
+      "subtitle": "OpenAI 注册尝试记录 2026 04 26 05:01:15 状态：失败 失败阶段：邮箱验证码验证 任务 UUID：d591ff20 26e4 4b95 8ba6 bebd414cfdc5 邮箱服务：luckmail（ID 1） 注册邮箱：melissamartinulwm@outlook.c..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# OpenAI 注册尝试记录 2026-04-26 05:01:15\n\n- 状态：失败\n- 失败阶段：邮箱验证码验证\n- 任务 UUID：`d591ff20-26e4-4b95-8ba6-bebd414cfdc5`\n- 邮箱服务：`luckmail`（ID `1`）\n- 注册邮箱：`melissamartinulwm@outlook.com`\n- 注册密码：`f2z0zJ-OM%8l`\n- 代理：`socks5h://127.0.0.1:17890`\n- 出口国家：`US`\n- Device ID：`21d14d76-e905-4b61-a034-d60652f5786e`\n- OpenAI 发送验证码：是\n- LuckMail 收到验证码：否\n- 最终错误：`验证验证码失败`\n\n## 过程摘要\n\n1. 已绕过原先 `CN` 地理位置阻塞，注册链路成功识别为 `US` 出口。\n2. 成功创建 LuckMail 邮箱并提交 OpenAI 注册表单。\n3. 成功设置密码并触发 OpenAI 发送验证码。\n4. 在三轮等待窗口内未从 LuckMail 取到验证码邮件，最终失败。\n\n## 备注\n\n- 当前这次尝试没有完成注册成功落库。\n- 后续应优先排查 LuckMail 对 OpenAI 验证邮件的接收/解析问题。",
+    "html": "<h1 id=\"openai-注册尝试记录-2026-04-26-050115\">OpenAI 注册尝试记录 2026-04-26 05:01:15</h1>\n<ul>\n<li>状态：失败</li>\n<li>失败阶段：邮箱验证码验证</li>\n<li>任务 UUID：<code>d591ff20-26e4-4b95-8ba6-bebd414cfdc5</code></li>\n<li>邮箱服务：<code>luckmail</code>（ID <code>1</code>）</li>\n<li>注册邮箱：<code>melissamartinulwm@outlook.com</code></li>\n<li>注册密码：<code>f2z0zJ-OM%8l</code></li>\n<li>代理：<code>socks5h://127.0.0.1:17890</code></li>\n<li>出口国家：<code>US</code></li>\n<li>Device ID：<code>21d14d76-e905-4b61-a034-d60652f5786e</code></li>\n<li>OpenAI 发送验证码：是</li>\n<li>LuckMail 收到验证码：否</li>\n<li>最终错误：<code>验证验证码失败</code></li>\n</ul>\n<h2 id=\"过程摘要\">过程摘要</h2>\n<ol>\n<li>已绕过原先 <code>CN</code> 地理位置阻塞，注册链路成功识别为 <code>US</code> 出口。</li>\n<li>成功创建 LuckMail 邮箱并提交 OpenAI 注册表单。</li>\n<li>成功设置密码并触发 OpenAI 发送验证码。</li>\n<li>在三轮等待窗口内未从 LuckMail 取到验证码邮件，最终失败。</li>\n</ol>\n<h2 id=\"备注\">备注</h2>\n<ul>\n<li>当前这次尝试没有完成注册成功落库。</li>\n<li>后续应优先排查 LuckMail 对 OpenAI 验证邮件的接收/解析问题。</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "openai-注册尝试记录-2026-04-26-05-01-15",
+        "text": "OpenAI 注册尝试记录 2026-04-26 05:01:15"
+      },
+      {
+        "depth": 2,
+        "slug": "过程摘要",
+        "text": "过程摘要"
+      },
+      {
+        "depth": 2,
+        "slug": "备注",
+        "text": "备注"
+      }
+    ],
+    "detailPath": "articles/md_1641565293e9.json"
+  }
+}

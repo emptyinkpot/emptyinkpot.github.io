@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "authority": {
+    "type": "markdown-runtime-index",
+    "fileTruth": "E:\\Vaults\\Obsidian",
+    "authoringTruth": "/home/vault/Obsidian/docs",
+    "publicFileAccess": "/openlist/Obsidian/docs",
+    "projectionTruth": "public-data/runtime/content-index.json"
+  },
+  "article": {
+    "id": "md_1d30f6282fc5",
+    "type": "MarkdownObject",
+    "source": "/openlist/Obsidian/docs/codex-knowledge/research-survey-template.md",
+    "sourcePath": "/home/vault/Obsidian/docs/codex-knowledge/research-survey-template.md",
+    "sourceRoot": "vault",
+    "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/research-survey-template.md",
+    "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/research-survey-template.md",
+    "slug": "codex-knowledge-research-survey-template",
+    "title": "调研 / 论文式综述模板",
+    "summary": "<Research Topic 调研与论文式综述 文档定位：本文用于系统性调研 <Research Topic ，给出问题定义、评价标准、候选方案、证据基础、比较分析与推荐结论。 适用读者：决策者、实现者、评审者，以及需要快速了解该领域现状的读者。 冲突处理：若本文与更新的 canonical ru...",
+    "description": "<Research Topic 调研与论文式综述 文档定位：本文用于系统性调研 <Research Topic ，给出问题定义、评价标准、候选方案、证据基础、比较分析与推荐结论。 适用读者：决策者、实现者、评审者，以及需要快速了解该领域现状的读者。 冲突处理：若本文与更新的 canonical ru...",
+    "date": "2026-04-26",
+    "updated": "2026-04-26",
+    "kind": "note",
+    "folder": {
+      "key": "codex-knowledge",
+      "label": "codex-knowledge",
+      "path": "codex-knowledge"
+    },
+    "tags": [
+      "codex-knowledge"
+    ],
+    "categories": [
+      "codex-knowledge"
+    ],
+    "folderTags": [
+      "codex-knowledge"
+    ],
+    "derivedTaxonomy": {
+      "mode": "filesystem-frontmatter-wikilink-derived",
+      "semanticAuthority": false,
+      "semanticSidecarStatus": "missing",
+      "categorySources": [
+        "filesystem.folderTags",
+        "kind"
+      ],
+      "tagSources": [
+        "filesystem.folderTags"
+      ],
+      "folderTags": [
+        "codex-knowledge"
+      ],
+      "explicitTags": [],
+      "explicitCategories": []
+    },
+    "semantic": {
+      "status": "missing",
+      "authority": false,
+      "source": "sidecar",
+      "sidecarPath": "/home/vault/Obsidian/docs/codex-knowledge/research-survey-template.semantic.json",
+      "openlistPath": "/openlist/Obsidian/docs/codex-knowledge/research-survey-template.semantic.json",
+      "openlistUrl": "/openlist/Obsidian/docs/codex-knowledge/research-survey-template.semantic.json",
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+    },
+    "series": "",
+    "project": "research survey template",
+    "visibility": "public",
+    "published": true,
+    "runtimeFeed": false,
+    "relations": {
+      "wikilinks": [],
+      "backlinks": [
+        "md_d92d19fbfb47"
+      ],
+      "assets": []
+    },
+    "card": {
+      "eyebrow": "CODEX KNOWLEDGE",
+      "chips": [
+        "CODEX KNOWLEDGE",
+        "RESEARCH SURVEY TEMPLATE"
+      ],
+      "subtitle": "<Research Topic 调研与论文式综述 文档定位：本文用于系统性调研 <Research Topic ，给出问题定义、评价标准、候选方案、证据基础、比较分析与推荐结论。 适用读者：决策者、实现者、评审者，以及需要快速了解该领域现状的读者。 冲突处理：若本文与更新的 canonical ru..."
+    },
+    "projection": {
+      "feed": true,
+      "reader": true,
+      "search": true,
+      "graph": true
+    },
+    "body": "# <Research Topic>\n## 调研与论文式综述\n\n> 文档定位：本文用于系统性调研 `<Research Topic>`，给出问题定义、评价标准、候选方案、证据基础、比较分析与推荐结论。\n> 适用读者：决策者、实现者、评审者，以及需要快速了解该领域现状的读者。\n> 冲突处理：若本文与更新的 canonical runtime truth、官方文档或最新实验结果冲突，以更新证据为准；本文应显式记录证据时间与适用边界。\n\n## 0. 摘要\n\n### 0.1 研究问题\n\n一句话定义本文要回答的核心问题。\n\n### 0.2 简明结论\n\n- 结论：`<recommended-answer>`\n- 最适用场景：`<scenario>`\n- 不适用场景：`<scenario>`\n- 最关键证据：`<evidence>`\n\n### 0.3 阅读导航\n\n- 快速看结论：读 `10. 结论`\n- 快速看比较：读 `7. 对比矩阵`\n- 快速看证据与局限：读 `8. 证据质量与局限`\n\n## 1. 问题定义\n\n### 1.1 研究对象\n\n说明本文调研的对象是什么。\n\n### 1.2 研究边界\n\n说明本文覆盖什么，不覆盖什么。\n\n### 1.3 目标读者\n\n说明本文是为谁写的，他们最关心什么。\n\n## 2. 背景与上下文\n\n### 2.1 业务背景\n\n说明为什么现在需要这份调研。\n\n### 2.2 技术背景\n\n说明相关技术现状、历史路径与问题来源。\n\n### 2.3 前置假设\n\n- `<assumption>`\n\n## 3. 术语与定义\n\n| 术语 | 定义 | 备注 |\n| --- | --- | --- |\n| `<term>` | `<definition>` | `<note>` |\n\n## 4. 研究方法\n\n### 4.1 信息来源\n\n- 官方文档\n- 实际代码 / 仓库\n- 实验结果\n- 本地运行验证\n- 其他可靠来源\n\n### 4.2 评价标准\n\n| 维度 | 含义 | 权重 | 说明 |\n| --- | --- | --- | --- |\n| `<dimension>` | `<meaning>` | `<weight>` | `<note>` |\n\n### 4.3 证据分级\n\n- 一级证据：官方文档、源码、运行验证\n- 二级证据：维护者说明、正式讨论、权威对比材料\n- 三级证据：经验推断、社区观察\n\n## 5. 候选方案总览\n\n| 方案 | 一句话描述 | 适用场景 | 主要风险 |\n| --- | --- | --- | --- |\n| `<option>` | `<description>` | `<scenario>` | `<risk>` |\n\n## 6. 分方案分析\n\n### 6.1 方案 A：<name>\n\n#### 6.1.1 核心机制\n\n#### 6.1.2 优点\n\n#### 6.1.3 缺点\n\n#### 6.1.4 适用场景\n\n#### 6.1.5 不适用场景\n\n#### 6.1.6 证据摘要\n\n### 6.2 方案 B：<name>\n\n按同样结构继续。\n\n## 7. 对比矩阵\n\n### 7.1 总体对比\n\n| 维度 | 方案 A | 方案 B | 方案 C | 结论 |\n| --- | --- | --- | --- | --- |\n| `<dimension>` | `<score/summary>` | `<score/summary>` | `<score/summary>` | `<winner>` |\n\n### 7.2 场景化对比\n\n按不同使用场景再做一轮对比，而不是只给单一排名。\n\n## 8. 证据质量与局限\n\n### 8.1 证据强度\n\n说明哪些结论来自强证据，哪些来自推断。\n\n### 8.2 局限性\n\n- 时间局限\n- 环境局限\n- 数据局限\n- 样本局限\n\n### 8.3 未决问题\n\n- `<open-question>`\n\n## 9. 风险与反例\n\n### 9.1 关键风险\n\n| 风险 | 触发条件 | 影响 | 缓解 |\n| --- | --- | --- | --- |\n| `<risk>` | `<trigger>` | `<impact>` | `<mitigation>` |\n\n### 9.2 反例与反驳\n\n记录可能推翻本文结论的典型情况。\n\n## 10. 结论\n\n### 10.1 主结论\n\n明确给出推荐结论，避免模棱两可收尾。\n\n### 10.2 推荐方案\n\n- 推荐对象：`<who>`\n- 推荐方案：`<what>`\n- 推荐原因：`<why>`\n\n### 10.3 保留意见\n\n说明哪些场景不适合直接采用主结论。\n\n## 11. 落地建议\n\n### 11.1 如果要实施\n\n- 第一步：`<step>`\n- 第二步：`<step>`\n- 第三步：`<step>`\n\n### 11.2 如果要继续研究\n\n- 还需要补什么证据\n- 还需要做什么实验\n\n## 12. 参考与附录\n\n### 12.1 参考来源\n\n- `<reference>`\n\n### 12.2 数据、样例与补充说明\n\n- `<appendix>`\n\n### 12.3 版本与新鲜度说明\n\n- 写明调研时间、证据截止时间、适用版本范围",
+    "html": "<h1 id=\"\"></h1>\n<h2 id=\"调研与论文式综述\">调研与论文式综述</h2>\n<blockquote>\n<p>文档定位：本文用于系统性调研 <code>&#x3C;Research Topic></code>，给出问题定义、评价标准、候选方案、证据基础、比较分析与推荐结论。\n适用读者：决策者、实现者、评审者，以及需要快速了解该领域现状的读者。\n冲突处理：若本文与更新的 canonical runtime truth、官方文档或最新实验结果冲突，以更新证据为准；本文应显式记录证据时间与适用边界。</p>\n</blockquote>\n<h2 id=\"0-摘要\">0. 摘要</h2>\n<h3 id=\"01-研究问题\">0.1 研究问题</h3>\n<p>一句话定义本文要回答的核心问题。</p>\n<h3 id=\"02-简明结论\">0.2 简明结论</h3>\n<ul>\n<li>结论：<code>&#x3C;recommended-answer></code></li>\n<li>最适用场景：<code>&#x3C;scenario></code></li>\n<li>不适用场景：<code>&#x3C;scenario></code></li>\n<li>最关键证据：<code>&#x3C;evidence></code></li>\n</ul>\n<h3 id=\"03-阅读导航\">0.3 阅读导航</h3>\n<ul>\n<li>快速看结论：读 <code>10. 结论</code></li>\n<li>快速看比较：读 <code>7. 对比矩阵</code></li>\n<li>快速看证据与局限：读 <code>8. 证据质量与局限</code></li>\n</ul>\n<h2 id=\"1-问题定义\">1. 问题定义</h2>\n<h3 id=\"11-研究对象\">1.1 研究对象</h3>\n<p>说明本文调研的对象是什么。</p>\n<h3 id=\"12-研究边界\">1.2 研究边界</h3>\n<p>说明本文覆盖什么，不覆盖什么。</p>\n<h3 id=\"13-目标读者\">1.3 目标读者</h3>\n<p>说明本文是为谁写的，他们最关心什么。</p>\n<h2 id=\"2-背景与上下文\">2. 背景与上下文</h2>\n<h3 id=\"21-业务背景\">2.1 业务背景</h3>\n<p>说明为什么现在需要这份调研。</p>\n<h3 id=\"22-技术背景\">2.2 技术背景</h3>\n<p>说明相关技术现状、历史路径与问题来源。</p>\n<h3 id=\"23-前置假设\">2.3 前置假设</h3>\n<ul>\n<li><code>&#x3C;assumption></code></li>\n</ul>\n<h2 id=\"3-术语与定义\">3. 术语与定义</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>术语</th>\n<th>定义</th>\n<th>备注</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>&#x3C;term></code></td>\n<td><code>&#x3C;definition></code></td>\n<td><code>&#x3C;note></code></td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"4-研究方法\">4. 研究方法</h2>\n<h3 id=\"41-信息来源\">4.1 信息来源</h3>\n<ul>\n<li>官方文档</li>\n<li>实际代码 / 仓库</li>\n<li>实验结果</li>\n<li>本地运行验证</li>\n<li>其他可靠来源</li>\n</ul>\n<h3 id=\"42-评价标准\">4.2 评价标准</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>维度</th>\n<th>含义</th>\n<th>权重</th>\n<th>说明</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>&#x3C;dimension></code></td>\n<td><code>&#x3C;meaning></code></td>\n<td><code>&#x3C;weight></code></td>\n<td><code>&#x3C;note></code></td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"43-证据分级\">4.3 证据分级</h3>\n<ul>\n<li>一级证据：官方文档、源码、运行验证</li>\n<li>二级证据：维护者说明、正式讨论、权威对比材料</li>\n<li>三级证据：经验推断、社区观察</li>\n</ul>\n<h2 id=\"5-候选方案总览\">5. 候选方案总览</h2>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>方案</th>\n<th>一句话描述</th>\n<th>适用场景</th>\n<th>主要风险</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>&#x3C;option></code></td>\n<td><code>&#x3C;description></code></td>\n<td><code>&#x3C;scenario></code></td>\n<td><code>&#x3C;risk></code></td>\n</tr>\n</tbody>\n</table></div>\n<h2 id=\"6-分方案分析\">6. 分方案分析</h2>\n<h3 id=\"61-方案-a\">6.1 方案 A：</h3>\n<h4 id=\"611-核心机制\">6.1.1 核心机制</h4>\n<h4 id=\"612-优点\">6.1.2 优点</h4>\n<h4 id=\"613-缺点\">6.1.3 缺点</h4>\n<h4 id=\"614-适用场景\">6.1.4 适用场景</h4>\n<h4 id=\"615-不适用场景\">6.1.5 不适用场景</h4>\n<h4 id=\"616-证据摘要\">6.1.6 证据摘要</h4>\n<h3 id=\"62-方案-b\">6.2 方案 B：</h3>\n<p>按同样结构继续。</p>\n<h2 id=\"7-对比矩阵\">7. 对比矩阵</h2>\n<h3 id=\"71-总体对比\">7.1 总体对比</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>维度</th>\n<th>方案 A</th>\n<th>方案 B</th>\n<th>方案 C</th>\n<th>结论</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>&#x3C;dimension></code></td>\n<td><code>&#x3C;score/summary></code></td>\n<td><code>&#x3C;score/summary></code></td>\n<td><code>&#x3C;score/summary></code></td>\n<td><code>&#x3C;winner></code></td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"72-场景化对比\">7.2 场景化对比</h3>\n<p>按不同使用场景再做一轮对比，而不是只给单一排名。</p>\n<h2 id=\"8-证据质量与局限\">8. 证据质量与局限</h2>\n<h3 id=\"81-证据强度\">8.1 证据强度</h3>\n<p>说明哪些结论来自强证据，哪些来自推断。</p>\n<h3 id=\"82-局限性\">8.2 局限性</h3>\n<ul>\n<li>时间局限</li>\n<li>环境局限</li>\n<li>数据局限</li>\n<li>样本局限</li>\n</ul>\n<h3 id=\"83-未决问题\">8.3 未决问题</h3>\n<ul>\n<li><code>&#x3C;open-question></code></li>\n</ul>\n<h2 id=\"9-风险与反例\">9. 风险与反例</h2>\n<h3 id=\"91-关键风险\">9.1 关键风险</h3>\n<div class=\"prose-table-wrapper\"><table>\n<thead>\n<tr>\n<th>风险</th>\n<th>触发条件</th>\n<th>影响</th>\n<th>缓解</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>&#x3C;risk></code></td>\n<td><code>&#x3C;trigger></code></td>\n<td><code>&#x3C;impact></code></td>\n<td><code>&#x3C;mitigation></code></td>\n</tr>\n</tbody>\n</table></div>\n<h3 id=\"92-反例与反驳\">9.2 反例与反驳</h3>\n<p>记录可能推翻本文结论的典型情况。</p>\n<h2 id=\"10-结论\">10. 结论</h2>\n<h3 id=\"101-主结论\">10.1 主结论</h3>\n<p>明确给出推荐结论，避免模棱两可收尾。</p>\n<h3 id=\"102-推荐方案\">10.2 推荐方案</h3>\n<ul>\n<li>推荐对象：<code>&#x3C;who></code></li>\n<li>推荐方案：<code>&#x3C;what></code></li>\n<li>推荐原因：<code>&#x3C;why></code></li>\n</ul>\n<h3 id=\"103-保留意见\">10.3 保留意见</h3>\n<p>说明哪些场景不适合直接采用主结论。</p>\n<h2 id=\"11-落地建议\">11. 落地建议</h2>\n<h3 id=\"111-如果要实施\">11.1 如果要实施</h3>\n<ul>\n<li>第一步：<code>&#x3C;step></code></li>\n<li>第二步：<code>&#x3C;step></code></li>\n<li>第三步：<code>&#x3C;step></code></li>\n</ul>\n<h3 id=\"112-如果要继续研究\">11.2 如果要继续研究</h3>\n<ul>\n<li>还需要补什么证据</li>\n<li>还需要做什么实验</li>\n</ul>\n<h2 id=\"12-参考与附录\">12. 参考与附录</h2>\n<h3 id=\"121-参考来源\">12.1 参考来源</h3>\n<ul>\n<li><code>&#x3C;reference></code></li>\n</ul>\n<h3 id=\"122-数据样例与补充说明\">12.2 数据、样例与补充说明</h3>\n<ul>\n<li><code>&#x3C;appendix></code></li>\n</ul>\n<h3 id=\"123-版本与新鲜度说明\">12.3 版本与新鲜度说明</h3>\n<ul>\n<li>写明调研时间、证据截止时间、适用版本范围</li>\n</ul>",
+    "toc": [
+      {
+        "depth": 1,
+        "slug": "research-topic",
+        "text": "<Research Topic>"
+      },
+      {
+        "depth": 2,
+        "slug": "调研与论文式综述",
+        "text": "调研与论文式综述"
+      },
+      {
+        "depth": 2,
+        "slug": "0-摘要",
+        "text": "0. 摘要"
+      },
+      {
+        "depth": 3,
+        "slug": "0-1-研究问题",
+        "text": "0.1 研究问题"
+      },
+      {
+        "depth": 3,
+        "slug": "0-2-简明结论",
+        "text": "0.2 简明结论"
+      },
+      {
+        "depth": 3,
+        "slug": "0-3-阅读导航",
+        "text": "0.3 阅读导航"
+      },
+      {
+        "depth": 2,
+        "slug": "1-问题定义",
+        "text": "1. 问题定义"
+      },
+      {
+        "depth": 3,
+        "slug": "1-1-研究对象",
+        "text": "1.1 研究对象"
+      },
+      {
+        "depth": 3,
+        "slug": "1-2-研究边界",
+        "text": "1.2 研究边界"
+      },
+      {
+        "depth": 3,
+        "slug": "1-3-目标读者",
+        "text": "1.3 目标读者"
+      },
+      {
+        "depth": 2,
+        "slug": "2-背景与上下文",
+        "text": "2. 背景与上下文"
+      },
+      {
+        "depth": 3,
+        "slug": "2-1-业务背景",
+        "text": "2.1 业务背景"
+      },
+      {
+        "depth": 3,
+        "slug": "2-2-技术背景",
+        "text": "2.2 技术背景"
+      },
+      {
+        "depth": 3,
+        "slug": "2-3-前置假设",
+        "text": "2.3 前置假设"
+      },
+      {
+        "depth": 2,
+        "slug": "3-术语与定义",
+        "text": "3. 术语与定义"
+      },
+      {
+        "depth": 2,
+        "slug": "4-研究方法",
+        "text": "4. 研究方法"
+      },
+      {
+        "depth": 3,
+        "slug": "4-1-信息来源",
+        "text": "4.1 信息来源"
+      },
+      {
+        "depth": 3,
+        "slug": "4-2-评价标准",
+        "text": "4.2 评价标准"
+      },
+      {
+        "depth": 3,
+        "slug": "4-3-证据分级",
+        "text": "4.3 证据分级"
+      },
+      {
+        "depth": 2,
+        "slug": "5-候选方案总览",
+        "text": "5. 候选方案总览"
+      },
+      {
+        "depth": 2,
+        "slug": "6-分方案分析",
+        "text": "6. 分方案分析"
+      },
+      {
+        "depth": 3,
+        "slug": "6-1-方案-a-name",
+        "text": "6.1 方案 A：<name>"
+      },
+      {
+        "depth": 3,
+        "slug": "6-2-方案-b-name",
+        "text": "6.2 方案 B：<name>"
+      },
+      {
+        "depth": 2,
+        "slug": "7-对比矩阵",
+        "text": "7. 对比矩阵"
+      },
+      {
+        "depth": 3,
+        "slug": "7-1-总体对比",
+        "text": "7.1 总体对比"
+      },
+      {
+        "depth": 3,
+        "slug": "7-2-场景化对比",
+        "text": "7.2 场景化对比"
+      },
+      {
+        "depth": 2,
+        "slug": "8-证据质量与局限",
+        "text": "8. 证据质量与局限"
+      },
+      {
+        "depth": 3,
+        "slug": "8-1-证据强度",
+        "text": "8.1 证据强度"
+      },
+      {
+        "depth": 3,
+        "slug": "8-2-局限性",
+        "text": "8.2 局限性"
+      },
+      {
+        "depth": 3,
+        "slug": "8-3-未决问题",
+        "text": "8.3 未决问题"
+      },
+      {
+        "depth": 2,
+        "slug": "9-风险与反例",
+        "text": "9. 风险与反例"
+      },
+      {
+        "depth": 3,
+        "slug": "9-1-关键风险",
+        "text": "9.1 关键风险"
+      },
+      {
+        "depth": 3,
+        "slug": "9-2-反例与反驳",
+        "text": "9.2 反例与反驳"
+      },
+      {
+        "depth": 2,
+        "slug": "10-结论",
+        "text": "10. 结论"
+      },
+      {
+        "depth": 3,
+        "slug": "10-1-主结论",
+        "text": "10.1 主结论"
+      },
+      {
+        "depth": 3,
+        "slug": "10-2-推荐方案",
+        "text": "10.2 推荐方案"
+      },
+      {
+        "depth": 3,
+        "slug": "10-3-保留意见",
+        "text": "10.3 保留意见"
+      },
+      {
+        "depth": 2,
+        "slug": "11-落地建议",
+        "text": "11. 落地建议"
+      },
+      {
+        "depth": 3,
+        "slug": "11-1-如果要实施",
+        "text": "11.1 如果要实施"
+      },
+      {
+        "depth": 3,
+        "slug": "11-2-如果要继续研究",
+        "text": "11.2 如果要继续研究"
+      },
+      {
+        "depth": 2,
+        "slug": "12-参考与附录",
+        "text": "12. 参考与附录"
+      },
+      {
+        "depth": 3,
+        "slug": "12-1-参考来源",
+        "text": "12.1 参考来源"
+      },
+      {
+        "depth": 3,
+        "slug": "12-2-数据-样例与补充说明",
+        "text": "12.2 数据、样例与补充说明"
+      },
+      {
+        "depth": 3,
+        "slug": "12-3-版本与新鲜度说明",
+        "text": "12.3 版本与新鲜度说明"
+      }
+    ],
+    "detailPath": "articles/md_1d30f6282fc5.json"
+  }
+}
