@@ -115,8 +115,8 @@ export default function BookDrawerReader({ books }: Props) {
       });
       if (priority === 'intent') {
         setReaderPool((current) => [book.id, ...current.filter((item) => item !== book.id)].slice(0, readerPoolLimit));
+        prefetchBookSource(book, settings, priority);
       }
-      prefetchBookSource(book, settings, priority);
     };
 
     const observer = new IntersectionObserver(

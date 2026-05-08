@@ -6,16 +6,17 @@ import { loadBookSettings } from '../../lib/books/storage';
 type Props = {
   book: BookItem;
   className?: string;
+  allowGeneratedCover?: boolean;
 };
 
-export default function BookCover({ book, className = '' }: Props) {
+export default function BookCover({ book, className = '', allowGeneratedCover = true }: Props) {
   const [coverUrl, setCoverUrl] = useState(() => book.cover || '');
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     setFailed(false);
-    setCoverUrl(book.cover || getOpenListCoverUrl(book));
-  }, [book]);
+    setCoverUrl(book.cover || (allowGeneratedCover ? getOpenListCoverUrl(book) : ''));
+  }, [book, allowGeneratedCover]);
 
   return (
     <span className={`book-cover-render ${className}`.trim()} data-book-cover-id={book.id}>
