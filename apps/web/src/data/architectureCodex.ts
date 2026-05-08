@@ -438,7 +438,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       'KnowledgeObject 是统一协议：id、type、title、summary、sources、relations、tags、createdAt、updatedAt、snapshotVersion。',
-      'KnowledgeCollection 是对象进入 Surface 前的阅读上下文层：Object -> Collection -> ReadingSession -> View。当前 Runtime Content Index 会生成 folder collection、series collection 和共享 topic collection；首页优先展示 folder / series collection card，但 card 只打开 Reader Drawer。/collections/ 与 /collections/[slug]/ 只为 folder / series 生成 Reading Session；topic collection 只作为 metadata / search / Graph 维度保留在 runtime index，默认不得批量预渲染成静态集合页。',
+      'KnowledgeCollection 是对象进入 Surface 前的阅读上下文层：Object -> Collection -> ReadingSession -> View。首页 canonical shape 是 Runtime Surface v2：混合对象瀑布流、feed tabs、drawer peek、search、OpenList/Pinterest shell 和 runtime refresh 同时活着；Collection 只能作为 runtime lens 插入 feed，不能接管首页、不能变成 collection-only feed，也不能驱动 full route takeover。首页 Drawer 使用 .home-reader-session：当前文章正文是前景，集合标题只在 context rail 中弱化出现，TOC / 上一篇 / 下一篇是高密度导航；不得回退成 collection hero、stats、summary card、object card grid 或 .home-drawer-summary 卡片递归。/collections/ 与 /collections/[slug]/ 是备用 / permalink surface，不得替代首页 runtime surface；topic collection 只作为 metadata / search / Graph 维度；topic collections are dimensions, not static collection pages。',
       'BookObject 连接 openlist:// EPUB/PDF/MOBI、cover asset、author、topic、reader memory、highlight 和 collection。',
       'VisualObject 连接 OpenList/COS/Immich/Pinterest preview、palette、mood、source URL、related books、related posts 和 graph node。',
       'PersonObject、TimelineObject、PlaceObject 和 TopicObject 是后续扩展的实体类型，不能被临时 tag 完全替代。',

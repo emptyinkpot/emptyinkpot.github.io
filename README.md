@@ -6,6 +6,20 @@ status: canonical
 # MyBlog
 ## 总体设计与实施手册
 
+MyBlog is not a blog homepage. It is a mixed-object Knowledge Runtime Surface. Preserve feed continuity, drawer reading, and collection-as-lens behavior.
+
+Runtime Constitution entrypoints:
+
+- `AI_RULES.md`
+- `project.frontend-runtime-contract.json`
+- `contracts/frontend-runtime-contract.json`
+- `contracts/runtime-authority-map.json`
+- `contracts/object-projection-contract.json`
+- `contracts/collection-behavior-contract.json`
+- `philosophy/FRONTEND_DESIGN_PHILOSOPHY.md`
+- `topology/SYSTEM_TOPOLOGY.md`
+- `adr/ADR-001-collections-are-lenses-not-pages.md`
+
 > 版本定位：本文件是 MyBlog 的唯一真源、项目说明入口与工程手册主文档。
 > 文档策略：正文先给出项目说明、结构与边界，再展开运行、开发、发布与维护规则。
 > 冲突处理：若本文件与任何派生文档冲突，以本文件为准；派生文档只允许补充，不允许重定义项目边界。
@@ -316,7 +330,7 @@ SSE / runtime fetch
 - Runtime MarkdownObject 是公开文章进入前端前的唯一对象模型，必须包含 `sourcePath`、`openlistPath`、`openlistUrl`、`sourceRoot: "vault"`、`kind`、`folderTags`、`visibility`、`published`、`runtimeFeed`、`relations` 和 `card`。`sourcePath` 只表示内部热镜像路径；`openlistPath/openlistUrl` 才是前端公开来源入口。卡片 UI 只能读取 `MarkdownObject.card.eyebrow / card.chips / card.subtitle`，禁止首页、列表页或组件自己从 `tags/categories` 临时生成展示标签。
 - 当前 `tags/categories/folderTags/card.chips` 只是 `derivedTaxonomy`：来源限于 frontmatter、文件夹路径和 Obsidian wikilink，属于 filesystem/frontmatter/wikilink 派生，不是 AI 语义标签、ontology、embedding cluster 或知识图谱真源。
 - AI Semantic Pipeline 当前是 `active-sidecar-generator`：只允许写 `*.semantic.json` sidecar，例如 `foo.md -> foo.semantic.json`；sidecar 可包含 `entities/topics/relations/collections/clusters/model/generatedAt`，但永远是 projection，不得回写 Markdown 正文或 frontmatter，不得覆盖 `tags/categories` 的人工显式字段。2026-05-08 已用云端 `sub2api.tengokukk.com` 的 `coze-glm-shell` / `Coze GLM` 跑通一篇有效 sidecar，runtime projection 已读为 `semantic.status=active`。
-- KnowledgeCollection 是 Runtime MarkdownObject 之上的阅读上下文层：文章、视觉、书籍、项目和 repo 后续都应先进入 Collection，再投影到首页、Graph、Search、Reader 或 Gallery。首页 collection card 只是打开 Reading Session 的入口；Collection 不是对象卡片目录页。点击集合必须进入 Reader Drawer / Reading Session，当前文章正文是中心，集合目录是上下文轨道；集合内切换文章不得 full reload，只允许 Drawer 内切换并用 URL state 同步。`/collections/` 是集合入口列表，`/collections/[slug]/` 只为 folder / series collection 生成独立 Reading Session Surface；topic collection 只保留为 metadata / search / Graph 维度，默认不得预渲染成静态集合页。
+- KnowledgeCollection 是 Runtime MarkdownObject 之上的阅读上下文层：文章、视觉、书籍、项目和 repo 后续都应先进入 Collection，再投影到首页、Graph、Search、Reader 或 Gallery。首页的 canonical surface 是混合对象瀑布流和 feed tabs，默认 tab 必须是 `all`，不得让 Collection 接管首页或把 feed 退化成 collection-only 目录。首页 collection card 只是 runtime lens：点击打开 Reader Drawer / Reading Session，背景 masonry、tabs 和 scroll context 必须保持活着。当前文章正文是中心，集合目录是上下文轨道；集合内切换文章不得 full reload，只允许 Drawer 内切换并用 URL state 同步。首页 Drawer 的 Collection 模板必须使用 `.home-reader-session`：不得渲染 collection hero、stats、summary card、object card grid 或 `.home-drawer-summary` 卡片递归。`/collections/` 是备用集合入口列表，不能替代首页；`/collections/[slug]/` 只为 folder / series collection 生成独立 Reading Session Surface；topic collection 只保留为 metadata / search / Graph 维度，默认不得预渲染成静态集合页。
 - Runtime 构建边界：`apps/web/public/runtime/content-index.json` 是前端 metadata index，供首页、集合入口、标签、分类、RSS、Graph 和搜索索引使用；正文、预渲染 `html` 和 `toc` 只能从 `/runtime/articles/*.json` 单篇 detail payload 读取。不得让通用页面在 build-time 读取 70MB+ full index，也不得让 Collection Reading Session 退回卡片目录或跳转 `/posts/` 才能阅读。
 - Markdown Presentation Truth 是 `apps/web/src/lib/markdown/pipeline.ts` 与 `apps/web/src/styles/global.css` 的 `.prose-shell`。Runtime MarkdownObject 文章必须使用同一套 rehype pipeline：GFM table、Obsidian callout、table wrapper、rehype-pretty-code/Shiki、heading slug 和 prose typography；Quartz 只作为 Markdown rendering system 参考，不整体替换 MyBlog 站点。
 - `docs/` 承担工程文档、规划、架构与维护记录，不作为公开文章真源的并列写作面。
@@ -543,11 +557,11 @@ Public Site
 - Runtime Projection 是允许从 Authoring Truth 进入公开 Feed 的通道；它不是简单文件夹复制，也不是全站发布回调，而是 MarkdownObject Index Compile。
 - 当前 Runtime Projection 条件：`docs` 下 Markdown 默认进入 `MarkdownObject`；`draft: true`、`published: false`、`visibility: private/draft` 或私有路径会排除。后续可再加更细规则；新文章仍建议补齐 frontmatter：`slug`、`title`、`date`、`summary`、`tags`、`categories`。
 - `tools/build-runtime-content-index.mjs` 必须把每篇公开文章归一化为 MarkdownObject：`sourcePath` 保留内部热镜像路径，`openlistPath/openlistUrl` 指向 `/openlist/Obsidian/docs/...` 公开入口，`kind` 从 frontmatter 或文件夹派生，`visibility` 从 frontmatter / `private` / `drafts` 派生，`folderTags` 来自路径段，`relations.wikilinks/assets/backlinks` 来自 Obsidian link 与 Markdown asset，`card.chips` 由 categories/tags/project/series 生成，`derivedTaxonomy` 必须声明当前分类/标签只是规则派生，`semantic` 必须声明 sidecar 槽位且 `authority=false`。
-- `tools/build-runtime-content-index.mjs` 还必须从 MarkdownObject 生成 KnowledgeCollection：folder collection、series collection 和至少两个对象共享的 topic collection。Collection 必须包含 `objects`、`relations`、`tags`、`layout`、`projections`、`card` 和 `stats`；首页优先消费 folder / series collection card，但 card 不是终点，只负责打开 Reading Session。`/collections/` 提供集合入口，`/collections/[slug]/` 只预渲染 folder / series Reading Session：直接显示当前文章全文 + 本集合目录 + 上一篇/下一篇；topic collection 只作为 metadata / search / Graph 维度留在 runtime index，不得批量生成静态集合页。集合内 Object 切换不得跳转到 `/posts/` 或刷新整页。
+- `tools/build-runtime-content-index.mjs` 还必须从 MarkdownObject 生成 KnowledgeCollection：folder collection、series collection 和至少两个对象共享的 topic collection。Collection 必须包含 `objects`、`relations`、`tags`、`layout`、`projections`、`card` 和 `stats`；首页可以插入 folder / series collection card，但不能 collection-first 或 collection-only，默认必须保留 post / note / book / visual / github / music 等混合对象瀑布流。Collection card 不是终点，只负责打开 Reading Session。`/collections/` 提供备用集合入口，`/collections/[slug]/` 只预渲染 folder / series Reading Session：直接显示当前文章全文 + 本集合目录 + 上一篇/下一篇；topic collection 只作为 metadata / search / Graph 维度留在 runtime index，不得批量生成静态集合页。集合内 Object 切换不得跳转到 `/posts/` 或刷新整页。
 - `apps/web/public/runtime/content-index.json` 只允许作为构建期 metadata index；正文、`html` 和 `toc` 必须按 `detailPath` 从 `/runtime/articles/*.json` 单篇 detail payload 加载。首页 Drawer、Collection Reading Session 和 `/posts/[slug]/` 可以读取单篇 detail；标签、分类、系列、RSS、Graph、搜索索引和普通卡片不得在 build-time 读取 full index。
 - 前端文章卡片合同：`ArticleCard`、首页 Runtime Feed、`/posts/` 和 `/posts/[slug]/` 的展示标签只能读取 `MarkdownObject.card.chips`；`tags/categories` 仍可供搜索、RSS、分类页和 Graph 索引使用，但不得作为卡片 UI 的临时展示逻辑。
 - Runtime Feature Registry 位于 `public-data/runtime/features.json`，公开副本位于 `apps/web/public/runtime/features.json`。它只声明当前 active runtime surface 的 authority、truth、producer、consumer 和 projection，不登记旧文章兼容系统。
-- 首页 `/` 的主 Feed 必须把全部 Runtime MarkdownObject 作为现有 `.home-feed-card` 小卡片渲染，点击仍打开首页 Drawer；完整文章只进入 `/posts/[slug]/`。首页抽屉正文只按 `detailPath` 读取 `/runtime/articles/*.json` 内预渲染的 `html`，不得在浏览器里维护第二套 Markdown renderer。
+- 首页 `/` 是 Runtime Surface v2：混合对象瀑布流、feed tabs、drawer peek、search、OpenList/Pinterest shell 和 runtime refresh 必须同时活着。它可以展示少量 `KnowledgeCollection` lens，但不得变成 Collection Gateway 或 collection-only feed；post / note / book / visual / github / music / project 仍是同一个 surface 里的对象投影。点击集合打开首页 Reader Drawer / Reading Session，当前文章全文是中心，集合目录是右侧上下文轨道；背景 feed、tabs 与 scroll context 保持活着。首页抽屉正文只按 `detailPath` 读取 `/runtime/articles/*.json` 内预渲染的 `html`，不得在浏览器里维护第二套 Markdown renderer。
 - `/posts/` 必须只展示 Runtime MarkdownObject；不得展示 Astro posts archive。
 - Runtime 文章页的 metadata 必须使用 Editorial Metadata Line，例如 `2026-05-07 / 4 min read / HISTORY / PDF ARCHIVE`；不要回退到 badge、chip、pill 或按钮式标签。`/posts/[slug]/` 是唯一公开文章详情路由；不保留 `/runtime/` 文章页面或 redirect。
 - 引用私有附件、存在无法迁移的 Obsidian embed、位于 `drafts/private/assets/.obsidian` 等私有路径的文件不得进入 runtime projection。

@@ -13,6 +13,7 @@ validateContentInfrastructureReductionContract();
 validateStabilizationSprint();
 validateObsidianAuthorityContract();
 validateOpenListServerStorageBoundary();
+validateRuntimeConstitution();
 
 if (issues.length) {
   console.error(['Repository governance validation failed:', ...issues.map((issue) => `- ${issue}`)].join('\n'));
@@ -467,6 +468,69 @@ function validateOpenListServerStorageBoundary() {
   }
   if (!String(project.nginxStaticRouteRule ?? '').includes('try_files $uri $uri/index.html =404')) {
     issues.push('project.json nginxStaticRouteRule must forbid SPA-style /index.html fallback');
+  }
+}
+
+function validateRuntimeConstitution() {
+  const requiredFiles = [
+    'AI_RULES.md',
+    'project.frontend-runtime-contract.json',
+    'contracts/frontend-runtime-contract.json',
+    'contracts/runtime-authority-map.json',
+    'contracts/object-projection-contract.json',
+    'contracts/collection-behavior-contract.json',
+    'philosophy/FRONTEND_DESIGN_PHILOSOPHY.md',
+    'philosophy/RUNTIME_IDENTITY.md',
+    'philosophy/KNOWLEDGE_OBJECT_MODEL.md',
+    'philosophy/COLLECTION_MODEL.md',
+    'philosophy/ANTI_CMS_RULES.md',
+    'topology/SYSTEM_TOPOLOGY.md',
+    'topology/RUNTIME_GRAPH.md',
+    'topology/SYNC_ARCHITECTURE.md',
+    'topology/DEPLOY_GRAPH.md',
+    'adr/ADR-001-collections-are-lenses-not-pages.md',
+    'adr/ADR-002-feed-tabs-must-not-navigate.md',
+    'adr/ADR-003-mixed-object-masonry-is-core-identity.md'
+  ];
+
+  requiredFiles.forEach((relativePath) => {
+    if (!fileExists(relativePath)) {
+      issues.push(`Runtime Constitution file is required: ${relativePath}`);
+    }
+  });
+
+  if (!fileExists('contracts/frontend-runtime-contract.json')) return;
+
+  const aiRules = readText(resolvePath('AI_RULES.md'));
+  const contract = JSON.parse(readText(resolvePath('contracts/frontend-runtime-contract.json')));
+  const collectionContract = JSON.parse(readText(resolvePath('contracts/collection-behavior-contract.json')));
+
+  [
+    'Knowledge Runtime Surface',
+    'Do not turn collections into standalone CMS pages',
+    'Do not replace the homepage mixed-object masonry stream with collection grids',
+    'Do not make topic collections prerender into static collection pages',
+    'Collection is context. Drawer is reading. Homepage is discovery'
+  ].forEach((term) => {
+    if (!aiRules.includes(term)) {
+      issues.push(`AI_RULES.md must include Runtime Constitution term: ${term}`);
+    }
+  });
+
+  if (contract.productIdentity?.primaryModel !== 'Knowledge Runtime Surface') {
+    issues.push('contracts/frontend-runtime-contract.json must define Knowledge Runtime Surface as primary model');
+  }
+
+  if (contract.collectionModel?.role !== 'runtime lens and reading context') {
+    issues.push('contracts/frontend-runtime-contract.json must define collection as runtime lens and reading context');
+  }
+
+  if (collectionContract.basisRules?.topic?.staticCollectionPage !== false) {
+    issues.push('contracts/collection-behavior-contract.json must forbid topic static collection pages');
+  }
+
+  if (collectionContract.basisRules?.topic?.metadataSearchGraphDimension !== true) {
+    issues.push('contracts/collection-behavior-contract.json must keep topic as metadata/search/Graph dimension');
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,77 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/图文文档写作规范.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/图文文档写作规范.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E5%9B%BE%E6%96%87%E6%96%87%E6%A1%A3%E5%86%99%E4%BD%9C%E8%A7%84%E8%8C%83.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:37:46.533Z",
+      "model": "coze-shell",
+      "entities": [
+        "图文文档写作规范",
+        "AGENTS.md",
+        "AGENTS.annotated.md",
+        "Atramenti-Console",
+        "Obsidian",
+        "PDF",
+        "DOCX"
+      ],
+      "topics": [
+        "图文文档创作规范",
+        "技术文档写作最佳实践",
+        "截图规范与管理",
+        "示意图设计准则",
+        "文档导出与分发标准",
+        "文档内容协同表达"
+      ],
+      "relations": [
+        {
+          "type": "depends_on",
+          "target": "AGENTS.md",
+          "label": "遵循通用文档创建、整合等规则",
+          "confidence": 1
+        },
+        {
+          "type": "depends_on",
+          "target": "AGENTS.annotated.md",
+          "label": "遵循通用文档创建、整合等规则",
+          "confidence": 1
+        },
+        {
+          "type": "applies_to",
+          "target": "Atramenti-Console",
+          "label": "规范其项目内各类图文文档创作",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "Obsidian",
+          "label": "指定图片存储路径关联该工具",
+          "confidence": 1
+        },
+        {
+          "type": "supports",
+          "target": "PDF",
+          "label": "支持文档导出为该格式",
+          "confidence": 1
+        },
+        {
+          "type": "supports",
+          "target": "DOCX",
+          "label": "支持文档导出为该格式",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "技术文档规范知识库"
+      ],
+      "clusters": [
+        "文档写作规范类",
+        "图文内容创作指南类"
+      ]
     },
     "series": "",
     "project": "图文文档写作规范",

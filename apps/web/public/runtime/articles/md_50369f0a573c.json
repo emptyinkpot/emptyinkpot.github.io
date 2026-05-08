@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -43,7 +43,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -63,13 +63,73 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/账户.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/账户.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%B4%A6%E6%88%B7.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:44:06.375Z",
+      "model": "coze-shell",
+      "entities": [
+        "GPT-5.4",
+        "GPT-5.4-mini",
+        "OpenAI",
+        "WSL",
+        "ChatGPT",
+        "crs"
+      ],
+      "topics": [
+        "AI Model Configuration",
+        "API Authentication",
+        "Agent Account Setup",
+        "Sandbox Environment Management"
+      ],
+      "relations": [
+        {
+          "type": "configures",
+          "target": "GPT-5.4",
+          "label": "sets up AI agent with GPT-5.4 model",
+          "confidence": 1
+        },
+        {
+          "type": "configures",
+          "target": "GPT-5.4-mini",
+          "label": "sets up account with GPT-5.4-mini model",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "OpenAI",
+          "label": "relies on OpenAI authentication standards",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "ChatGPT",
+          "label": "utilizes ChatGPT as account auth method",
+          "confidence": 1
+        },
+        {
+          "type": "acknowledges",
+          "target": "WSL",
+          "label": "confirms WSL setup completion",
+          "confidence": 1
+        },
+        {
+          "type": "provides",
+          "target": "OpenAI",
+          "label": "hosts OpenAI-compatible API endpoint",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Agent Configuration Repository"
+      ],
+      "clusters": [
+        "AI Agent Account & Model Configurations"
+      ]
     },
     "series": "",
     "project": "毕业论文",

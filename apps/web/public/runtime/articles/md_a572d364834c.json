@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -41,7 +41,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -59,13 +59,76 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/Benammar 2018 外文译文资料说明.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/Benammar 2018 外文译文资料说明.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/Benammar%202018%20%E5%A4%96%E6%96%87%E8%AF%91%E6%96%87%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:45:22.675Z",
+      "model": "coze-shell",
+      "entities": [
+        "刘高朋",
+        "Atramenti-Console",
+        "Obsidian",
+        "Sensors期刊",
+        "《A Modular IoT Platform for Real-Time Indoor Air Quality Monitoring》",
+        "模块化物联网室内空气质量实时监测平台"
+      ],
+      "topics": [
+        "外文译文资料管理",
+        "物联网室内空气质量实时监测",
+        "学术论文翻译与归档",
+        "文档收口与版本追溯"
+      ],
+      "relations": [
+        {
+          "type": "corresponds_to",
+          "target": "《A Modular IoT Platform for Real-Time Indoor Air Quality Monitoring》",
+          "label": "译文对应原文学术论文",
+          "confidence": 1
+        },
+        {
+          "type": "created_by",
+          "target": "刘高朋",
+          "label": "外文译文由刘高朋完成",
+          "confidence": 1
+        },
+        {
+          "type": "managed_by",
+          "target": "Atramenti-Console",
+          "label": "译文文档由Atramenti-Console系统管理",
+          "confidence": 1
+        },
+        {
+          "type": "published_in",
+          "target": "Sensors期刊",
+          "label": "原文论文发表于Sensors期刊",
+          "confidence": 1
+        },
+        {
+          "type": "related_to",
+          "target": "模块化物联网室内空气质量实时监测平台",
+          "label": "译文内容围绕该监测平台主题展开",
+          "confidence": 1
+        },
+        {
+          "type": "categorized_under",
+          "target": "学术文档归档",
+          "label": "译文资料归类为学术归档文档",
+          "confidence": 0.9
+        }
+      ],
+      "collections": [
+        "毕业论文配套外文译文集合",
+        "Atramenti-Console codex文档集合"
+      ],
+      "clusters": [
+        "学术翻译资料集群",
+        "物联网监测技术文档集群",
+        "文档管理与收口集群"
+      ]
     },
     "series": "",
     "project": "毕业论文",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -42,7 +42,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -58,13 +58,82 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/记录/未命名 1.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/记录/未命名 1.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%AE%B0%E5%BD%95/%E6%9C%AA%E5%91%BD%E5%90%8D%201.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:42:50.442Z",
+      "model": "coze-shell",
+      "entities": [
+        "Windows PowerShell",
+        "OpenAI Codex",
+        "GPT-5.4 medium",
+        "Token Pool Project",
+        "ASUS-KL",
+        "rg (ripgrep)",
+        "Codex policy documents"
+      ],
+      "topics": [
+        "AI code assistant interaction",
+        "Command-line project exploration",
+        "AI assistant configuration management",
+        "PowerShell session automation"
+      ],
+      "relations": [
+        {
+          "type": "hosts",
+          "target": "OpenAI Codex",
+          "label": "provides execution environment for",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "GPT-5.4 medium",
+          "label": "runs on AI model",
+          "confidence": 1
+        },
+        {
+          "type": "interacts_with",
+          "target": "OpenAI Codex",
+          "label": "initiates session with",
+          "confidence": 1
+        },
+        {
+          "type": "accesses",
+          "target": "Codex policy documents",
+          "label": "reads configuration from",
+          "confidence": 1
+        },
+        {
+          "type": "explores",
+          "target": "Token Pool Project",
+          "label": "analyzes project structure and files",
+          "confidence": 1
+        },
+        {
+          "type": "contains",
+          "target": "project.json",
+          "label": "includes core configuration file",
+          "confidence": 1
+        },
+        {
+          "type": "contains",
+          "target": "README.md",
+          "label": "includes project documentation",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "AI Assistant Session Logs",
+        "Project Exploration Records"
+      ],
+      "clusters": [
+        "Codex-PowerShell Integration Sessions",
+        "Token Pool Project Audits"
+      ]
     },
     "series": "",
     "project": "未命名 1",

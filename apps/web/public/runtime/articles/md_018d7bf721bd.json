@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -43,7 +43,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -63,13 +63,98 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/Mortis%20%E6%8C%87%E6%8C%A5%E5%B1%82%E4%B8%8E%20Guard%20%E5%8F%8C%E8%84%91%E6%9E%B6%E6%9E%84%E8%A7%84%E8%8C%83.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:33:44.873Z",
+      "model": "coze-shell",
+      "entities": [
+        "Mortis",
+        "Guard (MCP Guard)",
+        "Codex",
+        "controller",
+        "task queue",
+        "Skill",
+        "Windows Terminal",
+        "PowerShell",
+        "execution_plan",
+        "层级模型L1-L6",
+        "验证等级V3/V4"
+      ],
+      "topics": [
+        "AI Agent双脑决策-执行架构设计",
+        "任务执行流程标准化规范",
+        "层级化系统操作边界约束",
+        "任务审查与验证机制",
+        "Mortis架构落地规范"
+      ],
+      "relations": [
+        {
+          "type": "contains",
+          "target": "controller",
+          "label": "Mortis架构包含指挥层组件controller",
+          "confidence": 1
+        },
+        {
+          "type": "contains",
+          "target": "Guard (MCP Guard)",
+          "label": "Mortis架构包含审查层组件Guard",
+          "confidence": 1
+        },
+        {
+          "type": "contains",
+          "target": "Codex",
+          "label": "Mortis架构包含执行层组件Codex",
+          "confidence": 1
+        },
+        {
+          "type": "contains",
+          "target": "task queue",
+          "label": "Mortis架构包含任务队列组件task queue",
+          "confidence": 1
+        },
+        {
+          "type": "generates",
+          "target": "execution_plan",
+          "label": "controller生成唯一执行凭证execution_plan",
+          "confidence": 1
+        },
+        {
+          "type": "reviews",
+          "target": "execution_plan",
+          "label": "Guard审查execution_plan以决定任务是否放行",
+          "confidence": 1
+        },
+        {
+          "type": "executes",
+          "target": "execution_plan",
+          "label": "Codex严格依据execution_plan执行任务步骤",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "层级模型L1-L6",
+          "label": "Mortis架构使用层级模型L1-L6定位任务入口",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "验证等级V3/V4",
+          "label": "Mortis架构使用验证等级判定任务成功标准",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Mortis架构规范集合"
+      ],
+      "clusters": [
+        "AI Agent双脑架构规范",
+        "任务执行流程管控"
+      ]
     },
     "series": "",
     "project": "Mortis 指挥层与 Guard 双脑架构规范",

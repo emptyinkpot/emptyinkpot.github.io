@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,85 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/服务器.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/服务器.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%8D%E5%8A%A1%E5%99%A8.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:39:17.970Z",
+      "model": "coze-shell",
+      "entities": [
+        "sub2api",
+        "SOCKS5代理",
+        "setup-socks5-proxy.sh",
+        "Docker",
+        "server-170",
+        "server-124",
+        "server-171",
+        "jd-lavm-beijing",
+        "jd-lavm-yp7m9xmd5l",
+        "/api/v1/admin/proxies/data"
+      ],
+      "topics": [
+        "服务器代理部署",
+        "Docker内网网络配置",
+        "sub2api代理集成",
+        "SOCKS5代理安全优化"
+      ],
+      "relations": [
+        {
+          "type": "depends_on",
+          "target": "Docker",
+          "label": "sub2api依赖Docker容器环境部署",
+          "confidence": 1
+        },
+        {
+          "type": "requires",
+          "target": "SOCKS5代理",
+          "label": "sub2api代理池需接入SOCKS5代理节点",
+          "confidence": 1
+        },
+        {
+          "type": "deployed_on",
+          "target": "server-170",
+          "label": "SOCKS5代理部署在server-170服务器",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "setup-socks5-proxy.sh",
+          "label": "部署SOCKS5代理使用setup-socks5-proxy.sh脚本",
+          "confidence": 1
+        },
+        {
+          "type": "accesses",
+          "target": "/api/v1/admin/proxies/data",
+          "label": "sub2api通过该接口管理代理",
+          "confidence": 1
+        },
+        {
+          "type": "connects_to",
+          "target": "172.18.0.1:1080",
+          "label": "sub2api容器连接Docker内网网关的SOCKS5代理",
+          "confidence": 1
+        },
+        {
+          "type": "corresponds_to",
+          "target": "170.106.179.226",
+          "label": "server-170对应的公网IP地址",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "服务器配置与代理集成知识库"
+      ],
+      "clusters": [
+        "Docker网络配置",
+        "sub2api代理管理",
+        "SOCKS5代理部署"
+      ]
     },
     "series": "",
     "project": "服务器",

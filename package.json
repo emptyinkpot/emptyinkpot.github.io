@@ -23,6 +23,7 @@
     "check:github-overview": "node tools/validate-github-overview-snapshot.mjs",
     "check:updates": "node tools/validate-update-log.mjs",
     "check:content": "node tools/validate-content-governance.mjs",
+    "check:frontend-contract": "node tools/validate-frontend-runtime-contract.mjs",
     "check:pwa": "node tools/validate-pwa-surface.mjs",
     "android:twa:validate": "node tools/generate-android-twa.mjs --validate-only",
     "android:twa:generate": "node tools/generate-android-twa.mjs --generate",
@@ -31,7 +32,7 @@
     "check:workspace": "node tools/deploy-guard.mjs --check",
     "deploy:site": "node tools/deploy-static-site.mjs",
     "check:governance": "node tools/validate-repo-governance.mjs",
-    "check": "npm run runtime:content && npm run check:updates && npm run check:content && npm run check:pwa && npm run check:workspace && npm run check:governance && npm run check:github-overview"
+    "check": "npm run runtime:content && npm run check:updates && npm run check:content && npm run check:frontend-contract && npm run check:pwa && npm run check:workspace && npm run check:governance && npm run check:github-overview"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

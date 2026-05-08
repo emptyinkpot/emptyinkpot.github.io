@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -42,7 +42,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -61,13 +61,86 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/操作术语协议.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/操作术语协议.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%93%8D%E4%BD%9C%E6%9C%AF%E8%AF%AD%E5%8D%8F%E8%AE%AE.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:38:35.422Z",
+      "model": "coze-shell",
+      "entities": [
+        "宿主仓",
+        "来源仓",
+        "前端基底",
+        "owning repo",
+        "canonical source",
+        "source donor role",
+        "working copy",
+        "repo manifest",
+        "GitHub",
+        "github-delivery-mcp"
+      ],
+      "topics": [
+        "仓库整合与跨仓接入规范",
+        "前端基底判定规则",
+        "GitHub源码真源归属管理",
+        "操作术语统一约定",
+        "源码处理流程规范"
+      ],
+      "relations": [
+        {
+          "type": "defines",
+          "target": "宿主仓",
+          "label": "仓库整合动作的最终接收仓库",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "来源仓",
+          "label": "仓库整合动作的被整合/参考仓库",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "前端基底",
+          "label": "前端体系的核心归属载体",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "canonical source",
+          "label": "优先迭代的源码真源",
+          "confidence": 1
+        },
+        {
+          "type": "specifies",
+          "target": "GitHub仓库管理",
+          "label": "单一真源与交付顺序规则",
+          "confidence": 1
+        },
+        {
+          "type": "specifies",
+          "target": "前端整合",
+          "label": "基底判定与实现方式规则",
+          "confidence": 1
+        },
+        {
+          "type": "specifies",
+          "target": "源码处理",
+          "label": "仓库整合的源码迁移顺序规则",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Agent操作规范集合"
+      ],
+      "clusters": [
+        "仓库操作术语簇",
+        "源码管理规范簇",
+        "前端整合规则簇"
+      ]
     },
     "series": "",
     "project": "操作术语协议",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -44,7 +44,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -65,13 +65,107 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/MCP 清单总表.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/MCP 清单总表.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/MCP%20%E6%B8%85%E5%8D%95%E6%80%BB%E8%A1%A8.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:33:05.692Z",
+      "model": "coze-shell",
+      "entities": [
+        "MCP",
+        "Codex",
+        "Atramenti-Console",
+        "agent-runtime-mcp",
+        "chrome-devtools-mcp",
+        "chrome-devtools-mcp-wrapper",
+        "cloud-repo-mcp",
+        "context-store",
+        "context-store-reranker",
+        "core-qmd-dist-src-mcp",
+        "database-ops-mcp",
+        "dev-quality-mcp",
+        "drawio-diagrams",
+        "experience-mcp",
+        "fetch-mcp",
+        "frontend-patterns-mcp",
+        "config.toml",
+        "register-codex-paths.ps1",
+        "Server Operation & Maintenance Manual",
+        "PROJECT-CONTEXT.md"
+      ],
+      "topics": [
+        "MCP Registration & Management",
+        "System Configuration Governance",
+        "DevOps Tooling Administration",
+        "Knowledge Base Access",
+        "Browser Debugging Integration",
+        "Database Operations",
+        "Code Quality Assurance",
+        "Diagram Generation",
+        "Web Content Fetching",
+        "Frontend Pattern Guidelines"
+      ],
+      "relations": [
+        {
+          "type": "is_canonical_reference_for",
+          "target": "MCP Management (docs/agent scope)",
+          "label": "Serves as authoritative MCP management documentation",
+          "confidence": 1
+        },
+        {
+          "type": "hosts",
+          "target": "Codex",
+          "label": "Manages registered MCP components for Codex system",
+          "confidence": 1
+        },
+        {
+          "type": "resides_in",
+          "target": "Atramenti-Console",
+          "label": "Part of the Atramenti-Console project repository",
+          "confidence": 1
+        },
+        {
+          "type": "defines_live_source",
+          "target": "config.toml",
+          "label": "Specifies current active MCP registration state",
+          "confidence": 1
+        },
+        {
+          "type": "uses_provisioning_tool",
+          "target": "register-codex-paths.ps1",
+          "label": "Relies on script to generate managed MCP configuration blocks",
+          "confidence": 1
+        },
+        {
+          "type": "wraps",
+          "target": "chrome-devtools-mcp",
+          "label": "Provides local isolation and compatibility for Chrome DevTools MCP",
+          "confidence": 1
+        },
+        {
+          "type": "is_subcomponent_of",
+          "target": "context-store",
+          "label": "Reranks entries for context-store component",
+          "confidence": 1
+        },
+        {
+          "type": "links_to",
+          "target": "Server Operation & Maintenance Manual",
+          "label": "References multi-server system overview documentation",
+          "confidence": 0.9
+        }
+      ],
+      "collections": [
+        "MCP Management Documentation Suite",
+        "Atramenti-Console Project Documentation"
+      ],
+      "clusters": [
+        "MCP Configuration & Governance",
+        "DevOps Tooling Documentation"
+      ]
     },
     "series": "",
     "project": "MCP",

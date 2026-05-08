@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -42,7 +42,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -58,13 +58,107 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:31:13.860Z",
+      "model": "coze-shell",
+      "entities": [
+        "Token Pool",
+        "Codex OAuth",
+        "openai-codex-oauth",
+        "openaiResponses-custom",
+        "gpt-5.3-codex",
+        "gpt-5.4",
+        "STREAM_FIRST_CHUNK_TIMEOUT_MS",
+        "d0398338-6eb2-4c0d-b0d3-26e7060c68ec",
+        "soxio-responses-v1-b"
+      ],
+      "topics": [
+        "OAuth服务故障排查与修复",
+        "API网关超时优化",
+        "服务降级与回滚机制修复",
+        "API配额管理问题解决",
+        "服务健康状态校验逻辑优化",
+        "跨Provider请求体转换错误修复",
+        "流服务首包超时问题处理"
+      ],
+      "relations": [
+        {
+          "type": "故障根源",
+          "target": "openai-codex-oauth",
+          "label": "触发429 usage_limit_reached错误",
+          "confidence": 1
+        },
+        {
+          "type": "修复对象",
+          "target": "routing-runner.js",
+          "label": "解析stringified JSON错误体并标记不健康状态",
+          "confidence": 1
+        },
+        {
+          "type": "故障根源",
+          "target": "provider-pool-manager.js",
+          "label": "健康检查未立即摘除AUTH_ERROR节点",
+          "confidence": 1
+        },
+        {
+          "type": "修复对象",
+          "target": "common.js",
+          "label": "重试/fallback时重新构建适配目标Provider的请求体",
+          "confidence": 1
+        },
+        {
+          "type": "故障表现",
+          "target": "openaiResponses-custom",
+          "label": "接收不兼容请求体导致假401/协议错误",
+          "confidence": 1
+        },
+        {
+          "type": "依赖降级",
+          "target": "openai-codex-oauth",
+          "label": "降级到openaiResponses-custom作为fallback",
+          "confidence": 1
+        },
+        {
+          "type": "验证通过",
+          "target": "gpt-5.3-codex",
+          "label": "生产runtime验证返回200",
+          "confidence": 1
+        },
+        {
+          "type": "验证通过",
+          "target": "gpt-5.4",
+          "label": "生产runtime验证返回200",
+          "confidence": 1
+        },
+        {
+          "type": "故障节点",
+          "target": "d0398338-6eb2-4c0d-b0d3-26e7060c68ec",
+          "label": "对应soxio-responses-v1-b，返回401无效API密钥",
+          "confidence": 1
+        },
+        {
+          "type": "配置修复",
+          "target": "STREAM_FIRST_CHUNK_TIMEOUT_MS",
+          "label": "读取Provider级配置而非全局配置",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "服务故障修复记录集",
+        "API网关运维文档集",
+        "OAuth服务管理知识库"
+      ],
+      "clusters": [
+        "Codex OAuth故障集群",
+        "API网关超时与健康检查问题集群",
+        "跨Provider请求适配问题集群"
+      ]
     },
     "series": "",
     "project": "token pool codex auth stream repair",

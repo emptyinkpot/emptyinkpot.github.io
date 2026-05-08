@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -46,7 +46,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -68,13 +68,132 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/Server Operation & Maintenance Manual.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/Server Operation & Maintenance Manual.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/Server%20Operation%20%26%20Maintenance%20Manual.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:35:17.374Z",
+      "model": "coze-shell",
+      "entities": [
+        "Naikaku",
+        "Golutra",
+        "Atramenti-Console",
+        "MCP",
+        "124.220.233.126 (控制机)",
+        "Windows本机 (主执行机)",
+        "121.196.202.114 (备用执行机)",
+        "111.228.6.224 (补位机)",
+        "《多服务器智能体体系技术拆解报告》",
+        "《多服务器智能体接口与字段速查手册》",
+        "《多服务器智能体体系逐章批注版》",
+        "《服务器体系教学手册》",
+        "《服务器资产与角色规划总表》",
+        "AGENTS.md",
+        "AGENTS.annotated.md",
+        "PROJECT-CONTEXT.md",
+        "SESSION-HANDOFF.md",
+        "plan.md",
+        "服务器手册伴随仪表盘.md",
+        "MCP清单总表.md",
+        "atramenti-console-doc-index.md"
+      ],
+      "topics": [
+        "Server Operation & Maintenance",
+        "Multi-server Agent System Management",
+        "Cloud-native Server Orchestration",
+        "Task Automation for Server Clusters",
+        "Workspace Management for Server Operations",
+        "Runner Protocol Implementation",
+        "AI Agent Role Design for Server Tasks",
+        "Technical Manual Consolidation & Maintenance"
+      ],
+      "relations": [
+        {
+          "type": "absorbs",
+          "target": "《多服务器智能体体系技术拆解报告》",
+          "label": "absorbs content from",
+          "confidence": 1
+        },
+        {
+          "type": "absorbs",
+          "target": "《多服务器智能体接口与字段速查手册》",
+          "label": "absorbs content from",
+          "confidence": 1
+        },
+        {
+          "type": "absorbs",
+          "target": "《多服务器智能体体系逐章批注版》",
+          "label": "absorbs content from",
+          "confidence": 1
+        },
+        {
+          "type": "absorbs",
+          "target": "《服务器体系教学手册》",
+          "label": "absorbs content from",
+          "confidence": 1
+        },
+        {
+          "type": "absorbs",
+          "target": "《服务器资产与角色规划总表》",
+          "label": "absorbs content from",
+          "confidence": 1
+        },
+        {
+          "type": "follows",
+          "target": "AGENTS.md",
+          "label": "follows document maintenance rules from",
+          "confidence": 1
+        },
+        {
+          "type": "extends",
+          "target": "Golutra",
+          "label": "is an extended version of",
+          "confidence": 0.95
+        },
+        {
+          "type": "companion",
+          "target": "服务器手册伴随仪表盘.md",
+          "label": "has a companion dashboard document",
+          "confidence": 1
+        },
+        {
+          "type": "references",
+          "target": "atramenti-console-doc-index.md",
+          "label": "references documentation for",
+          "confidence": 1
+        },
+        {
+          "type": "centralizes",
+          "target": "124.220.233.126 (控制机)",
+          "label": "uses as central control machine",
+          "confidence": 1
+        },
+        {
+          "type": "delegates",
+          "target": "MCP清单总表.md",
+          "label": "delegates MCP management to",
+          "confidence": 1
+        },
+        {
+          "type": "supplements",
+          "target": "PROJECT-CONTEXT.md",
+          "label": "supplemented by project context document",
+          "confidence": 0.9
+        }
+      ],
+      "collections": [
+        "Naikaku Manual Series",
+        "Server Operation & Maintenance Knowledge Base",
+        "Multi-server Agent System Documentation"
+      ],
+      "clusters": [
+        "Server Management Manuals",
+        "Multi-agent System Technical Guides",
+        "Engineering Documentation Collections"
+      ]
     },
     "series": "",
     "project": "多服务器智能体",

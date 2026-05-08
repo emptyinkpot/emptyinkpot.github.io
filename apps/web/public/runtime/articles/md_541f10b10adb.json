@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,82 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/GitHub 仓群角色与收口清单.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/GitHub 仓群角色与收口清单.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/GitHub%20%E4%BB%93%E7%BE%A4%E8%A7%92%E8%89%B2%E4%B8%8E%E6%94%B6%E5%8F%A3%E6%B8%85%E5%8D%95.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:47:04.253Z",
+      "model": "coze-shell",
+      "entities": [
+        "GitHub",
+        "Git",
+        "emptyinkpot",
+        "asus-kl-codex-home",
+        "my-project-root",
+        "Atramenti-Console",
+        "emptyinkpot.github.io",
+        "mortis-multica-source",
+        "my-project-qmd",
+        "my-project-yt-dlp-mcp",
+        "my-project-video-audio-mcp",
+        "my-project-ffmpeg-mcp",
+        "mortis-napcat-control",
+        "mortis-multica-watch"
+      ],
+      "topics": [
+        "GitHub仓群角色管理",
+        "代码仓库备份与镜像策略",
+        "仓群结构优化",
+        "仓库生命周期收口"
+      ],
+      "relations": [
+        {
+          "type": "belongs_to",
+          "target": "emptyinkpot",
+          "label": "GitHub仓群成员",
+          "confidence": 1
+        },
+        {
+          "type": "is_role",
+          "target": "mirror/backup repo",
+          "label": "仓库角色",
+          "confidence": 1
+        },
+        {
+          "type": "is_role",
+          "target": "umbrella repo",
+          "label": "仓库角色",
+          "confidence": 1
+        },
+        {
+          "type": "is_role",
+          "target": "owning repo",
+          "label": "仓库角色",
+          "confidence": 1
+        },
+        {
+          "type": "is_role",
+          "target": "publish mirror",
+          "label": "仓库角色",
+          "confidence": 1
+        },
+        {
+          "type": "is_role",
+          "target": "public watch mirror",
+          "label": "仓库角色",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "GitHub仓群治理文档"
+      ],
+      "clusters": [
+        "代码仓库治理",
+        "仓群结构优化"
+      ]
     },
     "series": "",
     "project": "GitHub 仓群角色与收口清单",

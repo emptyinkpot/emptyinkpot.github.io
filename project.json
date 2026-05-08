@@ -9,6 +9,24 @@
   "adminAppRoot": "apps/admin-next",
   "androidShellRoot": "apps/android-shell",
   "runtimeContractRoot": "packages/runtime-contract",
+  "runtimeConstitution": {
+    "status": "active",
+    "aiEntry": "AI_RULES.md",
+    "frontendContractEntry": "project.frontend-runtime-contract.json",
+    "contractsRoot": "contracts",
+    "philosophyRoot": "philosophy",
+    "topologyRoot": "topology",
+    "adrRoot": "adr",
+    "primaryModel": "Knowledge Runtime Surface",
+    "coreRule": "Collection is context. Drawer is reading. Homepage is discovery.",
+    "forbidden": [
+      "turn collections into standalone CMS pages",
+      "replace mixed-object homepage with collection grids",
+      "make feed tabs route navigation",
+      "put card walls inside reader drawers",
+      "make topic collections prerender into static collection pages"
+    ]
+  },
   "objectModelRoot": "packages/object-model",
   "runtimeKernelRoot": "packages/runtime-kernel",
   "designSystemRoot": "packages/design-system",
@@ -433,7 +451,7 @@
           "stats"
         ],
         "generation": "tools/build-runtime-content-index.mjs groups MarkdownObject into folder collections, frontmatter series collections and shared topic collections",
-        "surfaceRule": "homepage consumes folder/series KnowledgeCollection cards before direct object cards, but a collection card only opens a Reading Session; /collections/ lists folder/series collection entry points; /collections/[slug]/ is only generated for folder/series Reading Session surfaces with article reader plus collection TOC; topic collections remain metadata/search/Graph dimensions in the runtime index and must not be batch prerendered into static collection pages; object switching inside a collection must not full reload or degrade into an object card grid"
+        "surfaceRule": "homepage is a mixed-object runtime surface and may include folder/series KnowledgeCollection lens cards without becoming collection-first or collection-only; a collection card only opens a Reading Session drawer; /collections/ lists folder/series collection entry points; /collections/[slug]/ is only generated for folder/series Reading Session surfaces with article reader plus collection TOC; topic collections remain metadata/search/Graph dimensions in the runtime index and must not be batch prerendered into static collection pages; object switching inside a collection must not full reload or degrade into an object card grid"
       },
       "filter": [
         "draft != true",
@@ -454,7 +472,7 @@
         "public-data/runtime/features.json",
         "apps/web/public/runtime/features.json"
       ],
-      "homepageFeedUi": "Homepage displays KnowledgeCollection projection cards first, then mixed object cards. Collection drawer templates are Reading Sessions: current article html is the reading center and collection TOC is the context rail; clicking another object swaps drawer article content from /runtime/articles/*.json without page navigation. Runtime MarkdownObject drawer templates are created from /runtime/content-index.json metadata and hydrate drawer bodies from per-article /runtime/articles/*.json detail payloads, not a browser-side Markdown renderer. /runtime/events SSE is preferred and 30 second polling is only used when EventSource is unavailable",
+      "homepageFeedUi": "Homepage is Runtime Surface v2: mixed-object masonry, feed tabs, drawer peek, search, OpenList/Pinterest shell and runtime refresh stay alive together. It may insert a small number of KnowledgeCollection lens cards, but must not become a Collection Gateway or collection-only feed. Collection drawer templates are Reading Sessions where current article html is the reading center and collection TOC is the context rail. Clicking another object swaps drawer article content from /runtime/articles/*.json without page navigation. /posts/ remains the article index and /posts/[slug]/ remains the permalink detail route. /runtime/events SSE is preferred and 30 second polling is only used when EventSource is unavailable",
       "runtimeReaderUi": "/posts/[slug]/ is the only public article detail route. It is generated from Runtime MarkdownObject metadata and reads the matching /runtime/articles/*.json detail payload for body/html/toc.",
       "cardUiRule": "ArticleCard, homepage runtime feed, /posts/ and /posts/[slug]/ display chips only from MarkdownObject.card.chips; tags/categories remain indexing metadata, not ad hoc card labels",
       "autoSyncWatcher": "deprecated: Windows watcher/scp content sync is disabled",

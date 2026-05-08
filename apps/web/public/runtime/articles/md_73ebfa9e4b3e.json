@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,96 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/Token Pool 流式断流排查手册.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/Token Pool 流式断流排查手册.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/Token%20Pool%20%E6%B5%81%E5%BC%8F%E6%96%AD%E6%B5%81%E6%8E%92%E6%9F%A5%E6%89%8B%E5%86%8C.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:36:00.684Z",
+      "model": "coze-shell",
+      "entities": [
+        "Token Pool",
+        "SSE (Server-Sent Events)",
+        "finalStatus字段",
+        "streamCompleted字段",
+        "stopReason字段",
+        "streamLifecycle字段",
+        "/openai/v1/responses接口",
+        "/openai/debug/requests接口"
+      ],
+      "topics": [
+        "流式响应断流排查",
+        "Token Pool故障诊断",
+        "SSE响应异常分析",
+        "API请求生命周期监控",
+        "服务端请求状态判定"
+      ],
+      "relations": [
+        {
+          "type": "belongs_to",
+          "target": "Token Pool",
+          "label": "故障排查手册",
+          "confidence": 1
+        },
+        {
+          "type": "describes",
+          "target": "Token Pool",
+          "label": "流式断流场景判定逻辑",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "SSE (Server-Sent Events)",
+          "label": "响应传输协议",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "finalStatus字段",
+          "label": "请求最终状态分类标识",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "streamCompleted字段",
+          "label": "流完整性判定标识",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "stopReason字段",
+          "label": "流终止原因标识",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "streamLifecycle字段",
+          "label": "流生命周期阶段记录",
+          "confidence": 1
+        },
+        {
+          "type": "provides",
+          "target": "/openai/debug/requests接口",
+          "label": "请求调试快照数据",
+          "confidence": 1
+        },
+        {
+          "type": "applies_to",
+          "target": "/openai/v1/responses接口",
+          "label": "流式请求链路",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Token Pool运维文档集",
+        "API故障排查指南"
+      ],
+      "clusters": [
+        "流式API故障排查集群",
+        "Token Pool运维文档集群"
+      ]
     },
     "series": "",
     "project": "Token Pool 流式断流排查手册",

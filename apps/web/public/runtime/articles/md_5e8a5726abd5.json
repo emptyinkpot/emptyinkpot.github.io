@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,68 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/未命名.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/未命名.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%AA%E5%91%BD%E5%90%8D.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:40:54.287Z",
+      "model": "coze-shell",
+      "entities": [
+        "Claude",
+        "Codex",
+        "PowerShell",
+        "Bash",
+        "Linux",
+        "Windows",
+        "MCP"
+      ],
+      "topics": [
+        "AI助手工具调用故障排查",
+        "跨Shell命令适配",
+        "AI工具执行环境差异"
+      ],
+      "relations": [
+        {
+          "type": "default_shell",
+          "target": "Bash",
+          "label": "默认使用",
+          "confidence": 1
+        },
+        {
+          "type": "default_shell",
+          "target": "PowerShell",
+          "label": "默认使用",
+          "confidence": 1
+        },
+        {
+          "type": "incompatible_with",
+          "target": "Bash",
+          "label": "语法不兼容",
+          "confidence": 1
+        },
+        {
+          "type": "execution_environment",
+          "target": "Linux",
+          "label": "基于",
+          "confidence": 1
+        },
+        {
+          "type": "execution_environment",
+          "target": "Windows",
+          "label": "基于",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "AI助手工具使用指南"
+      ],
+      "clusters": [
+        "AI工具Shell适配",
+        "跨平台命令执行"
+      ]
     },
     "series": "",
     "project": "未命名",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -42,7 +42,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -58,13 +58,79 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/记录/未命名.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/记录/未命名.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%AE%B0%E5%BD%95/%E6%9C%AA%E5%91%BD%E5%90%8D.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:43:30.841Z",
+      "model": "coze-shell",
+      "entities": [
+        "PowerShell",
+        "Microsoft Corporation",
+        "OpenAI Codex (v0.123.0-alpha.5)",
+        "GPT-5.4 Medium",
+        "Token Pool",
+        "Figma",
+        "ASUS-KL User Account",
+        "E:\\My Project"
+      ],
+      "topics": [
+        "Command-Line Interface (CLI) Interaction",
+        "Developer Token Management",
+        "OpenAI Codex Interactive Sessions",
+        "PowerShell Script Execution",
+        "Developer Secret Storage"
+      ],
+      "relations": [
+        {
+          "type": "developed_by",
+          "target": "Microsoft Corporation",
+          "label": "created by",
+          "confidence": 1
+        },
+        {
+          "type": "utilizes",
+          "target": "GPT-5.4 Medium",
+          "label": "runs on model",
+          "confidence": 1
+        },
+        {
+          "type": "interacts_with",
+          "target": "OpenAI Codex (v0.123.0-alpha.5)",
+          "label": "used to access",
+          "confidence": 1
+        },
+        {
+          "type": "manages",
+          "target": "Token Pool",
+          "label": "attempts to retrieve secrets from",
+          "confidence": 0.9
+        },
+        {
+          "type": "associated_with",
+          "target": "Figma",
+          "label": "linked to skill for",
+          "confidence": 0.8
+        },
+        {
+          "type": "hosts",
+          "target": "ASUS-KL User Account",
+          "label": "resides on user device",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Developer Tool Usage Logs",
+        "Token Management Workflow Notes"
+      ],
+      "clusters": [
+        "AI-Assisted Coding CLI Sessions",
+        "Secret & Token Management Workflows",
+        "PowerShell Script Execution Records"
+      ]
     },
     "series": "",
     "project": "未命名",

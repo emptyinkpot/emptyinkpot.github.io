@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "name": "myblog-runtime-authority-map",
+  "updatedAt": "2026-05-08",
+  "authorities": {
+    "authoringTruth": {
+      "owner": "Obsidian Vault",
+      "path": "Windows:E:\\Vaults\\Obsidian",
+      "role": "editable writing truth"
+    },
+    "serverHotMirror": {
+      "owner": "Syncthing",
+      "path": "Linux:/home/vault/Obsidian",
+      "role": "server-side hot mirror, not editable truth"
+    },
+    "articleProjection": {
+      "owner": "Runtime MarkdownObject compiler",
+      "path": "public-data/runtime/content-index.json",
+      "role": "public article object projection"
+    },
+    "runtimeState": {
+      "owner": "apps/admin-next + MySQL",
+      "role": "reader memory, highlights, dynamic events and future graph state"
+    },
+    "fileAccess": {
+      "owner": "OpenList",
+      "paths": [
+        "/openlist/Obsidian",
+        "/openlist/腾讯云COS",
+        "/openlist/夸克网盘"
+      ],
+      "role": "public file access, blob backend and cold archive"
+    },
+    "staticShell": {
+      "owner": "Astro",
+      "path": "apps/web/dist",
+      "role": "presentation shell"
+    }
+  },
+  "forbiddenAuthorityMerges": [
+    "OpenList as CMS",
+    "MySQL as article body source",
+    "Astro dist as source",
+    "topic collection as static page authority",
+    "localStorage as runtime truth",
+    "Pagefind as dynamic full-site search truth"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -41,7 +41,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -57,13 +57,83 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/plan.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/plan.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/plan.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:34:24.061Z",
+      "model": "coze-shell",
+      "entities": [
+        "Atramenti-Console",
+        "AGENTS.md",
+        "AGENTS.annotated.md",
+        "plan.md",
+        "append-plan.ps1",
+        "计划追加写入全局规则",
+        "中文写作偏好全局规则",
+        "计划记录模块"
+      ],
+      "topics": [
+        "智能代理全局规则维护",
+        "计划持久化与台账管理",
+        "文档本地化（中文优先）",
+        "系统模块稳定性评估",
+        "自动化脚本开发"
+      ],
+      "relations": [
+        {
+          "type": "修改",
+          "target": "AGENTS.md",
+          "label": "全局规则更新",
+          "confidence": 1
+        },
+        {
+          "type": "修改",
+          "target": "AGENTS.annotated.md",
+          "label": "规则说明补充",
+          "confidence": 1
+        },
+        {
+          "type": "追加写入",
+          "target": "plan.md",
+          "label": "计划记录持久化",
+          "confidence": 1
+        },
+        {
+          "type": "开发",
+          "target": "append-plan.ps1",
+          "label": "自动化计划工具创建",
+          "confidence": 1
+        },
+        {
+          "type": "评估",
+          "target": "计划记录模块",
+          "label": "稳定性与命中率分析",
+          "confidence": 1
+        },
+        {
+          "type": "应用",
+          "target": "中文写作偏好全局规则",
+          "label": "英文内容本地化",
+          "confidence": 1
+        },
+        {
+          "type": "应用",
+          "target": "计划追加写入全局规则",
+          "label": "计划台账维护",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Atramenti-Console智能代理配置与计划集"
+      ],
+      "clusters": [
+        "Agent规则优化迭代集群",
+        "计划记录模块增强集群"
+      ]
     },
     "series": "",
     "project": "plan",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -48,7 +48,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -69,13 +69,103 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/服务器手册伴随仪表盘.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/服务器手册伴随仪表盘.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%8B%E5%86%8C%E4%BC%B4%E9%9A%8F%E4%BB%AA%E8%A1%A8%E7%9B%98.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:40:14.374Z",
+      "model": "coze-shell",
+      "entities": [
+        "Server Operation & Maintenance Manual",
+        "Bases核心插件",
+        "SSH",
+        "systemd",
+        "MySQL",
+        "database-api",
+        "Atramenti-Console文档汇编",
+        "MCP清单总表",
+        "记忆体系分工与蒸馏方案（2026-04-19）",
+        "124.220.233.126（控制机）",
+        "121.196.202.114（主运行机）",
+        "111.228.6.224（补位实验机）",
+        "221.5.60.2:10043（弹性算力机）",
+        "140.143.229.144（对话服务器）",
+        "NEVERLETMEGO（Windows工作站）",
+        "服务器手册伴随视图.base",
+        "Smoothcloud"
+      ],
+      "topics": [
+        "服务器运维管理",
+        "服务器集群配置",
+        "服务部署与托管",
+        "SSH密钥体系管理",
+        "数据库接入管理",
+        "前端域名与入口管理",
+        "服务器状态监控",
+        "文档导航与聚合",
+        "运维知识库组织"
+      ],
+      "relations": [
+        {
+          "type": "aggregates",
+          "target": "Server Operation & Maintenance Manual",
+          "label": "聚合主手册关键章节、服务器信息与业务模块入口",
+          "confidence": 1
+        },
+        {
+          "type": "depends_on",
+          "target": "Bases核心插件",
+          "label": "依赖其实现交互视图功能",
+          "confidence": 1
+        },
+        {
+          "type": "embeds",
+          "target": "服务器手册伴随视图.base",
+          "label": "嵌入其服务器手册生态与docs-agent总览视图",
+          "confidence": 1
+        },
+        {
+          "type": "related_document",
+          "target": "Atramenti-Console文档汇编",
+          "label": "同组运维相关文档集合成员",
+          "confidence": 1
+        },
+        {
+          "type": "related_document",
+          "target": "MCP清单总表",
+          "label": "同组运维相关文档集合成员",
+          "confidence": 1
+        },
+        {
+          "type": "organizes_info_for",
+          "target": "124.220.233.126（控制机）",
+          "label": "整理该服务器的角色、档案与调度路由入口",
+          "confidence": 1
+        },
+        {
+          "type": "covers_topic",
+          "target": "SSH密钥体系管理",
+          "label": "提供SSH与密钥体系整理的入口",
+          "confidence": 0.9
+        },
+        {
+          "type": "covers_topic",
+          "target": "数据库接入管理",
+          "label": "提供MySQL/database-api接入记录的入口",
+          "confidence": 0.9
+        }
+      ],
+      "collections": [
+        "服务器运维知识库",
+        "docs/agent文档集合"
+      ],
+      "clusters": [
+        "服务器运维导航入口集群",
+        "文档聚合与视图集群"
+      ]
     },
     "series": "",
     "project": "多服务器智能体",

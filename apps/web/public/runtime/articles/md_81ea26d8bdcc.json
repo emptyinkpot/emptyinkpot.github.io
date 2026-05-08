@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,37 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/网站.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/网站.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E7%BD%91%E7%AB%99.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:42:02.317Z",
+      "model": "coze-shell",
+      "entities": [
+        "词元流动",
+        "TokenFlux"
+      ],
+      "topics": [
+        "Token-driven content flow platforms",
+        "Semantic web systems"
+      ],
+      "relations": [
+        {
+          "type": "alias",
+          "target": "TokenFlux",
+          "label": "中文名称",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Agent-related web resources"
+      ],
+      "clusters": [
+        "Web semantic token platforms"
+      ]
     },
     "series": "",
     "project": "网站",

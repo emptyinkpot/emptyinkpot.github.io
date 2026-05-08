@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "name": "myblog-object-projection-contract",
+  "updatedAt": "2026-05-08",
+  "coreObject": "KnowledgeObject",
+  "rule": "Objects define projections. Pages do not define object semantics.",
+  "objectTypes": [
+    "MarkdownObject",
+    "BookObject",
+    "VisualObject",
+    "ProjectObject",
+    "MusicObject",
+    "GitHubObject",
+    "KnowledgeCollection"
+  ],
+  "projections": {
+    "home": {
+      "surface": "mixed object feed",
+      "form": "preview card"
+    },
+    "drawer": {
+      "surface": "ReaderSession",
+      "form": "active object content plus compact context"
+    },
+    "search": {
+      "surface": "command/search overlay",
+      "form": "compact result"
+    },
+    "graph": {
+      "surface": "knowledge graph",
+      "form": "node/link projection"
+    },
+    "collection": {
+      "surface": "context lens",
+      "form": "toc item or contextual member"
+    }
+  },
+  "antiPatterns": [
+    "one page owns one object type",
+    "collection page owns object existence",
+    "card grid replaces reader",
+    "directory structure becomes UI taxonomy without projection"
+  ]
+}

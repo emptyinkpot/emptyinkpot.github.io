@@ -50,7 +50,7 @@ Do not assume `no import` means `not running`. Check delegated listeners, custom
 
 | Route family | Runtime shape | Primary owners |
 | --- | --- | --- |
-| `/` | SSR feed shell + large inline runtime + React islands + runtime API patches | `apps/web/src/pages/index.astro`, `BaseLayout.astro`, `HomeCommandPalette`, `RuntimeBookFeed`, `GitHubRuntimeSync` |
+| `/` | SSR Runtime Surface v2: mixed masonry feed + collection lens cards + large inline reader runtime + React islands + runtime API patches | `apps/web/src/pages/index.astro`, `BaseLayout.astro`, `HomeCommandPalette`, `GitHubRuntimeSync`, `RuntimeBookFeed` |
 | `/books/` | SSR page + `BookshelfGrid client:load` + OpenList file scan | `apps/web/src/pages/books/index.astro`, `BookshelfGrid.tsx`, `lib/books/openlist.ts` |
 | `/books/openlist/` | query-param runtime detail reader | `RuntimeBookDetail client:only="react"` |
 | `/reader/openlist/` | query-param runtime book reader | `RuntimeBookReader client:only="react"` |
@@ -75,7 +75,7 @@ Home page
 ├─ HomeCommandPalette client:idle
 ├─ RuntimeBookFeed client:load
 ├─ BookCover client:load
-├─ inline Feed / Drawer / Reader / Search / Seal runtime
+├─ inline mixed Feed Surface / Drawer / Reader Session / Search / Seal runtime
 └─ GitHubRuntimeSync inline component
 
 Books / Reader
@@ -94,7 +94,7 @@ Main risk: 首页 behavior is split between one large inline script and several 
 
 | Surface | Visual source | Runtime authority | Notes |
 | --- | --- | --- | --- |
-| Home feed cards | Astro SSR from content/data | inline drawer runtime mutates active card, filters, reader state | Click does not navigate by default; it opens drawer. |
+| Home mixed feed cards | Astro SSR from Runtime KnowledgeCollection metadata, runtime MarkdownObject projections and local object projections | inline drawer runtime mutates active card, filters, reader state | Default surface is mixed masonry. Collection cards are lenses that open a Reader Session drawer; `/collections/` is not the homepage owner. |
 | Command button | React island | `HomeCommandPalette` state; dispatches custom events | It is the canonical global search button. |
 | Home fallback search | SSR hidden layer | inline script, local `searchDocs` JSON | Opened by custom event or keyboard fallback. |
 | Drawer | SSR hidden reader nodes | inline script clones/replaces drawer content | Book drawer escalates to `BookDrawerReader` via custom event. |

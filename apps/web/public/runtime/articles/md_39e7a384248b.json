@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,38 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/账户创建.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/账户创建.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%B4%A6%E6%88%B7%E5%88%9B%E5%BB%BA.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:44:40.670Z",
+      "model": "coze-shell",
+      "entities": [
+        "luckmail",
+        "美国IP"
+      ],
+      "topics": [
+        "账户登录操作",
+        "网络访问权限控制"
+      ],
+      "relations": [
+        {
+          "type": "访问要求",
+          "target": "美国IP",
+          "label": "登录该账户需要使用",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "代理工具账户管理文档"
+      ],
+      "clusters": [
+        "账户登录配置",
+        "IP访问限制规则"
+      ]
     },
     "series": "",
     "project": "账户创建",

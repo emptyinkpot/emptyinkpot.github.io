@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -42,7 +42,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -61,13 +61,101 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/第一库文档管理规范.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/第一库文档管理规范.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E7%AC%AC%E4%B8%80%E5%BA%93%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:41:34.476Z",
+      "model": "coze-shell",
+      "entities": [
+        "第一库",
+        "MCP清单总表",
+        "全局AGENTS文档规则层",
+        "PROJECT-CONTEXT文档",
+        "SESSION-HANDOFF文档",
+        "plan文档",
+        "Git",
+        "Obsidian",
+        "Atramenti-Console"
+      ],
+      "topics": [
+        "文档治理",
+        "知识库管理",
+        "项目资料管理",
+        "版本化文档管理",
+        "Git版本控制",
+        "目录结构规划",
+        "资源路径规范",
+        "文档导航设计"
+      ],
+      "relations": [
+        {
+          "type": "包含",
+          "target": "文档治理",
+          "label": "包含文档治理模块",
+          "confidence": 1
+        },
+        {
+          "type": "包含",
+          "target": "主题知识库",
+          "label": "包含主题知识存储模块",
+          "confidence": 1
+        },
+        {
+          "type": "包含",
+          "target": "项目资料库",
+          "label": "包含项目资料管理模块",
+          "confidence": 1
+        },
+        {
+          "type": "承担",
+          "target": "docs/agent目录",
+          "label": "作为专题规范与管理文档承载层",
+          "confidence": 1
+        },
+        {
+          "type": "承担",
+          "target": "docs/codex-knowledge目录",
+          "label": "作为专题知识与资料存储层",
+          "confidence": 1
+        },
+        {
+          "type": "依赖",
+          "target": "Git",
+          "label": "使用Git进行指定文档版本跟踪",
+          "confidence": 1
+        },
+        {
+          "type": "依赖",
+          "target": "Obsidian",
+          "label": "使用Obsidian作为文档编辑管理工具",
+          "confidence": 1
+        },
+        {
+          "type": "关联",
+          "target": "MCP清单总表",
+          "label": "作为第一库MCP管理入口文档",
+          "confidence": 1
+        },
+        {
+          "type": "关联",
+          "target": "PROJECT-CONTEXT文档",
+          "label": "作为项目当前状态核心入口文档",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "第一库管理规范集合",
+        "文档治理核心文档集合"
+      ],
+      "clusters": [
+        "文档管理规范集群",
+        "知识库治理集群",
+        "项目资料管理集群"
+      ]
     },
     "series": "",
     "project": "第一库文档管理规范",

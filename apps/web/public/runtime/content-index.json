@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -21747,7 +21747,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -21762,13 +21762,85 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/服务器.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/服务器.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%8D%E5%8A%A1%E5%99%A8.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:39:17.970Z",
+        "model": "coze-shell",
+        "entities": [
+          "sub2api",
+          "SOCKS5代理",
+          "setup-socks5-proxy.sh",
+          "Docker",
+          "server-170",
+          "server-124",
+          "server-171",
+          "jd-lavm-beijing",
+          "jd-lavm-yp7m9xmd5l",
+          "/api/v1/admin/proxies/data"
+        ],
+        "topics": [
+          "服务器代理部署",
+          "Docker内网网络配置",
+          "sub2api代理集成",
+          "SOCKS5代理安全优化"
+        ],
+        "relations": [
+          {
+            "type": "depends_on",
+            "target": "Docker",
+            "label": "sub2api依赖Docker容器环境部署",
+            "confidence": 1
+          },
+          {
+            "type": "requires",
+            "target": "SOCKS5代理",
+            "label": "sub2api代理池需接入SOCKS5代理节点",
+            "confidence": 1
+          },
+          {
+            "type": "deployed_on",
+            "target": "server-170",
+            "label": "SOCKS5代理部署在server-170服务器",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "setup-socks5-proxy.sh",
+            "label": "部署SOCKS5代理使用setup-socks5-proxy.sh脚本",
+            "confidence": 1
+          },
+          {
+            "type": "accesses",
+            "target": "/api/v1/admin/proxies/data",
+            "label": "sub2api通过该接口管理代理",
+            "confidence": 1
+          },
+          {
+            "type": "connects_to",
+            "target": "172.18.0.1:1080",
+            "label": "sub2api容器连接Docker内网网关的SOCKS5代理",
+            "confidence": 1
+          },
+          {
+            "type": "corresponds_to",
+            "target": "170.106.179.226",
+            "label": "server-170对应的公网IP地址",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "服务器配置与代理集成知识库"
+        ],
+        "clusters": [
+          "Docker网络配置",
+          "sub2api代理管理",
+          "SOCKS5代理部署"
+        ]
       },
       "series": "",
       "project": "服务器",
@@ -22082,7 +22154,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -22097,13 +22169,38 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/账户创建.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/账户创建.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%B4%A6%E6%88%B7%E5%88%9B%E5%BB%BA.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:44:40.670Z",
+        "model": "coze-shell",
+        "entities": [
+          "luckmail",
+          "美国IP"
+        ],
+        "topics": [
+          "账户登录操作",
+          "网络访问权限控制"
+        ],
+        "relations": [
+          {
+            "type": "访问要求",
+            "target": "美国IP",
+            "label": "登录该账户需要使用",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "代理工具账户管理文档"
+        ],
+        "clusters": [
+          "账户登录配置",
+          "IP访问限制规则"
+        ]
       },
       "series": "",
       "project": "账户创建",
@@ -22898,7 +22995,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -22918,13 +23015,73 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/账户.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/账户.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%B4%A6%E6%88%B7.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:44:06.375Z",
+        "model": "coze-shell",
+        "entities": [
+          "GPT-5.4",
+          "GPT-5.4-mini",
+          "OpenAI",
+          "WSL",
+          "ChatGPT",
+          "crs"
+        ],
+        "topics": [
+          "AI Model Configuration",
+          "API Authentication",
+          "Agent Account Setup",
+          "Sandbox Environment Management"
+        ],
+        "relations": [
+          {
+            "type": "configures",
+            "target": "GPT-5.4",
+            "label": "sets up AI agent with GPT-5.4 model",
+            "confidence": 1
+          },
+          {
+            "type": "configures",
+            "target": "GPT-5.4-mini",
+            "label": "sets up account with GPT-5.4-mini model",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "OpenAI",
+            "label": "relies on OpenAI authentication standards",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "ChatGPT",
+            "label": "utilizes ChatGPT as account auth method",
+            "confidence": 1
+          },
+          {
+            "type": "acknowledges",
+            "target": "WSL",
+            "label": "confirms WSL setup completion",
+            "confidence": 1
+          },
+          {
+            "type": "provides",
+            "target": "OpenAI",
+            "label": "hosts OpenAI-compatible API endpoint",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Agent Configuration Repository"
+        ],
+        "clusters": [
+          "AI Agent Account & Model Configurations"
+        ]
       },
       "series": "",
       "project": "毕业论文",
@@ -24054,7 +24211,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -24069,13 +24226,37 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/网站.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/网站.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E7%BD%91%E7%AB%99.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:42:02.317Z",
+        "model": "coze-shell",
+        "entities": [
+          "词元流动",
+          "TokenFlux"
+        ],
+        "topics": [
+          "Token-driven content flow platforms",
+          "Semantic web systems"
+        ],
+        "relations": [
+          {
+            "type": "alias",
+            "target": "TokenFlux",
+            "label": "中文名称",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Agent-related web resources"
+        ],
+        "clusters": [
+          "Web semantic token platforms"
+        ]
       },
       "series": "",
       "project": "网站",
@@ -24141,7 +24322,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -24156,13 +24337,68 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/未命名.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/未命名.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%AA%E5%91%BD%E5%90%8D.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:40:54.287Z",
+        "model": "coze-shell",
+        "entities": [
+          "Claude",
+          "Codex",
+          "PowerShell",
+          "Bash",
+          "Linux",
+          "Windows",
+          "MCP"
+        ],
+        "topics": [
+          "AI助手工具调用故障排查",
+          "跨Shell命令适配",
+          "AI工具执行环境差异"
+        ],
+        "relations": [
+          {
+            "type": "default_shell",
+            "target": "Bash",
+            "label": "默认使用",
+            "confidence": 1
+          },
+          {
+            "type": "default_shell",
+            "target": "PowerShell",
+            "label": "默认使用",
+            "confidence": 1
+          },
+          {
+            "type": "incompatible_with",
+            "target": "Bash",
+            "label": "语法不兼容",
+            "confidence": 1
+          },
+          {
+            "type": "execution_environment",
+            "target": "Linux",
+            "label": "基于",
+            "confidence": 1
+          },
+          {
+            "type": "execution_environment",
+            "target": "Windows",
+            "label": "基于",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "AI助手工具使用指南"
+        ],
+        "clusters": [
+          "AI工具Shell适配",
+          "跨平台命令执行"
+        ]
       },
       "series": "",
       "project": "未命名",
@@ -26431,7 +26667,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -26447,13 +26683,79 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/记录/未命名.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/记录/未命名.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%AE%B0%E5%BD%95/%E6%9C%AA%E5%91%BD%E5%90%8D.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:43:30.841Z",
+        "model": "coze-shell",
+        "entities": [
+          "PowerShell",
+          "Microsoft Corporation",
+          "OpenAI Codex (v0.123.0-alpha.5)",
+          "GPT-5.4 Medium",
+          "Token Pool",
+          "Figma",
+          "ASUS-KL User Account",
+          "E:\\My Project"
+        ],
+        "topics": [
+          "Command-Line Interface (CLI) Interaction",
+          "Developer Token Management",
+          "OpenAI Codex Interactive Sessions",
+          "PowerShell Script Execution",
+          "Developer Secret Storage"
+        ],
+        "relations": [
+          {
+            "type": "developed_by",
+            "target": "Microsoft Corporation",
+            "label": "created by",
+            "confidence": 1
+          },
+          {
+            "type": "utilizes",
+            "target": "GPT-5.4 Medium",
+            "label": "runs on model",
+            "confidence": 1
+          },
+          {
+            "type": "interacts_with",
+            "target": "OpenAI Codex (v0.123.0-alpha.5)",
+            "label": "used to access",
+            "confidence": 1
+          },
+          {
+            "type": "manages",
+            "target": "Token Pool",
+            "label": "attempts to retrieve secrets from",
+            "confidence": 0.9
+          },
+          {
+            "type": "associated_with",
+            "target": "Figma",
+            "label": "linked to skill for",
+            "confidence": 0.8
+          },
+          {
+            "type": "hosts",
+            "target": "ASUS-KL User Account",
+            "label": "resides on user device",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Developer Tool Usage Logs",
+          "Token Management Workflow Notes"
+        ],
+        "clusters": [
+          "AI-Assisted Coding CLI Sessions",
+          "Secret & Token Management Workflows",
+          "PowerShell Script Execution Records"
+        ]
       },
       "series": "",
       "project": "未命名",
@@ -26522,7 +26824,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -26538,13 +26840,82 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/记录/未命名 1.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/记录/未命名 1.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E8%AE%B0%E5%BD%95/%E6%9C%AA%E5%91%BD%E5%90%8D%201.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:42:50.442Z",
+        "model": "coze-shell",
+        "entities": [
+          "Windows PowerShell",
+          "OpenAI Codex",
+          "GPT-5.4 medium",
+          "Token Pool Project",
+          "ASUS-KL",
+          "rg (ripgrep)",
+          "Codex policy documents"
+        ],
+        "topics": [
+          "AI code assistant interaction",
+          "Command-line project exploration",
+          "AI assistant configuration management",
+          "PowerShell session automation"
+        ],
+        "relations": [
+          {
+            "type": "hosts",
+            "target": "OpenAI Codex",
+            "label": "provides execution environment for",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "GPT-5.4 medium",
+            "label": "runs on AI model",
+            "confidence": 1
+          },
+          {
+            "type": "interacts_with",
+            "target": "OpenAI Codex",
+            "label": "initiates session with",
+            "confidence": 1
+          },
+          {
+            "type": "accesses",
+            "target": "Codex policy documents",
+            "label": "reads configuration from",
+            "confidence": 1
+          },
+          {
+            "type": "explores",
+            "target": "Token Pool Project",
+            "label": "analyzes project structure and files",
+            "confidence": 1
+          },
+          {
+            "type": "contains",
+            "target": "project.json",
+            "label": "includes core configuration file",
+            "confidence": 1
+          },
+          {
+            "type": "contains",
+            "target": "README.md",
+            "label": "includes project documentation",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "AI Assistant Session Logs",
+          "Project Exploration Records"
+        ],
+        "clusters": [
+          "Codex-PowerShell Integration Sessions",
+          "Token Pool Project Audits"
+        ]
       },
       "series": "",
       "project": "未命名 1",
@@ -27410,7 +27781,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -27426,13 +27797,83 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/plan.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/plan.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/plan.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:34:24.061Z",
+        "model": "coze-shell",
+        "entities": [
+          "Atramenti-Console",
+          "AGENTS.md",
+          "AGENTS.annotated.md",
+          "plan.md",
+          "append-plan.ps1",
+          "计划追加写入全局规则",
+          "中文写作偏好全局规则",
+          "计划记录模块"
+        ],
+        "topics": [
+          "智能代理全局规则维护",
+          "计划持久化与台账管理",
+          "文档本地化（中文优先）",
+          "系统模块稳定性评估",
+          "自动化脚本开发"
+        ],
+        "relations": [
+          {
+            "type": "修改",
+            "target": "AGENTS.md",
+            "label": "全局规则更新",
+            "confidence": 1
+          },
+          {
+            "type": "修改",
+            "target": "AGENTS.annotated.md",
+            "label": "规则说明补充",
+            "confidence": 1
+          },
+          {
+            "type": "追加写入",
+            "target": "plan.md",
+            "label": "计划记录持久化",
+            "confidence": 1
+          },
+          {
+            "type": "开发",
+            "target": "append-plan.ps1",
+            "label": "自动化计划工具创建",
+            "confidence": 1
+          },
+          {
+            "type": "评估",
+            "target": "计划记录模块",
+            "label": "稳定性与命中率分析",
+            "confidence": 1
+          },
+          {
+            "type": "应用",
+            "target": "中文写作偏好全局规则",
+            "label": "英文内容本地化",
+            "confidence": 1
+          },
+          {
+            "type": "应用",
+            "target": "计划追加写入全局规则",
+            "label": "计划台账维护",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Atramenti-Console智能代理配置与计划集"
+        ],
+        "clusters": [
+          "Agent规则优化迭代集群",
+          "计划记录模块增强集群"
+        ]
       },
       "series": "",
       "project": "plan",
@@ -30727,7 +31168,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -30742,13 +31183,96 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/Token Pool 流式断流排查手册.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/Token Pool 流式断流排查手册.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/Token%20Pool%20%E6%B5%81%E5%BC%8F%E6%96%AD%E6%B5%81%E6%8E%92%E6%9F%A5%E6%89%8B%E5%86%8C.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:36:00.684Z",
+        "model": "coze-shell",
+        "entities": [
+          "Token Pool",
+          "SSE (Server-Sent Events)",
+          "finalStatus字段",
+          "streamCompleted字段",
+          "stopReason字段",
+          "streamLifecycle字段",
+          "/openai/v1/responses接口",
+          "/openai/debug/requests接口"
+        ],
+        "topics": [
+          "流式响应断流排查",
+          "Token Pool故障诊断",
+          "SSE响应异常分析",
+          "API请求生命周期监控",
+          "服务端请求状态判定"
+        ],
+        "relations": [
+          {
+            "type": "belongs_to",
+            "target": "Token Pool",
+            "label": "故障排查手册",
+            "confidence": 1
+          },
+          {
+            "type": "describes",
+            "target": "Token Pool",
+            "label": "流式断流场景判定逻辑",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "SSE (Server-Sent Events)",
+            "label": "响应传输协议",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "finalStatus字段",
+            "label": "请求最终状态分类标识",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "streamCompleted字段",
+            "label": "流完整性判定标识",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "stopReason字段",
+            "label": "流终止原因标识",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "streamLifecycle字段",
+            "label": "流生命周期阶段记录",
+            "confidence": 1
+          },
+          {
+            "type": "provides",
+            "target": "/openai/debug/requests接口",
+            "label": "请求调试快照数据",
+            "confidence": 1
+          },
+          {
+            "type": "applies_to",
+            "target": "/openai/v1/responses接口",
+            "label": "流式请求链路",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Token Pool运维文档集",
+          "API故障排查指南"
+        ],
+        "clusters": [
+          "流式API故障排查集群",
+          "Token Pool运维文档集群"
+        ]
       },
       "series": "",
       "project": "Token Pool 流式断流排查手册",
@@ -30932,7 +31456,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -30948,13 +31472,107 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/auth/token-pool-codex-auth-stream-repair-2026-04-28.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:31:13.860Z",
+        "model": "coze-shell",
+        "entities": [
+          "Token Pool",
+          "Codex OAuth",
+          "openai-codex-oauth",
+          "openaiResponses-custom",
+          "gpt-5.3-codex",
+          "gpt-5.4",
+          "STREAM_FIRST_CHUNK_TIMEOUT_MS",
+          "d0398338-6eb2-4c0d-b0d3-26e7060c68ec",
+          "soxio-responses-v1-b"
+        ],
+        "topics": [
+          "OAuth服务故障排查与修复",
+          "API网关超时优化",
+          "服务降级与回滚机制修复",
+          "API配额管理问题解决",
+          "服务健康状态校验逻辑优化",
+          "跨Provider请求体转换错误修复",
+          "流服务首包超时问题处理"
+        ],
+        "relations": [
+          {
+            "type": "故障根源",
+            "target": "openai-codex-oauth",
+            "label": "触发429 usage_limit_reached错误",
+            "confidence": 1
+          },
+          {
+            "type": "修复对象",
+            "target": "routing-runner.js",
+            "label": "解析stringified JSON错误体并标记不健康状态",
+            "confidence": 1
+          },
+          {
+            "type": "故障根源",
+            "target": "provider-pool-manager.js",
+            "label": "健康检查未立即摘除AUTH_ERROR节点",
+            "confidence": 1
+          },
+          {
+            "type": "修复对象",
+            "target": "common.js",
+            "label": "重试/fallback时重新构建适配目标Provider的请求体",
+            "confidence": 1
+          },
+          {
+            "type": "故障表现",
+            "target": "openaiResponses-custom",
+            "label": "接收不兼容请求体导致假401/协议错误",
+            "confidence": 1
+          },
+          {
+            "type": "依赖降级",
+            "target": "openai-codex-oauth",
+            "label": "降级到openaiResponses-custom作为fallback",
+            "confidence": 1
+          },
+          {
+            "type": "验证通过",
+            "target": "gpt-5.3-codex",
+            "label": "生产runtime验证返回200",
+            "confidence": 1
+          },
+          {
+            "type": "验证通过",
+            "target": "gpt-5.4",
+            "label": "生产runtime验证返回200",
+            "confidence": 1
+          },
+          {
+            "type": "故障节点",
+            "target": "d0398338-6eb2-4c0d-b0d3-26e7060c68ec",
+            "label": "对应soxio-responses-v1-b，返回401无效API密钥",
+            "confidence": 1
+          },
+          {
+            "type": "配置修复",
+            "target": "STREAM_FIRST_CHUNK_TIMEOUT_MS",
+            "label": "读取Provider级配置而非全局配置",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "服务故障修复记录集",
+          "API网关运维文档集",
+          "OAuth服务管理知识库"
+        ],
+        "clusters": [
+          "Codex OAuth故障集群",
+          "API网关超时与健康检查问题集群",
+          "跨Provider请求适配问题集群"
+        ]
       },
       "series": "",
       "project": "token pool codex auth stream repair",
@@ -48945,7 +49563,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -48967,13 +49585,132 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/Server Operation & Maintenance Manual.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/Server Operation & Maintenance Manual.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/Server%20Operation%20%26%20Maintenance%20Manual.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:35:17.374Z",
+        "model": "coze-shell",
+        "entities": [
+          "Naikaku",
+          "Golutra",
+          "Atramenti-Console",
+          "MCP",
+          "124.220.233.126 (控制机)",
+          "Windows本机 (主执行机)",
+          "121.196.202.114 (备用执行机)",
+          "111.228.6.224 (补位机)",
+          "《多服务器智能体体系技术拆解报告》",
+          "《多服务器智能体接口与字段速查手册》",
+          "《多服务器智能体体系逐章批注版》",
+          "《服务器体系教学手册》",
+          "《服务器资产与角色规划总表》",
+          "AGENTS.md",
+          "AGENTS.annotated.md",
+          "PROJECT-CONTEXT.md",
+          "SESSION-HANDOFF.md",
+          "plan.md",
+          "服务器手册伴随仪表盘.md",
+          "MCP清单总表.md",
+          "atramenti-console-doc-index.md"
+        ],
+        "topics": [
+          "Server Operation & Maintenance",
+          "Multi-server Agent System Management",
+          "Cloud-native Server Orchestration",
+          "Task Automation for Server Clusters",
+          "Workspace Management for Server Operations",
+          "Runner Protocol Implementation",
+          "AI Agent Role Design for Server Tasks",
+          "Technical Manual Consolidation & Maintenance"
+        ],
+        "relations": [
+          {
+            "type": "absorbs",
+            "target": "《多服务器智能体体系技术拆解报告》",
+            "label": "absorbs content from",
+            "confidence": 1
+          },
+          {
+            "type": "absorbs",
+            "target": "《多服务器智能体接口与字段速查手册》",
+            "label": "absorbs content from",
+            "confidence": 1
+          },
+          {
+            "type": "absorbs",
+            "target": "《多服务器智能体体系逐章批注版》",
+            "label": "absorbs content from",
+            "confidence": 1
+          },
+          {
+            "type": "absorbs",
+            "target": "《服务器体系教学手册》",
+            "label": "absorbs content from",
+            "confidence": 1
+          },
+          {
+            "type": "absorbs",
+            "target": "《服务器资产与角色规划总表》",
+            "label": "absorbs content from",
+            "confidence": 1
+          },
+          {
+            "type": "follows",
+            "target": "AGENTS.md",
+            "label": "follows document maintenance rules from",
+            "confidence": 1
+          },
+          {
+            "type": "extends",
+            "target": "Golutra",
+            "label": "is an extended version of",
+            "confidence": 0.95
+          },
+          {
+            "type": "companion",
+            "target": "服务器手册伴随仪表盘.md",
+            "label": "has a companion dashboard document",
+            "confidence": 1
+          },
+          {
+            "type": "references",
+            "target": "atramenti-console-doc-index.md",
+            "label": "references documentation for",
+            "confidence": 1
+          },
+          {
+            "type": "centralizes",
+            "target": "124.220.233.126 (控制机)",
+            "label": "uses as central control machine",
+            "confidence": 1
+          },
+          {
+            "type": "delegates",
+            "target": "MCP清单总表.md",
+            "label": "delegates MCP management to",
+            "confidence": 1
+          },
+          {
+            "type": "supplements",
+            "target": "PROJECT-CONTEXT.md",
+            "label": "supplemented by project context document",
+            "confidence": 0.9
+          }
+        ],
+        "collections": [
+          "Naikaku Manual Series",
+          "Server Operation & Maintenance Knowledge Base",
+          "Multi-server Agent System Documentation"
+        ],
+        "clusters": [
+          "Server Management Manuals",
+          "Multi-agent System Technical Guides",
+          "Engineering Documentation Collections"
+        ]
       },
       "series": "",
       "project": "多服务器智能体",
@@ -51111,7 +51848,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -51130,13 +51867,101 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/第一库文档管理规范.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/第一库文档管理规范.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E7%AC%AC%E4%B8%80%E5%BA%93%E6%96%87%E6%A1%A3%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:41:34.476Z",
+        "model": "coze-shell",
+        "entities": [
+          "第一库",
+          "MCP清单总表",
+          "全局AGENTS文档规则层",
+          "PROJECT-CONTEXT文档",
+          "SESSION-HANDOFF文档",
+          "plan文档",
+          "Git",
+          "Obsidian",
+          "Atramenti-Console"
+        ],
+        "topics": [
+          "文档治理",
+          "知识库管理",
+          "项目资料管理",
+          "版本化文档管理",
+          "Git版本控制",
+          "目录结构规划",
+          "资源路径规范",
+          "文档导航设计"
+        ],
+        "relations": [
+          {
+            "type": "包含",
+            "target": "文档治理",
+            "label": "包含文档治理模块",
+            "confidence": 1
+          },
+          {
+            "type": "包含",
+            "target": "主题知识库",
+            "label": "包含主题知识存储模块",
+            "confidence": 1
+          },
+          {
+            "type": "包含",
+            "target": "项目资料库",
+            "label": "包含项目资料管理模块",
+            "confidence": 1
+          },
+          {
+            "type": "承担",
+            "target": "docs/agent目录",
+            "label": "作为专题规范与管理文档承载层",
+            "confidence": 1
+          },
+          {
+            "type": "承担",
+            "target": "docs/codex-knowledge目录",
+            "label": "作为专题知识与资料存储层",
+            "confidence": 1
+          },
+          {
+            "type": "依赖",
+            "target": "Git",
+            "label": "使用Git进行指定文档版本跟踪",
+            "confidence": 1
+          },
+          {
+            "type": "依赖",
+            "target": "Obsidian",
+            "label": "使用Obsidian作为文档编辑管理工具",
+            "confidence": 1
+          },
+          {
+            "type": "关联",
+            "target": "MCP清单总表",
+            "label": "作为第一库MCP管理入口文档",
+            "confidence": 1
+          },
+          {
+            "type": "关联",
+            "target": "PROJECT-CONTEXT文档",
+            "label": "作为项目当前状态核心入口文档",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "第一库管理规范集合",
+          "文档治理核心文档集合"
+        ],
+        "clusters": [
+          "文档管理规范集群",
+          "知识库治理集群",
+          "项目资料管理集群"
+        ]
       },
       "series": "",
       "project": "第一库文档管理规范",
@@ -54107,7 +54932,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -54127,13 +54952,98 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/Mortis 指挥层与 Guard 双脑架构规范.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/Mortis%20%E6%8C%87%E6%8C%A5%E5%B1%82%E4%B8%8E%20Guard%20%E5%8F%8C%E8%84%91%E6%9E%B6%E6%9E%84%E8%A7%84%E8%8C%83.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:33:44.873Z",
+        "model": "coze-shell",
+        "entities": [
+          "Mortis",
+          "Guard (MCP Guard)",
+          "Codex",
+          "controller",
+          "task queue",
+          "Skill",
+          "Windows Terminal",
+          "PowerShell",
+          "execution_plan",
+          "层级模型L1-L6",
+          "验证等级V3/V4"
+        ],
+        "topics": [
+          "AI Agent双脑决策-执行架构设计",
+          "任务执行流程标准化规范",
+          "层级化系统操作边界约束",
+          "任务审查与验证机制",
+          "Mortis架构落地规范"
+        ],
+        "relations": [
+          {
+            "type": "contains",
+            "target": "controller",
+            "label": "Mortis架构包含指挥层组件controller",
+            "confidence": 1
+          },
+          {
+            "type": "contains",
+            "target": "Guard (MCP Guard)",
+            "label": "Mortis架构包含审查层组件Guard",
+            "confidence": 1
+          },
+          {
+            "type": "contains",
+            "target": "Codex",
+            "label": "Mortis架构包含执行层组件Codex",
+            "confidence": 1
+          },
+          {
+            "type": "contains",
+            "target": "task queue",
+            "label": "Mortis架构包含任务队列组件task queue",
+            "confidence": 1
+          },
+          {
+            "type": "generates",
+            "target": "execution_plan",
+            "label": "controller生成唯一执行凭证execution_plan",
+            "confidence": 1
+          },
+          {
+            "type": "reviews",
+            "target": "execution_plan",
+            "label": "Guard审查execution_plan以决定任务是否放行",
+            "confidence": 1
+          },
+          {
+            "type": "executes",
+            "target": "execution_plan",
+            "label": "Codex严格依据execution_plan执行任务步骤",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "层级模型L1-L6",
+            "label": "Mortis架构使用层级模型L1-L6定位任务入口",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "验证等级V3/V4",
+            "label": "Mortis架构使用验证等级判定任务成功标准",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Mortis架构规范集合"
+        ],
+        "clusters": [
+          "AI Agent双脑架构规范",
+          "任务执行流程管控"
+        ]
       },
       "series": "",
       "project": "Mortis 指挥层与 Guard 双脑架构规范",
@@ -54976,7 +55886,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -54997,13 +55907,107 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/MCP 清单总表.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/MCP 清单总表.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/MCP%20%E6%B8%85%E5%8D%95%E6%80%BB%E8%A1%A8.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:33:05.692Z",
+        "model": "coze-shell",
+        "entities": [
+          "MCP",
+          "Codex",
+          "Atramenti-Console",
+          "agent-runtime-mcp",
+          "chrome-devtools-mcp",
+          "chrome-devtools-mcp-wrapper",
+          "cloud-repo-mcp",
+          "context-store",
+          "context-store-reranker",
+          "core-qmd-dist-src-mcp",
+          "database-ops-mcp",
+          "dev-quality-mcp",
+          "drawio-diagrams",
+          "experience-mcp",
+          "fetch-mcp",
+          "frontend-patterns-mcp",
+          "config.toml",
+          "register-codex-paths.ps1",
+          "Server Operation & Maintenance Manual",
+          "PROJECT-CONTEXT.md"
+        ],
+        "topics": [
+          "MCP Registration & Management",
+          "System Configuration Governance",
+          "DevOps Tooling Administration",
+          "Knowledge Base Access",
+          "Browser Debugging Integration",
+          "Database Operations",
+          "Code Quality Assurance",
+          "Diagram Generation",
+          "Web Content Fetching",
+          "Frontend Pattern Guidelines"
+        ],
+        "relations": [
+          {
+            "type": "is_canonical_reference_for",
+            "target": "MCP Management (docs/agent scope)",
+            "label": "Serves as authoritative MCP management documentation",
+            "confidence": 1
+          },
+          {
+            "type": "hosts",
+            "target": "Codex",
+            "label": "Manages registered MCP components for Codex system",
+            "confidence": 1
+          },
+          {
+            "type": "resides_in",
+            "target": "Atramenti-Console",
+            "label": "Part of the Atramenti-Console project repository",
+            "confidence": 1
+          },
+          {
+            "type": "defines_live_source",
+            "target": "config.toml",
+            "label": "Specifies current active MCP registration state",
+            "confidence": 1
+          },
+          {
+            "type": "uses_provisioning_tool",
+            "target": "register-codex-paths.ps1",
+            "label": "Relies on script to generate managed MCP configuration blocks",
+            "confidence": 1
+          },
+          {
+            "type": "wraps",
+            "target": "chrome-devtools-mcp",
+            "label": "Provides local isolation and compatibility for Chrome DevTools MCP",
+            "confidence": 1
+          },
+          {
+            "type": "is_subcomponent_of",
+            "target": "context-store",
+            "label": "Reranks entries for context-store component",
+            "confidence": 1
+          },
+          {
+            "type": "links_to",
+            "target": "Server Operation & Maintenance Manual",
+            "label": "References multi-server system overview documentation",
+            "confidence": 0.9
+          }
+        ],
+        "collections": [
+          "MCP Management Documentation Suite",
+          "Atramenti-Console Project Documentation"
+        ],
+        "clusters": [
+          "MCP Configuration & Governance",
+          "DevOps Tooling Documentation"
+        ]
       },
       "series": "",
       "project": "MCP",
@@ -55383,7 +56387,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -55402,13 +56406,86 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/操作术语协议.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/操作术语协议.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%93%8D%E4%BD%9C%E6%9C%AF%E8%AF%AD%E5%8D%8F%E8%AE%AE.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:38:35.422Z",
+        "model": "coze-shell",
+        "entities": [
+          "宿主仓",
+          "来源仓",
+          "前端基底",
+          "owning repo",
+          "canonical source",
+          "source donor role",
+          "working copy",
+          "repo manifest",
+          "GitHub",
+          "github-delivery-mcp"
+        ],
+        "topics": [
+          "仓库整合与跨仓接入规范",
+          "前端基底判定规则",
+          "GitHub源码真源归属管理",
+          "操作术语统一约定",
+          "源码处理流程规范"
+        ],
+        "relations": [
+          {
+            "type": "defines",
+            "target": "宿主仓",
+            "label": "仓库整合动作的最终接收仓库",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "来源仓",
+            "label": "仓库整合动作的被整合/参考仓库",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "前端基底",
+            "label": "前端体系的核心归属载体",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "canonical source",
+            "label": "优先迭代的源码真源",
+            "confidence": 1
+          },
+          {
+            "type": "specifies",
+            "target": "GitHub仓库管理",
+            "label": "单一真源与交付顺序规则",
+            "confidence": 1
+          },
+          {
+            "type": "specifies",
+            "target": "前端整合",
+            "label": "基底判定与实现方式规则",
+            "confidence": 1
+          },
+          {
+            "type": "specifies",
+            "target": "源码处理",
+            "label": "仓库整合的源码迁移顺序规则",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Agent操作规范集合"
+        ],
+        "clusters": [
+          "仓库操作术语簇",
+          "源码管理规范簇",
+          "前端整合规则簇"
+        ]
       },
       "series": "",
       "project": "操作术语协议",
@@ -56288,7 +57365,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -56303,13 +57380,96 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/任务包与能力分层路由规范.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/任务包与能力分层路由规范.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E4%BB%BB%E5%8A%A1%E5%8C%85%E4%B8%8E%E8%83%BD%E5%8A%9B%E5%88%86%E5%B1%82%E8%B7%AF%E7%94%B1%E8%A7%84%E8%8C%83.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:47:49.186Z",
+        "model": "coze-shell",
+        "entities": [
+          "Atramenti-Console",
+          "TASK-BRIEF.md",
+          "COMPLEX-TASK-SPEC.md",
+          "VERIFICATION-BUNDLE.md",
+          "PROJECT-CONTEXT.md",
+          "SESSION-HANDOFF.md",
+          "plan.md",
+          "new-task-pack.ps1",
+          "task-verify.ps1",
+          "任务包",
+          "验证包",
+          "证据链",
+          "能力分层路由"
+        ],
+        "topics": [
+          "任务管理标准化",
+          "工作流可执行化规范",
+          "任务验证与证据管理",
+          "项目状态跟踪机制",
+          "能力分层路由设计"
+        ],
+        "relations": [
+          {
+            "type": "belongs_to",
+            "target": "Atramenti-Console",
+            "label": "项目执行基线文档",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "任务包",
+            "label": "标准化创建规则与落地要求",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "验证包",
+            "label": "验证逻辑与结构规范",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "证据链",
+            "label": "最小结构与分类口径",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "三件套文档组合",
+            "label": "分工与同步规则",
+            "confidence": 1
+          },
+          {
+            "type": "defines",
+            "target": "能力分层路由",
+            "label": "实施优先级与要求",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "new-task-pack.ps1",
+            "label": "任务包创建工具",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "task-verify.ps1",
+            "label": "验证包生成工具",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "Atramenti-Console 项目执行规范",
+          "Agent 任务管理工作流规范"
+        ],
+        "clusters": [
+          "任务管理规范聚类",
+          "工作流标准化聚类",
+          "项目状态管控聚类"
+        ]
       },
       "series": "",
       "project": "任务包与能力分层路由规范",
@@ -63482,7 +64642,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -63497,13 +64657,82 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/GitHub 仓群角色与收口清单.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/GitHub 仓群角色与收口清单.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/GitHub%20%E4%BB%93%E7%BE%A4%E8%A7%92%E8%89%B2%E4%B8%8E%E6%94%B6%E5%8F%A3%E6%B8%85%E5%8D%95.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:47:04.253Z",
+        "model": "coze-shell",
+        "entities": [
+          "GitHub",
+          "Git",
+          "emptyinkpot",
+          "asus-kl-codex-home",
+          "my-project-root",
+          "Atramenti-Console",
+          "emptyinkpot.github.io",
+          "mortis-multica-source",
+          "my-project-qmd",
+          "my-project-yt-dlp-mcp",
+          "my-project-video-audio-mcp",
+          "my-project-ffmpeg-mcp",
+          "mortis-napcat-control",
+          "mortis-multica-watch"
+        ],
+        "topics": [
+          "GitHub仓群角色管理",
+          "代码仓库备份与镜像策略",
+          "仓群结构优化",
+          "仓库生命周期收口"
+        ],
+        "relations": [
+          {
+            "type": "belongs_to",
+            "target": "emptyinkpot",
+            "label": "GitHub仓群成员",
+            "confidence": 1
+          },
+          {
+            "type": "is_role",
+            "target": "mirror/backup repo",
+            "label": "仓库角色",
+            "confidence": 1
+          },
+          {
+            "type": "is_role",
+            "target": "umbrella repo",
+            "label": "仓库角色",
+            "confidence": 1
+          },
+          {
+            "type": "is_role",
+            "target": "owning repo",
+            "label": "仓库角色",
+            "confidence": 1
+          },
+          {
+            "type": "is_role",
+            "target": "publish mirror",
+            "label": "仓库角色",
+            "confidence": 1
+          },
+          {
+            "type": "is_role",
+            "target": "public watch mirror",
+            "label": "仓库角色",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "GitHub仓群治理文档"
+        ],
+        "clusters": [
+          "代码仓库治理",
+          "仓群结构优化"
+        ]
       },
       "series": "",
       "project": "GitHub 仓群角色与收口清单",
@@ -63775,7 +65004,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -63790,13 +65019,77 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/图文文档写作规范.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/图文文档写作规范.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E5%9B%BE%E6%96%87%E6%96%87%E6%A1%A3%E5%86%99%E4%BD%9C%E8%A7%84%E8%8C%83.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:37:46.533Z",
+        "model": "coze-shell",
+        "entities": [
+          "图文文档写作规范",
+          "AGENTS.md",
+          "AGENTS.annotated.md",
+          "Atramenti-Console",
+          "Obsidian",
+          "PDF",
+          "DOCX"
+        ],
+        "topics": [
+          "图文文档创作规范",
+          "技术文档写作最佳实践",
+          "截图规范与管理",
+          "示意图设计准则",
+          "文档导出与分发标准",
+          "文档内容协同表达"
+        ],
+        "relations": [
+          {
+            "type": "depends_on",
+            "target": "AGENTS.md",
+            "label": "遵循通用文档创建、整合等规则",
+            "confidence": 1
+          },
+          {
+            "type": "depends_on",
+            "target": "AGENTS.annotated.md",
+            "label": "遵循通用文档创建、整合等规则",
+            "confidence": 1
+          },
+          {
+            "type": "applies_to",
+            "target": "Atramenti-Console",
+            "label": "规范其项目内各类图文文档创作",
+            "confidence": 1
+          },
+          {
+            "type": "uses",
+            "target": "Obsidian",
+            "label": "指定图片存储路径关联该工具",
+            "confidence": 1
+          },
+          {
+            "type": "supports",
+            "target": "PDF",
+            "label": "支持文档导出为该格式",
+            "confidence": 1
+          },
+          {
+            "type": "supports",
+            "target": "DOCX",
+            "label": "支持文档导出为该格式",
+            "confidence": 1
+          }
+        ],
+        "collections": [
+          "技术文档规范知识库"
+        ],
+        "clusters": [
+          "文档写作规范类",
+          "图文内容创作指南类"
+        ]
       },
       "series": "",
       "project": "图文文档写作规范",
@@ -65984,7 +67277,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -66005,13 +67298,103 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/agent/服务器手册伴随仪表盘.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/agent/服务器手册伴随仪表盘.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/agent/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%89%8B%E5%86%8C%E4%BC%B4%E9%9A%8F%E4%BB%AA%E8%A1%A8%E7%9B%98.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:40:14.374Z",
+        "model": "coze-shell",
+        "entities": [
+          "Server Operation & Maintenance Manual",
+          "Bases核心插件",
+          "SSH",
+          "systemd",
+          "MySQL",
+          "database-api",
+          "Atramenti-Console文档汇编",
+          "MCP清单总表",
+          "记忆体系分工与蒸馏方案（2026-04-19）",
+          "124.220.233.126（控制机）",
+          "121.196.202.114（主运行机）",
+          "111.228.6.224（补位实验机）",
+          "221.5.60.2:10043（弹性算力机）",
+          "140.143.229.144（对话服务器）",
+          "NEVERLETMEGO（Windows工作站）",
+          "服务器手册伴随视图.base",
+          "Smoothcloud"
+        ],
+        "topics": [
+          "服务器运维管理",
+          "服务器集群配置",
+          "服务部署与托管",
+          "SSH密钥体系管理",
+          "数据库接入管理",
+          "前端域名与入口管理",
+          "服务器状态监控",
+          "文档导航与聚合",
+          "运维知识库组织"
+        ],
+        "relations": [
+          {
+            "type": "aggregates",
+            "target": "Server Operation & Maintenance Manual",
+            "label": "聚合主手册关键章节、服务器信息与业务模块入口",
+            "confidence": 1
+          },
+          {
+            "type": "depends_on",
+            "target": "Bases核心插件",
+            "label": "依赖其实现交互视图功能",
+            "confidence": 1
+          },
+          {
+            "type": "embeds",
+            "target": "服务器手册伴随视图.base",
+            "label": "嵌入其服务器手册生态与docs-agent总览视图",
+            "confidence": 1
+          },
+          {
+            "type": "related_document",
+            "target": "Atramenti-Console文档汇编",
+            "label": "同组运维相关文档集合成员",
+            "confidence": 1
+          },
+          {
+            "type": "related_document",
+            "target": "MCP清单总表",
+            "label": "同组运维相关文档集合成员",
+            "confidence": 1
+          },
+          {
+            "type": "organizes_info_for",
+            "target": "124.220.233.126（控制机）",
+            "label": "整理该服务器的角色、档案与调度路由入口",
+            "confidence": 1
+          },
+          {
+            "type": "covers_topic",
+            "target": "SSH密钥体系管理",
+            "label": "提供SSH与密钥体系整理的入口",
+            "confidence": 0.9
+          },
+          {
+            "type": "covers_topic",
+            "target": "数据库接入管理",
+            "label": "提供MySQL/database-api接入记录的入口",
+            "confidence": 0.9
+          }
+        ],
+        "collections": [
+          "服务器运维知识库",
+          "docs/agent文档集合"
+        ],
+        "clusters": [
+          "服务器运维导航入口集群",
+          "文档聚合与视图集群"
+        ]
       },
       "series": "",
       "project": "多服务器智能体",
@@ -71588,7 +72971,7 @@
       "derivedTaxonomy": {
         "mode": "filesystem-frontmatter-wikilink-derived",
         "semanticAuthority": false,
-        "semanticSidecarStatus": "missing",
+        "semanticSidecarStatus": "active",
         "categorySources": [
           "filesystem.folderTags",
           "kind"
@@ -71606,13 +72989,76 @@
         "explicitCategories": []
       },
       "semantic": {
-        "status": "missing",
+        "status": "active",
         "authority": false,
         "source": "sidecar",
         "sidecarPath": "/home/vault/Obsidian/docs/Benammar 2018 外文译文资料说明.semantic.json",
         "openlistPath": "/openlist/Obsidian/docs/Benammar 2018 外文译文资料说明.semantic.json",
         "openlistUrl": "/openlist/Obsidian/docs/Benammar%202018%20%E5%A4%96%E6%96%87%E8%AF%91%E6%96%87%E8%B5%84%E6%96%99%E8%AF%B4%E6%98%8E.semantic.json",
-        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+        "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+        "generatedAt": "2026-05-08T01:45:22.675Z",
+        "model": "coze-shell",
+        "entities": [
+          "刘高朋",
+          "Atramenti-Console",
+          "Obsidian",
+          "Sensors期刊",
+          "《A Modular IoT Platform for Real-Time Indoor Air Quality Monitoring》",
+          "模块化物联网室内空气质量实时监测平台"
+        ],
+        "topics": [
+          "外文译文资料管理",
+          "物联网室内空气质量实时监测",
+          "学术论文翻译与归档",
+          "文档收口与版本追溯"
+        ],
+        "relations": [
+          {
+            "type": "corresponds_to",
+            "target": "《A Modular IoT Platform for Real-Time Indoor Air Quality Monitoring》",
+            "label": "译文对应原文学术论文",
+            "confidence": 1
+          },
+          {
+            "type": "created_by",
+            "target": "刘高朋",
+            "label": "外文译文由刘高朋完成",
+            "confidence": 1
+          },
+          {
+            "type": "managed_by",
+            "target": "Atramenti-Console",
+            "label": "译文文档由Atramenti-Console系统管理",
+            "confidence": 1
+          },
+          {
+            "type": "published_in",
+            "target": "Sensors期刊",
+            "label": "原文论文发表于Sensors期刊",
+            "confidence": 1
+          },
+          {
+            "type": "related_to",
+            "target": "模块化物联网室内空气质量实时监测平台",
+            "label": "译文内容围绕该监测平台主题展开",
+            "confidence": 1
+          },
+          {
+            "type": "categorized_under",
+            "target": "学术文档归档",
+            "label": "译文资料归类为学术归档文档",
+            "confidence": 0.9
+          }
+        ],
+        "collections": [
+          "毕业论文配套外文译文集合",
+          "Atramenti-Console codex文档集合"
+        ],
+        "clusters": [
+          "学术翻译资料集群",
+          "物联网监测技术文档集群",
+          "文档管理与收口集群"
+        ]
       },
       "series": "",
       "project": "毕业论文",

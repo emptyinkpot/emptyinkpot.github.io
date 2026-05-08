@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T01:26:05.103Z",
+  "generatedAt": "2026-05-08T02:35:59.245Z",
   "authority": {
     "type": "markdown-runtime-index",
     "fileTruth": "E:\\Vaults\\Obsidian",
@@ -40,7 +40,7 @@
     "derivedTaxonomy": {
       "mode": "filesystem-frontmatter-wikilink-derived",
       "semanticAuthority": false,
-      "semanticSidecarStatus": "missing",
+      "semanticSidecarStatus": "active",
       "categorySources": [
         "filesystem.folderTags",
         "kind"
@@ -55,13 +55,96 @@
       "explicitCategories": []
     },
     "semantic": {
-      "status": "missing",
+      "status": "active",
       "authority": false,
       "source": "sidecar",
       "sidecarPath": "/home/vault/Obsidian/docs/agent/任务包与能力分层路由规范.semantic.json",
       "openlistPath": "/openlist/Obsidian/docs/agent/任务包与能力分层路由规范.semantic.json",
       "openlistUrl": "/openlist/Obsidian/docs/agent/%E4%BB%BB%E5%8A%A1%E5%8C%85%E4%B8%8E%E8%83%BD%E5%8A%9B%E5%88%86%E5%B1%82%E8%B7%AF%E7%94%B1%E8%A7%84%E8%8C%83.semantic.json",
-      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter."
+      "rule": "AI semantic metadata is projection sidecar only; never write back to Markdown/frontmatter.",
+      "generatedAt": "2026-05-08T01:47:49.186Z",
+      "model": "coze-shell",
+      "entities": [
+        "Atramenti-Console",
+        "TASK-BRIEF.md",
+        "COMPLEX-TASK-SPEC.md",
+        "VERIFICATION-BUNDLE.md",
+        "PROJECT-CONTEXT.md",
+        "SESSION-HANDOFF.md",
+        "plan.md",
+        "new-task-pack.ps1",
+        "task-verify.ps1",
+        "任务包",
+        "验证包",
+        "证据链",
+        "能力分层路由"
+      ],
+      "topics": [
+        "任务管理标准化",
+        "工作流可执行化规范",
+        "任务验证与证据管理",
+        "项目状态跟踪机制",
+        "能力分层路由设计"
+      ],
+      "relations": [
+        {
+          "type": "belongs_to",
+          "target": "Atramenti-Console",
+          "label": "项目执行基线文档",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "任务包",
+          "label": "标准化创建规则与落地要求",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "验证包",
+          "label": "验证逻辑与结构规范",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "证据链",
+          "label": "最小结构与分类口径",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "三件套文档组合",
+          "label": "分工与同步规则",
+          "confidence": 1
+        },
+        {
+          "type": "defines",
+          "target": "能力分层路由",
+          "label": "实施优先级与要求",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "new-task-pack.ps1",
+          "label": "任务包创建工具",
+          "confidence": 1
+        },
+        {
+          "type": "uses",
+          "target": "task-verify.ps1",
+          "label": "验证包生成工具",
+          "confidence": 1
+        }
+      ],
+      "collections": [
+        "Atramenti-Console 项目执行规范",
+        "Agent 任务管理工作流规范"
+      ],
+      "clusters": [
+        "任务管理规范聚类",
+        "工作流标准化聚类",
+        "项目状态管控聚类"
+      ]
     },
     "series": "",
     "project": "任务包与能力分层路由规范",
