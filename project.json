@@ -537,7 +537,8 @@
       "service": "Directus",
       "status": "target-not-deployed",
       "composeSkeleton": "infra/composable-stack/docker-compose.yml",
-      "role": "manual curation and metadata overlay for books, visuals, collections and knowledge_objects",
+      "p0Sidecar": "public-data/books/books.metadata.json",
+      "role": "metadata layer for books, visuals, collections and knowledge_objects; P0 books metadata is a versioned sidecar until Directus or an equivalent metadata DB is deployed",
       "filePolicy": "stores structured metadata only; large files remain in OpenList/COS"
     },
     "searchRuntime": {
@@ -558,7 +559,10 @@
       "status": "source skeleton only; not deployed as running services"
     },
     "authorityRules": [
-      "apps/web/src/data/books.ts is seed/compatibility metadata, not long-term book existence authority",
+      "OpenList/COS owns file existence only; it does not own tags, descriptions, status or collections",
+      "public-data/books/books-index.json is a regenerable file index projection, not an editable metadata database",
+      "public-data/books/books.metadata.json is the current P0 editable metadata layer and must migrate to Directus or an equivalent metadata DB before scaling",
+      "browser localStorage is preference/cache/legacy migration only, never runtime truth",
       "apps/admin-next is a gateway/import/cache/runtime bridge, not a full CMS, media library or search engine",
       "visitor page loads must read snapshots and caches, not run AI inference or re-index large files",
       "do not describe Directus or Meilisearch as active before deployment and verification"
@@ -1665,10 +1669,11 @@
         "apps/web/src/pages/reader/[id].astro",
         "apps/web/src/pages/settings.astro"
       ],
-      "dataSource": "apps/web/src/data/books.ts",
+      "dataSource": "apps/web/public/public-data/books/books-index.json",
+      "metadataSource": "public-data/books/books.metadata.json",
       "clientModules": [
         "apps/web/src/lib/books/types.ts",
-        "apps/web/src/lib/books/openlist.ts",
+        "apps/web/src/lib/books/manifest.ts",
         "apps/web/src/lib/books/storage.ts"
       ],
       "reactIslands": [
@@ -1804,7 +1809,8 @@
     "showcaseLayer": {
       "status": "implemented as lightweight data plus Astro showcase components",
       "dataSources": [
-        "apps/web/src/data/books.ts",
+        "apps/web/public/public-data/books/books-index.json",
+        "public-data/books/books.metadata.json",
         "apps/web/src/data/music.ts"
       ],
       "components": [
@@ -1886,7 +1892,8 @@
       "home": {
         "files": [
           "apps/web/src/pages/index.astro",
-          "apps/web/src/data/books.ts",
+          "apps/web/src/lib/books/manifest.ts",
+          "apps/web/public/public-data/books/books-index.json",
           "apps/web/src/data/music.ts",
           "apps/web/src/lib/analytics.ts",
           "apps/web/src/lib/profile.ts"
@@ -2023,7 +2030,8 @@
       "public-data/runtime/content-index.json",
       "apps/web/src/content/notes",
       "apps/web/src/content/projects",
-      "apps/web/src/data/books.ts",
+      "apps/web/public/public-data/books/books-index.json",
+      "public-data/books/books.metadata.json",
       "apps/web/src/data/music.ts",
       "apps/web/src/lib/profile.ts",
       "apps/web/src/data/github-overview.emptyinkpot.json"

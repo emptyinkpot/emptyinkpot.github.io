@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npm --prefix apps/web run dev",
     "admin:dev": "npm --prefix apps/admin-next run dev",
-    "build": "npm --prefix apps/web run build",
+    "build": "npm run runtime:books && npm --prefix apps/web run build",
     "admin:build": "npm --prefix apps/admin-next run build",
     "admin:start": "npm --prefix apps/admin-next run start",
     "preview": "npm --prefix apps/web run preview",
@@ -13,6 +13,7 @@
     "lint": "eslint \"apps/web/src/**/*.{ts,astro}\" \"tools/**/*.{js,mjs}\" \"*.{js,mjs}\"",
     "refresh:github-overview": "node tools/refresh-github-overview.mjs",
     "runtime:content": "node tools/build-runtime-content-index.mjs",
+    "runtime:books": "node tools/build-books-index.mjs",
     "runtime:content:sse": "node tools/runtime-content-sse-server.mjs",
     "runtime:content:server": "node tools/server-runtime-content-projector.mjs",
     "semantic:sidecars": "node tools/generate-semantic-sidecars.mjs",

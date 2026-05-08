@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookshelfGrid from '../../components/books/BookshelfGrid';
 import {
   formatRuntimeDate,
   getRuntimeCollectionHref,
@@ -25,6 +26,7 @@ const collectionHref = withBase(getRuntimeCollectionHref(collection));
 const latestUpdated = collection.stats.latestUpdated ? formatRuntimeDate(collection.stats.latestUpdated) : 'unknown';
 const sessionArticles = collection.objects;
 const firstArticle = sessionArticles[0];
+const isBookCollection = collection.id === 'collection:folder:books' || collection.source?.path === 'books' || collection.title.toLowerCase() === 'books';
 const sessionPayload = {
   collection: {
     id: collection.id,
@@ -48,6 +50,19 @@ const sessionPayload = {
 
 <BaseLayout title={`${collection.title} / Knowledge Collection`} description={collection.description} canonical={collectionHref}>
   <main class="workbench-page collection-detail-page" data-pagefind-body>
+    {isBookCollection ? (
+      <section class="collection-bookshelf-projection" data-collection-bookshelf-projection>
+        <header class="collection-bookshelf-projection__head">
+          <p class="section-kicker">KnowledgeCollection -> ReadingObject Shelf</p>
+          <h1>{collection.title}</h1>
+          <p>
+            这个 collection 不渲染成文章阅读列表。Books 是 ReadingObject，主投影是 Shelf Surface；搜索、图谱和首页混排仍保留 KnowledgeObject identity。
+          </p>
+        </header>
+        <BookshelfGrid client:load />
+      </section>
+    ) : (
+      <>
     <section class="collection-detail-hero glass-card">
       <div>
         <p class="section-kicker">KnowledgeCollection / {collection.basis}</p>
@@ -137,7 +152,10 @@ const sessionPayload = {
         </div>
       )}
     </section>
+      </>
+    )}
   </main>
+  {!isBookCollection && (
   <script>
     const payloadElement = document.getElementById('collection-reading-session-data');
     const sessionRoot = document.querySelector('[data-collection-reading-session]');
@@ -233,4 +251,5 @@ const sessionPayload = {
 
     if (articles.length) setActiveArticle(activeIndex, false);
   </script>
+  )}
 </BaseLayout>

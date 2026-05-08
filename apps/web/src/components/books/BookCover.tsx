@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { BookItem } from '../../lib/books/types';
 import { buildCachedBookCoverUrl } from '../../lib/books/openlist';
-import { loadBookSettings } from '../../lib/books/storage';
+import { defaultBookSettings } from '../../lib/books/storage';
 
 type Props = {
   book: BookItem;
@@ -39,5 +39,5 @@ export default function BookCover({ book, className = '', allowGeneratedCover = 
 }
 
 function getOpenListCoverUrl(book: BookItem) {
-  return buildCachedBookCoverUrl(book, loadBookSettings());
+  return buildCachedBookCoverUrl(book, defaultBookSettings);
 }

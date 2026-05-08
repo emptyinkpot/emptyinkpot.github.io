@@ -80,7 +80,50 @@
       "graph": "relation node",
       "search": "compact result",
       "collection": "toc item or contextual member"
+    },
+    "typeSpecificGrammar": {
+      "BookObject": {
+        "identity": [
+          "KnowledgeObject",
+          "ReadingObject"
+        ],
+        "stableIdentity": "metadataId is semantic identity; openlistPath is a file binding and may change when files move",
+        "home": "cover-first book projection",
+        "collection": "Shelf Surface",
+        "drawer": "book reader surface",
+        "coverProjection": "book.cover || /api/openlist/cover?path=...&modified=...&size=...",
+        "authoritySplit": {
+          "fileIndex": "public-data/books/books-index.json records OpenList path, modified, size, sourceType and cache-facing cover inputs",
+          "metadataLayer": "public-data/books/books.metadata.json records editable metadata now and must migrate to Directus or equivalent metadata DB before scaling",
+          "runtimeTruth": "apps/admin-next + MySQL owns reader memory, highlights, annotations and relation events",
+          "localStorage": "cache, preference or legacy migration only"
+        },
+        "forbidden": [
+          "text-only generic book card",
+          "books collection rendered as article reading session",
+          "disabled generated cover fallback on homepage",
+          "raw source prefetch on homepage idle",
+          "script-level overlays as book metadata database",
+          "books-index.json as editable metadata authority",
+          "localStorage book metadata authority"
+        ]
+      }
     }
+  },
+  "metadataGovernance": {
+    "rule": "Index and metadata are separate. Manifests are projections and caches, not editable truth.",
+    "bookP0": {
+      "index": "public-data/books/books-index.json",
+      "metadata": "public-data/books/books.metadata.json",
+      "target": "Directus or equivalent metadata DB",
+      "runtime": "MySQL for reader state only"
+    },
+    "forbidden": [
+      "const overlays in build scripts",
+      "semantic tags/categories hard-coded inside index builders",
+      "localStorage becoming a metadata database",
+      "OpenList deciding tags, collections, descriptions or status"
+    ]
   },
   "visualGrammar": {
     "preview": "card",

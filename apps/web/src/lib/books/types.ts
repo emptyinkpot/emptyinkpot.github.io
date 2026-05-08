@@ -4,6 +4,8 @@ export type BookSourceType = 'epub' | 'pdf' | 'external';
 
 export interface BookItem {
   id: string;
+  metadataId?: string;
+  metadataSource?: 'books.metadata.json' | 'inferred';
   title: string;
   author: string;
   status: BookStatus;

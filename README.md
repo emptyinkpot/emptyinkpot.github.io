@@ -686,7 +686,7 @@ MyBlog Visuals / Search / Graph
 
 硬规则：
 
-- 不再把 `apps/web/src/data/books.ts` 写成完整书库 existence authority；它只允许保存以 `openlistPath` 为 key 的 metadata overlay。书籍存在性只来自 OpenList/COS 文件索引，overlay 不能创建、恢复或覆盖文件存在性。
+- 不再把 `apps/web/src/data/books.ts`、build script 内联 `overlays` 或 `books-index.json` 写成完整书库 metadata authority。书籍存在性只来自 OpenList/COS 文件索引；`public-data/books/books-index.json` 只保存 path / modified / size / sourceType / cover cache 输入；人工 metadata 只进入 `public-data/books/books.metadata.json`，后续迁入 Directus 或同级 metadata DB。
 - 不再把 `apps/admin-next` 扩张成完整 CMS、媒体库或搜索引擎。它只做 API gateway、import pipeline、cache/prewarm、runtime state 和外部服务桥接。
 - Directus 只管结构化 metadata overlay；大文件仍归 OpenList/COS，运行时阅读状态仍归 MySQL。
 - Meilisearch 上线前不得声称动态高亮、贴纸、视觉素材、OpenList 文件和 runtime books 已全部进入统一搜索。
@@ -822,6 +822,7 @@ MyBlog 当前前端已经不是普通博客组件树，而是 `Astro SSR + React
 - `Ctrl/Cmd+K` 当前存在 Command Palette 与 fallback search 两条 authority；这是 Runtime Split Brain 的典型信号。
 - OpenList shell、Pinterest shell、Book Drawer、Reader command 仍通过自由 custom event 和 delegated listener 串联。
 - localStorage 同时承担 UI preference、cache、legacy migration source 和部分临时本地 authority；后续必须分类，不能继续长成 Shadow Database。
+- localStorage 只能继续作为 preference / cache / legacy migration / 明确离线临时态；不得新增为 metadata DB、reader runtime truth、collection truth 或 OpenList 索引真源。
 
 目标形态：
 
@@ -981,6 +982,38 @@ Web Projection / PWA-TWA / Android Native / Search / CLI / AI Agent
 - Phase 3 才允许 Kotlin + Compose Native Client：Compose UI、ViewModel + Flow、Ktor / Retrofit、Coil、Room、PdfRenderer / EPUB runtime、AppUpdater。
 - 自动更新默认目标是 GitHub Releases + AppUpdater；F-Droid repo 是后续开源分发选项。
 - 禁止把 WebView 套壳当作最终 App 架构；PWA/TWA 是过渡安装面，不是第二套系统。
+
+#### 0.7.5.1b Content Metadata System
+
+当前最大的边界风险不是 UI，而是 metadata 继续散落在 build scripts、manifest 和 localStorage 里形成 Shadow Database。MyBlog 的 P0 收束规则是：
+
+```text
+OpenList / COS
+  = file existence + blob truth
+
+books-index.json / visual-manifest.json / content-index.json
+  = projection manifest / cache / frontend index
+
+books.metadata.json
+  = P0 editable metadata sidecar
+  -> later Directus or equivalent metadata DB
+
+MySQL
+  = runtime truth: reader memory, highlights, annotations, relations, events
+
+localStorage
+  = preference / cache / legacy migration only
+```
+
+硬规则：
+
+- Index != Metadata。`path`、`modified`、`size`、`sourceType` 属于 index；`tags`、`category`、`description`、`status`、`collection` 属于 metadata layer。
+- Manifest != Truth。manifest 可以是 projection、cache 或 fallback，但不能成为人工编辑的长期数据库。
+- build script 不允许出现 `const overlays = {}` 这类内联 metadata 数据库；脚本只能 normalize、join index 与 metadata sidecar、输出 projection。
+- stable id 必须与文件路径分离。书籍当前使用 `metadataId` 表达语义身份，`openlistPath` 只是文件绑定；文件移动后不应制造新对象。
+- P0 可用 JSON sidecar 承担 metadata layer，但 P1 必须迁向 Directus / Payload / 同级 metadata DB；MySQL 只承担 runtime state，不存文章正文或大文件。
+- localStorage 新 key 必须先分类，不能写成 reader truth、metadata truth、collection truth 或 OpenList index truth。
+
 - 当前 Web PWA surface 已有 `apps/web/public/manifest.webmanifest` 与 `apps/web/public/sw.js`。Service worker 只允许缓存静态页面和构建资产，禁止拦截 `/api/*`、`/openlist/*`、`/reader/openlist`、`/books/openlist` 和 HTTP Range 请求，避免污染 OpenList raw、PDF/EPUB Reader 和 Runtime API。
 - `npm run check:pwa` 是 PWA/TWA surface 的本地质量门：检查 manifest、标准图标尺寸、service worker runtime 边界、BaseLayout 注册、android-shell 合同和 Digital Asset Links；它已接入 `npm run check`。
 - `apps/android-shell/twa.contract.json` 是 Android shell 的机器合同；Bubblewrap 只能消费线上已部署并通过 installability 检查的 `https://blog.tengokukk.com/manifest.webmanifest`。
@@ -1939,7 +1972,7 @@ apps/web/src/components/showcase/
 
 Showcase 实现规则：
 
-- 书架不再维护静态书籍种子；OpenList 当前配置的书籍目录默认 `/Obsidian/docs/books/original`，它是书籍存在性来源。旧 `/夸克网盘/obsidian/data/docs/books/original` 已删除，不能 resurrect。`apps/web/src/data/books.ts` 只能作为 metadata overlay，不能 resurrect OpenList 不存在的书。
+- 书架不再维护静态书籍种子；OpenList 当前配置的书籍目录默认 `/Obsidian/docs/books/original`，它是书籍存在性来源。旧 `/夸克网盘/obsidian/data/docs/books/original` 已删除，不能 resurrect。`public-data/books/books-index.json` 是可再生文件索引投影；`public-data/books/books.metadata.json` 是 P0 可版本化 metadata layer；任何 overlay 都不能创建、恢复或覆盖 OpenList 不存在的书。
 - 音乐第一阶段用 `apps/web/src/data/music.ts`，图片约定放 `apps/web/public/images/music/`。
 - 首页只放书架 / 音乐摘要卡片；主点击行为打开 drawer，完整内容通过 drawer action 进入 `/books/` 和 `/music/`。
 
@@ -1990,8 +2023,8 @@ OpenList
 
 书籍系统实现规则：
 
-- 书籍文件源与 existence authority 属于 OpenList；书名、作者、`sourceType`、`openlistPath` 由 OpenList 运行时索引归一化产生。`apps/web/src/data/books.ts` 只补分类、标签、note、description、status 等 metadata overlay。阅读状态不属于文件层，必须进入 MySQL Runtime Layer。
-- 当前书籍资料库默认 OpenList 路径是 `/Obsidian/docs/books/original`；旧 `/夸克网盘/obsidian/data/docs/books/original` 已删除。博客书架必须在运行时通过 `/api/openlist/list` 与当前配置目录同步，新增 EPUB/PDF/MOBI 文件不需要重新部署即可出现在 `/books/`；`.md` 报告类文件不进入书架。
+- 书籍文件源与 existence authority 属于 OpenList；`public-data/books/books-index.json` 只记录 OpenList file index projection：`openlistPath`、`modified`、`size`、`sourceType`、封面缓存输入和派生标题。书名修正、作者修正、分类、标签、note、description、status 和 collection hints 属于 metadata layer，只能写入 `public-data/books/books.metadata.json`，后续迁入 Directus 或同级 metadata DB。阅读状态不属于文件层，必须进入 MySQL Runtime Layer。
+- 当前书籍资料库默认 OpenList 路径是 `/Obsidian/docs/books/original`；旧 `/夸克网盘/obsidian/data/docs/books/original` 已删除。博客书架通过 `npm run runtime:books` 从 `/api/openlist/index` 生成 `books-index.json`，前台只读该 manifest，不在访客请求里 live-list OpenList；新增 EPUB/PDF/MOBI 文件需要索引重建后出现在 `/books/`，`.md` 报告类文件不进入书架。
 - `openlistPath` 写绝对路径时直接使用该路径；写相对路径时拼接 `/settings/` 的 `openlistBooksPath`。Reader 直接拼接 `/api/openlist/raw?path=...&modified=...&size=...`，不在打开抽屉时再调用 OpenList `fs/get`，也不让浏览器直接访问 OpenList。
 - 原始文件缓存策略：EPUB/PDF 文件属于 OpenList 存储层，但 visitor reader 不允许每次打开都回源下载。导入链路必须先运行 `/api/openlist/index/rebuild`，再运行 `/api/openlist/files/prewarm`，把 EPUB/PDF 原始字节按 `path + modified + size` 落盘到 `public-data/openlist-files/` 并写入 `public-data/openlist-files/manifest.json`。访客访问 `/api/openlist/raw` 时只能读取 manifest 命中的本地缓存文件，并支持 HTTP Range 供 PDF.js / epub.js 分段读取；缓存未命中返回 404，不能在访客请求里临时下载 OpenList。文件变更后因为 `modified/size` 改变，下一次 index rebuild + files prewarm 会生成新缓存；未变更时所有访客复用同一份缓存文件。
 - 封面策略：只使用真实来源，不生成伪封面。封面解析属于导入/索引阶段，不属于访客打开页面阶段。`/api/openlist/index/rebuild` 只更新文件索引；随后后台任务调用 `/api/openlist/covers/prewarm` 逐本预热 EPUB/PDF 封面，不能因为单本慢文件阻断整轮同步。这两个后台接口同时支持 POST JSON 和 GET query，服务器本机任务优先用 GET query，并把 OpenList raw URL 收敛到本机 `OPENLIST_BASE_URL + OPENLIST_API_PREFIX` 下载，避免导入任务绕公网网关。预热优先使用 OpenList `thumb`，否则从 EPUB 内嵌 cover 或 PDF 首页抽取真实封面，并按 `path + modified + size` 落盘缓存到 `public-data/openlist-covers/`，同时写入 `public-data/openlist-covers/manifest.json`。访客访问 `/api/openlist/cover?path=...` 时只读 manifest / 已落盘 jpg；缓存未命中就返回 404，不临时解析。manifest 命中还要校验 `modified/size`，文件变更后下一次索引重建 + prewarm 会生成新缓存；未变更时一直复用已存画面。MOBI 暂无站内封面解析器，显示明确“无封面”占位，不伪装成可识别封面。首页 Feed、书架页、详情页必须共用这套真实封面链路，不能用标题字样或 SVG poster 冒充书籍封面。
@@ -2010,7 +2043,7 @@ OpenList
 - 浏览器本地设置写入 `emptyinkpot-book-settings`；阅读主题继续同步 `emptyinkpot-reader-theme`，与首页 reader drawer 共用主题 token。
 - MySQL Runtime Layer P0 只承担动态状态，不替代 OpenList 或 GitHub：
   - OpenList：EPUB/PDF/MOBI 原始文件、真实封面来源、文件索引与封面缓存。
-  - GitHub / 源码：Markdown、项目 Wiki、可版本化 metadata overlay；`apps/web/src/data/books.ts` 不拥有书籍存在性。
+  - GitHub / 源码：Markdown、项目 Wiki、可版本化 metadata layer；`public-data/books/books.metadata.json` 是 P0 sidecar，`books-index.json` 不拥有 metadata authority。
   - MySQL：`reader_memory` 与 `reader_highlights`，后续再扩展 annotations / stickers / seals / graph links。
 - MySQL 连接只允许服务端读取 `MYBLOG_DB_HOST`、`MYBLOG_DB_PORT`、`MYBLOG_DB_USER`、`MYBLOG_DB_PASSWORD`、`MYBLOG_DB_NAME`；不得把数据库连接串、密码或 token 写进前端 bundle。
 - P0 schema 的 canonical owner 是 `apps/admin-next/lib/runtime-db.js`；首次 API 访问自动建库表，后续只做 `CREATE TABLE IF NOT EXISTS` 幂等校验，不新建兼容表。

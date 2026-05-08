@@ -338,12 +338,12 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'OpenList + 腾讯云 COS 当前已作为 content control plane 下的大文件 / blob 后端验证：bucket myblog-media-1410041307，region ap-shanghai，挂载点 /腾讯云COS，验证对象 _verify/openlist-cos.txt。',
       'OpenList + server storage integration 当前 active：/Obsidian 是 Local driver，root=/home/vault/Obsidian，只作为 Linux hot mirror 的 public access identity；/腾讯云COS 与 /夸克网盘 是冷层和 blob backend；root disk 维护入口是 npm run server:openlist-storage。',
       'Immich 当前是 skeleton-installed-not-started：/srv/immich、.env、docker-compose.yml、check-readiness.sh 和 Nginx vhost 已存在，但 DNS、独立存储和 root disk 空间未满足启动条件。',
-      'Directus 是 target-not-deployed metadata overlay，后续管理 books、visuals、collections、knowledge_objects 的人工策展字段，不保存大文件原件。',
+      'Directus 是 target-not-deployed metadata layer，后续管理 books、visuals、collections、knowledge_objects 的人工策展字段，不保存大文件原件；P0 书籍 metadata 暂由 public-data/books/books.metadata.json sidecar 承担。',
       'Meilisearch 是 target-not-deployed search runtime，后续索引 KnowledgeObject snapshot、OpenList file index、Directus metadata 和 Immich import snapshot；上线前 Pagefind 继续承担静态文章搜索。',
       'infra/composable-stack 提供 Directus + Meilisearch 的可复刻 Docker Compose skeleton、.env.example 和 check-readiness.sh；服务器侧已同步到 /srv/myblog/services/composable-stack/，但 .env 未创建、容器未启动，它是部署入口，不是已运行事实。',
-      'Astro/MyBlog 当前是 presentation shell：组织 Feed、Drawer、Reader、Visual Collection、Graph 和公开路由，只消费 API、snapshot、manifest 和 Astro content collection。',
+      'Astro/MyBlog 当前是 presentation shell：组织 Feed、Drawer、Reader、Visual Collection、Graph 和公开路由，只消费 API、snapshot、manifest 和 Astro content collection；manifest 是 projection/cache，不是人工 metadata truth。',
       'apps/admin-next 只做 gateway、import pipeline、runtime cache、OpenList proxy、MySQL runtime bridge 和服务间 glue；不得扩张成完整 CMS、媒体库或搜索引擎。',
-      'OpenList/COS 文件索引拥有书籍 existence authority；books.ts 只允许作为按 openlistPath keyed 的 metadata overlay，不能创建、恢复或覆盖文件存在性。'
+      'OpenList/COS 文件索引拥有书籍 existence authority；public-data/books/books-index.json 只保存 path / modified / size / sourceType / cover cache 输入；public-data/books/books.metadata.json 是 P0 editable metadata layer。build script 不得内联 const overlays，也不得让 manifest、localStorage 或 OpenList 决定 tags、description、status、collection。'
     ],
     tradeoffs: [
       '组合成熟服务会增加部署和观测复杂度，但避免在 MyBlog 内重复实现媒体库、CMS、搜索和对象存储。',
@@ -447,13 +447,13 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'Astro/MyBlog 是 Projection Shell：Feed、Drawer、Reader、Graph、Visual Collection 和 Codex 页面都从对象 snapshot / content collection 渲染，不拥有对象真源。'
     ],
     tradeoffs: [
-      '对象层会增加 schema 和同步成本，但能避免 books.ts、visuals.ts、OpenList index、MySQL runtime 各自生成一套不可合并的 ID。',
+      '对象层会增加 schema 和同步成本，但能避免 books.metadata.json、visuals.ts、OpenList index、MySQL runtime 各自生成一套不可合并的 ID。',
       'Markdown 退回 serialization format 会降低“文件即一切”的简单感，但换来跨书籍、图片、项目、人物和阅读痕迹的稳定关系。',
       '早期可以先用 JSON manifest 表达 KnowledgeObject / KnowledgeCollection snapshot，等 Directus / Meilisearch 就绪后再升级为服务化对象索引。'
     ],
     future: [
       '定义 public-data/knowledge/knowledge-objects.schema.json，覆盖 BookObject、VisualObject、PostObject、ProjectObject、HighlightObject 和 KnowledgeCollection。',
-      '从 books.ts、visualCollections、OpenList index、reader_highlights 和 posts frontmatter 生成 KnowledgeObject snapshot。',
+      '从 books.metadata.json、visualCollections、OpenList index、reader_highlights 和 posts frontmatter 生成 KnowledgeObject snapshot。',
       '把 Graph、Search、Timeline 和 Drawer 的数据入口统一到 KnowledgeObject projection。',
       '用 Directus 管人工 metadata overlay，用 Meilisearch 管 object-first search，用 MySQL 管动态事件和关系。'
     ],
@@ -651,8 +651,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '展示过多封面，因为 Top 3 + count 更克制，也更接近成熟媒体库。'
     ],
     runtime: [
-      'OpenList original 目录提供实时书源并决定哪些书存在；books.ts 只提供 keyed metadata overlay，不能把 OpenList 已删除的书重新带回 UI。',
-      '当前 `/books/` 与首页 Feed 默认一书一卡：OpenList 返回多少本具体书，就渲染多少张具体书卡。',
+      'OpenList original 目录提供书源并决定哪些书存在；public-data/books/books-index.json 是可再生文件索引投影，public-data/books/books.metadata.json 只提供 keyed metadata layer，不能把 OpenList 已删除的书重新带回 UI。',
+      '当前 `/books/` 与首页 Feed 默认一书一卡：books-index.json 返回多少本具体书，就渲染多少张具体书卡；前台不得在访客请求里 live-list OpenList。',
       'Collection 是后续 Knowledge Topic 视图，不再替代默认书籍清单，也不能让具体书籍在主书架里消失。'
     ],
     tradeoffs: [

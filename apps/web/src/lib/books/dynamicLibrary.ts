@@ -1,6 +1,4 @@
 import type { BookItem, BookSourceType } from './types';
-import type { BookMetadataOverlay } from '../../data/books';
-import { bookMetadataByPath } from '../../data/books';
 
 const sourceTag = 'OpenList 原始库';
 const extensionPattern = /\.(epub|pdf|mobi)$/i;
@@ -45,7 +43,17 @@ export function normalizeOpenListBookFile(file: {
   };
 }
 
-export function buildCanonicalBooks(dynamicBooks: BookItem[], overlays: Record<string, BookMetadataOverlay> = bookMetadataByPath) {
+export type BookMetadataOverlay = {
+  category?: string;
+  tags?: string[];
+  status?: BookItem['status'];
+  statusLabel?: string;
+  note?: string;
+  description?: string;
+  cover?: string;
+};
+
+export function buildCanonicalBooks(dynamicBooks: BookItem[], overlays: Record<string, BookMetadataOverlay> = {}) {
   return dynamicBooks.map((book) => applyBookMetadataOverlay(book, overlays[book.openlistPath || ''])).sort((a, b) => {
     const left = Date.parse(a.modified || '') || 0;
     const right = Date.parse(b.modified || '') || 0;

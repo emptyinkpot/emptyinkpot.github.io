@@ -1,8 +1,8 @@
 import { BookOpen } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
-import { buildCanonicalBooks, normalizeOpenListBookFile } from '../../lib/books/dynamicLibrary';
-import { listOpenListFiles } from '../../lib/books/openlist';
-import { loadBookSettings } from '../../lib/books/storage';
+import { useEffect, useState } from 'react';
+import { loadBooksIndex } from '../../lib/books/manifest';
+import { buildCachedBookCoverUrl } from '../../lib/books/openlist';
+import { defaultBookSettings } from '../../lib/books/storage';
 import { getBookDetailHref, getBookReaderHref } from '../../lib/books/routes';
 import type { BookItem } from '../../lib/books/types';
 import BookCover from './BookCover';
@@ -26,22 +26,19 @@ type SearchDoc = {
 export default function RuntimeBookFeed({ targetId }: Props) {
   const [books, setBooks] = useState<BookItem[]>([]);
   const [status, setStatus] = useState('正在同步 OpenList 书籍...');
-  const settings = useMemo(() => loadBookSettings(), []);
 
   useEffect(() => {
     let cancelled = false;
-    listOpenListFiles(settings.openlistBaseUrl, settings.openlistBooksPath)
-      .then((files) => {
+    loadBooksIndex()
+      .then((manifest) => {
         if (cancelled) return;
-        const dynamicBooks = files.map(normalizeOpenListBookFile).filter(Boolean) as BookItem[];
-        const canonicalBooks = buildCanonicalBooks(dynamicBooks);
-        setBooks(canonicalBooks);
-        setStatus(`OpenList canonical：${canonicalBooks.length} 本`);
+        setBooks(manifest.books);
+        setStatus(`books-index：${manifest.books.length} 本`);
         window.dispatchEvent(
           new CustomEvent('emptyinkpot:runtime-books-ready', {
             detail: {
-              count: canonicalBooks.length,
-              docs: canonicalBooks.map(toSearchDoc)
+              count: manifest.books.length,
+              docs: manifest.books.map(toSearchDoc)
             }
           })
         );
@@ -49,13 +46,13 @@ export default function RuntimeBookFeed({ targetId }: Props) {
       .catch((error: Error) => {
         if (cancelled) return;
         setBooks([]);
-        setStatus(`OpenList 书籍同步失败：${error.message}`);
+        setStatus(`books-index 暂不可用：${error.message}`);
       });
 
     return () => {
       cancelled = true;
     };
-  }, [settings]);
+  }, []);
 
   return (
     <>
@@ -87,7 +84,7 @@ function RuntimeBookCard({ book }: { book: BookItem }) {
   return (
     <button
       type="button"
-      className="home-feed-card home-feed-card--compact"
+      className="home-feed-card home-feed-card--compact home-feed-card--book"
       data-feed-card
       data-feed-kind="book"
       data-drawer-id={drawerId}
@@ -104,7 +101,7 @@ function RuntimeBookCard({ book }: { book: BookItem }) {
       </span>
       <span className="card-paperclip" aria-hidden="true" />
       <div className="home-feed-card__cover home-feed-card__cover--book">
-        <BookCover book={book} allowGeneratedCover={false} />
+        <BookCover book={book} />
       </div>
       <div className="home-feed-card__body">
         <div className="home-feed-card__meta">
@@ -150,7 +147,7 @@ function RuntimeBookTemplate({ book }: { book: BookItem }) {
           <section className="book-drawer-reader-panel" aria-label={`${book.title} 阅读器`}>
             <header className="book-drawer-reader-panel__intro">
               <div className="home-drawer-summary__media home-drawer-summary__media--book">
-                <BookCover book={book} allowGeneratedCover={false} />
+                <BookCover book={book} />
               </div>
               <div className="book-drawer-reader-panel__copy">
                 <span className="book-drawer-reader-panel__eyebrow">Runtime Book Object</span>
@@ -187,7 +184,7 @@ function RuntimeBookTemplate({ book }: { book: BookItem }) {
         ) : (
           <>
             <div className="home-drawer-summary__media home-drawer-summary__media--book">
-              <BookCover book={book} allowGeneratedCover={false} />
+              <BookCover book={book} />
             </div>
             <div className="home-drawer-summary__main">
               <dl className="home-drawer-summary__details">
@@ -213,7 +210,7 @@ function RuntimeBookTemplate({ book }: { book: BookItem }) {
 }
 
 function getBookCoverSrc(book: BookItem) {
-  return book.cover || '';
+  return book.cover || buildCachedBookCoverUrl(book, defaultBookSettings);
 }
 
 function toSearchDoc(book: BookItem): SearchDoc {

@@ -1,9 +1,7 @@
 import { BookOpen, FileText, Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { BookItem } from '../../lib/books/types';
-import { listOpenListFiles } from '../../lib/books/openlist';
-import { loadBookSettings } from '../../lib/books/storage';
-import { buildCanonicalBooks, normalizeOpenListBookFile } from '../../lib/books/dynamicLibrary';
+import { loadBooksIndex } from '../../lib/books/manifest';
 import { listReaderMemory } from '../../lib/runtime/reader';
 import { getBookDetailHref, getBookReaderHref } from '../../lib/books/routes';
 import BookCover from './BookCover';
@@ -11,11 +9,13 @@ import BookCover from './BookCover';
 type Props = Record<string, never>;
 
 type ProgressMap = Record<string, string>;
+type ShelfMode = 'visual' | 'compact' | 'reading';
 
 export default function BookshelfGrid({}: Props) {
   const [libraryBooks, setLibraryBooks] = useState<BookItem[]>([]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('全部');
+  const [mode, setMode] = useState<ShelfMode>('visual');
   const [progress, setProgress] = useState<ProgressMap>({});
   const [recentIds, setRecentIds] = useState<string[]>([]);
   const [syncStatus, setSyncStatus] = useState('正在同步 OpenList 书库...');
@@ -41,20 +41,18 @@ export default function BookshelfGrid({}: Props) {
   }, [libraryBooks]);
 
   useEffect(() => {
-    const settings = loadBookSettings();
     let cancelled = false;
 
-    listOpenListFiles(settings.openlistBaseUrl, settings.openlistBooksPath)
-      .then((files) => {
+    loadBooksIndex()
+      .then((manifest) => {
         if (cancelled) return;
-        const dynamicBooks = files.map(normalizeOpenListBookFile).filter(Boolean) as BookItem[];
-        setLibraryBooks(buildCanonicalBooks(dynamicBooks));
-        setSyncStatus(`已同步 ${dynamicBooks.length} 本 OpenList 书籍`);
+        setLibraryBooks(manifest.books);
+        setSyncStatus(`books-index 已加载 ${manifest.books.length} 本`);
       })
       .catch((error: Error) => {
         if (cancelled) return;
         setLibraryBooks([]);
-        setSyncStatus(`OpenList 同步失败：${error.message}`);
+        setSyncStatus(`books-index 暂不可用：${error.message}`);
       });
 
     return () => {
@@ -78,15 +76,17 @@ export default function BookshelfGrid({}: Props) {
     .map((id) => libraryBooks.find((book) => book.id === id))
     .filter((book) => book?.sourceType !== 'external')
     .filter(Boolean)
-    .slice(0, 3) as BookItem[];
+    .slice(0, 8) as BookItem[];
+
+  const visibleShelves = useMemo(() => groupBooksIntoShelves(filtered), [filtered]);
 
   return (
-    <section className="bookshelf-app">
+    <section className={`bookshelf-app bookshelf-app--${mode}`} data-bookshelf-mode={mode}>
       <header className="bookshelf-topbar">
         <div>
-          <p className="section-kicker">Private Bookshelf</p>
+          <p className="section-kicker">ReadingObject Shelf</p>
           <h1>我的书架</h1>
-          <p>书架会实时同步 OpenList 原始书库；PDF/EPUB 封面来自导入缓存，阅读进度写入 MySQL Runtime。</p>
+          <p>书籍在这里按 ReadingObject 投影：封面、作者、阅读状态和主题 shelf 是第一层，KnowledgeObject 关系留给搜索、图谱和首页混排。</p>
           <small className="bookshelf-sync-status">{syncStatus}</small>
         </div>
         <label className="bookshelf-search">
@@ -122,29 +122,61 @@ export default function BookshelfGrid({}: Props) {
         ))}
       </nav>
 
+      <div className="bookshelf-mode-switch" aria-label="书架视图">
+        {[
+          ['visual', '封面书架'],
+          ['reading', '继续阅读'],
+          ['compact', '书脊视图']
+        ].map(([id, label]) => (
+          <button key={id} className={mode === id ? 'is-active' : ''} type="button" onClick={() => setMode(id as ShelfMode)}>
+            {label}
+          </button>
+        ))}
+      </div>
+
       {recentBooks.length ? (
-        <section className="bookshelf-recent">
-          <span>最近阅读</span>
-          <div>
+        <section className="bookshelf-reading-lane" aria-label="继续阅读">
+          <header>
+            <span>Currently Reading</span>
+            <strong>{recentBooks.length} active objects</strong>
+          </header>
+          <div className="bookshelf-reading-lane__rail">
             {recentBooks.map((book) => (
-              <a href={getBookReaderHref(book)} key={book.id}>
-                {book.title}
+              <a className="bookshelf-reading-card" href={getBookReaderHref(book)} key={book.id}>
+                <BookCover book={book} />
+                <span>
+                  <strong>{book.title}</strong>
+                  <small>{progress[book.id] || '继续阅读'}</small>
+                </span>
               </a>
             ))}
           </div>
         </section>
       ) : null}
 
-      <div className="bookshelf-grid">
-        {filtered.map((book) => renderBookTile(book, progress))}
+      <div className="bookshelf-surface" data-bookshelf-surface>
+        {visibleShelves.map((shelf) => (
+          <section className="bookshelf-shelf" key={shelf.id} data-bookshelf-shelf={shelf.id}>
+            <header className="bookshelf-shelf__head">
+              <div>
+                <span>{shelf.eyebrow}</span>
+                <h2>{shelf.title}</h2>
+              </div>
+              <small>{shelf.books.length} books</small>
+            </header>
+            <div className="bookshelf-grid">
+              {shelf.books.map((book) => renderBookTile(book, progress, mode))}
+            </div>
+          </section>
+        ))}
       </div>
     </section>
   );
 }
 
-function renderBookTile(book: BookItem, progress: ProgressMap) {
+function renderBookTile(book: BookItem, progress: ProgressMap, mode: ShelfMode) {
   return (
-    <article className="book-tile" key={book.id}>
+    <article className={`book-tile book-tile--${mode}`} key={book.id} data-book-projection="shelf">
       <a className="book-cover-wrap" href={getBookDetailHref(book)} aria-label={`查看 ${book.title}`}>
         <BookCover book={book} />
       </a>
@@ -153,7 +185,8 @@ function renderBookTile(book: BookItem, progress: ProgressMap) {
           {book.title}
         </a>
         <span>{book.author}</span>
-        <small>{progress[book.id] || '未开始'}</small>
+        <small>{progress[book.id] || book.statusLabel || '未开始'}</small>
+        <em>{[book.category, book.sourceType.toUpperCase()].filter(Boolean).join(' / ')}</em>
         <div className="book-tile__actions">
           {book.sourceType === 'external' ? (
             <a href={getBookDetailHref(book)}>
@@ -174,6 +207,23 @@ function renderBookTile(book: BookItem, progress: ProgressMap) {
       </div>
     </article>
   );
+}
+
+function groupBooksIntoShelves(books: BookItem[]) {
+  const buckets = new Map<string, BookItem[]>();
+  books.forEach((book) => {
+    const key = book.category || '未分类';
+    buckets.set(key, [...(buckets.get(key) || []), book]);
+  });
+
+  return [...buckets.entries()]
+    .map(([title, shelfBooks]) => ({
+      id: title.toLowerCase().replace(/\s+/g, '-'),
+      title,
+      eyebrow: title === '全部' ? 'Library Shelf' : 'Thematic Shelf',
+      books: shelfBooks
+    }))
+    .sort((a, b) => b.books.length - a.books.length || a.title.localeCompare(b.title, 'zh-CN'));
 }
 
 function formatProgressLabel(item: { progress?: number; location?: unknown }) {

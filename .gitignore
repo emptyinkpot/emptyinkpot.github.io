@@ -9,5 +9,7 @@ node_modules/
 public/
 !apps/web/public/
 !apps/web/public/**
+apps/web/public/runtime/
+public-data/runtime/
 .deploy*/
 _multiconfig.yml
