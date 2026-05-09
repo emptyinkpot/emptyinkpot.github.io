@@ -14,4 +14,5 @@ Windows E:\Vaults\Obsidian
 - OpenList does not own the editable Vault.
 - OpenList exposes public file identity.
 - Runtime projector does not run Astro build, Pagefind or deploy.
-- Shell changes deploy through `npm run deploy:site`.
+- Shell changes deploy through `npm run deploy:site` from `/srv/myblog/repo`.
+- `syncthing@ubuntu.service` must be healthy before claiming Linux hot mirror freshness.

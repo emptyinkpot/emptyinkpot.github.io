@@ -1,6 +1,12 @@
 # System Topology
 
 ```text
+GitHub emptyinkpot/emptyinkpot.github.io
+  <-> /srv/myblog/repo
+  -> apps/web Astro build
+  -> /srv/myblog/site
+  -> Nginx / blog.tengokukk.com
+
 Obsidian Vault
   -> Syncthing hot mirror
   -> Runtime MarkdownObject compiler
@@ -21,6 +27,7 @@ apps/admin-next + MySQL
 
 ## Active Authorities
 
+- Source workspace: `/srv/myblog/repo`
 - Authoring: `E:\Vaults\Obsidian`
 - Server mirror: `/home/vault/Obsidian`
 - Article projection: `public-data/runtime/content-index.json`

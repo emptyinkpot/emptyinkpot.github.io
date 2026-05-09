@@ -2,6 +2,19 @@
 
 This repo inherits the global policy core at `C:\Users\ASUS-KL\.codex\policy\index.md`.
 
+
+## Required Read Order
+
+Before editing this repository, read:
+
+1. `AI_CONTEXT.md`
+2. `ARCHITECTURE.md`
+3. `SYSTEM_TOPOLOGY.md`
+4. `WORKSPACE_RUNTIME.md`
+5. `docs/operations/current-runtime-map.md`
+6. `project.json`
+7. `workspace.manifest.json`
+
 ## Frontend Documentation Freshness
 
 - Any change to `apps/web/` frontend UI, interaction, reader behavior, visual system, homepage information architecture, or frontend runtime must also update the relevant Architecture Codex entry.
