@@ -3,9 +3,9 @@
   "workspaceId": "myblog-canonical-active",
   "workspaceType": "canonical",
   "profile": "workspaces/canonical.json",
-  "root": "E:\\My Project\\MyBlog",
+  "root": "/srv/myblog/repo",
   "allowedRoots": [
-    "E:\\My Project\\MyBlog"
+    "/srv/myblog/repo"
   ],
   "capabilities": {
     "canBuild": true,
@@ -36,7 +36,8 @@
     "buildOutputRoot": "apps/web/dist",
     "remoteTempRoot": "/tmp/myblog-dist-upload",
     "forbiddenSources": [
-      "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*"
+      "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*",
+      "E:\\My Project\\MyBlog"
     ],
     "incidentReference": "2026-05-07 stale worktree deploy regression"
   }

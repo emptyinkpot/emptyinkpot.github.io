@@ -16,7 +16,7 @@ This repo inherits the global policy core at `C:\Users\ASUS-KL\.codex\policy\ind
 - Before deploying, run `npm run deploy:site` or at minimum `npm run check:workspace`; do not hand-run `scp` from an unchecked worktree.
 - The machine-readable workspace authority source is `workspace.manifest.json`.
 - Workspaces under `C:\Users\ASUS-KL\.codex-runtime\worktrees\*` are experimental by default: they may prototype UI, feed, drawer, visual and animation changes, but must not deploy, modify PWA authority, runtime schema or OpenList authority unless their manifest explicitly grants that capability and the guard passes.
-- The current deploy-authoritative workspace is `E:\My Project\MyBlog`.
+- The current deploy-authoritative workspace is `/srv/myblog/repo`.
 - Any change to workspace authority must update `README.md`, `project.json`, `workspace.manifest.json`, `workspaces/*.json` and the `runtime-federation` Architecture Codex entry together.
 
 ## Current Codex Entries
