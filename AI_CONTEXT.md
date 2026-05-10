@@ -8,9 +8,12 @@ MyBlog is not a traditional blog, CMS admin panel, CRUD app, or generic Astro th
 
 - Default editable source root: `ubuntu@124.220.233.126:/srv/myblog/repo`.
 - GitHub repository: `https://github.com/emptyinkpot/emptyinkpot.github.io`.
+- Remote IDE / server-side workspace is `/srv/myblog/repo` on `124.220.233.126`.
+- Server GitHub auth is repo-local through `/home/ubuntu/.ssh/myblog_source_ed25519`; do not assume global server Git credentials.
 - Local Windows checkout `E:\My Project\MyBlog` is retired and must not be used as the default edit or deploy source.
 - Normal workflow: edit `/srv/myblog/repo` -> validate remotely -> commit remotely -> push to GitHub -> deploy to `/srv/myblog/site` only through the guarded deployment path.
 - Do not hand-run `scp` from an unchecked workspace to `/srv/myblog/site`.
+- If SSH is unavailable, treat it as an infrastructure outage. A local mirror can push a corrective documentation commit to GitHub, but it does not become canonical and it must not deploy.
 
 ## Read Order For Architecture Work
 

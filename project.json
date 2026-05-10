@@ -5,6 +5,15 @@
   "githubRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
   "defaultBranch": "main",
   "localSourceRoot": null,
+  "remoteIde": {
+    "status": "canonical",
+    "host": "ubuntu@124.220.233.126",
+    "sourceRoot": "/srv/myblog/repo",
+    "deploymentRoot": "/srv/myblog/site",
+    "repoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
+    "repoLocalSshCommandRequired": true,
+    "localCheckoutPolicy": "retired-local-mirror-only"
+  },
   "siteAppRoot": "apps/web",
   "adminAppRoot": "apps/admin-next",
   "androidShellRoot": "apps/android-shell",
@@ -112,7 +121,15 @@
     "buildOutputRoot": "apps/web/dist",
     "serverRuntimeRoot": "/srv/myblog/site",
     "remoteFirstSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
-    "retiredLocalSourceRoot": "E:\\My Project\\MyBlog"
+    "retiredLocalSourceRoot": "E:\\My Project\\MyBlog",
+    "remoteIde": {
+      "host": "ubuntu@124.220.233.126",
+      "sourceRoot": "/srv/myblog/repo",
+      "deploymentRoot": "/srv/myblog/site",
+      "repoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
+      "gitRemote": "git@github.com:emptyinkpot/emptyinkpot.github.io.git",
+      "sshOutageRule": "Do not promote a local checkout to canonical when SSH is unavailable; use GitHub as a delivery surface and reconcile the server source root after recovery."
+    }
   },
   "stabilizationSprint": {
     "status": "active",
@@ -2206,5 +2223,7 @@
     "rule": "Quartz is a Markdown rendering reference only; MyBlog keeps its Astro presentation shell and shared prose system."
   },
   "remoteFirstSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
-  "localSourceRootStatus": "retired-local-mirror"
+  "localSourceRootStatus": "retired-local-mirror",
+  "remoteIdeSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
+  "serverRepoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519"
 }

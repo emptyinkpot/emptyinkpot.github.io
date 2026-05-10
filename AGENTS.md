@@ -32,6 +32,15 @@ Before editing this repository, read:
 - The current deploy-authoritative workspace is `/srv/myblog/repo`.
 - Any change to workspace authority must update `README.md`, `project.json`, `workspace.manifest.json`, `workspaces/*.json` and the `runtime-federation` Architecture Codex entry together.
 
+## Remote IDE / Server-First Rule
+
+- Default edit root: `ubuntu@124.220.233.126:/srv/myblog/repo`.
+- Default deploy target: `ubuntu@124.220.233.126:/srv/myblog/site`.
+- Repository-local GitHub SSH key on the server: `/home/ubuntu/.ssh/myblog_source_ed25519`.
+- Do not rely on server-global GitHub credentials; `/srv/myblog/repo` must own its `core.sshCommand`.
+- `E:\My Project\MyBlog` is retired. If a local checkout exists, it is a mirror or delivery fallback only, never the canonical workspace.
+- If SSH is temporarily unavailable, do not reinterpret the local checkout as source of truth. Use GitHub delivery only as an outage fallback, then reconcile `/srv/myblog/repo` when SSH returns.
+
 ## Current Codex Entries
 
 - `reader-system`

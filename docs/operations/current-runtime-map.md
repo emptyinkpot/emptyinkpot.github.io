@@ -13,6 +13,17 @@ This document records where MyBlog is edited, deployed, and integrated. It is an
 | Static runtime root | `/srv/myblog/site` | Nginx-served production static root. |
 | Legacy source copy | `/srv/myblog/source` | Non-canonical server-side copy; do not treat as source truth. |
 
+## Remote IDE And SSH Boundary
+
+| Item | Value | Notes |
+| --- | --- | --- |
+| Remote IDE / edit target | `ubuntu@124.220.233.126:/srv/myblog/repo` | Use this as the default editing root for Codex/Claude/operator work. |
+| Repository-local deploy key | `/home/ubuntu/.ssh/myblog_source_ed25519` | Bound through repo-local `core.sshCommand`; do not assume server-global GitHub auth. |
+| Git remote URL | `git@github.com:emptyinkpot/emptyinkpot.github.io.git` | SSH remote is expected after deploy-key setup. |
+| Local Windows checkout | mirror only | A local clone may inspect, diff, or recover delivery when SSH is down, but it is not source authority. |
+
+If SSH to `124.220.233.126` fails, do not silently promote a local clone back to canonical. Record the SSH outage, use GitHub as the delivery surface if needed, and fast-forward `/srv/myblog/repo` as soon as SSH is restored.
+
 ## Public URLs
 
 | Surface | URL |
@@ -43,6 +54,7 @@ Preferred workflow:
 ```text
 edit /srv/myblog/repo on 124.220.233.126
 -> npm run check:workspace
+-> npm run check:governance
 -> npm run check or targeted checks
 -> commit in /srv/myblog/repo
 -> push to GitHub
@@ -50,6 +62,8 @@ edit /srv/myblog/repo on 124.220.233.126
 ```
 
 The deployment command builds `apps/web/dist`, uploads it to a remote temp directory, and replaces `/srv/myblog/site` while preserving `/srv/myblog/site/runtime`.
+
+Do not deploy through manual `tar`, `scp`, or ad hoc `rsync` from unchecked worktrees. `npm run deploy:site` is the normal guarded publish path.
 
 ## Runtime Directories Not Source
 
@@ -60,6 +74,12 @@ Do not commit or edit these as source truth:
 - `/srv/myblog/source`
 - `/srv/myblog/public-data` unless a runbook explicitly promotes data back into Git
 - `/home/vault/Obsidian` from MyBlog tooling; it is Vault mirror/file truth, not repository source
+
+## Known Transitional State
+
+- `/srv/myblog/repo` was restored as the canonical server workspace while GitHub clone transport was unstable.
+- GitHub deploy-key authentication for MyBlog is repo-local and should be verified with `git ls-remote origin refs/heads/feat/content-runtime-governance`.
+- Once SSH and GitHub transport are stable, `/srv/myblog/repo` should be checked against GitHub history and fast-forwarded or recloned without changing the source authority rule.
 
 ## Verification Commands
 
