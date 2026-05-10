@@ -5,22 +5,32 @@ import ChartCard from '../components/visualizations/ChartCard.astro';
 import GitHubHeatmap from '../components/visualizations/GitHubHeatmap.astro';
 import GitHubLanguageDonut from '../components/visualizations/GitHubLanguageDonut.astro';
 import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine.astro';
+import GitHubRuntimeSync from '../components/visualizations/GitHubRuntimeSync.astro';
 import MusicCard from '../components/showcase/MusicCard.astro';
 import HomeCommandPalette from '../components/react/HomeCommandPalette';
 import HomeNumberTicker from '../components/react/HomeNumberTicker';
-import { formatDate, getExcerptFromBody, getPrimaryCategory, getReadingTime, sortPosts } from '../lib/content';
+import BookCover from '../components/books/BookCover';
+import RuntimeBookFeed from '../components/books/RuntimeBookFeed';
+import { formatDate, getExcerptFromBody } from '../lib/content';
 import { buildGitHubAnalytics, getRecentHeatmapWeeks } from '../lib/analytics';
-import { books } from '../data/books';
+import type { BookItem } from '../lib/books/types';
 import { musicItems, type MusicItem } from '../data/music';
-import { visualItems, type VisualItem } from '../data/visuals';
+import { visualCollections, type VisualCollection, type VisualItem } from '../data/visuals';
 import { getGitHubOverview } from '../lib/github';
 import { profileLinks } from '../lib/profile';
-import { getPostCover } from '../lib/postCovers';
 import { getRelatedKnowledgeEntries, type KnowledgeRelationSource } from '../lib/knowledge/relations';
 import { defaultSealDefinitions, sealDefinitionStorageKey } from '../lib/knowledge/seals';
+import {
+  getRuntimeArticleCard,
+  getRuntimeArticles,
+  getRuntimeCollectionHref,
+  getRuntimeCollections,
+  type KnowledgeCollection,
+  type RuntimeMarkdownObject
+} from '../lib/runtimeContent';
 import { withBase } from '../lib/site';
 
-type DrawerKind = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'knowledge' | 'bilibili' | 'update';
+type DrawerKind = 'collection' | 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'knowledge' | 'bilibili' | 'update';
 
 type DrawerEntry = {
   id: string;
@@ -32,6 +42,7 @@ type DrawerEntry = {
   summary: string;
   Content?: Awaited<ReturnType<typeof render>>['Content'];
   toc?: Array<{ href: string; className: string; text: string }>;
+  runtimeHtml?: string;
   coverSrc?: string;
   accent?: string;
   tags?: string[];
@@ -40,12 +51,17 @@ type DrawerEntry = {
   details?: Array<{ label: string; value: string }>;
   chartVariant?: 'heatmap' | 'line' | 'language';
   visualItem?: VisualItem;
+  visualCollection?: VisualCollection;
+  knowledgeCollection?: KnowledgeCollection;
+  collectionSessionArticles?: RuntimeMarkdownObject[];
+  runtimeArticle?: RuntimeMarkdownObject;
+  bookItem?: BookItem;
   readHref?: string;
 };
 
 type FeedItem = {
   id: string;
-  type: 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'bilibili' | 'update';
+  type: 'collection' | 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'bilibili' | 'update';
   title: string;
   summary: string;
   kicker: string;
@@ -55,6 +71,8 @@ type FeedItem = {
   githubVariant?: 'repo' | 'heatmap' | 'line' | 'language' | 'team';
   musicItem?: MusicItem;
   visualItem?: VisualItem;
+  visualCollection?: VisualCollection;
+  knowledgeCollection?: KnowledgeCollection;
   coverSrc?: string;
   tags?: string[];
   accent?: string;
@@ -63,7 +81,11 @@ type FeedItem = {
 
 const sealTypes = defaultSealDefinitions;
 
-const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
+const runtimeArticles = getRuntimeArticles();
+const runtimeCollections = getRuntimeCollections();
+const runtimeArticleById = new Map(runtimeArticles.map((article) => [article.id, article]));
+const runtimeArticleCards = new Map(runtimeArticles.map((article) => [article.id, getRuntimeArticleCard(article)]));
+const uniqueTagCount = new Set(runtimeArticles.flatMap((article) => runtimeArticleCards.get(article.id)?.chips ?? [])).size;
 const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
@@ -73,44 +95,31 @@ const projects = [...(await getCollection('projects'))].sort(
 const github = await getGitHubOverview('emptyinkpot');
 const githubAnalytics = buildGitHubAnalytics(github);
 const recentHeatmapWeeks = getRecentHeatmapWeeks(githubAnalytics, 12);
-const recentSignalDays = githubAnalytics.heatmapWeeks.flatMap((week) => week.days).slice(-7);
-const maxRecentSignal = Math.max(...recentSignalDays.map((day) => day.count), 1);
 
 const drawerSources = [
-  ...posts.map((entry) => ({ entry, kind: 'post' as const })),
   ...notes.map((entry) => ({ entry, kind: 'note' as const })),
   ...projects.map((entry) => ({ entry, kind: 'project' as const }))
 ];
 
 const articleDrawerEntries: DrawerEntry[] = await Promise.all(
   drawerSources.map(async ({ entry, kind }) => {
-    const rendered = await render(entry as CollectionEntry<'posts'>);
-    const basePath = kind === 'post' ? 'posts' : kind === 'note' ? 'notes' : 'projects';
+    const rendered = await render(entry as CollectionEntry<'notes'> | CollectionEntry<'projects'>);
+    const basePath = kind === 'note' ? 'notes' : 'projects';
     const summary =
       'summary' in entry.data && entry.data.summary
         ? entry.data.summary
         : entry.data.description ?? getExcerptFromBody(entry.body, 180);
-    const tags =
-      kind === 'post'
-        ? [
-            getPrimaryCategory(entry as CollectionEntry<'posts'>),
-            ...(entry as CollectionEntry<'posts'>).data.tags,
-            ...((entry as CollectionEntry<'posts'>).data.series ? [(entry as CollectionEntry<'posts'>).data.series] : [])
-          ]
-        : kind === 'project'
-          ? (entry as CollectionEntry<'projects'>).data.stack
-          : ['note'];
+    const tags = kind === 'project' ? (entry as CollectionEntry<'projects'>).data.stack : ['note'];
 
     return {
       id: `${kind}:${entry.id}`,
       kind,
       title: entry.data.title,
-      kicker: kind === 'post' ? getPrimaryCategory(entry as CollectionEntry<'posts'>) : kind === 'note' ? '札记' : '项目工坊',
+      kicker: kind === 'note' ? '札记' : '项目工坊',
       date: 'date' in entry.data && entry.data.date ? formatDate(entry.data.date) : undefined,
       href: withBase(`/${basePath}/${entry.id}/`),
       summary,
       tags,
-      series: kind === 'post' ? (entry as CollectionEntry<'posts'>).data.series : undefined,
       body: entry.body,
       Content: rendered.Content,
       toc: rendered.headings
@@ -123,20 +132,6 @@ const articleDrawerEntries: DrawerEntry[] = await Promise.all(
     };
   })
 );
-
-const postItems: FeedItem[] = posts.map((post, index) => ({
-  id: `post-${post.id}`,
-  type: 'post',
-  title: post.data.title,
-  summary: post.data.summary ?? post.data.description ?? getExcerptFromBody(post.body, index === 0 ? 220 : 130),
-  kicker: getPrimaryCategory(post),
-  meta: `${formatDate(post.data.date)} / ${getReadingTime(post.body)} min read`,
-  href: withBase(`/posts/${post.id}/`),
-  drawerId: `post:${post.id}`,
-  coverSrc: getPostCover(post),
-  tags: post.data.tags.slice(0, 3),
-  size: index % 5 === 0 ? 'tall' : index % 3 === 0 ? 'compact' : 'standard'
-}));
 
 const noteItems: FeedItem[] = notes.map((note) => ({
   id: `note-${note.id}`,
@@ -163,6 +158,22 @@ const projectItems: FeedItem[] = projects.map((project) => ({
   tags: project.data.stack.slice(0, 3),
   size: 'standard'
 }));
+
+const postItems: FeedItem[] = runtimeArticles.slice(0, 24).map((article, index) => {
+  const card = runtimeArticleCards.get(article.id) ?? getRuntimeArticleCard(article);
+  return {
+    id: `runtime-post-${article.id}`,
+    type: 'post',
+    title: article.title,
+    summary: card.subtitle || article.description || article.summary || '',
+    kicker: card.eyebrow || article.kind || 'MarkdownObject',
+    meta: article.date ? `${formatDate(new Date(article.date))} / ${article.readingMinutes || 1} min read` : `${article.readingMinutes || 1} min read`,
+    href: withBase(`/posts/${encodeURIComponent(article.slug || article.id || '')}/`),
+    drawerId: `runtime:${article.id}`,
+    tags: card.chips || [],
+    size: index === 0 ? 'standard' : 'compact'
+  };
+});
 
 const githubItems: FeedItem[] = github.repos.slice(0, 6).map((repo, index) => ({
   id: `github-${repo.name}`,
@@ -198,7 +209,7 @@ const githubChartItems: FeedItem[] = [
     type: 'github',
     githubVariant: 'line',
     title: '月度贡献折线',
-    summary: '从 GitHub 快照派生的月度活动趋势，不在首页重抓数据。',
+    summary: '打开页面后由 GitHub runtime API 刷新月度活动趋势。',
     kicker: 'GitHub / Line',
     meta: 'monthly',
     href: withBase('/github/'),
@@ -222,20 +233,6 @@ const githubChartItems: FeedItem[] = [
     size: 'compact'
   }
 ];
-
-const bookItems: FeedItem[] = books.map((book) => ({
-  id: `book-${book.id}`,
-  type: 'book',
-  title: book.title,
-  summary: book.note,
-  kicker: `书架 / ${book.statusLabel}`,
-  meta: book.author,
-  href: withBase(`/books/${book.id}/`),
-  drawerId: `book:${book.id}`,
-  coverSrc: book.cover,
-  tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].slice(0, 4),
-  size: 'compact'
-}));
 
 const musicFeedItems: FeedItem[] = musicItems.map((item) => ({
   id: `music-${item.id}`,
@@ -285,64 +282,50 @@ const updateItems: FeedItem[] = [
   }
 ];
 
-const visualFeedItems: FeedItem[] = visualItems.map((item, index) => ({
-  id: `visual:${item.id}`,
+const visualFeedItems: FeedItem[] = visualCollections.map((collection, index) => ({
+  id: `visual:${collection.id}`,
   type: 'visual',
-  title: item.title,
-  summary: item.summary,
-  kicker: `Visual / ${item.type}`,
-  meta: item.tags.slice(0, 2).join(' / '),
+  title: collection.title,
+  summary: collection.summary,
+  kicker: 'Visual Collection',
+  meta: `${collection.images.length} images / ${collection.sourceLabel}`,
   href: withBase('/visuals/'),
-  drawerId: `visual:${item.id}`,
-  coverSrc: item.image,
-  tags: item.tags,
-  accent: item.palette.dominant,
-  visualItem: item,
+  drawerId: `visual:${collection.id}`,
+  coverSrc: collection.coverImages[0] ?? collection.images[0]?.image,
+  tags: collection.tags,
+  accent: collection.palette.dominant,
+  visualCollection: collection,
+  size: index === 0 ? 'tall' : 'standard'
+}));
+
+const homeCollectionLimit = 12;
+const collectionFeedItems: FeedItem[] = runtimeCollections.slice(0, homeCollectionLimit).map((collection, index) => ({
+  id: `knowledge-collection:${collection.id}`,
+  type: 'collection',
+  title: collection.title,
+  summary: collection.description,
+  kicker: collection.card.eyebrow,
+  meta: `${collection.stats.objectCount} objects / ${collection.layout}`,
+  href: withBase(getRuntimeCollectionHref(collection)),
+  drawerId: collection.id,
+  tags: collection.card.chips,
+  accent: ['#6b2d5c', '#244a5a', '#3b6b50', '#8e53a2'][index % 4],
+  knowledgeCollection: collection,
   size: index === 0 ? 'tall' : 'standard'
 }));
 
 const feedItems = [
-  postItems[0],
-  visualFeedItems[0],
-  ...projectItems.slice(0, 1),
-  ...noteItems.slice(0, 1),
-  ...bookItems.slice(0, 2),
-  githubChartItems[0],
-  musicFeedItems[0],
-  ...githubItems.slice(0, 2),
-  ...postItems.slice(1, 5),
-  githubChartItems[1],
-  visualFeedItems[1],
+  ...collectionFeedItems.slice(0, 3),
+  ...postItems.slice(0, 8),
+  ...noteItems.slice(0, 4),
+  ...visualFeedItems.slice(0, 4),
+  ...musicFeedItems.slice(0, 3),
+  ...githubChartItems,
+  ...githubItems.slice(0, 4),
+  ...projectItems.slice(0, 3),
   ...bilibiliItems,
-  ...updateItems,
-  githubChartItems[2],
-  ...postItems.slice(5),
-  ...projectItems.slice(1),
-  ...noteItems.slice(1),
-  ...githubItems.slice(2),
-  ...visualFeedItems.slice(2),
-  ...bookItems.slice(2),
-  ...musicFeedItems.slice(1)
-].filter(Boolean) as FeedItem[];
-
-const bookDrawerEntries: DrawerEntry[] = books.map((book) => ({
-  id: `book:${book.id}`,
-  kind: 'book',
-  title: book.title,
-  kicker: `书架 / ${book.statusLabel}`,
-  href: withBase(`/books/${book.id}/`),
-  readHref: withBase(`/reader/${book.id}/`),
-  summary: book.description ?? book.note,
-  coverSrc: book.cover,
-  tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags].slice(0, 6),
-  details: [
-    { label: '作者', value: book.author },
-    { label: '分类', value: book.category },
-    { label: '状态', value: book.statusLabel },
-    { label: '来源', value: `${book.sourceType.toUpperCase()} / OpenList` },
-    { label: '路径', value: book.openlistPath ?? '未配置' }
-  ]
-}));
+  ...updateItems
+];
 
 const musicDrawerEntries: DrawerEntry[] = musicItems.map((item) => ({
   id: `music:${item.id}`,
@@ -381,7 +364,7 @@ const githubDrawerEntries: DrawerEntry[] = [
     title: '月度贡献折线',
     kicker: 'GitHub / Line',
     href: withBase('/github/'),
-    summary: '从 GitHub snapshot 派生的月度贡献趋势。首页只保留摘要，完整图表进入 /github/。',
+    summary: '由 GitHub runtime API 聚合月度贡献趋势。首页保留摘要，完整图表进入 /github/。',
     chartVariant: 'line',
     tags: ['line', 'trend']
   },
@@ -413,22 +396,41 @@ const githubDrawerEntries: DrawerEntry[] = [
   }))
 ];
 
-const visualDrawerEntries: DrawerEntry[] = visualItems.map((item) => ({
-  id: `visual:${item.id}`,
+const visualDrawerEntries: DrawerEntry[] = visualCollections.map((collection) => ({
+  id: `visual:${collection.id}`,
   kind: 'visual',
-  title: item.title,
-  kicker: `视觉素材 / ${item.type}`,
-  href: withBase('/visuals/'),
-  summary: item.summary,
-  coverSrc: item.image,
-  accent: item.palette.dominant,
-  tags: item.tags,
-  visualItem: item,
+  title: collection.title,
+  kicker: `视觉集合 / ${collection.sourceLabel}`,
+  href: withBase(`/visuals/#${collection.id}`),
+  summary: collection.summary,
+  coverSrc: collection.coverImages[0] ?? collection.images[0]?.image,
+  accent: collection.palette.dominant,
+  tags: collection.tags,
+  visualCollection: collection,
   details: [
-    { label: '类型', value: item.type },
-    { label: '来源', value: item.source ?? '未记录' },
-    { label: '主色', value: item.palette.dominant },
-    { label: '用途', value: '视觉素材 / 设计锚点 / Graph 节点' }
+    { label: '来源', value: collection.sourceLabel },
+    { label: '数量', value: `${collection.images.length} images` },
+    { label: '主色', value: collection.palette.dominant },
+    { label: '用途', value: '视觉集合 / Board / Graph 节点' }
+  ]
+}));
+
+const collectionDrawerEntries: DrawerEntry[] = runtimeCollections.slice(0, homeCollectionLimit).map((collection) => ({
+  id: collection.id,
+  kind: 'collection',
+  title: collection.title,
+  kicker: collection.card.eyebrow,
+  href: withBase(getRuntimeCollectionHref(collection)),
+  summary: collection.description,
+  accent: collection.basis === 'folder' ? '#6b2d5c' : collection.basis === 'series' ? '#244a5a' : '#3b6b50',
+  tags: collection.card.chips,
+  knowledgeCollection: collection,
+  collectionSessionArticles: collection.objects.map((object) => runtimeArticleById.get(object.id)).filter(Boolean) as RuntimeMarkdownObject[],
+  details: [
+    { label: 'Objects', value: String(collection.stats.objectCount) },
+    { label: 'Layout', value: collection.layout },
+    { label: 'Basis', value: collection.basis },
+    { label: 'Source', value: collection.source?.path || collection.source?.type || 'runtime collection' }
   ]
 }));
 
@@ -442,8 +444,8 @@ const utilityDrawerEntries: DrawerEntry[] = [
     summary: '文章、项目、书架、音乐、GitHub 和本地标记共同进入知识图谱。首页入口默认打开这张摘要索引，完整关系图保留在 Knowledge 页面。',
     tags: ['graph', 'memory', 'reader'],
     details: [
-      { label: '知识入口', value: String(articleDrawerEntries.length + bookDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 2 + bilibiliItems.length) },
-      { label: '标签', value: String(new Set(posts.flatMap((post) => post.data.tags)).size) },
+      { label: '知识入口', value: String(runtimeArticles.length + articleDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 2 + bilibiliItems.length) },
+      { label: '标签', value: String(uniqueTagCount) },
       { label: '交互', value: '抽屉预览 / 完整图谱' }
     ]
   },
@@ -473,24 +475,13 @@ const utilityDrawerEntries: DrawerEntry[] = [
 ];
 
 const drawerEntries = [
+  ...collectionDrawerEntries,
   ...articleDrawerEntries,
-  ...bookDrawerEntries,
   ...musicDrawerEntries,
   ...githubDrawerEntries,
   ...visualDrawerEntries,
   ...utilityDrawerEntries
 ];
-const repostSourceDocs = drawerEntries.map((entry) => ({
-  id: entry.id,
-  kind: entry.kind,
-  title: entry.title,
-  kicker: entry.kicker,
-  summary: entry.summary,
-  href: entry.href,
-  coverSrc: entry.coverSrc,
-  accent: entry.accent,
-  tags: entry.tags ?? []
-}));
 const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
 const relationSources = drawerEntries.map((entry) => ({
   id: entry.id,
@@ -534,92 +525,85 @@ function hoverPreviewAttrs(item: FeedItem) {
     'data-hover-kicker': item.kicker,
     'data-hover-meta': item.meta,
     'data-hover-image': item.coverSrc,
-    'data-hover-accent': item.visualItem?.palette.dominant ?? item.accent,
+    'data-hover-accent': item.visualCollection?.palette.dominant ?? item.visualItem?.palette.dominant ?? item.accent,
     'data-hover-tags': JSON.stringify(item.tags ?? [])
   };
 }
 
-const latestPost = posts[0];
 const latestProject = projects[0];
 const latestRepo = github.repos[0];
-const latestBook = books[0];
 const latestMusic = musicItems[0];
-const uniqueTagCount = new Set(posts.flatMap((post) => post.data.tags)).size;
-const homeBentoProjectDrawerId = latestProject ? `project:${latestProject.id}` : undefined;
-const homeBentoGitHubDrawerId = latestRepo ? `github-repo:${latestRepo.name}` : 'github:heatmap';
-const homeBentoBookDrawerId = bookItems[0]?.drawerId;
-const homeBentoMusicDrawerId = latestMusic ? `music:${latestMusic.id}` : undefined;
-const activityItems = [
-  latestPost && `最新文章：${latestPost.data.title}`,
+const latestRuntimeArticle = runtimeArticles[0];
+const staticNodeCount = knowledgeDocs.length;
+const staticActivityItems = [
   latestProject && `项目工坊：${latestProject.data.title} / ${latestProject.data.progress}%`,
   latestRepo && `GitHub：${latestRepo.name} 更新于 ${formatDate(new Date(latestRepo.updatedAt))}`,
-  latestBook && `书架：${latestBook.title}`,
-  latestMusic && `音乐：${latestMusic.title}`,
-  `Knowledge：${knowledgeDocs.length} 个入口 / ${uniqueTagCount} 个标签`
+  '书架：OpenList runtime canonical',
+  latestMusic && `音乐：${latestMusic.title}`
+].filter(Boolean) as string[];
+const activityItems = [
+  latestRuntimeArticle && `最新文章：${latestRuntimeArticle.title}`,
+  ...staticActivityItems,
+  `Knowledge：${knowledgeDocs.length + runtimeArticles.length} 个入口 / ${uniqueTagCount} 个标签`
 ].filter(Boolean) as string[];
 const homeCommands = [
-  { id: 'search', label: '搜索全站', description: '文章、项目、书架、音乐、GitHub、本地标记', action: 'search', icon: 'search' },
-  { id: 'posts', label: '文章', description: `${posts.length} 篇公开文章`, href: withBase('/posts/'), icon: 'posts' },
+  { id: 'search', label: '搜索当前 Feed', description: 'Runtime articles、项目、书架、音乐、GitHub、本地标记', action: 'search', icon: 'search' },
+  { id: 'collections', label: '知识集合', description: `${runtimeCollections.length} 个 Runtime Collection`, href: withBase('/collections/'), icon: 'knowledge' },
+  { id: 'posts', label: '文章', description: `${runtimeArticles.length} 篇 Runtime MarkdownObject`, href: withBase('/posts/'), icon: 'posts' },
   { id: 'projects', label: '项目工坊', description: latestProject ? `${latestProject.data.title} / ${latestProject.data.progress}%` : '项目空间', href: withBase('/projects/'), icon: 'projects' },
   { id: 'project-workbench', label: '项目工作台', description: 'GitHub Workbench / Wiki / Timeline', href: withBase('/projects/site-v2/'), icon: 'projects' },
   { id: 'github', label: 'GitHub', description: `${github.profile.publicRepos} 个公开仓库`, href: withBase('/github/'), icon: 'github' },
-  { id: 'books', label: '书架', description: `${books.length} 条阅读记录`, href: withBase('/books/'), icon: 'books' },
+  { id: 'books', label: '书架', description: 'OpenList 实时书库', href: withBase('/books/'), icon: 'books' },
   { id: 'music', label: '音乐', description: `${musicItems.length} 条音乐记录`, href: withBase('/music/'), icon: 'music' },
+  { id: 'visuals', label: '视觉素材', description: `${visualCollections.length} 个视觉 collection`, href: withBase('/visuals/'), icon: 'visuals' },
+  { id: 'immich', label: 'Immich 媒体库', description: 'AI 照片 / 视频管理与语义搜索', href: 'https://photos.blog.tengokukk.com/', icon: 'external' },
   { id: 'knowledge', label: 'Knowledge Graph', description: `${knowledgeDocs.length} 个知识入口`, href: withBase('/knowledge/'), icon: 'knowledge' },
+  { id: 'openlist', label: 'OpenList', description: '嵌入查看当前文件源', action: 'openlist', icon: 'external' },
+  { id: 'pinterest', label: 'Pinterest', description: '站内嵌入视觉收藏流', action: 'pinterest', icon: 'visuals' },
   { id: 'settings', label: '设置', description: '阅读排版、Graph、视觉偏好', href: withBase('/settings/'), icon: 'settings' }
 ];
 ---
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
-  <div class="home-feed-shell">
-    <aside class="home-feed-rail" aria-label="个人状态与知识记忆">
-      <section class="home-feed-profile">
+  <div class="home-feed-shell" data-github-live-root data-github-username="emptyinkpot">
+    <aside class="home-feed-rail" aria-label="系统导航与上下文状态" data-home-sidebar>
+      <button class="home-sidebar-collapse" type="button" data-sidebar-collapse aria-label="折叠右侧栏" aria-expanded="true">
+        <span data-sidebar-collapse-icon>›</span>
+      </button>
+
+      <section class="home-feed-profile home-sidebar-section">
         <a class="home-feed-brand" href={withBase('/')}>
           <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="emptyinkpot" data-image-key="home.brand.logo" />
-          <span data-copy-key="home.brand.name">emptyinkpot</span>
+          <span data-sidebar-label data-copy-key="home.brand.name">emptyinkpot</span>
         </a>
-        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} data-image-key="home.profile.avatar" />
-        <h1>{github.profile.name}</h1>
-        <p data-copy-key="home.profile.tagline">Content OS · Knowledge System</p>
+        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} data-image-key="home.profile.avatar" data-github-profile="avatar" />
+        <h1 data-sidebar-label data-github-profile="name">{github.profile.name}</h1>
+        <p data-sidebar-label data-copy-key="home.profile.tagline">Content OS · Knowledge System</p>
+        <small class="github-live-status" data-sidebar-label data-github-live-status data-github-live-state="loading">GitHub 快照待同步</small>
       </section>
 
-      <section class="home-feed-rail-card home-feed-signals">
-        <span data-copy-key="home.signals.kicker">Signals</span>
-        <strong>@{github.profile.login}</strong>
-        <p>{github.totalContributions} 次年度活动 / {github.profile.publicRepos} 个公开仓库</p>
-        <div class="home-feed-signal-grid" aria-label="GitHub signal summary">
-          <div>
-            <small data-copy-key="home.signals.posts">Posts</small>
-            <b>{posts.length}</b>
-          </div>
-          <div>
-            <small data-copy-key="home.signals.repos">Repos</small>
-            <b>{github.profile.publicRepos}</b>
-          </div>
-          <div>
-            <small data-copy-key="home.signals.active">Active</small>
-            <b>{githubAnalytics.activeDays}</b>
-          </div>
-        </div>
-        <GitHubHeatmap weeks={recentHeatmapWeeks} compact />
-        <div class="home-feed-trend" aria-label="最近 7 天活动趋势">
-          {recentSignalDays.map((day) => (
-            <i style={`--signal-height:${Math.max(10, Math.round((day.count / maxRecentSignal) * 100))}%`} title={`${day.date}: ${day.count}`} />
-          ))}
-        </div>
-      </section>
+      <nav class="home-feed-rail-card home-sidebar-section home-sidebar-nav" aria-label="站点导航">
+        <span data-sidebar-label data-copy-key="home.sidebar.nav">Navigation</span>
+        <a class="home-sidebar-item" href={withBase('/projects/')} aria-label="项目工坊"><b>项</b><span data-sidebar-label>项目工坊</span></a>
+        <a class="home-sidebar-item" href={withBase('/knowledge/')} aria-label="知识图谱"><b>知</b><span data-sidebar-label>知识图谱</span></a>
+        <a class="home-sidebar-item" href={withBase('/books/')} aria-label="书架"><b>书</b><span data-sidebar-label>书架</span></a>
+        <a class="home-sidebar-item" href={withBase('/codex/')} aria-label="设计圣典"><b>典</b><span data-sidebar-label>设计圣典</span></a>
+        <a class="home-sidebar-item" href={withBase('/visuals/')} aria-label="视觉素材"><b>视</b><span data-sidebar-label>视觉素材</span></a>
+        <a class="home-sidebar-item" href={withBase('/github/')} aria-label="GitHub"><b>G</b><span data-sidebar-label>GitHub</span></a>
+        <a class="home-sidebar-item" href={withBase('/settings/')} aria-label="设置"><b>设</b><span data-sidebar-label>设置</span></a>
+      </nav>
 
-      <section class="home-feed-rail-card home-feed-memory">
-        <span data-copy-key="home.memory.kicker">Reading Memory</span>
-        <strong data-copy-key="home.memory.title">最近阅读</strong>
+      <section class="home-feed-rail-card home-feed-memory home-sidebar-section">
+        <span data-sidebar-label data-copy-key="home.memory.kicker">Recent</span>
+        <strong data-sidebar-label data-copy-key="home.memory.title">最近</strong>
         <ul data-sidebar-history>
           <li data-copy-key="home.memory.empty">暂无记录</li>
         </ul>
       </section>
 
-      <section class="home-feed-rail-card home-feed-stats">
-        <span data-copy-key="home.stats.kicker">Knowledge Stats</span>
-        <strong data-copy-key="home.stats.title">知识状态</strong>
+      <section class="home-feed-rail-card home-feed-stats home-sidebar-section">
+        <span data-sidebar-label data-copy-key="home.stats.kicker">Status</span>
+        <strong data-sidebar-label data-copy-key="home.stats.title">状态</strong>
         <div class="home-feed-stat-grid">
           <div><small data-copy-key="home.stats.highlights">高亮</small><b data-sidebar-stat="highlights">0</b></div>
           <div><small data-copy-key="home.stats.annotations">批注</small><b data-sidebar-stat="annotations">0</b></div>
@@ -629,15 +613,6 @@ const homeCommands = [
         <ul data-sidebar-bookmarks>
           <li data-copy-key="home.stats.emptyBookmarks">暂无收藏</li>
         </ul>
-      </section>
-
-      <section class="home-feed-rail-card home-feed-quick">
-        <span data-copy-key="home.quick.kicker">Quick Actions</span>
-        <HomeCommandPalette client:idle commands={homeCommands} />
-        <button type="button" data-search-open data-copy-key="home.quick.search">搜索</button>
-        <a href={withBase('/visuals/')} data-copy-key="home.quick.visuals">视觉素材</a>
-        <a href={withBase('/knowledge/')} data-copy-key="home.quick.graph">Graph</a>
-        <a href={withBase('/settings/')} data-copy-key="home.quick.settings">设置</a>
       </section>
     </aside>
 
@@ -653,11 +628,11 @@ const homeCommands = [
           <p data-hero-subtitle data-copy-key="home.banner.subtitle">Content OS · Tangible Knowledge UI</p>
           <div class="home-hero-banner__metrics" aria-label="站点动态指标">
             <div>
-              <HomeNumberTicker client:visible value={posts.length} />
-              <small>Posts</small>
+              <span class="home-number-ticker" data-runtime-article-count>{runtimeArticles.length.toLocaleString('zh-CN')}</span>
+              <small>Articles</small>
             </div>
             <div>
-              <HomeNumberTicker client:visible value={github.profile.publicRepos} />
+              <span data-github-metric="publicRepos"><HomeNumberTicker client:visible value={github.profile.publicRepos} /></span>
               <small>Repos</small>
             </div>
             <div>
@@ -665,73 +640,14 @@ const homeCommands = [
               <small>Projects</small>
             </div>
             <div>
-              <HomeNumberTicker client:visible value={knowledgeDocs.length} />
+              <span class="home-number-ticker" data-runtime-node-count data-static-node-count={staticNodeCount}>{(staticNodeCount + runtimeArticles.length).toLocaleString('zh-CN')}</span>
               <small>Nodes</small>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="home-os-bento" aria-label="Content OS quick entry">
-        <a class="home-os-bento__item home-os-bento__item--wide" href={withBase('/projects/')} data-drawer-id={homeBentoProjectDrawerId}>
-          <span>Project Studio</span>
-          <strong>{latestProject?.data.title ?? '项目工坊'}</strong>
-          <p>{latestProject?.data.description ?? '项目、Wiki、Timeline 与 GitHub 状态的统一入口。'}</p>
-          <div class="home-os-bento__progress" aria-label="项目进度">
-            <i style={`--progress:${latestProject?.data.progress ?? 0}%`}></i>
-          </div>
-          <small>{latestProject?.data.progress ?? 0}% / 进入项目空间</small>
-        </a>
-        <a class="home-os-bento__item" href={withBase('/github/')} data-drawer-id={homeBentoGitHubDrawerId}>
-          <span>GitHub</span>
-          <strong>{latestRepo?.name ?? '@emptyinkpot'}</strong>
-          <p>{github.totalContributions} 次年度活动，{githubAnalytics.activeDays} 个活跃日。</p>
-        </a>
-        <a
-          class="home-os-bento__item"
-          href={withBase('/knowledge/')}
-          data-drawer-id="knowledge:index"
-          data-seal-surface
-          data-seal-target="knowledge:index"
-          data-seal-title="Knowledge"
-          data-seal-kind="knowledge"
-        >
-          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
-          <span>Knowledge</span>
-          <strong>{knowledgeDocs.length} 个入口</strong>
-          <p>文章、项目、书架、音乐和本地标记共同构成知识图谱。</p>
-        </a>
-        <a
-          class="home-os-bento__item"
-          href={withBase('/books/')}
-          data-drawer-id={homeBentoBookDrawerId}
-          data-seal-surface
-          data-seal-target={homeBentoBookDrawerId}
-          data-seal-title={latestBook?.title ?? '书架'}
-          data-seal-kind="book"
-        >
-          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
-          <span>Books</span>
-          <strong>{latestBook?.title ?? '书架'}</strong>
-          <p>{latestBook?.note ?? '阅读记录、摘录和知识回流。'}</p>
-        </a>
-        <a
-          class="home-os-bento__item"
-          href={withBase('/music/')}
-          data-drawer-id={homeBentoMusicDrawerId}
-          data-seal-surface
-          data-seal-target={homeBentoMusicDrawerId}
-          data-seal-title={latestMusic?.title ?? '音乐'}
-          data-seal-kind="music"
-        >
-          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
-          <span>Music</span>
-          <strong>{latestMusic?.title ?? '音乐'}</strong>
-          <p>{latestMusic ? `${latestMusic.artist} / ${latestMusic.platform}` : '音乐状态和专辑入口。'}</p>
-        </a>
-      </section>
-
-      <section class="home-activity-marquee" aria-label="站点活动流">
+      <section class="home-activity-marquee" aria-label="站点活动流" data-home-activity-marquee>
         <div>
           {[...activityItems, ...activityItems].map((item) => (
             <span>{item}</span>
@@ -741,12 +657,13 @@ const homeCommands = [
 
       <div class="home-feed-toolbar" aria-label="首页内容筛选">
         <div>
-          <span data-copy-key="home.feed.kicker">Feed</span>
-          <strong data-copy-key="home.feed.title">连续浏览</strong>
+          <span data-copy-key="home.feed.kicker">Runtime Surface</span>
+          <strong data-copy-key="home.feed.title">混合对象流</strong>
         </div>
         <nav class="home-feed-tabs" aria-label="首页唯一导航">
-          <button type="button" class="home-feed-tab home-feed-tab--search" data-search-open data-copy-key="home.feed.search">搜索</button>
-          <button type="button" class="home-feed-tab is-active" data-feed-filter="all" data-copy-key="home.feed.all">全部</button>
+          <HomeCommandPalette client:idle commands={homeCommands} />
+          <button type="button" class="home-feed-tab is-active" data-feed-filter="all">全部</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="collection">集合</button>
           <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
           <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
           <button type="button" class="home-feed-tab" data-feed-filter="project" data-copy-key="home.feed.project">项目工坊</button>
@@ -754,21 +671,28 @@ const homeCommands = [
           <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
           <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
           <button type="button" class="home-feed-tab" data-feed-filter="visual">视觉素材</button>
-          <button type="button" class="home-feed-tab" data-feed-filter="repost">引用</button>
           {profileLinks.bilibiliConfigured && <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>}
           <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
-          <a class="home-feed-tab" href={withBase('/settings/')} data-copy-key="home.feed.settings">设置</a>
+          <a class="home-feed-tab" href={withBase('/posts/')}>文章索引</a>
+          <a class="home-feed-tab" href={withBase('/books/')}>书架</a>
+          <a class="home-feed-tab" href={withBase('/github/')}>GitHub</a>
+          <a class="home-feed-tab" href={withBase('/visuals/')}>视觉素材</a>
+          <button type="button" class="home-feed-tab home-feed-tab--openlist" data-openlist-embed-open>OpenList</button>
+          <button type="button" class="home-feed-tab home-feed-tab--pinterest" data-pinterest-embed-open>Pinterest</button>
         </nav>
       </div>
 
-      <section class="home-feed-grid" aria-label="内容流">
+      <section class="home-feed-grid" aria-label="内容流" data-home-feed-grid>
+        <RuntimeBookFeed targetId="home-feed" client:load />
         {feedItems.map((item) =>
           item.type === 'github' && item.githubVariant === 'heatmap' ? (
             <button
               type="button"
               class={feedCardClass(item)}
               data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? 'true' : undefined}
               data-feed-kind={item.type}
+              data-github-repo-card={item.githubVariant === 'repo' ? item.title : undefined}
               {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
               data-seal-target={item.drawerId ?? item.id}
@@ -793,6 +717,7 @@ const homeCommands = [
               type="button"
               class={feedCardClass(item)}
               data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? 'true' : undefined}
               data-feed-kind={item.type}
               {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
@@ -812,6 +737,7 @@ const homeCommands = [
               type="button"
               class={feedCardClass(item)}
               data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? 'true' : undefined}
               data-feed-kind={item.type}
               {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
@@ -826,7 +752,7 @@ const homeCommands = [
                 <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
               </ChartCard>
             </button>
-          ) : item.type === 'visual' && item.visualItem ? (
+          ) : item.type === 'visual' && item.visualCollection ? (
             <button
               type="button"
               class={`${feedCardClass(item)} visual-feed-card`}
@@ -837,23 +763,25 @@ const homeCommands = [
               data-seal-target={item.drawerId ?? item.id}
               data-seal-title={item.title}
               data-seal-kind={item.type}
-              style={`--visual-accent:${item.visualItem.palette.dominant}`}
+              style={`--visual-accent:${item.visualCollection.palette.dominant}`}
             >
               <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
               <span class="card-paperclip" aria-hidden="true"></span>
-              <div class="visual-feed-card__media">
-                <img src={item.visualItem.image} alt="" loading="lazy" />
+              <div class="visual-feed-card__stack" aria-hidden="true">
+                {(item.visualCollection.coverImages.length ? item.visualCollection.coverImages : item.visualCollection.images.map((image) => image.image))
+                  .slice(0, 4)
+                  .map((image, coverIndex) => (
+                    <img src={image} alt="" loading="lazy" style={`--stack-index:${coverIndex}`} />
+                  ))}
               </div>
               <div class="visual-feed-card__overlay">
                 <small>{item.kicker}</small>
                 <h2>{item.title}</h2>
                 <p>{item.summary}</p>
                 <div class="visual-feed-card__palette" aria-label="调色板">
-                  {item.visualItem.palette.colors.slice(0, 5).map((color) => <i style={`background:${color}`}></i>)}
+                  {item.visualCollection.palette.colors.slice(0, 5).map((color) => <i style={`background:${color}`}></i>)}
                 </div>
-                <div class="home-feed-card__tags">
-                  {item.tags?.slice(0, 4).map((tag) => <span>{tag}</span>)}
-                </div>
+                <span class="visual-meta-line">{item.visualCollection.mood} · {item.visualCollection.images.length} IMAGES</span>
               </div>
             </button>
           ) : item.type === 'music' && item.musicItem ? (
@@ -861,6 +789,7 @@ const homeCommands = [
               type="button"
               class={feedCardClass(item)}
               data-feed-card
+              data-runtime-feed-card={item.type === 'collection' ? item.id : item.id.startsWith('runtime-') ? item.id : undefined}
               data-feed-kind={item.type}
               {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
@@ -878,6 +807,7 @@ const homeCommands = [
               type="button"
               class={feedCardClass(item)}
               data-feed-card
+              data-runtime-feed-card={item.type === 'collection' ? item.id : item.id.startsWith('runtime-') ? item.id : undefined}
               data-feed-kind={item.type}
               {...hoverPreviewAttrs(item)}
               data-drawer-id={item.drawerId}
@@ -892,27 +822,28 @@ const homeCommands = [
                 <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
                 </div>
-              ) : item.type === 'book' ? (
-                <div class="home-feed-book-cover" aria-hidden="true">
-                  <span>{item.tags?.[0] ?? 'Book'}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.meta}</small>
-                </div>
               ) : (
                 <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
                   {item.type}
                 </div>
               )}
-              <div class="home-feed-card__body">
-                <div class="home-feed-card__meta">
-                  <span>{item.kicker}</span>
-                  {item.meta && <small>{item.meta}</small>}
-                </div>
-                <h2>{item.title}</h2>
-                <p>{item.summary}</p>
-                {item.tags?.length ? (
-                  <div class="home-feed-card__tags">
-                    {item.tags.map((tag) => <span>{tag}</span>)}
+          <div class="home-feed-card__body">
+            <div class="home-feed-card__meta">
+              <span>{item.kicker}</span>
+              {item.meta && <small>{item.meta}</small>}
+            </div>
+            <h2>{item.title}</h2>
+            <p>{item.summary}</p>
+            {item.knowledgeCollection?.objects?.length ? (
+              <div class="home-collection-preview">
+                {item.knowledgeCollection.objects.slice(0, 4).map((object) => (
+                  <span>{object.title}</span>
+                ))}
+              </div>
+            ) : null}
+            {item.tags?.length ? (
+              <div class="home-feed-card__tags">
+                {item.tags.map((tag) => <span>{tag}</span>)}
                   </div>
                 ) : null}
               </div>
@@ -921,6 +852,7 @@ const homeCommands = [
             <a
               class={feedCardClass(item)}
               data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? item.id : undefined}
               data-feed-kind={item.type}
               {...hoverPreviewAttrs(item)}
               data-seal-target={item.drawerId ?? item.href ?? item.id}
@@ -935,12 +867,6 @@ const homeCommands = [
                 <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
                   <img src={item.coverSrc} alt="" loading="lazy" />
                 </div>
-              ) : item.type === 'book' ? (
-                <div class="home-feed-book-cover" aria-hidden="true">
-                  <span>{item.tags?.[0] ?? 'Book'}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.meta}</small>
-                </div>
               ) : (
                 <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
                   {item.type}
@@ -953,6 +879,13 @@ const homeCommands = [
                 </div>
                 <h2>{item.title}</h2>
                 <p>{item.summary}</p>
+                {item.knowledgeCollection?.objects?.length ? (
+                  <div class="home-collection-preview">
+                    {item.knowledgeCollection.objects.slice(0, 4).map((object) => (
+                      <span>{object.title}</span>
+                    ))}
+                  </div>
+                ) : null}
                 {item.tags?.length ? (
                   <div class="home-feed-card__tags">
                     {item.tags.map((tag) => <span>{tag}</span>)}
@@ -977,12 +910,11 @@ const homeCommands = [
         </div>
         <div class="home-article-drawer__actions">
           <div class="reader-theme-switch" aria-label="阅读主题">
-            <button type="button" data-reader-theme="light">Light</button>
-            <button type="button" data-reader-theme="sepia">Sepia</button>
-            <button type="button" data-reader-theme="dark">Dark</button>
+            <button type="button" data-reader-theme="light" title="白天" aria-label="白天">☀</button>
+            <button type="button" data-reader-theme="sepia" title="护眼" aria-label="护眼">Aa</button>
+            <button type="button" data-reader-theme="dark" title="夜间" aria-label="夜间">☾</button>
           </div>
           <button type="button" data-reader-bookmark>收藏</button>
-          <button type="button" data-reader-repost>引用</button>
           <button type="button" data-reader-seal>盖章</button>
           <a href={withBase('/knowledge/')} data-reader-graph>知识图谱</a>
           <a href={withBase('/posts/')} data-article-full>完整页面</a>
@@ -1003,7 +935,7 @@ const homeCommands = [
         <kbd>Esc</kbd>
       </div>
       <nav class="knowledge-search-tabs" aria-label="搜索类型">
-        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'repost', 'highlight', 'annotation', 'seal', 'sticker'].map((kind) => (
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'highlight', 'annotation', 'seal', 'sticker'].map((kind) => (
           <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
         ))}
       </nav>
@@ -1053,50 +985,45 @@ const homeCommands = [
     </div>
   </div>
 
-  <div class="repost-composer-layer" data-repost-layer hidden>
-    <button class="repost-composer-backdrop" type="button" data-repost-close aria-label="关闭引用编辑器"></button>
-    <section class="repost-composer" role="dialog" aria-modal="true" aria-label="引用转发">
-      <header>
-        <span>Quote Repost</span>
-        <strong data-repost-target-title>选择对象</strong>
-      </header>
-      <textarea data-repost-commentary maxlength="360" placeholder="写下这次重新投影的理由、关联或批注。"></textarea>
-      <div class="repost-composer__target" data-repost-target-preview></div>
-      <footer>
-        <button type="button" data-repost-close>取消</button>
-        <button type="button" data-repost-publish>进入 Feed</button>
-      </footer>
-    </section>
-  </div>
-
   <script type="application/json" id="seal-definition-data" set:html={JSON.stringify({ key: sealDefinitionStorageKey, definitions: sealTypes })} />
-  <script type="application/json" id="visual-knowledge-data" set:html={JSON.stringify(visualItems)} />
+  <script type="application/json" id="visual-knowledge-data" set:html={JSON.stringify(visualCollections)} />
   <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
-  <script type="application/json" id="repost-source-data" set:html={JSON.stringify(repostSourceDocs)} />
+  <script
+    type="application/json"
+    id="home-runtime-static-data"
+    set:html={JSON.stringify({ staticActivityItems, staticNodeCount })}
+  />
 
-  <div class="home-article-templates" hidden>
+  <div class="home-article-templates" hidden data-article-templates>
     {drawerEntries.map((entry) => {
       const Content = entry.Content;
       const related = getRelatedEntries(entry);
+      const hasArticleContent = Boolean(Content || entry.runtimeHtml);
+      const firstCollectionArticle = entry.collectionSessionArticles?.[0];
+      const firstCollectionCard = firstCollectionArticle ? getRuntimeArticleCard(firstCollectionArticle) : undefined;
 
       return (
         <article
           class="home-article-reader"
           data-drawer-template={entry.id}
           data-article-id={entry.id}
+          data-github-repo-template={entry.id.startsWith('github-repo:') ? entry.title : undefined}
           data-kind={entry.kind}
           data-full-href={entry.href}
           data-read-href={entry.readHref ?? ''}
+          data-book-id={entry.bookItem?.id ?? ''}
           data-kicker={entry.kicker}
           data-title={entry.title}
         >
-          <header class="home-article-intro">
-            <span>{entry.kicker}</span>
-            <h1>{entry.title}</h1>
-            <p>{entry.summary}</p>
-            {entry.date && <small>{entry.date}</small>}
-          </header>
-          {Content ? (
+          {entry.kind !== 'collection' && (
+            <header class="home-article-intro">
+              <span>{entry.kicker}</span>
+              <h1>{entry.title}</h1>
+              <p>{entry.summary}</p>
+              {entry.date && <small>{entry.date}</small>}
+            </header>
+          )}
+          {hasArticleContent ? (
             <>
               <div class="home-article-reader__grid">
                 <nav class="home-article-toc" aria-label="文章目录">
@@ -1112,7 +1039,7 @@ const homeCommands = [
                   )}
                 </nav>
                 <div class="home-article-content prose-shell prose-shell--plain">
-                  <Content />
+                  {Content ? <Content /> : <div set:html={entry.runtimeHtml} />}
                 </div>
               </div>
               <section class="reader-mini-graph" data-reader-mini-graph data-reader-mini-article={entry.id} aria-label="文章知识网络">
@@ -1168,19 +1095,73 @@ const homeCommands = [
                 </section>
               ) : null}
             </>
+          ) : entry.kind === 'collection' && entry.knowledgeCollection ? (
+            <section
+              class="home-reader-session home-collection-reader"
+              aria-label={`${entry.title} reading session`}
+              data-home-collection-session
+              data-collection-id={entry.knowledgeCollection.id}
+            >
+              {firstCollectionArticle ? (
+                <>
+                  <main class="home-reader-session__main">
+                    <header class="home-reader-session__header">
+                      <span data-home-collection-kicker>{firstCollectionCard?.eyebrow || firstCollectionArticle.kind || 'MarkdownObject'}</span>
+                      <h2 data-home-collection-title>{firstCollectionArticle.title}</h2>
+                      <p data-home-collection-summary>{firstCollectionCard?.subtitle || firstCollectionArticle.description || firstCollectionArticle.summary}</p>
+                    </header>
+                    <div class="home-reader-session__body prose-shell prose-shell--plain" data-home-collection-body><p>正文正在加载。</p></div>
+                  </main>
+                  <aside class="home-reader-session__rail" aria-label="本集合目录">
+                    <div class="home-reader-session__rail-head">
+                      <span>Collection</span>
+                      <strong>{entry.title}</strong>
+                    </div>
+                    <div class="home-reader-session__toc">
+                      {entry.collectionSessionArticles?.slice(0, 16).map((article, index) => (
+                        <button
+                          type="button"
+                          class:list={[index === 0 && 'is-active']}
+                          data-home-collection-object={article.id}
+                          data-home-collection-detail-url={withBase(`/runtime/${article.detailPath || `articles/${article.id}.json`}`)}
+                        >
+                          <small>{article.kind || 'post'}{article.date ? ` / ${formatDate(new Date(article.date))}` : ''}</small>
+                          <span>{article.title}</span>
+                        </button>
+                      ))}
+                    </div>
+                    <div class="home-reader-session__nav">
+                      <button type="button" data-home-collection-prev>上一篇</button>
+                      <button type="button" data-home-collection-next>下一篇</button>
+                    </div>
+                  </aside>
+                </>
+              ) : (
+                <div class="home-collection-reader__empty">
+                  <p>这个集合暂时只有对象索引，还没有可直接阅读的正文。</p>
+                </div>
+              )}
+            </section>
           ) : (
             <div class="home-drawer-summary">
-              {entry.visualItem ? (
-                <section class="visual-drawer-panel" style={`--visual-accent:${entry.visualItem.palette.dominant}`}>
-                  <div class="visual-drawer-panel__image">
-                    <img src={entry.visualItem.image} alt="" loading="lazy" />
+              {entry.visualCollection ? (
+                <section class="visual-drawer-panel" style={`--visual-accent:${entry.visualCollection.palette.dominant}`}>
+                  <div class="visual-drawer-panel__collection-stack" aria-hidden="true">
+                    {(entry.visualCollection.coverImages.length ? entry.visualCollection.coverImages : entry.visualCollection.images.map((image) => image.image))
+                      .slice(0, 4)
+                      .map((image, index) => (
+                        <img src={image} alt="" loading="lazy" style={`--stack-index:${index}`} />
+                      ))}
                   </div>
                   <div class="visual-drawer-panel__content">
-                    <p>{entry.visualItem.note}</p>
+                    <p>{entry.visualCollection.curationNote}</p>
+                    <span class="visual-meta-line">
+                      {entry.visualCollection.sourceLabel} · {entry.visualCollection.mood} · {entry.visualCollection.images.length} IMAGES
+                    </span>
                     <section>
                       <h3>调色板</h3>
                       <div class="visual-palette-row">
-                        {entry.visualItem.palette.colors.map((color) => (
+                        {entry.visualCollection.palette.colors.map((color) => (
                           <button type="button" data-copy-color={color} style={`background:${color}`} title={`复制 ${color}`}>
                             <span>{color}</span>
                           </button>
@@ -1188,19 +1169,68 @@ const homeCommands = [
                       </div>
                     </section>
                     <section>
-                      <h3>知识关联</h3>
-                      <div class="home-feed-card__tags">
-                        {entry.visualItem.tags.map((tag) => <span>{tag}</span>)}
+                      <h3>Board</h3>
+                      <div class="visual-drawer-board">
+                        {entry.visualCollection.images.map((image) => (
+                          <article>
+                            <img src={image.image} alt="" loading="lazy" />
+                            <strong>{image.title}</strong>
+                            <span>{image.summary}</span>
+                          </article>
+                        ))}
                       </div>
                     </section>
                     <section>
                       <h3>设计 Token</h3>
-                      <button type="button" class="visual-token-copy" data-copy-visual-token={entry.visualItem.id}>
-                        复制视觉 Token
+                      <button type="button" class="visual-token-copy" data-copy-visual-token={entry.visualCollection.id}>
+                        复制 Collection Token
                       </button>
                     </section>
                   </div>
                 </section>
+              ) : entry.kind === 'book' && entry.bookItem && entry.readHref ? (
+                <section class="book-drawer-reader-panel" aria-label={`${entry.title} 阅读器`}>
+                  <header class="book-drawer-reader-panel__intro">
+                    <div class="home-drawer-summary__media home-drawer-summary__media--book">
+                      <BookCover book={entry.bookItem} client:load />
+                    </div>
+                    <div class="book-drawer-reader-panel__copy">
+                      <span class="book-drawer-reader-panel__eyebrow">Library Record</span>
+                      <h3>{entry.title}</h3>
+                      <p>{entry.summary}</p>
+                      <div class="home-feed-card__tags">
+                        {entry.tags?.map((tag) => <span>{tag}</span>)}
+                      </div>
+                    </div>
+                  </header>
+                  <div
+                    class="book-drawer-reader-panel__mount"
+                    data-book-drawer-reader-mount={`${entry.bookItem.id}-${entry.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`}
+                  >
+                    {entry.bookItem.sourceType === 'pdf' ? (
+                      <section class="pdf-reader pdf-reader--drawer" data-book-drawer-instant>
+                        <article class="pdf-reader__instant" aria-label={`${entry.title} 阅读首屏`}>
+                          {entry.coverSrc ? (
+                            <img src={entry.coverSrc} alt={`${entry.title} 封面`} loading="eager" />
+                          ) : (
+                            <span class="book-cover-fallback">
+                              <i>无封面</i>
+                            </span>
+                          )}
+                          <div>
+                            <span>{entry.bookItem.sourceType.toUpperCase()} ARCHIVE</span>
+                            <h2>{entry.title}</h2>
+                            <p>{entry.bookItem.author}</p>
+                          </div>
+                        </article>
+                      </section>
+                    ) : null}
+                  </div>
+                </section>
+              ) : entry.kind === 'book' && entry.bookItem ? (
+                <div class="home-drawer-summary__media home-drawer-summary__media--book">
+                  <BookCover book={entry.bookItem} client:load />
+                </div>
               ) : entry.coverSrc ? (
                 <div class:list={['home-drawer-summary__media', entry.kind === 'music' && 'home-drawer-summary__media--round']}>
                   <img src={entry.coverSrc} alt="" loading="lazy" />
@@ -1229,7 +1259,10 @@ const homeCommands = [
                 {!entry.chartVariant && (
                   <>
                     {entry.details?.length ? (
-                      <dl class="home-drawer-summary__details">
+                      <dl
+                        class="home-drawer-summary__details"
+                        data-github-repo-details={entry.id.startsWith('github-repo:') ? entry.title : undefined}
+                      >
                         {entry.details.map((detail) => (
                           <div>
                             <dt>{detail.label}</dt>
@@ -1256,6 +1289,7 @@ const homeCommands = [
   <script>
     (() => {
       const layer = document.querySelector('[data-article-layer]');
+      const articleDrawer = layer?.querySelector('.home-article-drawer');
       const drawerBody = document.querySelector('[data-article-body]');
       const titleTarget = document.querySelector('[data-article-title]');
       const kickerTarget = document.querySelector('[data-article-kicker]');
@@ -1263,12 +1297,11 @@ const homeCommands = [
       const readLink = document.querySelector('[data-article-read]');
       const shelfLink = document.querySelector('[data-article-shelf]');
       const bookmarkButton = document.querySelector('[data-reader-bookmark]');
-      const repostButton = document.querySelector('[data-reader-repost]');
       const progress = document.querySelector('[data-reading-progress]');
       const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
-      let cards = [...document.querySelectorAll('[data-feed-card]')];
-      const feedGrid = document.querySelector('.home-feed-grid');
-      const drawerTriggers = [...document.querySelectorAll('[data-drawer-id]')];
+      const getCards = () => [...document.querySelectorAll('[data-feed-card]')];
+      const homeFeedGrid = document.querySelector('[data-home-feed-grid]');
+      const articleTemplates = document.querySelector('[data-article-templates]');
       const mainScroller = document.querySelector('.home-feed-main');
       const searchLayer = document.querySelector('[data-search-layer]');
       const searchInput = document.querySelector('[data-search-input]');
@@ -1276,24 +1309,21 @@ const homeCommands = [
       const searchKinds = [...document.querySelectorAll('[data-search-kind]')];
       const selectionToolbar = document.querySelector('[data-selection-toolbar]');
       const sealPalette = document.querySelector('[data-seal-palette]');
-      const repostLayer = document.querySelector('[data-repost-layer]');
-      const repostTargetTitle = document.querySelector('[data-repost-target-title]');
-      const repostPreview = document.querySelector('[data-repost-target-preview]');
-      const repostCommentary = document.querySelector('[data-repost-commentary]');
       const sealTargetTitle = document.querySelector('[data-seal-target-title]');
       const readerSealButton = document.querySelector('[data-reader-seal]');
       const readerGraphLink = document.querySelector('[data-reader-graph]');
+      const homeShell = document.querySelector('.home-feed-shell');
+      const sidebarCollapse = document.querySelector('[data-sidebar-collapse]');
+      const sidebarCollapseIcon = document.querySelector('[data-sidebar-collapse-icon]');
       const sidebarHistory = document.querySelector('[data-sidebar-history]');
       const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
       const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
-      const searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
-      const repostSources = JSON.parse(document.getElementById('repost-source-data')?.textContent || '[]');
-      const repostSourceMap = repostSources.reduce((map, item) => {
-        if (item?.id) map[item.id] = item;
-        return map;
-      }, {});
+      let searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
       const sealConfig = JSON.parse(document.getElementById('seal-definition-data')?.textContent || '{"definitions":[]}');
       const visualKnowledgeItems = JSON.parse(document.getElementById('visual-knowledge-data')?.textContent || '[]');
+      const homeRuntimeStatic = JSON.parse(
+        document.getElementById('home-runtime-static-data')?.textContent || '{"staticActivityItems":[],"staticNodeCount":0}'
+      );
       const storageKeys = {
         history: 'emptyinkpot-reading-history',
         bookmarks: 'emptyinkpot-reader-bookmarks',
@@ -1301,9 +1331,9 @@ const homeCommands = [
         annotations: 'emptyinkpot-reader-annotations',
         seals: 'emptyinkpot-reader-seals',
         stickers: 'emptyinkpot-stickers',
-        reposts: 'emptyinkpot-reposts',
         sealDefinitions: sealConfig.key || 'emptyinkpot-seal-definitions',
-        readerTheme: 'emptyinkpot-reader-theme'
+        readerTheme: 'emptyinkpot-reader-theme',
+        sidebarCollapsed: 'emptyinkpot-home-sidebar-collapsed'
       };
       const defaultSealDefinitions = Array.isArray(sealConfig.definitions) ? sealConfig.definitions : [];
       const loadSealDefinitions = () => {
@@ -1330,9 +1360,28 @@ const homeCommands = [
       let selectedRange = null;
       let pendingHighlightId = null;
       let sealContext = null;
-      let repostContext = null;
       let drawerCloseTimer = 0;
       let searchCloseTimer = 0;
+      let readerMemoryFrame = 0;
+
+      const setSidebarCollapsed = (collapsed) => {
+        homeShell?.classList.toggle('is-sidebar-collapsed', collapsed);
+        if (sidebarCollapse) {
+          sidebarCollapse.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+          sidebarCollapse.setAttribute('aria-label', collapsed ? '展开右侧栏' : '折叠右侧栏');
+        }
+        if (sidebarCollapseIcon) {
+          sidebarCollapseIcon.textContent = collapsed ? '‹' : '›';
+        }
+        localStorage.setItem(storageKeys.sidebarCollapsed, collapsed ? 'true' : 'false');
+      };
+
+      const initSidebar = () => {
+        setSidebarCollapsed(localStorage.getItem(storageKeys.sidebarCollapsed) === 'true');
+        sidebarCollapse?.addEventListener('click', () => {
+          setSidebarCollapsed(!homeShell?.classList.contains('is-sidebar-collapsed'));
+        });
+      };
 
       const initHeroBanner = () => {
         const hero = document.querySelector('[data-hero-banner]');
@@ -1381,15 +1430,38 @@ const homeCommands = [
         };
 
         if (!reducedMotion) {
+          let targetX = 0;
+          let targetY = 0;
+          let currentX = 0;
+          let currentY = 0;
+          let hovering = false;
+
           hero.addEventListener('mousemove', (event) => {
             const rect = hero.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width - 0.5;
-            const y = (event.clientY - rect.top) / rect.height - 0.5;
-            if (layers.bg instanceof HTMLElement) layers.bg.style.transform = `scale(1.1) translate(${x * 10}px, ${y * 8}px)`;
-            if (layers.mid instanceof HTMLElement) layers.mid.style.transform = `scale(1.08) translate(${x * 20}px, ${y * 14}px)`;
-            if (layers.front instanceof HTMLElement) layers.front.style.transform = `scale(1.05) translate(${x * 34}px, ${y * 20}px)`;
+            targetX = (event.clientX - rect.left) / rect.width - 0.5;
+            targetY = (event.clientY - rect.top) / rect.height - 0.5;
+            hovering = true;
           });
-          hero.addEventListener('mouseleave', resetLayers);
+          hero.addEventListener('mouseleave', () => {
+            targetX = 0;
+            targetY = 0;
+            hovering = false;
+          });
+
+          const animate = () => {
+            currentX += (targetX - currentX) * 0.08;
+            currentY += (targetY - currentY) * 0.08;
+            if (Math.abs(currentX) > 0.001 || Math.abs(currentY) > 0.001 || hovering) {
+              if (layers.bg instanceof HTMLElement) layers.bg.style.transform = `scale(1.1) translate(${currentX * 10}px, ${currentY * 8}px)`;
+              if (layers.mid instanceof HTMLElement) layers.mid.style.transform = `scale(1.08) translate(${currentX * 20}px, ${currentY * 14}px)`;
+              if (layers.front instanceof HTMLElement) layers.front.style.transform = `scale(1.05) translate(${currentX * 34}px, ${currentY * 20}px)`;
+            } else {
+              resetLayers();
+            }
+            requestAnimationFrame(animate);
+          };
+
+          requestAnimationFrame(animate);
         }
       };
 
@@ -1409,137 +1481,64 @@ const homeCommands = [
         }
       };
 
-      const escapeHtmlAttribute = (value = '') =>
-        String(value)
-          .replaceAll('&', '&amp;')
-          .replaceAll('"', '&quot;')
-          .replaceAll('<', '&lt;')
-          .replaceAll('>', '&gt;');
-
-      const getReposts = () => readJson(storageKeys.reposts, []);
-
-      const createRepostCard = (record) => {
-        const source = record.snapshot || repostSourceMap[record.targetId] || {};
-        const card = document.createElement('button');
-        const tags = Array.isArray(source.tags) ? source.tags.slice(0, 4) : [];
-        card.type = 'button';
-        card.className = 'home-feed-card home-feed-card--repost home-feed-card--standard';
-        card.dataset.feedCard = 'true';
-        card.dataset.feedKind = 'repost';
-        card.dataset.drawerId = record.targetId || '';
-        card.dataset.sealTarget = record.id;
-        card.dataset.sealTitle = source.title || 'Repost';
-        card.dataset.sealKind = 'repost';
-        card.dataset.repostCard = record.id;
-        card.innerHTML = `
-          <div class="bookmark bookmark--repost"><span>Quote</span></div>
-          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
-          <span class="card-paperclip" aria-hidden="true"></span>
-          <div class="home-repost-card__quote">
-            <span>Repost</span>
-            <p></p>
-          </div>
-          <div class="home-repost-card__source">
-            ${source.coverSrc ? `<img src="${escapeHtmlAttribute(source.coverSrc)}" alt="" loading="lazy" />` : `<i>${escapeHtmlAttribute(source.kind || 'object')}</i>`}
-            <div>
-              <small></small>
-              <strong></strong>
-              <p></p>
-            </div>
-          </div>
-          <div class="home-feed-card__tags"></div>
-        `;
-        card.querySelector('.home-repost-card__quote p').textContent = record.commentary || '重新投影到 Feed。';
-        card.querySelector('.home-repost-card__source small').textContent = source.kicker || source.kind || 'Object';
-        card.querySelector('.home-repost-card__source strong').textContent = source.title || record.targetId || 'Untitled';
-        card.querySelector('.home-repost-card__source p').textContent = source.summary || '';
-        const tagRoot = card.querySelector('.home-feed-card__tags');
-        tags.forEach((tag) => {
-          const span = document.createElement('span');
-          span.textContent = tag;
-          tagRoot.append(span);
-        });
-        card.addEventListener('click', (event) => {
-          event.preventDefault();
-          if (record.targetId) openDrawer(record.targetId, card);
-        });
-        return card;
+      const runtimeState = {
+        memory: [],
+        highlights: [],
+        loaded: false
       };
 
-      const renderReposts = () => {
-        if (!feedGrid) return;
-        document.querySelectorAll('[data-repost-card]').forEach((node) => node.remove());
-        const fragment = document.createDocumentFragment();
-        getReposts().slice(0, 12).forEach((record) => fragment.append(createRepostCard(record)));
-        feedGrid.prepend(fragment);
-        cards = [...document.querySelectorAll('[data-feed-card]')];
-        renderSeals();
-      };
-
-      const renderRepostPreview = (source) => {
-        if (!repostPreview) return;
-        repostPreview.replaceChildren();
-        const preview = document.createElement('article');
-        preview.className = 'repost-composer__source';
-        const image = source?.coverSrc ? document.createElement('img') : null;
-        const body = document.createElement('div');
-        const kicker = document.createElement('small');
-        const title = document.createElement('strong');
-        const summary = document.createElement('p');
-        if (image) {
-          image.src = source.coverSrc;
-          image.alt = '';
-          preview.append(image);
+      const loadRuntimeState = async () => {
+        if (runtimeState.loaded) return runtimeState;
+        runtimeState.loaded = true;
+        try {
+          const [memoryResponse, highlightResponse] = await Promise.all([
+            fetch('/api/runtime/reader/memory?limit=50', { cache: 'no-store' }),
+            fetch('/api/runtime/reader/highlights?limit=100', { cache: 'no-store' })
+          ]);
+          const [memoryData, highlightData] = await Promise.all([memoryResponse.json(), highlightResponse.json()]);
+          runtimeState.memory = Array.isArray(memoryData.items) ? memoryData.items : [];
+          runtimeState.highlights = Array.isArray(highlightData.items) ? highlightData.items : [];
+        } catch {
+          runtimeState.memory = [];
+          runtimeState.highlights = [];
         }
-        kicker.textContent = source?.kicker || source?.kind || 'Object';
-        title.textContent = source?.title || 'Untitled';
-        summary.textContent = source?.summary || '';
-        body.append(kicker, title, summary);
-        preview.append(body);
-        repostPreview.append(preview);
+        return runtimeState;
       };
 
-      const openRepostComposer = (targetId) => {
-        const source = repostSourceMap[targetId];
-        if (!source || !repostLayer) return;
-        repostContext = source;
-        if (repostTargetTitle) repostTargetTitle.textContent = source.title || 'Untitled';
-        if (repostCommentary instanceof HTMLTextAreaElement) repostCommentary.value = '';
-        renderRepostPreview(source);
-        repostLayer.hidden = false;
-        requestAnimationFrame(() => {
-          repostLayer.classList.add('is-open');
-          repostCommentary?.focus?.({ preventScroll: true });
+      const getRuntimeMergedHistory = () => {
+        const local = readJson(storageKeys.history, []);
+        const byId = new Map(local.map((item) => [item.id, item]));
+        runtimeState.memory
+          .filter((item) => item.objectType === 'article')
+          .forEach((item) => byId.set(item.objectId || item.id, { ...byId.get(item.objectId || item.id), ...item, id: item.objectId || item.id }));
+        return [...byId.values()].sort((a, b) => (b.lastReadAt || b.timestamp || 0) - (a.lastReadAt || a.timestamp || 0));
+      };
+
+      const getRuntimeMergedHighlights = () => {
+        const local = readJson(storageKeys.highlights, []);
+        const byId = new Map(local.map((item) => [item.id, item]));
+        runtimeState.highlights.forEach((item) => byId.set(item.id, { ...byId.get(item.id), ...item, articleId: item.articleId || item.objectId }));
+        return [...byId.values()].sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0));
+      };
+
+      const saveRuntimeMemory = (record) => {
+        fetch('/api/runtime/reader/memory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record)
+        }).catch(() => {
+          // Runtime persistence is server-side; local UI state should not block on it.
         });
       };
 
-      const closeRepostComposer = () => {
-        if (!repostLayer) return;
-        repostLayer.classList.remove('is-open');
-        window.setTimeout(() => {
-          repostLayer.hidden = true;
-          repostContext = null;
-        }, 120);
-      };
-
-      const publishRepost = () => {
-        if (!repostContext?.id) return;
-        const now = Date.now();
-        const commentary = repostCommentary instanceof HTMLTextAreaElement ? repostCommentary.value.trim() : '';
-        const record = {
-          id: `repost:${repostContext.id}:${now}`,
-          type: 'RepostObject',
-          targetId: repostContext.id,
-          commentary,
-          snapshot: repostContext,
-          createdAt: now,
-          updatedAt: now
-        };
-        writeJson(storageKeys.reposts, [record, ...getReposts().filter((item) => item.id !== record.id)].slice(0, 80));
-        closeRepostComposer();
-        renderReposts();
-        setFilter('repost');
-        closeDrawer();
+      const saveRuntimeHighlight = (record) => {
+        fetch('/api/runtime/reader/highlights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record)
+        }).catch(() => {
+          // Runtime persistence is server-side; local UI state should not block on it.
+        });
       };
 
       const normalizeReaderTheme = (theme) => (['light', 'sepia', 'dark'].includes(theme) ? theme : 'light');
@@ -1557,7 +1556,385 @@ const homeCommands = [
         }
       };
 
-      const getVisibleCards = () => cards.filter((card) => !card.hidden);
+      const getVisibleCards = () => getCards().filter((card) => !card.hidden);
+
+      const escapeHtml = (value) =>
+        String(value ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#39;');
+
+      const slugifyRuntimeText = (value) =>
+        String(value ?? '')
+          .trim()
+          .toLowerCase()
+          .normalize('NFKD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .replace(/-{2,}/g, '-');
+
+      const getRuntimeHeadings = (markdown) =>
+        String(markdown ?? '')
+          .split(/\r?\n/)
+          .map((line) => line.match(/^(#{1,3})\s+(.+)$/))
+          .filter(Boolean)
+          .map((match) => ({
+            depth: match[1].length,
+            slug: slugifyRuntimeText(match[2]),
+            text: match[2].trim()
+          }));
+
+      const stripRuntimeMarkdown = (text) =>
+        String(text ?? '')
+          .replace(/```[\s\S]*?```/g, ' ')
+          .replace(/`([^`]+)`/g, '$1')
+          .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+          .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+          .replace(/^>\s?/gm, '')
+          .replace(/^#+\s+/gm, '')
+          .replace(/[*_~>-]/g, ' ')
+          .replace(/\|/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+      const getRuntimeReadingTime = (text) => Math.max(1, Math.round(stripRuntimeMarkdown(text).length / 320));
+
+      const runtimeArticleHref = (article) => `/posts/${encodeURIComponent(article.slug || article.id || '')}/`;
+      const runtimeCollectionHref = (collection) =>
+        `/collections/${String(collection.id || '')
+          .replace(/^collection:/, '')
+          .trim()
+          .toLowerCase()
+          .normalize('NFKD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .replace(/-{2,}/g, '-')}/`;
+      const getRuntimeArticleCard = (article) => {
+        if (article?.card?.chips?.length) return article.card;
+        const eyebrow = article?.card?.eyebrow || article?.categories?.[0] || article?.kind || 'MarkdownObject';
+        return {
+          eyebrow,
+          chips: [eyebrow, ...(article?.tags || [])].filter(Boolean).slice(0, 6),
+          subtitle: article?.card?.subtitle || article?.description || article?.summary || ''
+        };
+      };
+
+      const formatRuntimeDate = (date) => {
+        const parsed = new Date(date);
+        if (Number.isNaN(parsed.getTime())) return String(date ?? '');
+        return new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(parsed);
+      };
+
+      const runtimeArticleDetailUrl = (article) =>
+        `/runtime/${article?.detailPath || `articles/${article?.id || encodeURIComponent(article?.slug || '')}.json`}?t=${Date.now()}`;
+
+      const loadRuntimeArticleDetail = async (article) => {
+        const response = await fetch(runtimeArticleDetailUrl(article), { cache: 'no-store' });
+        if (!response.ok) return article;
+        const detail = await response.json();
+        return detail?.article ? { ...article, ...detail.article } : article;
+      };
+
+      const updateRuntimeHomeMetrics = (articles) => {
+        const runtimeCount = articles.length;
+        const tagCount = new Set(articles.flatMap((article) => getRuntimeArticleCard(article).chips || [])).size;
+        const staticNodeCount = Number(homeRuntimeStatic.staticNodeCount || 0);
+        const articleCount = document.querySelector('[data-runtime-article-count]');
+        const nodeCount = document.querySelector('[data-runtime-node-count]');
+        if (articleCount) articleCount.textContent = runtimeCount.toLocaleString('zh-CN');
+        if (nodeCount) nodeCount.textContent = (staticNodeCount + runtimeCount).toLocaleString('zh-CN');
+
+        const marqueeTrack = document.querySelector('[data-home-activity-marquee] div');
+        if (!marqueeTrack) return;
+        const items = [
+          articles[0]?.title ? `最新文章：${articles[0].title}` : '',
+          ...(Array.isArray(homeRuntimeStatic.staticActivityItems) ? homeRuntimeStatic.staticActivityItems : []),
+          `Knowledge：${staticNodeCount + runtimeCount} 个入口 / ${tagCount} 个标签`
+        ].filter(Boolean);
+        marqueeTrack.replaceChildren(
+          ...[...items, ...items].map((item) => {
+            const span = document.createElement('span');
+            span.textContent = item;
+            return span;
+          })
+        );
+      };
+
+      const createRuntimeCard = (article) => {
+        const card = document.createElement('button');
+        const drawerId = `runtime:${article.id}`;
+        const articleCard = getRuntimeArticleCard(article);
+        card.type = 'button';
+        card.className = 'home-feed-card home-feed-card--post home-feed-card--compact';
+        card.dataset.feedCard = 'true';
+        card.dataset.runtimeFeedCard = `runtime-${article.id}`;
+        card.dataset.runtimeFolder = article.folder?.key || '';
+        card.dataset.feedKind = 'post';
+        card.dataset.hoverPreview = 'true';
+        card.dataset.hoverId = drawerId;
+        card.dataset.hoverTitle = article.title || 'Untitled';
+        card.dataset.hoverKicker = articleCard.eyebrow;
+        card.dataset.hoverSummary = articleCard.subtitle;
+        card.dataset.drawerId = drawerId;
+        card.dataset.sealTarget = drawerId;
+        card.dataset.sealTitle = article.title || 'Untitled';
+        card.dataset.sealKind = 'post';
+        card.innerHTML = `
+          <div class="bookmark bookmark--post"><span>post</span></div>
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+          <span class="card-paperclip" aria-hidden="true"></span>
+          <div class="home-feed-card__mark">post</div>
+          <div class="home-feed-card__body">
+            <div class="home-feed-card__meta">
+              <span>${escapeHtml(articleCard.eyebrow)}</span>
+              <small>${escapeHtml(formatRuntimeDate(article.date))} / ${article.readingMinutes || 1} min read</small>
+            </div>
+            <h2>${escapeHtml(article.title || 'Untitled')}</h2>
+            <p>${escapeHtml(articleCard.subtitle)}</p>
+            ${
+              articleCard.chips?.length
+                ? `<div class="home-feed-card__tags">${articleCard.chips.map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}</div>`
+                : ''
+            }
+          </div>
+        `;
+        return card;
+      };
+
+      const createRuntimeTemplate = (article) => {
+        const wrapper = document.createElement('div');
+        const drawerId = `runtime:${article.id}`;
+        const date = formatRuntimeDate(article.date);
+        const articleCard = getRuntimeArticleCard(article);
+        const tags = articleCard.chips || [];
+        const headings = Array.isArray(article.toc) ? article.toc : [];
+        const href = runtimeArticleHref(article);
+        wrapper.innerHTML = `
+          <article
+            class="home-article-reader"
+            data-drawer-template="${escapeHtml(drawerId)}"
+            data-article-id="${escapeHtml(drawerId)}"
+            data-runtime-folder="${escapeHtml(article.folder?.key || '')}"
+            data-kind="post"
+            data-full-href="${escapeHtml(href)}"
+            data-read-href=""
+            data-book-id=""
+            data-kicker="${escapeHtml(articleCard.eyebrow)}"
+            data-title="${escapeHtml(article.title || 'Untitled')}"
+          >
+            <header class="home-article-intro">
+              <span>${escapeHtml(articleCard.eyebrow)}</span>
+              <h1>${escapeHtml(article.title || 'Untitled')}</h1>
+              <p>${escapeHtml(articleCard.subtitle)}</p>
+              <small>${escapeHtml(date)}</small>
+            </header>
+            <div class="home-article-reader__grid">
+              <nav class="home-article-toc" aria-label="文章目录">
+                <strong>目录</strong>
+                ${
+                  headings.length
+                    ? headings.map((heading) => `<a href="#${escapeHtml(heading.slug)}" class="depth-${heading.depth}">${escapeHtml(heading.text)}</a>`).join('')
+                    : '<span>暂无标题</span>'
+                }
+              </nav>
+              <div class="home-article-content prose-shell prose-shell--plain" data-runtime-detail-body data-runtime-detail-url="${escapeHtml(runtimeArticleDetailUrl(article))}"><p>文章正文正在按需加载。</p></div>
+            </div>
+            <section class="reader-mini-graph" data-reader-mini-graph data-reader-mini-article="${escapeHtml(drawerId)}" aria-label="文章知识网络">
+              <header>
+                <span>Mini Graph</span>
+                <a href="/knowledge/" data-mini-graph-open>查看知识图谱</a>
+              </header>
+              <div class="reader-mini-graph__grid">
+                <section>
+                  <strong>当前</strong>
+                  <button type="button" data-memory-drawer="${escapeHtml(drawerId)}">${escapeHtml(article.title || 'Untitled')}</button>
+                </section>
+                <section><strong>关联</strong><p>动态内容暂无强关联</p></section>
+                <section>
+                  <strong>标签</strong>
+                  ${
+                    tags.length
+                      ? tags.map((tag) => `<button type="button" data-mini-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join('')
+                      : '<p>暂无标签</p>'
+                  }
+                </section>
+                <section><strong>标记</strong><div data-mini-highlights><p>暂无本地标记</p></div></section>
+              </div>
+            </section>
+          </article>
+        `;
+        return wrapper.firstElementChild;
+      };
+
+      const createRuntimeCollectionCard = (collection) => {
+        const card = document.createElement('button');
+        const chips = collection.card?.chips || collection.tags || [];
+        const objectTitles = (collection.objects || []).slice(0, 4);
+        const href = runtimeCollectionHref(collection);
+        card.type = 'button';
+        card.className = `home-feed-card home-feed-card--collection ${collection.basis === 'folder' ? 'home-feed-card--tall' : 'home-feed-card--standard'}`;
+        card.dataset.feedCard = 'true';
+        card.dataset.runtimeFeedCard = `collection-${collection.id}`;
+        card.dataset.feedKind = 'collection';
+        card.dataset.hoverPreview = 'true';
+        card.dataset.hoverId = collection.id;
+        card.dataset.hoverTitle = collection.title || 'Untitled Collection';
+        card.dataset.hoverKicker = collection.card?.eyebrow || 'Knowledge Collection';
+        card.dataset.hoverSummary = collection.description || collection.card?.subtitle || '';
+        card.dataset.drawerId = collection.id;
+        card.dataset.href = href;
+        card.dataset.sealTarget = collection.id;
+        card.dataset.sealTitle = collection.title || 'Untitled Collection';
+        card.dataset.sealKind = 'collection';
+        card.innerHTML = `
+          <div class="bookmark bookmark--knowledge"><span>Collection</span></div>
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+          <span class="card-paperclip" aria-hidden="true"></span>
+          <div class="home-feed-card__mark">collection</div>
+          <div class="home-feed-card__body">
+            <div class="home-feed-card__meta">
+              <span>${escapeHtml(collection.card?.eyebrow || 'Knowledge Collection')}</span>
+              <small>${escapeHtml(String(collection.stats?.objectCount || 0))} objects / ${escapeHtml(collection.layout || 'feed')}</small>
+            </div>
+            <h2>${escapeHtml(collection.title || 'Untitled Collection')}</h2>
+            <p>${escapeHtml(collection.description || collection.card?.subtitle || '')}</p>
+            ${
+              objectTitles.length
+                ? `<div class="home-collection-preview">${objectTitles.map((object) => `<span>${escapeHtml(object.title || 'Untitled')}</span>`).join('')}</div>`
+                : ''
+            }
+            ${chips.length ? `<div class="home-feed-card__tags">${chips.map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}</div>` : ''}
+          </div>
+        `;
+        return card;
+      };
+
+      const createRuntimeCollectionTemplate = (collection, articleById = new Map()) => {
+        const wrapper = document.createElement('div');
+        const href = runtimeCollectionHref(collection);
+        const sessionArticles = (collection.objects || [])
+          .map((object) => ({ ...object, ...(articleById.get(object.id) || {}) }))
+          .filter((object) => object?.id)
+          .slice(0, 16);
+        const firstArticle = sessionArticles[0];
+        const firstCard = firstArticle ? getRuntimeArticleCard(firstArticle) : null;
+        const objectButtons = sessionArticles
+          .map((object, index) => `
+            <button
+              type="button"
+              class="${index === 0 ? 'is-active' : ''}"
+              data-home-collection-object="${escapeHtml(object.id)}"
+              data-home-collection-detail-url="${escapeHtml(runtimeArticleDetailUrl(object))}"
+            >
+              <small>${escapeHtml(object.kind || object.type || 'post')}${object.date ? ` / ${escapeHtml(formatRuntimeDate(object.date))}` : ''}</small>
+              <span>${escapeHtml(object.title || 'Untitled')}</span>
+            </button>
+          `)
+          .join('');
+        const readerHtml = firstArticle
+          ? `
+            <main class="home-reader-session__main">
+              <header class="home-reader-session__header">
+                <span data-home-collection-kicker>${escapeHtml(firstCard?.eyebrow || firstArticle.kind || 'MarkdownObject')}</span>
+                <h2 data-home-collection-title>${escapeHtml(firstArticle.title || 'Untitled')}</h2>
+                <p data-home-collection-summary>${escapeHtml(firstCard?.subtitle || firstArticle.description || firstArticle.summary || '')}</p>
+              </header>
+              <div
+                class="home-reader-session__body prose-shell prose-shell--plain"
+                data-home-collection-body
+              ><p>正文正在加载。</p></div>
+            </main>
+            <aside class="home-reader-session__rail" aria-label="本集合目录">
+              <div class="home-reader-session__rail-head">
+                <span>Collection</span>
+                <strong>${escapeHtml(collection.title || 'Untitled Collection')}</strong>
+              </div>
+              <div class="home-reader-session__toc">${objectButtons}</div>
+              <div class="home-reader-session__nav">
+                <button type="button" data-home-collection-prev>上一篇</button>
+                <button type="button" data-home-collection-next>下一篇</button>
+              </div>
+            </aside>
+          `
+          : '<div class="home-collection-reader__empty"><p>这个集合暂时只有对象索引，还没有可直接阅读的正文。</p></div>';
+        wrapper.innerHTML = `
+          <article
+            class="home-article-reader"
+            data-drawer-template="${escapeHtml(collection.id)}"
+            data-article-id="${escapeHtml(collection.id)}"
+            data-kind="collection"
+            data-full-href="${escapeHtml(href)}"
+            data-read-href=""
+            data-book-id=""
+            data-kicker="${escapeHtml(collection.card?.eyebrow || 'Knowledge Collection')}"
+            data-title="${escapeHtml(collection.title || 'Untitled Collection')}"
+          >
+            <section
+              class="home-reader-session home-collection-reader"
+              aria-label="${escapeHtml(collection.title || 'Collection')} reading session"
+              data-home-collection-session
+              data-collection-id="${escapeHtml(collection.id)}"
+            >
+              ${readerHtml}
+            </section>
+          </article>
+        `;
+        return wrapper.firstElementChild;
+      };
+      const syncRuntimeHomepageFeed = async () => {
+        if (!homeFeedGrid || !articleTemplates) return;
+        try {
+          const response = await fetch(`/runtime/content-index.json?t=${Date.now()}`, { cache: 'no-store' });
+          if (!response.ok) return;
+          const index = await response.json();
+          const articles = Array.isArray(index.articles) ? index.articles.filter((article) => article?.projection?.feed !== false) : [];
+          const collections = Array.isArray(index.collections)
+            ? index.collections.filter((collection) => collection?.projections?.home !== false).slice(0, 12)
+            : [];
+          const articleById = new Map(articles.map((article) => [article.id, article]));
+          document.querySelectorAll('[data-runtime-feed-card]').forEach((node) => node.remove());
+          articleTemplates.querySelectorAll('[data-drawer-template^="runtime:"]').forEach((node) => node.remove());
+          articleTemplates.querySelectorAll('[data-drawer-template^="collection:"]').forEach((node) => node.remove());
+          const collectionCards = collections.map(createRuntimeCollectionCard);
+          const articleCards = articles.slice(0, 8).map(createRuntimeCard);
+          const cards = [
+            ...collectionCards.slice(0, 3),
+            ...articleCards
+          ];
+          const templates = collections.map((collection) => createRuntimeCollectionTemplate(collection, articleById));
+          articleTemplates.prepend(...templates, ...articles.map(createRuntimeTemplate));
+          const firstNonCollectionCard = homeFeedGrid.querySelector('[data-feed-card]:not([data-feed-kind="collection"])');
+          if (firstNonCollectionCard) {
+            firstNonCollectionCard.before(...cards);
+          } else {
+            homeFeedGrid.prepend(...cards);
+          }
+          window.emptyinkpotRuntimeFolders?.apply?.();
+          searchDocs = [
+            ...searchDocs.filter((doc) => !(String(doc.id || '').startsWith('runtime:') || String(doc.drawerId || '').startsWith('runtime:'))),
+            ...articles.map((article) => ({
+              id: `runtime:${article.id}`,
+              type: 'post',
+              title: article.title,
+              content: [getRuntimeArticleCard(article).subtitle, ...(article.tags || []), ...(article.categories || [])].join('\n'),
+              tags: getRuntimeArticleCard(article).chips || [],
+              href: runtimeArticleHref(article),
+              drawerId: `runtime:${article.id}`
+            }))
+          ];
+          updateRuntimeHomeMetrics(articles);
+          renderSearch();
+          renderSeals();
+          setFilter(document.querySelector('.home-feed-tab.is-active')?.dataset.feedFilter || 'all');
+          window.dispatchEvent(new CustomEvent('emptyinkpot:runtime-home-feed-ready', { detail: { count: articles.length } }));
+        } catch {
+          // Static runtime cards remain when the runtime index is unavailable.
+        }
+      };
 
       const setSearchKind = (kind) => {
         searchKind = kind || 'all';
@@ -1567,11 +1944,19 @@ const homeCommands = [
       const setActiveCard = (index) => {
         const visibleCards = getVisibleCards();
         if (!visibleCards.length) return;
-        cards.forEach((card) => card.classList.remove('feed-card--active'));
+        getCards().forEach((card) => card.classList.remove('feed-card--active'));
         activeIndex = Math.max(0, Math.min(index, visibleCards.length - 1));
         const card = visibleCards[activeIndex];
         card.classList.add('feed-card--active');
         card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      };
+
+      const formatReaderProgress = (item) => {
+        const progress = Number(item?.progress || 0);
+        const percent = Math.round(Math.max(0, Math.min(1, progress)) * 100);
+        const when = Number(item?.lastReadAt || item?.timestamp || 0);
+        const date = when ? new Date(when).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }) : '';
+        return [percent ? `${percent}%` : '未开始', date].filter(Boolean).join(' · ');
       };
 
       const renderSidebarList = (target, items, emptyText, type) => {
@@ -1590,7 +1975,14 @@ const homeCommands = [
             button.type = 'button';
             button.dataset.sidebarDrawer = drawerId || '';
             if (type === 'highlight' && item.id) button.dataset.sidebarHighlight = item.id;
-            button.textContent = type === 'highlight' ? item.text || 'Untitled highlight' : item.title || 'Untitled';
+            const label = document.createElement('span');
+            label.textContent = type === 'highlight' ? item.text || 'Untitled highlight' : item.title || 'Untitled';
+            button.append(label);
+            if (type === 'history') {
+              const meta = document.createElement('small');
+              meta.textContent = formatReaderProgress(item);
+              button.append(meta);
+            }
             row.append(button);
             return row;
           })
@@ -1598,9 +1990,9 @@ const homeCommands = [
       };
 
       const renderSidebarState = () => {
-        const history = readJson(storageKeys.history, []);
+        const history = getRuntimeMergedHistory();
         const bookmarks = readJson(storageKeys.bookmarks, []);
-        const highlights = readJson(storageKeys.highlights, []);
+        const highlights = getRuntimeMergedHighlights();
         const annotations = readJson(storageKeys.annotations, []);
         sidebarStats.forEach((node) => {
           const map = { history, bookmarks, highlights, annotations };
@@ -1723,10 +2115,52 @@ const homeCommands = [
 
       const saveHistory = (article) => {
         if (!article?.id) return;
-        const list = readJson(storageKeys.history, []);
-        const next = [{ id: article.id, title: article.title, href: article.href, timestamp: Date.now() }, ...list.filter((item) => item.id !== article.id)].slice(0, 50);
+        const list = getRuntimeMergedHistory();
+        const previous = list.find((item) => item.id === article.id) || {};
+        const now = Date.now();
+        const record = {
+          ...previous,
+          id: article.id,
+          objectId: article.id,
+          objectType: 'article',
+          title: article.title,
+          href: article.href,
+          timestamp: now,
+          lastReadAt: now,
+          scrollTop: previous.scrollTop || 0,
+          progress: previous.progress || 0
+        };
+        const next = [record, ...list.filter((item) => item.id !== article.id)].slice(0, 50);
         writeJson(storageKeys.history, next);
+        saveRuntimeMemory(record);
         renderSidebarState();
+      };
+
+      const getHistoryEntry = (id) => getRuntimeMergedHistory().find((item) => item.id === id || item.objectId === id);
+
+      const persistReadingMemory = (ratio) => {
+        if (!currentArticle || !drawerBody) return;
+        if (readerMemoryFrame) return;
+        readerMemoryFrame = requestAnimationFrame(() => {
+          readerMemoryFrame = 0;
+          const list = getRuntimeMergedHistory();
+          const previous = list.find((item) => item.id === currentArticle.id) || {};
+          const now = Date.now();
+          const record = {
+            ...previous,
+            id: currentArticle.id,
+            objectId: currentArticle.id,
+            objectType: 'article',
+            title: currentArticle.title,
+            href: currentArticle.href,
+            timestamp: previous.timestamp || now,
+            lastReadAt: now,
+            scrollTop: drawerBody.scrollTop,
+            progress: Number.isFinite(ratio) ? Math.max(0, Math.min(1, ratio)) : 0
+          };
+          writeJson(storageKeys.history, [record, ...list.filter((item) => item.id !== currentArticle.id)].slice(0, 50));
+          saveRuntimeMemory(record);
+        });
       };
 
       const getBookmarks = () => readJson(storageKeys.bookmarks, []);
@@ -1738,11 +2172,6 @@ const homeCommands = [
         const active = isBookmarked(currentArticle.id);
         bookmarkButton.classList.toggle('is-active', active);
         bookmarkButton.textContent = active ? '已收藏' : '收藏';
-      };
-
-      const updateRepostButton = () => {
-        if (!repostButton || !currentArticle) return;
-        repostButton.hidden = !repostSourceMap[currentArticle.id];
       };
 
       const toggleBookmark = () => {
@@ -1762,6 +2191,7 @@ const homeCommands = [
         const max = drawerBody.scrollHeight - drawerBody.clientHeight;
         const ratio = max > 0 ? drawerBody.scrollTop / max : 0;
         progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
+        persistReadingMemory(ratio);
       };
 
       const updateReaderGraphLink = () => {
@@ -1941,9 +2371,9 @@ const homeCommands = [
         toggle.textContent = '阅读记忆';
         content.className = 'reader-memory-panel__content';
         panel.append(toggle, content);
-        const history = readJson(storageKeys.history, []).slice(0, 4);
+        const history = getRuntimeMergedHistory().slice(0, 4);
         const bookmarks = readJson(storageKeys.bookmarks, []).slice(0, 4);
-        const highlights = readJson(storageKeys.highlights, []).slice(0, 4);
+        const highlights = getRuntimeMergedHighlights().slice(0, 4);
         const annotations = readJson(storageKeys.annotations, []).slice(0, 4);
         const appendSection = (title, items, type) => {
           const section = document.createElement('section');
@@ -1963,11 +2393,18 @@ const homeCommands = [
             const target = type === 'highlight' || type === 'annotation' ? item.articleId : item.id;
             const label = type === 'highlight' ? item.text : type === 'annotation' ? item.body : item.title;
             const button = document.createElement('button');
+            const text = document.createElement('span');
             button.type = 'button';
             button.dataset.memoryDrawer = target || '';
             if (type === 'highlight' && item.id) button.dataset.memoryHighlight = item.id;
             if (type === 'annotation' && item.highlightId) button.dataset.memoryHighlight = item.highlightId;
-            button.textContent = label || 'Untitled';
+            text.textContent = label || 'Untitled';
+            button.append(text);
+            if (type === 'history') {
+              const meta = document.createElement('small');
+              meta.textContent = formatReaderProgress(item);
+              button.append(meta);
+            }
             section.append(button);
           });
 
@@ -1990,7 +2427,7 @@ const homeCommands = [
           graphOpen.href = `/knowledge/?focus=${encodeURIComponent(currentArticle.id)}`;
         }
         if (!highlightsTarget) return;
-        const highlights = readJson(storageKeys.highlights, [])
+        const highlights = getRuntimeMergedHighlights()
           .filter((item) => item.articleId === currentArticle.id)
           .slice(0, 3);
         const annotations = readJson(storageKeys.annotations, [])
@@ -2023,7 +2460,7 @@ const homeCommands = [
         if (!drawerBody || !currentArticle) return;
         const root = drawerBody.querySelector('.home-article-content');
         if (!root) return;
-        const highlights = readJson(storageKeys.highlights, []).filter((item) => item.articleId === currentArticle.id);
+        const highlights = getRuntimeMergedHighlights().filter((item) => item.articleId === currentArticle.id || item.objectId === currentArticle.id);
         const orphaned = [];
         highlights.forEach((item) => {
           const range = resolveHighlightRange(root, item);
@@ -2121,7 +2558,10 @@ const homeCommands = [
         } catch {
           return;
         }
-        writeJson(storageKeys.highlights, [record, ...readJson(storageKeys.highlights, [])]);
+        const nextHighlights = [record, ...getRuntimeMergedHighlights().filter((item) => item.id !== record.id)];
+        runtimeState.highlights = nextHighlights;
+        writeJson(storageKeys.highlights, nextHighlights);
+        saveRuntimeHighlight({ ...record, objectId: currentArticle.id, objectType: 'article' });
         if (note.trim()) {
           const annotation = {
             id: `annotation:${record.id}`,
@@ -2143,7 +2583,7 @@ const homeCommands = [
       const search = (query) => {
         const q = query.trim().toLowerCase();
         if (!q) return [];
-        const storedHighlights = readJson(storageKeys.highlights, []).map((item) => ({
+        const storedHighlights = getRuntimeMergedHighlights().map((item) => ({
           id: item.id,
           type: 'highlight',
           title: item.title,
@@ -2179,16 +2619,14 @@ const homeCommands = [
           drawerId: item.targetId,
           href: item.targetId?.startsWith('visual:') ? `/visuals/#${encodeURIComponent(item.targetId.slice('visual:'.length))}` : undefined
         }));
-        const storedReposts = getReposts().map((item) => ({
-          id: item.id,
-          type: 'repost',
-          title: `引用 · ${item.snapshot?.title || item.targetId}`,
-          content: [item.commentary, item.snapshot?.summary, item.snapshot?.kicker].join(' '),
-          tags: ['repost', item.snapshot?.kind, ...(item.snapshot?.tags || [])].filter(Boolean),
-          drawerId: item.targetId,
-          href: item.snapshot?.href
-        }));
-        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals, ...storedStickers, ...storedReposts]
+        const folderApi = window.emptyinkpotRuntimeFolders;
+        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals, ...storedStickers]
+          .filter((doc) => {
+            if (!String(doc.id || '').startsWith('runtime:')) return true;
+            const template = document.querySelector(`[data-drawer-template="${escapeCssIdentifier(doc.drawerId || doc.id)}"]`);
+            const folderKey = template?.getAttribute('data-runtime-folder') || '';
+            return !folderApi || folderApi.isVisible(folderKey);
+          })
           .filter((doc) => searchKind === 'all' || doc.type === searchKind)
           .map((doc) => {
             const content = [doc.title, doc.content, ...(doc.tags || [])].join(' ').toLowerCase();
@@ -2260,7 +2698,7 @@ const homeCommands = [
 
       const setFilter = (kind) => {
         filterButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.feedFilter === kind));
-        cards.forEach((card) => {
+        getCards().forEach((card) => {
           const visible = kind === 'all' || card.dataset.feedKind === kind;
           card.hidden = !visible;
         });
@@ -2273,7 +2711,9 @@ const homeCommands = [
         layer.classList.remove('is-open');
         window.clearTimeout(drawerCloseTimer);
         drawerCloseTimer = window.setTimeout(() => {
+          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
           layer.hidden = true;
+          articleDrawer?.classList.remove('home-article-drawer--book');
           document.body.classList.remove('has-home-article-drawer');
           drawerBody?.replaceChildren();
           currentArticle = null;
@@ -2291,6 +2731,118 @@ const homeCommands = [
         }, drawerTransitionMs);
       };
 
+      const hydrateRuntimeDrawer = async (content) => {
+        const body = content.querySelector('[data-runtime-detail-body]');
+        const detailUrl = body?.dataset.runtimeDetailUrl;
+        if (!body || !detailUrl || body.dataset.runtimeDetailLoaded === 'true') return;
+        try {
+          const response = await fetch(detailUrl, { cache: 'no-store' });
+          if (!response.ok) return;
+          const detail = await response.json();
+          if (!detail?.article?.html) return;
+          body.innerHTML = detail.article.html;
+          body.dataset.runtimeDetailLoaded = 'true';
+          const toc = content.querySelector('.home-article-toc');
+          if (toc && Array.isArray(detail.article.toc) && detail.article.toc.length) {
+            toc.replaceChildren(
+              Object.assign(document.createElement('strong'), { textContent: '目录' }),
+              ...detail.article.toc.map((heading) => {
+                const link = document.createElement('a');
+                link.href = `#${heading.slug}`;
+                link.className = `depth-${heading.depth}`;
+                link.textContent = heading.text;
+                return link;
+              })
+            );
+          }
+          requestAnimationFrame(updateReadingProgress);
+          requestAnimationFrame(applyStoredHighlights);
+        } catch {
+          // Keep the lightweight placeholder if the detail payload is unavailable.
+        }
+      };
+
+      const hydrateCollectionSession = (content) => {
+        const session = content.querySelector('[data-home-collection-session]');
+        if (!session || session.dataset.collectionSessionHydrated === 'true') return;
+        session.dataset.collectionSessionHydrated = 'true';
+        const buttons = () => [...session.querySelectorAll('[data-home-collection-object]')];
+        let activeIndex = Math.max(0, buttons().findIndex((button) => button.classList.contains('is-active')));
+        const setActiveButton = (id) => {
+          buttons().forEach((button) => button.classList.toggle('is-active', button.dataset.homeCollectionObject === id));
+        };
+        const loadObject = async (button) => {
+          if (!button) return;
+          const detailUrl = button.dataset.homeCollectionDetailUrl;
+          const title = session.querySelector('[data-home-collection-title]');
+          const summary = session.querySelector('[data-home-collection-summary]');
+          const kicker = session.querySelector('[data-home-collection-kicker]');
+          const body = session.querySelector('[data-home-collection-body]');
+          setActiveButton(button.dataset.homeCollectionObject || '');
+          activeIndex = buttons().indexOf(button);
+          if (!detailUrl || !body) return;
+          const controller = new AbortController();
+          const timeout = window.setTimeout(() => controller.abort(), 20000);
+          body.dataset.loadState = 'loading';
+          body.innerHTML = '<p>正在切换文章。</p>';
+          try {
+            const response = await fetch(`${detailUrl}${detailUrl.includes('?') ? '&' : '?'}t=${Date.now()}`, {
+              cache: 'no-store',
+              signal: controller.signal
+            });
+            if (!response.ok) {
+              body.dataset.loadState = `http-${response.status}`;
+              body.innerHTML = '<p>正文加载失败，保留当前阅读会话。</p>';
+              return;
+            }
+            const text = await response.text();
+            const detail = JSON.parse(text);
+            const article = detail?.article;
+            if (!article) {
+              body.dataset.loadState = 'missing-article';
+              body.innerHTML = '<p>正文为空。</p>';
+              return;
+            }
+            if (title) title.textContent = article.title || 'Untitled';
+            if (summary) summary.textContent = article.card?.subtitle || article.description || article.summary || '';
+            if (kicker) kicker.textContent = article.card?.eyebrow || article.kind || 'MarkdownObject';
+            body.innerHTML = article.html || '<p>正文为空。</p>';
+            body.dataset.loadState = article.html ? 'loaded' : 'empty';
+            const collectionId = session.dataset.collectionId || '';
+            if (collectionId && article.id) {
+              const url = new URL(window.location.href);
+              url.searchParams.set('collection', collectionId);
+              url.searchParams.set('object', article.id);
+              history.replaceState({ collectionId, objectId: article.id }, '', url);
+            }
+            requestAnimationFrame(updateReadingProgress);
+          } catch {
+            body.dataset.loadState = 'error';
+            body.innerHTML = '<p>正文加载失败，保留当前阅读会话。</p>';
+          } finally {
+            window.clearTimeout(timeout);
+          }
+        };
+        session.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const objectButton = target.closest('[data-home-collection-object]');
+          if (objectButton instanceof HTMLElement) {
+            loadObject(objectButton).catch(() => {});
+            return;
+          }
+          if (target.closest('[data-home-collection-prev]')) {
+            const next = buttons()[Math.max(0, activeIndex - 1)];
+            loadObject(next).catch(() => {});
+          }
+          if (target.closest('[data-home-collection-next]')) {
+            const next = buttons()[Math.min(buttons().length - 1, activeIndex + 1)];
+            loadObject(next).catch(() => {});
+          }
+        });
+        loadObject(buttons()[activeIndex]).catch(() => {});
+      };
+
       const openDrawer = (id, trigger, options = {}) => {
         const template = [...document.querySelectorAll('[data-drawer-template]')].find(
           (node) => node.dataset.drawerTemplate === id
@@ -2304,22 +2856,28 @@ const homeCommands = [
         const kicker = reader?.dataset.kicker ?? '';
         const href = reader?.dataset.fullHref ?? '#';
         const kind = reader?.dataset.kind ?? '';
+        const isBookDrawer = kind === 'book';
+        const isCollectionDrawer = kind === 'collection';
         const readHref = reader?.dataset.readHref ?? '';
+        const bookId = reader?.dataset.bookId ?? '';
         const articleId = reader?.dataset.articleId ?? id;
+        const storedMemory = getHistoryEntry(articleId);
         lastFocused = trigger;
         savedScrollTop = mainScroller?.scrollTop ?? 0;
         currentArticle = { id: articleId, title, href };
         pendingHighlightId = options.highlightId || null;
 
         drawerBody.replaceChildren(createReaderMemoryPanel(), content);
+        articleDrawer?.classList.toggle('home-article-drawer--book', isBookDrawer);
+        articleDrawer?.classList.toggle('home-article-drawer--collection', isCollectionDrawer);
         if (titleTarget) titleTarget.textContent = title;
         if (kickerTarget) kickerTarget.textContent = kicker;
         if (fullLink) {
           fullLink.setAttribute('href', href);
-          fullLink.textContent = kind === 'book' ? '书籍详情' : '完整页面';
+          fullLink.textContent = isBookDrawer ? '书籍详情' : '完整页面';
         }
         if (readLink) {
-          if (kind === 'book' && readHref) {
+          if (isBookDrawer && readHref) {
             readLink.hidden = false;
             readLink.setAttribute('href', readHref);
           } else {
@@ -2328,10 +2886,9 @@ const homeCommands = [
           }
         }
         if (shelfLink) {
-          shelfLink.hidden = kind !== 'book';
+          shelfLink.hidden = !isBookDrawer;
         }
         updateReaderGraphLink();
-        updateRepostButton();
         window.clearTimeout(drawerCloseTimer);
         layer.hidden = false;
         document.body.classList.add('has-home-article-drawer');
@@ -2340,10 +2897,36 @@ const homeCommands = [
         });
         saveHistory(currentArticle);
         updateBookmarkButton();
-        updateReadingProgress();
+        if (storedMemory?.scrollTop && !options.highlightId) {
+          requestAnimationFrame(() => {
+            drawerBody.scrollTop = storedMemory.scrollTop;
+            updateReadingProgress();
+          });
+        } else {
+          updateReadingProgress();
+        }
         requestAnimationFrame(applyStoredHighlights);
+        requestAnimationFrame(() => {
+          hydrateRuntimeDrawer(content).catch(() => {});
+          hydrateCollectionSession(content);
+        });
         requestAnimationFrame(renderReaderMiniGraph);
         requestAnimationFrame(renderSeals);
+        if (isBookDrawer && bookId && readHref) {
+          const mount = reader?.querySelector('[data-book-drawer-reader-mount]');
+          window.__emptyinkpotPendingBookDrawerOpen = {
+            bookId,
+            mountId: mount?.dataset.bookDrawerReaderMount || ''
+          };
+          window.dispatchEvent(
+            new CustomEvent('emptyinkpot:book-drawer-open', {
+              detail: window.__emptyinkpotPendingBookDrawerOpen
+            })
+          );
+        } else {
+          window.__emptyinkpotPendingBookDrawerOpen = null;
+          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
+        }
         layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
       };
 
@@ -2351,18 +2934,43 @@ const homeCommands = [
         button.addEventListener('click', () => setFilter(button.dataset.feedFilter || 'all'));
       });
 
-      drawerTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', (event) => {
-          const id = trigger.dataset.drawerId;
-          if (!id) return;
-          event.preventDefault();
-          openDrawer(id, trigger);
-        });
+      document.addEventListener('click', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-drawer-id]') : null;
+        if (!trigger) return;
+        const id = trigger.dataset.drawerId;
+        if (!id) return;
+        event.preventDefault();
+        openDrawer(id, trigger);
       });
 
-      document.querySelectorAll('[data-search-open]').forEach((button) => {
-        button.addEventListener('click', openSearch);
+      window.addEventListener('emptyinkpot:runtime-books-ready', (event) => {
+        const docs = Array.isArray(event.detail?.docs) ? event.detail.docs : [];
+        searchDocs = [...searchDocs.filter((doc) => doc.type !== 'book'), ...docs];
+        renderSearch();
+        renderSeals();
       });
+
+      syncRuntimeHomepageFeed();
+      let runtimeFeedEventSource = null;
+      const connectRuntimeFeedEvents = () => {
+        if (!('EventSource' in window) || runtimeFeedEventSource) return;
+        runtimeFeedEventSource = new EventSource('/runtime/events');
+        runtimeFeedEventSource.addEventListener('content-index', syncRuntimeHomepageFeed);
+        runtimeFeedEventSource.addEventListener('error', () => {
+          runtimeFeedEventSource?.close();
+          runtimeFeedEventSource = null;
+          window.setTimeout(connectRuntimeFeedEvents, 5000);
+        });
+      };
+      connectRuntimeFeedEvents();
+      window.setInterval(() => {
+        if (!runtimeFeedEventSource) syncRuntimeHomepageFeed();
+      }, 30000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') syncRuntimeHomepageFeed();
+      });
+
+      window.addEventListener('home-search-open', openSearch);
 
       document.querySelectorAll('[data-search-close]').forEach((button) => {
         button.addEventListener('click', closeSearch);
@@ -2382,13 +2990,6 @@ const homeCommands = [
       });
 
       bookmarkButton?.addEventListener('click', toggleBookmark);
-      repostButton?.addEventListener('click', () => {
-        if (currentArticle?.id) openRepostComposer(currentArticle.id);
-      });
-      document.querySelectorAll('[data-repost-close]').forEach((button) => {
-        button.addEventListener('click', closeRepostComposer);
-      });
-      document.querySelector('[data-repost-publish]')?.addEventListener('click', publishRepost);
       drawerBody?.addEventListener('scroll', updateReadingProgress);
       drawerBody?.addEventListener('mouseup', () => setTimeout(showSelectionToolbar, 0));
       drawerBody?.addEventListener('click', (event) => {
@@ -2493,7 +3094,10 @@ const homeCommands = [
                 accentMuted: colors[1],
                 background: colors[2],
                 text: colors[3],
-                border: colors[4]
+                border: colors[4],
+                mood: item.mood,
+                source: item.sourceLabel,
+                imageCount: item.images?.length ?? 0
               }
             },
             null,
@@ -2556,7 +3160,7 @@ const homeCommands = [
         const isTyping = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
         const commandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
         if (commandSearch) {
-          if (document.querySelector('.home-command__trigger')) {
+          if (document.documentElement.getAttribute('data-home-command-ready') === 'true') {
             return;
           }
           event.preventDefault();
@@ -2592,8 +3196,12 @@ const homeCommands = [
       });
 
       applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
+      initSidebar();
       renderSidebarState();
-      renderReposts();
+      loadRuntimeState().then(() => {
+        renderSidebarState();
+        renderReaderMiniGraph();
+      });
       renderSeals();
       initHeroBanner();
       const params = new URLSearchParams(window.location.search);
@@ -2611,4 +3219,5 @@ const homeCommands = [
       }
     })();
   </script>
+  <GitHubRuntimeSync />
 </BaseLayout>

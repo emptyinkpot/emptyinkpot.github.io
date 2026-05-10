@@ -1,0 +1,69 @@
+name: Generate Android TWA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - apps/android-shell/**
+      - apps/web/public/.well-known/assetlinks.json
+      - apps/web/public/manifest.webmanifest
+      - apps/web/public/sw.js
+      - apps/web/public/images/branding/**
+      - tools/generate-android-twa.mjs
+      - tools/validate-pwa-surface.mjs
+      - package.json
+      - package-lock.json
+
+permissions:
+  contents: read
+
+jobs:
+  twa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate PWA and TWA contract
+        run: npm run android:twa:validate
+
+      - name: Generate unsigned Android artifacts
+        run: npm run android:twa:build
+        env:
+          TWA_SKIP_SIGNING: "1"
+          TWA_VERSION_CODE: ${{ github.run_number }}
+          TWA_VERSION_NAME: 1.${{ github.run_number }}
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v5
+        with:
+          name: myblog-twa-unsigned-apk
+          path: .runtime/android-twa/app-release-unsigned-aligned.apk
+          if-no-files-found: error
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v5
+        with:
+          name: myblog-twa-unsigned-aab
+          path: .runtime/android-twa/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error

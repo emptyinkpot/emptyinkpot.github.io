@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getRuntimeFolders } from '../lib/runtimeContent';
 import { withBase } from '../lib/site';
 
 const glassControls = [
@@ -94,6 +95,8 @@ const selectControls = [
     ]
   }
 ];
+
+const runtimeFolders = getRuntimeFolders();
 ---
 
 <BaseLayout title="显示设置 / emptyinkpot" description="调整 emptyinkpot 首页主题、阅读排版和知识系统显示偏好。">
@@ -215,9 +218,39 @@ const selectControls = [
           </div>
 
           <label class="settings-control settings-control--inline">
+            <input type="checkbox" name="home.feedToolbarSticky" data-setting="home.feedToolbarSticky" />
+            <span>首页 Feed 筛选栏吸顶</span>
+          </label>
+
+          <label class="settings-control settings-control--inline">
             <input type="checkbox" name="interactions.hoverPreview" data-setting="interactions.hoverPreview" />
             <span>启用 Hover 预览浮层</span>
           </label>
+        </section>
+
+        <section class="settings-group" data-runtime-folder-settings>
+          <div class="settings-page__panel-head">
+            <span>Runtime Folders</span>
+            <strong>展示文件夹</strong>
+          </div>
+          <p class="settings-mode-note">
+            这里只控制当前浏览器展示哪些 Obsidian docs 文件夹；不会删除文件、不会改同步、不会改 OpenList。默认全部展示。
+          </p>
+          <div class="settings-folder-list" aria-label="Runtime 文件夹展示开关">
+            {runtimeFolders.map((folder) => (
+              <label class="settings-folder-toggle">
+                <input type="checkbox" data-runtime-folder-setting={folder.key} checked />
+                <span>
+                  <strong>{folder.label}</strong>
+                  <small>{folder.count} 篇 / {folder.path || 'docs root'}</small>
+                </span>
+              </label>
+            ))}
+          </div>
+          <div class="settings-page__actions">
+            <button type="button" data-runtime-folder-all>全部展示</button>
+            <button type="button" data-runtime-folder-none>全部隐藏</button>
+          </div>
         </section>
 
         <section class="settings-group">
@@ -287,7 +320,7 @@ const selectControls = [
               type="url"
               name="openlistBaseUrl"
               data-book-setting="openlistBaseUrl"
-              placeholder="http://127.0.0.1:5244"
+              placeholder="/api/openlist"
               aria-label="OpenList Base URL"
             />
           </label>
@@ -299,7 +332,7 @@ const selectControls = [
               type="text"
               name="openlistBooksPath"
               data-book-setting="openlistBooksPath"
-              placeholder="/夸克网盘"
+              placeholder="/Obsidian/docs/books/original"
               aria-label="默认书籍目录"
             />
           </label>
@@ -392,6 +425,43 @@ const selectControls = [
   </main>
 
   <script>
+    (() => {
+      const api = window.emptyinkpotRuntimeFolders;
+      const form = document.querySelector('[data-runtime-folder-settings]');
+      if (!api || !form) return;
+      const inputs = [...form.querySelectorAll('[data-runtime-folder-setting]')];
+      const allButton = form.querySelector('[data-runtime-folder-all]');
+      const noneButton = form.querySelector('[data-runtime-folder-none]');
+
+      const read = () =>
+        Object.fromEntries(
+          inputs.map((input) => [input.dataset.runtimeFolderSetting, input.checked])
+        );
+
+      const paint = (settings = api.load()) => {
+        inputs.forEach((input) => {
+          const key = input.dataset.runtimeFolderSetting;
+          input.checked = settings[key] !== false;
+        });
+      };
+
+      const save = () => {
+        api.save(read());
+        paint(api.load());
+      };
+
+      paint(api.load());
+      form.addEventListener('input', save);
+      allButton?.addEventListener('click', () => {
+        api.save(Object.fromEntries(inputs.map((input) => [input.dataset.runtimeFolderSetting, true])));
+        paint(api.load());
+      });
+      noneButton?.addEventListener('click', () => {
+        api.save(Object.fromEntries(inputs.map((input) => [input.dataset.runtimeFolderSetting, false])));
+        paint(api.load());
+      });
+    })();
+
     (() => {
       const api = window.emptyinkpotVisualSettings;
       if (!api) return;
@@ -491,8 +561,8 @@ const selectControls = [
       const storageKey = 'emptyinkpot-book-settings';
       const readerThemeKey = 'emptyinkpot-reader-theme';
       const defaults = {
-        openlistBaseUrl: 'http://127.0.0.1:5244',
-        openlistBooksPath: '/夸克网盘',
+        openlistBaseUrl: '/api/openlist',
+        openlistBooksPath: '/Obsidian/docs/books/original',
         readerTheme: 'sepia',
         showRecent: true
       };
@@ -501,7 +571,9 @@ const selectControls = [
       const inputs = [...document.querySelectorAll('[data-book-setting]')];
 
       const normalize = (input = {}) => ({
-        openlistBaseUrl: String(input.openlistBaseUrl || defaults.openlistBaseUrl).trim(),
+        openlistBaseUrl: ['http://127.0.0.1:5244', 'http://localhost:5244'].includes(String(input.openlistBaseUrl || '').trim())
+          ? defaults.openlistBaseUrl
+          : String(input.openlistBaseUrl || defaults.openlistBaseUrl).trim(),
         openlistBooksPath: String(input.openlistBooksPath || defaults.openlistBooksPath).trim().replace(/\/$/, '') || '/',
         readerTheme: ['light', 'sepia', 'dark'].includes(input.readerTheme) ? input.readerTheme : defaults.readerTheme,
         showRecent: input.showRecent !== false

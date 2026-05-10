@@ -1,0 +1,70 @@
+---
+import WorkbenchPageIntro from '../../components/shared/WorkbenchPageIntro.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatRuntimeDate, getRuntimeCollectionHref, getRuntimeCollections } from '../../lib/runtimeContent';
+import { withBase } from '../../lib/site';
+
+const collections = getRuntimeCollections();
+const featured = collections.slice(0, 12);
+const totalObjects = collections.reduce((sum, collection) => sum + collection.stats.objectCount, 0);
+const latestUpdated = collections
+  .map((collection) => collection.stats.latestUpdated)
+  .filter(Boolean)
+  .sort()
+  .at(-1);
+---
+
+<BaseLayout title="知识集合 / emptyinkpot" description="KnowledgeCollection 是 KnowledgeObject 进入首页、图谱和搜索之前的集合缓冲层。">
+  <main class="workbench-page collection-page" data-pagefind-body>
+    <WorkbenchPageIntro
+      kicker="SECTION / COLLECTIONS"
+      title="Knowledge Collections"
+      summary="这里是 Object → Collection → Surface 的一级入口。文章、笔记和资料先被派生成集合，再进入首页、图谱和搜索。"
+      stats={[
+        { label: 'Collections', value: String(collections.length) },
+        { label: 'Objects', value: String(totalObjects) },
+        { label: 'Updated', value: latestUpdated ? formatRuntimeDate(latestUpdated) : 'none' }
+      ]}
+    />
+
+    <section class="collection-runtime-shelf" aria-label="Runtime KnowledgeCollection list">
+      <div class="runtime-article-shelf__head">
+        <p class="section-kicker">Collection Runtime</p>
+        <h2>Collection Projections</h2>
+        <p>集合按 folder、series、topic 派生。首页只取前几个集合做预览，完整集合入口保留在这里。</p>
+      </div>
+      <div class="collection-runtime-grid">
+        {featured.map((collection) => (
+          <article class="collection-runtime-card">
+            <div class="collection-runtime-card__meta">
+              <span>{collection.basis}</span>
+              <span>/</span>
+              <span>{collection.stats.objectCount} objects</span>
+              <span>/</span>
+              <span>{collection.layout}</span>
+            </div>
+            <h3>
+              <a href={withBase(getRuntimeCollectionHref(collection))}>{collection.title}</a>
+            </h3>
+            <p>{collection.description}</p>
+            <div class="collection-runtime-card__preview">
+              {collection.objects.slice(0, 4).map((object) => (
+                <span>{object.title}</span>
+              ))}
+            </div>
+            {collection.card.chips.length > 0 && (
+              <div class="runtime-article-card__tags">
+                {collection.card.chips.slice(0, 6).map((tag, index) => (
+                  <>
+                    {index > 0 && <span aria-hidden="true">/</span>}
+                    <span>{tag}</span>
+                  </>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

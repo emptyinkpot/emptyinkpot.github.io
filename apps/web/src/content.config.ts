@@ -2,26 +2,6 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const posts = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    summary: z.string().optional(),
-    canonical: z.string().url().optional(),
-    redirectFrom: z.array(z.string()).default([]),
-    date: z.coerce.date(),
-    updated: z.coerce.date().optional(),
-    tags: z.array(z.string()).default([]),
-    categories: z.array(z.string()).default([]),
-    series: z.string().optional(),
-    featured: z.boolean().default(false),
-    draft: z.boolean().default(false),
-    cover: z.string().optional(),
-    toc: z.boolean().default(true)
-  })
-});
-
 const notes = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/notes' }),
   schema: z.object({
@@ -44,6 +24,10 @@ const projects = defineCollection({
     stack: z.array(z.string()).default([]),
     repo: z.string().url().optional(),
     demo: z.string().url().optional(),
+    collaborationRuntime: z.enum(['github-workbench', 'appflowy-embed', 'none']).default('github-workbench'),
+    collaborationStatus: z.enum(['interim-active', 'target-not-deployed', 'connected', 'disabled']).default('interim-active'),
+    appflowyUrl: z.string().url().optional(),
+    appflowyWorkspace: z.string().optional(),
     modules: z.array(z.object({
       id: z.string().optional(),
       name: z.string(),
@@ -73,7 +57,6 @@ const pages = defineCollection({
 });
 
 export const collections = {
-  posts,
   notes,
   projects,
   pages

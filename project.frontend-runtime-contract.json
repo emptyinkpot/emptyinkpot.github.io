@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "name": "myblog-frontend-runtime-contract",
+  "updatedAt": "2026-05-08",
+  "canonicalContract": "contracts/frontend-runtime-contract.json",
+  "productIdentity": {
+    "primaryModel": "Knowledge Runtime Surface",
+    "notA": [
+      "traditional blog",
+      "CMS directory site",
+      "collection page website",
+      "admin dashboard"
+    ],
+    "corePrinciple": "Everything stays alive. Feed, tabs, drawer, search, graph and collection lens must preserve spatial continuity."
+  },
+  "primarySurface": {
+    "id": "home-runtime-surface",
+    "path": "/",
+    "role": "mixed object discovery surface",
+    "mustPreserve": [
+      "heterogeneous masonry feed",
+      "feed tabs without page reload",
+      "drawer peek without full navigation",
+      "scroll position",
+      "active filters",
+      "runtime refresh",
+      "mixed object stream"
+    ],
+    "forbidden": [
+      "replace homepage with collection-only grid",
+      "force collection click to full page takeover",
+      "reset feed scroll when opening drawer",
+      "turn feed tabs into route navigation",
+      "make object cards the only reading entry"
+    ]
+  },
+  "collectionModel": {
+    "role": "runtime lens and reading context",
+    "notRole": "page center",
+    "allowedSurfaces": [
+      "/collections/ as optional index",
+      "/collections/[slug]/ as fallback permalink"
+    ],
+    "preferredInteraction": {
+      "clickCollection": "open drawer reading session",
+      "clickObjectInsideCollection": "switch active object inside drawer",
+      "urlBehavior": "sync state with query params, do not force full reload"
+    },
+    "forbidden": [
+      "collection hero replacing feed",
+      "collection card wall inside drawer",
+      "card recursion",
+      "collection route takeover as primary flow"
+    ]
+  },
+  "drawerModel": {
+    "name": "ReaderSession",
+    "role": "primary reading overlay",
+    "mustContain": [
+      "active object full content",
+      "collapsible collection toc",
+      "previous/next object",
+      "current object metadata",
+      "related objects"
+    ],
+    "mustNotContain": [
+      "large collection hero",
+      "stats dashboard",
+      "card grid as main body",
+      "page-like layout"
+    ],
+    "density": "compact-context-plus-prose-reader"
+  },
+  "objectModel": {
+    "center": "KnowledgeObject",
+    "projectionRule": "Pages do not define object semantics. Objects define page projections.",
+    "projections": {
+      "feed": "preview card",
+      "drawer": "reader detail",
+      "graph": "relation node",
+      "search": "compact result",
+      "collection": "toc item or contextual member"
+    },
+    "typeSpecificGrammar": {
+      "BookObject": {
+        "identity": [
+          "KnowledgeObject",
+          "ReadingObject"
+        ],
+        "stableIdentity": "metadataId is semantic identity; openlistPath is a file binding and may change when files move",
+        "home": "cover-first book projection",
+        "collection": "Shelf Surface",
+        "drawer": "book reader surface",
+        "coverProjection": "book.cover || /api/openlist/cover?path=...&modified=...&size=...",
+        "authoritySplit": {
+          "fileIndex": "public-data/books/books-index.json records OpenList path, modified, size, sourceType and cache-facing cover inputs",
+          "metadataLayer": "public-data/books/books.metadata.json records editable metadata now and must migrate to Directus or equivalent metadata DB before scaling",
+          "runtimeTruth": "apps/admin-next + MySQL owns reader memory, highlights, annotations and relation events",
+          "localStorage": "cache, preference or legacy migration only"
+        },
+        "forbidden": [
+          "text-only generic book card",
+          "books collection rendered as article reading session",
+          "disabled generated cover fallback on homepage",
+          "raw source prefetch on homepage idle",
+          "script-level overlays as book metadata database",
+          "books-index.json as editable metadata authority",
+          "localStorage book metadata authority"
+        ]
+      }
+    }
+  },
+  "metadataGovernance": {
+    "rule": "Index and metadata are separate. Manifests are projections and caches, not editable truth.",
+    "bookP0": {
+      "index": "public-data/books/books-index.json",
+      "metadata": "public-data/books/books.metadata.json",
+      "target": "Directus or equivalent metadata DB",
+      "runtime": "MySQL for reader state only"
+    },
+    "forbidden": [
+      "const overlays in build scripts",
+      "semantic tags/categories hard-coded inside index builders",
+      "localStorage becoming a metadata database",
+      "OpenList deciding tags, collections, descriptions or status"
+    ]
+  },
+  "visualGrammar": {
+    "preview": "card",
+    "reader": "prose surface",
+    "collection": "toc rail / lens",
+    "metadata": "chips",
+    "search": "command overlay",
+    "graph": "node-link projection",
+    "forbidden": [
+      "everything is a card",
+      "drawer card wall",
+      "admin panel visual language on reader surfaces"
+    ]
+  },
+  "regressionGuards": [
+    {
+      "id": "home-must-keep-mixed-feed",
+      "rule": "Homepage must render mixed object feed, not only collection cards."
+    },
+    {
+      "id": "tabs-must-not-navigate",
+      "rule": "Feed tabs must filter client-side without full page navigation."
+    },
+    {
+      "id": "drawer-must-be-reader",
+      "rule": "Drawer body must prioritize active object content over collection grid."
+    },
+    {
+      "id": "collection-is-lens",
+      "rule": "Collection is contextual lens, not primary page takeover."
+    }
+  ]
+}

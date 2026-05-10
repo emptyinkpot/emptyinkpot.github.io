@@ -8,6 +8,7 @@
 - `tools/validate-update-log.mjs`：校验 `public-data/updates/index.md` 的结构与字段（兼容历史路径）
 - `tools/validate-content-governance.mjs`：校验现行内容层的字段、链接兼容、RSS 与搜索接线
 - `tools/validate-repo-governance.mjs`：校验工程文档路径、历史边界与仓库治理基线
+- `tools/server-openlist-storage-maintenance.mjs`：通过 SSH 审计服务器 OpenList / Vault / MyBlog 热冷层，并可显式清理可再生的 `openlist-files` Reader 原件缓存
 
 ## 当前约定
 
@@ -18,6 +19,7 @@
 ## 使用约定
 
 - 运行统一检查时，优先使用根目录 `npm run check`
+- 审计服务器 OpenList 结合状态时使用 `npm run server:openlist-storage`；释放本地 reader 原件缓存必须显式执行 `npm run server:openlist-storage -- --prune-openlist-file-cache --apply`
 - 新的仓库级脚本统一放在 `tools/`，不要继续放回 `scripts/`
 - 与历史 Hexo 相关的说明进入 `docs/historical/` 或 `docs/governance/`
 - 与现行站点运行相关的实现进入 `apps/web/`

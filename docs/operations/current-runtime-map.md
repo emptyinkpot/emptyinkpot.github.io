@@ -7,23 +7,24 @@ This document records where MyBlog is edited, deployed, and integrated. It is an
 | Surface | Value | Notes |
 | --- | --- | --- |
 | GitHub repository | `https://github.com/emptyinkpot/emptyinkpot.github.io` | Long-term Git truth and collaboration. |
-| Active delivery branch | `main` | GitHub Pages deploys from main only. |
-| Remote IDE / edit root | `server-170:/home/ubuntu/workspaces/MyBlog` | Canonical remote source workspace for normal edits. |
-| Remote integration root | `server-170:/home/ubuntu/workspaces/MyBlog-main-integration` | Temporary main-derived integration worktree for repairing branch drift. |
-| Local source root | none | `E:\My Project\MyBlog` is retired; future local checkouts are mirrors only. |
-| Static runtime mirror | `ubuntu@124.220.233.126:/srv/myblog/site` | Historical/live server mirror root, not the source workspace. |
+| Active production source branch | `backup/production-myblog-source-20260510` / integration PR branch | Production source is now preserved on GitHub and must be integrated before main deploys production. |
+| Local source root | none | `E:\My Project\MyBlog` is retired/deleted; future local clones are mirrors only. |
+| Production source root | `ubuntu@124.220.233.126:/srv/myblog/repo` | Current production-capable source workspace. |
+| Integration source root | `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` | Clean integration worktree used to repair GitHub/main drift. |
+| Static runtime root | `/srv/myblog/site` | Nginx-served production static root. |
 | Legacy source copy | `/srv/myblog/source` | Non-canonical server-side copy; do not treat as source truth. |
 
 ## Remote IDE And SSH Boundary
 
 | Item | Value | Notes |
 | --- | --- | --- |
-| Remote IDE / edit target | `server-170:/home/ubuntu/workspaces/MyBlog` | Use this as the default editing root for Codex/Claude/operator work. |
-| Git remote URL | `https://github.com/emptyinkpot/emptyinkpot.github.io.git` | Current delivery surface. |
-| GitHub delivery auth | temporary askpass token when needed | Do not write GitHub tokens into repo files or remote git config. |
+| Production IDE / edit target | `ubuntu@124.220.233.126:/srv/myblog/repo` | Use this for production runtime/deploy work. |
+| Integration IDE / edit target | `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` | Use this for GitHub recovery and PR integration work. |
+| Repository-local deploy key | `/home/ubuntu/.ssh/myblog_source_ed25519` | Bound through repo-local `core.sshCommand`; do not assume server-global GitHub auth. |
+| Git remote URL | `git@github.com:emptyinkpot/emptyinkpot.github.io.git` | SSH remote is expected after deploy-key setup. |
 | Local Windows checkout | mirror only | A local clone may inspect, diff, or recover delivery when SSH is down, but it is not source authority. |
 
-If SSH to `server-170` fails, do not silently promote a local clone back to canonical. Record the SSH outage, use GitHub as the delivery surface if needed, and reconcile `server-170:/home/ubuntu/workspaces/MyBlog` as soon as SSH returns.
+If SSH to `124.220.233.126` fails, do not silently promote a local clone back to canonical. Record the SSH outage, use GitHub as the delivery surface if needed, and reconcile `/srv/myblog/repo` and the server-170 integration workspace as soon as SSH is restored.
 
 ## Public URLs
 
@@ -46,25 +47,26 @@ If SSH to `server-170` fails, do not silently promote a local clone back to cano
 
 Known issue:
 
-- `syncthing@ubuntu.service` was previously failed during inspection. Treat Vault mirror sync as degraded until repaired and verified.
+- `syncthing@ubuntu.service` is failed as of the current inspection. Treat Vault mirror sync as degraded until repaired and verified.
 
 ## Deployment Workflow
 
 Preferred workflow:
 
 ```text
-edit /home/ubuntu/workspaces/MyBlog on server-170
+edit /srv/myblog/repo on 124.220.233.126, or use /home/ubuntu/workspaces/MyBlog-production-integration on server-170 for GitHub recovery
 -> npm run check:workspace
 -> npm run check:governance
 -> npm run check or targeted checks
--> commit in /home/ubuntu/workspaces/MyBlog or a server-170 integration worktree
+-> commit in /srv/myblog/repo
 -> push to GitHub
--> merge/push main to trigger GitHub Pages
+-> open/merge PR for GitHub source recovery
+-> npm run deploy:site from the production-authorized workspace when publishing to blog.tengokukk.com
 ```
 
-GitHub Actions builds `apps/web/dist` and deploys GitHub Pages from `main`. `/srv/myblog/site` is a historical/live mirror root, not the current source root.
+The deployment command builds `apps/web/dist`, uploads it to a remote temp directory, and replaces `/srv/myblog/site` while preserving `/srv/myblog/site/runtime`.
 
-Do not deploy through manual `tar`, `scp`, ad hoc `rsync`, or unchecked worktrees. `npm run check:workspace` plus GitHub Actions is the normal guarded path.
+Do not deploy through manual `tar`, `scp`, or ad hoc `rsync` from unchecked worktrees. `npm run deploy:site` is the normal guarded publish path.
 
 ## Runtime Directories Not Source
 
@@ -76,21 +78,19 @@ Do not commit or edit these as source truth:
 - `/srv/myblog/public-data` unless a runbook explicitly promotes data back into Git
 - `/home/vault/Obsidian` from MyBlog tooling; it is Vault mirror/file truth, not repository source
 
-## Transitional State
+## Known Transitional State
 
-- `server-170:/home/ubuntu/workspaces/MyBlog` is the current canonical remote IDE workspace.
-- `server-170:/home/ubuntu/workspaces/MyBlog-main-integration` is an integration worktree used to repair the previous feature-branch/main drift.
-- `/srv/myblog/repo` must not be revived as source authority unless `project.json`, `workspace.manifest.json`, `AGENTS.md`, and this document are changed together.
-- GitHub delivery should be verified with `git ls-remote origin refs/heads/main`.
+- `/srv/myblog/repo` was restored as the canonical server workspace while GitHub clone transport was unstable.
+- GitHub deploy-key authentication for MyBlog is repo-local and should be verified with `git ls-remote origin refs/heads/feat/content-runtime-governance`.
+- Once SSH and GitHub transport are stable, `/srv/myblog/repo` should be checked against GitHub history and fast-forwarded or recloned without changing the source authority rule.
 
 ## Verification Commands
 
 ```bash
-cd /home/ubuntu/workspaces/MyBlog
+cd /srv/myblog/repo
 npm run check:workspace
 npm run check:governance
 npm run check
-npm run build
 ```
 
 Operational checks:
@@ -116,6 +116,7 @@ MyBlog's active runtime database is Tencent Cloud CynosDB Serverless MySQL, not 
 
 Runtime DB owns dynamic state only: reader memory, highlights, visual source indexes, visual pins and visual sync runs. It must not store article bodies, EPUB/PDF/image/video blobs, OpenList files, COS objects, Quark files, Astro dist, Pagefind output, or Syncthing hot mirror data.
 
+
 Current verified Runtime DB environment values, excluding secrets:
 
 ```text
@@ -139,3 +140,7 @@ MyBlog Runtime DB includes a dedicated plaintext personal information table by o
 | Database | `cloudbase-4glvyyq9f61b19cd` |
 
 This table is intended to store personal account/password/API-key style information as readable text in MySQL. Real values must be inserted into MySQL only; do not place actual passwords, cookies, tokens, or API keys in Git, README examples, screenshots, or logs.
+
+## 2026-05-10 Source Drift Incident
+
+GitHub main temporarily lagged the production-capable source tree. The production source state from `/srv/myblog/repo` was preserved on GitHub as `backup/production-myblog-source-20260510` and PR #42. Do not deploy GitHub Pages artifacts over `/srv/myblog/site` unless the production source tree has first been integrated and verified.

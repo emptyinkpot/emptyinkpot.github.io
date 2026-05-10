@@ -1,14 +1,14 @@
-import { getCollection } from 'astro:content';
 import type { APIRoute } from 'astro';
-import { books } from '../../data/books';
+import { getCollection } from 'astro:content';
 import { musicItems } from '../../data/music';
-import { getExcerptFromBody, getPrimaryCategory, sortPosts } from '../../lib/content';
+import { getExcerptFromBody } from '../../lib/content';
 import { getGitHubOverview } from '../../lib/github';
-import { withBase } from '../../lib/site';
 import type { KnowledgeSearchDoc } from '../../lib/knowledge/types';
+import { getRuntimeArticles } from '../../lib/runtimeContent';
+import { withBase } from '../../lib/site';
 
 export const GET: APIRoute = async () => {
-  const posts = sortPosts(await getCollection('posts', ({ data }) => !data.draft));
+  const runtimeArticles = getRuntimeArticles();
   const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime()
   );
@@ -18,16 +18,16 @@ export const GET: APIRoute = async () => {
   const github = await getGitHubOverview('emptyinkpot');
 
   const docs: KnowledgeSearchDoc[] = [
-    ...posts.map((post) => ({
-      id: `post:${post.id}`,
+    ...runtimeArticles.map((article) => ({
+      id: `runtime:${article.id}`,
       type: 'post' as const,
-      title: post.data.title,
-      content: [post.data.description, post.data.summary, getExcerptFromBody(post.body, 1200)].filter(Boolean).join('\n'),
-      tags: [getPrimaryCategory(post), ...post.data.tags],
-      href: withBase(`/posts/${post.id}/`),
-      drawerId: `post:${post.id}`,
-      sourceId: post.id,
-      updatedAt: post.data.date.toISOString()
+      title: article.title,
+      content: [article.description, article.summary, article.card?.subtitle, ...article.categories, ...article.tags].filter(Boolean).join('\n'),
+      tags: [...article.categories, ...article.tags],
+      href: withBase(`/posts/${article.slug}/`),
+      drawerId: `runtime:${article.id}`,
+      sourceId: article.id,
+      updatedAt: article.updated || article.date
     })),
     ...notes.map((note) => ({
       id: `note:${note.id}`,
@@ -50,16 +50,6 @@ export const GET: APIRoute = async () => {
       drawerId: `project:${project.id}`,
       sourceId: project.id,
       updatedAt: project.data.date?.toISOString()
-    })),
-    ...books.map((book) => ({
-      id: `book:${book.id}`,
-      type: 'book' as const,
-      title: book.title,
-      content: [book.author, book.category, book.statusLabel, book.note, book.description, book.openlistPath].filter(Boolean).join('\n'),
-      tags: [book.category, book.statusLabel, book.sourceType.toUpperCase(), ...book.tags],
-      href: withBase(`/books/${book.id}/`),
-      drawerId: `book:${book.id}`,
-      sourceId: book.id
     })),
     ...musicItems.map((item) => ({
       id: `music:${item.id}`,

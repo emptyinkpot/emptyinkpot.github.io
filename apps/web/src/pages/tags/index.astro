@@ -1,20 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getTagCounts, toSlug } from '../../lib/content';
+import { getGroupedCounts, toSlug } from '../../lib/content';
+import { getRuntimeArticles } from '../../lib/runtimeContent';
 import { withBase } from '../../lib/site';
 
-const posts = await getCollection('posts', ({ data }) => !data.draft);
-const tags = getTagCounts(posts);
+const tags = getGroupedCounts(getRuntimeArticles().flatMap((article) => article.tags));
 ---
 
-<BaseLayout title="Tags / emptyinkpot" description="按标签浏览 emptyinkpot 中的文章内容。">
+<BaseLayout title="Tags / emptyinkpot" description="按标签浏览 emptyinkpot 中的 Runtime MarkdownObject。">
   <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
     <section class="space-y-4">
       <p class="section-kicker">Tags</p>
       <h1 class="section-title text-4xl md:text-5xl">标签入口</h1>
       <p class="max-w-3xl text-base leading-8 text-stone-600">
-        标签页更适合从主题词切入内容，后续可以进一步承接搜索和系列导航。
+        标签页只读取 Runtime MarkdownObject，不再读取 Astro posts archive。
       </p>
     </section>
 

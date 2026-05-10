@@ -7,6 +7,13 @@ const issues = [];
 validateMigrationStatus();
 validatePackageScripts();
 validatePagesWorkflow();
+validateWorkspaceGovernance();
+validateMatureReplacementContract();
+validateContentInfrastructureReductionContract();
+validateStabilizationSprint();
+validateObsidianAuthorityContract();
+validateOpenListServerStorageBoundary();
+validateRuntimeConstitution();
 
 if (issues.length) {
   console.error(['Repository governance validation failed:', ...issues.map((issue) => `- ${issue}`)].join('\n'));
@@ -19,42 +26,14 @@ function validateMigrationStatus() {
   const migrationStatusPath = 'docs/governance/content-migration-status.md';
   const filePath = resolvePath(migrationStatusPath);
   const source = readText(filePath);
-  const rows = source
-    .split('\n')
-    .filter((line) => line.startsWith('| `apps/web/src/content/posts/'));
 
-  if (!rows.length) {
-    issues.push(`\`${migrationStatusPath}\` does not contain any tracked Astro content rows`);
-    return;
+  if (!source.includes('public-data/runtime/content-index.json')) {
+    issues.push(`\`${migrationStatusPath}\` must document the Runtime MarkdownObject article authority`);
   }
 
-  rows.forEach((row) => {
-    const columns = row
-      .split('|')
-      .slice(1, -1)
-      .map((column) => column.trim());
-
-    if (columns.length !== 4) {
-      issues.push(`Invalid migration status row: ${row}`);
-      return;
-    }
-
-    const [astroFile, status, scope, notes] = columns.map(stripBackticks);
-
-    if (!fileExists(astroFile)) {
-      issues.push(`Tracked Astro content file is missing: ${astroFile}`);
-    }
-
-    if (status === '现行') {
-      if (!scope || scope === '-') {
-        issues.push(`Current Astro content row is missing scope: ${astroFile}`);
-        return;
-      }
-      if (!notes || notes === '-') {
-        issues.push(`Current Astro content row is missing notes: ${astroFile}`);
-      }
-    }
-  });
+  if (source.split('\n').some((line) => line.includes('Astro posts') && line.includes('现行'))) {
+    issues.push(`\`${migrationStatusPath}\` still marks Astro posts as current content authority`);
+  }
 }
 
 function validatePackageScripts() {
@@ -66,6 +45,17 @@ function validatePackageScripts() {
     const normalizedCommand = String(command).toLowerCase();
     if (normalizedCommand.includes('hexo')) {
       issues.push(`Hexo command is no longer allowed in package scripts: ${name}`);
+    }
+
+    if (name === 'runtime:content:sync' || name.startsWith('sync:obsidian-home')) {
+      issues.push(`Deprecated Windows content sync script must not be exposed as a normal package script: ${name}`);
+    }
+
+    if (
+      normalizedCommand.includes('watch-obsidian-home-sync') ||
+      normalizedCommand.includes('sync-runtime-content-index')
+    ) {
+      issues.push(`Deprecated Windows watcher/scp runtime sync command must not be exposed in package scripts: ${name}`);
     }
   });
 }
@@ -89,6 +79,461 @@ function validatePagesWorkflow() {
   }
 }
 
+function validateWorkspaceGovernance() {
+  const manifestPath = resolvePath('workspace.manifest.json');
+  if (!fs.existsSync(manifestPath)) {
+    issues.push('workspace.manifest.json is required so build/deploy authority is machine-readable');
+    return;
+  }
+
+  const manifest = JSON.parse(readText(manifestPath));
+  const project = JSON.parse(readText(resolvePath('project.json')));
+  const requiredCapabilityKeys = [
+    'canBuild',
+    'canDeploy',
+    'canModifyRuntime',
+    'canTouchPWA',
+    'canModifyRuntimeSchema',
+    'canModifyOpenListAuthority'
+  ];
+
+  if (!manifest.workspaceId) {
+    issues.push('workspace.manifest.json is missing workspaceId');
+  }
+  if (!manifest.workspaceType) {
+    issues.push('workspace.manifest.json is missing workspaceType');
+  }
+  if (!manifest.capabilities || typeof manifest.capabilities !== 'object') {
+    issues.push('workspace.manifest.json is missing capabilities');
+  } else {
+    requiredCapabilityKeys.forEach((key) => {
+      if (typeof manifest.capabilities[key] !== 'boolean') {
+        issues.push(`workspace.manifest.json capabilities.${key} must be boolean`);
+      }
+    });
+  }
+
+  if (!fileExists('tools/deploy-guard.mjs')) {
+    issues.push('tools/deploy-guard.mjs is required for deployment authority checks');
+  }
+  if (!fileExists('tools/deploy-static-site.mjs')) {
+    issues.push('tools/deploy-static-site.mjs is required so deploys go through deploy guard');
+  }
+  if (!fileExists('workspaces/canonical.json')) {
+    issues.push('workspaces/canonical.json is required');
+  }
+  if (!fileExists('workspaces/experimental.json')) {
+    issues.push('workspaces/experimental.json is required');
+  }
+  if (!fileExists('workspaces/sandbox.json')) {
+    issues.push('workspaces/sandbox.json is required');
+  }
+
+  const allowedRoots = [manifest.root, ...(manifest.allowedRoots ?? [])].filter(Boolean);
+  if (project.localSourceRoot && !allowedRoots.includes(project.localSourceRoot)) {
+    issues.push('workspace.manifest.json allowedRoots must include project.json localSourceRoot');
+  }
+
+  if (manifest.workspaceType === 'canonical' && manifest.deploymentAuthority !== true) {
+    issues.push('canonical workspace must declare deploymentAuthority=true');
+  }
+
+  const packageJson = JSON.parse(readText(resolvePath('package.json')));
+  if (!packageJson.scripts?.['check:workspace']) {
+    issues.push('package.json is missing check:workspace script');
+  }
+  if (!packageJson.scripts?.['deploy:site']) {
+    issues.push('package.json is missing deploy:site script');
+  }
+}
+
+function validateMatureReplacementContract() {
+  const requiredTerms = ['Syncthing', 'Quartz', 'Contentlayer', 'Meilisearch', 'Coolify', 'Immich'];
+  const readme = readText(resolvePath('README.md'));
+  const project = readText(resolvePath('project.json'));
+  const codex = readText(resolvePath('apps/web/src/data/architectureCodex.ts'));
+
+  requiredTerms.forEach((term) => {
+    if (!readme.includes(term)) {
+      issues.push(`README.md must include mature replacement layer: ${term}`);
+    }
+    if (!project.includes(term)) {
+      issues.push(`project.json must include mature replacement layer: ${term}`);
+    }
+    if (!codex.includes(term)) {
+      issues.push(`architectureCodex.ts must include mature replacement layer: ${term}`);
+    }
+  });
+
+  if (!readme.includes('Payload / Directus')) {
+    issues.push('README.md must document Payload / Directus as the object and metadata admin replacement lane');
+  }
+  if (!project.includes('Payload or Directus')) {
+    issues.push('project.json must document Payload or Directus as the object and metadata admin replacement lane');
+  }
+  if (!codex.includes('Payload / Directus')) {
+    issues.push('architectureCodex.ts must document Payload / Directus as the object and metadata admin replacement lane');
+  }
+}
+
+function validateContentInfrastructureReductionContract() {
+  const readme = readText(resolvePath('README.md'));
+  const project = JSON.parse(readText(resolvePath('project.json')));
+  const projectText = readText(resolvePath('project.json'));
+  const codex = readText(resolvePath('apps/web/src/data/architectureCodex.ts'));
+  const reduction = project.contentInfrastructureReduction;
+
+  if (!reduction || reduction.status !== 'target-policy-active') {
+    issues.push('project.json must declare contentInfrastructureReduction.status target-policy-active');
+    return;
+  }
+
+  const requiredTerms = [
+    'Content Infrastructure Reduction',
+    'Quartz',
+    'Contentlayer',
+    'Meilisearch',
+    'Coolify',
+    'giant runtime JSON',
+    'OpenList'
+  ];
+
+  requiredTerms.forEach((term) => {
+    if (!readme.includes(term)) {
+      issues.push(`README.md must document Content Infrastructure Reduction term: ${term}`);
+    }
+    if (!projectText.toLowerCase().includes(term.toLowerCase())) {
+      issues.push(`project.json must document Content Infrastructure Reduction term: ${term}`);
+    }
+    if (!codex.includes(term)) {
+      issues.push(`architectureCodex.ts must document Content Infrastructure Reduction term: ${term}`);
+    }
+  });
+
+  const candidates = reduction.targetCandidates ?? {};
+  const requiredCandidateStatuses = {
+    quartz: 'candidate-not-integrated',
+    contentlayer: 'candidate-not-installed',
+    meilisearch: 'target-not-deployed',
+    coolify: 'candidate-not-deployed'
+  };
+
+  Object.entries(requiredCandidateStatuses).forEach(([name, status]) => {
+    if (candidates[name]?.status !== status) {
+      issues.push(`project.json contentInfrastructureReduction.targetCandidates.${name}.status must be ${status}`);
+    }
+  });
+
+  const openListBoundary = String(reduction.activeNow?.openListBoundary ?? '');
+  ['runtime build', 'projection', 'database', 'Pagefind', 'Astro dist', 'Syncthing hot mirror', 'node_modules'].forEach((term) => {
+    if (!openListBoundary.includes(term)) {
+      issues.push(`project.json contentInfrastructureReduction.activeNow.openListBoundary must forbid OpenList as ${term}`);
+    }
+  });
+
+  const forbiddenText = (reduction.forbidden ?? []).join('\n');
+  ['content-index.json', 'bespoke watcher', 'RSS race', 'Quartz', 'Contentlayer', 'Meilisearch', 'Coolify', 'OpenList'].forEach((term) => {
+    if (!forbiddenText.includes(term)) {
+      issues.push(`project.json contentInfrastructureReduction.forbidden must include ${term}`);
+    }
+  });
+
+  const referenceSystems = project.runtimeFederation?.referenceSystems ?? {};
+  if (referenceSystems.quartz?.status !== 'reference / substrate candidate') {
+    issues.push('project.json runtimeFederation.referenceSystems.quartz must remain reference / substrate candidate');
+  }
+  if (referenceSystems.contentlayer?.status !== 'candidate-not-installed') {
+    issues.push('project.json runtimeFederation.referenceSystems.contentlayer must remain candidate-not-installed');
+  }
+  if (referenceSystems.meilisearch?.status !== 'target-not-deployed') {
+    issues.push('project.json runtimeFederation.referenceSystems.meilisearch must remain target-not-deployed');
+  }
+  if (referenceSystems.coolify?.status !== 'candidate-not-deployed') {
+    issues.push('project.json runtimeFederation.referenceSystems.coolify must remain candidate-not-deployed');
+  }
+
+  if (!String(reduction.activeNow?.search ?? '').includes('not unified full-site dynamic search')) {
+    issues.push('project.json contentInfrastructureReduction.activeNow.search must say current search is not unified full-site dynamic search');
+  }
+  if (!readme.includes('上线前 Pagefind 只叫静态 archive 搜索，不叫全站统一搜索')) {
+    issues.push('README.md must prevent Pagefind from being documented as unified full-site search before Meilisearch');
+  }
+
+  if (!readme.includes('topic collection 只作为 metadata / search / Graph 维度')) {
+    issues.push('README.md must document that topic collections are dimensions, not static collection pages');
+  }
+  if (!String(project.contentPipeline?.runtimeProjection?.collectionSchema?.surfaceRule ?? '').includes('topic collections remain metadata/search/Graph dimensions')) {
+    issues.push('project.json contentPipeline.runtimeProjection.collectionSchema.surfaceRule must prevent topic collections from static collection page generation');
+  }
+  if (!codex.includes('topic collection 只作为 metadata / search / Graph 维度')) {
+    issues.push('architectureCodex.ts must document that topic collections are dimensions, not static collection pages');
+  }
+  const runtimeContent = readText(resolvePath('apps/web/src/lib/runtimeContent.ts'));
+  if (!runtimeContent.includes("collection.basis === 'topic'")) {
+    issues.push('apps/web/src/lib/runtimeContent.ts must filter topic collections out of static collection surfaces');
+  }
+}
+
+function validateStabilizationSprint() {
+  const project = JSON.parse(readText(resolvePath('project.json')));
+  const readme = readText(resolvePath('README.md'));
+  const codex = readText(resolvePath('apps/web/src/data/architectureCodex.ts'));
+  const sprint = project.stabilizationSprint;
+
+  if (!sprint || sprint.status !== 'active') {
+    issues.push('project.json must declare active stabilizationSprint before adding more target runtimes');
+    return;
+  }
+
+  if (sprint.mode !== 'reduction-not-feature-sprint') {
+    issues.push('stabilizationSprint.mode must be reduction-not-feature-sprint');
+  }
+
+  const frozen = sprint.frozenTargetRuntimes ?? {};
+  ['appflowyCloud', 'immich', 'directus', 'meilisearch'].forEach((name) => {
+    if (!frozen[name]) {
+      issues.push(`stabilizationSprint.frozenTargetRuntimes.${name} is required`);
+      return;
+    }
+    if (frozen[name].allowStart !== false) {
+      issues.push(`stabilizationSprint.frozenTargetRuntimes.${name}.allowStart must remain false during stabilization`);
+    }
+  });
+
+  ['Syncthing', 'MarkdownObject', 'Quartz'].forEach((term) => {
+    if (!readme.includes(term)) {
+      issues.push(`README.md must include stabilization priority: ${term}`);
+    }
+    if (!codex.includes(term)) {
+      issues.push(`architectureCodex.ts must include stabilization priority: ${term}`);
+    }
+  });
+
+  if (!readme.includes('AppFlowy 只保留') && !readme.includes('AppFlowy 只保留 `infra/appflowy-cloud/` skeleton')) {
+    issues.push('README.md must explicitly say AppFlowy remains skeleton-only during stabilization');
+  }
+
+  if (!project.contentPipeline?.vaultSync || project.contentPipeline.vaultSync.status !== 'active') {
+    issues.push('project.json must mark contentPipeline.vaultSync.status active after Linux Vault sync cutover');
+  }
+
+  if (!project.contentPipeline?.commands?.vaultSyncCheck) {
+    issues.push('project.json must expose a repeatable vaultSyncCheck command');
+  }
+
+  if (!readme.includes('npm run check:vault-sync')) {
+    issues.push('README.md must document npm run check:vault-sync for Syncthing/Linux Vault acceptance');
+  }
+
+  if (!codex.includes('obsidian-vault') || !codex.includes('/home/vault/Obsidian') || !codex.includes('/openlist/Obsidian')) {
+    issues.push('architectureCodex.ts must document the active obsidian-vault Syncthing folder, Linux hot mirror, and OpenList /openlist/Obsidian content control plane');
+  }
+}
+
+function validateObsidianAuthorityContract() {
+  const checkedFiles = [
+    'README.md',
+    'project.json',
+    'apps/web/src/data/architectureCodex.ts'
+  ];
+
+  const requiredTerms = [
+    [/E:\\\\?Vaults\\\\?Obsidian/, 'Windows Obsidian authoring truth: E:\\Vaults\\Obsidian'],
+    [/\/home\/vault\/Obsidian/, 'Linux runtime hot mirror: /home/vault/Obsidian'],
+    [/\/openlist\/Obsidian/, 'OpenList content control plane: /openlist/Obsidian'],
+    [/content control plane/, 'OpenList content control plane term']
+  ];
+
+  checkedFiles.forEach((relativePath) => {
+    const source = readText(resolvePath(relativePath));
+    requiredTerms.forEach(([pattern, label]) => {
+      if (!pattern.test(source)) {
+        issues.push(`${relativePath} must include ${label}`);
+      }
+    });
+  });
+
+  const stalePatterns = [
+    {
+      pattern: /OpenList\s+\/Vault|\/Vault maps|\/Vault 映射/,
+      message: 'stale OpenList /Vault mapping must not be documented as active'
+    },
+    {
+      pattern: /Linux \/home\/vault file truth|Linux:\/home\/vault"/,
+      message: 'Linux /home/vault must not be documented as file truth; use /home/vault/Obsidian hot mirror'
+    },
+    {
+      pattern: /\/home\/vault\/image/,
+      message: 'Vault image mirror must live under /home/vault/Obsidian/image'
+    },
+    {
+      pattern: /\/夸克网盘\/obsidian\/data\/docs.*真源|真源.*\/夸克网盘\/obsidian\/data/,
+      message: 'legacy /夸克网盘/obsidian/data must not be documented as Obsidian truth'
+    },
+    {
+      pattern: /Remotely Save.*负责完整 Vault 文件同步/,
+      message: 'Remotely Save must not be documented as the current active Vault sync owner'
+    }
+  ];
+
+  checkedFiles.forEach((relativePath) => {
+    const source = readText(resolvePath(relativePath));
+    stalePatterns.forEach(({ pattern, message }) => {
+      if (pattern.test(source)) {
+        issues.push(`${relativePath}: ${message}`);
+      }
+    });
+  });
+}
+
+function validateOpenListServerStorageBoundary() {
+  const checkedFiles = [
+    'README.md',
+    'project.json',
+    'apps/web/src/data/architectureCodex.ts'
+  ];
+
+  const requiredTerms = [
+    [/\/Obsidian/, 'OpenList local /Obsidian mount'],
+    [/\/腾讯云COS/, 'Tencent COS OpenList cold/blob mount'],
+    [/\/夸克网盘/, 'Quark OpenList cold/legacy mount'],
+    [/server:openlist-storage/, 'server OpenList storage maintenance command'],
+    [/openlist-files/, 're-generable OpenList reader file cache'],
+    [/系统盘|system disk|system\/hot disk|系统盘或热运行盘/, 'OpenList must not be a system/hot disk'],
+    [/cold archive|冷归档/, 'OpenList/COS/Quark cold archive role']
+  ];
+
+  checkedFiles.forEach((relativePath) => {
+    const source = readText(resolvePath(relativePath));
+    requiredTerms.forEach(([pattern, label]) => {
+      if (!pattern.test(source)) {
+        issues.push(`${relativePath} must document ${label}`);
+      }
+    });
+  });
+
+  const readme = readText(resolvePath('README.md'));
+  const project = JSON.parse(readText(resolvePath('project.json')));
+  const packageJson = JSON.parse(readText(resolvePath('package.json')));
+
+  if (!packageJson.scripts?.['server:openlist-storage']) {
+    issues.push('package.json must expose server:openlist-storage');
+  }
+
+  if (project.openListLocalMount !== 'OpenList:/Obsidian -> Linux:/home/vault/Obsidian') {
+    issues.push('project.json openListLocalMount must be OpenList:/Obsidian -> Linux:/home/vault/Obsidian');
+  }
+
+  const publicRoots = project.openListPublicRoots ?? [];
+  ['/Obsidian', '/腾讯云COS', '/夸克网盘'].forEach((root) => {
+    if (!publicRoots.includes(root)) {
+      issues.push(`project.json openListPublicRoots must include ${root}`);
+    }
+  });
+
+  if (!project.serverStorageBoundary?.maintenanceCommand?.includes('server:openlist-storage')) {
+    issues.push('project.json serverStorageBoundary must expose npm run server:openlist-storage');
+  }
+
+  if (!String(project.serverStorageBoundary?.coldLayerRule || '').includes('not an ext4/system disk replacement')) {
+    issues.push('project.json serverStorageBoundary.coldLayerRule must forbid treating OpenList as an ext4/system disk replacement');
+  }
+
+  const sourceMap = project.sourceOfTruthMap ?? {};
+  if (sourceMap.openListLocalMount !== project.openListLocalMount) {
+    issues.push('project.json sourceOfTruthMap.openListLocalMount must mirror the active top-level OpenList local mount');
+  }
+
+  const sourceRoots = sourceMap.openListPublicRoots ?? [];
+  ['/Obsidian', '/腾讯云COS', '/夸克网盘'].forEach((root) => {
+    if (!sourceRoots.includes(root)) {
+      issues.push(`project.json sourceOfTruthMap.openListPublicRoots must include ${root}`);
+    }
+  });
+
+  if (!sourceMap.serverStorageBoundary?.maintenanceCommand?.includes('server:openlist-storage')) {
+    issues.push('project.json sourceOfTruthMap.serverStorageBoundary must expose npm run server:openlist-storage');
+  }
+
+  if (!String(sourceMap.serverStorageBoundary?.coldLayerRule || '').includes('not an ext4/system disk replacement')) {
+    issues.push('project.json sourceOfTruthMap.serverStorageBoundary.coldLayerRule must forbid treating OpenList as an ext4/system disk replacement');
+  }
+
+  if (!readme.includes('OpenList 本地挂载：`/Obsidian -> /home/vault/Obsidian`')) {
+    issues.push('README.md quick-start must document the active /Obsidian OpenList local mount');
+  }
+
+  if (!readme.includes('try_files $uri $uri/index.html =404')) {
+    issues.push('README.md must document static route 404 semantics for Nginx');
+  }
+  if (!String(project.nginxStaticRouteRule ?? '').includes('try_files $uri $uri/index.html =404')) {
+    issues.push('project.json nginxStaticRouteRule must forbid SPA-style /index.html fallback');
+  }
+}
+
+function validateRuntimeConstitution() {
+  const requiredFiles = [
+    'AI_RULES.md',
+    'project.frontend-runtime-contract.json',
+    'contracts/frontend-runtime-contract.json',
+    'contracts/runtime-authority-map.json',
+    'contracts/object-projection-contract.json',
+    'contracts/collection-behavior-contract.json',
+    'philosophy/FRONTEND_DESIGN_PHILOSOPHY.md',
+    'philosophy/RUNTIME_IDENTITY.md',
+    'philosophy/KNOWLEDGE_OBJECT_MODEL.md',
+    'philosophy/COLLECTION_MODEL.md',
+    'philosophy/ANTI_CMS_RULES.md',
+    'topology/SYSTEM_TOPOLOGY.md',
+    'topology/RUNTIME_GRAPH.md',
+    'topology/SYNC_ARCHITECTURE.md',
+    'topology/DEPLOY_GRAPH.md',
+    'adr/ADR-001-collections-are-lenses-not-pages.md',
+    'adr/ADR-002-feed-tabs-must-not-navigate.md',
+    'adr/ADR-003-mixed-object-masonry-is-core-identity.md'
+  ];
+
+  requiredFiles.forEach((relativePath) => {
+    if (!fileExists(relativePath)) {
+      issues.push(`Runtime Constitution file is required: ${relativePath}`);
+    }
+  });
+
+  if (!fileExists('contracts/frontend-runtime-contract.json')) return;
+
+  const aiRules = readText(resolvePath('AI_RULES.md'));
+  const contract = JSON.parse(readText(resolvePath('contracts/frontend-runtime-contract.json')));
+  const collectionContract = JSON.parse(readText(resolvePath('contracts/collection-behavior-contract.json')));
+
+  [
+    'Knowledge Runtime Surface',
+    'Do not turn collections into standalone CMS pages',
+    'Do not replace the homepage mixed-object masonry stream with collection grids',
+    'Do not make topic collections prerender into static collection pages',
+    'Collection is context. Drawer is reading. Homepage is discovery'
+  ].forEach((term) => {
+    if (!aiRules.includes(term)) {
+      issues.push(`AI_RULES.md must include Runtime Constitution term: ${term}`);
+    }
+  });
+
+  if (contract.productIdentity?.primaryModel !== 'Knowledge Runtime Surface') {
+    issues.push('contracts/frontend-runtime-contract.json must define Knowledge Runtime Surface as primary model');
+  }
+
+  if (contract.collectionModel?.role !== 'runtime lens and reading context') {
+    issues.push('contracts/frontend-runtime-contract.json must define collection as runtime lens and reading context');
+  }
+
+  if (collectionContract.basisRules?.topic?.staticCollectionPage !== false) {
+    issues.push('contracts/collection-behavior-contract.json must forbid topic static collection pages');
+  }
+
+  if (collectionContract.basisRules?.topic?.metadataSearchGraphDimension !== true) {
+    issues.push('contracts/collection-behavior-contract.json must keep topic as metadata/search/Graph dimension');
+  }
+}
+
 function readText(filePath) {
   return fs.readFileSync(filePath, 'utf8');
 }
@@ -101,6 +546,3 @@ function resolvePath(relativePath) {
   return path.resolve(rootDir, relativePath);
 }
 
-function stripBackticks(value) {
-  return value.replace(/^`|`$/g, '');
-}

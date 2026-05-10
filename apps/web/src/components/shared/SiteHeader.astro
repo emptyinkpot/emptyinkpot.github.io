@@ -12,8 +12,10 @@ const navItems = [
   { href: '/music', label: '音乐' },
   { href: '/visuals', label: '视觉素材' },
   { href: '/knowledge', label: '知识图谱' },
-  { href: '/codex', label: '架构档案' },
+  { href: '/codex', label: '设计圣典' },
   { href: '/evidence-library', label: '史料库' },
+  { action: 'openlist', label: 'OpenList' },
+  { action: 'pinterest', label: 'Pinterest' },
   { href: '/updates', label: '更新' },
   { href: '/settings', label: '设置' },
   { href: '/search', label: '搜索' },
@@ -42,6 +44,30 @@ const navItems = [
     <nav class="flex flex-wrap items-center gap-2 text-sm text-stone-600">
       {
         navItems.map((item) => {
+          if ('action' in item && item.action === 'openlist') {
+            return (
+              <button
+                type="button"
+                data-openlist-embed-open
+                class="rounded-full px-4 py-2 text-left transition hover:bg-white/75 hover:text-stone-900"
+              >
+                {item.label}
+              </button>
+            );
+          }
+
+          if ('action' in item && item.action === 'pinterest') {
+            return (
+              <button
+                type="button"
+                data-pinterest-embed-open
+                class="rounded-full px-4 py-2 text-left transition hover:bg-white/75 hover:text-stone-900"
+              >
+                {item.label}
+              </button>
+            );
+          }
+
           const active =
             item.href === '/'
               ? pathname === '/'

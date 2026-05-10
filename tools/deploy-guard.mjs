@@ -28,7 +28,7 @@ requireField('workspaceId');
 requireField('workspaceType');
 requireField('capabilities');
 
-if (!allowedRoots.includes(currentRoot) && !isGitHubActionsCheckout(currentRoot)) {
+if (!allowedRoots.includes(currentRoot)) {
   issues.push(`Current root is not declared as an allowed root for this workspace: ${rootDir}`);
 }
 
@@ -86,11 +86,6 @@ function normalizePath(value) {
 
 function isCodexRuntimeWorktree(value) {
   return value.includes('/.codex-runtime/worktrees/');
-}
-
-
-function isGitHubActionsCheckout(value) {
-  return process.env.GITHUB_ACTIONS === 'true' && value.includes('/home/runner/work/');
 }
 
 function fail(messages) {

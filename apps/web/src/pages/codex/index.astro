@@ -1,62 +1,72 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { architectureCodexEntries } from '../../data/architectureCodex';
+import { architectureCodexEntries, architectureCodexGlossary, getCodexHref } from '../../data/architectureCodex';
+import { withBase } from '../../lib/site';
+
+const activeEntries = architectureCodexEntries.filter((entry) => entry.status === 'active').length;
 ---
 
-<BaseLayout title="Architecture Codex / emptyinkpot" description="MyBlog 的系统设计档案，记录阅读、文件真源、对象层和投影壳的架构决策。">
-  <main class="workbench-page" data-pagefind-body>
-    <section class="workbench-page__intro home-workbench__card home-workbench__card--panel">
-      <div class="workbench-page__intro-copy">
-        <p class="section-kicker">SYSTEM / ARCHITECTURE CODEX</p>
-        <h1>系统架构档案</h1>
-        <p>
-          这里记录 MyBlog 为什么这样组织阅读器、OpenList、Obsidian、对象层和前端投影。它不是营销说明，也不是教程，而是后续维护时必须同步更新的设计考古档案。
-        </p>
-      </div>
-      <div class="workbench-page__stats">
-        <div class="workbench-page__stat">
-          <strong>{architectureCodexEntries.length}</strong>
-          <span>entries</span>
+<BaseLayout title="Architecture Codex / emptyinkpot" description="emptyinkpot 的系统设计档案，记录阅读器、知识运行时、视觉系统和数据架构的设计理由。">
+  <main class="codex-page" data-pagefind-body>
+    <section class="codex-hero">
+      <p class="section-kicker">Architecture Codex</p>
+      <h1>这里记录系统为什么长成现在这样。</h1>
+      <p>
+        Codex 不是普通博客，也不是教程。它保存 Reader、OpenList、MySQL、Graph、视觉语言和书架策展的设计考古，供未来的自己、协作者和 AI 维护者读取。
+      </p>
+      <dl>
+        <div>
+          <dt>Systems</dt>
+          <dd>{architectureCodexEntries.length}</dd>
         </div>
-        <div class="workbench-page__stat">
-          <strong>SSOT</strong>
-          <span>file truth</span>
+        <div>
+          <dt>Active</dt>
+          <dd>{activeEntries}</dd>
         </div>
-      </div>
+        <div>
+          <dt>Glossary</dt>
+          <dd>{architectureCodexGlossary.length}</dd>
+        </div>
+      </dl>
     </section>
 
-    <section class="workbench-page__grid workbench-page__grid--projects" aria-label="Architecture Codex entries">
+    <section class="codex-index" aria-label="Architecture Codex entries">
       {
         architectureCodexEntries.map((entry) => (
-          <article class="workbench-page__project-card home-workbench__card home-workbench__card--panel" id={entry.id}>
-            <p class="section-kicker">CODEX / {entry.id}</p>
+          <a class="codex-entry-card" href={getCodexHref(entry.slug)}>
+            <span>{entry.status}</span>
             <h2>{entry.title}</h2>
-            <p>{entry.summary}</p>
-
-            <div class="workbench-page__meta">
-              {entry.relatedSystems.map((system) => <span>{system}</span>)}
-            </div>
-
-            <h3>Runtime</h3>
-            <ul>
-              {entry.runtime.map((item) => <li>{item}</li>)}
-            </ul>
-
-            <h3>Tradeoff</h3>
-            <ul>
-              {entry.tradeoff.map((item) => <li>{item}</li>)}
-            </ul>
-
-            <h3>Future Direction</h3>
-            <ul>
-              {entry.futureDirection.map((item) => <li>{item}</li>)}
-            </ul>
-
-            <h3>Inspiration</h3>
-            <p>{entry.inspiration.join(' / ')}</p>
-          </article>
+            <p>{entry.subtitle}</p>
+            <small>{entry.systems.slice(0, 4).join(' / ')}</small>
+          </a>
         ))
       }
+    </section>
+
+    <section class="codex-glossary" aria-label="Codex glossary">
+      <div>
+        <p class="section-kicker">Glossary</p>
+        <h2>项目自己的词汇系统</h2>
+      </div>
+      <dl>
+        {
+          architectureCodexGlossary.map((item) => (
+            <div>
+              <dt>{item.term}</dt>
+              <dd>{item.definition}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="codex-protocol" aria-label="Codex protocol">
+      <p class="section-kicker">Maintenance Protocol</p>
+      <h2>以后新增大系统，先写档案，再写界面。</h2>
+      <p>
+        每个新系统必须回答 Inspiration、Rejected、Runtime、Tradeoff、Future Direction 和 Related Systems。没有这些记录的功能，只能算临时 UI，不算 MyBlog 的长期架构。
+      </p>
+      <a href={withBase('/knowledge/')}>查看 Knowledge Graph</a>
     </section>
   </main>
 </BaseLayout>

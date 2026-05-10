@@ -50,6 +50,7 @@ OpenList 负责大文件存储和网盘挂载，不负责史料语义。
 
 ```text
 OpenList URL: http://127.0.0.1:5244
+public embed route: https://blog.tengokukk.com/openlist/
 active mount: /夸克网盘
 useful API:
   POST /api/fs/list

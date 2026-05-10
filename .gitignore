@@ -3,13 +3,13 @@ Thumbs.db
 db.json
 *.log
 .cache/
+.runtime/
 .next/
 node_modules/
 public/
 !apps/web/public/
 !apps/web/public/**
+apps/web/public/runtime/
+public-data/runtime/
 .deploy*/
 _multiconfig.yml
-
-public-data/runtime/
-apps/web/public/runtime/

@@ -24,10 +24,24 @@ const github = await getGitHubOverview('emptyinkpot');
 const projectView = buildProjectStudioView(project, github);
 const repoUpdatedAt = projectView.repo ? new Date(projectView.repo.updatedAt) : undefined;
 const repoLabel = projectView.owner && projectView.repoName ? `${projectView.owner}/${projectView.repoName}` : 'manual project';
+const initialBranch = 'main';
 const primaryWiki = projectView.wiki[0];
 const initialWikiContent = project.body?.trim() || project.data.description;
-const githubRuntimeMode = 'GitHub API';
+const appflowyConnected = projectView.collaborationRuntime === 'appflowy-embed' && Boolean(projectView.appflowyUrl);
+const collaborationLabel = appflowyConnected ? 'AppFlowy workspace' : 'GitHub Workbench fallback';
 const commandItems = [
+  ...(appflowyConnected && projectView.appflowyUrl
+    ? [
+        {
+          id: 'appflowy',
+          label: 'AppFlowy 工作区',
+          description: projectView.appflowyWorkspace ?? '协作 runtime',
+          href: '#appflowy',
+          kind: 'internal',
+          icon: 'modules'
+        }
+      ]
+    : []),
   {
     id: 'wiki',
     label: 'Wiki 文档',
@@ -39,7 +53,7 @@ const commandItems = [
   {
     id: 'timeline',
     label: '时间线',
-    description: '提交到未来 timeline API',
+    description: '提交到 timeline API',
     href: '#timeline',
     kind: 'internal',
     icon: 'timeline'
@@ -55,7 +69,7 @@ const commandItems = [
   {
     id: 'issues',
     label: 'Issues',
-    description: `${projectView.repo?.issues ?? 0} open`,
+    description: '实时读取 GitHub Issues',
     href: '#issues',
     kind: 'internal',
     icon: 'issues'
@@ -63,7 +77,7 @@ const commandItems = [
   {
     id: 'pulls',
     label: 'Pull Requests',
-    description: '等待 GitHub API',
+    description: '实时读取 GitHub PR',
     href: '#pulls',
     kind: 'internal',
     icon: 'pulls'
@@ -99,8 +113,16 @@ const commandItems = [
 ] as const;
 ---
 
-<BaseLayout title={`${project.data.title} / GitHub Workbench`} description={project.data.description} hideSiteChrome={true} appMode={true}>
-  <main class="project-workbench" data-pagefind-body data-project-slug={project.id} data-project-repo={repoLabel} data-github-api-ready="true">
+<BaseLayout title={`${project.data.title} / Project Studio`} description={project.data.description} hideSiteChrome={true} appMode={true}>
+  <main
+    class="project-workbench"
+    data-pagefind-body
+    data-project-slug={project.id}
+    data-project-repo={repoLabel}
+    data-github-api-ready="true"
+    data-collaboration-runtime={projectView.collaborationRuntime}
+    data-collaboration-status={projectView.collaborationStatus}
+  >
     <aside class="project-workbench__sidebar" aria-label="Project workbench navigation">
       <a class="project-workbench__brand" href={withBase('/projects/')}>
         <i aria-hidden="true"></i>
@@ -121,43 +143,45 @@ const commandItems = [
 
       <div class="project-workbench__sidebar-note">
         <span>{getProjectTypeLabel(projectView.type)} / {projectView.status}</span>
-        <p>写入 GitHub 需要后端 API 中间层；当前公开站点只暴露安全的前端工作台与 GitHub edit fallback。</p>
+        <p>协作 runtime 目标是外置 AppFlowy。当前未配置 AppFlowy embed 时，本页只保留 GitHub Workbench fallback；前台不暴露 token。</p>
       </div>
     </aside>
 
     <section class="project-workbench__main">
       <header class="project-workbench__statusbar">
         <div class="project-workbench__repo">
-          <span>项目工坊 / {repoLabel} / {githubRuntimeMode}</span>
+          <span>项目工坊 / {repoLabel} / {collaborationLabel}</span>
           <strong>{project.data.title}</strong>
-          <small>当前读取构建期 GitHub snapshot；Wiki 与 Timeline 写入通过服务端 GitHub API 提交。</small>
+          <small data-project-live-summary>
+            {appflowyConnected ? 'AppFlowy workspace 已配置；GitHub 信号继续作为项目代码投影。' : 'AppFlowy workspace 未接入；当前 GitHub API 只是 fallback，不是最终协作内核。'}
+          </small>
         </div>
 
         <dl class="project-workbench__status">
           <div>
             <dt>Branch</dt>
-            <dd>main</dd>
+            <dd data-project-status="branch">{initialBranch}</dd>
           </div>
           <div>
             <dt>Updated</dt>
-            <dd>{repoUpdatedAt ? formatDate(repoUpdatedAt) : 'manual'}</dd>
+            <dd data-project-status="updated">{repoUpdatedAt ? formatDate(repoUpdatedAt) : 'manual'}</dd>
           </div>
           <div>
             <dt>Issues</dt>
-            <dd>{projectView.repo?.issues ?? 0}</dd>
+            <dd data-project-status="issues">{projectView.repo?.issues ?? 0}</dd>
           </div>
           <div>
             <dt>PR</dt>
-            <dd>pending</dd>
+            <dd data-project-status="pulls">...</dd>
           </div>
           <div>
             <dt>Contributors</dt>
-            <dd>{projectView.contributors.length}</dd>
+            <dd data-project-status="contributors">{projectView.contributors.length}</dd>
           </div>
         </dl>
 
         <div class="project-workbench__status-actions">
-          <span class="project-workbench__api-badge">GitHub API</span>
+          <span class="project-workbench__api-badge" data-project-live-status data-state="loading">连接中</span>
           <ProjectWorkbenchCommand client:idle commands={commandItems} />
           <a href={project.data.repo ?? withBase('/projects/')} target={project.data.repo ? '_blank' : undefined} rel={project.data.repo ? 'noreferrer' : undefined}>仓库</a>
           {primaryWiki?.editUrl && <a href={primaryWiki.editUrl} target="_blank" rel="noreferrer">GitHub 编辑</a>}
@@ -165,10 +189,43 @@ const commandItems = [
         </div>
       </header>
 
+      <section id="appflowy" class={`project-work-panel project-work-panel--runtime ${appflowyConnected ? 'is-connected' : 'is-pending'}`}>
+        <header class="project-work-panel__header">
+          <div>
+            <span>COLLABORATION RUNTIME</span>
+            <h2>AppFlowy Workspace</h2>
+          </div>
+          <strong>{appflowyConnected ? 'connected' : 'target'}</strong>
+        </header>
+
+        {
+          appflowyConnected && projectView.appflowyUrl ? (
+            <div class="project-workbench__appflowy-frame">
+              <iframe
+                src={projectView.appflowyUrl}
+                title={`${project.data.title} AppFlowy workspace`}
+                loading="lazy"
+                referrerpolicy="no-referrer"
+              ></iframe>
+            </div>
+          ) : (
+            <div class="project-workbench__runtime-note">
+              <p>
+                目标架构是把协作 runtime 拆到独立 AppFlowy Cloud，由 `project.tengokukk.com` 承载 block editor、database、kanban、comments 与 realtime workspace。
+              </p>
+              <p>
+                当前生产页没有 AppFlowy URL，因此 Wiki、Timeline、Issues、PR、Commits 仍是 GitHub Workbench fallback。它可以记录项目状态，但不再被当作最终协作系统继续扩张。
+              </p>
+              <a href="https://github.com/AppFlowy-IO/AppFlowy-Cloud" target="_blank" rel="noreferrer">AppFlowy Cloud</a>
+            </div>
+          )
+        }
+      </section>
+
       <section id="wiki" class="project-work-panel project-work-panel--editor" data-wiki-editor>
         <header class="project-work-panel__header">
           <div>
-            <span>WIKI EDITOR</span>
+            <span>GITHUB FALLBACK WIKI</span>
             <h1>{primaryWiki?.title ?? '项目 Wiki'}</h1>
           </div>
           <div class="project-work-panel__tools">
@@ -186,14 +243,14 @@ const commandItems = [
         >{initialWikiContent}</textarea>
 
         <p class="project-workbench__message" data-wiki-message>
-          当前静态站不会暴露 GitHub token。点击提交会调用服务端 `/api/github/file/save` 写入 GitHub。
+          当前静态站不会暴露 GitHub token。点击提交会调用服务端 `/api/github/file/save` 写入 GitHub；AppFlowy 接入后，协作文档应迁到外置 workspace。
         </p>
       </section>
 
       <section id="timeline" class="project-work-panel" data-timeline-editor>
         <header class="project-work-panel__header">
           <div>
-            <span>TIMELINE</span>
+            <span>GITHUB FALLBACK TIMELINE</span>
             <h2>项目时间线</h2>
           </div>
           <button type="button" data-save-timeline>提交 timeline.json</button>
@@ -252,9 +309,11 @@ const commandItems = [
             <span>ISSUES</span>
             <h2>问题队列</h2>
           </div>
-          <strong>{projectView.repo?.issues ?? 0} open</strong>
+          <strong data-project-count="issues">{projectView.repo?.issues ?? 0} open</strong>
         </header>
-        <p class="project-workbench__empty">Issues 列表需要 `/api/github/issues` 中间层或构建期 GitHub snapshot 扩展；当前只显示公开 snapshot 中的 open issue 计数。</p>
+        <div class="project-workbench__commit-list" data-github-issues-list>
+          <p class="project-workbench__empty">正在从 `/api/github/issues` 读取公开 Issue。</p>
+        </div>
       </section>
 
       <section id="pulls" class="project-work-panel">
@@ -263,9 +322,11 @@ const commandItems = [
             <span>PULL REQUESTS</span>
             <h2>合并请求</h2>
           </div>
-          <strong>API pending</strong>
+          <strong data-project-count="pulls">...</strong>
         </header>
-        <p class="project-workbench__empty">Pull Requests 需要 `/api/github/pulls`。接入前不伪造 PR 数据。</p>
+        <div class="project-workbench__commit-list" data-github-pulls-list>
+          <p class="project-workbench__empty">正在从 `/api/github/pulls` 读取公开 PR。</p>
+        </div>
       </section>
 
       <section id="commits" class="project-work-panel">
@@ -276,7 +337,7 @@ const commandItems = [
           </div>
           {projectView.repo?.htmlUrl && <a href={`${projectView.repo.htmlUrl}/commits/main`} target="_blank" rel="noreferrer">GitHub commits</a>}
         </header>
-        <div class="project-workbench__commit-list">
+        <div class="project-workbench__commit-list" data-github-commits-list>
           {projectView.timeline.map((item) => (
             <article>
               <strong>{item.title}</strong>
@@ -291,7 +352,7 @@ const commandItems = [
     <aside class="project-workbench__inspector" aria-label="Project inspector">
       <section id="contributors">
         <span>CONTRIBUTORS</span>
-        <div class="project-workbench__contributors">
+        <div class="project-workbench__contributors" data-github-contributors-list>
           {projectView.contributors.map((contributor) => (
             <a href={contributor.href} target="_blank" rel="noreferrer">
               <img src={contributor.avatarUrl} alt={`${contributor.name} avatar`} loading="lazy" decoding="async" />
@@ -341,11 +402,231 @@ const commandItems = [
       const timelineBody = root.querySelector('[data-timeline-body]');
       const timelineMessage = root.querySelector('[data-timeline-message]');
       const syncButton = root.querySelector('[data-sync-project]');
+      const liveStatus = root.querySelector('[data-project-live-status]');
+      const liveSummary = root.querySelector('[data-project-live-summary]');
+      const issuesList = root.querySelector('[data-github-issues-list]');
+      const pullsList = root.querySelector('[data-github-pulls-list]');
+      const commitsList = root.querySelector('[data-github-commits-list]');
+      const contributorsList = root.querySelector('[data-github-contributors-list]');
 
       const setMessage = (target, value, tone = '') => {
         if (!(target instanceof HTMLElement)) return;
         target.textContent = value;
         target.dataset.tone = tone;
+      };
+
+      const formatLiveDate = (value) => {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '未知时间';
+        return new Intl.DateTimeFormat('zh-CN', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        }).format(date);
+      };
+
+      const setLiveStatus = (value, state = 'loading') => {
+        if (!(liveStatus instanceof HTMLElement)) return;
+        liveStatus.textContent = value;
+        liveStatus.dataset.state = state;
+      };
+
+      const setLiveSummary = (value) => {
+        if (liveSummary instanceof HTMLElement) liveSummary.textContent = value;
+      };
+
+      const setStatusValue = (key, value) => {
+        root.querySelectorAll(`[data-project-status="${key}"]`).forEach((node) => {
+          node.textContent = String(value);
+        });
+      };
+
+      const setCount = (key, value) => {
+        root.querySelectorAll(`[data-project-count="${key}"]`).forEach((node) => {
+          node.textContent = value;
+        });
+      };
+
+      const getJson = async (url) => {
+        const response = await fetch(url, {
+          headers: { Accept: 'application/json' },
+          cache: 'no-store'
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload = await response.json();
+        if (!payload.ok) throw new Error(payload.error || 'GitHub API payload invalid');
+        return payload;
+      };
+
+      const createLiveArticle = ({ title, href, meta, body }) => {
+        const article = document.createElement('article');
+        const heading = document.createElement('strong');
+        const link = document.createElement('a');
+        const detail = document.createElement('span');
+        const summary = document.createElement('p');
+        link.href = href || '#';
+        if (href) {
+          link.target = '_blank';
+          link.rel = 'noreferrer';
+        }
+        link.textContent = title;
+        heading.append(link);
+        detail.textContent = meta;
+        summary.textContent = body;
+        article.append(heading, detail, summary);
+        return article;
+      };
+
+      const renderEmpty = (container, message) => {
+        if (!container) return;
+        const empty = document.createElement('p');
+        empty.className = 'project-workbench__empty';
+        empty.textContent = message;
+        container.replaceChildren(empty);
+      };
+
+      const renderIssues = (items = []) => {
+        setStatusValue('issues', items.length);
+        setCount('issues', `${items.length} open`);
+        if (!issuesList) return;
+        if (!items.length) {
+          renderEmpty(issuesList, '当前没有打开的 Issue。');
+          return;
+        }
+        issuesList.replaceChildren(
+          ...items.slice(0, 8).map((issue) =>
+            createLiveArticle({
+              title: `#${issue.number} ${issue.title}`,
+              href: issue.htmlUrl,
+              meta: `${issue.state} · 更新 ${formatLiveDate(issue.updatedAt)}`,
+              body: issue.labels?.filter(Boolean).length ? `Labels: ${issue.labels.filter(Boolean).join(', ')}` : 'GitHub live issue'
+            })
+          )
+        );
+      };
+
+      const renderPulls = (items = []) => {
+        setStatusValue('pulls', items.length);
+        setCount('pulls', `${items.length} open`);
+        if (!pullsList) return;
+        if (!items.length) {
+          renderEmpty(pullsList, '当前没有打开的 Pull Request。');
+          return;
+        }
+        pullsList.replaceChildren(
+          ...items.slice(0, 8).map((pull) =>
+            createLiveArticle({
+              title: `#${pull.number} ${pull.title}`,
+              href: pull.htmlUrl,
+              meta: `${pull.draft ? 'draft' : pull.state} · 更新 ${formatLiveDate(pull.updatedAt)}`,
+              body: pull.user?.login ? `Author: @${pull.user.login}` : 'GitHub live pull request'
+            })
+          )
+        );
+      };
+
+      const renderCommits = (items = []) => {
+        if (!commitsList) return;
+        if (!items.length) {
+          renderEmpty(commitsList, '最近提交暂时不可用。');
+          return;
+        }
+        commitsList.replaceChildren(
+          ...items.slice(0, 10).map((commit) =>
+            createLiveArticle({
+              title: commit.message?.split('\n')[0] || commit.sha.slice(0, 7),
+              href: commit.htmlUrl,
+              meta: `${commit.sha.slice(0, 7)} · ${formatLiveDate(commit.date)}`,
+              body: commit.author?.login ? `Author: @${commit.author.login}` : 'Git commit'
+            })
+          )
+        );
+      };
+
+      const renderContributors = (items = []) => {
+        setStatusValue('contributors', items.length);
+        if (!contributorsList) return;
+        if (!items.length) {
+          renderEmpty(contributorsList, '贡献者数据暂时不可用。');
+          return;
+        }
+        contributorsList.replaceChildren(
+          ...items.slice(0, 10).map((contributor) => {
+            const anchor = document.createElement('a');
+            const avatar = document.createElement('img');
+            const login = document.createElement('strong');
+            const count = document.createElement('small');
+            anchor.href = contributor.htmlUrl;
+            anchor.target = '_blank';
+            anchor.rel = 'noreferrer';
+            avatar.src = contributor.avatarUrl;
+            avatar.alt = `${contributor.login} avatar`;
+            avatar.loading = 'lazy';
+            avatar.decoding = 'async';
+            login.textContent = `@${contributor.login}`;
+            count.textContent = `${contributor.contributions || 0} commits`;
+            anchor.append(avatar, login, count);
+            return anchor;
+          })
+        );
+      };
+
+      const syncProjectLive = async () => {
+        if (!apiReady || !repo.includes('/')) {
+          setLiveStatus('本地模式', 'snapshot');
+          setLiveSummary('这个项目没有可同步的 GitHub 仓库，当前使用项目 frontmatter。');
+          return;
+        }
+
+        setLiveStatus('连接中', 'loading');
+        setLiveSummary('正在读取 GitHub repo / issues / PR / commits / contributors。');
+        const repoQuery = encodeURIComponent(repo);
+
+        try {
+          const repoPayload = await getJson(`/api/github/repo?repo=${repoQuery}`);
+          const liveRepo = repoPayload.repo || {};
+          const branch = liveRepo.defaultBranch || 'main';
+          const updatedAt = liveRepo.pushedAt || liveRepo.updatedAt;
+
+          setStatusValue('branch', branch);
+          setStatusValue('updated', formatLiveDate(updatedAt));
+          setLiveSummary(
+            `${liveRepo.fullName || repo} · ${liveRepo.language || 'Unknown'} · 正在同步 open Issues / PR · 更新 ${formatLiveDate(updatedAt)}`
+          );
+
+          const [issues, pulls, commits, contributors] = await Promise.allSettled([
+            getJson(`/api/github/issues?repo=${repoQuery}&state=open`),
+            getJson(`/api/github/pulls?repo=${repoQuery}&state=open`),
+            getJson(`/api/github/commits?repo=${repoQuery}&branch=${encodeURIComponent(branch)}&limit=10`),
+            getJson(`/api/github/contributors?repo=${repoQuery}`)
+          ]);
+
+          if (issues.status === 'fulfilled') renderIssues(issues.value.issues || []);
+          else renderEmpty(issuesList, 'Issues API 读取失败，保留仓库 open issue 计数。');
+
+          if (pulls.status === 'fulfilled') renderPulls(pulls.value.pulls || []);
+          else renderEmpty(pullsList, 'Pull Requests API 读取失败。');
+
+          if (commits.status === 'fulfilled') renderCommits(commits.value.commits || []);
+          else renderEmpty(commitsList, 'Commits API 读取失败，保留构建期时间线。');
+
+          if (contributors.status === 'fulfilled') renderContributors(contributors.value.contributors || []);
+          else renderEmpty(contributorsList, 'Contributors API 读取失败，保留构建期贡献者。');
+
+          const issueCount = issues.status === 'fulfilled' ? (issues.value.issues || []).length : liveRepo.openIssues;
+          const pullCount = pulls.status === 'fulfilled' ? (pulls.value.pulls || []).length : '未知';
+          const contributorCount = contributors.status === 'fulfilled' ? (contributors.value.contributors || []).length : '未知';
+          setLiveSummary(
+            `${liveRepo.fullName || repo} · ${branch} · ${issueCount} Issues / ${pullCount} PR / ${contributorCount} contributors · 更新 ${formatLiveDate(updatedAt)}`
+          );
+          setLiveStatus('已同步', 'live');
+        } catch (error) {
+          console.warn('[project-workbench-live]', error);
+          setLiveStatus('同步失败', 'error');
+          setLiveSummary('GitHub API 读取失败，当前页面保留构建期兜底。');
+        }
       };
 
       const postJson = async (url, payload) => {
@@ -410,12 +691,16 @@ const commandItems = [
 
       syncButton?.addEventListener('click', () => {
         if (syncButton instanceof HTMLButtonElement) {
-          syncButton.textContent = '需要 API';
-          window.setTimeout(() => {
-            syncButton.textContent = '同步';
-          }, 1400);
+          syncButton.textContent = '同步中';
+          syncProjectLive().finally(() => {
+            window.setTimeout(() => {
+              syncButton.textContent = '同步';
+            }, 600);
+          });
         }
       });
+
+      syncProjectLive();
     })();
   </script>
 </BaseLayout>

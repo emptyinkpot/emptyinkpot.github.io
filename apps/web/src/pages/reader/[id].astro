@@ -1,18 +1,21 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BookReader from '../../components/books/BookReader';
-import { books } from '../../data/books';
+import { withBase } from '../../lib/site';
 
 export function getStaticPaths() {
-  return books.map((book) => ({
-    params: { id: book.id },
-    props: { book }
-  }));
+  return [];
 }
 
-const { book } = Astro.props;
+const { id } = Astro.params;
 ---
 
-<BaseLayout title={`阅读：${book.title} / emptyinkpot`} description={book.description ?? book.note} hideSiteChrome={true} appMode={true}>
-  <BookReader book={book} client:only="react" />
+<BaseLayout title="Reader 已迁移 / emptyinkpot" description="书籍 reader 已切换到 OpenList runtime authority。" hideSiteChrome={true} appMode={true}>
+  <main class="book-reader-shell">
+    <section class="book-reader-empty">
+      <span>Book Authority Cutover</span>
+      <h1>这个静态 reader 入口已经退役</h1>
+      <p>书籍阅读现在由 OpenList 文件路径驱动。旧静态 ID「{id}」不再决定书籍是否存在。</p>
+      <a href={withBase('/books/')}>返回 OpenList 书架</a>
+    </section>
+  </main>
 </BaseLayout>

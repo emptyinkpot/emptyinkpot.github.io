@@ -1,4 +1,4 @@
-export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'highlight' | 'annotation' | 'seal' | 'sticker' | 'repost';
+export type KnowledgeNodeType = 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'highlight' | 'annotation' | 'seal' | 'sticker';
 
 export type KnowledgeSearchDoc = {
   id: string;
@@ -117,26 +117,6 @@ export type BookmarkRecord = {
   createdAt: number;
 };
 
-export type RepostRecord = {
-  id: string;
-  type: 'RepostObject';
-  targetId: string;
-  commentary: string;
-  snapshot: {
-    id: string;
-    kind: KnowledgeNodeType;
-    title: string;
-    kicker: string;
-    summary: string;
-    href?: string;
-    coverSrc?: string;
-    accent?: string;
-    tags: string[];
-  };
-  createdAt: number;
-  updatedAt: number;
-};
-
 export type ReadingHistoryItem = {
   id: string;
   title: string;
@@ -157,8 +137,7 @@ export type KnowledgeGraphNodeType =
   | 'highlight'
   | 'annotation'
   | 'seal'
-  | 'sticker'
-  | 'repost';
+  | 'sticker';
 
 export type KnowledgeGraphNode = {
   id: string;

@@ -29,16 +29,18 @@ Before editing this repository, read:
 - Before deploying, run `npm run deploy:site` or at minimum `npm run check:workspace`; do not hand-run `scp` from an unchecked worktree.
 - The machine-readable workspace authority source is `workspace.manifest.json`.
 - Workspaces under `C:\Users\ASUS-KL\.codex-runtime\worktrees\*` are experimental by default: they may prototype UI, feed, drawer, visual and animation changes, but must not deploy, modify PWA authority, runtime schema or OpenList authority unless their manifest explicitly grants that capability and the guard passes.
-- The current deploy-authoritative workspace is `/home/ubuntu/workspaces/MyBlog`.
+- The current deploy-authoritative workspace is `/srv/myblog/repo`; integration work may happen in `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` before it is pushed to GitHub.
 - Any change to workspace authority must update `README.md`, `project.json`, `workspace.manifest.json`, `workspaces/*.json` and the `runtime-federation` Architecture Codex entry together.
 
 ## Remote IDE / Server-First Rule
 
-- Default edit root: `server-170:/home/ubuntu/workspaces/MyBlog`.
-- Default deploy target: GitHub Pages from main branch. Historical live mirror: ubuntu@124.220.233.126:/srv/myblog/site
-- GitHub delivery uses repository remote https://github.com/emptyinkpot/emptyinkpot.github.io.git. Server-side pushes may use temporary GitHub token askpass when persistent credentials are unavailable.
+- Default production edit root: `ubuntu@124.220.233.126:/srv/myblog/repo`.
+- Default integration/root repair workspace: `server-170:/home/ubuntu/workspaces/MyBlog-production-integration`.
+- Default deploy target: `ubuntu@124.220.233.126:/srv/myblog/site`.
+- Repository-local GitHub SSH key on the server: `/home/ubuntu/.ssh/myblog_source_ed25519`.
+- Do not rely on server-global GitHub credentials; `/srv/myblog/repo` must own its `core.sshCommand`.
 - `E:\My Project\MyBlog` is retired. If a local checkout exists, it is a mirror or delivery fallback only, never the canonical workspace.
-- If SSH is temporarily unavailable, do not reinterpret the local checkout as source of truth. Use GitHub delivery only as an outage fallback, then reconcile the server-170 workspace when SSH returns.
+- If SSH is temporarily unavailable, do not reinterpret the local checkout as source of truth. Use GitHub delivery only as an outage fallback, then reconcile `/srv/myblog/repo` and the server-170 integration workspace when SSH returns.
 
 ## Current Codex Entries
 
@@ -63,5 +65,5 @@ Before editing this repository, read:
   - verified, committed, and pushed to the appropriate remote branch
   - explicitly blocked with the failing command, dirty files, and reason it cannot be pushed
 - Do not stop after code edits with an uncommitted worktree unless a blocker has been reported.
-- For deployable frontend changes, run the repository verification command before commit. If the change is intended for production, continue through the repository delivery path that triggers CI/CD instead of leaving changes only in the remote IDE workspace.
-- If CI/CD is branch-gated, state the branch gate and whether the pushed branch does or does not trigger deployment.
+- For deployable frontend changes, run the repository verification command before commit. If the change is intended for production, continue through the repository delivery path that triggers CI/CD or the guarded production deploy script instead of leaving changes only in a remote workspace.
+- If CI/CD or production deployment is branch-gated, state the branch gate and whether the pushed branch does or does not trigger deployment.

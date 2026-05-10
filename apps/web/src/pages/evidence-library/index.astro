@@ -90,6 +90,9 @@ const hardRules = Object.entries(plan.hardRules).filter(([, enabled]) => enabled
           {plan.actors.openlist.activeMounts.map((mount) => <li>Active mount: {mount}</li>)}
           {Object.entries(plan.actors.openlist.apis).map(([name, route]) => <li>{name}: {route}</li>)}
         </ul>
+        <button type="button" class="evidence-library__openlist-action" data-openlist-embed-open>
+          查看当前 OpenList
+        </button>
       </article>
     </section>
 

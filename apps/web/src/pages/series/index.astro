@@ -1,20 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getSeriesCounts, toSlug } from '../../lib/content';
+import { getGroupedCounts, toSlug } from '../../lib/content';
+import { getRuntimeArticles } from '../../lib/runtimeContent';
 import { withBase } from '../../lib/site';
 
-const posts = await getCollection('posts', ({ data }) => !data.draft);
-const seriesList = getSeriesCounts(posts);
+const seriesList = getGroupedCounts(getRuntimeArticles().map((article) => article.series).filter(Boolean) as string[]);
 ---
 
-<BaseLayout title="专题 / emptyinkpot" description="按系列浏览 emptyinkpot 中的文章内容。">
+<BaseLayout title="专题 / emptyinkpot" description="按系列浏览 emptyinkpot 中的 Runtime MarkdownObject。">
   <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
     <section class="space-y-4">
       <p class="section-kicker">专题</p>
       <h1 class="section-title text-4xl md:text-5xl">专题系列</h1>
       <p class="max-w-3xl text-base leading-8 text-stone-600">
-        系列页比标签更强调“连续阅读”。后续适合用于教程、迁移日志和长期专题。
+        系列页只读取 Runtime MarkdownObject，不再读取 Astro posts archive。
       </p>
     </section>
 

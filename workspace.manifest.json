@@ -3,10 +3,11 @@
   "workspaceId": "myblog-canonical-active",
   "workspaceType": "canonical",
   "profile": "workspaces/canonical.json",
-  "root": "/home/ubuntu/workspaces/MyBlog",
+  "root": "/srv/myblog/repo",
   "allowedRoots": [
-    "/home/ubuntu/workspaces/MyBlog",
-    "/home/ubuntu/workspaces/MyBlog-main-integration"
+    "/home/ubuntu/workspaces/MyBlog-main-integration",
+    "/home/ubuntu/workspaces/MyBlog-production-integration",
+    "/srv/myblog/repo"
   ],
   "capabilities": {
     "canBuild": true,
@@ -33,7 +34,7 @@
   "deployment": {
     "guard": "tools/deploy-guard.mjs",
     "command": "npm run deploy:site",
-    "target": "GitHub Pages from main branch; historical live mirror ubuntu@124.220.233.126:/srv/myblog/site",
+    "target": "ubuntu@124.220.233.126:/srv/myblog/site",
     "buildOutputRoot": "apps/web/dist",
     "remoteTempRoot": "/tmp/myblog-dist-upload",
     "forbiddenSources": [
@@ -41,6 +42,8 @@
       "E:\\My Project\\MyBlog"
     ],
     "incidentReference": "2026-05-07 stale worktree deploy regression",
-    "sourceWorkspace": "/home/ubuntu/workspaces/MyBlog"
-  }
+    "sourceWorkspace": "/srv/myblog/repo"
+  },
+  "integrationWorkspace": "/home/ubuntu/workspaces/MyBlog-production-integration",
+  "mainReplacementWorkspace": "/home/ubuntu/workspaces/MyBlog-main-integration"
 }

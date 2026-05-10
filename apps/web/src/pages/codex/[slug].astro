@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { architectureCodexEntries, getCodexHref } from '../../data/architectureCodex';
+import { withBase } from '../../lib/site';
+
+export function getStaticPaths() {
+  return architectureCodexEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const relatedEntries = entry.related
+  .map((slug) => architectureCodexEntries.find((item) => item.slug === slug))
+  .filter(Boolean);
+---
+
+<BaseLayout title={`${entry.title} / Architecture Codex / emptyinkpot`} description={entry.thesis}>
+  <main class="codex-detail" data-pagefind-body>
+    <nav class="codex-breadcrumb" aria-label="Codex path">
+      <a href={withBase('/codex/')}>Architecture Codex</a>
+      <span>{entry.title}</span>
+    </nav>
+
+    <header class="codex-detail__hero">
+      <p class="section-kicker">{entry.status} / System Design Archive</p>
+      <h1>{entry.title}</h1>
+      <p>{entry.thesis}</p>
+      <div class="codex-meta-line">
+        {entry.systems.map((item) => <span>{item}</span>)}
+      </div>
+    </header>
+
+    <section class="codex-record-grid" aria-label={`${entry.title} design record`}>
+      <article>
+        <span>Inspiration</span>
+        <h2>借鉴对象</h2>
+        <ul>
+          {entry.inspiration.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+
+      <article>
+        <span>Rejected</span>
+        <h2>拒绝的方案</h2>
+        <ul>
+          {entry.rejected.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+
+      <article>
+        <span>Runtime</span>
+        <h2>运行方式</h2>
+        <ul>
+          {entry.runtime.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+
+      <article>
+        <span>Tradeoff</span>
+        <h2>取舍</h2>
+        <ul>
+          {entry.tradeoffs.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+
+      <article class="codex-record-grid__wide">
+        <span>Future Direction</span>
+        <h2>后续方向</h2>
+        <ul>
+          {entry.future.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+    </section>
+
+    <section class="codex-related" aria-label="Related systems">
+      <p class="section-kicker">Related Systems</p>
+      <div>
+        {
+          relatedEntries.map((related) => (
+            <a href={getCodexHref(related.slug)}>
+              <span>{related.status}</span>
+              <strong>{related.title}</strong>
+              <small>{related.subtitle}</small>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>

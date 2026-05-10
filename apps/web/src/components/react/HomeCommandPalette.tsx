@@ -1,11 +1,14 @@
 import { Command } from 'cmdk';
 import { AnimatePresence, motion } from 'motion/react';
+import { createPortal } from 'react-dom';
+import type { MouseEvent } from 'react';
 import {
   BookOpen,
   Boxes,
   CircleUserRound,
   Code2,
   ExternalLink,
+  CircleHelp,
   Library,
   Music2,
   Search,
@@ -19,13 +22,16 @@ type HomeCommand = {
   label: string;
   description: string;
   href?: string;
-  action?: 'search';
+  action?: 'search' | 'openlist' | 'pinterest';
   icon: string;
 };
 
 type HomeCommandPaletteProps = {
   commands: HomeCommand[];
 };
+
+const RUNTIME_COMMAND_EVENT = 'runtime:command';
+const HOME_COMMAND_READY_ATTR = 'data-home-command-ready';
 
 const iconMap = {
   search: Search,
@@ -34,6 +40,7 @@ const iconMap = {
   github: ExternalLink,
   books: Library,
   music: Music2,
+  visuals: Boxes,
   knowledge: Code2,
   settings: Settings,
   profile: CircleUserRound,
@@ -42,9 +49,13 @@ const iconMap = {
 
 export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps) {
   const [open, setOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [helpPosition, setHelpPosition] = useState({ left: 12, top: 12 });
   const safeCommands = useMemo(() => commands.filter((command) => command.href || command.action), [commands]);
 
   useEffect(() => {
+    document.documentElement.setAttribute(HOME_COMMAND_READY_ATTR, 'true');
+
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
@@ -53,18 +64,46 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
 
       if (event.key === 'Escape') {
         setOpen(false);
+        setHelpOpen(false);
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.documentElement.removeAttribute(HOME_COMMAND_READY_ATTR);
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, []);
+
+  const dispatchRuntimeCommand = (kind: string, payload?: Record<string, unknown>) => {
+    window.dispatchEvent(
+      new CustomEvent(RUNTIME_COMMAND_EVENT, {
+        detail: {
+          kind,
+          source: 'HomeCommandPalette',
+          payload,
+          issuedAt: new Date().toISOString()
+        }
+      })
+    );
+  };
 
   const runCommand = (command: HomeCommand) => {
     setOpen(false);
 
     if (command.action === 'search') {
-      document.querySelector<HTMLElement>('[data-search-open]')?.click();
+      dispatchRuntimeCommand('search.open');
+      window.dispatchEvent(new CustomEvent('home-search-open'));
+      return;
+    }
+
+    if (command.action === 'openlist') {
+      window.dispatchEvent(new CustomEvent('openlist-embed-open'));
+      return;
+    }
+
+    if (command.action === 'pinterest') {
+      window.dispatchEvent(new CustomEvent('pinterest-embed-open'));
       return;
     }
 
@@ -73,13 +112,73 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
     }
   };
 
+  const toggleHelp = (event: MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setHelpPosition({
+      left: Math.min(window.innerWidth - 300, Math.max(12, rect.left)),
+      top: rect.bottom + 8
+    });
+    setHelpOpen((value) => !value);
+  };
+
   return (
     <div className="home-command">
       <button className="home-command__trigger" type="button" onClick={() => setOpen(true)}>
         <Search aria-hidden="true" size={15} />
-        <span>Command</span>
-        <kbd>Ctrl K</kbd>
+        <span>全局检索</span>
       </button>
+      <button
+        className="home-command__help"
+        type="button"
+        aria-label="查看快捷规则"
+        aria-expanded={helpOpen}
+        onClick={toggleHelp}
+      >
+        <CircleHelp aria-hidden="true" size={15} />
+      </button>
+
+      {typeof document !== 'undefined'
+        ? createPortal(
+            <AnimatePresence>
+              {helpOpen ? (
+                <motion.aside
+                  className="home-command__help-popover"
+                  style={{ left: helpPosition.left, top: helpPosition.top }}
+                  initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                  transition={{ duration: 0.14 }}
+                >
+                  <header>
+                    <strong>全局检索</strong>
+                    <button type="button" aria-label="关闭快捷规则" onClick={() => setHelpOpen(false)}>
+                      <X aria-hidden="true" size={14} />
+                    </button>
+                  </header>
+                  <dl>
+                    <div>
+                      <dt>Ctrl / Command + K</dt>
+                      <dd>打开全局检索，搜索入口、书架、文章、项目和本地标记。</dd>
+                    </div>
+                    <div>
+                      <dt>J / K</dt>
+                      <dd>在首页 Feed 里上下移动。</dd>
+                    </div>
+                    <div>
+                      <dt>Enter</dt>
+                      <dd>打开当前卡片的阅读抽屉。</dd>
+                    </div>
+                    <div>
+                      <dt>Esc</dt>
+                      <dd>关闭搜索、Command 或阅读抽屉。</dd>
+                    </div>
+                  </dl>
+                </motion.aside>
+              ) : null}
+            </AnimatePresence>,
+            document.body
+          )
+        : null}
 
       <AnimatePresence>
         {open ? (
@@ -106,7 +205,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
               <Command label="Home Command Palette">
                 <div className="home-command__input-row">
                   <Search aria-hidden="true" size={17} />
-                  <Command.Input placeholder="跳转文章、项目工坊、书架、音乐、GitHub、Knowledge..." autoFocus />
+                  <Command.Input placeholder="搜索或跳转：文章、项目、书架、音乐、GitHub、Knowledge、本地标记..." autoFocus />
                   <button type="button" aria-label="关闭" onClick={() => setOpen(false)}>
                     <X aria-hidden="true" size={16} />
                   </button>
@@ -114,7 +213,7 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
 
                 <Command.List className="home-command__list">
                   <Command.Empty className="home-command__empty">没有匹配的入口。</Command.Empty>
-                  <Command.Group heading="Content OS">
+                  <Command.Group heading="全局检索">
                     {safeCommands.map((command) => {
                       const Icon = iconMap[command.icon as keyof typeof iconMap] ?? ExternalLink;
 
