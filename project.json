@@ -18,6 +18,7 @@
   "adminAppRoot": "apps/admin-next",
   "androidShellRoot": "apps/android-shell",
   "runtimeContractRoot": "packages/runtime-contract",
+  "runtimeDatabaseApiContract": "contracts/runtime-database-api-contract.json",
   "runtimeConstitution": {
     "status": "active",
     "aiEntry": "AI_RULES.md",
