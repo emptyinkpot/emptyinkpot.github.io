@@ -3,9 +3,10 @@
   "workspaceId": "myblog-canonical-active",
   "workspaceType": "canonical",
   "profile": "workspaces/canonical.json",
-  "root": "/srv/myblog/repo",
+  "root": "/home/ubuntu/workspaces/MyBlog",
   "allowedRoots": [
-    "/srv/myblog/repo"
+    "/srv/myblog/repo",
+    "/home/ubuntu/workspaces/MyBlog"
   ],
   "capabilities": {
     "canBuild": true,
@@ -39,6 +40,7 @@
       "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*",
       "E:\\My Project\\MyBlog"
     ],
-    "incidentReference": "2026-05-07 stale worktree deploy regression"
+    "incidentReference": "2026-05-07 stale worktree deploy regression",
+    "sourceWorkspace": "/home/ubuntu/workspaces/MyBlog"
   }
 }

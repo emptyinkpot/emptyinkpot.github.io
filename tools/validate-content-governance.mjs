@@ -43,6 +43,7 @@ function validateRuntimeArticles() {
   }
 
   const index = JSON.parse(readText(runtimeContentIndexPath));
+  const publicPayload = index?.stats?.publicPayload === 'metadata-only';
   const articles = Array.isArray(index.articles) ? index.articles : [];
 
   if (!articles.length) {
@@ -75,8 +76,15 @@ function validateRuntimeArticles() {
       issues.push(`Runtime article is missing date: ${label}`);
     }
 
-    if (!article?.body && !article?.html) {
+    if (!publicPayload && !article?.body && !article?.html) {
       issues.push(`Runtime article must provide body or html: ${label}`);
+    }
+
+    if (publicPayload && article?.detailPath) {
+      const detailPath = resolvePath(`public-data/runtime/${article.detailPath}`);
+      if (!fs.existsSync(detailPath)) {
+        issues.push(`Runtime metadata article is missing detail payload: ${label}`);
+      }
     }
 
     if (article?.projection?.feed !== true) {

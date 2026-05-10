@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "workspaceType": "canonical",
   "description": "Authoritative remote source workspace. It may edit runtime authority, PWA surface, OpenList contracts and deployment scripts.",
-  "defaultRoot": "/srv/myblog/repo",
+  "defaultRoot": "/home/ubuntu/workspaces/MyBlog",
   "capabilities": {
     "canBuild": true,
     "canDeploy": true,
@@ -24,5 +24,6 @@
     "architecture-codex",
     "deployment"
   ],
-  "forbiddenFeatures": []
+  "forbiddenFeatures": [],
+  "legacyRoot": "/srv/myblog/repo"
 }

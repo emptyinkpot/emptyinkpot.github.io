@@ -20,8 +20,7 @@ export async function buildRuntimeContentIndex(options = {}) {
   const generatedAt = options.generatedAt || new Date().toISOString();
 
   if (!fs.existsSync(vaultRoot)) {
-    console.log(`Vault root not found: ${vaultRoot}`);
-    return { index: null, files: [] };
+    return reuseExistingRuntimeIndex({ rootDir, publicDataRoot, webPublicRoot, vaultRoot });
   }
 
   const articles = (
@@ -78,6 +77,35 @@ if (isMain()) {
     console.error(error.message);
     process.exit(1);
   });
+}
+
+function reuseExistingRuntimeIndex({ rootDir, publicDataRoot, webPublicRoot, vaultRoot }) {
+  const fullIndexPath = path.join(publicDataRoot, 'content-index.json');
+  const publicIndexPath = path.join(webPublicRoot, 'content-index.json');
+  const candidates = [fullIndexPath, publicIndexPath, path.join(rootDir, 'public/runtime/content-index.json')];
+  const existingIndexPath = candidates.find((candidate) => fs.existsSync(candidate));
+
+  if (!existingIndexPath) {
+    console.log(`Vault root not found and no existing runtime index is available: ${vaultRoot}`);
+    return { index: null, files: [] };
+  }
+
+  fs.mkdirSync(publicDataRoot, { recursive: true });
+  fs.mkdirSync(webPublicRoot, { recursive: true });
+
+  if (existingIndexPath !== fullIndexPath) {
+    fs.copyFileSync(existingIndexPath, fullIndexPath);
+  }
+  if (existingIndexPath !== publicIndexPath) {
+    fs.copyFileSync(existingIndexPath, publicIndexPath);
+  }
+
+  console.log(`Vault root not found: ${vaultRoot}`);
+  console.log(`Reusing existing runtime content index: ${path.relative(rootDir, existingIndexPath)}`);
+  return {
+    index: JSON.parse(fs.readFileSync(existingIndexPath, 'utf8')),
+    files: [fullIndexPath, publicIndexPath]
+  };
 }
 
 async function toRuntimeArticle(
