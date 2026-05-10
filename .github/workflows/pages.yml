@@ -39,6 +39,12 @@ jobs:
         run: npm ci
         working-directory: apps/web
 
+      - name: Seed runtime content index
+        run: |
+          mkdir -p public-data/runtime apps/web/public/runtime
+          curl -fsSL https://blog.tengokukk.com/runtime/content-index.json -o public-data/runtime/content-index.json
+          cp public-data/runtime/content-index.json apps/web/public/runtime/content-index.json
+
       - name: Validate repository governance
         run: npm run check
 

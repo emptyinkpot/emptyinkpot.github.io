@@ -5,6 +5,7 @@
   "profile": "workspaces/canonical.json",
   "root": "/srv/myblog/repo",
   "allowedRoots": [
+    "/home/ubuntu/workspaces/MyBlog-production-integration",
     "/srv/myblog/repo"
   ],
   "capabilities": {
@@ -39,6 +40,8 @@
       "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*",
       "E:\\My Project\\MyBlog"
     ],
-    "incidentReference": "2026-05-07 stale worktree deploy regression"
-  }
+    "incidentReference": "2026-05-07 stale worktree deploy regression",
+    "sourceWorkspace": "/srv/myblog/repo"
+  },
+  "integrationWorkspace": "/home/ubuntu/workspaces/MyBlog-production-integration"
 }
