@@ -17,7 +17,9 @@
     "check:updates": "node tools/validate-update-log.mjs",
     "check:content": "node tools/validate-content-governance.mjs",
     "check:governance": "node tools/validate-repo-governance.mjs",
-    "check": "npm run check:updates && npm run check:content && npm run check:governance && npm run check:github-overview"
+    "check": "npm run check:workspace && npm run check:updates && npm run check:content && npm run check:governance && npm run check:github-overview",
+    "check:workspace": "node tools/deploy-guard.mjs --check",
+    "build:runtime-index": "node tools/build-runtime-content-index.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

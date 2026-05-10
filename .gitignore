@@ -10,3 +10,6 @@ public/
 !apps/web/public/**
 .deploy*/
 _multiconfig.yml
+
+public-data/runtime/
+apps/web/public/runtime/
