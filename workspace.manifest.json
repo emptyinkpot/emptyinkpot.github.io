@@ -41,6 +41,10 @@
       "E:\\My Project\\MyBlog"
     ],
     "incidentReference": "2026-05-07 stale worktree deploy regression",
-    "sourceWorkspace": "/srv/myblog/repo"
+    "sourceWorkspace": "/srv/myblog/repo",
+    "requireCleanTree": true,
+    "requireMainBranch": true,
+    "requireOriginMainSync": true,
+    "requireDeploymentAuthority": true
   }
 }

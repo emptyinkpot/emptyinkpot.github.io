@@ -58,15 +58,16 @@ edit /srv/myblog/repo on 124.220.233.126
 -> npm run check:workspace
 -> npm run check:governance
 -> npm run check or targeted checks
+-> git status must be clean
+-> branch must be main and HEAD must match origin/main
 -> commit in /srv/myblog/repo
 -> push to GitHub
--> open/merge PR for GitHub source recovery
--> npm run deploy:site from the production-authorized workspace when publishing to blog.tengokukk.com
+-> deploy only with npm run deploy:site from the production-authorized workspace when publishing to blog.tengokukk.com
 ```
 
 The deployment command builds `apps/web/dist`, uploads it to a remote temp directory, and replaces `/srv/myblog/site` while preserving `/srv/myblog/site/runtime`.
 
-Do not deploy through manual `tar`, `scp`, or ad hoc `rsync` from unchecked worktrees. `npm run deploy:site` is the normal guarded publish path.
+Do not deploy through manual `tar`, `scp`, or ad hoc `rsync` from unchecked worktrees. `npm run deploy:site` is the only publish path, and it now refuses dirty trees, non-main branches, and trees that are not synced to `origin/main`.
 
 ## Runtime Directories Not Source
 

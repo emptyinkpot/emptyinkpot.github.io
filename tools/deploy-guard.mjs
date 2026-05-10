@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import cp from 'node:child_process';
 
 const rootDir = process.cwd();
 const args = new Set(process.argv.slice(2));
@@ -23,6 +24,10 @@ const currentRoot = normalizePath(rootDir);
 const allowedRoots = [manifest.root, ...(manifest.allowedRoots ?? [])]
   .filter(Boolean)
   .map(normalizePath);
+const currentBranch = readGit(['branch', '--show-current']).trim();
+const headCommit = readGit(['rev-parse', 'HEAD']).trim();
+const originMain = readGit(['rev-parse', 'origin/main']).trim();
+const statusOutput = readGit(['status', '--porcelain=v1']);
 
 requireField('workspaceId');
 requireField('workspaceType');
@@ -60,6 +65,15 @@ if (intent === 'deploy') {
   if (!manifest.deployment?.buildOutputRoot) {
     issues.push('Deployment manifest is missing deployment.buildOutputRoot.');
   }
+  if (manifest.deployment?.requireCleanTree !== false && statusOutput.trim()) {
+    issues.push('Deployment requires a clean git working tree.');
+  }
+  if (manifest.deployment?.requireMainBranch !== false && currentBranch !== 'main') {
+    issues.push(`Deployment requires branch main, but current branch is ${currentBranch || '[detached HEAD]'}.`);
+  }
+  if (manifest.deployment?.requireOriginMainSync !== false && headCommit !== originMain) {
+    issues.push(`Deployment requires HEAD to match origin/main, but HEAD=${headCommit} and origin/main=${originMain}.`);
+  }
 }
 
 if (issues.length) {
@@ -78,6 +92,14 @@ function requireField(field) {
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function readGit(args) {
+  const result = cp.spawnSync('git', args, { cwd: rootDir, encoding: 'utf8' });
+  if (result.status !== 0) {
+    throw new Error((result.stderr || result.stdout || 'git command failed').trim());
+  }
+  return result.stdout || '';
 }
 
 function normalizePath(value) {
