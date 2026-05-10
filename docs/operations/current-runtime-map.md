@@ -9,7 +9,7 @@ This document records where MyBlog is edited, deployed, and integrated. It is an
 | GitHub repository | `https://github.com/emptyinkpot/emptyinkpot.github.io` | Long-term Git truth and collaboration. |
 | Active production source branch | `backup/production-myblog-source-20260510` / integration PR branch | Production source is now preserved on GitHub and must be integrated before main deploys production. |
 | Local source root | none | `E:\My Project\MyBlog` is retired/deleted; future local clones are mirrors only. |
-| Production source root | `ubuntu@124.220.233.126:/srv/myblog/repo` | Current production-capable source workspace. |
+| Production source root | `ubuntu@124.220.233.126:/home/ubuntu/workspaces/MyBlog` | Current production-capable source workspace. |
 | Integration source root | `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` | Clean integration worktree used to repair GitHub/main drift. |
 | Static runtime root | `/srv/myblog/site` | Nginx-served production static root. |
 | Legacy source copy | `/srv/myblog/source` | Non-canonical server-side copy; do not treat as source truth. |
@@ -18,13 +18,13 @@ This document records where MyBlog is edited, deployed, and integrated. It is an
 
 | Item | Value | Notes |
 | --- | --- | --- |
-| Production IDE / edit target | `ubuntu@124.220.233.126:/srv/myblog/repo` | Use this for production runtime/deploy work. |
+| Production IDE / edit target | `ubuntu@124.220.233.126:/home/ubuntu/workspaces/MyBlog` | Use this for production runtime/deploy work. |
 | Integration IDE / edit target | `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` | Use this for GitHub recovery and PR integration work. |
 | Repository-local deploy key | `/home/ubuntu/.ssh/myblog_source_ed25519` | Bound through repo-local `core.sshCommand`; do not assume server-global GitHub auth. |
 | Git remote URL | `git@github.com:emptyinkpot/emptyinkpot.github.io.git` | SSH remote is expected after deploy-key setup. |
 | Local Windows checkout | mirror only | A local clone may inspect, diff, or recover delivery when SSH is down, but it is not source authority. |
 
-If SSH to `124.220.233.126` fails, do not silently promote a local clone back to canonical. Record the SSH outage, use GitHub as the delivery surface if needed, and reconcile `/srv/myblog/repo` and the server-170 integration workspace as soon as SSH is restored.
+If SSH to `124.220.233.126` fails, do not silently promote a local clone back to canonical. Record the SSH outage, use GitHub as the delivery surface if needed, and reconcile `/home/ubuntu/workspaces/MyBlog` and the server-170 integration workspace as soon as SSH is restored.
 
 ## Public URLs
 
@@ -54,11 +54,11 @@ Known issue:
 Preferred workflow:
 
 ```text
-edit /srv/myblog/repo on 124.220.233.126, or use /home/ubuntu/workspaces/MyBlog-production-integration on server-170 for GitHub recovery
+edit /home/ubuntu/workspaces/MyBlog on 124.220.233.126, or use /home/ubuntu/workspaces/MyBlog-production-integration on server-170 for GitHub recovery
 -> npm run check:workspace
 -> npm run check:governance
 -> npm run check or targeted checks
--> commit in /srv/myblog/repo
+-> commit in /home/ubuntu/workspaces/MyBlog
 -> push to GitHub
 -> open/merge PR for GitHub source recovery
 -> npm run deploy:site from the production-authorized workspace when publishing to blog.tengokukk.com
@@ -80,14 +80,14 @@ Do not commit or edit these as source truth:
 
 ## Known Transitional State
 
-- `/srv/myblog/repo` was restored as the canonical server workspace while GitHub clone transport was unstable.
+- `/home/ubuntu/workspaces/MyBlog` was restored as the canonical server workspace while GitHub clone transport was unstable.
 - GitHub deploy-key authentication for MyBlog is repo-local and should be verified with `git ls-remote origin refs/heads/feat/content-runtime-governance`.
-- Once SSH and GitHub transport are stable, `/srv/myblog/repo` should be checked against GitHub history and fast-forwarded or recloned without changing the source authority rule.
+- Once SSH and GitHub transport are stable, `/home/ubuntu/workspaces/MyBlog` should be checked against GitHub history and fast-forwarded or recloned without changing the source authority rule.
 
 ## Verification Commands
 
 ```bash
-cd /srv/myblog/repo
+cd /home/ubuntu/workspaces/MyBlog
 npm run check:workspace
 npm run check:governance
 npm run check
@@ -143,4 +143,4 @@ This table is intended to store personal account/password/API-key style informat
 
 ## 2026-05-10 Source Drift Incident
 
-GitHub main temporarily lagged the production-capable source tree. The production source state from `/srv/myblog/repo` was preserved on GitHub as `backup/production-myblog-source-20260510` and PR #42. Do not deploy GitHub Pages artifacts over `/srv/myblog/site` unless the production source tree has first been integrated and verified.
+GitHub main temporarily lagged the production-capable source tree. The production source state from `/home/ubuntu/workspaces/MyBlog` was preserved on GitHub as `backup/production-myblog-source-20260510` and PR #42. Do not deploy GitHub Pages artifacts over `/srv/myblog/site` unless the production source tree has first been integrated and verified.
