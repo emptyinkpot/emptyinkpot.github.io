@@ -48,7 +48,7 @@ export async function ensureRuntimeSchema() {
     const db = pool;
     if (!db) throw new Error("Runtime database pool is not initialized.");
 
-    await db.execute(`
+    await db.query(`
       CREATE TABLE IF NOT EXISTS reader_memory (
         object_id VARCHAR(191) PRIMARY KEY,
         object_type VARCHAR(32) NOT NULL,
@@ -65,7 +65,7 @@ export async function ensureRuntimeSchema() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
 
-    await db.execute(`
+    await db.query(`
       CREATE TABLE IF NOT EXISTS reader_highlights (
         id VARCHAR(191) PRIMARY KEY,
         object_id VARCHAR(191) NOT NULL,
@@ -82,7 +82,7 @@ export async function ensureRuntimeSchema() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
 
-    await db.execute(`
+    await db.query(`
       CREATE TABLE IF NOT EXISTS visual_sources (
         id VARCHAR(191) PRIMARY KEY,
         source_type VARCHAR(48) NOT NULL,
@@ -108,7 +108,7 @@ export async function ensureRuntimeSchema() {
 
     await ensureColumn(db, "visual_sources", "provider_config_json", "provider_config_json JSON NULL AFTER board_id");
 
-    await db.execute(`
+    await db.query(`
       CREATE TABLE IF NOT EXISTS visual_pins (
         source_id VARCHAR(191) NOT NULL,
         pin_id VARCHAR(191) NOT NULL,
@@ -129,7 +129,7 @@ export async function ensureRuntimeSchema() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
 
-    await db.execute(`
+    await db.query(`
       CREATE TABLE IF NOT EXISTS visual_sync_runs (
         id VARCHAR(191) PRIMARY KEY,
         source_id VARCHAR(191) NOT NULL,
@@ -150,7 +150,7 @@ export async function ensureRuntimeSchema() {
 }
 
 async function ensureColumn(db, table, column, definition) {
-  const [rows] = await db.execute(
+  const [rows] = await db.query(
     `
       SELECT COLUMN_NAME
       FROM INFORMATION_SCHEMA.COLUMNS
@@ -160,7 +160,7 @@ async function ensureColumn(db, table, column, definition) {
     [table, column],
   );
   if (!rows.length) {
-    await db.execute(`ALTER TABLE ${table} ADD COLUMN ${definition}`);
+    await db.query(`ALTER TABLE ${table} ADD COLUMN ${definition}`);
   }
 }
 

@@ -96,3 +96,19 @@ Operational checks:
 systemctl status myblog-admin-next.service myblog-runtime-content-projector.service myblog-runtime-sse.service nginx.service
 systemctl status syncthing@ubuntu.service
 ```
+
+## Runtime Database Boundary
+
+MyBlog's active runtime database is Tencent Cloud CynosDB Serverless MySQL, not the local MariaDB service and not an OpenList/Quark/COS file store.
+
+| Item | Value | Notes |
+| --- | --- | --- |
+| Runtime DB type | `CynosDB MySQL 8.0` | Serverless Tencent Cloud MySQL-compatible database. |
+| Cluster id | `cynosdbmysql-no0zqua0` | Control-plane identifier. |
+| Public endpoint | `124.220.245.121:22295` | Current `/etc/myblog-admin-next.env` target. |
+| Database | `cloudbase-4glvyyq9f61b19cd` | Current `MYBLOG_DB_NAME`. |
+| Service owner | `apps/admin-next` | Reads `MYBLOG_DB_*` from `/etc/myblog-admin-next.env`. |
+| Schema owner | `apps/admin-next/lib/runtime-db.js` | Creates/checks runtime tables idempotently. |
+| Local MariaDB | `127.0.0.1:3306` | Running on the server, but not the active MyBlog Runtime DB. |
+
+Runtime DB owns dynamic state only: reader memory, highlights, visual source indexes, visual pins and visual sync runs. It must not store article bodies, EPUB/PDF/image/video blobs, OpenList files, COS objects, Quark files, Astro dist, Pagefind output, or Syncthing hot mirror data.
