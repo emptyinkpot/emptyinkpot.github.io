@@ -23,3 +23,5 @@
 - 新的实施方案、架构设计与结构性决策优先进入 `docs/architecture/`
 - 过程记录不要写回这里，改放入 `docs/maintenance/`
 - 仓库级治理规则不要写回这里，改放入 `docs/governance/`
+
+- [Runtime Database API Contract](runtime-database-api-contract.md)
