@@ -124,3 +124,16 @@ MYBLOG_DB_NAME=cloudbase-4glvyyq9f61b19cd
 ```
 
 The private CynosDB endpoint `172.17.0.3:3306` was not routable from the current Lighthouse host during the 2026-05-10 check, so production currently uses the public endpoint. Revisit VPC routing before switching to the private endpoint.
+
+## Plaintext Personal Information Store
+
+MyBlog Runtime DB includes a dedicated plaintext personal information table by operator requirement.
+
+| Item | Value |
+| --- | --- |
+| Table | `personal_secret_entries` |
+| Plaintext value column | `secret_value` |
+| Mode | `plaintext-by-user-requirement` |
+| Database | `cloudbase-4glvyyq9f61b19cd` |
+
+This table is intended to store personal account/password/API-key style information as readable text in MySQL. Real values must be inserted into MySQL only; do not place actual passwords, cookies, tokens, or API keys in Git, README examples, screenshots, or logs.

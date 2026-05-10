@@ -4471,3 +4471,10 @@ MYBLOG_DB_NAME=cloudbase-4glvyyq9f61b19cd
 MySQL 只承担 Runtime State：`reader_memory`、`reader_highlights`、`visual_sources`、`visual_pins`、`visual_sync_runs`。OpenList / COS / 夸克网盘保存文件和 blob identity，Obsidian/Vault 保存写作真源，MySQL 保存阅读进度、高亮、视觉索引和同步运行记录。
 
 禁止把 Markdown 正文、EPUB/PDF/图片/视频 blob、OpenList 文件对象、COS 对象、夸克文件、Astro dist、Pagefind 输出或 Syncthing 热镜像放入 MySQL。
+
+
+### Plaintext Personal Information Store
+
+MyBlog 的 MySQL Runtime Layer 包含专门的明文个人信息表：`personal_secret_entries`。其中 `secret_value` 字段按你的要求保存可读明文，适合放账号密码、个人 token、API key、登录备注等需要由你直接读取的信息。
+
+真实值只进入 MySQL，不进入 Git、README、截图或日志。

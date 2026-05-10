@@ -144,6 +144,30 @@ export async function ensureRuntimeSchema() {
         INDEX idx_visual_sync_runs_source_started (source_id, started_at)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
+
+
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS personal_secret_entries (
+        id VARCHAR(191) PRIMARY KEY,
+        namespace VARCHAR(96) NOT NULL DEFAULT 'default',
+        label VARCHAR(191) NOT NULL,
+        account VARCHAR(191) NULL,
+        secret_type VARCHAR(48) NOT NULL DEFAULT 'password',
+        secret_value LONGTEXT NOT NULL,
+        url TEXT NULL,
+        note TEXT NULL,
+        tags_json JSON NULL,
+        metadata_json JSON NULL,
+        visibility VARCHAR(32) NOT NULL DEFAULT 'private',
+        created_at DATETIME(3) NOT NULL,
+        updated_at DATETIME(3) NOT NULL,
+        last_used_at DATETIME(3) NULL,
+        deleted_at DATETIME(3) NULL,
+        INDEX idx_personal_secret_namespace (namespace, deleted_at, updated_at),
+        INDEX idx_personal_secret_label (label),
+        INDEX idx_personal_secret_type (secret_type, deleted_at)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
   })();
 
   return schemaReady;

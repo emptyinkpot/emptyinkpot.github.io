@@ -155,7 +155,8 @@
         "reader_highlights",
         "visual_sources",
         "visual_pins",
-        "visual_sync_runs"
+        "visual_sync_runs",
+        "personal_secret_entries"
       ],
       "owns": [
         "reader progress and last-read state",
@@ -174,6 +175,16 @@
         "Syncthing hot mirror files"
       ],
       "integrationRole": "dynamic runtime state layer beside OpenList/COS/Quark file storage and Obsidian content truth"
+    },
+    "plaintextPersonalSecretStore": {
+      "status": "active-schema",
+      "table": "personal_secret_entries",
+      "valueColumn": "secret_value",
+      "storageMode": "plaintext-by-user-requirement",
+      "purpose": "store personal account/password/API-key style information directly in MySQL as readable text",
+      "owner": "apps/admin-next / MySQL Runtime Layer",
+      "database": "cloudbase-4glvyyq9f61b19cd",
+      "warning": "Values are intentionally stored as plaintext in MySQL; do not commit real values to Git or logs."
     }
   },
   "stabilizationSprint": {
@@ -1122,7 +1133,8 @@
         "reader_highlights",
         "visual_sources",
         "visual_pins",
-        "visual_sync_runs"
+        "visual_sync_runs",
+        "personal_secret_entries"
       ],
       "owns": [
         "reader progress and last-read state",
@@ -1141,6 +1153,16 @@
         "Syncthing hot mirror files"
       ],
       "integrationRole": "dynamic runtime state layer beside OpenList/COS/Quark file storage and Obsidian content truth"
+    },
+    "plaintextPersonalSecretStore": {
+      "status": "active-schema",
+      "table": "personal_secret_entries",
+      "valueColumn": "secret_value",
+      "storageMode": "plaintext-by-user-requirement",
+      "purpose": "store personal account/password/API-key style information directly in MySQL as readable text",
+      "owner": "apps/admin-next / MySQL Runtime Layer",
+      "database": "cloudbase-4glvyyq9f61b19cd",
+      "warning": "Values are intentionally stored as plaintext in MySQL; do not commit real values to Git or logs."
     }
   },
   "projectCollaborationRuntime": {
@@ -2341,7 +2363,8 @@
       "reader_highlights",
       "visual_sources",
       "visual_pins",
-      "visual_sync_runs"
+      "visual_sync_runs",
+      "personal_secret_entries"
     ],
     "owns": [
       "reader progress and last-read state",
@@ -2359,6 +2382,16 @@
       "Astro dist or Pagefind output",
       "Syncthing hot mirror files"
     ],
-    "integrationRole": "dynamic runtime state layer beside OpenList/COS/Quark file storage and Obsidian content truth"
+    "integrationRole": "dynamic runtime state layer beside OpenList/COS/Quark file storage and Obsidian content truth",
+    "plaintextPersonalSecretStore": {
+      "status": "active-schema",
+      "table": "personal_secret_entries",
+      "valueColumn": "secret_value",
+      "storageMode": "plaintext-by-user-requirement",
+      "purpose": "store personal account/password/API-key style information directly in MySQL as readable text",
+      "owner": "apps/admin-next / MySQL Runtime Layer",
+      "database": "cloudbase-4glvyyq9f61b19cd",
+      "warning": "Values are intentionally stored as plaintext in MySQL; do not commit real values to Git or logs."
+    }
   }
 }
