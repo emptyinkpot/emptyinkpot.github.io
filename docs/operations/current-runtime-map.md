@@ -7,9 +7,10 @@ This document records where MyBlog is edited, deployed, and integrated. It is an
 | Surface | Value | Notes |
 | --- | --- | --- |
 | GitHub repository | `https://github.com/emptyinkpot/emptyinkpot.github.io` | Long-term Git truth and collaboration. |
-| Active branch at migration | `feat/content-runtime-governance` | Current remote workspace branch. |
+| Active production source branch | `backup/production-myblog-source-20260510` / integration PR branch | Production source is now preserved on GitHub and must be integrated before main deploys production. |
 | Local source root | none | `E:\My Project\MyBlog` is retired/deleted; future local clones are mirrors only. |
-| Remote source root | `ubuntu@124.220.233.126:/srv/myblog/repo` | Canonical editable source workspace. |
+| Production source root | `ubuntu@124.220.233.126:/srv/myblog/repo` | Current production-capable source workspace. |
+| Integration source root | `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` | Clean integration worktree used to repair GitHub/main drift. |
 | Static runtime root | `/srv/myblog/site` | Nginx-served production static root. |
 | Legacy source copy | `/srv/myblog/source` | Non-canonical server-side copy; do not treat as source truth. |
 
@@ -17,12 +18,13 @@ This document records where MyBlog is edited, deployed, and integrated. It is an
 
 | Item | Value | Notes |
 | --- | --- | --- |
-| Remote IDE / edit target | `ubuntu@124.220.233.126:/srv/myblog/repo` | Use this as the default editing root for Codex/Claude/operator work. |
+| Production IDE / edit target | `ubuntu@124.220.233.126:/srv/myblog/repo` | Use this for production runtime/deploy work. |
+| Integration IDE / edit target | `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` | Use this for GitHub recovery and PR integration work. |
 | Repository-local deploy key | `/home/ubuntu/.ssh/myblog_source_ed25519` | Bound through repo-local `core.sshCommand`; do not assume server-global GitHub auth. |
 | Git remote URL | `git@github.com:emptyinkpot/emptyinkpot.github.io.git` | SSH remote is expected after deploy-key setup. |
 | Local Windows checkout | mirror only | A local clone may inspect, diff, or recover delivery when SSH is down, but it is not source authority. |
 
-If SSH to `124.220.233.126` fails, do not silently promote a local clone back to canonical. Record the SSH outage, use GitHub as the delivery surface if needed, and fast-forward `/srv/myblog/repo` as soon as SSH is restored.
+If SSH to `124.220.233.126` fails, do not silently promote a local clone back to canonical. Record the SSH outage, use GitHub as the delivery surface if needed, and reconcile `/srv/myblog/repo` and the server-170 integration workspace as soon as SSH is restored.
 
 ## Public URLs
 
@@ -52,13 +54,14 @@ Known issue:
 Preferred workflow:
 
 ```text
-edit /srv/myblog/repo on 124.220.233.126
+edit /srv/myblog/repo on 124.220.233.126, or use /home/ubuntu/workspaces/MyBlog-production-integration on server-170 for GitHub recovery
 -> npm run check:workspace
 -> npm run check:governance
 -> npm run check or targeted checks
 -> commit in /srv/myblog/repo
 -> push to GitHub
--> npm run deploy:site when publishing static shell changes
+-> open/merge PR for GitHub source recovery
+-> npm run deploy:site from the production-authorized workspace when publishing to blog.tengokukk.com
 ```
 
 The deployment command builds `apps/web/dist`, uploads it to a remote temp directory, and replaces `/srv/myblog/site` while preserving `/srv/myblog/site/runtime`.
@@ -137,3 +140,7 @@ MyBlog Runtime DB includes a dedicated plaintext personal information table by o
 | Database | `cloudbase-4glvyyq9f61b19cd` |
 
 This table is intended to store personal account/password/API-key style information as readable text in MySQL. Real values must be inserted into MySQL only; do not place actual passwords, cookies, tokens, or API keys in Git, README examples, screenshots, or logs.
+
+## 2026-05-10 Source Drift Incident
+
+GitHub main temporarily lagged the production-capable source tree. The production source state from `/srv/myblog/repo` was preserved on GitHub as `backup/production-myblog-source-20260510` and PR #42. Do not deploy GitHub Pages artifacts over `/srv/myblog/site` unless the production source tree has first been integrated and verified.

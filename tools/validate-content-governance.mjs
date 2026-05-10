@@ -8,6 +8,7 @@ const publicRuntimeContentIndexPath = resolvePath(`${appDir}/public/runtime/cont
 const rssPagePath = resolvePath(`${appDir}/src/pages/rss.xml.ts`);
 const searchPagePath = resolvePath(`${appDir}/src/pages/search.astro`);
 const issues = [];
+const isCi = process.env.GITHUB_ACTIONS === 'true' || process.env.CI === 'true';
 const slugOwners = new Map();
 
 validateRuntimeIndexJson(runtimeContentIndexPath, 'Runtime article index');
@@ -43,6 +44,7 @@ function validateRuntimeArticles() {
   }
 
   const index = JSON.parse(readText(runtimeContentIndexPath));
+  const publicPayload = index?.stats?.publicPayload === 'metadata-only';
   const articles = Array.isArray(index.articles) ? index.articles : [];
 
   if (!articles.length) {
@@ -75,9 +77,12 @@ function validateRuntimeArticles() {
       issues.push(`Runtime article is missing date: ${label}`);
     }
 
-    if (!article?.body && !article?.html) {
+    if (!publicPayload && !article?.body && !article?.html) {
       issues.push(`Runtime article must provide body or html: ${label}`);
     }
+
+    // Metadata-only public runtime indexes can be seeded from the live site in CI
+    // or remote IDE worktrees without copying every article detail payload.
 
     if (article?.projection?.feed !== true) {
       issues.push(`Runtime article is not enabled for feed projection: ${label}`);

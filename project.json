@@ -185,7 +185,12 @@
       "owner": "apps/admin-next / MySQL Runtime Layer",
       "database": "cloudbase-4glvyyq9f61b19cd",
       "warning": "Values are intentionally stored as plaintext in MySQL; do not commit real values to Git or logs."
-    }
+    },
+    "productionSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
+    "remoteIntegrationRoot": "server-170:/home/ubuntu/workspaces/MyBlog-production-integration",
+    "productionSiteRoot": "/srv/myblog/site",
+    "githubProductionBackupBranch": "backup/production-myblog-source-20260510",
+    "githubProductionBackupPr": "https://github.com/emptyinkpot/emptyinkpot.github.io/pull/42"
   },
   "stabilizationSprint": {
     "status": "active",
@@ -1608,7 +1613,9 @@
     "treat server runtime directories as long-term source of truth",
     "publish without lint-check-build quality gate",
     "declare analytics or tracing as active without verification",
-    "write local preview URLs as canonical public entry"
+    "write local preview URLs as canonical public entry",
+    "deploy GitHub Pages artifact over /srv/myblog/site before production source integration",
+    "treat GitHub main as production-complete without checking /srv/myblog/repo"
   ],
   "platformRoadmap": [
     "observability layer",
@@ -2393,5 +2400,6 @@
       "database": "cloudbase-4glvyyq9f61b19cd",
       "warning": "Values are intentionally stored as plaintext in MySQL; do not commit real values to Git or logs."
     }
-  }
+  },
+  "remoteIntegrationRoot": "server-170:/home/ubuntu/workspaces/MyBlog-production-integration"
 }
