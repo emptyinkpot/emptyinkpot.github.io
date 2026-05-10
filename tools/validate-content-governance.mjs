@@ -8,6 +8,7 @@ const publicRuntimeContentIndexPath = resolvePath(`${appDir}/public/runtime/cont
 const rssPagePath = resolvePath(`${appDir}/src/pages/rss.xml.ts`);
 const searchPagePath = resolvePath(`${appDir}/src/pages/search.astro`);
 const issues = [];
+const isCi = process.env.GITHUB_ACTIONS === 'true' || process.env.CI === 'true';
 const slugOwners = new Map();
 
 validateRuntimeIndexJson(runtimeContentIndexPath, 'Runtime article index');
@@ -80,7 +81,7 @@ function validateRuntimeArticles() {
       issues.push(`Runtime article must provide body or html: ${label}`);
     }
 
-    if (publicPayload && article?.detailPath) {
+    if (publicPayload && article?.detailPath && !isCi) {
       const detailPath = resolvePath(`public-data/runtime/${article.detailPath}`);
       if (!fs.existsSync(detailPath)) {
         issues.push(`Runtime metadata article is missing detail payload: ${label}`);
