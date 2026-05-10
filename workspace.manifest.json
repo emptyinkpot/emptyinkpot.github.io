@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "workspaceId": "myblog-canonical-active",
+  "workspaceType": "canonical",
+  "profile": "workspaces/canonical.json",
+  "root": "/home/ubuntu/workspaces/MyBlog",
+  "allowedRoots": [
+    "/home/ubuntu/workspaces/MyBlog",
+    "/home/ubuntu/workspaces/MyBlog-main-integration"
+  ],
+  "capabilities": {
+    "canBuild": true,
+    "canDeploy": true,
+    "canModifyRuntime": true,
+    "canTouchPWA": true,
+    "canModifyRuntimeSchema": true,
+    "canModifyOpenListAuthority": true
+  },
+  "deploymentAuthority": true,
+  "allowedFeatures": [
+    "frontend-ui",
+    "reader-runtime",
+    "runtime-books",
+    "openlist-authority",
+    "pinterest-shell",
+    "pwa",
+    "search-index",
+    "runtime-schema",
+    "architecture-codex",
+    "deployment"
+  ],
+  "forbiddenFeatures": [],
+  "deployment": {
+    "guard": "tools/deploy-guard.mjs",
+    "command": "npm run deploy:site",
+    "target": "GitHub Pages from main branch; historical live mirror ubuntu@124.220.233.126:/srv/myblog/site",
+    "buildOutputRoot": "apps/web/dist",
+    "remoteTempRoot": "/tmp/myblog-dist-upload",
+    "forbiddenSources": [
+      "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*",
+      "E:\\My Project\\MyBlog"
+    ],
+    "incidentReference": "2026-05-07 stale worktree deploy regression",
+    "sourceWorkspace": "/home/ubuntu/workspaces/MyBlog"
+  }
+}

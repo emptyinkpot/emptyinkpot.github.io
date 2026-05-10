@@ -1,23 +1,89 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { architectureCodexEntries } from '../data/architectureCodex';
+
+const platformRefs = [
+  {
+    name: 'Ghost',
+    role: '成熟出版平台',
+    note: '借鉴发布后台、会员/订阅和前后端解耦。'
+  },
+  {
+    name: 'Quartz',
+    role: '知识型博客',
+    note: '借鉴 Markdown-first、双向链接和数字花园导航。'
+  },
+  {
+    name: 'Astro',
+    role: '站点装配层',
+    note: '继续承担内容集合、静态输出和组件分层。'
+  },
+  {
+    name: 'WriteFreely / Mastodon',
+    role: '社交分发参考',
+    note: '借鉴时间线、公开写作和轻反馈，而不是联邦实现。'
+  }
+];
+
+const activeCodex = architectureCodexEntries.filter((entry) => entry.status !== 'future').length;
 ---
 
-<BaseLayout title="关于 / emptyinkpot" description="关于 emptyinkpot 的个人博客。">
+<BaseLayout title="关于 / emptyinkpot" description="emptyinkpot 的站点定位、平台参考与工程边界。">
   <main class="pb-10 pt-8 md:pt-14" data-pagefind-body>
     <section class="glass-card max-w-4xl rounded-[2.25rem] p-6 md:p-8">
       <p class="section-kicker mb-4">关于</p>
-      <h1 class="section-title mb-5 text-4xl md:text-5xl">关于这个站点</h1>
+      <h1 class="section-title mb-5 text-4xl md:text-5xl">这个站点不是普通博客</h1>
       <div class="prose-shell prose-shell--plain">
-        <p>你好，这里是 <code>emptyinkpot</code> 的个人博客。</p>
         <p>
-          这里会记录一些与技术、写作和日常相关的内容。当前站点已经统一由 Astro 构建，并通过 GitHub Pages 发布到
-          <code>https://emptyinkpot.github.io/</code>。
+          这里是 <code>emptyinkpot</code> 的内容运行面。它已经不是简单文章列表，而是一个把写作、项目、
+          知识对象、阅读和公开分发收敛到一起的站点。
         </p>
         <p>
-          这次整理的重点，不是再维护两套前台，而是把内容模型、页面体系、构建配置和后续扩展能力收口到同一个站点里，
-          让博客真正具备长期演进的稳定结构。
+          站点当前由 Astro 装配，并通过 GitHub Pages 和独立服务器发布。它的目标不是变成一个重型 CMS，
+          而是逐步长成一个更成熟的内容平台。
         </p>
       </div>
+    </section>
+
+    <section class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {platformRefs.map((item) => (
+        <article class="glass-card rounded-[1.75rem] p-5">
+          <p class="section-kicker mb-3">{item.role}</p>
+          <h2 class="text-xl font-semibold text-stone-950">{item.name}</h2>
+          <p class="mt-3 text-sm leading-7 text-stone-600">{item.note}</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="mt-6 grid gap-4 md:grid-cols-[1.2fr_0.8fr]">
+      <article class="glass-card rounded-[2rem] p-6 md:p-8">
+        <p class="section-kicker mb-3">平台方向</p>
+        <h2 class="text-2xl font-semibold text-stone-950">从博客模板走向内容平台</h2>
+        <div class="prose-shell prose-shell--plain mt-4">
+          <p>MyBlog 正在对标更成熟的系统，但只借鉴其能力结构，不复制其完整实现。</p>
+          <p>
+            当前重点是让首页、文章、专题、项目和阅读体验形成一致的发布逻辑，而不是继续堆叠散乱功能。
+          </p>
+          <ul>
+            <li>Ghost 负责平台化发布经验</li>
+            <li>Quartz 负责知识组织经验</li>
+            <li>Astro 负责站点装配和静态发布</li>
+            <li>WriteFreely / Mastodon 负责公开分发经验</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="glass-card rounded-[2rem] p-6 md:p-8">
+        <p class="section-kicker mb-3">Codex</p>
+        <h2 class="text-2xl font-semibold text-stone-950">设计档案</h2>
+        <p class="mt-3 text-sm leading-7 text-stone-600">
+          当前 Architecture Codex 条目数：<strong>{architectureCodexEntries.length}</strong>，
+          其中现行或成形中的设计条目有 <strong>{activeCodex}</strong> 个。
+        </p>
+        <p class="mt-4 text-sm leading-7 text-stone-600">
+          以后新的平台能力、交互模式或运行层变更，优先写进 Codex，再落到页面和组件。
+        </p>
+      </article>
     </section>
   </main>
 </BaseLayout>

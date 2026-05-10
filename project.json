@@ -4,7 +4,7 @@
   "machineReadableEntry": "project.json",
   "githubRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
   "defaultBranch": "main",
-  "localSourceRoot": "E:\\My Project\\MyBlog",
+  "localSourceRoot": null,
   "siteAppRoot": "apps/web",
   "adminAppRoot": "apps/admin-next",
   "sourcePostsRoot": "apps/web/src/content/posts",
@@ -25,13 +25,17 @@
   },
   "sourceOfTruthMap": {
     "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
-    "localActiveSourceRoot": "E:\\My Project\\MyBlog",
+    "localActiveSourceRoot": null,
     "publicPostsRoot": "apps/web/src/content/posts",
     "vaultFileTruthRoot": "/夸克网盘/obsidian/data",
     "vaultSyncAuthority": "Obsidian + Remotely Save + OpenList WebDAV/S3",
     "architectureCodexSource": "apps/web/src/data/architectureCodex.ts",
     "buildOutputRoot": "apps/web/dist",
-    "serverRuntimeRoot": "/srv/myblog/site"
+    "serverRuntimeRoot": "/srv/myblog/site",
+    "localMirrorRoot": "E:\\My Project\\MyBlog",
+    "remoteActiveSourceRoot": "server-170:/home/ubuntu/workspaces/MyBlog",
+    "remoteIntegrationRoot": "server-170:/home/ubuntu/workspaces/MyBlog-main-integration",
+    "deploymentAuthority": "GitHub Pages from main branch"
   },
   "publicBaseUrl": "https://blog.tengokukk.com/",
   "siteEntrypoints": {
@@ -63,13 +67,30 @@
   },
   "objectLayer": {
     "position": "files are carriers; objects are identity and relation layer",
-    "objectTypes": ["KnowledgeObject", "BookObject", "VisualObject", "ProjectObject", "RepostObject"],
-    "blobAuthority": ["OpenList", "COS/S3"],
+    "objectTypes": [
+      "KnowledgeObject",
+      "BookObject",
+      "VisualObject",
+      "ProjectObject",
+      "RepostObject"
+    ],
+    "blobAuthority": [
+      "OpenList",
+      "COS/S3"
+    ],
     "projectionShell": "MyBlog Astro/React frontend",
     "idRule": "routes, graph nodes, reader memory and search records use stable object ids rather than titles or file paths",
     "repostRuntime": {
       "storageKey": "emptyinkpot-reposts",
-      "recordShape": ["id", "type", "targetId", "commentary", "snapshot", "createdAt", "updatedAt"],
+      "recordShape": [
+        "id",
+        "type",
+        "targetId",
+        "commentary",
+        "snapshot",
+        "createdAt",
+        "updatedAt"
+      ],
       "projectionRule": "RepostObject references the original object and injects a repost feed card; it must not create a new markdown source or duplicate the original object body."
     }
   },
@@ -77,7 +98,10 @@
     "status": "target contract; not hand-rolled by MyBlog",
     "localAuthoring": "Obsidian vault",
     "recommendedSync": "Remotely Save",
-    "transport": ["OpenList WebDAV", "S3/COS"],
+    "transport": [
+      "OpenList WebDAV",
+      "S3/COS"
+    ],
     "webDavPublicRoute": "https://blog.tengokukk.com/openlist/dav/",
     "cloudVaultRoot": "/夸克网盘/obsidian/data",
     "syncScope": "full vault including docs, image, attachments, pdf, epub and canvas",
@@ -88,11 +112,38 @@
     ]
   },
   "contentModel": {
-    "posts": ["title", "date", "tags", "categories", "summary", "slug"],
-    "notes": ["title", "date", "summary", "slug"],
-    "projects": ["title", "summary", "slug"],
-    "pages": ["title", "slug"],
-    "books": ["id", "title", "author", "category", "tags", "sourceType", "openlistPath"],
+    "posts": [
+      "title",
+      "date",
+      "tags",
+      "categories",
+      "summary",
+      "slug"
+    ],
+    "notes": [
+      "title",
+      "date",
+      "summary",
+      "slug"
+    ],
+    "projects": [
+      "title",
+      "summary",
+      "slug"
+    ],
+    "pages": [
+      "title",
+      "slug"
+    ],
+    "books": [
+      "id",
+      "title",
+      "author",
+      "category",
+      "tags",
+      "sourceType",
+      "openlistPath"
+    ],
     "evidenceLibrary": [
       "asset",
       "clip",
@@ -133,10 +184,13 @@
     "npm run admin:build"
   ],
   "forbiddenActions": [
+    "declare analytics or tracing as active without verification",
+    "deploy from an unchecked worktree",
+    "edit E:\\My Project\\MyBlog as source authority",
+    "publish without lint-check-build quality gate",
+    "treat feature branches as GitHub Pages deployment branches",
     "treat old working copies or static snapshots as active source",
     "treat server runtime directories as long-term source of truth",
-    "publish without lint-check-build quality gate",
-    "declare analytics or tracing as active without verification",
     "write local preview URLs as canonical public entry"
   ],
   "platformRoadmap": [
@@ -223,7 +277,10 @@
         "className": "home-feed-shell",
         "maxWidthPx": 1480,
         "viewportGutterPx": 40,
-        "columns": ["280px", "minmax(0, 1fr)"],
+        "columns": [
+          "280px",
+          "minmax(0, 1fr)"
+        ],
         "gapPx": 20,
         "paddingBlockPx": 20
       },
@@ -239,8 +296,14 @@
       "feedColumnCount": 3,
       "feedColumnGapPx": 16,
       "primaryGrids": {
-        "homeFeedShell": ["280px", "minmax(0, 1fr)"],
-        "articleReader": ["180px", "minmax(0, 1fr)"]
+        "homeFeedShell": [
+          "280px",
+          "minmax(0, 1fr)"
+        ],
+        "articleReader": [
+          "180px",
+          "minmax(0, 1fr)"
+        ]
       },
       "keyComponentSizesPx": {
         "feedProfilePadding": 16,
@@ -271,7 +334,10 @@
       "styleSource": "apps/web/src/styles/global.css",
       "scope": "browser-local homepage display preferences",
       "defaultTheme": "heritage",
-      "themeOptions": ["heritage", "glass"],
+      "themeOptions": [
+        "heritage",
+        "glass"
+      ],
       "heritageTheme": {
         "status": "default",
         "intent": "Cultural OS visual language: paper background, pure color panels, semantic color strips, low shadow, no glass blur",
@@ -335,14 +401,21 @@
         "verifiedMount": "/夸克网盘",
         "webDavPublicRoute": "https://blog.tengokukk.com/openlist/dav/",
         "vaultFileTruthRoot": "/夸克网盘/obsidian/data",
-        "verifiedApis": ["POST /api/fs/list", "POST /api/fs/get"],
+        "verifiedApis": [
+          "POST /api/fs/list",
+          "POST /api/fs/get"
+        ],
         "rawUrlField": "raw_url",
         "frontendSecretPolicy": "do not store OpenList tokens or netdisk cookies in static frontend source"
       },
       "objectModel": {
         "bookObjectId": "BookItem.id",
         "blobCarrier": "openlistPath",
-        "projectionRoutes": ["/books/", "/books/[id]/", "/reader/[id]/"],
+        "projectionRoutes": [
+          "/books/",
+          "/books/[id]/",
+          "/reader/[id]/"
+        ],
         "readerMemory": "localStorage today; attach to object ids before server sync"
       },
       "localStorageKeys": [
@@ -352,7 +425,10 @@
         "emptyinkpot-book-recent",
         "emptyinkpot-reader-theme"
       ],
-      "readerLibraries": ["react-reader", "react-pdf"],
+      "readerLibraries": [
+        "react-reader",
+        "react-pdf"
+      ],
       "pdfWorker": "https://unpkg.com/pdfjs-dist@<react-pdf pdfjs.version>/build/pdf.worker.min.mjs"
     },
     "githubVisualizationAssets": {
@@ -373,23 +449,46 @@
       "visualSurfaces": [
         {
           "name": "GitHub contribution heatmap",
-          "data": ["overview.months", "overview.weeks", "overview.totalContributions"],
-          "legacyTypes": ["HomeCheckInData", "HomeCheckInWeek", "HomeCheckInCell"]
+          "data": [
+            "overview.months",
+            "overview.weeks",
+            "overview.totalContributions"
+          ],
+          "legacyTypes": [
+            "HomeCheckInData",
+            "HomeCheckInWeek",
+            "HomeCheckInCell"
+          ]
         },
         {
           "name": "GitHub monthly contribution line chart",
-          "data": ["overview.monthly"],
-          "legacyTypes": ["HomeGitHubMonthlyPoint"]
+          "data": [
+            "overview.monthly"
+          ],
+          "legacyTypes": [
+            "HomeGitHubMonthlyPoint"
+          ]
         },
         {
           "name": "GitHub language donut chart",
-          "data": ["overview.languages"],
-          "legacyTypes": ["HomeGitHubLanguageSlice"]
+          "data": [
+            "overview.languages"
+          ],
+          "legacyTypes": [
+            "HomeGitHubLanguageSlice"
+          ]
         },
         {
           "name": "Team and repository signal panels",
-          "data": ["overview.profile", "overview.repos"],
-          "legacyTypes": ["HomeTeamSignal", "HomeRepoSignal", "HomeAutomationSignal"]
+          "data": [
+            "overview.profile",
+            "overview.repos"
+          ],
+          "legacyTypes": [
+            "HomeTeamSignal",
+            "HomeRepoSignal",
+            "HomeAutomationSignal"
+          ]
         }
       ],
       "legacyCssClasses": [
@@ -456,7 +555,11 @@
         "emptyinkpot-reader-highlights",
         "emptyinkpot-reader-theme"
       ],
-      "readerThemes": ["light", "sepia", "dark"],
+      "readerThemes": [
+        "light",
+        "sepia",
+        "dark"
+      ],
       "bookmarkObjectSystem": {
         "className": "bookmark",
         "rules": [
@@ -507,8 +610,13 @@
         ],
         "wrapperMaxWidthPx": 1180,
         "viewportGutterPx": 24,
-        "gridColumns": ["repeat(2, minmax(0, 1fr))"],
-        "postCardColumns": ["176px", "minmax(0, 1fr)"],
+        "gridColumns": [
+          "repeat(2, minmax(0, 1fr))"
+        ],
+        "postCardColumns": [
+          "176px",
+          "minmax(0, 1fr)"
+        ],
         "postCoverMinHeightPx": 176,
         "collapseBreakpointPx": 1100
       },
@@ -537,35 +645,62 @@
       }
     },
     "publicEvidenceLibrary": {
-      "heroColumns": ["minmax(0, 1.5fr)", "minmax(256px, 0.75fr)"],
+      "heroColumns": [
+        "minmax(0, 1.5fr)",
+        "minmax(256px, 0.75fr)"
+      ],
       "heroGapPx": 24,
       "heroPaddingPx": 24,
       "heroPreMinHeightPx": 144,
-      "gridColumns": ["repeat(3, minmax(0, 1fr))"],
+      "gridColumns": [
+        "repeat(3, minmax(0, 1fr))"
+      ],
       "gridGapPx": 16,
       "cardPaddingPx": 21.6,
-      "sourceGridColumns": ["160px", "minmax(0, 1fr)"],
+      "sourceGridColumns": [
+        "160px",
+        "minmax(0, 1fr)"
+      ],
       "collapseBreakpointPx": 860,
       "longTextRule": "evidence-library__mono and source code must use overflow-wrap:anywhere"
     },
     "adminPrototype": {
       "source": "apps/admin-next/app/globals.css",
-      "shellColumns": ["240px", "1fr"],
+      "shellColumns": [
+        "240px",
+        "1fr"
+      ],
       "sidebarPaddingPx": 24,
       "mainPaddingPx": 24,
       "mainScrollContainer": "console-main",
       "cardPaddingPx": 20,
       "cardRadiusPx": 24,
       "pageStackGapPx": 24,
-      "metricGridColumns": ["repeat(3, minmax(0, 1fr))"],
-      "twoColumnGridColumns": ["repeat(2, minmax(0, 1fr))"],
+      "metricGridColumns": [
+        "repeat(3, minmax(0, 1fr))"
+      ],
+      "twoColumnGridColumns": [
+        "repeat(2, minmax(0, 1fr))"
+      ],
       "metricCardMinHeightPx": 128,
-      "metaGridColumns": ["120px", "minmax(0, 1fr)"],
-      "timelineGridColumns": ["repeat(6, minmax(0, 1fr))"],
-      "aiLayoutColumns": ["220px", "minmax(0, 1fr)", "280px"],
+      "metaGridColumns": [
+        "120px",
+        "minmax(0, 1fr)"
+      ],
+      "timelineGridColumns": [
+        "repeat(6, minmax(0, 1fr))"
+      ],
+      "aiLayoutColumns": [
+        "220px",
+        "minmax(0, 1fr)",
+        "280px"
+      ],
       "aiLayoutMinHeight": "calc(100vh - 48px)",
       "chatBubbleMaxWidth": "80%",
-      "tableCellPaddingPx": [14, 16],
+      "tableCellPaddingPx": [
+        14,
+        16
+      ],
       "collapseBreakpointPx": 1100,
       "overlapRules": [
         "console-main is the only admin main scroll container",
@@ -597,9 +732,33 @@
       "apps/web/src/lib/profile.ts",
       "apps/web/src/data/github-overview.emptyinkpot.json"
     ],
-    "feedItemTypes": ["post", "note", "project", "book", "music", "github", "bilibili", "update"],
-    "githubFeedVariants": ["repo", "heatmap", "line", "language", "team"],
-    "drawerTypes": ["post", "note", "project", "book", "music", "github", "bilibili", "update"],
+    "feedItemTypes": [
+      "post",
+      "note",
+      "project",
+      "book",
+      "music",
+      "github",
+      "bilibili",
+      "update"
+    ],
+    "githubFeedVariants": [
+      "repo",
+      "heatmap",
+      "line",
+      "language",
+      "team"
+    ],
+    "drawerTypes": [
+      "post",
+      "note",
+      "project",
+      "book",
+      "music",
+      "github",
+      "bilibili",
+      "update"
+    ],
     "implementation": {
       "masonry": "css-columns",
       "drawer": "astro-rendered hidden reader nodes cloned by vanilla js",
@@ -719,5 +878,9 @@
     "npm run check",
     "npm run build"
   ],
-  "status": "active"
+  "status": "active",
+  "remoteSourceRoot": "server-170:/home/ubuntu/workspaces/MyBlog",
+  "remoteIntegrationRoot": "server-170:/home/ubuntu/workspaces/MyBlog-main-integration",
+  "localMirrorRoot": "E:\\My Project\\MyBlog",
+  "deploymentAuthority": "GitHub Pages from main branch"
 }

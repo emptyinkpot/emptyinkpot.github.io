@@ -2789,6 +2789,19 @@ npm run check
 npm run build
 ```
 
+### 当前权威源码与部署口径
+
+当前 MyBlog 已改为 remote-first / GitHub Pages delivery：
+
+- GitHub 仓库：`https://github.com/emptyinkpot/emptyinkpot.github.io`
+- 默认远程 IDE / 写入面：`server-170:/home/ubuntu/workspaces/MyBlog`
+- 临时集成 worktree：`server-170:/home/ubuntu/workspaces/MyBlog-main-integration`
+- 本机 `E:\My Project\MyBlog`：只允许作为 mirror/read surface，不是 active source
+- 发布路径：合并或推送到 `main` 后由 `.github/workflows/pages.yml` 部署 GitHub Pages
+- `/srv/myblog/site`：历史/live mirror root，不是源码工作区
+
+下面旧的 `/srv/myblog/repo` 服务器部署段落只作为历史自托管参考；当前操作以 `AGENTS.md`、`project.json`、`workspace.manifest.json` 和 `docs/operations/current-runtime-map.md` 为准。
+
 ### 建议的云端目录结构
 
 建议在云服务器上使用固定项目目录，例如：
