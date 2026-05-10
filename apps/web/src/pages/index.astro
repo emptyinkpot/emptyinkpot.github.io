@@ -564,7 +564,7 @@ const homeCommands = [
 ];
 ---
 
-<BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
+<BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，作为内容平台入口与知识运行面。" hideSiteChrome={true}>
   <div class="home-feed-shell" data-github-live-root data-github-username="emptyinkpot">
     <aside class="home-feed-rail" aria-label="系统导航与上下文状态" data-home-sidebar>
       <button class="home-sidebar-collapse" type="button" data-sidebar-collapse aria-label="折叠右侧栏" aria-expanded="true">
@@ -578,7 +578,7 @@ const homeCommands = [
         </a>
         <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} data-image-key="home.profile.avatar" data-github-profile="avatar" />
         <h1 data-sidebar-label data-github-profile="name">{github.profile.name}</h1>
-        <p data-sidebar-label data-copy-key="home.profile.tagline">Content OS · Knowledge System</p>
+        <p data-sidebar-label data-copy-key="home.profile.tagline">Content Platform · Knowledge Runtime</p>
         <small class="github-live-status" data-sidebar-label data-github-live-status data-github-live-state="loading">GitHub 快照待同步</small>
       </section>
 
@@ -625,7 +625,7 @@ const homeCommands = [
         <div class="home-hero-banner__content">
           <span data-hero-season-label data-hero-kicker data-copy-key="home.banner.kicker">Seasonal Field</span>
           <h1 data-hero-title data-copy-key="home.banner.title">EMPTYINKPOT</h1>
-          <p data-hero-subtitle data-copy-key="home.banner.subtitle">Content OS · Tangible Knowledge UI</p>
+          <p data-hero-subtitle data-copy-key="home.banner.subtitle">Publishing · Knowledge · Runtime</p>
           <div class="home-hero-banner__metrics" aria-label="站点动态指标">
             <div>
               <span class="home-number-ticker" data-runtime-article-count>{runtimeArticles.length.toLocaleString('zh-CN')}</span>
@@ -647,6 +647,40 @@ const homeCommands = [
         </div>
       </section>
 
+      <section class="home-platform-summary" aria-label="平台摘要">
+        <div class="glass-card rounded-[2rem] p-6 md:p-8">
+          <p class="section-kicker mb-3">Platform Summary</p>
+          <h2 class="text-2xl font-semibold text-stone-950">MyBlog 正在从博客模板收敛为内容平台</h2>
+          <p class="mt-3 max-w-3xl text-sm leading-7 text-stone-600">
+            这里的重点不是新增更多页面，而是把写作、知识、项目和公开分发收束进一致的叙事和运行层。
+            参考 Ghost 的发布经验、Quartz 的知识组织、Astro 的工程基线，再把社交分发和反馈入口保留在站点结构里。
+          </p>
+        </div>
+        <div class="mt-4 grid gap-4 md:grid-cols-3">
+          <article class="glass-card rounded-[1.75rem] p-5">
+            <p class="section-kicker mb-3">Publishing</p>
+            <h3 class="text-xl font-semibold text-stone-950">发布与文章</h3>
+            <p class="mt-3 text-sm leading-7 text-stone-600">
+              {runtimeArticles.length} 篇 Runtime MarkdownObject、{notes.length} 条笔记、统一文章索引与 RSS 出口。
+            </p>
+          </article>
+          <article class="glass-card rounded-[1.75rem] p-5">
+            <p class="section-kicker mb-3">Knowledge</p>
+            <h3 class="text-xl font-semibold text-stone-950">知识与项目</h3>
+            <p class="mt-3 text-sm leading-7 text-stone-600">
+              {runtimeCollections.length} 个知识集合、{projects.length} 个项目工坊条目，承载专题、项目、卡片与关系。
+            </p>
+          </article>
+          <article class="glass-card rounded-[1.75rem] p-5">
+            <p class="section-kicker mb-3">Distribution</p>
+            <h3 class="text-xl font-semibold text-stone-950">分发与反馈</h3>
+            <p class="mt-3 text-sm leading-7 text-stone-600">
+              OpenList、GitHub、视觉板块与公开入口一起工作，站点承担分发和阅读的统一界面。
+            </p>
+          </article>
+        </div>
+      </section>
+
       <section class="home-activity-marquee" aria-label="站点活动流" data-home-activity-marquee>
         <div>
           {[...activityItems, ...activityItems].map((item) => (
@@ -657,8 +691,8 @@ const homeCommands = [
 
       <div class="home-feed-toolbar" aria-label="首页内容筛选">
         <div>
-          <span data-copy-key="home.feed.kicker">Runtime Surface</span>
-          <strong data-copy-key="home.feed.title">混合对象流</strong>
+          <span data-copy-key="home.feed.kicker">Content Platform</span>
+          <strong data-copy-key="home.feed.title">内容平台流</strong>
         </div>
         <nav class="home-feed-tabs" aria-label="首页唯一导航">
           <HomeCommandPalette client:idle commands={homeCommands} />

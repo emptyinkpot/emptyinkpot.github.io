@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
-const defaultVaultRoot = process.env.MYBLOG_VAULT_ROOT || 'E:/Vaults/Obsidian/docs';
+const defaultVaultRoot = process.env.MYBLOG_VAULT_ROOT || (process.platform === 'win32' ? 'E:/Vaults/Obsidian/docs' : '/home/vault/Obsidian/docs');
 const defaultBaseUrl =
   process.env.MYBLOG_SEMANTIC_LLM_BASE_URL ||
   process.env.MORTIS_QQ_LLM_BASE_URL ||

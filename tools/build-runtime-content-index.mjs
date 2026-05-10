@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { renderMarkdownToHtml } from '../apps/web/src/lib/markdown/pipeline.mjs';
 
-const defaultVaultRoot = process.env.MYBLOG_VAULT_ROOT || 'E:/Vaults/Obsidian/docs';
+const defaultVaultRoot = process.env.MYBLOG_VAULT_ROOT || (process.platform === 'win32' ? 'E:/Vaults/Obsidian/docs' : '/home/vault/Obsidian/docs');
 const defaultSourceRootLabel = process.env.MYBLOG_RUNTIME_SOURCE_ROOT_LABEL || '/home/vault/Obsidian/docs';
 const defaultOpenListRootLabel = process.env.MYBLOG_RUNTIME_OPENLIST_ROOT_LABEL || '/openlist/Obsidian/docs';
 const sourceRootType = 'vault';

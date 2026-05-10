@@ -57,3 +57,12 @@ Before editing this repository, read:
 - `visual-system`
 - `design-language`
 - `collection-stack`
+
+## Delivery Closure Gate
+
+- Any implementation turn that modifies MyBlog source, docs, contracts, or frontend runtime must end in one of these states:
+  - verified, committed, and pushed to the appropriate remote branch
+  - explicitly blocked with the failing command, dirty files, and reason it cannot be pushed
+- Do not stop after code edits with an uncommitted worktree unless a blocker has been reported.
+- For deployable frontend changes, run the repository verification command before commit. If the change is intended for production, continue through the repository delivery path that triggers CI/CD instead of leaving changes only in the remote IDE workspace.
+- If CI/CD is branch-gated, state the branch gate and whether the pushed branch does or does not trigger deployment.
