@@ -4455,3 +4455,19 @@ git fetch --prune origin
 - 架构方案：`docs/architecture/astro-blog-redesign-plan.md`
 - 执行清单：`docs/architecture/astro-blog-redesign-checklist.md`
 - 维护记录：`docs/maintenance/README.md`
+
+### Runtime Database Integration
+
+MyBlog 的动态运行状态接入 Tencent Cloud CynosDB Serverless MySQL。生产连接配置只保存在服务器 `/etc/myblog-admin-next.env`，仓库只记录非 secret 边界：
+
+```text
+MYBLOG_DB_HOST=124.220.245.121
+MYBLOG_DB_PORT=22295
+MYBLOG_DB_USER=openclaw
+MYBLOG_DB_PASSWORD=<server-only secret>
+MYBLOG_DB_NAME=cloudbase-4glvyyq9f61b19cd
+```
+
+MySQL 只承担 Runtime State：`reader_memory`、`reader_highlights`、`visual_sources`、`visual_pins`、`visual_sync_runs`。OpenList / COS / 夸克网盘保存文件和 blob identity，Obsidian/Vault 保存写作真源，MySQL 保存阅读进度、高亮、视觉索引和同步运行记录。
+
+禁止把 Markdown 正文、EPUB/PDF/图片/视频 blob、OpenList 文件对象、COS 对象、夸克文件、Astro dist、Pagefind 输出或 Syncthing 热镜像放入 MySQL。
