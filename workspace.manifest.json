@@ -3,12 +3,10 @@
   "workspaceId": "myblog-canonical-active",
   "workspaceType": "canonical",
   "profile": "workspaces/canonical.json",
-  "root": "/home/ubuntu/workspaces/MyBlog",
+  "root": "/srv/myblog/repo",
   "allowedRoots": [
     "/home/runner/work/emptyinkpot.github.io/emptyinkpot.github.io",
-    "/home/ubuntu/workspaces/MyBlog",
-    "/home/ubuntu/workspaces/MyBlog-main-integration",
-    "/home/ubuntu/workspaces/MyBlog-production-integration"
+    "/srv/myblog/repo"
   ],
   "capabilities": {
     "canBuild": true,
@@ -43,8 +41,6 @@
       "E:\\My Project\\MyBlog"
     ],
     "incidentReference": "2026-05-07 stale worktree deploy regression",
-    "sourceWorkspace": "/home/ubuntu/workspaces/MyBlog"
-  },
-  "integrationWorkspace": "/home/ubuntu/workspaces/MyBlog-production-integration",
-  "mainReplacementWorkspace": "/home/ubuntu/workspaces/MyBlog-main-integration"
+    "sourceWorkspace": "/srv/myblog/repo"
+  }
 }
