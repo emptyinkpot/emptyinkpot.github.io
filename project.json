@@ -129,6 +129,51 @@
       "repoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
       "gitRemote": "git@github.com:emptyinkpot/emptyinkpot.github.io.git",
       "sshOutageRule": "Do not promote a local checkout to canonical when SSH is unavailable; use GitHub as a delivery surface and reconcile the server source root after recovery."
+    },
+    "runtimeDatabase": {
+      "status": "active",
+      "type": "Tencent Cloud CynosDB Serverless MySQL",
+      "clusterId": "cynosdbmysql-no0zqua0",
+      "engine": "MySQL 8.0",
+      "publicEndpoint": "124.220.245.121:22295",
+      "privateEndpoint": "172.17.0.3:3306",
+      "privateEndpointStatus": "not-routable-from-current-lighthouse-as-of-2026-05-10",
+      "database": "cloudbase-4glvyyq9f61b19cd",
+      "user": "openclaw",
+      "secretSource": "/etc/myblog-admin-next.env",
+      "serviceOwner": "apps/admin-next",
+      "schemaOwner": "apps/admin-next/lib/runtime-db.js",
+      "connectionEnv": [
+        "MYBLOG_DB_HOST",
+        "MYBLOG_DB_PORT",
+        "MYBLOG_DB_USER",
+        "MYBLOG_DB_PASSWORD",
+        "MYBLOG_DB_NAME"
+      ],
+      "activeTables": [
+        "reader_memory",
+        "reader_highlights",
+        "visual_sources",
+        "visual_pins",
+        "visual_sync_runs"
+      ],
+      "owns": [
+        "reader progress and last-read state",
+        "reader highlights and anchors",
+        "visual source registry",
+        "visual pin runtime index",
+        "visual sync run logs"
+      ],
+      "forbidden": [
+        "article markdown body source",
+        "EPUB/PDF/image/video blobs",
+        "OpenList file objects",
+        "Tencent COS objects",
+        "Quark netdisk files",
+        "Astro dist or Pagefind output",
+        "Syncthing hot mirror files"
+      ],
+      "integrationRole": "dynamic runtime state layer beside OpenList/COS/Quark file storage and Obsidian content truth"
     }
   },
   "stabilizationSprint": {
@@ -1051,7 +1096,52 @@
       "MyBlog writes glue, not engines",
       "Android is a runtime projection, not a second app universe",
       "every federation member must declare authority, status, integration path, secret boundary and failure mode"
-    ]
+    ],
+    "runtimeDatabase": {
+      "status": "active",
+      "type": "Tencent Cloud CynosDB Serverless MySQL",
+      "clusterId": "cynosdbmysql-no0zqua0",
+      "engine": "MySQL 8.0",
+      "publicEndpoint": "124.220.245.121:22295",
+      "privateEndpoint": "172.17.0.3:3306",
+      "privateEndpointStatus": "not-routable-from-current-lighthouse-as-of-2026-05-10",
+      "database": "cloudbase-4glvyyq9f61b19cd",
+      "user": "openclaw",
+      "secretSource": "/etc/myblog-admin-next.env",
+      "serviceOwner": "apps/admin-next",
+      "schemaOwner": "apps/admin-next/lib/runtime-db.js",
+      "connectionEnv": [
+        "MYBLOG_DB_HOST",
+        "MYBLOG_DB_PORT",
+        "MYBLOG_DB_USER",
+        "MYBLOG_DB_PASSWORD",
+        "MYBLOG_DB_NAME"
+      ],
+      "activeTables": [
+        "reader_memory",
+        "reader_highlights",
+        "visual_sources",
+        "visual_pins",
+        "visual_sync_runs"
+      ],
+      "owns": [
+        "reader progress and last-read state",
+        "reader highlights and anchors",
+        "visual source registry",
+        "visual pin runtime index",
+        "visual sync run logs"
+      ],
+      "forbidden": [
+        "article markdown body source",
+        "EPUB/PDF/image/video blobs",
+        "OpenList file objects",
+        "Tencent COS objects",
+        "Quark netdisk files",
+        "Astro dist or Pagefind output",
+        "Syncthing hot mirror files"
+      ],
+      "integrationRole": "dynamic runtime state layer beside OpenList/COS/Quark file storage and Obsidian content truth"
+    }
   },
   "projectCollaborationRuntime": {
     "status": "reduction-mode; AppFlowy is target-not-deployed and GitHub Workbench is interim-active fallback",
@@ -2225,5 +2315,50 @@
   "remoteFirstSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
   "localSourceRootStatus": "retired-local-mirror",
   "remoteIdeSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
-  "serverRepoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519"
+  "serverRepoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
+  "runtimeDatabase": {
+    "status": "active",
+    "type": "Tencent Cloud CynosDB Serverless MySQL",
+    "clusterId": "cynosdbmysql-no0zqua0",
+    "engine": "MySQL 8.0",
+    "publicEndpoint": "124.220.245.121:22295",
+    "privateEndpoint": "172.17.0.3:3306",
+    "privateEndpointStatus": "not-routable-from-current-lighthouse-as-of-2026-05-10",
+    "database": "cloudbase-4glvyyq9f61b19cd",
+    "user": "openclaw",
+    "secretSource": "/etc/myblog-admin-next.env",
+    "serviceOwner": "apps/admin-next",
+    "schemaOwner": "apps/admin-next/lib/runtime-db.js",
+    "connectionEnv": [
+      "MYBLOG_DB_HOST",
+      "MYBLOG_DB_PORT",
+      "MYBLOG_DB_USER",
+      "MYBLOG_DB_PASSWORD",
+      "MYBLOG_DB_NAME"
+    ],
+    "activeTables": [
+      "reader_memory",
+      "reader_highlights",
+      "visual_sources",
+      "visual_pins",
+      "visual_sync_runs"
+    ],
+    "owns": [
+      "reader progress and last-read state",
+      "reader highlights and anchors",
+      "visual source registry",
+      "visual pin runtime index",
+      "visual sync run logs"
+    ],
+    "forbidden": [
+      "article markdown body source",
+      "EPUB/PDF/image/video blobs",
+      "OpenList file objects",
+      "Tencent COS objects",
+      "Quark netdisk files",
+      "Astro dist or Pagefind output",
+      "Syncthing hot mirror files"
+    ],
+    "integrationRole": "dynamic runtime state layer beside OpenList/COS/Quark file storage and Obsidian content truth"
+  }
 }

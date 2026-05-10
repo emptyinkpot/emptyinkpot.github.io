@@ -112,3 +112,15 @@ MyBlog's active runtime database is Tencent Cloud CynosDB Serverless MySQL, not 
 | Local MariaDB | `127.0.0.1:3306` | Running on the server, but not the active MyBlog Runtime DB. |
 
 Runtime DB owns dynamic state only: reader memory, highlights, visual source indexes, visual pins and visual sync runs. It must not store article bodies, EPUB/PDF/image/video blobs, OpenList files, COS objects, Quark files, Astro dist, Pagefind output, or Syncthing hot mirror data.
+
+
+Current verified Runtime DB environment values, excluding secrets:
+
+```text
+MYBLOG_DB_HOST=124.220.245.121
+MYBLOG_DB_PORT=22295
+MYBLOG_DB_USER=openclaw
+MYBLOG_DB_NAME=cloudbase-4glvyyq9f61b19cd
+```
+
+The private CynosDB endpoint `172.17.0.3:3306` was not routable from the current Lighthouse host during the 2026-05-10 check, so production currently uses the public endpoint. Revisit VPC routing before switching to the private endpoint.
