@@ -180,8 +180,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     thesis:
       'Reader System 把 EPUB、PDF、阅读位置、高亮和抽屉体验收敛成一个长期常驻的阅读运行层，目标是接近现代阅读产品，而不是浏览器下载器。',
     status: 'active',
-    systems: ['Book Drawer Reader', 'Reader Pool', 'Runtime Persistence', 'PDF.js', 'epub.js', 'Reader Memory'],
-    inspiration: ['Readest', 'Apple Books', 'Kindle', '微信读书', 'Omnivore'],
+    systems: ['Book Drawer Reader', 'Reader Pool', 'Runtime Persistence', 'PDF.js', 'epub.js', 'Reader Memory', 'Public Edit Intake', 'BlockNote Spike'],
+    inspiration: ['Readest', 'Apple Books', 'Kindle', '微信读书', 'Omnivore', 'BlockNote', 'Tiptap', 'ProseMirror', 'Hypothesis'],
     rejected: [
       'iframe 直接打开 OpenList 文件，因为它不能接入目录、阅读记忆、高亮和 Graph。',
       '点击后才加载完整 Reader Runtime，因为 PDF.js / EPUB.js 冷启动会把体感延迟全部压到用户点击之后。',
@@ -200,7 +200,9 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'PDF 页面缓存必须纳入导入管线：/api/openlist/pages/prewarm 在 files/prewarm 后批量准备前几页；访客继续向下滚动时 CachedPdfPageList 按批次请求后续页，每页只在服务端渲染一次，之后复用缓存。',
       'PDF 在 drawer mode 使用真实封面作为即时首屏，PDF.js direct runtime 在后台完成首页渲染后再淡入连续滚动正文。',
       '即时封面首屏由 Astro 静态模板直接输出缓存封面 URL，不能依赖 BookCover React island hydrate 后才出现。',
-      'PDF 在 drawer mode 使用连续滚动多页和 IntersectionObserver 懒渲染，完整 reader 页面保留单页控制。'
+      'PDF 在 drawer mode 使用连续滚动多页和 IntersectionObserver 懒渲染，完整 reader 页面保留单页控制。',
+      '/edit-intake/ 是可编辑 projection surface spike：BlockNote 只作为 MyBlog UI substrate，页面生成 public-edit-intake.v1 JSON，不直接写 DataBase CCG/CDM/AST。',
+      'MyBlog 侧评论、高亮、rewrite_block 和 insert_asset_block 必须通过 DataBase public edit intake 边界；评论/高亮落 Annotation Graph overlay，真实内容修改进入 review 后的 Graph Edit Operation。'
     ],
     tradeoffs: [
       '常驻 Runtime 会占用更多前端内存，但换来二次打开和近场阅读的稳定体感。',
@@ -211,7 +213,9 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     future: [
       '把 PDF worker 单例和 EPUB book object 缓存收敛为显式 Runtime Registry。',
       '后台导入阶段增加 Calibre 转换，把 MOBI 标准化为 EPUB reader asset。',
-      '把目录、搜索、高亮和批注统一到 Knowledge Runtime。'
+      '把目录、搜索、高亮和批注统一到 Knowledge Runtime。',
+      '把 /edit-intake/ spike 接入真实 projection package anchorMap，输出 comment/highlight/rewrite_block/insert_asset_block/moderation fixtures。',
+      '在 anchor/intake 边界稳定前，不引入 Yjs/Hocuspocus、Payload 或 Hypothesis storage 作为内容真源。'
     ],
     related: ['runtime-architecture', 'composable-service-stack', 'knowledge-runtime', 'design-language']
   },

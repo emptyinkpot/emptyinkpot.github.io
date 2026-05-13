@@ -13381,3 +13381,218 @@ body.app-mode {
     min-height: 360px;
   }
 }
+
+.edit-intake-page {
+  min-height: 100dvh;
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(246, 248, 244, 0.9)),
+    radial-gradient(circle at 12% 10%, rgba(47, 93, 80, 0.12), transparent 32%),
+    radial-gradient(circle at 85% 6%, rgba(107, 45, 92, 0.1), transparent 34%);
+  color: var(--color-ink, #2c2824);
+  padding: 22px;
+}
+
+.edit-intake-hero,
+.edit-intake-grid {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+}
+
+.edit-intake-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  align-items: end;
+  gap: 18px;
+  border: 1px solid var(--runtime-surface-border);
+  border-radius: 8px;
+  background: var(--runtime-surface-panel);
+  box-shadow: var(--runtime-elevation-raised);
+  backdrop-filter: var(--runtime-surface-blur);
+  padding: 18px;
+}
+
+.edit-intake-hero p,
+.edit-intake-panel__head p {
+  margin: 0 0 6px;
+  color: rgba(47, 93, 80, 0.82);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.edit-intake-hero h1,
+.edit-intake-panel__head h2 {
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-ui);
+  letter-spacing: 0;
+}
+
+.edit-intake-hero h1 {
+  font-size: clamp(30px, 5vw, 58px);
+  line-height: 0.96;
+}
+
+.edit-intake-hero dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.edit-intake-hero dl div {
+  min-width: 0;
+  border: 1px solid rgba(92, 77, 61, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 11px 12px;
+}
+
+.edit-intake-hero dt {
+  color: rgba(92, 77, 61, 0.72);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.edit-intake-hero dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.edit-intake-grid {
+  display: grid;
+  grid-template-columns: minmax(380px, 1.15fr) minmax(360px, 0.85fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.edit-intake-panel {
+  min-width: 0;
+  border: 1px solid var(--runtime-surface-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.66);
+  box-shadow: var(--runtime-elevation-raised);
+  backdrop-filter: var(--runtime-surface-blur);
+  padding: 14px;
+}
+
+.edit-intake-panel--editor,
+.edit-intake-panel--artifact {
+  min-height: 620px;
+}
+
+.edit-intake-panel__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.edit-intake-panel__head h2 {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.edit-intake-panel__head span {
+  flex: 0 0 auto;
+  max-width: 180px;
+  border: 1px solid rgba(47, 93, 80, 0.14);
+  border-radius: 999px;
+  background: rgba(47, 93, 80, 0.08);
+  padding: 6px 10px;
+  overflow-wrap: anywhere;
+  color: rgba(47, 93, 80, 0.9);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.edit-intake-panel--editor .bn-container {
+  min-height: 430px;
+  border: 1px solid rgba(92, 77, 61, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #2c2824;
+  overflow: hidden;
+}
+
+.edit-intake-panel--editor .bn-editor {
+  min-height: 430px;
+  padding: 18px 20px;
+}
+
+.edit-intake-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.edit-intake-actions button {
+  border: 1px solid rgba(47, 93, 80, 0.2);
+  border-radius: 8px;
+  background: rgba(47, 93, 80, 0.1);
+  color: rgba(32, 65, 55, 0.96);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 850;
+  padding: 10px 12px;
+}
+
+.edit-intake-actions button:hover,
+.edit-intake-actions button:focus-visible {
+  background: rgba(47, 93, 80, 0.16);
+  box-shadow: var(--runtime-focus-ring);
+  outline: none;
+}
+
+.edit-intake-code {
+  max-height: 520px;
+  margin: 0;
+  border: 1px solid rgba(92, 77, 61, 0.12);
+  border-radius: 8px;
+  background: rgba(34, 31, 28, 0.92);
+  color: #f7f1e8;
+  overflow: auto;
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 980px) {
+  .edit-intake-page {
+    padding: 12px;
+  }
+
+  .edit-intake-hero,
+  .edit-intake-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-intake-hero dl {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-intake-panel--editor,
+  .edit-intake-panel--artifact {
+    min-height: 0;
+  }
+
+  .edit-intake-panel--editor .bn-container,
+  .edit-intake-panel--editor .bn-editor {
+    min-height: 340px;
+  }
+}
