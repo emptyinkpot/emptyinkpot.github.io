@@ -15,6 +15,10 @@ Windows E:\Vaults\Obsidian
 /srv/myblog/site/runtime/content-index.json
         -> reader/home/search projection
 
+DataBase Gateway
+        <- optional structured projection from myblog-runtime-content-projector
+        -> canonical content_works/content_parts/content_blocks/content_assets/content_relations
+
 apps/admin-next + MySQL
         -> runtime APIs, reader memory, evidence library, GitHub/OpenList bridges
 ```
@@ -41,3 +45,5 @@ apps/admin-next + MySQL
 ## Channel/Service Boundary
 
 MyBlog is the public projection shell. It may integrate GitHub, OpenList, runtime DB, and future mature services, but it should not become a bespoke CMS/search/sync engine when mature substrate services are available.
+
+DataBase is the canonical structured content platform. MyBlog may call DataBase Gateway when `MYBLOG_DATABASE_CANONICAL_PROJECTION=1`, but it must not direct-connect to DataBase MySQL, redefine DataBase schemas, or store a parallel canonical content registry.

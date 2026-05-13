@@ -66,6 +66,22 @@
   ],
   "generatedRuntimeRoot": "/srv/myblog/site/runtime/content-index.json",
   "runtimeTruth": "MySQL via apps/admin-next",
+  "canonicalStructuredContentPlatform": {
+    "status": "optional-projection",
+    "owner": "DataBase",
+    "gatewayEndpoint": "POST /writes/project-obsidian-markdown",
+    "enableEnv": "MYBLOG_DATABASE_CANONICAL_PROJECTION=1",
+    "gatewayUrlEnv": "MYBLOG_DATABASE_GATEWAY_URL",
+    "apiKeyEnv": "MYBLOG_DATABASE_GATEWAY_API_KEY",
+    "sourceRule": "Obsidian/Vault remains Markdown file truth; DataBase owns structured identity, blocks, assets and relations.",
+    "myblogRole": "projection client and public rendering shell only",
+    "forbidden": [
+      "direct DataBase MySQL access from MyBlog canonical content projection",
+      "MyBlog-owned shadow content work registry",
+      "local DataBase schema copies",
+      "silent fallback when DataBase projection is enabled"
+    ]
+  },
   "fileTruth": "Windows Vault synced to Linux hot mirror and exposed through OpenList",
   "contentRoots": [
     "apps/web/src/content/notes",
@@ -113,6 +129,15 @@
     "generatedRuntimeRoot": "/srv/myblog/site/runtime/content-index.json",
     "activeArticleTruthRoot": "public-data/runtime/content-index.json",
     "runtimeTruth": "MySQL via apps/admin-next",
+    "canonicalStructuredContentPlatform": {
+      "owner": "DataBase",
+      "gatewayEndpoint": "POST /writes/project-obsidian-markdown",
+      "projectionClient": "tools/server-runtime-content-projector.mjs",
+      "projectionBuildSource": "tools/build-runtime-content-index.mjs",
+      "enableEnv": "MYBLOG_DATABASE_CANONICAL_PROJECTION=1",
+      "gatewayUrlEnv": "MYBLOG_DATABASE_GATEWAY_URL",
+      "apiKeyEnv": "MYBLOG_DATABASE_GATEWAY_API_KEY"
+    },
     "fileTruth": "Windows Vault synced to Linux hot mirror and exposed through OpenList",
     "runtimeContractRoot": "packages/runtime-contract",
     "objectModelRoot": "packages/object-model",

@@ -16,6 +16,7 @@ MyBlog is a knowledge runtime and public projection shell. It combines static As
 | Production static root | `/srv/myblog/site` | Nginx-served public static site and runtime JSON directory. |
 | Vault hot mirror | `/home/vault/Obsidian` | Linux hot mirror of the authoring vault. |
 | Public file access | OpenList `/openlist/Obsidian`, COS, Quark | Public file identity and cold/blob storage surfaces. |
+| Canonical content platform | DataBase Gateway `/writes/project-obsidian-markdown` | Optional structured projection sink for Vault Markdown identity, blocks, assets, and relations. MyBlog calls the Gateway; it does not own canonical content schema or direct SQL. |
 
 ## Runtime Flow
 
@@ -27,6 +28,18 @@ Obsidian authoring truth
 -> Astro projection shell
 -> public reader/discovery surfaces
 ```
+
+When `MYBLOG_DATABASE_CANONICAL_PROJECTION=1`, the same runtime content projector also posts each publishable Markdown projection to DataBase Gateway:
+
+```text
+Obsidian authoring truth
+-> Linux hot mirror
+-> myblog-runtime-content-projector
+-> DataBase Gateway /writes/project-obsidian-markdown
+-> DataBase canonical content tables
+```
+
+This is not a second MyBlog storage path. Obsidian remains the human-editable Markdown file truth; DataBase owns structured canonical content, semantic relations, author/style context, and future cross-product queries. MyBlog only owns projection and rendering.
 
 Code and deployment flow:
 
@@ -57,5 +70,6 @@ Known inactive/problem state:
 - GitHub owns long-term Git history and collaboration.
 - `/srv/myblog/repo` owns active edits and deploy-authoritative builds.
 - `/srv/myblog/site` is runtime output, not source.
+- DataBase owns canonical structured content. MyBlog must integrate it through DataBase Gateway contracts, not by direct MySQL access or local schema copies.
 - `/srv/myblog/source` is legacy/server-side source copy and must not be treated as the canonical editable repository.
 - `E:\My Project\MyBlog` is retired and must not be used as default source.

@@ -23,13 +23,14 @@ export async function buildRuntimeContentIndex(options = {}) {
     return reuseExistingRuntimeIndex({ rootDir, publicDataRoot, webPublicRoot, vaultRoot });
   }
 
-  const articles = (
+  const projectedArticles = (
     await Promise.all(
       listMarkdownFiles(vaultRoot).map((absolutePath) => toRuntimeArticle(absolutePath, vaultRoot, sourceRootLabel, openListRootLabel))
     )
   )
     .filter(Boolean)
-    .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title, 'zh-CN'));
+    .sort((a, b) => b.article.date.localeCompare(a.article.date) || a.article.title.localeCompare(b.article.title, 'zh-CN'));
+  const articles = projectedArticles.map((item) => item.article);
   populateBacklinks(articles);
   const collections = buildKnowledgeCollections(articles);
   articles.forEach((article) => {
@@ -69,7 +70,11 @@ export async function buildRuntimeContentIndex(options = {}) {
   publicFiles.forEach((filePath) => writePublicRuntimeIndex(filePath, index));
 
   console.log(`Built runtime content index with ${articles.length} MarkdownObject article(s).`);
-  return { index, files: [...fullFiles, ...publicFiles] };
+  return {
+    index,
+    files: [...fullFiles, ...publicFiles],
+    canonicalProjectionItems: projectedArticles.map((item) => item.canonicalProjection)
+  };
 }
 
 if (isMain()) {
@@ -118,6 +123,7 @@ async function toRuntimeArticle(
   if (isPrivatePath(relativePath)) return null;
 
   const source = fs.readFileSync(absolutePath, 'utf8');
+  const fileStat = fs.statSync(absolutePath);
   const parsed = parseFrontmatter(source);
   const data = parsed ? parseYamlish(parsed.frontmatter) : {};
   const rawBody = parsed ? parsed.body : source;
@@ -141,8 +147,8 @@ async function toRuntimeArticle(
   const folder = deriveRuntimeFolder(relativePath);
   const title = readString(data.title) || path.basename(relativePath, path.extname(relativePath));
   const slug = slugify(readString(data.slug) || relativePath.replace(/\.[^.]+$/, ''));
-  const date = normalizeDate(readString(data.date), fs.statSync(absolutePath).mtime);
-  const updated = normalizeDate(readString(data.updated), fs.statSync(absolutePath).mtime);
+  const date = normalizeDate(readString(data.date), fileStat.mtime);
+  const updated = normalizeDate(readString(data.updated), fileStat.mtime);
   const summary = readString(data.summary) || readString(data.description) || getExcerpt(body, 150);
   const project = deriveProject(relativePath, data);
   const explicitTags = readStringList(data.tags);
@@ -186,7 +192,7 @@ async function toRuntimeArticle(
     summary
   });
 
-  return {
+  const article = {
     id: `md_${hash(sourcePath).slice(0, 12)}`,
     type: 'MarkdownObject',
     source: openlistUrl,
@@ -223,6 +229,43 @@ async function toRuntimeArticle(
     body,
     html: await renderMarkdownToHtml(body),
     toc: getRuntimeHeadings(body)
+  };
+
+  return {
+    article,
+    canonicalProjection: {
+      articleId: article.id,
+      sourceProvider: 'obsidian-vault',
+      relativePath,
+      sourcePath: `docs/${relativePath}`,
+      runtimeSourcePath: sourcePath,
+      sourceUri: `obsidian://vault/Obsidian/docs/${relativePath}`,
+      openlistPath,
+      openlistUrl,
+      sha256: hash(source),
+      mtime: fileStat.mtime.toISOString(),
+      frontmatter: data,
+      rawBody,
+      body,
+      relations,
+      article: {
+        id: article.id,
+        title,
+        subtitle: readString(data.subtitle),
+        kind,
+        status: published ? 'active' : 'draft',
+        summary,
+        description: article.description,
+        slug,
+        date,
+        updated,
+        tags,
+        categories,
+        folder,
+        series: article.series,
+        project
+      }
+    }
   };
 }
 

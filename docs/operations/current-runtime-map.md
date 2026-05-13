@@ -45,6 +45,17 @@ If SSH to `124.220.233.126` fails, do not silently promote a local clone back to
 | `myblog-runtime-content-projector.service` | Projects `/home/vault/Obsidian/docs` to runtime content JSON. |
 | `myblog-runtime-sse.service` | SSE notifier for runtime content-index changes. |
 
+`myblog-runtime-content-projector.service` can also project structured Markdown identity into DataBase when explicitly enabled:
+
+```env
+MYBLOG_DATABASE_CANONICAL_PROJECTION=1
+MYBLOG_DATABASE_GATEWAY_URL=https://database.tengokukk.com
+MYBLOG_DATABASE_GATEWAY_API_KEY=<optional when DataBase auth is disabled>
+MYBLOG_DATABASE_AUTHOR_PROFILE_ID=emptyinkpot_primary_author
+```
+
+When enabled, Gateway write failures are fatal for the projector process. This keeps the DataBase projection from drifting into a silent partial-success state. When disabled, MyBlog only writes runtime JSON and does not claim canonical DataBase projection is active.
+
 Known issue:
 
 - `syncthing@ubuntu.service` is failed as of the current inspection. Treat Vault mirror sync as degraded until repaired and verified.
@@ -116,6 +127,17 @@ MyBlog's active runtime database is Tencent Cloud CynosDB Serverless MySQL, not 
 | Local MariaDB | `127.0.0.1:3306` | Running on the server, but not the active MyBlog Runtime DB. |
 
 Runtime DB owns dynamic state only: reader memory, highlights, visual source indexes, visual pins and visual sync runs. It must not store article bodies, EPUB/PDF/image/video blobs, OpenList files, COS objects, Quark files, Astro dist, Pagefind output, or Syncthing hot mirror data.
+
+## DataBase Canonical Projection Boundary
+
+DataBase, not MyBlog, owns structured content truth for cross-product use. The only MyBlog write path into that platform is:
+
+```text
+myblog-runtime-content-projector.service
+-> DataBase Gateway POST /writes/project-obsidian-markdown
+```
+
+MyBlog does not direct-connect to DataBase MySQL for canonical content, does not define DataBase table schemas, and does not create a local shadow registry of content works. It sends Vault-derived source identity, frontmatter, blocks, assets, and Obsidian relations to the Gateway contract.
 
 
 Current verified Runtime DB environment values, excluding secrets:
