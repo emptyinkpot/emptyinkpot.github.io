@@ -31,7 +31,7 @@ console.log(`[runtime-content-projector] Watch root: ${watchRoot}`);
 console.log(`[runtime-content-projector] Runtime index: ${runtimeIndexPath}`);
 console.log(`[runtime-content-projector] Public OpenList root: ${openListRootLabel}`);
 console.log(`[runtime-content-projector] DataBase canonical projection: ${databaseProjectionEnabled ? 'enabled' : 'disabled'}`);
-console.log('[runtime-content-projector] This service only rewrites runtime/content-index.json. It never runs Astro build, Pagefind, deploy, scp or rsync.');
+console.log('[runtime-content-projector] This service only rewrites runtime projection artifacts. It never runs Astro build, Pagefind, deploy, scp or rsync.');
 
 scheduleProjection('startup');
 
@@ -98,7 +98,7 @@ async function projectRuntimeIndex() {
     if (databaseProjectionEnabled) {
       await projectCanonicalContent(result.canonicalProjectionItems || []);
     }
-    console.log('[runtime-content-projector] Runtime index refreshed.');
+    console.log('[runtime-content-projector] Runtime projection artifacts refreshed.');
   } catch (error) {
     console.error(`[runtime-content-projector] Projection failed: ${error.message}`);
     if (databaseProjectionEnabled) process.exit(1);
