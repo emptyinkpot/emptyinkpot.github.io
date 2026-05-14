@@ -5,6 +5,8 @@ const rootDir = process.cwd();
 const appDir = 'apps/web';
 const runtimeContentIndexPath = resolvePath('public-data/runtime/content-index.json');
 const publicRuntimeContentIndexPath = resolvePath(`${appDir}/public/runtime/content-index.json`);
+const runtimeProjectionPackagePath = resolvePath('public-data/runtime/projection-package');
+const publicProjectionPackagePath = resolvePath(`${appDir}/public/runtime/projection-package`);
 const rssPagePath = resolvePath(`${appDir}/src/pages/rss.xml.ts`);
 const searchPagePath = resolvePath(`${appDir}/src/pages/search.astro`);
 const issues = [];
@@ -15,6 +17,8 @@ validateRuntimeIndexJson(runtimeContentIndexPath, 'Runtime article index');
 validateRuntimeIndexJson(publicRuntimeContentIndexPath, 'Public runtime article index');
 validateRuntimeArticles();
 validateRuntimeCollections();
+validateProjectionPackage(runtimeProjectionPackagePath, 'Runtime projection package');
+validateProjectionPackage(publicProjectionPackagePath, 'Public runtime projection package');
 validateSiteSupportPages();
 
 if (issues.length) {
@@ -196,6 +200,84 @@ function validateRuntimeCollections() {
       issues.push(`Runtime collection must declare home/graph/search projections: ${label}`);
     }
   });
+}
+
+function validateProjectionPackage(packagePath, label) {
+  const artifactNames = [
+    'manifest.json',
+    'toc.json',
+    'anchor-map.json',
+    'asset-map.json',
+    'search-chunks.json',
+    'reader-layout.json',
+    'annotations.overlay.json'
+  ];
+
+  if (!fs.existsSync(packagePath)) {
+    issues.push(`${label} is missing: ${path.relative(rootDir, packagePath)}`);
+    return;
+  }
+
+  const artifacts = new Map();
+  for (const artifactName of artifactNames) {
+    const artifactPath = path.join(packagePath, artifactName);
+    if (!fs.existsSync(artifactPath)) {
+      issues.push(`${label} artifact is missing: ${path.relative(rootDir, artifactPath)}`);
+      continue;
+    }
+
+    try {
+      artifacts.set(artifactName, JSON.parse(readText(artifactPath)));
+    } catch (error) {
+      issues.push(`${label} artifact must be valid JSON (${artifactName}): ${error.message}`);
+    }
+  }
+
+  const manifest = artifacts.get('manifest.json');
+  const toc = artifacts.get('toc.json');
+  const anchorMap = artifacts.get('anchor-map.json');
+  const searchChunks = artifacts.get('search-chunks.json');
+  const readerLayout = artifacts.get('reader-layout.json');
+  const annotationsOverlay = artifacts.get('annotations.overlay.json');
+
+  if (!manifest) return;
+
+  if (manifest.schemaVersion !== 'myblog.projection-package.v1') {
+    issues.push(`${label} manifest has invalid schemaVersion`);
+  }
+
+  if (manifest.authority?.type !== 'projection-package') {
+    issues.push(`${label} manifest must declare projection-package authority`);
+  }
+
+  if (manifest.authority?.upstream !== 'markdown-runtime-index') {
+    issues.push(`${label} manifest must declare markdown-runtime-index as upstream`);
+  }
+
+  const articleCount = manifest.stats?.articles;
+  if (!Number.isInteger(articleCount) || articleCount <= 0) {
+    issues.push(`${label} manifest must report at least one article`);
+  }
+
+  if (toc && toc.documents?.length !== articleCount) {
+    issues.push(`${label} toc document count must match manifest article count`);
+  }
+
+  if (!Array.isArray(anchorMap?.anchors) || !anchorMap.anchors.length) {
+    issues.push(`${label} anchor-map must expose anchors`);
+  }
+
+  if (!Array.isArray(searchChunks?.chunks) || !searchChunks.chunks.length) {
+    issues.push(`${label} search-chunks must expose chunks`);
+  }
+
+  if (readerLayout && readerLayout.documents?.length !== articleCount) {
+    issues.push(`${label} reader-layout document count must match manifest article count`);
+  }
+
+  if (annotationsOverlay?.authority?.owner !== 'DataBase') {
+    issues.push(`${label} annotations overlay must preserve DataBase as review/mutation authority`);
+  }
 }
 
 function validateSiteSupportPages() {

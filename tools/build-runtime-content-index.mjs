@@ -66,7 +66,10 @@ export async function buildRuntimeContentIndex(options = {}) {
       ? options.outputFiles.map((filePath) => path.resolve(filePath))
       : [path.join(webPublicRoot, 'content-index.json')];
 
-  fullFiles.forEach((filePath) => writeJson(filePath, index));
+  fullFiles.forEach((filePath) => {
+    writeJson(filePath, index);
+    writeRuntimeProjectionPackage(path.dirname(filePath), index, { publicPayload: false });
+  });
   publicFiles.forEach((filePath) => writePublicRuntimeIndex(filePath, index));
 
   console.log(`Built runtime content index with ${articles.length} MarkdownObject article(s).`);
@@ -865,6 +868,244 @@ function writePublicRuntimeIndex(filePath, index) {
   };
 
   writeJson(filePath, publicIndex);
+  writeRuntimeProjectionPackage(path.dirname(filePath), publicIndex, { publicPayload: true });
+}
+
+function writeRuntimeProjectionPackage(runtimeRoot, index, { publicPayload }) {
+  const packageRoot = path.join(runtimeRoot, 'projection-package');
+  fs.rmSync(packageRoot, { recursive: true, force: true });
+  fs.mkdirSync(packageRoot, { recursive: true });
+
+  const manifest = buildProjectionManifest(index, { publicPayload });
+  const toc = buildProjectionToc(index);
+  const anchorMap = buildProjectionAnchorMap(index);
+  const assetMap = buildProjectionAssetMap(index);
+  const searchChunks = buildProjectionSearchChunks(index, { publicPayload });
+  const readerLayout = buildProjectionReaderLayout(index);
+  const annotationsOverlay = buildProjectionAnnotationsOverlay(index);
+
+  writeJson(path.join(packageRoot, 'manifest.json'), manifest);
+  writeJson(path.join(packageRoot, 'toc.json'), toc);
+  writeJson(path.join(packageRoot, 'anchor-map.json'), anchorMap);
+  writeJson(path.join(packageRoot, 'asset-map.json'), assetMap);
+  writeJson(path.join(packageRoot, 'search-chunks.json'), searchChunks);
+  writeJson(path.join(packageRoot, 'reader-layout.json'), readerLayout);
+  writeJson(path.join(packageRoot, 'annotations.overlay.json'), annotationsOverlay);
+}
+
+function buildProjectionManifest(index, { publicPayload }) {
+  return {
+    schemaVersion: 'myblog.projection-package.v1',
+    generatedAt: index.generatedAt,
+    sourceIndex: 'content-index.json',
+    authority: {
+      ...index.authority,
+      type: 'projection-package',
+      upstream: index.authority?.type || 'markdown-runtime-index',
+      rule: 'This package is a derived projection artifact. It is not source truth, canonical AST storage, or a DataBase schema copy.'
+    },
+    payload: {
+      public: Boolean(publicPayload),
+      articleBodies: publicPayload ? 'detail-payloads' : 'inline',
+      articleDetailPath: 'runtime/articles/{id}.json'
+    },
+    artifacts: {
+      toc: 'toc.json',
+      anchorMap: 'anchor-map.json',
+      assetMap: 'asset-map.json',
+      searchChunks: 'search-chunks.json',
+      readerLayout: 'reader-layout.json',
+      annotationsOverlay: 'annotations.overlay.json'
+    },
+    stats: {
+      articles: Array.isArray(index.articles) ? index.articles.length : 0,
+      collections: Array.isArray(index.collections) ? index.collections.length : 0,
+      anchors: countProjectionAnchors(index),
+      assets: countProjectionAssets(index),
+      searchChunks: countProjectionSearchChunks(index)
+    }
+  };
+}
+
+function buildProjectionToc(index) {
+  return {
+    schemaVersion: 'myblog.toc.v1',
+    generatedAt: index.generatedAt,
+    documents: articlesOf(index).map((article) => ({
+      documentId: article.id,
+      slug: article.slug,
+      title: article.title,
+      href: `/posts/${article.slug}/`,
+      detailPath: article.detailPath || `articles/${article.id}.json`,
+      sections: normalizeToc(article)
+    }))
+  };
+}
+
+function buildProjectionAnchorMap(index) {
+  return {
+    schemaVersion: 'myblog.anchor-map.v1',
+    generatedAt: index.generatedAt,
+    anchors: articlesOf(index).flatMap((article) => {
+      const documentAnchors = [{
+        id: `${article.id}:document`,
+        documentId: article.id,
+        type: 'document',
+        slug: article.slug,
+        href: `/posts/${article.slug}/`,
+        title: article.title,
+        sourcePath: article.sourcePath,
+        openlistPath: article.openlistPath
+      }];
+
+      const sectionAnchors = normalizeToc(article).map((section, sectionIndex) => ({
+        id: `${article.id}:section:${section.id}`,
+        documentId: article.id,
+        type: 'section',
+        sectionId: section.id,
+        slug: article.slug,
+        href: `/posts/${article.slug}/#${section.id}`,
+        title: section.title,
+        depth: section.depth,
+        ordinal: sectionIndex + 1
+      }));
+
+      return [...documentAnchors, ...sectionAnchors];
+    })
+  };
+}
+
+function buildProjectionAssetMap(index) {
+  return {
+    schemaVersion: 'myblog.asset-map.v1',
+    generatedAt: index.generatedAt,
+    assets: articlesOf(index).flatMap((article) =>
+      unique(article.relations?.assets || []).map((target) => ({
+        id: `asset_${hash(`${article.id}:${target}`).slice(0, 16)}`,
+        documentId: article.id,
+        target,
+        sourcePath: article.sourcePath,
+        openlistPath: article.openlistPath,
+        status: 'referenced',
+        rule: 'Asset entries are references. Binary truth remains in the mounted file/blob backend.'
+      }))
+    )
+  };
+}
+
+function buildProjectionSearchChunks(index, { publicPayload }) {
+  return {
+    schemaVersion: 'myblog.search-chunks.v1',
+    generatedAt: index.generatedAt,
+    chunks: articlesOf(index).flatMap((article) => {
+      const base = {
+        documentId: article.id,
+        slug: article.slug,
+        href: `/posts/${article.slug}/`,
+        title: article.title,
+        kind: article.kind,
+        categories: article.categories || [],
+        tags: article.tags || []
+      };
+      const summaryText = article.summary || article.description || '';
+      const chunks = [{
+        id: `${article.id}:summary`,
+        ...base,
+        anchorId: `${article.id}:document`,
+        role: 'summary',
+        text: summaryText
+      }];
+
+      if (!publicPayload && article.body) {
+        splitSearchText(article.body).forEach((text, indexNumber) => {
+          chunks.push({
+            id: `${article.id}:body:${indexNumber + 1}`,
+            ...base,
+            anchorId: `${article.id}:document`,
+            role: 'body',
+            ordinal: indexNumber + 1,
+            text
+          });
+        });
+      }
+
+      return chunks.filter((chunk) => chunk.text);
+    })
+  };
+}
+
+function buildProjectionReaderLayout(index) {
+  return {
+    schemaVersion: 'myblog.reader-layout.v1',
+    generatedAt: index.generatedAt,
+    documents: articlesOf(index).map((article) => ({
+      documentId: article.id,
+      slug: article.slug,
+      title: article.title,
+      href: `/posts/${article.slug}/`,
+      detailPath: article.detailPath || `articles/${article.id}.json`,
+      readingMinutes: Math.max(1, Math.round(stripMarkdown(article.body || article.summary || article.description || '').length / 320)),
+      layoutHints: {
+        reflowable: true,
+        pageNumbersAreProjection: true,
+        anchorStrategy: 'document-and-section-anchor',
+        tocSource: 'section-tree-projection'
+      }
+    }))
+  };
+}
+
+function buildProjectionAnnotationsOverlay(index) {
+  return {
+    schemaVersion: 'myblog.annotations-overlay.v1',
+    generatedAt: index.generatedAt,
+    authority: {
+      owner: 'DataBase',
+      intakeSchema: 'public-edit-intake.v1',
+      rule: 'MyBlog can render annotation overlays and emit intake proposals, but canonical review and graph mutation belong to DataBase.'
+    },
+    overlays: articlesOf(index).map((article) => ({
+      documentId: article.id,
+      slug: article.slug,
+      annotations: []
+    }))
+  };
+}
+
+function normalizeToc(article) {
+  return (Array.isArray(article.toc) ? article.toc : []).map((heading, indexNumber) => ({
+    id: heading.slug || `section-${indexNumber + 1}`,
+    title: heading.text || `Section ${indexNumber + 1}`,
+    depth: Number.isInteger(heading.depth) ? heading.depth : 1,
+    ordinal: indexNumber + 1
+  }));
+}
+
+function splitSearchText(text) {
+  const clean = stripMarkdown(text);
+  if (!clean) return [];
+  const chunks = [];
+  const chunkSize = 900;
+  for (let index = 0; index < clean.length; index += chunkSize) {
+    chunks.push(clean.slice(index, index + chunkSize).trim());
+  }
+  return chunks.filter(Boolean);
+}
+
+function articlesOf(index) {
+  return Array.isArray(index?.articles) ? index.articles : [];
+}
+
+function countProjectionAnchors(index) {
+  return articlesOf(index).reduce((total, article) => total + 1 + normalizeToc(article).length, 0);
+}
+
+function countProjectionAssets(index) {
+  return articlesOf(index).reduce((total, article) => total + unique(article.relations?.assets || []).length, 0);
+}
+
+function countProjectionSearchChunks(index) {
+  return buildProjectionSearchChunks(index, { publicPayload: false }).chunks.length;
 }
 
 function stripMarkdown(text) {
