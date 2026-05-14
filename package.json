@@ -20,6 +20,7 @@
     "check:vault-sync": "node tools/validate-linux-vault-sync.mjs",
     "server:openlist-storage": "node tools/server-openlist-storage-maintenance.mjs",
     "import:visual-sources": "node tools/import-visual-sources.mjs",
+    "import:contentbase-projection": "node tools/import-contentbase-projection.mjs",
     "new:update": "node tools/new-update-entry.mjs",
     "check:github-overview": "node tools/validate-github-overview-snapshot.mjs",
     "check:updates": "node tools/validate-update-log.mjs",
