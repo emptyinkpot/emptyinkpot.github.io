@@ -131,7 +131,7 @@ export async function createOpenListSourceProxyResponse(input = {}, request) {
   }
 
   const responseHeaders = new Headers();
-  responseHeaders.set("content-type", upstream.headers.get("content-type") || source.contentType);
+  responseHeaders.set("content-type", source.contentType || upstream.headers.get("content-type") || "application/octet-stream");
   responseHeaders.set("accept-ranges", upstream.headers.get("accept-ranges") || "bytes");
   responseHeaders.set("cache-control", "private, max-age=60");
   responseHeaders.set("x-openlist-file-cache", "proxy");
