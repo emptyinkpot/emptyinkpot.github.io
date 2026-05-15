@@ -1,22 +1,11 @@
 import crypto from "node:crypto";
-import {
-  getRuntimeDbPool,
-  mysqlDate,
-  toEpoch,
-} from "@/lib/runtime-db";
+import { databaseGatewayFetch } from "@/lib/runtime-db";
 
 const defaultSource = {
   id: "pinterest-saved-pins",
-  sourceType: "pinterest_saved",
   provider:
     process.env.VISUAL_PINTEREST_PROVIDER ||
     (process.env.APIFY_PINTEREST_DATASET_ID || process.env.APIFY_PINTEREST_TASK_ID ? "apify_dataset" : "pinterest_api"),
-  sourceUrl: "https://www.pinterest.com/emptyinkstand/_pins/",
-  boardId: process.env.PINTEREST_BOARD_ID || "",
-  title: "Pinterest Saved Pins",
-  collectionTitle: "Pinterest / Saved Pins",
-  partitionPattern: [6, 4, 9, 12],
-  syncIntervalSeconds: 600,
 };
 
 const fallbackPalette = {
@@ -24,170 +13,84 @@ const fallbackPalette = {
   colors: ["#6b2d5c", "#c9a227", "#f5f1e8", "#2f5d50", "#1f1b18"],
 };
 
-export async function ensureDefaultVisualSources() {
-  const db = await getRuntimeDbPool();
-  const now = mysqlDate();
-  await db.execute(
-    `
-      INSERT INTO visual_sources
-        (id, source_type, provider, source_url, board_id, provider_config_json, title, collection_title, partition_pattern_json, sync_interval_seconds, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, NULL, ?, ?, ?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE
-        source_type = VALUES(source_type),
-        provider = VALUES(provider),
-        source_url = VALUES(source_url),
-        board_id = IF(VALUES(board_id) != '', VALUES(board_id), board_id),
-        title = VALUES(title),
-        collection_title = VALUES(collection_title),
-        partition_pattern_json = VALUES(partition_pattern_json),
-        sync_interval_seconds = VALUES(sync_interval_seconds),
-        updated_at = VALUES(updated_at)
-    `,
-    [
-      defaultSource.id,
-      defaultSource.sourceType,
-      defaultSource.provider,
-      defaultSource.sourceUrl,
-      defaultSource.boardId,
-      defaultSource.title,
-      defaultSource.collectionTitle,
-      JSON.stringify(defaultSource.partitionPattern),
-      defaultSource.syncIntervalSeconds,
-      now,
-      now,
-    ],
-  );
-}
-
 export async function readVisualSnapshot() {
-  await ensureDefaultVisualSources();
-  const db = await getRuntimeDbPool();
-  const [sources] = await db.execute("SELECT * FROM visual_sources ORDER BY id ASC");
+  const snapshot = await databaseGatewayFetch("/myblog/runtime/visuals/snapshot");
   const collections = [];
-  const sourceReports = [];
+  const pinsBySource = snapshot.pinsBySource || {};
 
-  for (const source of sources) {
-    const [pins] = await db.execute(
-      `
-        SELECT * FROM visual_pins
-        WHERE source_id = ? AND deleted_at IS NULL
-        ORDER BY position_index ASC, first_seen_at ASC
-      `,
-      [source.id],
-    );
-    const normalizedPins = pins.map(normalizePin);
-    collections.push(...toPartitionCollections(source, normalizedPins));
-    sourceReports.push(normalizeSource(source, normalizedPins.length));
+  for (const source of snapshot.sources || []) {
+    const pins = Array.isArray(pinsBySource[source.id]) ? pinsBySource[source.id] : [];
+    collections.push(...toPartitionCollections(source, pins.map(normalizeGatewayPin)));
   }
 
   return {
-    version: 1,
-    mode: "bookmark-mirror",
+    version: snapshot.version || 1,
+    mode: snapshot.mode || "bookmark-mirror",
     downloaded: false,
-    generatedAt: new Date().toISOString(),
-    sources: sourceReports,
+    generatedAt: snapshot.generatedAt || new Date().toISOString(),
+    sources: (snapshot.sources || []).map(normalizeGatewaySource),
     collections,
   };
 }
 
 export async function syncVisualSource(sourceId = defaultSource.id) {
-  await ensureDefaultVisualSources();
-  const db = await getRuntimeDbPool();
-  const [rows] = await db.execute("SELECT * FROM visual_sources WHERE id = ? LIMIT 1", [sourceId]);
-  const source = rows[0];
-  if (!source) {
-    return { ok: false, error: `Unknown visual source: ${sourceId}`, status: 404 };
-  }
-
-  const runId = `visual-sync:${source.id}:${Date.now()}`;
-  const startedAt = mysqlDate();
-  await db.execute(
-    "INSERT INTO visual_sync_runs (id, source_id, provider, status, started_at) VALUES (?, ?, ?, 'running', ?)",
-    [runId, source.id, source.provider || "pinterest_api", startedAt],
-  );
-  await db.execute(
-    "UPDATE visual_sources SET sync_status = 'running', last_error = NULL, updated_at = ? WHERE id = ?",
-    [startedAt, source.id],
-  );
-
   try {
+    const provider = defaultSource.provider;
+    const source = { id: sourceId, provider };
     const pins = await fetchSourcePins(source);
-    const now = mysqlDate();
-    await upsertPins(db, source, pins, now);
-
-    const activeIds = pins.map((pin) => pin.pinId);
-    if (activeIds.length) {
-      const placeholders = activeIds.map(() => "?").join(", ");
-      await db.execute(
-        `
-          UPDATE visual_pins
-          SET deleted_at = ?, last_seen_at = ?
-          WHERE source_id = ? AND deleted_at IS NULL AND pin_id NOT IN (${placeholders})
-        `,
-        [now, now, source.id, ...activeIds],
-      );
-    }
-
     const snapshotHash = hashPins(pins);
-    await db.execute(
-      `
-        UPDATE visual_sources
-        SET last_cursor = NULL,
-            last_synced_at = ?,
-            sync_status = 'ok',
-            pins_snapshot_hash = ?,
-            last_error = NULL,
-            updated_at = ?
-        WHERE id = ?
-      `,
-      [now, snapshotHash, now, source.id],
-    );
-    await db.execute(
-      `
-        UPDATE visual_sync_runs
-        SET status = 'ok', synced_items = ?, active_items = ?, snapshot_hash = ?, finished_at = ?
-        WHERE id = ?
-      `,
-      [pins.length, pins.length, snapshotHash, now, runId],
-    );
+    const result = await databaseGatewayFetch("/myblog/runtime/visuals/sync-result", {
+      method: "POST",
+      body: JSON.stringify({
+        sourceId,
+        provider,
+        ok: true,
+        snapshotHash,
+        pins,
+      }),
+    });
 
     return {
       ok: true,
-      sourceId: source.id,
-      syncedItems: pins.length,
-      snapshotHash,
+      sourceId,
+      syncedItems: result.syncedItems ?? pins.length,
+      snapshotHash: result.snapshotHash || snapshotHash,
       downloaded: false,
     };
   } catch (error) {
-    const now = mysqlDate();
-    const message = error?.message || "Visual source sync failed.";
-    await db.execute(
-      "UPDATE visual_sources SET sync_status = 'error', last_error = ?, updated_at = ? WHERE id = ?",
-      [message, now, source.id],
-    );
-    await db.execute(
-      "UPDATE visual_sync_runs SET status = 'error', error = ?, finished_at = ? WHERE id = ?",
-      [message, now, runId],
-    );
-    return { ok: false, sourceId: source.id, error: message, status: 502 };
+    try {
+      await databaseGatewayFetch("/myblog/runtime/visuals/sync-result", {
+        method: "POST",
+        body: JSON.stringify({
+          sourceId,
+          provider: defaultSource.provider,
+          ok: false,
+          error: error?.message || "Visual source sync failed.",
+          pins: [],
+        }),
+      });
+    } catch {
+      // The caller receives the original provider/Gateway failure below.
+    }
+    return { ok: false, sourceId, error: error?.message || "Visual source sync failed.", status: error?.status || 502 };
   }
 }
 
 async function fetchSourcePins(source) {
-  if (source.provider === "pinterest_api") return fetchPinterestPins(source);
-  if (source.provider === "apify_dataset") return fetchApifyDatasetPins(source);
+  if (source.provider === "pinterest_api") return fetchPinterestPins();
+  if (source.provider === "apify_dataset") return fetchApifyDatasetPins();
   throw new Error(`Unsupported visual source provider: ${source.provider}`);
 }
 
-async function fetchPinterestPins(source) {
+async function fetchPinterestPins() {
   const token = process.env.PINTEREST_ACCESS_TOKEN || "";
   if (!token) {
     throw new Error("PINTEREST_ACCESS_TOKEN is not configured. Use an official Pinterest API token or switch provider.");
   }
 
-  const boardId = source.board_id || process.env.PINTEREST_BOARD_ID || "";
+  const boardId = process.env.PINTEREST_BOARD_ID || "";
   if (!boardId) {
-    throw new Error("PINTEREST_BOARD_ID or visual_sources.board_id is required for official board pin sync.");
+    throw new Error("PINTEREST_BOARD_ID is required for official board pin sync.");
   }
 
   const output = [];
@@ -221,15 +124,14 @@ async function fetchPinterestPins(source) {
   return output;
 }
 
-async function fetchApifyDatasetPins(source) {
+async function fetchApifyDatasetPins() {
   const token = process.env.APIFY_TOKEN || "";
   if (!token) {
     throw new Error("APIFY_TOKEN is not configured. Configure an Apify scheduled scraper dataset/task for saved-pin mirror sync.");
   }
 
-  const config = parseProviderConfig(source.provider_config_json);
-  const datasetId = config.datasetId || process.env.APIFY_PINTEREST_DATASET_ID || "";
-  const taskId = config.taskId || process.env.APIFY_PINTEREST_TASK_ID || "";
+  const datasetId = process.env.APIFY_PINTEREST_DATASET_ID || "";
+  const taskId = process.env.APIFY_PINTEREST_TASK_ID || "";
   const actorTaskId = datasetId || (taskId ? await fetchApifyTaskDatasetId(taskId, token) : "");
   if (!actorTaskId) {
     throw new Error("APIFY_PINTEREST_DATASET_ID or APIFY_PINTEREST_TASK_ID is required for Apify Pinterest mirror sync.");
@@ -323,59 +225,14 @@ function normalizeApifyPinterestPin(item, positionIndex) {
   };
 }
 
-function parseProviderConfig(value) {
-  if (!value) return {};
-  if (typeof value === "object") return value;
-  try {
-    const parsed = JSON.parse(value);
-    return parsed && typeof parsed === "object" ? parsed : {};
-  } catch {
-    return {};
-  }
-}
-
-async function upsertPins(db, source, pins, now) {
-  for (const pin of pins) {
-    await db.execute(
-      `
-        INSERT INTO visual_pins
-          (source_id, pin_id, pin_url, image_preview_url, title, description, board_id, position_index, downloaded, raw_json, first_seen_at, last_seen_at, deleted_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, NULL)
-        ON DUPLICATE KEY UPDATE
-          pin_url = VALUES(pin_url),
-          image_preview_url = VALUES(image_preview_url),
-          title = VALUES(title),
-          description = VALUES(description),
-          board_id = VALUES(board_id),
-          position_index = VALUES(position_index),
-          downloaded = 0,
-          raw_json = VALUES(raw_json),
-          last_seen_at = VALUES(last_seen_at),
-          deleted_at = NULL
-      `,
-      [
-        source.id,
-        pin.pinId,
-        pin.pinUrl,
-        pin.imagePreviewUrl,
-        pin.title,
-        pin.description,
-        pin.boardId,
-        pin.positionIndex,
-        JSON.stringify(pin.raw || {}),
-        now,
-        now,
-      ],
-    );
-  }
-}
-
 function toPartitionCollections(source, pins) {
-  const pattern = parsePattern(source.partition_pattern_json);
+  const pattern = Array.isArray(source.partitionPattern) && source.partitionPattern.length
+    ? source.partitionPattern
+    : [6, 4, 9, 12];
   const chunks = chunkByPattern(pins, pattern);
   return chunks.map((items, index) => ({
     id: `${source.id}-cluster-${index + 1}`,
-    title: `${source.collection_title || source.title} · Cluster ${String(index + 1).padStart(2, "0")}`,
+    title: `${source.collectionTitle || source.title} · Cluster ${String(index + 1).padStart(2, "0")}`,
     source: "pinterest",
     sourceLabel: "PINTEREST MIRROR",
     summary: `${source.title} 当前镜像快照中的第 ${index + 1} 个视觉主题簇。`,
@@ -405,48 +262,36 @@ function chunkByPattern(items, pattern) {
   return chunks;
 }
 
-function parsePattern(value) {
-  const fallback = [6, 4, 9, 12];
-  if (!value) return fallback;
-  if (Array.isArray(value)) return value.length ? value : fallback;
-  try {
-    const parsed = JSON.parse(value);
-    return Array.isArray(parsed) && parsed.length ? parsed : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-function normalizePin(row) {
+function normalizeGatewayPin(pin) {
   return {
-    id: `pin:${row.pin_id}`,
-    title: row.title || "Pinterest Pin",
-    image: row.image_preview_url,
-    previewUrl: row.image_preview_url,
+    id: `pin:${pin.pinId}`,
+    title: pin.title || "Pinterest Pin",
+    image: pin.imagePreviewUrl,
+    previewUrl: pin.imagePreviewUrl,
     type: "reference",
     source: "Pinterest",
-    sourceUrl: row.pin_url,
-    summary: row.description || row.title || "Pinterest mirrored pin",
-    note: "由 Pinterest mirror sync 写入本地 DB 的收藏记录。当前阶段不下载原图，只保留平台预览图 URL、pin URL 和 metadata。",
+    sourceUrl: pin.pinUrl,
+    summary: pin.description || pin.title || "Pinterest mirrored pin",
+    note: "由 Pinterest mirror sync 写入 DataBase 的收藏记录。当前阶段不下载原图，只保留平台预览图 URL、pin URL 和 metadata。",
     tags: ["pinterest", "visual reference"],
     palette: fallbackPalette,
     related: { visuals: [] },
   };
 }
 
-function normalizeSource(row, activeItems) {
+function normalizeGatewaySource(source) {
   return {
-    id: row.id,
-    type: row.source_type,
-    provider: row.provider,
-    url: row.source_url,
+    id: source.id,
+    type: source.sourceType,
+    provider: source.provider,
+    url: source.sourceUrl,
     mode: "bookmark-mirror",
     downloaded: false,
-    activeItems,
-    syncStatus: row.sync_status,
-    snapshotHash: row.pins_snapshot_hash || "",
-    lastSyncedAt: row.last_synced_at ? toEpoch(row.last_synced_at) : null,
-    lastError: row.last_error || "",
+    activeItems: source.pinCount || 0,
+    syncStatus: source.syncStatus,
+    snapshotHash: source.pinsSnapshotHash || "",
+    lastSyncedAt: source.lastSyncedAt,
+    lastError: source.lastError || "",
   };
 }
 
