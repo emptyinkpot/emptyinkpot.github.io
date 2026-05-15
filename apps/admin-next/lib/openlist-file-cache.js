@@ -104,6 +104,48 @@ export async function cacheOpenListSource(input = {}) {
   return { path: openlistPath, status: "cached", key, size: stat.size };
 }
 
+export async function getOpenListSourceUrl(input = {}) {
+  const file = await getOpenListFile(String(input.path || ""));
+  const rawUrl = resolveRawUrl(file?.raw_url || "");
+  if (!rawUrl) throw new Error("OpenList did not return raw_url.");
+  return {
+    rawUrl,
+    size: Number(input.size || file?.size || 0),
+    modified: input.modified || file?.modified || "",
+    contentType: getContentType(input.path || file?.name || ""),
+  };
+}
+
+export async function createOpenListSourceProxyResponse(input = {}, request) {
+  const source = await getOpenListSourceUrl(input);
+  const headers = {};
+  const range = request.headers.get("range");
+  if (range) headers.range = range;
+
+  const upstream = await fetch(source.rawUrl, {
+    headers,
+    cache: "no-store",
+  });
+  if (!upstream.ok || !upstream.body) {
+    throw new Error(`OpenList raw_url HTTP ${upstream.status}`);
+  }
+
+  const responseHeaders = new Headers();
+  responseHeaders.set("content-type", upstream.headers.get("content-type") || source.contentType);
+  responseHeaders.set("accept-ranges", upstream.headers.get("accept-ranges") || "bytes");
+  responseHeaders.set("cache-control", "private, max-age=60");
+  responseHeaders.set("x-openlist-file-cache", "proxy");
+  for (const header of ["content-length", "content-range"]) {
+    const value = upstream.headers.get(header);
+    if (value) responseHeaders.set(header, value);
+  }
+
+  return new Response(upstream.body, {
+    status: upstream.status,
+    headers: responseHeaders,
+  });
+}
+
 export async function prewarmOpenListBookFiles(files = [], options = {}) {
   const limit = clampNumber(options.limit, 1, 5000, 100);
   const targets = files

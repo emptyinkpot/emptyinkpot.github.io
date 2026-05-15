@@ -1,13 +1,15 @@
-import { getCachedOpenListCover } from "@/lib/openlist-cover";
+import { getCachedOrExtractedOpenListCover } from "@/lib/openlist-cover";
 import { handleRouteError } from "@/lib/openlist-runtime";
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const cover = await getCachedOpenListCover({
+    const cover = await getCachedOrExtractedOpenListCover({
       path: searchParams.get("path") || "",
       modified: searchParams.get("modified") || "",
       size: searchParams.get("size") || "",
+    }, {
+      retryMiss: searchParams.get("retryMiss") === "1" || searchParams.get("retryMiss") === "true",
     });
 
     if (!cover) {

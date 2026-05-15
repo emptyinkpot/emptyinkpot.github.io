@@ -1,5 +1,7 @@
+import { databaseGatewayFetch, hasDataBaseGatewayConfig } from "@/lib/runtime-db";
+
 const DEFAULT_BASE_URL = "http://127.0.0.1:5244";
-const DEFAULT_ROOT = "/夸克网盘";
+const DEFAULT_ROOT = "/夸克网盘,/Obsidian";
 const DEFAULT_API_PREFIX = "/openlist";
 
 export function jsonError(message, status = 500, extra = {}) {
@@ -98,6 +100,17 @@ export async function openListFetch(route, body, init = {}) {
 }
 
 export async function getOpenListFile(path) {
+  if (hasDataBaseGatewayConfig()) {
+    const payload = await databaseGatewayFetch("/openlist/fs/get", {
+      method: "POST",
+      body: JSON.stringify({
+        path: assertPublicOpenListPath(path),
+        password: "",
+      }),
+    });
+    return payload.item;
+  }
+
   return openListFetch("/api/fs/get", {
     path: assertPublicOpenListPath(path),
     password: "",
@@ -108,8 +121,22 @@ export async function getOpenListFile(path) {
 }
 
 export async function listOpenListFiles(input = {}) {
+  const path = assertPublicOpenListPath(input.path || getOpenListConfig().publicRoots[0] || "/");
+  if (hasDataBaseGatewayConfig()) {
+    return databaseGatewayFetch("/openlist/fs/list", {
+      method: "POST",
+      body: JSON.stringify({
+        path,
+        password: "",
+        page: Number(input.page || 1),
+        per_page: Math.min(200, Math.max(1, Number(input.perPage || input.per_page || 50))),
+        refresh: Boolean(input.refresh),
+      }),
+    });
+  }
+
   return openListFetch("/api/fs/list", {
-    path: assertPublicOpenListPath(input.path || getOpenListConfig().publicRoots[0] || DEFAULT_ROOT),
+    path,
     password: "",
     page: Number(input.page || 1),
     per_page: Math.min(200, Math.max(1, Number(input.perPage || input.per_page || 50))),
@@ -121,6 +148,8 @@ export function resolveRawUrl(rawUrl) {
   const { baseUrl, apiPrefix } = getOpenListConfig();
   if (!rawUrl) return "";
   if (/^https?:\/\//i.test(rawUrl)) {
+    if (hasDataBaseGatewayConfig()) return rawUrl;
+
     const parsed = new URL(rawUrl);
     if (apiPrefix && (parsed.pathname === apiPrefix || parsed.pathname.startsWith(`${apiPrefix}/`))) {
       return new URL(`${parsed.pathname}${parsed.search}`, `${baseUrl}/`).toString();
