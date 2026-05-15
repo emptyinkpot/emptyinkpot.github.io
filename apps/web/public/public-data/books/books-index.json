@@ -1,10 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-08T05:42:09.731Z",
+  "generatedAt": "2026-05-15T14:52:44.384Z",
   "source": {
-    "type": "openlist-index",
+    "type": "database-gateway-openlist-target",
     "canonicalPath": "/Obsidian/docs/books/original",
-    "indexUrl": "https://blog.tengokukk.com/api/openlist/index",
+    "indexUrl": "/openlist/targets/myblog-books-original/list",
+    "targetId": "myblog-books-original",
     "metadataPath": "public-data/books/books.metadata.json",
     "metadataAuthority": "sidecar-json",
     "liveListForbidden": true

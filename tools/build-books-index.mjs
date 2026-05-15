@@ -8,8 +8,11 @@ const metadataPath = path.join(root, 'public-data', 'books', 'books.metadata.jso
 const outputPath = path.join(root, 'public-data', 'books', 'books-index.json');
 const webPublicOutputPath = path.join(root, 'apps', 'web', 'public', 'public-data', 'books', 'books-index.json');
 const webPublicMetadataPath = path.join(root, 'apps', 'web', 'public', 'public-data', 'books', 'books.metadata.json');
-const canonicalPath = '/Obsidian/docs/books/original';
-const openListIndexUrl = process.env.MYBLOG_OPENLIST_INDEX_URL || 'https://blog.tengokukk.com/api/openlist/index';
+const databaseGatewayUrl = (process.env.MYBLOG_DATABASE_GATEWAY_URL || process.env.DATABASE_GATEWAY_URL || '').replace(/\/+$/, '');
+const databaseGatewayApiKey = process.env.MYBLOG_DATABASE_GATEWAY_API_KEY || process.env.DATABASE_GATEWAY_API_KEY || '';
+const databaseGatewayTargetId = process.env.MYBLOG_BOOKS_OPENLIST_TARGET_ID || 'myblog-books-original';
+const legacyOpenListIndexUrl = process.env.MYBLOG_OPENLIST_INDEX_URL || '';
+const legacyCanonicalPath = '/Obsidian/docs/books/original';
 
 const sourceTag = 'OpenList 原始库';
 const extensionPattern = /\.(epub|pdf|mobi)$/i;
@@ -19,6 +22,7 @@ async function main() {
   const metadataMap = buildMetadataMap(metadata.entries || []);
   const index = await loadOpenListIndex();
   if (!index) return;
+  const canonicalPath = normalizeOpenListPath(index.canonicalPath || legacyCanonicalPath);
 
   const books = index.files
     .filter((file) => !file.isDir && String(file.path || '').startsWith(`${canonicalPath}/`) && extensionPattern.test(file.name || ''))
@@ -34,9 +38,10 @@ async function main() {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
     source: {
-      type: 'openlist-index',
+      type: index.sourceType || 'database-gateway-openlist-target',
       canonicalPath,
-      indexUrl: openListIndexUrl,
+      indexUrl: index.indexUrl,
+      targetId: index.targetId,
       metadataPath: 'public-data/books/books.metadata.json',
       metadataAuthority: 'sidecar-json',
       liveListForbidden: true
@@ -63,22 +68,15 @@ async function main() {
 
 async function loadOpenListIndex() {
   try {
-    const response = await fetch(openListIndexUrl, {
-      headers: {
-        Accept: 'application/json'
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`OpenList index request failed: ${response.status}`);
+    if (databaseGatewayUrl) {
+      return await loadDataBaseGatewayOpenListTargetIndex();
     }
 
-    const index = await response.json();
-    if (!index.ok || !Array.isArray(index.files)) {
-      throw new Error('OpenList index response is not a valid files index');
+    if (legacyOpenListIndexUrl) {
+      return await loadLegacyOpenListIndex();
     }
 
-    return index;
+    throw new Error('MYBLOG_DATABASE_GATEWAY_URL is not configured.');
   } catch (error) {
     const cached = await readJson(outputPath, null);
     if (cached?.books?.length) {
@@ -92,6 +90,108 @@ async function loadOpenListIndex() {
     }
     throw error;
   }
+}
+
+async function loadDataBaseGatewayOpenListTargetIndex() {
+  const files = [];
+  let page = 1;
+  let total = 0;
+  let targetRemoteDir = '';
+
+  while (page < 1000) {
+    const response = await fetch(`${databaseGatewayUrl}/openlist/targets/${encodeURIComponent(databaseGatewayTargetId)}/list`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...(databaseGatewayApiKey ? { 'X-DataBase-Api-Key': databaseGatewayApiKey } : {})
+      },
+      body: JSON.stringify({
+        page,
+        per_page: 200,
+        refresh: false
+      })
+    });
+
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || payload?.ok === false) {
+      throw new Error(payload?.message || payload?.error || `DataBase Gateway OpenList target request failed: ${response.status}`);
+    }
+
+    const content = Array.isArray(payload.content) ? payload.content : [];
+    targetRemoteDir = normalizeOpenListPath(payload.target?.remoteDir || targetRemoteDir);
+    if (!targetRemoteDir) {
+      throw new Error(`DataBase Gateway OpenList target has no remoteDir: ${databaseGatewayTargetId}`);
+    }
+    total = Number(payload.total || content.length || total);
+    for (const item of content) {
+      files.push(toOpenListIndexFile(targetRemoteDir, item));
+    }
+
+    if (!content.length || content.length < 200 || files.length >= total) break;
+    page += 1;
+  }
+
+  if (!files.length) {
+    throw new Error(`DataBase Gateway OpenList target returned 0 files: ${databaseGatewayTargetId}`);
+  }
+
+  return {
+    ok: true,
+    sourceType: 'database-gateway-openlist-target',
+    indexUrl: `/openlist/targets/${databaseGatewayTargetId}/list`,
+    targetId: databaseGatewayTargetId,
+    canonicalPath: targetRemoteDir,
+    files
+  };
+}
+
+async function loadLegacyOpenListIndex() {
+  const response = await fetch(legacyOpenListIndexUrl, {
+    headers: {
+      Accept: 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenList index request failed: ${response.status}`);
+  }
+
+  const index = await response.json();
+  if (!index.ok || !Array.isArray(index.files)) {
+    throw new Error('OpenList index response is not a valid files index');
+  }
+
+  if (!index.files.length) {
+    throw new Error(`OpenList index returned 0 files: ${legacyOpenListIndexUrl}`);
+  }
+
+  return {
+    ...index,
+    sourceType: 'legacy-openlist-index',
+    indexUrl: legacyOpenListIndexUrl,
+    canonicalPath: normalizeOpenListPath(index.canonicalPath || index.root || legacyCanonicalPath)
+  };
+}
+
+function toOpenListIndexFile(parentPath, item) {
+  const name = String(item.name || '').trim();
+  const itemPath = normalizeOpenListPath(`${normalizeOpenListPath(parentPath).replace(/\/+$/g, '')}/${name}`);
+  return {
+    id: item.id || stableBookId(itemPath),
+    source: 'database-gateway-openlist-target',
+    path: itemPath,
+    parentPath: normalizeOpenListPath(parentPath),
+    root: normalizeOpenListPath(parentPath),
+    name,
+    ext: path.extname(name).toLowerCase(),
+    kind: item.is_dir ? 'folder' : 'book',
+    isDir: Boolean(item.is_dir),
+    size: Number(item.size || 0),
+    modified: item.modified || '',
+    type: item.type,
+    thumb: item.thumb || ''
+  };
 }
 
 function buildMetadataMap(entries) {
