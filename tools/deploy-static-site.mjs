@@ -12,9 +12,21 @@ const canonicalServerRoot = '/srv/myblog/repo';
 const distDir = 'apps/web/dist';
 const localArchive = path.join(os.tmpdir(), `myblog-dist-${Date.now()}.tgz`);
 const isCanonicalServerDeploy = path.resolve(rootDir) === canonicalServerRoot;
+const skipBuild = process.env.MYBLOG_DEPLOY_SKIP_BUILD === '1';
 
 run('node', ['tools/deploy-guard.mjs']);
-if (process.env.MYBLOG_DEPLOY_SKIP_BUILD === '1') {
+if (isCanonicalServerDeploy && !skipBuild) {
+  console.error(
+    [
+      'Refusing to run a full Astro/Pagefind build on the production Lighthouse host.',
+      'Build apps/web/dist off-box, upload it into /srv/myblog/repo/apps/web/dist, then run:',
+      'MYBLOG_DEPLOY_SKIP_BUILD=1 npm run deploy:site'
+    ].join('\n')
+  );
+  process.exit(1);
+}
+
+if (skipBuild) {
   const indexPath = path.join(rootDir, distDir, 'index.html');
   const collectionsPath = path.join(rootDir, distDir, 'collections', 'index.html');
   if (!fs.existsSync(indexPath) || !fs.existsSync(collectionsPath)) {

@@ -76,7 +76,19 @@ edit /srv/myblog/repo on 124.220.233.126
 -> deploy only with npm run deploy:site from the production-authorized workspace when publishing to blog.tengokukk.com
 ```
 
-The deployment command builds `apps/web/dist`, uploads it to a remote temp directory, and replaces `/srv/myblog/site` while preserving `/srv/myblog/site/runtime`.
+The deployment command replaces `/srv/myblog/site` while preserving `/srv/myblog/site/runtime`.
+
+Do not run the full Astro/Pagefind build on the production Lighthouse host. That
+host is a 4 GB runtime box and full builds can starve SSH, nginx, and the Gateway.
+For production deploys, build `apps/web/dist` off-box, upload the finished dist
+into `/srv/myblog/repo/apps/web/dist`, then run:
+
+```bash
+MYBLOG_DEPLOY_SKIP_BUILD=1 npm run deploy:site
+```
+
+`npm run deploy:site` deliberately refuses a full build when executed from
+`/srv/myblog/repo` without `MYBLOG_DEPLOY_SKIP_BUILD=1`.
 
 Do not deploy through manual `tar`, `scp`, or ad hoc `rsync` from unchecked worktrees. `npm run deploy:site` is the only publish path, and it now refuses dirty trees, non-main branches, and trees that are not synced to `origin/main`.
 
