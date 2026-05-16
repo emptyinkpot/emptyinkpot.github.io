@@ -4,7 +4,8 @@ export async function POST(request) {
   try {
     const body = await readJson(request);
     const path = String(body.path || "");
-    const file = await getOpenListFile(path);
+    const bookId = String(body.bookId || "");
+    const file = await getOpenListFile({ bookId, path });
 
     return Response.json({
       ok: true,

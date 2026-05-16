@@ -6,7 +6,8 @@ import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import JSZip from "jszip";
-import { getOpenListFile, resolveRawUrl } from "./openlist-runtime";
+import { resolveRawUrl } from "./openlist-runtime";
+import { resolveOpenListSourceInput } from "./openlist-file-cache";
 
 const coverCacheVersion = "v7";
 const coverRoot = path.join(resolvePublicDataRoot(), "openlist-covers");
@@ -37,25 +38,29 @@ export function getCoverCacheKey(input = {}) {
 }
 
 export async function getCachedOrExtractedOpenListCover(input = {}, options = {}) {
-  const openlistPath = String(input.path || "");
-  const cachedFromManifest = await readManifestCover(openlistPath, input);
-  if (cachedFromManifest) return cachedFromManifest;
+  const resolved = await resolveOpenListSourceInput(input);
+  const openlistPath = String(resolved.path || "");
+  const effectiveInput = {
+    ...input,
+    path: openlistPath,
+    modified: resolved.modified,
+    size: resolved.size,
+  };
 
-  if (input.modified && input.size) {
-    const cachedFromVersion = await readVersionedCachedCover(input);
-    if (cachedFromVersion) return cachedFromVersion;
+  if (openlistPath) {
+    const cachedFromManifest = await readManifestCover(openlistPath, effectiveInput);
+    if (cachedFromManifest) return cachedFromManifest;
+
+    if (effectiveInput.modified && effectiveInput.size) {
+      const cachedFromVersion = await readVersionedCachedCover(effectiveInput);
+      if (cachedFromVersion) return cachedFromVersion;
+    }
   }
 
   if (options.allowExtract === false) {
     return null;
   }
 
-  const file = await getOpenListFile(openlistPath);
-  const effectiveInput = {
-    ...input,
-    modified: input.modified || file?.modified || "",
-    size: input.size || file?.size || "",
-  };
   const key = getCoverCacheKey(effectiveInput);
   const imagePath = path.join(coverRoot, `${key}.jpg`);
   const missPath = path.join(coverRoot, `${key}.miss.json`);
@@ -70,12 +75,12 @@ export async function getCachedOrExtractedOpenListCover(input = {}, options = {}
   await fs.mkdir(coverRoot, { recursive: true });
 
   try {
-    if (file?.thumb) {
-      const thumb = await fetchSourceBuffer(resolveRawUrl(file.thumb));
+    if (resolved.file?.thumb) {
+      const thumb = await fetchSourceBuffer(resolveRawUrl(resolved.file.thumb));
       const cover = await normalizeImageToJpeg(thumb);
       await fs.writeFile(imagePath, cover);
       await fs.rm(missPath, { force: true });
-      await writeCoverManifest(openlistPath, {
+      await writeCoverManifest(effectiveInput.path, {
         key,
         modified: effectiveInput.modified,
         size: effectiveInput.size,
@@ -88,10 +93,10 @@ export async function getCachedOrExtractedOpenListCover(input = {}, options = {}
       };
     }
 
-    const rawUrl = resolveRawUrl(file?.raw_url || "");
+    const rawUrl = resolveRawUrl(resolved.file?.raw_url || "");
     if (!rawUrl) throw new Error("OpenList did not return raw_url.");
 
-    const ext = path.extname(openlistPath).toLowerCase();
+    const ext = path.extname(effectiveInput.path).toLowerCase();
     const cover =
       ext === ".epub"
         ? await extractEpubCover(await fetchSourceBuffer(rawUrl))
@@ -106,7 +111,7 @@ export async function getCachedOrExtractedOpenListCover(input = {}, options = {}
 
     await fs.writeFile(imagePath, cover);
     await fs.rm(missPath, { force: true });
-    await writeCoverManifest(openlistPath, {
+    await writeCoverManifest(effectiveInput.path, {
       key,
       modified: effectiveInput.modified,
       size: effectiveInput.size,
@@ -125,6 +130,7 @@ export async function getCachedOrExtractedOpenListCover(input = {}, options = {}
 
 export async function getCachedOpenListCover(input = {}) {
   const openlistPath = String(input.path || "");
+  if (!openlistPath) return null;
   return (await readManifestCover(openlistPath, input)) || (await readVersionedCachedCover(input));
 }
 

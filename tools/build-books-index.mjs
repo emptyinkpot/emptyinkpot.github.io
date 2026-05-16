@@ -218,8 +218,8 @@ function normalizeIndexRecord(file, metadataMap) {
   const metadataTags = metadata?.tags || [];
 
   return {
-    id: stableBookId(openlistPath),
-    metadataId: metadata?.metadataId || stableBookId(openlistPath).replace(/^openlist-/, 'book-'),
+    id: file.id || stableBookId(openlistPath),
+    metadataId: metadata?.metadataId || (file.id || stableBookId(openlistPath)).replace(/^openlist-/, 'book-'),
     metadataSource: metadata ? 'books.metadata.json' : 'inferred',
     title: metadata?.title || parsed.title,
     author: metadata?.author || parsed.author || 'OpenList 原始书库',

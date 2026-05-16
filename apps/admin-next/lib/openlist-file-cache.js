@@ -31,8 +31,24 @@ export function getOpenListFileCacheKey(input = {}) {
     .digest("hex");
 }
 
+export async function resolveOpenListSourceInput(input = {}) {
+  const file = await getOpenListFile({
+    bookId: input.bookId || "",
+    path: input.path || "",
+  });
+  const resolvedPath = String(file?.path || input.path || "");
+  return {
+    file,
+    path: resolvedPath,
+    modified: input.modified || file?.modified || "",
+    size: input.size || file?.size || "",
+    contentType: getContentType(resolvedPath || file?.name || ""),
+  };
+}
+
 export async function getCachedOpenListSource(input = {}) {
   const openlistPath = String(input.path || "");
+  if (!openlistPath) return null;
   const manifest = await readFileManifest();
   const entry = manifest.files?.[openlistPath];
   if (!entry?.key || !entry?.file) return null;
@@ -55,28 +71,29 @@ export async function getCachedOpenListSource(input = {}) {
 }
 
 export async function cacheOpenListSource(input = {}) {
-  const openlistPath = String(input.path || "");
+  const resolved = await resolveOpenListSourceInput(input);
+  const openlistPath = String(resolved.path || "");
+  if (!openlistPath) return { path: openlistPath, status: "skipped", reason: "missing path" };
   const ext = path.extname(openlistPath).toLowerCase();
   if (![".epub", ".pdf"].includes(ext)) {
     return { path: openlistPath, status: "skipped", reason: "unsupported extension" };
   }
 
-  const cached = await getCachedOpenListSource(input);
-  if (cached) return { path: openlistPath, status: "hit", key: cached.key, size: cached.size };
-
-  const file = await getOpenListFile(openlistPath);
   const effectiveInput = {
     path: openlistPath,
-    modified: input.modified || file?.modified || "",
-    size: input.size || file?.size || "",
+    modified: resolved.modified,
+    size: resolved.size,
   };
+  const cached = await getCachedOpenListSource(effectiveInput);
+  if (cached) return { path: openlistPath, status: "hit", key: cached.key, size: cached.size };
+
   const sourceSize = Number(effectiveInput.size || 0);
   const maxBytes = getMaxSourceBytes();
   if (sourceSize > maxBytes) {
     return { path: openlistPath, status: "skipped", reason: `source file too large: ${sourceSize}` };
   }
 
-  const rawUrl = resolveRawUrl(file?.raw_url || "");
+  const rawUrl = resolveRawUrl(resolved.file?.raw_url || "");
   if (!rawUrl) throw new Error("OpenList did not return raw_url.");
 
   await fs.mkdir(fileRoot, { recursive: true });
@@ -98,21 +115,22 @@ export async function cacheOpenListSource(input = {}) {
     file: outputName,
     modified: effectiveInput.modified,
     size: stat.size || sourceSize,
-    contentType: getContentType(openlistPath),
+    contentType: resolved.contentType,
   });
 
   return { path: openlistPath, status: "cached", key, size: stat.size };
 }
 
 export async function getOpenListSourceUrl(input = {}) {
-  const file = await getOpenListFile(String(input.path || ""));
-  const rawUrl = resolveRawUrl(file?.raw_url || "");
+  const resolved = await resolveOpenListSourceInput(input);
+  const rawUrl = resolveRawUrl(resolved.file?.raw_url || "");
   if (!rawUrl) throw new Error("OpenList did not return raw_url.");
   return {
     rawUrl,
-    size: Number(input.size || file?.size || 0),
-    modified: input.modified || file?.modified || "",
-    contentType: getContentType(input.path || file?.name || ""),
+    size: Number(resolved.size || 0),
+    modified: resolved.modified,
+    contentType: resolved.contentType,
+    path: resolved.path,
   };
 }
 

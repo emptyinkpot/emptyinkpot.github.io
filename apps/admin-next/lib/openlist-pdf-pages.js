@@ -5,7 +5,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
-import { getCachedOpenListSource } from "./openlist-file-cache";
+import { cacheOpenListSource, getCachedOpenListSource, resolveOpenListSourceInput } from "./openlist-file-cache";
 
 const pageCacheVersion = "v1";
 const pageRoot = path.join(resolvePublicDataRoot(), "openlist-pages");
@@ -40,21 +40,35 @@ export function getPdfPageCacheKey(input = {}) {
 }
 
 export async function getCachedOrRenderedPdfPage(input = {}) {
-  const openlistPath = String(input.path || "");
+  const resolved = await resolveOpenListSourceInput(input);
+  let openlistPath = String(resolved.path || "");
   const page = clampNumber(input.page, 1, 100000, 1);
   if (path.extname(openlistPath).toLowerCase() !== ".pdf") return null;
 
-  const source = await getCachedOpenListSource({
+  let source = await getCachedOpenListSource({
     path: openlistPath,
-    modified: input.modified || "",
-    size: input.size || "",
+    modified: resolved.modified,
+    size: resolved.size,
   });
+  if (!source) {
+    await cacheOpenListSource({
+      bookId: input.bookId || "",
+      path: openlistPath,
+      modified: resolved.modified,
+      size: resolved.size,
+    });
+    source = await getCachedOpenListSource({
+      path: openlistPath,
+      modified: resolved.modified,
+      size: resolved.size,
+    });
+  }
   if (!source) return null;
 
   const key = getPdfPageCacheKey({
     path: openlistPath,
-    modified: input.modified || source.modified || "",
-    size: input.size || source.size || "",
+    modified: resolved.modified || source.modified || "",
+    size: resolved.size || source.size || "",
     page,
   });
   const imagePath = path.join(pageRoot, `${key}.jpg`);

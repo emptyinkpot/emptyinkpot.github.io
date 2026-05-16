@@ -5,6 +5,7 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const page = await getCachedOrRenderedPdfPage({
+      bookId: searchParams.get("bookId") || "",
       path: searchParams.get("path") || "",
       modified: searchParams.get("modified") || "",
       size: searchParams.get("size") || "",

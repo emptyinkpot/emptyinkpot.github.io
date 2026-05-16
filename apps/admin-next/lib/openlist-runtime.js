@@ -3,6 +3,7 @@ import { databaseGatewayFetch, hasDataBaseGatewayConfig } from "@/lib/runtime-db
 const DEFAULT_BASE_URL = "http://127.0.0.1:5244";
 const DEFAULT_ROOT = "/夸克网盘,/Obsidian";
 const DEFAULT_API_PREFIX = "/openlist";
+const DEFAULT_BOOKS_TARGET_ID = "myblog-books-original";
 
 export function jsonError(message, status = 500, extra = {}) {
   return Response.json(
@@ -20,6 +21,7 @@ export function getOpenListConfig() {
     baseUrl: String(process.env.OPENLIST_BASE_URL || DEFAULT_BASE_URL).replace(/\/$/, ""),
     apiPrefix: normalizeApiPrefix(process.env.OPENLIST_API_PREFIX ?? DEFAULT_API_PREFIX),
     token: process.env.OPENLIST_TOKEN || "",
+    booksTargetId: process.env.MYBLOG_BOOKS_OPENLIST_TARGET_ID || DEFAULT_BOOKS_TARGET_ID,
     publicRoots: String(process.env.OPENLIST_PUBLIC_ROOTS || process.env.OPENLIST_PUBLIC_ROOT || DEFAULT_ROOT)
       .split(",")
       .map((item) => normalizeOpenListPath(item))
@@ -99,15 +101,30 @@ export async function openListFetch(route, body, init = {}) {
   return payload.data;
 }
 
-export async function getOpenListFile(path) {
+export async function getOpenListFile(input) {
+  const request = typeof input === "string" ? { path: input } : { ...(input || {}) };
+  const path = String(request.path || "");
+  const bookId = String(request.bookId || "");
   if (hasDataBaseGatewayConfig()) {
-    const payload = await databaseGatewayFetch("/openlist/fs/get", {
-      method: "POST",
-      body: JSON.stringify({
-        path: assertPublicOpenListPath(path),
-        password: "",
-      }),
-    });
+    const { booksTargetId } = getOpenListConfig();
+    const targetPayload = bookId
+      ? {
+          bookId,
+          password: "",
+        }
+      : null;
+    const payload = targetPayload
+      ? await databaseGatewayFetch(`/openlist/targets/${encodeURIComponent(booksTargetId)}/get`, {
+          method: "POST",
+          body: JSON.stringify(targetPayload),
+        })
+      : await databaseGatewayFetch("/openlist/fs/get", {
+          method: "POST",
+          body: JSON.stringify({
+            path: assertPublicOpenListPath(path),
+            password: "",
+          }),
+        });
     return payload.item;
   }
 
@@ -160,6 +177,7 @@ export function resolveRawUrl(rawUrl) {
 }
 
 export function publicFileInfo(file, path) {
+  const resolvedPath = file?.path || path;
   return {
     name: file?.name || path.split("/").pop() || "",
     size: Number(file?.size || 0),
@@ -168,15 +186,20 @@ export function publicFileInfo(file, path) {
     thumb: file?.thumb || "",
     type: file?.type,
     raw_url: buildCachedRawUrl({
-      path,
+      path: resolvedPath,
+      bookId: file?.id || "",
       modified: file?.modified || "",
       size: file?.size || "",
     }),
+    id: file?.id || "",
+    path: resolvedPath,
   };
 }
 
 export function buildCachedRawUrl(input = {}) {
-  const params = new URLSearchParams({ path: String(input.path || "") });
+  const params = new URLSearchParams();
+  if (input.bookId) params.set("bookId", String(input.bookId));
+  if (input.path) params.set("path", String(input.path));
   if (input.modified) params.set("modified", String(input.modified));
   if (input.size) params.set("size", String(input.size));
   return `/api/openlist/raw?${params.toString()}`;

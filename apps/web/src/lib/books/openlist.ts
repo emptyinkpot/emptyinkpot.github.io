@@ -173,9 +173,10 @@ export function resolveRawUrl(rawUrl: string, baseUrl: string) {
 
 export function buildCachedBookRawUrl(book: BookItem, settings: BookSettings) {
   const path = resolveBookOpenListPath(book, settings);
-  if (!path || book.sourceType === 'external') return '';
+  if ((!book.id && !path) || book.sourceType === 'external') return '';
 
-  const params = new URLSearchParams({ path });
+  const params = new URLSearchParams({ bookId: book.id });
+  if (path) params.set('path', path);
   if (book.modified) params.set('modified', book.modified);
   if (book.size) params.set('size', String(book.size));
   return `/api/openlist/raw?${params.toString()}`;
@@ -183,9 +184,10 @@ export function buildCachedBookRawUrl(book: BookItem, settings: BookSettings) {
 
 export function buildCachedBookCoverUrl(book: BookItem, settings: BookSettings) {
   const path = resolveBookOpenListPath(book, settings);
-  if (!path || book.sourceType === 'external') return '';
+  if ((!book.id && !path) || book.sourceType === 'external') return '';
 
-  const params = new URLSearchParams({ path });
+  const params = new URLSearchParams({ bookId: book.id });
+  if (path) params.set('path', path);
   if (book.modified) params.set('modified', book.modified);
   if (book.size) params.set('size', String(book.size));
   return `/api/openlist/cover?${params.toString()}`;
@@ -193,9 +195,10 @@ export function buildCachedBookCoverUrl(book: BookItem, settings: BookSettings) 
 
 export function buildCachedBookPageUrl(book: BookItem, settings: BookSettings, page: number) {
   const path = resolveBookOpenListPath(book, settings);
-  if (!path || book.sourceType !== 'pdf') return '';
+  if ((!book.id && !path) || book.sourceType !== 'pdf') return '';
 
-  const params = new URLSearchParams({ path, page: String(Math.max(1, Math.round(page))) });
+  const params = new URLSearchParams({ bookId: book.id, page: String(Math.max(1, Math.round(page))) });
+  if (path) params.set('path', path);
   if (book.modified) params.set('modified', book.modified);
   if (book.size) params.set('size', String(book.size));
   return `/api/openlist/page?${params.toString()}`;
