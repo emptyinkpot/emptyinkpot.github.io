@@ -4,6 +4,8 @@ This repository is a native Quartz v4 workspace with MyBlog behavior added throu
 
 Quartz is the only primary framework. MyBlog does not wrap Quartz from a separate app shell, and the old Astro shell is not part of this repository shape.
 
+The public experience intentionally preserves the original MyBlog workbench look and interactions: mixed object feed, reader drawer, local reading memory, bookmarks, highlights, annotations, seal stamps, command/search surface, and source/runtime navigation. Those features are implemented as Quartz-native runtime components/resources, not as an Astro or Next outer shell.
+
 ## Structure
 
 - `quartz/`: Quartz source plus MyBlog plugin code.

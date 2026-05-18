@@ -21,6 +21,104 @@ export type MyBlogChannel = {
   nativeOwner?: "quartz" | "myblog-emitter" | "runtime-bridge"
 }
 
+export type MyBlogSealDefinition = {
+  id: string
+  label: string
+  subLabel: string
+  color: string
+  shape: "circle" | "square" | "oval" | "vertical" | "ticket"
+  texture: "clean" | "rough" | "aged" | "ink"
+  summary: string
+}
+
+export type MyBlogFeedItem = {
+  id: string
+  type: string
+  title: string
+  summary: string
+  kicker: string
+  meta: string
+  href: string
+  tags: string[]
+  accent: string
+  size?: "compact" | "standard" | "tall"
+}
+
+export const myblogSealDefinitions: MyBlogSealDefinition[] = [
+  {
+    id: "selected",
+    label: "精选",
+    subLabel: "SELECTED",
+    color: "#9E2A2B",
+    shape: "circle",
+    texture: "aged",
+    summary: "内容价值高，值得优先回访。",
+  },
+  {
+    id: "important",
+    label: "重要",
+    subLabel: "IMPORTANT",
+    color: "#6B2D5C",
+    shape: "circle",
+    texture: "ink",
+    summary: "对系统或长期主题有关键意义。",
+  },
+  {
+    id: "insight",
+    label: "洞见",
+    subLabel: "INSIGHT",
+    color: "#2F5D50",
+    shape: "square",
+    texture: "rough",
+    summary: "包含可复用观点或推理。",
+  },
+  {
+    id: "unfinished",
+    label: "未完",
+    subLabel: "DRAFT",
+    color: "#6B645C",
+    shape: "vertical",
+    texture: "clean",
+    summary: "仍需补写、重构或验证。",
+  },
+  {
+    id: "reread",
+    label: "重读",
+    subLabel: "REREAD",
+    color: "#C9A227",
+    shape: "oval",
+    texture: "aged",
+    summary: "适合复盘和周期性重读。",
+  },
+  {
+    id: "archive",
+    label: "归档",
+    subLabel: "ARCHIVE",
+    color: "#3A3A3A",
+    shape: "ticket",
+    texture: "rough",
+    summary: "保留历史价值，降低当前优先级。",
+  },
+  {
+    id: "done",
+    label: "完成",
+    subLabel: "DONE",
+    color: "#2F5D50",
+    shape: "circle",
+    texture: "aged",
+    summary: "任务或阅读已经闭环。",
+  },
+  {
+    id: "canon",
+    label: "正典",
+    subLabel: "CANON",
+    color: "#6B2D5C",
+    shape: "ticket",
+    texture: "ink",
+    summary: "被纳入长期知识体系的核心材料。",
+  },
+]
+
 export const myblogChannels: MyBlogChannel[] = [
   {
     id: "posts",
@@ -315,6 +413,55 @@ export function toMyBlogEntries(allFiles: QuartzPluginData[]): MyBlogEntry[] {
       }
     })
     .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title, "zh-CN"))
+}
+
+export function toMyBlogFeedItems(entries: MyBlogEntry[]): MyBlogFeedItem[] {
+  const articleItems: MyBlogFeedItem[] = entries.slice(0, 18).map((entry, index) => ({
+    id: `post:${entry.slug}`,
+    type: entry.kind === "home" ? "post" : entry.kind,
+    title: entry.title,
+    summary: entry.description || "这篇内容来自 MyBlog Vault，经 Quartz 内容管线发布。",
+    kicker: entry.kind === "home" ? "Runtime Markdown" : entry.kind,
+    meta: entry.date || "undated",
+    href: entry.href,
+    tags: entry.tags.slice(0, 5),
+    accent: ["#6b2d5c", "#244a5a", "#2f5d50", "#9e2a2b"][index % 4],
+    size: index === 0 ? "tall" : index < 5 ? "standard" : "compact",
+  }))
+
+  const channelItems: MyBlogFeedItem[] = myblogChannels
+    .filter((channel) =>
+      [
+        "books",
+        "github",
+        "visuals",
+        "music",
+        "knowledge",
+        "evidence-library",
+        "edit-intake",
+      ].includes(channel.id),
+    )
+    .map((channel, index) => ({
+      id: `channel:${channel.id}`,
+      type:
+        channel.id === "visuals"
+          ? "visual"
+          : channel.id === "evidence-library"
+            ? "update"
+            : channel.id === "edit-intake"
+              ? "project"
+              : channel.id,
+      title: channel.title,
+      summary: channel.description,
+      kicker: channel.kicker,
+      meta: channel.status,
+      href: channel.slug,
+      tags: channel.tags,
+      accent: ["#660874", "#1f4a5f", "#2f5d50", "#c9a227"][index % 4],
+      size: index === 0 ? "standard" : "compact",
+    }))
+
+  return [...channelItems.slice(0, 3), ...articleItems.slice(0, 10), ...channelItems.slice(3)]
 }
 
 export function pageDescription(channel: MyBlogChannel) {
