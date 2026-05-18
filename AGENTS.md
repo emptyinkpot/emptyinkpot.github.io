@@ -7,13 +7,10 @@ This repo inherits the global policy core at `C:\Users\ASUS-KL\.codex\policy\ind
 
 Before editing this repository, read:
 
-1. `AI_CONTEXT.md`
-2. `ARCHITECTURE.md`
-3. `SYSTEM_TOPOLOGY.md`
-4. `WORKSPACE_RUNTIME.md`
-5. `docs/operations/current-runtime-map.md`
-6. `project.json`
-7. `workspace.manifest.json`
+1. `README.md`
+2. `project.json`
+3. `workspace.manifest.json`
+4. `apps/web/src/data/architectureCodex.ts`
 
 ## Frontend Documentation Freshness
 

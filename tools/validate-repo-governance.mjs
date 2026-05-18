@@ -23,16 +23,14 @@ if (issues.length) {
 console.log('Repository governance validation passed');
 
 function validateMigrationStatus() {
-  const migrationStatusPath = 'docs/governance/content-migration-status.md';
-  const filePath = resolvePath(migrationStatusPath);
-  const source = readText(filePath);
+  const source = readText(resolvePath('README.md'));
 
   if (!source.includes('public-data/runtime/content-index.json')) {
-    issues.push(`\`${migrationStatusPath}\` must document the Runtime MarkdownObject article authority`);
+    issues.push('README.md must document the Runtime MarkdownObject article authority');
   }
 
   if (source.split('\n').some((line) => line.includes('Astro posts') && line.includes('现行'))) {
-    issues.push(`\`${migrationStatusPath}\` still marks Astro posts as current content authority`);
+    issues.push('README.md still marks Astro posts as current content authority');
   }
 }
 
@@ -473,24 +471,12 @@ function validateOpenListServerStorageBoundary() {
 
 function validateRuntimeConstitution() {
   const requiredFiles = [
-    'AI_RULES.md',
+    'README.md',
     'project.frontend-runtime-contract.json',
     'contracts/frontend-runtime-contract.json',
     'contracts/runtime-authority-map.json',
     'contracts/object-projection-contract.json',
-    'contracts/collection-behavior-contract.json',
-    'philosophy/FRONTEND_DESIGN_PHILOSOPHY.md',
-    'philosophy/RUNTIME_IDENTITY.md',
-    'philosophy/KNOWLEDGE_OBJECT_MODEL.md',
-    'philosophy/COLLECTION_MODEL.md',
-    'philosophy/ANTI_CMS_RULES.md',
-    'topology/SYSTEM_TOPOLOGY.md',
-    'topology/RUNTIME_GRAPH.md',
-    'topology/SYNC_ARCHITECTURE.md',
-    'topology/DEPLOY_GRAPH.md',
-    'adr/ADR-001-collections-are-lenses-not-pages.md',
-    'adr/ADR-002-feed-tabs-must-not-navigate.md',
-    'adr/ADR-003-mixed-object-masonry-is-core-identity.md'
+    'contracts/collection-behavior-contract.json'
   ];
 
   requiredFiles.forEach((relativePath) => {
@@ -501,19 +487,20 @@ function validateRuntimeConstitution() {
 
   if (!fileExists('contracts/frontend-runtime-contract.json')) return;
 
-  const aiRules = readText(resolvePath('AI_RULES.md'));
+  const readme = readText(resolvePath('README.md'));
   const contract = JSON.parse(readText(resolvePath('contracts/frontend-runtime-contract.json')));
   const collectionContract = JSON.parse(readText(resolvePath('contracts/collection-behavior-contract.json')));
 
   [
     'Knowledge Runtime Surface',
+    'Everything stays alive',
     'Do not turn collections into standalone CMS pages',
     'Do not replace the homepage mixed-object masonry stream with collection grids',
     'Do not make topic collections prerender into static collection pages',
     'Collection is context. Drawer is reading. Homepage is discovery'
   ].forEach((term) => {
-    if (!aiRules.includes(term)) {
-      issues.push(`AI_RULES.md must include Runtime Constitution term: ${term}`);
+    if (!readme.includes(term)) {
+      issues.push(`README.md must include Runtime Constitution term: ${term}`);
     }
   });
 
@@ -545,4 +532,3 @@ function fileExists(relativePath) {
 function resolvePath(relativePath) {
   return path.resolve(rootDir, relativePath);
 }
-

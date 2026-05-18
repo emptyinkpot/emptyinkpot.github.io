@@ -68,7 +68,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '把 UI authority 等同视觉来源，因为 MyBlog 常用 SSR seed + runtime API patch + localStorage fallback。'
     ],
     runtime: [
-      '规范文档是 docs/frontend-runtime-audit.md；它是前端运行时考古入口。',
+      '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时考古不再维护独立 docs 文档。',
       '审计路径固定为 user behavior -> DOM -> event -> state -> render -> hydration -> network -> animation -> authority -> fallback。',
       'BaseLayout 拥有全局 build-version reload guard、visual settings applier、OpenList iframe shell、Pinterest mirror shell 和 HoverPreviewSystem island。',
       '首页拥有大型 inline runtime：Feed filter、Drawer、Reader commands、local search、reader theme、highlights、seals、sidebar state 和 keyboard navigation。',
@@ -107,7 +107,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '只安装 Zustand、Radix、Vaul 或 React Flow 就声称升级，因为没有迁移 surface 和浏览器证据的依赖只能算 installed / not migrated。'
     ],
     runtime: [
-      '规范文档是 docs/frontend-runtime-convergence.md；它是前端运行时收束入口。',
+      '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时收束不再维护独立 docs 文档。',
       'P0 合同包是 packages/runtime-kernel，当前 dependency-free，只定义 command、overlay、drawer、keyboard、authority 和 storage classification，不改变生产行为。',
       '当前没有 active runtime-migration.json、packages/runtime-overlay 或 packages/runtime-store；overlay、drawer、focus 和 Escape 的真源仍是 legacy inline runtime + React islands。',
       'packages/runtime-kernel 不替代 packages/runtime-contract；前者管前端交互意图，后者管 API transport envelope。',
@@ -150,7 +150,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '让 Drawer、Search、OpenList、Pinterest、Graph 各自维护 z-index、motion、focus 和 overlay 规则，因为这会继续扩大多 runtime patch 感。'
     ],
     runtime: [
-      '规范文档是 docs/runtime-experience-layer.md；它是交互质感和 runtime coherence 入口。',
+      '规范入口是 README.md 与本 Architecture Codex 条目；交互质感和 runtime coherence 不再维护独立 docs 文档。',
       'P0 token 包是 packages/design-system；当前只定义 motion、depth、elevation、focus 和 surface token，不是组件库。',
       'apps/web/src/styles/global.css 暴露 --runtime-motion-*、--runtime-ease-*、--runtime-depth-*、--runtime-elevation-*、--runtime-focus-*、--runtime-surface-* 变量，后续 overlay / drawer / command / visual surface 必须复用。',
       'P1 已部分落地：Home Command layer 和 fallback Knowledge Search layer 开始复用 runtime depth、surface、elevation 和 motion token。',
@@ -697,7 +697,7 @@ export const architectureCodexGlossary = [
   },
   {
     term: 'Runtime Experience Layer',
-    definition: '统一 Drawer、Command、Reader、Visuals、Graph 和 runtime shells 的交互质感层；当前入口是 docs/runtime-experience-layer.md 与 packages/design-system。'
+    definition: '统一 Drawer、Command、Reader、Visuals、Graph 和 runtime shells 的交互质感层；当前入口是 README.md、Architecture Codex 与 packages/design-system。'
   },
   {
     term: 'Spatial Layer',

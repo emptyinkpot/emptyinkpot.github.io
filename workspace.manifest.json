@@ -6,7 +6,8 @@
   "root": "/srv/myblog/repo",
   "allowedRoots": [
     "/home/runner/work/emptyinkpot.github.io/emptyinkpot.github.io",
-    "/srv/myblog/repo"
+    "/srv/myblog/repo",
+    "E:\\My Project\\MyBlog"
   ],
   "capabilities": {
     "canBuild": true,

@@ -101,7 +101,7 @@
       "id": "phase-1-public-plan",
       "status": "in_progress",
       "deliverables": [
-        "public-data/evidence-library/README.md",
+        "README.md",
         "public-data/evidence-library/evidence-library-plan.json",
         "apps/web/src/pages/evidence-library/index.astro"
       ]

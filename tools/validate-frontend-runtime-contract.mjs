@@ -1,9 +1,8 @@
 import fs from 'node:fs';
 
 const requiredFiles = [
+  'README.md',
   'project.frontend-runtime-contract.json',
-  'FRONTEND_DESIGN_PHILOSOPHY.md',
-  'AI_RULES.md',
   'contracts/frontend-runtime-contract.json',
   'contracts/runtime-authority-map.json',
   'contracts/object-projection-contract.json',
@@ -11,18 +10,6 @@ const requiredFiles = [
   'public-data/books/books-index.json',
   'apps/web/public/public-data/books/books-index.json',
   'contracts/collection-behavior-contract.json',
-  'philosophy/FRONTEND_DESIGN_PHILOSOPHY.md',
-  'philosophy/RUNTIME_IDENTITY.md',
-  'philosophy/KNOWLEDGE_OBJECT_MODEL.md',
-  'philosophy/COLLECTION_MODEL.md',
-  'philosophy/ANTI_CMS_RULES.md',
-  'topology/SYSTEM_TOPOLOGY.md',
-  'topology/RUNTIME_GRAPH.md',
-  'topology/SYNC_ARCHITECTURE.md',
-  'topology/DEPLOY_GRAPH.md',
-  'adr/ADR-001-collections-are-lenses-not-pages.md',
-  'adr/ADR-002-feed-tabs-must-not-navigate.md',
-  'adr/ADR-003-mixed-object-masonry-is-core-identity.md',
   'apps/web/src/pages/index.astro'
 ];
 
@@ -38,7 +25,7 @@ const entryText = readText('project.frontend-runtime-contract.json');
 const contractText = readText('contracts/frontend-runtime-contract.json');
 const collectionContractText = readText('contracts/collection-behavior-contract.json');
 const authorityText = readText('contracts/runtime-authority-map.json');
-const aiRules = readText('AI_RULES.md');
+const readme = readText('README.md');
 const index = readText('apps/web/src/pages/index.astro');
 const runtimeBookFeed = readText('apps/web/src/components/books/RuntimeBookFeed.tsx');
 const bookshelfGrid = readText('apps/web/src/components/books/BookshelfGrid.tsx');
@@ -47,8 +34,6 @@ const buildBooksIndex = readText('tools/build-books-index.mjs');
 const booksMetadataText = readText('public-data/books/books.metadata.json');
 const booksIndexText = readText('public-data/books/books-index.json');
 const collectionDetail = readText('apps/web/src/pages/collections/[slug].astro');
-const philosophy = readText('philosophy/FRONTEND_DESIGN_PHILOSOPHY.md');
-const rootPhilosophy = readText('FRONTEND_DESIGN_PHILOSOPHY.md');
 
 let entry = {};
 let contract = {};
@@ -105,11 +90,8 @@ for (const term of [
   'Collection is context',
   'Drawer is reading'
 ]) {
-  if (!philosophy.includes(term)) {
-    errors.push(`FRONTEND_DESIGN_PHILOSOPHY.md must include: ${term}`);
-  }
-  if (!rootPhilosophy.includes(term)) {
-    errors.push(`Root FRONTEND_DESIGN_PHILOSOPHY.md must include: ${term}`);
+  if (!readme.includes(term)) {
+    errors.push(`README.md must include: ${term}`);
   }
 }
 
@@ -119,8 +101,8 @@ for (const term of [
   'Do not make topic collections prerender into static collection pages',
   'Collection is context. Drawer is reading. Homepage is discovery'
 ]) {
-  if (!aiRules.includes(term)) {
-    errors.push(`AI_RULES.md must include: ${term}`);
+  if (!readme.includes(term)) {
+    errors.push(`README.md must include: ${term}`);
   }
 }
 

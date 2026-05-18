@@ -53,6 +53,12 @@ if (project.localSourceRoot && manifest.deploymentAuthority) {
 }
 
 if (intent === 'deploy') {
+  for (const forbiddenSource of manifest.deployment?.forbiddenSources ?? []) {
+    if (matchesPathPattern(currentRoot, normalizePath(forbiddenSource))) {
+      issues.push(`Deployment is forbidden from this workspace root by manifest.deployment.forbiddenSources: ${rootDir}`);
+    }
+  }
+
   if (!capabilities.canDeploy) {
     issues.push(`Workspace ${manifest.workspaceId} does not have capabilities.canDeploy=true.`);
   }
@@ -108,6 +114,14 @@ function normalizePath(value) {
 
 function isCodexRuntimeWorktree(value) {
   return value.includes('/.codex-runtime/worktrees/');
+}
+
+function matchesPathPattern(value, pattern) {
+  if (pattern.endsWith('/*')) {
+    return value.startsWith(pattern.slice(0, -1));
+  }
+
+  return value === pattern;
 }
 
 function fail(messages) {

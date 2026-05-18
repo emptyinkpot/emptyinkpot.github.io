@@ -21,12 +21,9 @@
   "runtimeDatabaseApiContract": "contracts/runtime-database-api-contract.json",
   "runtimeConstitution": {
     "status": "active",
-    "aiEntry": "AI_RULES.md",
+    "humanEntry": "README.md",
     "frontendContractEntry": "project.frontend-runtime-contract.json",
     "contractsRoot": "contracts",
-    "philosophyRoot": "philosophy",
-    "topologyRoot": "topology",
-    "adrRoot": "adr",
     "primaryModel": "Knowledge Runtime Surface",
     "coreRule": "Collection is context. Drawer is reading. Homepage is discovery.",
     "forbidden": [
@@ -91,15 +88,11 @@
   ],
   "buildOutputRoot": "apps/web/dist",
   "docsEntrypoints": {
-    "frontendReadme": "apps/web/README.md",
+    "rootReadme": "README.md",
     "architectureCodex": "apps/web/src/data/architectureCodex.ts",
-    "frontendRuntimeAudit": "docs/frontend-runtime-audit.md",
-    "frontendRuntimeConvergence": "docs/frontend-runtime-convergence.md",
-    "runtimeExperienceLayer": "docs/runtime-experience-layer.md",
-    "planDoc": "docs/plans/update-plan.md",
-    "adminP0Checklist": "docs/plans/admin-next-p0-checklist.md",
-    "architectureChecklist": "docs/architecture/astro-blog-redesign-checklist.md",
-    "maintenanceLog": "docs/maintenance/astro-redesign-execution-log.md"
+    "frontendRuntimeAudit": "apps/web/src/data/architectureCodex.ts",
+    "frontendRuntimeConvergence": "apps/web/src/data/architectureCodex.ts",
+    "runtimeExperienceLayer": "apps/web/src/data/architectureCodex.ts"
   },
   "sourceOfTruthMap": {
     "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
@@ -1253,7 +1246,7 @@
   },
   "frontendRuntimeAudit": {
     "status": "first-pass documented",
-    "canonicalDoc": "docs/frontend-runtime-audit.md",
+    "canonicalDoc": "apps/web/src/data/architectureCodex.ts",
     "method": "trace user behavior through DOM, event, state, render, hydration, network, animation, authority and fallback",
     "mustCover": [
       "pages",
@@ -1286,11 +1279,11 @@
       "apps/web/src/components/books/BookDrawerReader.tsx",
       "apps/web/src/components/books/BookReader.tsx"
     ],
-    "rule": "frontend runtime changes must update docs/frontend-runtime-audit.md or explicitly state why the audit map is unaffected"
+    "rule": "frontend runtime changes must update the relevant Architecture Codex entry in apps/web/src/data/architectureCodex.ts or explicitly state why the audit map is unaffected"
   },
   "frontendRuntimeConvergence": {
     "status": "reduction mode; legacy inline runtime and React islands remain current overlay/drawer authority",
-    "canonicalDoc": "docs/frontend-runtime-convergence.md",
+    "canonicalDoc": "apps/web/src/data/architectureCodex.ts",
     "runtimeKernelRoot": "packages/runtime-kernel",
     "thesis": "MyBlog must converge command, keyboard, overlays, drawers, focus, navigation and client cache behavior into one frontend runtime kernel before adding more independent runtime layers.",
     "currentRisk": [
@@ -1355,7 +1348,7 @@
   },
   "runtimeExperienceLayer": {
     "status": "P1 command/search surfaces use runtime tokens; broader surfaces still pending",
-    "canonicalDoc": "docs/runtime-experience-layer.md",
+    "canonicalDoc": "apps/web/src/data/architectureCodex.ts",
     "designSystemRoot": "packages/design-system",
     "thesis": "MyBlog needs interaction quality and runtime coherence across surfaces, not more isolated components.",
     "targetFeel": [

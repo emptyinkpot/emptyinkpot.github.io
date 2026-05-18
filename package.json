@@ -44,12 +44,8 @@
     "globals": "^17.4.0",
     "typescript-eslint": "^8.58.0"
   },
-  "description": "`emptyinkpot.github.io` 当前已经收拢为单站点仓库：对外站点由 `apps/web/` 生成，工程文档统一收纳在 `docs/`。",
+  "description": "`emptyinkpot.github.io` 当前已经收拢为单站点仓库：对外站点由 `apps/web/` 生成，仓库人工文档入口只保留根 README。",
   "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
-  },
   "dependencies": {
     "acorn": "^8.16.0",
     "acorn-jsx": "^5.3.2",
