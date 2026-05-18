@@ -522,7 +522,14 @@ function listMarkdownFiles(directory) {
 }
 
 function isPrivatePath(relativePath) {
-  return relativePath
+  const normalizedPath = toSlash(relativePath);
+  const basename = path.basename(normalizedPath).toLowerCase();
+
+  if (/\.(recovered|backup|bak|tmp)\.mdx?$/i.test(basename)) {
+    return true;
+  }
+
+  return normalizedPath
     .split('/')
     .some((segment) => segment.startsWith('.') || segment === 'assets' || segment === 'private' || segment === 'drafts');
 }
