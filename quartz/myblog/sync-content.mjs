@@ -4,7 +4,9 @@ import crypto from "node:crypto"
 import { fileURLToPath } from "node:url"
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
-const contentRoot = path.join(repoRoot, "content")
+const contentRoot = path.resolve(
+  readArgValue("--out") || process.env.MYBLOG_CONTENT_ROOT || path.join(repoRoot, "content"),
+)
 const defaultVaultRoot =
   process.env.MYBLOG_VAULT_ROOT ||
   (process.platform === "win32" ? "E:/Vaults/Obsidian/docs" : "/home/vault/Obsidian/docs")
@@ -55,7 +57,9 @@ if (!articles.some((article) => article.slug === "index")) {
   )
 }
 
-console.log(`Synced ${articles.length} public Markdown file(s) from ${vaultRoot} into content/.`)
+console.log(
+  `Synced ${articles.length} public Markdown file(s) from ${vaultRoot} into ${contentRoot}.`,
+)
 
 function ensureFallbackIndex() {
   fs.mkdirSync(contentRoot, { recursive: true })

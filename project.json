@@ -15,7 +15,9 @@
     "rule": "Quartz is the repository shape and primary framework; MyBlog behavior enters through Quartz plugins, layout, configuration, and content sync.",
     "plugin": "quartz/plugins/transformers/myblogStyle.ts",
     "contentSync": "quartz/myblog/sync-content.mjs",
-    "contentRoot": "content",
+    "buildWrapper": "quartz/myblog/build.mjs",
+    "manualContentRoot": "content",
+    "buildStagingRoot": "../.myblog-quartz-content",
     "buildOutputRoot": "apps/web/dist"
   },
   "contentTruth": {
