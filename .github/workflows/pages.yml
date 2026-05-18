@@ -44,6 +44,10 @@ jobs:
           mkdir -p public-data/runtime apps/web/public/runtime
           if curl --connect-timeout 20 --max-time 60 -fsSL https://blog.tengokukk.com/runtime/content-index.json -o public-data/runtime/content-index.json; then
             cp public-data/runtime/content-index.json apps/web/public/runtime/content-index.json
+            if ! npm run check:content; then
+              rm -rf public-data/runtime apps/web/public/runtime
+              npm run runtime:content
+            fi
           else
             npm run runtime:content
           fi
