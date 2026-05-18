@@ -11,11 +11,14 @@
     "commit": "d25a6eabf96751ffca56f8a8139272def7a65041"
   },
   "myblogIntegration": {
-    "status": "plugin-layer",
-    "rule": "Quartz is the repository shape and primary framework; MyBlog behavior enters through Quartz plugins, layout, configuration, and content sync.",
-    "plugin": "quartz/plugins/transformers/myblogStyle.ts",
+    "status": "quartz-native-runtime",
+    "rule": "Quartz is the only primary framework; MyBlog behavior enters through Quartz-native components, emitters, plugins, layout, configuration, runtime data, and content sync. The Astro shell must not be restored.",
+    "components": "quartz/components/myblog",
+    "runtimeEmitter": "quartz/plugins/emitters/myblogRuntimePages.tsx",
+    "runtimeResourcePlugin": "quartz/plugins/transformers/myblogStyle.ts",
     "contentSync": "quartz/myblog/sync-content.mjs",
     "buildWrapper": "quartz/myblog/build.mjs",
+    "runtimeIndex": "static/myblog-runtime.json",
     "manualContentRoot": "content",
     "buildStagingRoot": "../.myblog-quartz-content",
     "buildOutputRoot": "apps/web/dist"
