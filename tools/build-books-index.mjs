@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { listOpenListTargetFiles } from '../apps/admin-next/lib/database-gateway-client.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -9,7 +10,6 @@ const outputPath = path.join(root, 'public-data', 'books', 'books-index.json');
 const webPublicOutputPath = path.join(root, 'apps', 'web', 'public', 'public-data', 'books', 'books-index.json');
 const webPublicMetadataPath = path.join(root, 'apps', 'web', 'public', 'public-data', 'books', 'books.metadata.json');
 const databaseGatewayUrl = (process.env.MYBLOG_DATABASE_GATEWAY_URL || process.env.DATABASE_GATEWAY_URL || '').replace(/\/+$/, '');
-const databaseGatewayApiKey = process.env.MYBLOG_DATABASE_GATEWAY_API_KEY || process.env.DATABASE_GATEWAY_API_KEY || '';
 const databaseGatewayTargetId = process.env.MYBLOG_BOOKS_OPENLIST_TARGET_ID || 'myblog-books-original';
 const legacyOpenListIndexUrl = process.env.MYBLOG_OPENLIST_INDEX_URL || '';
 const legacyCanonicalPath = '/Obsidian/docs/books/original';
@@ -99,23 +99,14 @@ async function loadDataBaseGatewayOpenListTargetIndex() {
   let targetRemoteDir = '';
 
   while (page < 1000) {
-    const response = await fetch(`${databaseGatewayUrl}/openlist/targets/${encodeURIComponent(databaseGatewayTargetId)}/list`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        ...(databaseGatewayApiKey ? { 'X-DataBase-Api-Key': databaseGatewayApiKey } : {})
-      },
-      body: JSON.stringify({
-        page,
-        per_page: 200,
-        refresh: false
-      })
+    const payload = await listOpenListTargetFiles(databaseGatewayTargetId, {
+      page,
+      per_page: 200,
+      refresh: false
     });
 
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok || payload?.ok === false) {
-      throw new Error(payload?.message || payload?.error || `DataBase Gateway OpenList target request failed: ${response.status}`);
+    if (payload?.ok === false) {
+      throw new Error(payload?.message || payload?.error || 'DataBase Gateway OpenList target request failed');
     }
 
     const content = Array.isArray(payload.content) ? payload.content : [];
@@ -199,10 +190,24 @@ function buildMetadataMap(entries) {
   for (const entry of entries) {
     const paths = [entry.openlistPath, ...(entry.pathAliases || [])].filter(Boolean);
     for (const itemPath of paths) {
-      byPath.set(normalizeOpenListPath(itemPath), entry);
+      for (const alias of metadataPathAliases(itemPath)) {
+        byPath.set(alias, entry);
+      }
     }
   }
   return byPath;
+}
+
+function metadataPathAliases(itemPath) {
+  const normalized = normalizeOpenListPath(itemPath);
+  const aliases = new Set([normalized]);
+  if (normalized.startsWith('/Obsidian/docs/books/original/')) {
+    aliases.add(normalized.replace('/Obsidian/docs/books/original/', '/ObsidianArchive/docs/books/original/'));
+  }
+  if (normalized.startsWith('/ObsidianArchive/docs/books/original/')) {
+    aliases.add(normalized.replace('/ObsidianArchive/docs/books/original/', '/Obsidian/docs/books/original/'));
+  }
+  return aliases;
 }
 
 function normalizeIndexRecord(file, metadataMap) {

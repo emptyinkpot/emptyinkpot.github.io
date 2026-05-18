@@ -1,4 +1,9 @@
-import { databaseGatewayFetch, hasDataBaseGatewayConfig } from "@/lib/runtime-db";
+import {
+  getOpenListFile as getDataBaseOpenListFile,
+  getOpenListTargetFile,
+  hasDataBaseGatewayConfig,
+  listOpenListFiles as listDataBaseOpenListFiles,
+} from "@/lib/runtime-db";
 
 const DEFAULT_BASE_URL = "http://127.0.0.1:5244";
 const DEFAULT_ROOT = "/夸克网盘,/Obsidian";
@@ -114,16 +119,10 @@ export async function getOpenListFile(input) {
         }
       : null;
     const payload = targetPayload
-      ? await databaseGatewayFetch(`/openlist/targets/${encodeURIComponent(booksTargetId)}/get`, {
-          method: "POST",
-          body: JSON.stringify(targetPayload),
-        })
-      : await databaseGatewayFetch("/openlist/fs/get", {
-          method: "POST",
-          body: JSON.stringify({
-            path: assertPublicOpenListPath(path),
-            password: "",
-          }),
+      ? await getOpenListTargetFile(booksTargetId, targetPayload)
+      : await getDataBaseOpenListFile({
+          path: assertPublicOpenListPath(path),
+          password: "",
         });
     return payload.item;
   }
@@ -140,15 +139,12 @@ export async function getOpenListFile(input) {
 export async function listOpenListFiles(input = {}) {
   const path = assertPublicOpenListPath(input.path || getOpenListConfig().publicRoots[0] || "/");
   if (hasDataBaseGatewayConfig()) {
-    return databaseGatewayFetch("/openlist/fs/list", {
-      method: "POST",
-      body: JSON.stringify({
-        path,
-        password: "",
-        page: Number(input.page || 1),
-        per_page: Math.min(200, Math.max(1, Number(input.perPage || input.per_page || 50))),
-        refresh: Boolean(input.refresh),
-      }),
+    return listDataBaseOpenListFiles({
+      path,
+      password: "",
+      page: Number(input.page || 1),
+      per_page: Math.min(200, Math.max(1, Number(input.perPage || input.per_page || 50))),
+      refresh: Boolean(input.refresh),
     });
   }
 

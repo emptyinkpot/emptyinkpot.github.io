@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { databaseGatewayFetch } from "@/lib/runtime-db";
+import { getMyBlogVisualSnapshot, recordMyBlogVisualSyncResult } from "@/lib/runtime-db";
 
 const defaultSource = {
   id: "pinterest-saved-pins",
@@ -14,7 +14,7 @@ const fallbackPalette = {
 };
 
 export async function readVisualSnapshot() {
-  const snapshot = await databaseGatewayFetch("/myblog/runtime/visuals/snapshot");
+  const snapshot = await getMyBlogVisualSnapshot();
   const collections = [];
   const pinsBySource = snapshot.pinsBySource || {};
 
@@ -39,15 +39,12 @@ export async function syncVisualSource(sourceId = defaultSource.id) {
     const source = { id: sourceId, provider };
     const pins = await fetchSourcePins(source);
     const snapshotHash = hashPins(pins);
-    const result = await databaseGatewayFetch("/myblog/runtime/visuals/sync-result", {
-      method: "POST",
-      body: JSON.stringify({
-        sourceId,
-        provider,
-        ok: true,
-        snapshotHash,
-        pins,
-      }),
+    const result = await recordMyBlogVisualSyncResult({
+      sourceId,
+      provider,
+      ok: true,
+      snapshotHash,
+      pins,
     });
 
     return {
@@ -59,15 +56,12 @@ export async function syncVisualSource(sourceId = defaultSource.id) {
     };
   } catch (error) {
     try {
-      await databaseGatewayFetch("/myblog/runtime/visuals/sync-result", {
-        method: "POST",
-        body: JSON.stringify({
-          sourceId,
-          provider: defaultSource.provider,
-          ok: false,
-          error: error?.message || "Visual source sync failed.",
-          pins: [],
-        }),
+      await recordMyBlogVisualSyncResult({
+        sourceId,
+        provider: defaultSource.provider,
+        ok: false,
+        error: error?.message || "Visual source sync failed.",
+        pins: [],
       });
     } catch {
       // The caller receives the original provider/Gateway failure below.

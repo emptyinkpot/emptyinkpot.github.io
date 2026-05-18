@@ -51,6 +51,19 @@ Acceptance commands:
 - `/腾讯云COS` is the Tencent COS OpenList cold/blob mount.
 - `/夸克网盘` is the Quark OpenList cold/legacy mount.
 
+## DataBase Gateway Boundary
+
+MyBlog integrates DataBase through `apps/admin-next/lib/database-gateway-client.mjs`.
+That adapter is SDK-first: when `@emptyinkpot/database-gateway-generated-client`
+is installed in the runtime, MyBlog uses the generated OpenAPI client. When the
+package is absent, the adapter keeps the same Gateway HTTP contract as a
+fallback so production builds do not depend on an unpublished package.
+
+MyBlog must still not direct-connect to DataBase MySQL. Canonical Markdown
+projection writes go through `POST /writes/project-obsidian-markdown`; reader
+memory, highlights, visual runtime and OpenList target access go through the
+DataBase Gateway routes exposed by the generated client contract.
+
 ## OpenList Storage Boundary
 
 OpenList/COS/Quark are cold archive, blob backend, public browse, and content address surfaces. They are not an ext4/system disk replacement and must not be used as the server system disk or hot runtime disk.

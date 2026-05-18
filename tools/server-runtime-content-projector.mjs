@@ -4,6 +4,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import chokidar from 'chokidar';
 import { buildRuntimeContentIndex } from './build-runtime-content-index.mjs';
+import { projectObsidianMarkdown } from '../apps/admin-next/lib/database-gateway-client.mjs';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const vaultRoot = path.resolve(process.env.MYBLOG_VAULT_ROOT || '/home/vault/Obsidian/docs');
@@ -13,8 +14,7 @@ const sourceRootLabel = process.env.MYBLOG_RUNTIME_SOURCE_ROOT_LABEL || '/home/v
 const openListRootLabel = process.env.MYBLOG_RUNTIME_OPENLIST_ROOT_LABEL || '/openlist/Obsidian/docs';
 const debounceMs = Number(process.env.MYBLOG_RUNTIME_PROJECTOR_DEBOUNCE_MS || 3000);
 const databaseProjectionEnabled = process.env.MYBLOG_DATABASE_CANONICAL_PROJECTION === '1';
-const databaseGatewayUrl = readRequiredEnvWhenEnabled('MYBLOG_DATABASE_GATEWAY_URL');
-const databaseGatewayApiKey = process.env.MYBLOG_DATABASE_GATEWAY_API_KEY || '';
+readRequiredEnvWhenEnabled('MYBLOG_DATABASE_GATEWAY_URL');
 const databaseProjectionActor = process.env.MYBLOG_DATABASE_PROJECTION_ACTOR || 'myblog-runtime-projector';
 const databaseProjectionAuthorProfileId = process.env.MYBLOG_DATABASE_AUTHOR_PROFILE_ID || 'emptyinkpot_primary_author';
 
@@ -132,21 +132,8 @@ async function projectCanonicalContent(items) {
   for (const item of items) {
     const payload = toDataBaseProjectionEnvelope(item);
     const idempotencyKey = `myblog:obsidian:${item.sha256}:${item.articleId}`.slice(0, 191);
-    const response = await fetch(`${databaseGatewayUrl}/writes/project-obsidian-markdown`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-DataBase-Idempotency-Key': idempotencyKey,
-        ...(databaseGatewayApiKey ? { 'X-DataBase-Api-Key': databaseGatewayApiKey } : {})
-      },
-      body: JSON.stringify(payload)
-    });
-    const responseBody = await response.text();
-    const parsed = responseBody ? JSON.parse(responseBody) : null;
-    if (!response.ok) {
-      throw new Error(`DataBase canonical projection failed for ${item.relativePath}: ${response.status} ${responseBody}`);
-    }
+    const result = await projectObsidianMarkdown(payload, { idempotencyKey });
+    const parsed = result || null;
     if (!parsed?.ok) {
       throw new Error(`DataBase canonical projection returned non-ok response for ${item.relativePath}.`);
     }

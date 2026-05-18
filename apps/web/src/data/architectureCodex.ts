@@ -482,6 +482,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '唯一真源层仍是 OpenList/COS、MySQL、Directus target、Meilisearch target、Immich target 和 KnowledgeObject graph。',
       'Runtime API 只能有一套：/api/feed、/api/books、/api/visuals、/api/search、/api/graph、/api/runtime/*。Web 和 Android 都消费同一套合同。',
       'Web 当前是 Astro Projection Shell；Android 未来只能是另一个 Projection Surface，不得拥有 book existence、metadata authority、OpenList parsing 或 search ranking authority。',
+      'DataBase Gateway access is centralized in apps/admin-next/lib/database-gateway-client.mjs: it loads @emptyinkpot/database-gateway-generated-client when present and otherwise preserves the same Gateway HTTP contract. MyBlog code must not scatter raw DataBase route strings outside this adapter.',
       'Phase 1 已建立 apps/android-shell skeleton，并在 apps/web/public/manifest.webmanifest 与 apps/web/public/sw.js 提供 Web PWA surface：目标是 PWA + Bubblewrap / Trusted Web Activity，快速得到可安装 Android 包，更新仍随 Web Runtime 发布。',
       'Android TWA 现在由 tools/generate-android-twa.mjs 自动生成：npm run android:twa:validate 校验本地和线上 PWA、service worker 与 Digital Asset Links，npm run android:twa:generate 生成 .runtime/android-twa，npm run android:twa:build 生成未签名 APK/AAB，npm run android:twa:build:test-signed 生成本机测试签名 APK。',
       'apps/web/public/.well-known/assetlinks.json 是 TWA 信任声明；它必须匹配 apps/android-shell/twa.contract.json 的 packageId 和 SHA256 指纹，否则 Android 不能把 blog.tengokukk.com 交给可信 Web Activity。',
