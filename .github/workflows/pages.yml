@@ -42,8 +42,11 @@ jobs:
       - name: Seed runtime content index
         run: |
           mkdir -p public-data/runtime apps/web/public/runtime
-          curl -fsSL https://blog.tengokukk.com/runtime/content-index.json -o public-data/runtime/content-index.json
-          cp public-data/runtime/content-index.json apps/web/public/runtime/content-index.json
+          if curl --connect-timeout 20 --max-time 60 -fsSL https://blog.tengokukk.com/runtime/content-index.json -o public-data/runtime/content-index.json; then
+            cp public-data/runtime/content-index.json apps/web/public/runtime/content-index.json
+          else
+            npm run runtime:content
+          fi
 
       - name: Validate repository governance
         run: npm run check

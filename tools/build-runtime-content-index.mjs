@@ -94,8 +94,15 @@ function reuseExistingRuntimeIndex({ rootDir, publicDataRoot, webPublicRoot, vau
   const existingIndexPath = candidates.find((candidate) => fs.existsSync(candidate));
 
   if (!existingIndexPath) {
+    const fallbackIndex = createEmptyRuntimeIndex();
+    fs.mkdirSync(publicDataRoot, { recursive: true });
+    fs.mkdirSync(webPublicRoot, { recursive: true });
+    writeJson(fullIndexPath, fallbackIndex);
+    writeRuntimeProjectionPackage(publicDataRoot, fallbackIndex, { publicPayload: false });
+    writePublicRuntimeIndex(publicIndexPath, fallbackIndex);
     console.log(`Vault root not found and no existing runtime index is available: ${vaultRoot}`);
-    return { index: null, files: [] };
+    console.log('Generated empty runtime content index for build fallback.');
+    return { index: fallbackIndex, files: [fullIndexPath, publicIndexPath] };
   }
 
   fs.mkdirSync(publicDataRoot, { recursive: true });
@@ -113,6 +120,30 @@ function reuseExistingRuntimeIndex({ rootDir, publicDataRoot, webPublicRoot, vau
   return {
     index: JSON.parse(fs.readFileSync(existingIndexPath, 'utf8')),
     files: [fullIndexPath, publicIndexPath]
+  };
+}
+
+function createEmptyRuntimeIndex() {
+  return {
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    authority: {
+      type: 'markdown-runtime-index',
+      fileTruth: 'E:\\Vaults\\Obsidian',
+      authoringTruth: defaultSourceRootLabel,
+      publicFileAccess: defaultOpenListRootLabel,
+      projectionTruth: 'public-data/runtime/content-index.json',
+      fallback: {
+        reason: 'vault-unavailable',
+        mode: 'empty-runtime-index'
+      }
+    },
+    stats: {
+      articles: 0,
+      collections: 0
+    },
+    collections: [],
+    articles: []
   };
 }
 

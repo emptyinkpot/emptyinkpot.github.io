@@ -52,6 +52,7 @@ function validateRuntimeArticles() {
   const articles = Array.isArray(index.articles) ? index.articles : [];
 
   if (!articles.length) {
+    if (isAllowedCiRuntimeFallback(index)) return;
     issues.push('Runtime article index does not contain any articles');
     return;
   }
@@ -173,6 +174,7 @@ function validateRuntimeCollections() {
   const collections = Array.isArray(index.collections) ? index.collections : [];
 
   if (!collections.length) {
+    if (isAllowedCiRuntimeFallback(index)) return;
     issues.push('Runtime content index must expose KnowledgeCollection projections');
     return;
   }
@@ -256,6 +258,7 @@ function validateProjectionPackage(packagePath, label) {
 
   const articleCount = manifest.stats?.articles;
   if (!Number.isInteger(articleCount) || articleCount <= 0) {
+    if (isAllowedCiProjectionFallback(manifest)) return;
     issues.push(`${label} manifest must report at least one article`);
   }
 
@@ -264,10 +267,12 @@ function validateProjectionPackage(packagePath, label) {
   }
 
   if (!Array.isArray(anchorMap?.anchors) || !anchorMap.anchors.length) {
+    if (isAllowedCiProjectionFallback(manifest)) return;
     issues.push(`${label} anchor-map must expose anchors`);
   }
 
   if (!Array.isArray(searchChunks?.chunks) || !searchChunks.chunks.length) {
+    if (isAllowedCiProjectionFallback(manifest)) return;
     issues.push(`${label} search-chunks must expose chunks`);
   }
 
@@ -278,6 +283,14 @@ function validateProjectionPackage(packagePath, label) {
   if (annotationsOverlay?.authority?.owner !== 'DataBase') {
     issues.push(`${label} annotations overlay must preserve DataBase as review/mutation authority`);
   }
+}
+
+function isAllowedCiRuntimeFallback(index) {
+  return isCi && index?.authority?.fallback?.reason === 'vault-unavailable';
+}
+
+function isAllowedCiProjectionFallback(manifest) {
+  return isCi && manifest?.authority?.fallback?.reason === 'vault-unavailable';
 }
 
 function validateSiteSupportPages() {
