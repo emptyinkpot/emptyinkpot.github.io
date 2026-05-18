@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import http from 'node:http';
 import path from 'node:path';
 import process from 'node:process';
 import { spawnSync } from 'node:child_process';
@@ -23,12 +24,21 @@ let configuredJdkPath = '';
 let configuredAndroidSdkPath = '';
 
 await verifyLocalPwaSurface();
-const online = await verifyOnlinePwaSurface(contract).catch((error) => {
+const pwaSurface = await verifyOnlinePwaSurface(contract).then((surface) => ({ ...surface, source: 'online' })).catch((error) => {
   if (!isCi) throw error;
   console.warn(`Online PWA validation unavailable in CI, using local TWA surface: ${error.message}`);
-  return verifyLocalTwaSurface(contract);
+  return { ...verifyLocalTwaSurface(contract), source: 'local' };
 });
-const twaManifest = createTwaManifest(contract, online.manifest);
+const localPwaAssetServer = !validateOnly && pwaSurface.source === 'local'
+  ? await startLocalPwaAssetServer()
+  : null;
+const webManifestUrl = localPwaAssetServer
+  ? new URL('/manifest.webmanifest', localPwaAssetServer.origin).toString()
+  : contract.manifestUrl;
+const twaManifest = createTwaManifest(contract, pwaSurface.manifest, webManifestUrl);
+const publicTwaManifest = localPwaAssetServer
+  ? createTwaManifest(contract, pwaSurface.manifest, contract.manifestUrl)
+  : twaManifest;
 
 if (validateOnly) {
   console.log(JSON.stringify({
@@ -45,25 +55,30 @@ ensureInsideRoot(outputDir);
 fs.mkdirSync(outputDir, { recursive: true });
 writeJson(path.join(outputDir, 'twa-manifest.json'), twaManifest);
 
-configureBubblewrap();
+try {
+  configureBubblewrap();
 
-runBubblewrap(['update', '--skipVersionUpgrade', `--manifest=${path.join(outputDir, 'twa-manifest.json')}`, `--directory=${outputDir}`]);
-patchGeneratedGradleProject();
-if (testSigning) {
-  ensureTestSigningKey();
-}
-
-if (shouldBuild) {
-  runBubblewrap([
-    'build',
-    ...(skipSigning || testSigning ? ['--skipSigning'] : []),
-    '--skipPwaValidation',
-    `--manifest=${path.join(outputDir, 'twa-manifest.json')}`,
-    `--directory=${outputDir}`
-  ]);
+  runBubblewrap(['update', '--skipVersionUpgrade', `--manifest=${path.join(outputDir, 'twa-manifest.json')}`, `--directory=${outputDir}`]);
+  writeJson(path.join(outputDir, 'twa-manifest.json'), publicTwaManifest);
+  patchGeneratedGradleProject();
   if (testSigning) {
-    signApkWithTestKey();
+    ensureTestSigningKey();
   }
+
+  if (shouldBuild) {
+    runBubblewrap([
+      'build',
+      ...(skipSigning || testSigning ? ['--skipSigning'] : []),
+      '--skipPwaValidation',
+      `--manifest=${path.join(outputDir, 'twa-manifest.json')}`,
+      `--directory=${outputDir}`
+    ]);
+    if (testSigning) {
+      signApkWithTestKey();
+    }
+  }
+} finally {
+  await localPwaAssetServer?.close();
 }
 
 console.log(JSON.stringify({
@@ -181,7 +196,91 @@ function verifyLocalTwaSurface(twaContract) {
   return { manifest, icon512 };
 }
 
-function createTwaManifest(twaContract, webManifest) {
+async function startLocalPwaAssetServer() {
+  const publicDir = path.resolve(rootDir, 'apps/web/public');
+  const sockets = new Set();
+  const server = http.createServer((request, response) => {
+    serveLocalPwaAsset(publicDir, request, response);
+  });
+  server.on('connection', (socket) => {
+    sockets.add(socket);
+    socket.on('close', () => sockets.delete(socket));
+  });
+
+  return await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address();
+      if (!address || typeof address === 'string') {
+        reject(new Error('Cannot resolve local PWA asset server address'));
+        return;
+      }
+
+      console.warn(`Serving local PWA assets for Bubblewrap at http://127.0.0.1:${address.port}`);
+      resolve({
+        origin: `http://127.0.0.1:${address.port}`,
+        close: () => new Promise((closeResolve, closeReject) => {
+          for (const socket of sockets) {
+            socket.destroy();
+          }
+          server.close((error) => {
+            if (error) closeReject(error);
+            else closeResolve();
+          });
+        })
+      });
+    });
+  });
+}
+
+function serveLocalPwaAsset(publicDir, request, response) {
+  if (!['GET', 'HEAD'].includes(request.method || 'GET')) {
+    response.writeHead(405, { Allow: 'GET, HEAD' });
+    response.end();
+    return;
+  }
+
+  const url = new URL(request.url || '/', 'http://127.0.0.1');
+  const pathname = decodeURIComponent(url.pathname);
+  const candidate = path.resolve(publicDir, `.${pathname}`);
+  const relative = path.relative(publicDir, candidate);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    response.writeHead(403);
+    response.end();
+    return;
+  }
+
+  if (!fs.existsSync(candidate) || !fs.statSync(candidate).isFile()) {
+    response.writeHead(404);
+    response.end();
+    return;
+  }
+
+  response.writeHead(200, {
+    'Content-Type': contentTypeFor(candidate),
+    'Cache-Control': 'no-store'
+  });
+
+  if (request.method === 'HEAD') {
+    response.end();
+    return;
+  }
+
+  fs.createReadStream(candidate).pipe(response);
+}
+
+function contentTypeFor(filePath) {
+  const extension = path.extname(filePath).toLowerCase();
+  return {
+    '.webmanifest': 'application/manifest+json; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
+    '.js': 'text/javascript; charset=utf-8',
+    '.png': 'image/png',
+    '.svg': 'image/svg+xml; charset=utf-8'
+  }[extension] || 'application/octet-stream';
+}
+
+function createTwaManifest(twaContract, webManifest, webManifestUrl = twaContract.manifestUrl) {
   const runtimeUrl = new URL(twaContract.runtimeUrl);
   const icon512 = findIcon(webManifest, '512x512');
   const icon192 = findIcon(webManifest, '192x192');
@@ -204,8 +303,8 @@ function createTwaManifest(twaContract, webManifest) {
     enableNotifications: false,
     enableSiteSettingsShortcut: true,
     startUrl: '/',
-    iconUrl: new URL(icon512.src, twaContract.manifestUrl).toString(),
-    maskableIconUrl: icon512.purpose?.includes('maskable') ? new URL(icon512.src, twaContract.manifestUrl).toString() : undefined,
+    iconUrl: new URL(icon512.src, webManifestUrl).toString(),
+    maskableIconUrl: icon512.purpose?.includes('maskable') ? new URL(icon512.src, webManifestUrl).toString() : undefined,
     monochromeIconUrl: undefined,
     splashScreenFadeOutDuration: 300,
     signingKey: {
@@ -218,11 +317,11 @@ function createTwaManifest(twaContract, webManifest) {
       name: shortcut.name,
       shortName: shortcut.short_name || shortcut.name,
       url: shortcut.url,
-      chosenIconUrl: new URL(shortcut.icons?.[0]?.src || icon192?.src || icon512.src, twaContract.manifestUrl).toString(),
-      chosenMaskableIconUrl: new URL(shortcut.icons?.[0]?.src || icon192?.src || icon512.src, twaContract.manifestUrl).toString()
+      chosenIconUrl: new URL(shortcut.icons?.[0]?.src || icon192?.src || icon512.src, webManifestUrl).toString(),
+      chosenMaskableIconUrl: new URL(shortcut.icons?.[0]?.src || icon192?.src || icon512.src, webManifestUrl).toString()
     })),
     generatorApp: 'myblog-android-twa-generator',
-    webManifestUrl: twaContract.manifestUrl,
+    webManifestUrl,
     fallbackType: twaContract.fallbackType || 'customtabs',
     features: {},
     alphaDependencies: {
