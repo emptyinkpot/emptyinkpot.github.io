@@ -1,0 +1,27 @@
+---
+interface Props {
+  kicker: string;
+  title: string;
+  summary?: string;
+  metric?: string;
+  href?: string;
+  compact?: boolean;
+}
+
+const { kicker, title, summary, metric, href, compact = false } = Astro.props;
+---
+
+<article class:list={['chart-card', compact && 'chart-card--compact']}>
+  <header class="chart-card__header">
+    <div>
+      <span>{kicker}</span>
+      <h2>{title}</h2>
+    </div>
+    {metric && <strong>{metric}</strong>}
+  </header>
+  {summary && <p>{summary}</p>}
+  <div class="chart-card__body">
+    <slot />
+  </div>
+  {href && <a class="chart-card__link" href={href}>查看完整页</a>}
+</article>

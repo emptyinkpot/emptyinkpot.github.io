@@ -1,0 +1,18 @@
+[Unit]
+Description=MyBlog Runtime Content SSE
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/srv/myblog/source
+Environment=NODE_ENV=production
+Environment=MYBLOG_RUNTIME_SSE_PORT=4121
+Environment=MYBLOG_RUNTIME_INDEX_PATH=/srv/myblog/site/runtime/content-index.json
+ExecStart=/usr/bin/node /srv/myblog/source/tools/runtime-content-sse-server.mjs
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

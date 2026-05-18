@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MusicCard from '../../components/showcase/MusicCard.astro';
+import { musicItems } from '../../data/music';
+
+const moods = [...new Set(musicItems.flatMap((item) => item.mood))];
+---
+
+<BaseLayout title="音乐 / emptyinkpot" description="emptyinkpot 的音乐和歌单展示页。">
+  <main class="showcase-page">
+    <section class="showcase-page__hero glass-card">
+      <div>
+        <p class="section-kicker">Music Shelf</p>
+        <h1>音乐</h1>
+        <p>首页只放音乐摘要卡，这里用于沉淀歌曲、歌单、专辑墙和写作情绪标签。当前先用 `src/data/music.ts` 作为轻数据入口。</p>
+      </div>
+      <div class="showcase-page__metrics">
+        <span><strong>{musicItems.length}</strong>条目</span>
+        <span><strong>{moods.length}</strong>情绪标签</span>
+      </div>
+    </section>
+
+    <section class="showcase-page__section glass-card">
+      <div class="showcase-page__section-head">
+        <span>Now Playing</span>
+        <h2>最近喜欢</h2>
+      </div>
+      <div class="showcase-page__cards">
+        {musicItems.map((item) => <MusicCard item={item} />)}
+      </div>
+    </section>
+
+    <section class="showcase-page__section glass-card">
+      <div class="showcase-page__section-head">
+        <span>Mood Tags</span>
+        <h2>情绪标签</h2>
+      </div>
+      <div class="showcase-page__tag-cloud">
+        {moods.map((mood) => <span>{mood}</span>)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "name": "myblog-collection-behavior-contract",
+  "updatedAt": "2026-05-08",
+  "identity": "Collection is a lens, not a CMS page.",
+  "basisRules": {
+    "folder": {
+      "staticCollectionPage": true,
+      "homeCard": true,
+      "drawerLens": true
+    },
+    "series": {
+      "staticCollectionPage": true,
+      "homeCard": true,
+      "drawerLens": true
+    },
+    "topic": {
+      "staticCollectionPage": false,
+      "homeCard": false,
+      "drawerLens": false,
+      "metadataSearchGraphDimension": true
+    }
+  },
+  "requiredRuntimeBehavior": [
+    "collection click opens or focuses a ReaderSession",
+    "active object remains the content center",
+    "collection members appear as compact context",
+    "object switching happens inside the session",
+    "feed continuity is preserved"
+  ],
+  "forbiddenRuntimeBehavior": [
+    "full route takeover as the primary flow",
+    "card wall inside reader drawer",
+    "topic collection static route generation",
+    "collection hero louder than active object",
+    "feed reset on collection open"
+  ]
+}

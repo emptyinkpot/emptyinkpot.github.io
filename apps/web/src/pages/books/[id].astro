@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/site';
+
+export function getStaticPaths() {
+  return [];
+}
+
+const { id } = Astro.params;
+---
+
+<BaseLayout
+  title="书籍详情已迁移 / emptyinkpot"
+  description="书籍实体已经切换到 OpenList runtime authority。"
+  hideSiteChrome={true}
+  barePage={true}
+>
+  <main class="book-detail-page">
+    <section class="book-reader-empty">
+      <span>Book Authority Cutover</span>
+      <h1>这个静态书籍入口已经退役</h1>
+      <p>书籍现在由 OpenList 实时书库决定是否存在。旧静态 ID「{id}」不再拥有书籍详情 authority。</p>
+      <a href={withBase('/books/')}>进入 OpenList 书架</a>
+    </section>
+  </main>
+</BaseLayout>

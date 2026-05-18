@@ -1,14 +1,51 @@
 {
   "schemaVersion": 1,
-  "workspaceId": "myblog-quartz-root",
+  "workspaceId": "myblog-canonical-active",
   "workspaceType": "canonical",
+  "profile": "workspaces/canonical.json",
   "root": "/srv/myblog/repo",
-  "allowedRoots": ["/srv/myblog/repo", "E:\\My Project\\MyBlog"],
+  "allowedRoots": [
+    "/home/runner/work/emptyinkpot.github.io/emptyinkpot.github.io",
+    "/srv/myblog/repo",
+    "E:\\My Project\\MyBlog"
+  ],
+  "capabilities": {
+    "canBuild": true,
+    "canDeploy": true,
+    "canModifyRuntime": true,
+    "canTouchPWA": true,
+    "canModifyRuntimeSchema": true,
+    "canModifyOpenListAuthority": true
+  },
   "deploymentAuthority": true,
-  "buildOutputRoot": "apps/web/dist",
-  "primaryFramework": "quartz",
-  "commands": {
-    "check": "npm run check",
-    "build": "npm run build"
+  "allowedFeatures": [
+    "frontend-ui",
+    "reader-runtime",
+    "runtime-books",
+    "openlist-authority",
+    "pinterest-shell",
+    "pwa",
+    "search-index",
+    "runtime-schema",
+    "architecture-codex",
+    "deployment"
+  ],
+  "forbiddenFeatures": [],
+  "deployment": {
+    "guard": "tools/deploy-guard.mjs",
+    "command": "npm run deploy:site",
+    "target": "ubuntu@124.220.233.126:/srv/myblog/site",
+    "buildOutputRoot": "apps/web/dist",
+    "remoteTempRoot": "/tmp/myblog-dist-upload",
+    "forbiddenSources": [
+      "C:\\Users\\ASUS-KL\\.codex-runtime\\worktrees\\*",
+      "E:\\My Project\\MyBlog"
+    ],
+    "incidentReference": "2026-05-07 stale worktree deploy regression",
+    "sourceWorkspace": "/srv/myblog/repo",
+    "requireCleanTree": true,
+    "requireMainBranch": true,
+    "requireOriginMainSync": true,
+    "requireDeploymentAuthority": true
   }
 }

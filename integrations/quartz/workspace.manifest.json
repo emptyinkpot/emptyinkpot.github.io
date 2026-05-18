@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "workspaceId": "myblog-quartz-root",
+  "workspaceType": "canonical",
+  "root": "/srv/myblog/repo",
+  "allowedRoots": ["/srv/myblog/repo", "E:\\My Project\\MyBlog"],
+  "deploymentAuthority": true,
+  "buildOutputRoot": "apps/web/dist",
+  "primaryFramework": "quartz",
+  "commands": {
+    "check": "npm run check",
+    "build": "npm run build"
+  }
+}

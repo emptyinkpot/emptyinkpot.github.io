@@ -1,0 +1,29 @@
+---
+import type { HeatmapWeek } from '../../lib/analytics';
+
+interface Props {
+  weeks: HeatmapWeek[];
+  compact?: boolean;
+}
+
+const { weeks, compact = false } = Astro.props;
+---
+
+<div
+  class:list={['github-heatmap', compact && 'github-heatmap--compact']}
+  aria-label="GitHub contribution heatmap"
+  data-github-viz="heatmap"
+  data-github-compact={compact ? 'true' : undefined}
+>
+  {weeks.map((week) => (
+    <div class="github-heatmap__week" title={week.label}>
+      {week.days.map((day) => (
+        <span
+          class:list={['github-heatmap__cell', `github-heatmap__cell--${day.level}`]}
+          title={`${day.date}: ${day.count}`}
+          aria-label={`${day.date}: ${day.count}`}
+        />
+      ))}
+    </div>
+  ))}
+</div>

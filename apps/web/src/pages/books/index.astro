@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookshelfGrid from '../../components/books/BookshelfGrid';
+---
+
+<BaseLayout
+  title="我的书架 / emptyinkpot"
+  description="emptyinkpot 的私人书架，连接 OpenList 文件源与在线阅读器。"
+  hideSiteChrome={true}
+  barePage={true}
+>
+  <BookshelfGrid client:load />
+</BaseLayout>

@@ -1,0 +1,850 @@
+---
+import SiteFooter from '../components/shared/SiteFooter.astro';
+import HoverPreviewSystem from '../components/react/HoverPreviewSystem';
+import { visualCollections } from '../data/visuals';
+import { withBase } from '../lib/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  hideSiteChrome?: boolean;
+  appMode?: boolean;
+  barePage?: boolean;
+}
+
+const {
+  title = 'emptyinkpot',
+  description = 'emptyinkpot 的个人内容站，基于 Astro 构建，强调结构化内容、专题组织与长期演进能力。',
+  canonical,
+  hideSiteChrome = false,
+  appMode = false,
+  barePage = false
+} = Astro.props;
+
+const buildVersion = new Date().toISOString();
+const defaultHomeBackground = `url("${withBase('/images/home/homepage-floral-bg.png')}")`;
+const openListEmbedUrl = withBase('/openlist/');
+const pinterestShellSeed = visualCollections.filter((collection) => collection.source === 'pinterest');
+const bodyMode = hideSiteChrome ? (appMode ? 'app-mode' : barePage ? 'bare-mode' : 'home-mode') : false;
+const useFullBleedWrap = hideSiteChrome && !barePage;
+---
+
+<html lang="zh-CN" data-theme="heritage">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="site-build-version" content={buildVersion} />
+    <meta name="theme-color" content="#6b2d5c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="MyBlog" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="manifest" href={withBase('/manifest.webmanifest')} />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase('/images/branding/myblog-pwa-192.png')} />
+    <link rel="alternate" type="application/rss+xml" title="emptyinkpot RSS" href={withBase('/rss.xml')} />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        if (!('serviceWorker' in navigator)) return;
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {
+            // Installability should not block normal page rendering.
+          });
+        });
+      })();
+    </script>
+    <script is:inline define:vars={{ buildVersion }}>
+      (() => {
+        const versionKey = 'emptyinkpot-build-version';
+        const reloadKey = `emptyinkpot-build-reload:${buildVersion}`;
+
+        try {
+          const previousVersion = localStorage.getItem(versionKey);
+          const hasReloadedForVersion = sessionStorage.getItem(reloadKey) === '1';
+
+          if (previousVersion && previousVersion !== buildVersion && !hasReloadedForVersion) {
+            sessionStorage.setItem(reloadKey, '1');
+            localStorage.setItem(versionKey, buildVersion);
+            window.location.reload();
+            return;
+          }
+
+          localStorage.setItem(versionKey, buildVersion);
+        } catch {
+          // Ignore storage failures so page rendering stays unaffected.
+        }
+      })();
+    </script>
+    <script is:inline define:vars={{ defaultHomeBackground }}>
+      (() => {
+        const storageKey = 'emptyinkpot-visual-settings';
+        const runtimeFolderStorageKey = 'emptyinkpot-runtime-folder-settings';
+        const defaults = {
+          theme: 'heritage',
+          cardTopAlpha: 0.92,
+          cardBottomAlpha: 0.78,
+          railTopAlpha: 0.9,
+          railBottomAlpha: 0.76,
+          toolbarTopAlpha: 0.94,
+          toolbarBottomAlpha: 0.84,
+          backgroundOverlayAlpha: 0.72,
+          glassBlurPx: 26,
+          glassSaturate: 1.18,
+          backgroundImage: defaultHomeBackground,
+          typography: {
+            bodySize: 18,
+            lineHeight: 1.9,
+            columnWidth: 680,
+            titleScale: 1,
+            paragraphGap: 16,
+            fontMode: 'serif'
+          },
+          knowledge: {
+            graphDensity: 'medium',
+            graphLabels: 'important',
+            graphMotion: true,
+            highlightVisibility: 'normal',
+            readerMemoryPanel: 'collapsed'
+          },
+          home: {
+            feedToolbarSticky: false
+          },
+          interactions: {
+            hoverPreview: false
+          },
+          content: {
+            banner: {
+              kicker: '',
+              title: '',
+              subtitle: '',
+              springLabel: '',
+              summerLabel: '',
+              autumnLabel: '',
+              winterLabel: '',
+              bgImage: '',
+              midImage: '',
+              frontImage: ''
+            },
+            copy: {},
+            images: {}
+          }
+        };
+
+        const numericRanges = {
+          cardTopAlpha: [0.45, 1],
+          cardBottomAlpha: [0.45, 1],
+          railTopAlpha: [0.45, 1],
+          railBottomAlpha: [0.45, 1],
+          toolbarTopAlpha: [0.45, 1],
+          toolbarBottomAlpha: [0.45, 1],
+          backgroundOverlayAlpha: [0.35, 0.95],
+          glassBlurPx: [0, 40],
+          glassSaturate: [0.8, 1.6],
+          'typography.bodySize': [16, 20],
+          'typography.lineHeight': [1.65, 2.05],
+          'typography.columnWidth': [600, 760],
+          'typography.titleScale': [0.9, 1.2],
+          'typography.paragraphGap': [12, 24]
+        };
+
+        const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+        const getPath = (source, path) =>
+          path.split('.').reduce((value, key) => (value && value[key] !== undefined ? value[key] : undefined), source);
+
+        const setPath = (target, path, value) => {
+          const keys = path.split('.');
+          const last = keys.pop();
+          const parent = keys.reduce((node, key) => {
+            node[key] = node[key] || {};
+            return node[key];
+          }, target);
+          parent[last] = value;
+        };
+
+        const normalizeChoice = (value, allowed, fallback) => (allowed.includes(value) ? value : fallback);
+
+        const normalizeBoolean = (value, fallback) => {
+          if (value === true || value === 'true') return true;
+          if (value === false || value === 'false') return false;
+          return fallback;
+        };
+
+        const normalizeUrl = (value) => {
+          const raw = String(value ?? '').trim();
+          if (!raw) return defaults.backgroundImage;
+          if (raw.startsWith('url(')) return raw;
+          if (raw.startsWith('/') || raw.startsWith('http://') || raw.startsWith('https://')) {
+            return `url("${raw.replaceAll('"', '%22')}")`;
+          }
+          return defaults.backgroundImage;
+        };
+
+        const normalizeOptionalUrl = (value) => {
+          const raw = String(value ?? '').trim();
+          if (!raw) return '';
+          if (raw.startsWith('url(')) return raw;
+          if (raw.startsWith('/') || raw.startsWith('http://') || raw.startsWith('https://')) {
+            return `url("${raw.replaceAll('"', '%22')}")`;
+          }
+          return '';
+        };
+
+        const unwrapUrl = (value) => {
+          const raw = String(value || '');
+          const match = raw.match(/^url\(["']?(.*?)["']?\)$/);
+          return match ? match[1] : raw;
+        };
+
+        const normalizeTextMap = (value) => {
+          if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+          return Object.fromEntries(
+            Object.entries(value)
+              .filter(([key, item]) => key && item !== undefined && item !== null)
+              .map(([key, item]) => [String(key), String(item)])
+          );
+        };
+
+        const normalize = (input = {}) => {
+          const next = {
+            ...defaults,
+            typography: { ...defaults.typography },
+            knowledge: { ...defaults.knowledge },
+            home: { ...defaults.home },
+            content: {
+              banner: { ...defaults.content.banner },
+              copy: {},
+              images: {}
+            }
+          };
+          next.theme = input.theme === 'glass' ? 'glass' : 'heritage';
+          for (const [key, range] of Object.entries(numericRanges)) {
+            const value = Number(getPath(input, key) ?? input[key]);
+            if (Number.isFinite(value)) {
+              setPath(next, key, clamp(value, range[0], range[1]));
+            }
+          }
+          next.backgroundImage = normalizeUrl(input.backgroundImage);
+          next.typography.fontMode = normalizeChoice(
+            input.typography?.fontMode ?? input.fontMode,
+            ['serif', 'sans', 'mixed', 'system'],
+            defaults.typography.fontMode
+          );
+          next.knowledge.graphDensity = normalizeChoice(
+            input.knowledge?.graphDensity ?? input.graphDensity,
+            ['low', 'medium', 'high'],
+            defaults.knowledge.graphDensity
+          );
+          next.knowledge.graphLabels = normalizeChoice(
+            input.knowledge?.graphLabels ?? input.graphLabels,
+            ['important', 'all', 'none'],
+            defaults.knowledge.graphLabels
+          );
+          next.knowledge.graphMotion = normalizeBoolean(
+            input.knowledge?.graphMotion ?? input.graphMotion,
+            defaults.knowledge.graphMotion
+          );
+          next.knowledge.highlightVisibility = normalizeChoice(
+            input.knowledge?.highlightVisibility ?? input.highlightVisibility,
+            ['subtle', 'normal', 'strong'],
+            defaults.knowledge.highlightVisibility
+          );
+          next.knowledge.readerMemoryPanel = normalizeChoice(
+            input.knowledge?.readerMemoryPanel ?? input.readerMemoryPanel,
+            ['collapsed', 'expanded', 'hidden'],
+            defaults.knowledge.readerMemoryPanel
+          );
+          next.home.feedToolbarSticky = normalizeBoolean(
+            input.home?.feedToolbarSticky ?? input.feedToolbarSticky,
+            defaults.home.feedToolbarSticky
+          );
+          next.interactions = {
+            hoverPreview: normalizeBoolean(
+              input.interactions?.hoverPreview ?? input.hoverPreview,
+              defaults.interactions.hoverPreview
+            )
+          };
+          const banner = input.content?.banner ?? input.banner ?? {};
+          for (const key of ['kicker', 'title', 'subtitle', 'springLabel', 'summerLabel', 'autumnLabel', 'winterLabel']) {
+            next.content.banner[key] = String(banner[key] ?? defaults.content.banner[key]).trim();
+          }
+          for (const key of ['bgImage', 'midImage', 'frontImage']) {
+            next.content.banner[key] = normalizeOptionalUrl(banner[key]);
+          }
+          next.content.copy = normalizeTextMap(input.content?.copy ?? input.copy);
+          next.content.images = normalizeTextMap(input.content?.images ?? input.images);
+          return next;
+        };
+
+        const applyContent = (settings) => {
+          const content = settings.content || defaults.content;
+          const restoreContentOverrides = () => {
+            document.querySelectorAll('[data-content-original-text]').forEach((element) => {
+              element.textContent = element.getAttribute('data-content-original-text') || '';
+            });
+            document.querySelectorAll('[data-content-original-src]').forEach((element) => {
+              if (element instanceof HTMLImageElement) {
+                element.src = element.getAttribute('data-content-original-src') || '';
+              }
+            });
+            document.querySelectorAll('[data-content-original-bg]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.backgroundImage = element.getAttribute('data-content-original-bg') || '';
+              }
+            });
+            document.querySelectorAll('[data-content-original-hero-bg]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.setProperty('--hero-bg-image', element.getAttribute('data-content-original-hero-bg') || '');
+              }
+            });
+            document.querySelectorAll('[data-content-original-hero-mid]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.setProperty('--hero-mid-image', element.getAttribute('data-content-original-hero-mid') || '');
+              }
+            });
+            document.querySelectorAll('[data-content-original-hero-front]').forEach((element) => {
+              if (element instanceof HTMLElement) {
+                element.style.setProperty('--hero-front-image', element.getAttribute('data-content-original-hero-front') || '');
+              }
+            });
+          };
+          const setText = (element, value) => {
+            if (!element.hasAttribute('data-content-original-text')) {
+              element.setAttribute('data-content-original-text', element.textContent || '');
+            }
+            element.textContent = value;
+          };
+          const setImage = (element, value) => {
+            if (!value) return;
+            if (element instanceof HTMLImageElement) {
+              if (!element.hasAttribute('data-content-original-src')) {
+                element.setAttribute('data-content-original-src', element.getAttribute('src') || '');
+              }
+              element.src = value;
+              return;
+            }
+            if (element instanceof HTMLElement) {
+              if (!element.hasAttribute('data-content-original-bg')) {
+                element.setAttribute('data-content-original-bg', element.style.backgroundImage || '');
+              }
+              element.style.backgroundImage = normalizeOptionalUrl(value);
+            }
+          };
+          const applyToTargets = (selector, callback) => {
+            try {
+              document.querySelectorAll(selector).forEach(callback);
+            } catch {
+              // Invalid user selectors are ignored so one bad override cannot break the page.
+            }
+          };
+
+          restoreContentOverrides();
+
+          document.querySelectorAll('[data-copy-key]').forEach((element) => {
+            const key = element.dataset.copyKey;
+            if (!key || content.copy[key] === undefined) return;
+            setText(element, content.copy[key]);
+          });
+
+          Object.entries(content.copy).forEach(([key, value]) => {
+            if (!key.startsWith('selector:')) return;
+            applyToTargets(key.slice('selector:'.length), (element) => {
+              setText(element, value);
+            });
+          });
+
+          document.querySelectorAll('[data-image-key]').forEach((element) => {
+            const key = element.dataset.imageKey;
+            const value = key ? content.images[key] : '';
+            if (!key || !value) return;
+            setImage(element, value);
+          });
+
+          Object.entries(content.images).forEach(([key, value]) => {
+            if (!key.startsWith('selector:')) return;
+            applyToTargets(key.slice('selector:'.length), (element) => setImage(element, value));
+          });
+
+          const hero = document.querySelector('[data-hero-banner]');
+          if (hero instanceof HTMLElement) {
+            const banner = content.banner || {};
+            const setHeroText = (selector, value) => {
+              const target = hero.querySelector(selector);
+              if (target && value) setText(target, value);
+            };
+            const setHeroVar = (name, value, originalKey) => {
+              if (!value) return;
+              if (!hero.hasAttribute(originalKey)) {
+                hero.setAttribute(originalKey, hero.style.getPropertyValue(name) || '');
+              }
+              hero.style.setProperty(name, value);
+            };
+            setHeroText('[data-hero-kicker]', banner.kicker);
+            setHeroText('[data-hero-title]', banner.title);
+            setHeroText('[data-hero-subtitle]', banner.subtitle);
+            setHeroVar('--hero-bg-image', banner.bgImage, 'data-content-original-hero-bg');
+            setHeroVar('--hero-mid-image', banner.midImage, 'data-content-original-hero-mid');
+            setHeroVar('--hero-front-image', banner.frontImage, 'data-content-original-hero-front');
+          }
+
+          applyRuntimeFolderVisibility();
+          window.dispatchEvent(new CustomEvent('emptyinkpot-content-settings-applied', { detail: settings }));
+        };
+
+        const exportContentPorts = () => ({
+          copy: Object.fromEntries(
+            [...document.querySelectorAll('[data-copy-key]')].map((element) => [
+              element.dataset.copyKey,
+              element.textContent?.trim() || ''
+            ]).filter(([key]) => Boolean(key))
+          ),
+          images: Object.fromEntries(
+            [...document.querySelectorAll('[data-image-key]')].map((element) => [
+              element.dataset.imageKey,
+              element instanceof HTMLImageElement ? element.currentSrc || element.src : unwrapUrl(getComputedStyle(element).backgroundImage)
+            ]).filter(([key]) => Boolean(key))
+          )
+        });
+
+        const apply = (input = {}) => {
+          const settings = normalize(input);
+          const root = document.documentElement;
+          root.dataset.theme = settings.theme;
+          root.style.setProperty('--home-card-glass-top-alpha', String(settings.cardTopAlpha));
+          root.style.setProperty('--home-card-glass-bottom-alpha', String(settings.cardBottomAlpha));
+          root.style.setProperty('--home-rail-glass-top-alpha', String(settings.railTopAlpha));
+          root.style.setProperty('--home-rail-glass-bottom-alpha', String(settings.railBottomAlpha));
+          root.style.setProperty('--home-toolbar-glass-top-alpha', String(settings.toolbarTopAlpha));
+          root.style.setProperty('--home-toolbar-glass-bottom-alpha', String(settings.toolbarBottomAlpha));
+          root.style.setProperty('--home-background-overlay-alpha', String(settings.backgroundOverlayAlpha));
+          root.style.setProperty('--home-glass-blur', `${settings.glassBlurPx}px`);
+          root.style.setProperty('--home-glass-saturate', String(settings.glassSaturate));
+          root.style.setProperty('--home-background-image', settings.backgroundImage);
+          root.style.setProperty('--type-body-size', `${settings.typography.bodySize}px`);
+          root.style.setProperty('--type-body-line', String(settings.typography.lineHeight));
+          root.style.setProperty('--reader-column-width', `${settings.typography.columnWidth}px`);
+          root.style.setProperty('--type-title-scale', String(settings.typography.titleScale));
+          root.style.setProperty('--reader-paragraph-gap', `${settings.typography.paragraphGap}px`);
+          root.style.setProperty('--reader-section-gap', `${Math.round(settings.typography.paragraphGap * 3)}px`);
+          root.dataset.fontMode = settings.typography.fontMode;
+          root.dataset.graphDensity = settings.knowledge.graphDensity;
+          root.dataset.graphLabels = settings.knowledge.graphLabels;
+          root.dataset.graphMotion = settings.knowledge.graphMotion ? 'on' : 'off';
+          root.dataset.highlightVisibility = settings.knowledge.highlightVisibility;
+          root.dataset.readerMemoryPanel = settings.knowledge.readerMemoryPanel;
+          root.dataset.homeFeedToolbarSticky = settings.home.feedToolbarSticky ? 'on' : 'off';
+          root.dataset.hoverPreview = settings.interactions.hoverPreview ? 'on' : 'off';
+          if (document.body) applyContent(settings);
+          return settings;
+        };
+
+        const load = () => {
+          try {
+            return normalize(JSON.parse(localStorage.getItem(storageKey) || '{}'));
+          } catch {
+            return normalize();
+          }
+        };
+
+        const save = (input) => {
+          const settings = apply(input);
+          try {
+            localStorage.setItem(storageKey, JSON.stringify(settings));
+          } catch {
+            // Ignore storage failures; the current page still receives the visual settings.
+          }
+          return settings;
+        };
+
+        const reset = () => {
+          try {
+            localStorage.removeItem(storageKey);
+          } catch {
+            // Ignore storage failures.
+          }
+          return apply(defaults);
+        };
+
+        window.emptyinkpotVisualSettings = { storageKey, defaults, apply, load, save, reset, exportContentPorts };
+        const loadRuntimeFolderSettings = () => {
+          try {
+            const parsed = JSON.parse(localStorage.getItem(runtimeFolderStorageKey) || '{}');
+            return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+          } catch {
+            return {};
+          }
+        };
+        const saveRuntimeFolderSettings = (settings = {}) => {
+          try {
+            localStorage.setItem(runtimeFolderStorageKey, JSON.stringify(settings));
+          } catch {
+            // Folder visibility is a local preference; ignore storage failures.
+          }
+          applyRuntimeFolderVisibility(settings);
+          window.dispatchEvent(new CustomEvent('emptyinkpot-runtime-folders-applied', { detail: settings }));
+          return settings;
+        };
+        const isRuntimeFolderVisible = (folderKey, settings = loadRuntimeFolderSettings()) => settings[String(folderKey || '')] !== false;
+        function applyRuntimeFolderVisibility(settings = loadRuntimeFolderSettings()) {
+          document.querySelectorAll('[data-runtime-folder]').forEach((element) => {
+            const key = element.getAttribute('data-runtime-folder') || '';
+            element.hidden = !isRuntimeFolderVisible(key, settings);
+          });
+        }
+        window.emptyinkpotRuntimeFolders = {
+          storageKey: runtimeFolderStorageKey,
+          load: loadRuntimeFolderSettings,
+          save: saveRuntimeFolderSettings,
+          apply: applyRuntimeFolderVisibility,
+          isVisible: isRuntimeFolderVisible
+        };
+        apply(load());
+        document.addEventListener('DOMContentLoaded', () => {
+          apply(load());
+          applyRuntimeFolderVisibility();
+        }, { once: true });
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body class:list={[bodyMode]}>
+    <div class="site-shell">
+      <div class="site-shell__glow site-shell__glow--one"></div>
+      <div class="site-shell__glow site-shell__glow--two"></div>
+      <div class:list={['page-wrap', useFullBleedWrap && 'page-wrap--home']}>
+        <slot />
+      </div>
+      {!hideSiteChrome && <SiteFooter />}
+    </div>
+    <div class="openlist-embed-layer" data-openlist-layer hidden>
+      <button class="openlist-embed-backdrop" type="button" data-openlist-close aria-label="关闭 OpenList"></button>
+      <section class="openlist-embed-panel" role="dialog" aria-modal="true" aria-labelledby="openlist-embed-title">
+        <header class="openlist-embed-header">
+          <div>
+            <span>OpenList</span>
+            <h2 id="openlist-embed-title">文件源</h2>
+          </div>
+          <nav aria-label="OpenList 操作">
+            <a href={openListEmbedUrl} target="_blank" rel="noreferrer">新窗口</a>
+            <button type="button" data-openlist-close>关闭</button>
+          </nav>
+        </header>
+        <iframe
+          class="openlist-embed-frame"
+          data-openlist-frame
+          data-src={openListEmbedUrl}
+          title="OpenList 文件源"
+          loading="lazy"
+        ></iframe>
+      </section>
+    </div>
+    <div class="openlist-embed-layer pinterest-embed-layer" data-pinterest-layer hidden>
+      <button class="openlist-embed-backdrop" type="button" data-pinterest-close aria-label="关闭 Pinterest"></button>
+      <section class="openlist-embed-panel pinterest-embed-panel" role="dialog" aria-modal="true" aria-labelledby="pinterest-embed-title">
+        <header class="openlist-embed-header">
+          <div>
+            <span>Pinterest</span>
+            <h2 id="pinterest-embed-title">视觉流镜像</h2>
+          </div>
+          <nav aria-label="Pinterest 操作">
+            <span data-pinterest-shell-status>读取本地镜像</span>
+            <button type="button" data-pinterest-close>关闭</button>
+          </nav>
+        </header>
+        <div class="pinterest-shell-frame" data-pinterest-frame>
+          <div class="pinterest-shell-note">
+            <p>Full Pinterest page cannot be iframed because Pinterest sends <code>frame-ancestors 'self'</code>. This shell renders the browser-session mirror inside MyBlog instead of using the official marketing widget.</p>
+            <p data-pinterest-shell-source>当前显示的是本地镜像快照，不是 Pinterest 官方页面。</p>
+          </div>
+          <div class="pinterest-shell-board" data-pinterest-shell-board>
+            {pinterestShellSeed.flatMap((collection) =>
+              collection.images.map((item) => (
+                <article class="pinterest-shell-pin" data-pinterest-shell-pin>
+                  <img src={item.image} alt="" loading="lazy" />
+                  <div>
+                    <strong>{item.title}</strong>
+                    <small>{collection.title}</small>
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+    </div>
+    <script
+      type="application/json"
+      id="pinterest-shell-seed"
+      set:html={JSON.stringify({
+        sources: [
+          {
+            id: 'pinterest-build-seed',
+            type: 'pinterest',
+            provider: 'visual-manifest',
+            syncedItems: pinterestShellSeed.reduce((count, collection) => count + collection.images.length, 0),
+            syncStatus: 'build-seed'
+          }
+        ],
+        collections: pinterestShellSeed
+      })}
+    />
+    <HoverPreviewSystem client:load />
+    <script is:inline>
+      (() => {
+        const layer = document.querySelector('[data-openlist-layer]');
+        const frame = document.querySelector('[data-openlist-frame]');
+        if (!layer || !(frame instanceof HTMLIFrameElement)) return;
+
+        let closeTimer = 0;
+        let lastFocused = null;
+        const transitionMs = 180;
+        let frameObserver = null;
+
+        const hideOpenListLogin = () => {
+          let frameDocument;
+          try {
+            frameDocument = frame.contentDocument;
+          } catch {
+            return;
+          }
+          if (!frameDocument?.head || !frameDocument.body) return;
+
+          let style = frameDocument.getElementById('emptyinkpot-openlist-embed-style');
+          if (!style) {
+            style = frameDocument.createElement('style');
+            style.id = 'emptyinkpot-openlist-embed-style';
+            style.textContent = `
+              a[href$="/@login"],
+              a[href$="@login"],
+              a[href*="/@login"] {
+                display: none !important;
+              }
+            `;
+            frameDocument.head.appendChild(style);
+          }
+
+          const hideLoginLinks = () => {
+            frameDocument.querySelectorAll('a[href$="/@login"], a[href$="@login"], a[href*="/@login"]').forEach((link) => {
+              const previous = link.previousSibling;
+              if (previous?.nodeType === Node.TEXT_NODE && previous.textContent?.trim() === '|') {
+                previous.textContent = '';
+              }
+              link.parentNode?.childNodes.forEach((node) => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() === '|') {
+                  node.textContent = '';
+                }
+              });
+              link.setAttribute('aria-hidden', 'true');
+              link.setAttribute('tabindex', '-1');
+              link.hidden = true;
+            });
+
+            const separators = [];
+            const walker = frameDocument.createTreeWalker(frameDocument.body, NodeFilter.SHOW_TEXT);
+            let node = walker.nextNode();
+            while (node) {
+              if (node.textContent?.trim() === '|') {
+                separators.push(node);
+              }
+              node = walker.nextNode();
+            }
+            separators.forEach((separator) => {
+              separator.textContent = '';
+            });
+          };
+
+          hideLoginLinks();
+          frameObserver?.disconnect();
+          frameObserver = new MutationObserver(hideLoginLinks);
+          frameObserver.observe(frameDocument.body, { childList: true, subtree: true });
+        };
+
+        const open = (trigger) => {
+          window.clearTimeout(closeTimer);
+          lastFocused = trigger instanceof HTMLElement ? trigger : document.activeElement;
+          if (!frame.getAttribute('src')) {
+            frame.setAttribute('src', frame.dataset.src || '/openlist/');
+          } else {
+            hideOpenListLogin();
+          }
+          layer.hidden = false;
+          document.body.classList.add('has-openlist-embed');
+          requestAnimationFrame(() => {
+            layer.classList.add('is-open');
+            layer.querySelector('[data-openlist-close]')?.focus({ preventScroll: true });
+          });
+        };
+
+        const close = () => {
+          layer.classList.remove('is-open');
+          window.clearTimeout(closeTimer);
+          closeTimer = window.setTimeout(() => {
+            layer.hidden = true;
+            document.body.classList.remove('has-openlist-embed');
+            if (lastFocused instanceof HTMLElement) {
+              lastFocused.focus({ preventScroll: true });
+            }
+          }, transitionMs);
+        };
+
+        document.addEventListener('click', (event) => {
+          const trigger = event.target instanceof Element ? event.target.closest('[data-openlist-embed-open]') : null;
+          if (!trigger) return;
+          event.preventDefault();
+          open(trigger);
+        });
+
+        document.querySelectorAll('[data-openlist-close]').forEach((button) => {
+          button.addEventListener('click', close);
+        });
+
+        frame.addEventListener('load', hideOpenListLogin);
+        window.addEventListener('openlist-embed-open', (event) => open(event.target));
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !layer.hidden) close();
+        });
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        const layer = document.querySelector('[data-pinterest-layer]');
+        const board = document.querySelector('[data-pinterest-shell-board]');
+        const status = document.querySelector('[data-pinterest-shell-status]');
+        const sourceStatus = document.querySelector('[data-pinterest-shell-source]');
+        if (!layer || !board) return;
+
+        let closeTimer = 0;
+        let lastFocused = null;
+        let hydrated = false;
+        const transitionMs = 180;
+
+        const setStatus = (text) => {
+          if (status) status.textContent = text;
+        };
+
+        const setSourceStatus = (text) => {
+          if (sourceStatus) sourceStatus.textContent = text;
+        };
+
+        const escapeHtml = (value) =>
+          String(value || '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;');
+
+        const renderCollections = (collections) => {
+          const pinterestCollections = Array.isArray(collections)
+            ? collections.filter((collection) => collection?.source === 'pinterest')
+            : [];
+          const pins = pinterestCollections.flatMap((collection) =>
+            Array.isArray(collection.images)
+              ? collection.images.map((item) => ({ ...item, collectionTitle: collection.title }))
+              : []
+          );
+          if (!pins.length) {
+            board.innerHTML = '<p class="pinterest-shell-empty">当前没有可展示的 Pinterest 镜像。请先运行 visual sync。</p>';
+            setStatus('0 pins');
+            return;
+          }
+          board.innerHTML = pins
+            .map((item) => {
+              const image = item.previewUrl || item.image || '';
+              return `
+                <article class="pinterest-shell-pin" data-pinterest-shell-pin>
+                  <img src="${escapeHtml(image)}" alt="" loading="lazy" />
+                  <div>
+                    <strong>${escapeHtml(item.title || 'Pinterest Pin')}</strong>
+                    <small>${escapeHtml(item.collectionTitle || item.source || 'Pinterest')}</small>
+                  </div>
+                </article>
+              `;
+            })
+            .join('');
+          setStatus(`${pins.length} pins`);
+        };
+
+        const renderSourceStatus = (sources) => {
+          const pinterestSource = Array.isArray(sources)
+            ? sources.find((source) => String(source?.type || '').includes('pinterest') || String(source?.id || '').includes('pinterest'))
+            : null;
+          if (!pinterestSource) {
+            setSourceStatus('当前显示的是本地镜像快照，不是 Pinterest 官方页面。');
+            return;
+          }
+          const count = pinterestSource.activeItems ?? pinterestSource.syncedItems ?? 0;
+          const provider = pinterestSource.provider ? ` / ${pinterestSource.provider}` : '';
+          const state = pinterestSource.syncStatus ? ` / ${pinterestSource.syncStatus}` : '';
+          setSourceStatus(`当前镜像源：${count} pins${provider}${state}。如果 Pinterest 账号里更多，说明上游 browser/session/API 只同步到了这部分。`);
+        };
+
+        const hydrateSnapshot = async () => {
+          if (hydrated) return;
+          hydrated = true;
+          setStatus('同步镜像');
+          try {
+            const response = await fetch('/api/runtime/visuals/snapshot', { headers: { Accept: 'application/json' } });
+            if (!response.ok) throw new Error(`snapshot ${response.status}`);
+            const payload = await response.json();
+            renderCollections(payload.collections);
+            renderSourceStatus(payload.sources);
+          } catch {
+            try {
+              const seed = JSON.parse(document.getElementById('pinterest-shell-seed')?.textContent || '{"collections":[]}');
+              renderCollections(seed.collections);
+              renderSourceStatus(seed.sources);
+              setStatus('构建期镜像');
+            } catch {
+              setStatus('镜像不可用');
+            }
+          }
+        };
+
+        const open = (trigger) => {
+          window.clearTimeout(closeTimer);
+          lastFocused = trigger instanceof HTMLElement ? trigger : document.activeElement;
+          layer.hidden = false;
+          document.body.classList.add('has-openlist-embed', 'has-pinterest-embed');
+          hydrateSnapshot();
+          requestAnimationFrame(() => {
+            layer.classList.add('is-open');
+            layer.querySelector('[data-pinterest-close]')?.focus({ preventScroll: true });
+          });
+        };
+
+        const close = () => {
+          layer.classList.remove('is-open');
+          window.clearTimeout(closeTimer);
+          closeTimer = window.setTimeout(() => {
+            layer.hidden = true;
+            document.body.classList.remove('has-openlist-embed', 'has-pinterest-embed');
+            if (lastFocused instanceof HTMLElement) {
+              lastFocused.focus({ preventScroll: true });
+            }
+          }, transitionMs);
+        };
+
+        document.addEventListener('click', (event) => {
+          const trigger = event.target instanceof Element ? event.target.closest('[data-pinterest-embed-open]') : null;
+          if (!trigger) return;
+          event.preventDefault();
+          open(trigger);
+        });
+
+        document.querySelectorAll('[data-pinterest-close]').forEach((button) => {
+          button.addEventListener('click', close);
+        });
+
+        window.addEventListener('pinterest-embed-open', (event) => open(event.target));
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && !layer.hidden) close();
+        });
+      })();
+    </script>
+  </body>
+</html>

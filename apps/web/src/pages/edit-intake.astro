@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EditIntakeWorkbench from '../components/edit-intake/EditIntakeWorkbench';
+---
+
+<BaseLayout
+  title="Edit Intake Spike / emptyinkpot"
+  description="MyBlog editable projection surface prototype that emits DataBase public-edit-intake records."
+  hideSiteChrome={true}
+  barePage={true}
+>
+  <EditIntakeWorkbench client:only="react" />
+</BaseLayout>

@@ -1,0 +1,37 @@
+---
+import ArticleCard from '../../components/shared/ArticleCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getGroupedCounts, toSlug } from '../../lib/content';
+import { getRuntimeArticles } from '../../lib/runtimeContent';
+
+export function getStaticPaths() {
+  const articles = getRuntimeArticles();
+  const tags = getGroupedCounts(articles.flatMap((article) => article.tags));
+
+  return tags.map(([tag]) => ({
+    params: { slug: toSlug(tag) },
+    props: {
+      tag,
+      articles: articles.filter((article) => article.tags.some((articleTag) => toSlug(articleTag) === toSlug(tag)))
+    }
+  }));
+}
+
+const { tag, articles } = Astro.props;
+---
+
+<BaseLayout title={`${tag} / emptyinkpot`} description={`浏览标签「${tag}」下的 Runtime MarkdownObject。`}>
+  <main class="space-y-8 pb-10 pt-8 md:pt-14" data-pagefind-body>
+    <section class="space-y-4">
+      <p class="section-kicker">Tag</p>
+      <h1 class="section-title text-4xl md:text-5xl">{tag}</h1>
+      <p class="max-w-3xl text-base leading-8 text-stone-600">
+        当前标签下共有 {articles.length} 篇 Runtime MarkdownObject。
+      </p>
+    </section>
+
+    <section class="grid gap-5 md:grid-cols-2">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </section>
+  </main>
+</BaseLayout>

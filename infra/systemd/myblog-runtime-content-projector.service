@@ -1,0 +1,22 @@
+[Unit]
+Description=MyBlog Runtime Content Projector
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/srv/myblog/repo
+Environment=NODE_ENV=production
+Environment=MYBLOG_VAULT_ROOT=/home/vault/Obsidian/docs
+Environment=MYBLOG_VAULT_WATCH_ROOT=/home/vault/Obsidian/docs
+Environment=MYBLOG_RUNTIME_SOURCE_ROOT_LABEL=/home/vault/Obsidian/docs
+Environment=MYBLOG_RUNTIME_OPENLIST_ROOT_LABEL=/openlist/Obsidian/docs
+Environment=MYBLOG_RUNTIME_INDEX_PATH=/srv/myblog/site/runtime/content-index.json
+Environment=MYBLOG_RUNTIME_PROJECTOR_DEBOUNCE_MS=3000
+ExecStart=/usr/bin/node /srv/myblog/repo/tools/server-runtime-content-projector.mjs
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

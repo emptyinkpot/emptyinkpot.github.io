@@ -1,0 +1,32 @@
+---
+import type { GitHubOverview } from '../../lib/github';
+import type { RepoMatrixItem } from '../../lib/analytics';
+
+interface Props {
+  profile: GitHubOverview['profile'];
+  repos: RepoMatrixItem[];
+}
+
+const { profile, repos } = Astro.props;
+const visibleRepos = repos.slice(0, 4);
+---
+
+<div class="team-signal-graph" data-github-viz="team-signal">
+  <div class="team-signal-graph__root">
+    <img src={profile.avatarUrl} alt={profile.name} data-github-profile="avatar" />
+    <strong data-github-profile="name">{profile.name}</strong>
+    <span data-github-profile="login">@{profile.login}</span>
+  </div>
+  <div class="team-signal-graph__branches">
+    {visibleRepos.map((repo) => (
+      <a href={repo.htmlUrl}>
+        <strong>{repo.name}</strong>
+        <span>{repo.language || 'repo'}</span>
+      </a>
+    ))}
+    <a href="https://github.com/emptyinkpot/emptyinkpot.github.io/actions">
+      <strong>Automation</strong>
+      <span>Actions / Pages</span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "updatedAt": null,
+  "sources": [
+    {
+      "id": "pinterest-default-board",
+      "type": "pinterest",
+      "enabled": true,
+      "title": "Pinterest Saved Pins",
+      "url": "https://www.pinterest.com/emptyinkstand/_pins/",
+      "collectionTitle": "Pinterest / Saved Pins",
+      "mood": "Visual Board",
+      "tags": ["pinterest", "visual reference"],
+      "limit": 120,
+      "partitionPattern": [6, 4, 9, 12]
+    },
+    {
+      "id": "pixiv-bookmarks",
+      "type": "pixiv",
+      "enabled": true,
+      "title": "Pixiv Bookmarks",
+      "url": "https://www.pixiv.net/users/me/bookmarks/artworks",
+      "collectionTitle": "Pixiv / Bookmarks",
+      "mood": "Illustration Reference",
+      "tags": ["pixiv", "illustration"],
+      "limit": 120,
+      "partitionPattern": [6, 4, 9, 12]
+    }
+  ]
+}

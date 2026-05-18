@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1008" role="img" aria-labelledby="title desc">
+  <title id="title">Neural Networks and Deep Learning book cover</title>
+  <desc id="desc">A dark green technical book cover for the private bookshelf.</desc>
+  <rect width="720" height="1008" fill="#183b34"/>
+  <rect x="44" y="44" width="632" height="920" fill="#f8f1df" opacity=".08"/>
+  <rect x="88" y="88" width="544" height="832" fill="none" stroke="#e6d7af" stroke-width="4"/>
+  <path d="M156 636c82-116 158-116 240 0s158 116 240 0" fill="none" stroke="#e6d7af" stroke-width="12" stroke-linecap="round"/>
+  <path d="M156 710c82-116 158-116 240 0s158 116 240 0" fill="none" stroke="#9fc7bb" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="210" cy="278" r="28" fill="#e6d7af"/>
+  <circle cx="360" cy="214" r="28" fill="#9fc7bb"/>
+  <circle cx="510" cy="278" r="28" fill="#e6d7af"/>
+  <path d="M238 270l94-44m56 0l94 44" fill="none" stroke="#e6d7af" stroke-width="7" stroke-linecap="round"/>
+  <text x="104" y="424" fill="#f8f1df" font-family="Georgia, serif" font-size="52" font-weight="700">Neural Networks</text>
+  <text x="104" y="488" fill="#f8f1df" font-family="Georgia, serif" font-size="52" font-weight="700">and Deep Learning</text>
+  <text x="104" y="552" fill="#c9d8cc" font-family="Arial, sans-serif" font-size="28" letter-spacing="5">AI FOUNDATION</text>
+  <text x="104" y="854" fill="#e6d7af" font-family="Arial, sans-serif" font-size="30">Qiu Xipeng</text>
+</svg>

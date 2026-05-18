@@ -1,0 +1,68 @@
+---
+import WorkbenchPageIntro from '../../components/shared/WorkbenchPageIntro.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatRuntimeDate, getRuntimeArticleCard, getRuntimeArticles } from '../../lib/runtimeContent';
+import { withBase } from '../../lib/site';
+
+const runtimeArticles = getRuntimeArticles();
+const runtimeCards = runtimeArticles.map((article) => {
+  const card = getRuntimeArticleCard(article);
+  return {
+    href: withBase(`/posts/${article.slug}/`),
+    card,
+    date: formatRuntimeDate(article.date),
+    title: article.title,
+    summary: card.subtitle,
+    folder: article.folder
+  };
+});
+const activeCategory = runtimeCards[0]?.card.eyebrow ?? 'MarkdownObject';
+---
+
+<BaseLayout title="文章 / emptyinkpot" description="emptyinkpot 的文章列表页，展示 Obsidian / OpenList MarkdownObject。">
+  <main class="workbench-page" data-pagefind-body>
+    <WorkbenchPageIntro
+      kicker="SECTION / POSTS"
+      title="文章列表"
+      summary="这里只展示 Obsidian / OpenList MarkdownObject。旧 Astro posts collection 已移除。"
+      stats={[
+        { label: 'MarkdownObjects', value: String(runtimeArticles.length) },
+        { label: 'Current source', value: activeCategory },
+        { label: 'Route', value: '/posts/[slug]/' }
+      ]}
+    />
+
+    <section class="runtime-article-shelf" aria-label="Runtime MarkdownObject articles">
+      <div class="runtime-article-shelf__head">
+        <p class="section-kicker">Obsidian MarkdownObject</p>
+        <h2>Active Articles</h2>
+        <p>{runtimeCards.length} 篇 MarkdownObject 作为当前文章真源进入公开阅读投影。</p>
+      </div>
+      <div class="runtime-article-grid">
+        {runtimeCards.map((post) => (
+          <article class="runtime-article-card" data-runtime-folder={post.folder?.key ?? ''}>
+            <div class="runtime-article-card__meta">
+              <span>{post.card.eyebrow}</span>
+              <span>/</span>
+              <span>{post.date}</span>
+            </div>
+            <h3>
+              <a href={post.href}>{post.title}</a>
+            </h3>
+            <p>{post.summary}</p>
+            {post.card.chips.length > 0 && (
+              <div class="runtime-article-card__tags">
+                {post.card.chips.map((tag, index) => (
+                  <>
+                    {index > 0 && <span aria-hidden="true">/</span>}
+                    <span>{tag}</span>
+                  </>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

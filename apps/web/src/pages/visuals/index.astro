@@ -1,0 +1,526 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { visualCollections } from '../../data/visuals';
+import { withBase } from '../../lib/site';
+
+const visualManifestStorageKey = 'emptyinkpot-visual-collections';
+const externalVisualSources = new Set(['pinterest', 'pixiv']);
+const pinterestProfileUrl = 'https://www.pinterest.com/emptyinkstand/';
+const immichMediaRuntimeUrl = 'https://photos.blog.tengokukk.com/';
+const createPinterestSaveHref = (item: { image?: string; sourceUrl?: string; title?: string }) => {
+  const url = item.sourceUrl || pinterestProfileUrl;
+  const media = item.image || '';
+  const description = item.title || 'emptyinkpot visual reference';
+  return `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(media)}&description=${encodeURIComponent(description)}`;
+};
+---
+
+<BaseLayout title="视觉素材 / emptyinkpot" description="视觉素材集合、策展 board、调色板和知识图谱入口。">
+  <main class="visuals-page">
+    <section class="visuals-hero">
+      <p class="section-kicker">Visual Collection System</p>
+      <h1>视觉素材不是图片墙，是可回访的策展集合。</h1>
+      <p>Pinterest 现在是嵌入式 visual substrate，不再只是等待同步的远端图库。你可以在博客里浏览 Pinterest 视觉流，同时让 MyBlog 负责 collection partition、贴纸、注释、Graph 和本地视觉记忆。</p>
+      <div class="visuals-hero__actions">
+        <a href={withBase('/')}>回到首页 Feed</a>
+        <a href={immichMediaRuntimeUrl} target="_blank" rel="noreferrer">打开 Immich 媒体库</a>
+        <button type="button" data-pinterest-embed-open>打开 Pinterest Shell</button>
+        <a href="#visual-manifest">查看本地索引</a>
+        <a href={withBase('/knowledge/')}>打开 Knowledge Graph</a>
+      </div>
+    </section>
+
+    <section class="visual-immich-runtime" aria-label="Immich AI Media Runtime">
+      <div>
+        <p class="section-kicker">Immich AI Media Runtime</p>
+        <h2>AI 识别、相册时间线和语义搜索交给 Immich，博客只做策展和知识关系。</h2>
+        <p>
+          Immich 是独立媒体库服务，不是 Astro 组件。它负责图片 / 视频 ingest、人脸、物体、CLIP embedding、语义搜索和缩略图；
+          MyBlog 消费它的公开入口和后续 API 快照，把素材收敛成 Visual Collection、Graph 节点、文章引用和项目 moodboard。
+        </p>
+      </div>
+      <div class="visual-immich-runtime__meta">
+        <span>STATUS · WAITING FOR DEDICATED DEPLOYMENT</span>
+        <span>URL · photos.blog.tengokukk.com</span>
+        <span>RULE · ROOT SUBDOMAIN ONLY</span>
+        <a href={immichMediaRuntimeUrl} target="_blank" rel="noreferrer">进入媒体库</a>
+      </div>
+    </section>
+
+    <section class="visual-service-stack" aria-label="Composable visual service stack">
+      <div class="visual-service-stack__intro">
+        <p class="section-kicker">Composable Service Stack</p>
+        <h2>MyBlog 只做视觉展示壳，底层能力交给成熟服务。</h2>
+        <p>
+          OpenList + COS 保存原件，Immich 负责媒体 AI，Directus 后续承接人工 metadata overlay，Meilisearch 后续承接动态搜索。
+          这里展示的是运行时边界：哪些已经可用，哪些只是目标服务。
+        </p>
+        <a href={withBase('/codex/composable-service-stack/')}>查看架构 Codex</a>
+      </div>
+      <div class="visual-service-stack__grid">
+        <article>
+          <span>ACTIVE</span>
+          <strong>OpenList + COS</strong>
+          <p>文件真源与大文件存储。已挂载 `/腾讯云COS`，书籍、视觉素材、视频和归档文件从这里走。</p>
+        </article>
+        <article>
+          <span>SKELETON</span>
+          <strong>Immich</strong>
+          <p>AI 媒体库候选运行时。入口已接入，服务等待 DNS、独立存储和 readiness gate。</p>
+        </article>
+        <article>
+          <span>TARGET</span>
+          <strong>Directus</strong>
+          <p>人工策展后台。后续管理 books、visuals、collections、knowledge objects 的 metadata overlay。</p>
+        </article>
+        <article>
+          <span>TARGET</span>
+          <strong>Meilisearch</strong>
+          <p>动态搜索运行时。后续索引 OpenList 文件、Directus metadata、Immich snapshot 和 KnowledgeObject。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="visual-substrate-shell" id="pinterest-shell" aria-label="Pinterest Visual Shell">
+      <div class="visual-substrate-shell__copy">
+        <p class="section-kicker">Pinterest Visual Shell</p>
+        <h2>Pinterest 留在原平台，博客负责视觉壳和知识关系。</h2>
+        <p>
+          官方 embed / Save Button 让浏览和保存继续发生在 Pinterest 的登录会话里；MyBlog 只读取公开预览、组织 moodboard、记录注释和未来的 Visual Graph。
+          这样不会复制 cookie，也不会把收藏源误当成自己的数据库。
+        </p>
+        <div class="visual-substrate-shell__actions">
+          <button type="button" data-pinterest-embed-open>站内浏览 Pinterest</button>
+        </div>
+      </div>
+      <div class="visual-substrate-shell__embed">
+        <div class="visual-substrate-shell__notice">
+          Pinterest full page blocks iframe embedding with <code>frame-ancestors 'self'</code>. MyBlog therefore mirrors the logged browser feed into local collections and renders it with its own board UI.
+        </div>
+      </div>
+    </section>
+
+    <section class="visual-manifest-note" id="visual-manifest" aria-label="视觉素材 manifest">
+      <div>
+        <p class="section-kicker">Local Visual Index</p>
+        <h2>本地镜像是索引和缓存，不是 Pinterest 的替代真相。</h2>
+      </div>
+      <p>
+        <code>/api/runtime/visuals/snapshot</code> 和 <code>visual-manifest.json</code> 只负责把公开预览 URL 分区成有限的 mini moodboard。
+        Pinterest 官方 embed 承担实时浏览层；MySQL / manifest 承担本地视觉记忆、注释、搜索和 Graph 索引。
+      </p>
+      <button type="button" class="visual-token-copy" data-visual-export-manifest>复制当前 Collection JSON</button>
+      <span data-visual-message>当前共有 {visualCollections.length} 个 collection。</span>
+    </section>
+
+    <section class="visual-collections-grid" aria-label="视觉集合" data-visual-collections-grid>
+      {visualCollections.map((collection) => (
+        <article
+          class="visual-collection-card"
+          id={collection.id}
+          data-visual-collection={collection.id}
+          data-sticker-surface
+          data-sticker-target={`visual:${collection.id}`}
+          data-sticker-target-type="visual"
+          data-hover-preview="true"
+          data-hover-type="visual"
+          data-hover-id={`visual:${collection.id}`}
+          data-hover-title={collection.title}
+          data-hover-summary={collection.summary}
+          data-hover-kicker="Visual Collection"
+          data-hover-image={collection.coverImages[0] ?? collection.images[0]?.image}
+          data-hover-accent={collection.palette.dominant}
+          data-hover-tags={JSON.stringify(collection.tags)}
+          style={`--visual-accent:${collection.palette.dominant}`}
+        >
+          <button type="button" class="visual-collection-card__trigger" data-visual-board-toggle={collection.id}>
+            <span class="visual-collection-card__stack" aria-hidden="true">
+              {(collection.coverImages.length ? collection.coverImages : collection.images.map((item) => item.image))
+                .slice(0, 4)
+                .map((image, index) => (
+                  <img src={image} alt="" loading="lazy" style={`--stack-index:${index}`} />
+                ))}
+            </span>
+            <span class="visual-collection-card__body">
+              <small>{collection.sourceLabel}</small>
+              <strong>{collection.title}</strong>
+              <span>{collection.summary}</span>
+              <span class="visual-meta-line">{collection.mood} · {collection.images.length} IMAGES</span>
+              <span class="visual-feed-card__palette" aria-label="调色板">
+                {collection.palette.colors.slice(0, 5).map((color) => <i style={`background:${color}`}></i>)}
+              </span>
+            </span>
+          </button>
+          <div class="sticker-layer" data-sticker-layer></div>
+          <section class="visual-board" data-visual-board={collection.id} hidden={!externalVisualSources.has(collection.source)}>
+            <header>
+              <p class="section-kicker">Board</p>
+              <h2>{collection.title}</h2>
+              <p>{collection.curationNote}</p>
+            </header>
+            <div class="visual-board__grid">
+              {collection.images.map((item) => (
+                <article class="visual-board-item" id={item.id}>
+                  <img src={item.image} alt="" loading="lazy" />
+                  <div>
+                    <small>{item.type}</small>
+                    <strong>{item.title}</strong>
+                    <p>{item.note}</p>
+                    <span class="visual-meta-line">{item.tags.join(' · ')}</span>
+                    {item.sourceUrl?.includes('pinterest.com') && (
+                      <span class="visual-board-item__actions">
+                        <a class="visual-pin-save" data-pin-do="buttonPin" data-pin-custom="true" href={createPinterestSaveHref(item)}>Save</a>
+                        <a class="visual-source-link" href={item.sourceUrl} target="_blank" rel="noreferrer">Source</a>
+                      </span>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div class="visual-library-card__actions">
+              <button type="button" data-sticker-add="note">便签</button>
+              <button type="button" data-sticker-add="tape">胶带</button>
+              <button type="button" data-sticker-add="task">任务</button>
+              <button type="button" data-sticker-add="marker">标记</button>
+            </div>
+          </section>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <script type="application/json" id="visual-manifest-seed" set:html={JSON.stringify({ key: visualManifestStorageKey, collections: visualCollections })} />
+  <script>
+    const seed = JSON.parse(document.getElementById('visual-manifest-seed')?.textContent || '{"collections":[]}');
+    let collections = Array.isArray(seed.collections) ? seed.collections : [];
+    const message = document.querySelector('[data-visual-message]');
+    const stickersKey = 'emptyinkpot-stickers';
+
+    const escapeHtml = (value) =>
+      String(value || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+
+    function pinterestSaveHref(item) {
+      const url = item?.sourceUrl || 'https://www.pinterest.com/emptyinkstand/';
+      const media = item?.image || '';
+      const description = item?.title || 'emptyinkpot visual reference';
+      return `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(media)}&description=${encodeURIComponent(description)}`;
+    }
+
+    function pinterestActions(item) {
+      if (!String(item?.sourceUrl || '').includes('pinterest.com')) return '';
+      return `
+        <span class="visual-board-item__actions">
+          <a class="visual-pin-save" data-pin-do="buttonPin" data-pin-custom="true" href="${escapeHtml(pinterestSaveHref(item))}">Save</a>
+          <a class="visual-source-link" href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noreferrer">Source</a>
+        </span>
+      `;
+    }
+
+    function loadPinterestWidgets() {
+      if (document.querySelector('script[data-pinterest-widgets]')) {
+        window.PinUtils?.build?.();
+        return;
+      }
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+      script.defer = true;
+      script.dataset.pinterestWidgets = 'true';
+      script.src = 'https://assets.pinterest.com/js/pinit.js';
+      script.addEventListener('load', () => window.PinUtils?.build?.());
+      document.body.appendChild(script);
+    }
+
+    function setMessage(text) {
+      if (message) message.textContent = text;
+    }
+
+    function loadStickers() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(stickersKey) || '[]');
+        return Array.isArray(stored) ? stored : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveStickers(items) {
+      localStorage.setItem(stickersKey, JSON.stringify(items));
+    }
+
+    function stickerPreset(kind) {
+      return {
+        tape: { content: '重要', width: 118, height: 38, color: '#f5f1e8' },
+        note: { content: '灵感', width: 118, height: 76, color: '#f4d35e' },
+        task: { content: '待处理', width: 122, height: 54, color: '#2f5d50' },
+        marker: { content: '圈出', width: 112, height: 70, color: '#9e2a2b' }
+      }[kind] || { content: '贴纸', width: 112, height: 64, color: '#c9a227' };
+    }
+
+    function getStickerPlacement(surface, anchor, preset) {
+      const bounds = surface?.getBoundingClientRect();
+      if (!bounds) return { x: 18, y: 18 };
+      const anchorBounds = anchor?.getBoundingClientRect();
+      const rawX = anchorBounds ? anchorBounds.left - bounds.left : bounds.width - preset.width - 24;
+      const rawY = anchorBounds ? anchorBounds.top - bounds.top - preset.height - 18 : 24;
+      return {
+        x: Math.round(Math.max(12, Math.min(bounds.width - preset.width - 12, rawX))),
+        y: Math.round(Math.max(12, Math.min(bounds.height - preset.height - 12, rawY)))
+      };
+    }
+
+    function createSticker(targetId, targetType, kind, surface, anchor) {
+      const preset = stickerPreset(kind);
+      const now = Date.now();
+      const placement = getStickerPlacement(surface, anchor, preset);
+      const sticker = {
+        id: `sticker:${now}:${Math.random().toString(16).slice(2)}`,
+        targetId,
+        targetType,
+        kind,
+        content: preset.content,
+        x: placement.x,
+        y: placement.y,
+        width: preset.width,
+        height: preset.height,
+        rotation: Math.round((Math.random() * 8 - 4) * 10) / 10,
+        zIndex: now,
+        color: preset.color,
+        note: '',
+        createdAt: now,
+        updatedAt: now
+      };
+      saveStickers([sticker, ...loadStickers()]);
+      renderStickers();
+      setMessage(`已添加贴纸：${preset.content}`);
+    }
+
+    function updateSticker(id, patch, shouldRender = true) {
+      saveStickers(loadStickers().map((item) => (item.id === id ? { ...item, ...patch, updatedAt: Date.now() } : item)));
+      if (shouldRender) renderStickers();
+    }
+
+    function deleteSticker(id) {
+      saveStickers(loadStickers().filter((item) => item.id !== id));
+      renderStickers();
+      setMessage('已删除贴纸。');
+    }
+
+    function renderSticker(sticker) {
+      return `
+        <div
+          class="sticker-item sticker-item--${escapeHtml(sticker.kind)}"
+          data-sticker-id="${escapeHtml(sticker.id)}"
+          style="left:${Number(sticker.x) || 0}px; top:${Number(sticker.y) || 0}px; width:${Number(sticker.width) || 100}px; height:${Number(sticker.height) || 60}px; z-index:${Number(sticker.zIndex) || 1}; --sticker-color:${escapeHtml(sticker.color || '#c9a227')}; --sticker-rotation:${Number(sticker.rotation) || 0}deg;"
+        >
+          <div class="sticker-item__surface">
+            <button type="button" class="sticker-item__drag" data-sticker-drag title="拖动">移动</button>
+            <textarea data-sticker-content aria-label="贴纸内容">${escapeHtml(sticker.content || '')}</textarea>
+            <div class="sticker-item__tools">
+              <button type="button" data-sticker-rotate title="旋转">旋转</button>
+              <button type="button" data-sticker-delete title="删除">删除</button>
+            </div>
+            <span data-sticker-resize title="缩放"></span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderStickers() {
+      const stickers = loadStickers();
+      document.querySelectorAll('[data-sticker-surface]').forEach((surface) => {
+        const targetId = surface.dataset.stickerTarget;
+        const layer = surface.querySelector('[data-sticker-layer]');
+        if (!targetId || !layer) return;
+        layer.innerHTML = stickers
+          .filter((item) => item.targetId === targetId)
+          .map(renderSticker)
+          .join('');
+      });
+    }
+
+    function collectionCard(collection) {
+      const images = Array.isArray(collection.coverImages) && collection.coverImages.length
+        ? collection.coverImages
+        : (Array.isArray(collection.images) ? collection.images.map((item) => item.image) : []);
+      const palette = collection.palette?.colors || [];
+      const boardHidden = ['pinterest', 'pixiv'].includes(collection.source) ? '' : 'hidden';
+      return `
+        <article
+          class="visual-collection-card"
+          id="${escapeHtml(collection.id)}"
+          data-visual-collection="${escapeHtml(collection.id)}"
+          data-sticker-surface
+          data-sticker-target="visual:${escapeHtml(collection.id)}"
+          data-sticker-target-type="visual"
+          style="--visual-accent:${escapeHtml(collection.palette?.dominant || '#6b2d5c')}"
+        >
+          <button type="button" class="visual-collection-card__trigger" data-visual-board-toggle="${escapeHtml(collection.id)}">
+            <span class="visual-collection-card__stack" aria-hidden="true">
+              ${images.slice(0, 4).map((image, index) => `<img src="${escapeHtml(image)}" alt="" loading="lazy" style="--stack-index:${index}" />`).join('')}
+            </span>
+            <span class="visual-collection-card__body">
+              <small>${escapeHtml(collection.sourceLabel || 'VISUAL COLLECTION')}</small>
+              <strong>${escapeHtml(collection.title)}</strong>
+              <span>${escapeHtml(collection.summary)}</span>
+              <span class="visual-meta-line">${escapeHtml(collection.mood)} · ${collection.images?.length || 0} IMAGES</span>
+              <span class="visual-feed-card__palette" aria-label="调色板">
+                ${palette.slice(0, 5).map((color) => `<i style="background:${escapeHtml(color)}"></i>`).join('')}
+              </span>
+            </span>
+          </button>
+          <div class="sticker-layer" data-sticker-layer></div>
+          <section class="visual-board" data-visual-board="${escapeHtml(collection.id)}" ${boardHidden}>
+            <header>
+              <p class="section-kicker">Board</p>
+              <h2>${escapeHtml(collection.title)}</h2>
+              <p>${escapeHtml(collection.curationNote)}</p>
+            </header>
+            <div class="visual-board__grid">
+              ${(collection.images || []).map((item) => `
+                <article class="visual-board-item" id="${escapeHtml(item.id)}">
+                  <img src="${escapeHtml(item.image)}" alt="" loading="lazy" />
+                  <div>
+                    <small>${escapeHtml(item.type)}</small>
+                    <strong>${escapeHtml(item.title)}</strong>
+                    <p>${escapeHtml(item.note)}</p>
+                    <span class="visual-meta-line">${escapeHtml((item.tags || []).join(' · '))}</span>
+                    ${pinterestActions(item)}
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+            <div class="visual-library-card__actions">
+              <button type="button" data-sticker-add="note">便签</button>
+              <button type="button" data-sticker-add="tape">胶带</button>
+              <button type="button" data-sticker-add="task">任务</button>
+              <button type="button" data-sticker-add="marker">标记</button>
+            </div>
+          </section>
+        </article>
+      `;
+    }
+
+    async function loadRuntimeVisualSnapshot() {
+      try {
+        const response = await fetch('/api/runtime/visuals/snapshot', { headers: { Accept: 'application/json' } });
+        const snapshot = await response.json();
+        if (!response.ok || !snapshot?.ok || !Array.isArray(snapshot.collections) || !snapshot.collections.length) return;
+        collections = snapshot.collections;
+        const grid = document.querySelector('[data-visual-collections-grid]');
+        if (!grid) return;
+        grid.innerHTML = collections.map(collectionCard).join('');
+        setMessage(`Runtime mirror 当前共有 ${collections.length} 个 collection。`);
+        renderStickers();
+        loadPinterestWidgets();
+      } catch {
+        // Static manifest remains the fallback when runtime API is unavailable.
+      }
+    }
+
+    document.querySelector('[data-visual-export-manifest]')?.addEventListener('click', async () => {
+      const text = JSON.stringify(collections, null, 2);
+      try {
+        await navigator.clipboard?.writeText(text);
+        setMessage('已复制 VisualCollection manifest。');
+      } catch {
+        window.prompt('复制 VisualCollection manifest', text);
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      const toggle = event.target instanceof Element ? event.target.closest('[data-visual-board-toggle]') : null;
+      const stickerAdd = event.target instanceof Element ? event.target.closest('[data-sticker-add]') : null;
+      const stickerRotate = event.target instanceof Element ? event.target.closest('[data-sticker-rotate]') : null;
+      const stickerDelete = event.target instanceof Element ? event.target.closest('[data-sticker-delete]') : null;
+      const stickerItem = event.target instanceof Element ? event.target.closest('[data-sticker-id]') : null;
+      if (toggle?.dataset.visualBoardToggle) {
+        const board = document.querySelector(`[data-visual-board="${CSS.escape(toggle.dataset.visualBoardToggle)}"]`);
+        if (board) {
+          const nextHidden = !board.hidden;
+          document.querySelectorAll('[data-visual-board]').forEach((item) => {
+            item.hidden = true;
+          });
+          board.hidden = nextHidden;
+          if (!nextHidden) board.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        return;
+      }
+      if (stickerAdd) {
+        const surface = stickerAdd.closest('[data-sticker-surface]');
+        if (surface?.dataset.stickerTarget) {
+          createSticker(surface.dataset.stickerTarget, surface.dataset.stickerTargetType || 'visual', stickerAdd.dataset.stickerAdd || 'note', surface, stickerAdd);
+        }
+        return;
+      }
+      if (stickerRotate && stickerItem?.dataset.stickerId) {
+        const current = loadStickers().find((item) => item.id === stickerItem.dataset.stickerId);
+        updateSticker(stickerItem.dataset.stickerId, { rotation: ((current?.rotation || 0) + 12) % 360 });
+        return;
+      }
+      if (stickerDelete && stickerItem?.dataset.stickerId && confirm('删除这个贴纸？')) {
+        deleteSticker(stickerItem.dataset.stickerId);
+      }
+    });
+
+    document.addEventListener('input', (event) => {
+      const textarea = event.target instanceof Element ? event.target.closest('[data-sticker-content]') : null;
+      const sticker = textarea?.closest('[data-sticker-id]');
+      if (!textarea || !sticker?.dataset.stickerId) return;
+      updateSticker(sticker.dataset.stickerId, { content: textarea.value }, false);
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      const dragHandle = event.target instanceof Element ? event.target.closest('[data-sticker-drag]') : null;
+      const resizeHandle = event.target instanceof Element ? event.target.closest('[data-sticker-resize]') : null;
+      const item = (dragHandle || resizeHandle)?.closest('[data-sticker-id]');
+      const surface = item?.closest('[data-sticker-surface]');
+      if (!item || !surface || !item.dataset.stickerId) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const startX = event.clientX;
+      const startY = event.clientY;
+      const startLeft = parseFloat(item.style.left || '0');
+      const startTop = parseFloat(item.style.top || '0');
+      const startWidth = parseFloat(item.style.width || '100');
+      const startHeight = parseFloat(item.style.height || '60');
+      const bounds = surface.getBoundingClientRect();
+
+      const onMove = (moveEvent) => {
+        moveEvent.preventDefault();
+        const dx = moveEvent.clientX - startX;
+        const dy = moveEvent.clientY - startY;
+        if (resizeHandle) {
+          item.style.width = `${Math.max(46, Math.min(bounds.width - startLeft - 6, startWidth + dx))}px`;
+          item.style.height = `${Math.max(30, Math.min(bounds.height - startTop - 6, startHeight + dy))}px`;
+          return;
+        }
+        item.style.left = `${Math.max(0, Math.min(bounds.width - startWidth, startLeft + dx))}px`;
+        item.style.top = `${Math.max(0, Math.min(bounds.height - startHeight, startTop + dy))}px`;
+      };
+
+      const onUp = () => {
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+        updateSticker(item.dataset.stickerId, {
+          x: Math.round(parseFloat(item.style.left || '0')),
+          y: Math.round(parseFloat(item.style.top || '0')),
+          width: Math.round(parseFloat(item.style.width || '100')),
+          height: Math.round(parseFloat(item.style.height || '60')),
+          zIndex: Date.now()
+        });
+      };
+
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp, { once: true });
+    });
+
+    renderStickers();
+    loadPinterestWidgets();
+    loadRuntimeVisualSnapshot();
+  </script>
+</BaseLayout>

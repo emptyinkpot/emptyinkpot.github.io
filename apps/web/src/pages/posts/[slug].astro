@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  formatRuntimeDate,
+  getRuntimeArticleDetail,
+  getRuntimeArticleCard,
+  getRuntimeArticles,
+  getRuntimeHeadings,
+  getRuntimeArticleReadingMinutes
+} from '../../lib/runtimeContent';
+import { absoluteUrl, withBase } from '../../lib/site';
+
+export function getStaticPaths() {
+  return getRuntimeArticles().map((article) => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
+}
+
+const { article: articleMeta } = Astro.props;
+const article = getRuntimeArticleDetail(articleMeta);
+const headings = article.toc ?? getRuntimeHeadings(article.body);
+const html = article.html ?? '';
+const canonical = absoluteUrl(`/posts/${article.slug}/`, Astro.site);
+const card = getRuntimeArticleCard(article);
+const sourceHref = article.openlistUrl || article.openlistPath || article.source;
+const sourceLabel = article.openlistPath || article.openlistUrl || article.source;
+const detailPath = article.detailPath || `articles/${article.id}.json`;
+const metadata = [
+  formatRuntimeDate(article.date),
+  `${getRuntimeArticleReadingMinutes(article)} min read`,
+  ...card.chips
+];
+---
+
+<BaseLayout title={`${article.title} / emptyinkpot`} description={article.description} canonical={canonical}>
+  <main class="space-y-8 pb-10 pt-8 md:space-y-12 md:pt-14" data-pagefind-body>
+    <section class="glass-card rounded-[2.25rem] p-6 md:p-8">
+      <a class="section-kicker mb-4 inline-flex transition hover:text-stone-950" href={withBase('/posts/')}>
+        {card.eyebrow}
+      </a>
+      <h1 class="max-w-4xl text-3xl font-semibold leading-tight text-stone-950 md:text-5xl">
+        {article.title}
+      </h1>
+
+      <div class="mt-6 flex flex-wrap items-center gap-x-2 gap-y-2 text-xs font-semibold uppercase tracking-[0.18em] text-stone-500/80">
+        {metadata.map((item, index) => (
+          <>
+            {index > 0 && <span aria-hidden="true">/</span>}
+            <span>{item}</span>
+          </>
+        ))}
+      </div>
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
+      <article
+        class="prose-shell order-2 rounded-[2rem] lg:order-1"
+        data-runtime-article
+        data-runtime-slug={article.slug}
+        data-runtime-detail-path={detailPath}
+        set:html={html}
+      />
+
+      <aside class="order-1 lg:order-2">
+        <div class="toc-card sticky top-6 rounded-[2rem] p-5">
+          <p class="section-kicker mb-4">Source</p>
+          <a class="break-words text-sm leading-7 text-stone-500 transition hover:text-stone-950" href={sourceHref} target="_blank" rel="noreferrer">
+            {sourceLabel}
+          </a>
+          <div class="mt-5 border-t border-stone-200 pt-5">
+            <p class="section-kicker mb-4">On This Page</p>
+            {
+              headings.length ? (
+                <ul class="space-y-3 text-sm text-stone-600">
+                  {headings.map((heading) => (
+                    <li class:list={[heading.depth > 2 && 'pl-4']}>
+                      <a href={`#${heading.slug}`}>{heading.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="text-sm leading-7 text-stone-500">这篇文章当前没有可展示的目录。</p>
+              )
+            }
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <script>
+    const articleRoot = document.querySelector('[data-runtime-article]');
+    const detailPath = articleRoot?.getAttribute('data-runtime-detail-path');
+
+    async function refreshRuntimeArticle() {
+      if (!articleRoot || !detailPath) return;
+      const response = await fetch(`/runtime/${detailPath}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) return;
+      const detail = await response.json();
+      const article = detail?.article;
+      if (!article?.html) return;
+      articleRoot.innerHTML = article.html;
+    }
+
+    refreshRuntimeArticle().catch(() => {});
+
+    if ('EventSource' in window) {
+      const events = new EventSource('/runtime/events');
+      events.addEventListener('content-index', () => {
+        refreshRuntimeArticle().catch(() => {});
+      });
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') refreshRuntimeArticle().catch(() => {});
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,155 @@
+{
+  "id": "evidence-library-system",
+  "version": "1.0.0",
+  "title": "Evidence Library / 史料素材库体系",
+  "status": "implementation_in_progress",
+  "updatedAt": "2026-05-04",
+  "goal": "Build a MyBlog section and data layer for evidence-first historical video generation.",
+  "principle": "text -> evidence -> visual",
+  "publicRoute": "/evidence-library/",
+  "sourceRoot": "public-data/evidence-library",
+  "actors": {
+    "myblog": {
+      "role": "metadata, annotation, public showcase, admin workflow, manifest export",
+      "publicApp": "apps/web",
+      "adminApp": "apps/admin-next",
+      "dataRoot": "public-data/evidence-library"
+    },
+    "openlist": {
+      "role": "large-file storage and cloud-drive mount layer",
+      "baseUrl": "http://127.0.0.1:5244",
+      "publicEmbedRoute": "https://blog.tengokukk.com/openlist/",
+      "activeMounts": ["/夸克网盘"],
+      "apis": {
+        "list": "POST /api/fs/list",
+        "get": "POST /api/fs/get"
+      },
+      "semanticPolicy": "OpenList does not own evidence semantics. It only owns file access."
+    },
+    "remotion": {
+      "role": "video rendering and evidence-aware visual selection",
+      "manifestInput": "asset-source/evidence-manifest.json"
+    }
+  },
+  "hardRules": {
+    "evidenceFirst": true,
+    "noFakeDocument": true,
+    "noFakePortrait": true,
+    "noFakeHistoricalPhoto": true,
+    "fallbackMustBeMarked": true,
+    "openlistIsStorageOnly": true
+  },
+  "dataModel": {
+    "asset": {
+      "required": [
+        "id",
+        "title",
+        "assetType",
+        "openlistPath",
+        "license",
+        "entities",
+        "visualKinds",
+        "bestFor",
+        "avoidFor",
+        "visibility"
+      ],
+      "assetTypes": ["document", "image", "video", "audio", "map", "newspaper"],
+      "licenseValues": ["public_domain", "cc", "fair_use", "private_research", "unknown"],
+      "visibilityValues": ["private", "listed", "public"]
+    },
+    "clip": {
+      "required": [
+        "id",
+        "assetId",
+        "startMs",
+        "endMs",
+        "title",
+        "visualKinds",
+        "bestFor",
+        "loopable"
+      ]
+    }
+  },
+  "workflow": [
+    {
+      "id": "scan-openlist",
+      "title": "Scan OpenList directories",
+      "input": "OpenList mounted folders",
+      "output": "unlabeled asset candidates"
+    },
+    {
+      "id": "annotate-assets",
+      "title": "Annotate evidence assets",
+      "input": "asset candidates",
+      "output": "EvidenceAsset records"
+    },
+    {
+      "id": "annotate-clips",
+      "title": "Split and annotate video clips",
+      "input": "video assets",
+      "output": "EvidenceClip records"
+    },
+    {
+      "id": "export-remotion-manifest",
+      "title": "Export Remotion manifest",
+      "input": "EvidenceAsset and EvidenceClip records",
+      "output": "asset-source/evidence-manifest.json"
+    }
+  ],
+  "phases": [
+    {
+      "id": "phase-1-public-plan",
+      "status": "in_progress",
+      "deliverables": [
+        "README.md",
+        "public-data/evidence-library/evidence-library-plan.json",
+        "apps/web/src/pages/evidence-library/index.astro"
+      ]
+    },
+    {
+      "id": "phase-2-local-index",
+      "status": "in_progress",
+      "deliverables": ["OpenList scanner", "unlabeled asset queue"]
+    },
+    {
+      "id": "phase-3-clip-labeling",
+      "status": "planned",
+      "deliverables": ["clip annotation UI", "clip manifest"]
+    },
+    {
+      "id": "phase-4-remotion-integration",
+      "status": "in_progress",
+      "deliverables": ["Remotion evidence manifest export", "resolver integration"]
+    },
+    {
+      "id": "phase-5-public-showcase",
+      "status": "planned",
+      "deliverables": ["public evidence pages", "case-study pages"]
+    }
+  ],
+  "recommendedDirectories": {
+    "publicData": "public-data/evidence-library",
+    "schemas": "public-data/evidence-library/schemas",
+    "manifests": "public-data/evidence-library/manifests",
+    "exports": "public-data/evidence-library/exports",
+    "webPages": "apps/web/src/pages/evidence-library",
+    "adminPages": "apps/admin-next/app/admin/evidence-library"
+  },
+  "sampleAsset": {
+    "id": "south-manchuria-railway-map-001",
+    "title": "南满铁路历史地图",
+    "assetType": "map",
+    "openlistPath": "/夸克网盘/history/maps/south-manchuria-railway.jpg",
+    "license": "unknown",
+    "era": "1900s",
+    "entities": ["南满铁路", "旅顺", "大连", "关东州"],
+    "locations": ["旅顺", "大连", "关东州"],
+    "organizations": ["南满洲铁道株式会社"],
+    "events": [],
+    "visualKinds": ["map", "route"],
+    "bestFor": ["geo_explain", "route_explain", "documentary_context"],
+    "avoidFor": ["person", "explosion", "battle"],
+    "mustNotShow": ["现代城市", "现代车辆"],
+    "visibility": "private"
+  }
+}

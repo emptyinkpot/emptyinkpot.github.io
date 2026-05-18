@@ -1,0 +1,63 @@
+---
+import WorkbenchPageIntro from '../components/shared/WorkbenchPageIntro.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getUpdateLogEntries } from '../lib/updateLog';
+
+const entries = getUpdateLogEntries();
+const latestEntry = entries[0];
+---
+
+<BaseLayout title="更新 / emptyinkpot" description="公开维护日志，集中记录站点的持续整理、迁移与治理动作。">
+  <main class="workbench-page workbench-page--updates" data-pagefind-body>
+    <WorkbenchPageIntro
+      kicker="SECTION / UPDATES"
+      title="公开维护日志"
+      summary="这里同步展示当前维护日志真源中的公开更新。日志写入统一以 `public-data/updates/index.md` 为准。"
+      stats={[
+        { label: 'Latest record', value: latestEntry?.date ?? '暂无' },
+        { label: 'Public entries', value: String(entries.length) }
+      ]}
+    />
+
+    {
+      entries.length ? (
+        <section class="workbench-page__timeline">
+          {entries.map((entry) => (
+            <article class="workbench-page__update-entry home-workbench__card home-workbench__card--panel" id={entry.slug}>
+              <div class="workbench-page__update-head">
+                <p>{entry.date}</p>
+                <h2>{entry.title}</h2>
+              </div>
+
+              <div class="workbench-page__update-grid">
+                {entry.sections.map((section) => (
+                  <section class="workbench-page__update-section">
+                    <h3>{section.heading}</h3>
+                    {
+                      section.items.length ? (
+                        <ul>
+                          {section.items.map((item) => (
+                            <li>
+                              <span></span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p class="workbench-page__update-empty">该分节当前没有可展示的列表项。</p>
+                      )
+                    }
+                  </section>
+                ))}
+              </div>
+            </article>
+          ))}
+        </section>
+      ) : (
+        <section class="workbench-page__empty home-workbench__card home-workbench__card--panel">
+          还没有可同步到当前站点的公开更新记录。
+        </section>
+      )
+    }
+  </main>
+</BaseLayout>

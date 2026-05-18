@@ -1,0 +1,3223 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChartCard from '../components/visualizations/ChartCard.astro';
+import GitHubHeatmap from '../components/visualizations/GitHubHeatmap.astro';
+import GitHubLanguageDonut from '../components/visualizations/GitHubLanguageDonut.astro';
+import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine.astro';
+import GitHubRuntimeSync from '../components/visualizations/GitHubRuntimeSync.astro';
+import MusicCard from '../components/showcase/MusicCard.astro';
+import HomeCommandPalette from '../components/react/HomeCommandPalette';
+import HomeNumberTicker from '../components/react/HomeNumberTicker';
+import BookCover from '../components/books/BookCover';
+import RuntimeBookFeed from '../components/books/RuntimeBookFeed';
+import { formatDate, getExcerptFromBody } from '../lib/content';
+import { buildGitHubAnalytics, getRecentHeatmapWeeks } from '../lib/analytics';
+import type { BookItem } from '../lib/books/types';
+import { musicItems, type MusicItem } from '../data/music';
+import { visualCollections, type VisualCollection, type VisualItem } from '../data/visuals';
+import { getGitHubOverview } from '../lib/github';
+import { profileLinks } from '../lib/profile';
+import { getRelatedKnowledgeEntries, type KnowledgeRelationSource } from '../lib/knowledge/relations';
+import { defaultSealDefinitions, sealDefinitionStorageKey } from '../lib/knowledge/seals';
+import {
+  getRuntimeArticleCard,
+  getRuntimeArticles,
+  getRuntimeCollectionHref,
+  getRuntimeCollections,
+  type KnowledgeCollection,
+  type RuntimeMarkdownObject
+} from '../lib/runtimeContent';
+import { withBase } from '../lib/site';
+
+type DrawerKind = 'collection' | 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'knowledge' | 'bilibili' | 'update';
+
+type DrawerEntry = {
+  id: string;
+  kind: DrawerKind;
+  title: string;
+  kicker: string;
+  date?: string;
+  href: string;
+  summary: string;
+  Content?: Awaited<ReturnType<typeof render>>['Content'];
+  toc?: Array<{ href: string; className: string; text: string }>;
+  runtimeHtml?: string;
+  coverSrc?: string;
+  accent?: string;
+  tags?: string[];
+  series?: string;
+  body?: string;
+  details?: Array<{ label: string; value: string }>;
+  chartVariant?: 'heatmap' | 'line' | 'language';
+  visualItem?: VisualItem;
+  visualCollection?: VisualCollection;
+  knowledgeCollection?: KnowledgeCollection;
+  collectionSessionArticles?: RuntimeMarkdownObject[];
+  runtimeArticle?: RuntimeMarkdownObject;
+  bookItem?: BookItem;
+  readHref?: string;
+};
+
+type FeedItem = {
+  id: string;
+  type: 'collection' | 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'bilibili' | 'update';
+  title: string;
+  summary: string;
+  kicker: string;
+  meta?: string;
+  href?: string;
+  drawerId?: string;
+  githubVariant?: 'repo' | 'heatmap' | 'line' | 'language' | 'team';
+  musicItem?: MusicItem;
+  visualItem?: VisualItem;
+  visualCollection?: VisualCollection;
+  knowledgeCollection?: KnowledgeCollection;
+  coverSrc?: string;
+  tags?: string[];
+  accent?: string;
+  size?: 'compact' | 'standard' | 'tall';
+};
+
+const sealTypes = defaultSealDefinitions;
+
+const runtimeArticles = getRuntimeArticles();
+const runtimeCollections = getRuntimeCollections();
+const runtimeArticleById = new Map(runtimeArticles.map((article) => [article.id, article]));
+const runtimeArticleCards = new Map(runtimeArticles.map((article) => [article.id, getRuntimeArticleCard(article)]));
+const uniqueTagCount = new Set(runtimeArticles.flatMap((article) => runtimeArticleCards.get(article.id)?.chips ?? [])).size;
+const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const projects = [...(await getCollection('projects'))].sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0)
+);
+const github = await getGitHubOverview('emptyinkpot');
+const githubAnalytics = buildGitHubAnalytics(github);
+const recentHeatmapWeeks = getRecentHeatmapWeeks(githubAnalytics, 12);
+
+const drawerSources = [
+  ...notes.map((entry) => ({ entry, kind: 'note' as const })),
+  ...projects.map((entry) => ({ entry, kind: 'project' as const }))
+];
+
+const articleDrawerEntries: DrawerEntry[] = await Promise.all(
+  drawerSources.map(async ({ entry, kind }) => {
+    const rendered = await render(entry as CollectionEntry<'notes'> | CollectionEntry<'projects'>);
+    const basePath = kind === 'note' ? 'notes' : 'projects';
+    const summary =
+      'summary' in entry.data && entry.data.summary
+        ? entry.data.summary
+        : entry.data.description ?? getExcerptFromBody(entry.body, 180);
+    const tags = kind === 'project' ? (entry as CollectionEntry<'projects'>).data.stack : ['note'];
+
+    return {
+      id: `${kind}:${entry.id}`,
+      kind,
+      title: entry.data.title,
+      kicker: kind === 'note' ? '札记' : '项目工坊',
+      date: 'date' in entry.data && entry.data.date ? formatDate(entry.data.date) : undefined,
+      href: withBase(`/${basePath}/${entry.id}/`),
+      summary,
+      tags,
+      body: entry.body,
+      Content: rendered.Content,
+      toc: rendered.headings
+        .filter((heading) => heading.depth <= 3)
+        .map((heading) => ({
+          href: `#${heading.slug}`,
+          className: `depth-${heading.depth}`,
+          text: heading.text
+        }))
+    };
+  })
+);
+
+const noteItems: FeedItem[] = notes.map((note) => ({
+  id: `note-${note.id}`,
+  type: 'note',
+  title: note.data.title,
+  summary: note.data.description ?? getExcerptFromBody(note.body, 120),
+  kicker: '札记',
+  meta: formatDate(note.data.date),
+  href: withBase(`/notes/${note.id}/`),
+  drawerId: `note:${note.id}`,
+  tags: ['note'],
+  size: 'compact'
+}));
+
+const projectItems: FeedItem[] = projects.map((project) => ({
+  id: `project-${project.id}`,
+  type: 'project',
+  title: project.data.title,
+  summary: project.data.description ?? getExcerptFromBody(project.body, 130),
+  kicker: `项目工坊 / ${project.data.status}`,
+  meta: project.data.stack.slice(0, 3).join(' / '),
+  href: withBase(`/projects/${project.id}/`),
+  drawerId: `project:${project.id}`,
+  tags: project.data.stack.slice(0, 3),
+  size: 'standard'
+}));
+
+const postItems: FeedItem[] = runtimeArticles.slice(0, 24).map((article, index) => {
+  const card = runtimeArticleCards.get(article.id) ?? getRuntimeArticleCard(article);
+  return {
+    id: `runtime-post-${article.id}`,
+    type: 'post',
+    title: article.title,
+    summary: card.subtitle || article.description || article.summary || '',
+    kicker: card.eyebrow || article.kind || 'MarkdownObject',
+    meta: article.date ? `${formatDate(new Date(article.date))} / ${article.readingMinutes || 1} min read` : `${article.readingMinutes || 1} min read`,
+    href: withBase(`/posts/${encodeURIComponent(article.slug || article.id || '')}/`),
+    drawerId: `runtime:${article.id}`,
+    tags: card.chips || [],
+    size: index === 0 ? 'standard' : 'compact'
+  };
+});
+
+const githubItems: FeedItem[] = github.repos.slice(0, 6).map((repo, index) => ({
+  id: `github-${repo.name}`,
+  type: 'github',
+  githubVariant: 'repo',
+  title: repo.name,
+  summary: `${repo.language} / ${repo.stars} stars / ${repo.issues} issues`,
+  kicker: 'GitHub',
+  meta: `更新 ${formatDate(new Date(repo.updatedAt))}`,
+  href: repo.htmlUrl,
+  drawerId: `github-repo:${repo.name}`,
+  accent: ['#660874', '#244a5a', '#3b6b50', '#8e53a2'][index % 4],
+  tags: [repo.language],
+  size: 'compact'
+}));
+
+const githubChartItems: FeedItem[] = [
+  {
+    id: 'github-heatmap-mini',
+    type: 'github',
+    githubVariant: 'heatmap',
+    title: 'GitHub 活动热力图',
+    summary: `${githubAnalytics.totalContributions} 次年度活动 / ${githubAnalytics.activeDays} 个活跃日`,
+    kicker: 'GitHub / Heatmap',
+    meta: '最近 12 周',
+    href: withBase('/github/'),
+    drawerId: 'github:heatmap',
+    tags: ['heatmap', 'activity'],
+    size: 'standard'
+  },
+  {
+    id: 'github-line-mini',
+    type: 'github',
+    githubVariant: 'line',
+    title: '月度贡献折线',
+    summary: '打开页面后由 GitHub runtime API 刷新月度活动趋势。',
+    kicker: 'GitHub / Line',
+    meta: 'monthly',
+    href: withBase('/github/'),
+    drawerId: 'github:line',
+    tags: ['line', 'trend'],
+    size: 'compact'
+  },
+  {
+    id: 'github-language-mini',
+    type: 'github',
+    githubVariant: 'language',
+    title: '语言占比',
+    summary: githubAnalytics.topLanguage
+      ? `${githubAnalytics.topLanguage.label} 当前占比 ${githubAnalytics.topLanguage.percent}%`
+      : '语言分布等待快照数据。',
+    kicker: 'GitHub / Donut',
+    meta: 'languages',
+    href: withBase('/github/'),
+    drawerId: 'github:language',
+    tags: ['donut', 'language'],
+    size: 'compact'
+  }
+];
+
+const musicFeedItems: FeedItem[] = musicItems.map((item) => ({
+  id: `music-${item.id}`,
+  type: 'music',
+  title: item.title,
+  summary: item.note,
+  kicker: `音乐 / ${item.platform}`,
+  meta: item.artist,
+  href: withBase('/music/'),
+  drawerId: `music:${item.id}`,
+  musicItem: item,
+  coverSrc: item.cover,
+  tags: item.mood,
+  size: 'compact'
+}));
+
+const bilibiliItems: FeedItem[] = profileLinks.bilibiliConfigured
+  ? [
+      {
+        id: 'bilibili-profile',
+        type: 'bilibili',
+        title: profileLinks.bilibiliLabel,
+        summary: profileLinks.bilibiliDescription,
+        kicker: 'Bilibili',
+        meta: '视频主页',
+        href: profileLinks.bilibili,
+        drawerId: 'bilibili:profile',
+        tags: ['video'],
+        accent: '#fb7299',
+        size: 'compact'
+      }
+    ]
+  : [];
+
+const updateItems: FeedItem[] = [
+  {
+    id: 'update-evidence-library',
+    type: 'update',
+    title: '史料素材库已经成为独立板块',
+    summary: '用于沉淀 OpenList、Remotion、Evidence Resolver 和素材标注的公开说明入口。',
+    kicker: 'Update',
+    meta: 'evidence-library',
+    href: withBase('/evidence-library/'),
+    drawerId: 'update:evidence-library',
+    tags: ['evidence', 'remotion'],
+    size: 'standard'
+  }
+];
+
+const visualFeedItems: FeedItem[] = visualCollections.map((collection, index) => ({
+  id: `visual:${collection.id}`,
+  type: 'visual',
+  title: collection.title,
+  summary: collection.summary,
+  kicker: 'Visual Collection',
+  meta: `${collection.images.length} images / ${collection.sourceLabel}`,
+  href: withBase('/visuals/'),
+  drawerId: `visual:${collection.id}`,
+  coverSrc: collection.coverImages[0] ?? collection.images[0]?.image,
+  tags: collection.tags,
+  accent: collection.palette.dominant,
+  visualCollection: collection,
+  size: index === 0 ? 'tall' : 'standard'
+}));
+
+const homeCollectionLimit = 12;
+const collectionFeedItems: FeedItem[] = runtimeCollections.slice(0, homeCollectionLimit).map((collection, index) => ({
+  id: `knowledge-collection:${collection.id}`,
+  type: 'collection',
+  title: collection.title,
+  summary: collection.description,
+  kicker: collection.card.eyebrow,
+  meta: `${collection.stats.objectCount} objects / ${collection.layout}`,
+  href: withBase(getRuntimeCollectionHref(collection)),
+  drawerId: collection.id,
+  tags: collection.card.chips,
+  accent: ['#6b2d5c', '#244a5a', '#3b6b50', '#8e53a2'][index % 4],
+  knowledgeCollection: collection,
+  size: index === 0 ? 'tall' : 'standard'
+}));
+
+const feedItems = [
+  ...collectionFeedItems.slice(0, 3),
+  ...postItems.slice(0, 8),
+  ...noteItems.slice(0, 4),
+  ...visualFeedItems.slice(0, 4),
+  ...musicFeedItems.slice(0, 3),
+  ...githubChartItems,
+  ...githubItems.slice(0, 4),
+  ...projectItems.slice(0, 3),
+  ...bilibiliItems,
+  ...updateItems
+];
+
+const musicDrawerEntries: DrawerEntry[] = musicItems.map((item) => ({
+  id: `music:${item.id}`,
+  kind: 'music',
+  title: item.title,
+  kicker: `音乐 / ${item.platform}`,
+  href: withBase('/music/'),
+  summary: item.note,
+  coverSrc: item.cover,
+  tags: item.mood,
+  details: [
+    { label: 'Artist', value: item.artist },
+    ...(item.album ? [{ label: 'Album', value: item.album }] : []),
+    { label: 'Platform', value: item.platform }
+  ]
+}));
+
+const githubDrawerEntries: DrawerEntry[] = [
+  {
+    id: 'github:heatmap',
+    kind: 'github',
+    title: 'GitHub 活动热力图',
+    kicker: 'GitHub / Heatmap',
+    href: withBase('/github/'),
+    summary: `${githubAnalytics.totalContributions} 次年度活动，最近 12 周作为首页 mini 图表展示，完整年度热力图在 GitHub 仪表盘里展开。`,
+    chartVariant: 'heatmap',
+    tags: ['heatmap', 'activity'],
+    details: [
+      { label: '年度活动', value: String(githubAnalytics.totalContributions) },
+      { label: '活跃日', value: String(githubAnalytics.activeDays) }
+    ]
+  },
+  {
+    id: 'github:line',
+    kind: 'github',
+    title: '月度贡献折线',
+    kicker: 'GitHub / Line',
+    href: withBase('/github/'),
+    summary: '由 GitHub runtime API 聚合月度贡献趋势。首页保留摘要，完整图表进入 /github/。',
+    chartVariant: 'line',
+    tags: ['line', 'trend']
+  },
+  {
+    id: 'github:language',
+    kind: 'github',
+    title: '语言占比',
+    kicker: 'GitHub / Donut',
+    href: withBase('/github/'),
+    summary: githubAnalytics.topLanguage
+      ? `${githubAnalytics.topLanguage.label} 当前占比 ${githubAnalytics.topLanguage.percent}%，完整语言分布在 /github/。`
+      : '语言分布等待 GitHub snapshot 数据。',
+    chartVariant: 'language',
+    tags: ['donut', 'language']
+  },
+  ...github.repos.slice(0, 6).map((repo) => ({
+    id: `github-repo:${repo.name}`,
+    kind: 'github' as const,
+    title: repo.name,
+    kicker: 'GitHub / Repository',
+    href: repo.htmlUrl,
+    summary: repo.description || `${repo.language} repository`,
+    tags: [repo.language],
+    details: [
+      { label: 'Stars', value: String(repo.stars) },
+      { label: 'Issues', value: String(repo.issues) },
+      { label: 'Updated', value: formatDate(new Date(repo.updatedAt)) }
+    ]
+  }))
+];
+
+const visualDrawerEntries: DrawerEntry[] = visualCollections.map((collection) => ({
+  id: `visual:${collection.id}`,
+  kind: 'visual',
+  title: collection.title,
+  kicker: `视觉集合 / ${collection.sourceLabel}`,
+  href: withBase(`/visuals/#${collection.id}`),
+  summary: collection.summary,
+  coverSrc: collection.coverImages[0] ?? collection.images[0]?.image,
+  accent: collection.palette.dominant,
+  tags: collection.tags,
+  visualCollection: collection,
+  details: [
+    { label: '来源', value: collection.sourceLabel },
+    { label: '数量', value: `${collection.images.length} images` },
+    { label: '主色', value: collection.palette.dominant },
+    { label: '用途', value: '视觉集合 / Board / Graph 节点' }
+  ]
+}));
+
+const collectionDrawerEntries: DrawerEntry[] = runtimeCollections.slice(0, homeCollectionLimit).map((collection) => ({
+  id: collection.id,
+  kind: 'collection',
+  title: collection.title,
+  kicker: collection.card.eyebrow,
+  href: withBase(getRuntimeCollectionHref(collection)),
+  summary: collection.description,
+  accent: collection.basis === 'folder' ? '#6b2d5c' : collection.basis === 'series' ? '#244a5a' : '#3b6b50',
+  tags: collection.card.chips,
+  knowledgeCollection: collection,
+  collectionSessionArticles: collection.objects.map((object) => runtimeArticleById.get(object.id)).filter(Boolean) as RuntimeMarkdownObject[],
+  details: [
+    { label: 'Objects', value: String(collection.stats.objectCount) },
+    { label: 'Layout', value: collection.layout },
+    { label: 'Basis', value: collection.basis },
+    { label: 'Source', value: collection.source?.path || collection.source?.type || 'runtime collection' }
+  ]
+}));
+
+const utilityDrawerEntries: DrawerEntry[] = [
+  {
+    id: 'knowledge:index',
+    kind: 'knowledge',
+    title: 'Knowledge Graph',
+    kicker: 'Knowledge / Index',
+    href: withBase('/knowledge/'),
+    summary: '文章、项目、书架、音乐、GitHub 和本地标记共同进入知识图谱。首页入口默认打开这张摘要索引，完整关系图保留在 Knowledge 页面。',
+    tags: ['graph', 'memory', 'reader'],
+    details: [
+      { label: '知识入口', value: String(runtimeArticles.length + articleDrawerEntries.length + musicDrawerEntries.length + githubDrawerEntries.length + 2 + bilibiliItems.length) },
+      { label: '标签', value: String(uniqueTagCount) },
+      { label: '交互', value: '抽屉预览 / 完整图谱' }
+    ]
+  },
+  ...(profileLinks.bilibiliConfigured
+    ? [
+        {
+          id: 'bilibili:profile',
+          kind: 'bilibili' as const,
+          title: profileLinks.bilibiliLabel,
+          kicker: 'Bilibili',
+          href: profileLinks.bilibili,
+          summary: profileLinks.bilibiliDescription,
+          accent: '#fb7299',
+          tags: ['configured']
+        }
+      ]
+    : []),
+  {
+    id: 'update:evidence-library',
+    kind: 'update',
+    title: '史料素材库已经成为独立板块',
+    kicker: 'Update',
+    href: withBase('/evidence-library/'),
+    summary: '用于沉淀 OpenList、Remotion、Evidence Resolver 和素材标注的公开说明入口。',
+    tags: ['evidence', 'remotion']
+  }
+];
+
+const drawerEntries = [
+  ...collectionDrawerEntries,
+  ...articleDrawerEntries,
+  ...musicDrawerEntries,
+  ...githubDrawerEntries,
+  ...visualDrawerEntries,
+  ...utilityDrawerEntries
+];
+const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
+const relationSources = drawerEntries.map((entry) => ({
+  id: entry.id,
+  kind: entry.kind,
+  title: entry.title,
+  summary: entry.summary,
+  tags: entry.tags ?? [],
+  series: entry.series,
+  href: entry.href,
+  body: entry.body
+})) satisfies KnowledgeRelationSource[];
+const knowledgeDocs = drawerEntries.map((entry) => ({
+  id: entry.id,
+  type: entry.kind,
+  title: entry.title,
+  content: [entry.summary, ...(entry.tags ?? []), ...(entry.details?.map((detail) => `${detail.label} ${detail.value}`) ?? [])].join('\n'),
+  tags: entry.tags ?? [],
+  href: entry.href,
+  drawerId: entry.id
+}));
+
+function getRelatedEntries(entry: DrawerEntry) {
+  const source = relationSources.find((item) => item.id === entry.id);
+  if (!source) return [];
+  return getRelatedKnowledgeEntries(source, relationSources, 3)
+    .map(({ entry: item }) => drawerById.get(item.id))
+    .filter(Boolean) as DrawerEntry[];
+}
+
+function feedCardClass(item: FeedItem) {
+  return ['home-feed-card', `home-feed-card--${item.type}`, `home-feed-card--${item.size ?? 'standard'}`].join(' ');
+}
+
+function hoverPreviewAttrs(item: FeedItem) {
+  return {
+    'data-hover-preview': 'true',
+    'data-hover-type': item.type,
+    'data-hover-id': item.drawerId ?? item.id,
+    'data-hover-title': item.title,
+    'data-hover-summary': item.summary,
+    'data-hover-kicker': item.kicker,
+    'data-hover-meta': item.meta,
+    'data-hover-image': item.coverSrc,
+    'data-hover-accent': item.visualCollection?.palette.dominant ?? item.visualItem?.palette.dominant ?? item.accent,
+    'data-hover-tags': JSON.stringify(item.tags ?? [])
+  };
+}
+
+const latestProject = projects[0];
+const latestRepo = github.repos[0];
+const latestMusic = musicItems[0];
+const latestRuntimeArticle = runtimeArticles[0];
+const staticNodeCount = knowledgeDocs.length;
+const staticActivityItems = [
+  latestProject && `项目工坊：${latestProject.data.title} / ${latestProject.data.progress}%`,
+  latestRepo && `GitHub：${latestRepo.name} 更新于 ${formatDate(new Date(latestRepo.updatedAt))}`,
+  '书架：OpenList runtime canonical',
+  latestMusic && `音乐：${latestMusic.title}`
+].filter(Boolean) as string[];
+const activityItems = [
+  latestRuntimeArticle && `最新文章：${latestRuntimeArticle.title}`,
+  ...staticActivityItems,
+  `Knowledge：${knowledgeDocs.length + runtimeArticles.length} 个入口 / ${uniqueTagCount} 个标签`
+].filter(Boolean) as string[];
+const homeCommands = [
+  { id: 'search', label: '搜索当前 Feed', description: 'Runtime articles、项目、书架、音乐、GitHub、本地标记', action: 'search', icon: 'search' },
+  { id: 'collections', label: '知识集合', description: `${runtimeCollections.length} 个 Runtime Collection`, href: withBase('/collections/'), icon: 'knowledge' },
+  { id: 'posts', label: '文章', description: `${runtimeArticles.length} 篇 Runtime MarkdownObject`, href: withBase('/posts/'), icon: 'posts' },
+  { id: 'projects', label: '项目工坊', description: latestProject ? `${latestProject.data.title} / ${latestProject.data.progress}%` : '项目空间', href: withBase('/projects/'), icon: 'projects' },
+  { id: 'project-workbench', label: '项目工作台', description: 'GitHub Workbench / Wiki / Timeline', href: withBase('/projects/site-v2/'), icon: 'projects' },
+  { id: 'github', label: 'GitHub', description: `${github.profile.publicRepos} 个公开仓库`, href: withBase('/github/'), icon: 'github' },
+  { id: 'books', label: '书架', description: 'OpenList 实时书库', href: withBase('/books/'), icon: 'books' },
+  { id: 'music', label: '音乐', description: `${musicItems.length} 条音乐记录`, href: withBase('/music/'), icon: 'music' },
+  { id: 'visuals', label: '视觉素材', description: `${visualCollections.length} 个视觉 collection`, href: withBase('/visuals/'), icon: 'visuals' },
+  { id: 'immich', label: 'Immich 媒体库', description: 'AI 照片 / 视频管理与语义搜索', href: 'https://photos.blog.tengokukk.com/', icon: 'external' },
+  { id: 'knowledge', label: 'Knowledge Graph', description: `${knowledgeDocs.length} 个知识入口`, href: withBase('/knowledge/'), icon: 'knowledge' },
+  { id: 'openlist', label: 'OpenList', description: '嵌入查看当前文件源', action: 'openlist', icon: 'external' },
+  { id: 'pinterest', label: 'Pinterest', description: '站内嵌入视觉收藏流', action: 'pinterest', icon: 'visuals' },
+  { id: 'settings', label: '设置', description: '阅读排版、Graph、视觉偏好', href: withBase('/settings/'), icon: 'settings' }
+];
+---
+
+<BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
+  <div class="home-feed-shell" data-github-live-root data-github-username="emptyinkpot">
+    <aside class="home-feed-rail" aria-label="系统导航与上下文状态" data-home-sidebar>
+      <button class="home-sidebar-collapse" type="button" data-sidebar-collapse aria-label="折叠右侧栏" aria-expanded="true">
+        <span data-sidebar-collapse-icon>›</span>
+      </button>
+
+      <section class="home-feed-profile home-sidebar-section">
+        <a class="home-feed-brand" href={withBase('/')}>
+          <img src={withBase('/images/branding/vita-atramenti-logo.png')} alt="emptyinkpot" data-image-key="home.brand.logo" />
+          <span data-sidebar-label data-copy-key="home.brand.name">emptyinkpot</span>
+        </a>
+        <img class="home-feed-avatar" src={github.profile.avatarUrl} alt={github.profile.name} data-image-key="home.profile.avatar" data-github-profile="avatar" />
+        <h1 data-sidebar-label data-github-profile="name">{github.profile.name}</h1>
+        <p data-sidebar-label data-copy-key="home.profile.tagline">Content OS · Knowledge System</p>
+        <small class="github-live-status" data-sidebar-label data-github-live-status data-github-live-state="loading">GitHub 快照待同步</small>
+      </section>
+
+      <nav class="home-feed-rail-card home-sidebar-section home-sidebar-nav" aria-label="站点导航">
+        <span data-sidebar-label data-copy-key="home.sidebar.nav">Navigation</span>
+        <a class="home-sidebar-item" href={withBase('/projects/')} aria-label="项目工坊"><b>项</b><span data-sidebar-label>项目工坊</span></a>
+        <a class="home-sidebar-item" href={withBase('/knowledge/')} aria-label="知识图谱"><b>知</b><span data-sidebar-label>知识图谱</span></a>
+        <a class="home-sidebar-item" href={withBase('/books/')} aria-label="书架"><b>书</b><span data-sidebar-label>书架</span></a>
+        <a class="home-sidebar-item" href={withBase('/codex/')} aria-label="设计圣典"><b>典</b><span data-sidebar-label>设计圣典</span></a>
+        <a class="home-sidebar-item" href={withBase('/visuals/')} aria-label="视觉素材"><b>视</b><span data-sidebar-label>视觉素材</span></a>
+        <a class="home-sidebar-item" href={withBase('/github/')} aria-label="GitHub"><b>G</b><span data-sidebar-label>GitHub</span></a>
+        <a class="home-sidebar-item" href={withBase('/settings/')} aria-label="设置"><b>设</b><span data-sidebar-label>设置</span></a>
+      </nav>
+
+      <section class="home-feed-rail-card home-feed-memory home-sidebar-section">
+        <span data-sidebar-label data-copy-key="home.memory.kicker">Recent</span>
+        <strong data-sidebar-label data-copy-key="home.memory.title">最近</strong>
+        <ul data-sidebar-history>
+          <li data-copy-key="home.memory.empty">暂无记录</li>
+        </ul>
+      </section>
+
+      <section class="home-feed-rail-card home-feed-stats home-sidebar-section">
+        <span data-sidebar-label data-copy-key="home.stats.kicker">Status</span>
+        <strong data-sidebar-label data-copy-key="home.stats.title">状态</strong>
+        <div class="home-feed-stat-grid">
+          <div><small data-copy-key="home.stats.highlights">高亮</small><b data-sidebar-stat="highlights">0</b></div>
+          <div><small data-copy-key="home.stats.annotations">批注</small><b data-sidebar-stat="annotations">0</b></div>
+          <div><small data-copy-key="home.stats.bookmarks">收藏</small><b data-sidebar-stat="bookmarks">0</b></div>
+          <div><small data-copy-key="home.stats.history">阅读</small><b data-sidebar-stat="history">0</b></div>
+        </div>
+        <ul data-sidebar-bookmarks>
+          <li data-copy-key="home.stats.emptyBookmarks">暂无收藏</li>
+        </ul>
+      </section>
+    </aside>
+
+    <main class="home-feed-main" data-pagefind-body>
+      <section class="home-hero-banner" data-hero-banner aria-label="emptyinkpot hero banner">
+        <div class="home-hero-banner__layer home-hero-banner__layer--bg" data-hero-layer="bg"></div>
+        <div class="home-hero-banner__layer home-hero-banner__layer--mid" data-hero-layer="mid"></div>
+        <div class="home-hero-banner__layer home-hero-banner__layer--front" data-hero-layer="front"></div>
+        <div class="home-hero-banner__overlay"></div>
+        <div class="home-hero-banner__content">
+          <span data-hero-season-label data-hero-kicker data-copy-key="home.banner.kicker">Seasonal Field</span>
+          <h1 data-hero-title data-copy-key="home.banner.title">EMPTYINKPOT</h1>
+          <p data-hero-subtitle data-copy-key="home.banner.subtitle">Content OS · Tangible Knowledge UI</p>
+          <div class="home-hero-banner__metrics" aria-label="站点动态指标">
+            <div>
+              <span class="home-number-ticker" data-runtime-article-count>{runtimeArticles.length.toLocaleString('zh-CN')}</span>
+              <small>Articles</small>
+            </div>
+            <div>
+              <span data-github-metric="publicRepos"><HomeNumberTicker client:visible value={github.profile.publicRepos} /></span>
+              <small>Repos</small>
+            </div>
+            <div>
+              <HomeNumberTicker client:visible value={projects.length} />
+              <small>Projects</small>
+            </div>
+            <div>
+              <span class="home-number-ticker" data-runtime-node-count data-static-node-count={staticNodeCount}>{(staticNodeCount + runtimeArticles.length).toLocaleString('zh-CN')}</span>
+              <small>Nodes</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-activity-marquee" aria-label="站点活动流" data-home-activity-marquee>
+        <div>
+          {[...activityItems, ...activityItems].map((item) => (
+            <span>{item}</span>
+          ))}
+        </div>
+      </section>
+
+      <div class="home-feed-toolbar" aria-label="首页内容筛选">
+        <div>
+          <span data-copy-key="home.feed.kicker">Runtime Surface</span>
+          <strong data-copy-key="home.feed.title">混合对象流</strong>
+        </div>
+        <nav class="home-feed-tabs" aria-label="首页唯一导航">
+          <HomeCommandPalette client:idle commands={homeCommands} />
+          <button type="button" class="home-feed-tab is-active" data-feed-filter="all">全部</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="collection">集合</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="post" data-copy-key="home.feed.post">文章</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="note" data-copy-key="home.feed.note">笔记</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="project" data-copy-key="home.feed.project">项目工坊</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="book" data-copy-key="home.feed.book">书架</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="music" data-copy-key="home.feed.music">音乐</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="github" data-copy-key="home.feed.github">GitHub</button>
+          <button type="button" class="home-feed-tab" data-feed-filter="visual">视觉素材</button>
+          {profileLinks.bilibiliConfigured && <button type="button" class="home-feed-tab" data-feed-filter="bilibili" data-copy-key="home.feed.bilibili">Bilibili</button>}
+          <button type="button" class="home-feed-tab" data-feed-filter="update" data-copy-key="home.feed.evidence">史料素材库</button>
+          <a class="home-feed-tab" href={withBase('/posts/')}>文章索引</a>
+          <a class="home-feed-tab" href={withBase('/books/')}>书架</a>
+          <a class="home-feed-tab" href={withBase('/github/')}>GitHub</a>
+          <a class="home-feed-tab" href={withBase('/visuals/')}>视觉素材</a>
+          <button type="button" class="home-feed-tab home-feed-tab--openlist" data-openlist-embed-open>OpenList</button>
+          <button type="button" class="home-feed-tab home-feed-tab--pinterest" data-pinterest-embed-open>Pinterest</button>
+        </nav>
+      </div>
+
+      <section class="home-feed-grid" aria-label="内容流" data-home-feed-grid>
+        <RuntimeBookFeed targetId="home-feed" client:load />
+        {feedItems.map((item) =>
+          item.type === 'github' && item.githubVariant === 'heatmap' ? (
+            <button
+              type="button"
+              class={feedCardClass(item)}
+              data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? 'true' : undefined}
+              data-feed-kind={item.type}
+              data-github-repo-card={item.githubVariant === 'repo' ? item.title : undefined}
+              {...hoverPreviewAttrs(item)}
+              data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+            >
+              <div class="bookmark bookmark--github"><span>GitHub</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"></span>
+              <ChartCard
+                kicker={item.kicker}
+                title={item.title}
+                summary={item.summary}
+                metric={item.meta}
+                compact
+              >
+                <GitHubHeatmap weeks={recentHeatmapWeeks} compact />
+              </ChartCard>
+            </button>
+          ) : item.type === 'github' && item.githubVariant === 'line' ? (
+            <button
+              type="button"
+              class={feedCardClass(item)}
+              data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? 'true' : undefined}
+              data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
+              data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+            >
+              <div class="bookmark bookmark--github"><span>Line</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"></span>
+              <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
+                <GitHubMonthlyLine points={githubAnalytics.monthly} compact />
+              </ChartCard>
+            </button>
+          ) : item.type === 'github' && item.githubVariant === 'language' ? (
+            <button
+              type="button"
+              class={feedCardClass(item)}
+              data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? 'true' : undefined}
+              data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
+              data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+            >
+              <div class="bookmark bookmark--github"><span>Donut</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"></span>
+              <ChartCard kicker={item.kicker} title={item.title} summary={item.summary} compact>
+                <GitHubLanguageDonut languages={githubAnalytics.languages} compact />
+              </ChartCard>
+            </button>
+          ) : item.type === 'visual' && item.visualCollection ? (
+            <button
+              type="button"
+              class={`${feedCardClass(item)} visual-feed-card`}
+              data-feed-card
+              data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
+              data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+              style={`--visual-accent:${item.visualCollection.palette.dominant}`}
+            >
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"></span>
+              <div class="visual-feed-card__stack" aria-hidden="true">
+                {(item.visualCollection.coverImages.length ? item.visualCollection.coverImages : item.visualCollection.images.map((image) => image.image))
+                  .slice(0, 4)
+                  .map((image, coverIndex) => (
+                    <img src={image} alt="" loading="lazy" style={`--stack-index:${coverIndex}`} />
+                  ))}
+              </div>
+              <div class="visual-feed-card__overlay">
+                <small>{item.kicker}</small>
+                <h2>{item.title}</h2>
+                <p>{item.summary}</p>
+                <div class="visual-feed-card__palette" aria-label="调色板">
+                  {item.visualCollection.palette.colors.slice(0, 5).map((color) => <i style={`background:${color}`}></i>)}
+                </div>
+                <span class="visual-meta-line">{item.visualCollection.mood} · {item.visualCollection.images.length} IMAGES</span>
+              </div>
+            </button>
+          ) : item.type === 'music' && item.musicItem ? (
+            <button
+              type="button"
+              class={feedCardClass(item)}
+              data-feed-card
+              data-runtime-feed-card={item.type === 'collection' ? item.id : item.id.startsWith('runtime-') ? item.id : undefined}
+              data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
+              data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+            >
+              <div class="bookmark bookmark--music"><span>Music</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"></span>
+              <MusicCard item={item.musicItem} compact inertCard />
+            </button>
+          ) : item.drawerId && drawerById.has(item.drawerId) ? (
+            <button
+              type="button"
+              class={feedCardClass(item)}
+              data-feed-card
+              data-runtime-feed-card={item.type === 'collection' ? item.id : item.id.startsWith('runtime-') ? item.id : undefined}
+              data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
+              data-drawer-id={item.drawerId}
+              data-seal-target={item.drawerId ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+            >
+              <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"></span>
+              {item.coverSrc ? (
+                <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
+                  <img src={item.coverSrc} alt="" loading="lazy" />
+                </div>
+              ) : (
+                <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
+                  {item.type}
+                </div>
+              )}
+          <div class="home-feed-card__body">
+            <div class="home-feed-card__meta">
+              <span>{item.kicker}</span>
+              {item.meta && <small>{item.meta}</small>}
+            </div>
+            <h2>{item.title}</h2>
+            <p>{item.summary}</p>
+            {item.knowledgeCollection?.objects?.length ? (
+              <div class="home-collection-preview">
+                {item.knowledgeCollection.objects.slice(0, 4).map((object) => (
+                  <span>{object.title}</span>
+                ))}
+              </div>
+            ) : null}
+            {item.tags?.length ? (
+              <div class="home-feed-card__tags">
+                {item.tags.map((tag) => <span>{tag}</span>)}
+                  </div>
+                ) : null}
+              </div>
+            </button>
+          ) : (
+            <a
+              class={feedCardClass(item)}
+              data-feed-card
+              data-runtime-feed-card={item.id.startsWith('runtime-') ? item.id : undefined}
+              data-feed-kind={item.type}
+              {...hoverPreviewAttrs(item)}
+              data-seal-target={item.drawerId ?? item.href ?? item.id}
+              data-seal-title={item.title}
+              data-seal-kind={item.type}
+              href={item.href ?? withBase('/')}
+            >
+              <div class={`bookmark bookmark--${item.type}`}><span>{item.type}</span></div>
+              <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+              <span class="card-paperclip" aria-hidden="true"></span>
+              {item.coverSrc ? (
+                <div class:list={['home-feed-card__cover', item.type === 'book' && 'home-feed-card__cover--book']}>
+                  <img src={item.coverSrc} alt="" loading="lazy" />
+                </div>
+              ) : (
+                <div class="home-feed-card__mark" style={item.accent ? `--feed-accent:${item.accent}` : undefined}>
+                  {item.type}
+                </div>
+              )}
+              <div class="home-feed-card__body">
+                <div class="home-feed-card__meta">
+                  <span>{item.kicker}</span>
+                  {item.meta && <small>{item.meta}</small>}
+                </div>
+                <h2>{item.title}</h2>
+                <p>{item.summary}</p>
+                {item.knowledgeCollection?.objects?.length ? (
+                  <div class="home-collection-preview">
+                    {item.knowledgeCollection.objects.slice(0, 4).map((object) => (
+                      <span>{object.title}</span>
+                    ))}
+                  </div>
+                ) : null}
+                {item.tags?.length ? (
+                  <div class="home-feed-card__tags">
+                    {item.tags.map((tag) => <span>{tag}</span>)}
+                  </div>
+                ) : null}
+              </div>
+            </a>
+          )
+        )}
+      </section>
+    </main>
+  </div>
+
+  <div class="home-article-layer" data-article-layer hidden>
+    <button class="home-article-backdrop" type="button" data-article-close aria-label="关闭阅读抽屉"></button>
+    <aside class="home-article-drawer" role="dialog" aria-modal="true" aria-labelledby="home-article-title">
+      <div class="reading-progress" data-reading-progress></div>
+      <header class="home-article-drawer__header">
+        <div>
+          <span data-article-kicker></span>
+          <h2 id="home-article-title" data-article-title></h2>
+        </div>
+        <div class="home-article-drawer__actions">
+          <div class="reader-theme-switch" aria-label="阅读主题">
+            <button type="button" data-reader-theme="light" title="白天" aria-label="白天">☀</button>
+            <button type="button" data-reader-theme="sepia" title="护眼" aria-label="护眼">Aa</button>
+            <button type="button" data-reader-theme="dark" title="夜间" aria-label="夜间">☾</button>
+          </div>
+          <button type="button" data-reader-bookmark>收藏</button>
+          <button type="button" data-reader-seal>盖章</button>
+          <a href={withBase('/knowledge/')} data-reader-graph>知识图谱</a>
+          <a href={withBase('/posts/')} data-article-full>完整页面</a>
+          <a href={withBase('/books/')} data-article-read hidden>开始阅读</a>
+          <a href={withBase('/books/')} data-article-shelf hidden>完整书架</a>
+          <button type="button" data-article-close>关闭</button>
+        </div>
+      </header>
+      <div class="home-article-drawer__body" data-article-body></div>
+    </aside>
+  </div>
+
+  <div class="knowledge-search-layer" data-search-layer hidden>
+    <button class="knowledge-search-backdrop" type="button" data-search-close aria-label="关闭搜索"></button>
+    <section class="knowledge-search-panel" role="dialog" aria-modal="true" aria-label="Knowledge search">
+      <div class="knowledge-search-input-row">
+        <input type="search" name="knowledge-search" data-search-input placeholder="搜索文章、项目、书架、音乐、GitHub、标记..." aria-label="Knowledge search" />
+        <kbd>Esc</kbd>
+      </div>
+      <nav class="knowledge-search-tabs" aria-label="搜索类型">
+        {['all', 'post', 'note', 'project', 'book', 'music', 'github', 'visual', 'highlight', 'annotation', 'seal', 'sticker'].map((kind) => (
+          <button type="button" class={kind === 'all' ? 'is-active' : ''} data-search-kind={kind}>{kind}</button>
+        ))}
+      </nav>
+      <div class="knowledge-search-results" data-search-results>
+        <p class="knowledge-search-empty">输入关键词，或按 Cmd/Ctrl + K 随时打开搜索。</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="selection-toolbar" data-selection-toolbar hidden>
+    <button type="button" data-highlight-color="gold">金</button>
+    <button type="button" data-highlight-color="purple">紫</button>
+    <button type="button" data-highlight-color="green">绿</button>
+    <button type="button" data-open-annotation>批注</button>
+    <button type="button" data-copy-selection>复制</button>
+  </div>
+
+  <div class="seal-palette" data-seal-palette hidden>
+    <div class="seal-palette__panel" role="dialog" aria-modal="false" aria-label="选择印章">
+      <header>
+        <span>Seal</span>
+        <strong data-seal-target-title>选择判断</strong>
+        <button type="button" data-seal-close>关闭</button>
+      </header>
+      <div class="seal-palette__grid">
+        {sealTypes.map((seal) => (
+          <button
+            type="button"
+            class={`seal-palette__option knowledge-seal knowledge-seal--${seal.shape} knowledge-seal--${seal.texture}`}
+            style={`--seal-color:${seal.color}`}
+            data-seal-type={seal.id}
+            data-seal-label={seal.label}
+            data-seal-sublabel={seal.subLabel}
+            data-seal-color={seal.color}
+            data-seal-shape={seal.shape}
+            data-seal-texture={seal.texture}
+            title={seal.summary}
+          >
+            <span class="knowledge-seal__inner">
+              <strong>{seal.label}</strong>
+              <em>{seal.subLabel}</em>
+            </span>
+          </button>
+        ))}
+      </div>
+      <button type="button" class="seal-palette__remove" data-seal-remove>移除当前印章</button>
+    </div>
+  </div>
+
+  <script type="application/json" id="seal-definition-data" set:html={JSON.stringify({ key: sealDefinitionStorageKey, definitions: sealTypes })} />
+  <script type="application/json" id="visual-knowledge-data" set:html={JSON.stringify(visualCollections)} />
+  <script type="application/json" id="knowledge-search-data" set:html={JSON.stringify(knowledgeDocs)} />
+  <script
+    type="application/json"
+    id="home-runtime-static-data"
+    set:html={JSON.stringify({ staticActivityItems, staticNodeCount })}
+  />
+
+  <div class="home-article-templates" hidden data-article-templates>
+    {drawerEntries.map((entry) => {
+      const Content = entry.Content;
+      const related = getRelatedEntries(entry);
+      const hasArticleContent = Boolean(Content || entry.runtimeHtml);
+      const firstCollectionArticle = entry.collectionSessionArticles?.[0];
+      const firstCollectionCard = firstCollectionArticle ? getRuntimeArticleCard(firstCollectionArticle) : undefined;
+
+      return (
+        <article
+          class="home-article-reader"
+          data-drawer-template={entry.id}
+          data-article-id={entry.id}
+          data-github-repo-template={entry.id.startsWith('github-repo:') ? entry.title : undefined}
+          data-kind={entry.kind}
+          data-full-href={entry.href}
+          data-read-href={entry.readHref ?? ''}
+          data-book-id={entry.bookItem?.id ?? ''}
+          data-kicker={entry.kicker}
+          data-title={entry.title}
+        >
+          {entry.kind !== 'collection' && (
+            <header class="home-article-intro">
+              <span>{entry.kicker}</span>
+              <h1>{entry.title}</h1>
+              <p>{entry.summary}</p>
+              {entry.date && <small>{entry.date}</small>}
+            </header>
+          )}
+          {hasArticleContent ? (
+            <>
+              <div class="home-article-reader__grid">
+                <nav class="home-article-toc" aria-label="文章目录">
+                  <strong>目录</strong>
+                  {entry.toc?.length ? (
+                    entry.toc.map((heading) => (
+                      <a href={heading.href} class={heading.className}>
+                        {heading.text}
+                      </a>
+                    ))
+                  ) : (
+                    <span>暂无标题</span>
+                  )}
+                </nav>
+                <div class="home-article-content prose-shell prose-shell--plain">
+                  {Content ? <Content /> : <div set:html={entry.runtimeHtml} />}
+                </div>
+              </div>
+              <section class="reader-mini-graph" data-reader-mini-graph data-reader-mini-article={entry.id} aria-label="文章知识网络">
+                <header>
+                  <span>Mini Graph</span>
+                  <a href={withBase(`/knowledge/?focus=${encodeURIComponent(entry.id)}`)} data-mini-graph-open>查看知识图谱</a>
+                </header>
+                <div class="reader-mini-graph__grid">
+                  <section>
+                    <strong>当前</strong>
+                    <button type="button" data-memory-drawer={entry.id}>{entry.title}</button>
+                  </section>
+                  <section>
+                    <strong>关联</strong>
+                    {related.length ? (
+                      related.slice(0, 3).map((item) => (
+                        <button type="button" data-memory-drawer={item.id}>{item.title}</button>
+                      ))
+                    ) : (
+                      <p>暂无强关联</p>
+                    )}
+                  </section>
+                  <section>
+                    <strong>标签</strong>
+                    {(entry.tags ?? []).slice(0, 3).length ? (
+                      (entry.tags ?? []).slice(0, 3).map((tag) => (
+                        <button type="button" data-mini-tag={tag}>{tag}</button>
+                      ))
+                    ) : (
+                      <p>暂无标签</p>
+                    )}
+                  </section>
+                  <section>
+                    <strong>标记</strong>
+                    <div data-mini-highlights>
+                      <p>暂无本地标记</p>
+                    </div>
+                  </section>
+                </div>
+              </section>
+              {related.length ? (
+                <section class="home-article-related" aria-label="继续阅读">
+                  <span>继续阅读</span>
+                  <h3>相关内容</h3>
+                  <div>
+                    {related.map((item) => (
+                      <button type="button" data-memory-drawer={item.id}>
+                        <small>{item.kicker}</small>
+                        <strong>{item.title}</strong>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+            </>
+          ) : entry.kind === 'collection' && entry.knowledgeCollection ? (
+            <section
+              class="home-reader-session home-collection-reader"
+              aria-label={`${entry.title} reading session`}
+              data-home-collection-session
+              data-collection-id={entry.knowledgeCollection.id}
+            >
+              {firstCollectionArticle ? (
+                <>
+                  <main class="home-reader-session__main">
+                    <header class="home-reader-session__header">
+                      <span data-home-collection-kicker>{firstCollectionCard?.eyebrow || firstCollectionArticle.kind || 'MarkdownObject'}</span>
+                      <h2 data-home-collection-title>{firstCollectionArticle.title}</h2>
+                      <p data-home-collection-summary>{firstCollectionCard?.subtitle || firstCollectionArticle.description || firstCollectionArticle.summary}</p>
+                    </header>
+                    <div class="home-reader-session__body prose-shell prose-shell--plain" data-home-collection-body><p>正文正在加载。</p></div>
+                  </main>
+                  <aside class="home-reader-session__rail" aria-label="本集合目录">
+                    <div class="home-reader-session__rail-head">
+                      <span>Collection</span>
+                      <strong>{entry.title}</strong>
+                    </div>
+                    <div class="home-reader-session__toc">
+                      {entry.collectionSessionArticles?.slice(0, 16).map((article, index) => (
+                        <button
+                          type="button"
+                          class:list={[index === 0 && 'is-active']}
+                          data-home-collection-object={article.id}
+                          data-home-collection-detail-url={withBase(`/runtime/${article.detailPath || `articles/${article.id}.json`}`)}
+                        >
+                          <small>{article.kind || 'post'}{article.date ? ` / ${formatDate(new Date(article.date))}` : ''}</small>
+                          <span>{article.title}</span>
+                        </button>
+                      ))}
+                    </div>
+                    <div class="home-reader-session__nav">
+                      <button type="button" data-home-collection-prev>上一篇</button>
+                      <button type="button" data-home-collection-next>下一篇</button>
+                    </div>
+                  </aside>
+                </>
+              ) : (
+                <div class="home-collection-reader__empty">
+                  <p>这个集合暂时只有对象索引，还没有可直接阅读的正文。</p>
+                </div>
+              )}
+            </section>
+          ) : (
+            <div class="home-drawer-summary">
+              {entry.visualCollection ? (
+                <section class="visual-drawer-panel" style={`--visual-accent:${entry.visualCollection.palette.dominant}`}>
+                  <div class="visual-drawer-panel__collection-stack" aria-hidden="true">
+                    {(entry.visualCollection.coverImages.length ? entry.visualCollection.coverImages : entry.visualCollection.images.map((image) => image.image))
+                      .slice(0, 4)
+                      .map((image, index) => (
+                        <img src={image} alt="" loading="lazy" style={`--stack-index:${index}`} />
+                      ))}
+                  </div>
+                  <div class="visual-drawer-panel__content">
+                    <p>{entry.visualCollection.curationNote}</p>
+                    <span class="visual-meta-line">
+                      {entry.visualCollection.sourceLabel} · {entry.visualCollection.mood} · {entry.visualCollection.images.length} IMAGES
+                    </span>
+                    <section>
+                      <h3>调色板</h3>
+                      <div class="visual-palette-row">
+                        {entry.visualCollection.palette.colors.map((color) => (
+                          <button type="button" data-copy-color={color} style={`background:${color}`} title={`复制 ${color}`}>
+                            <span>{color}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                    <section>
+                      <h3>Board</h3>
+                      <div class="visual-drawer-board">
+                        {entry.visualCollection.images.map((image) => (
+                          <article>
+                            <img src={image.image} alt="" loading="lazy" />
+                            <strong>{image.title}</strong>
+                            <span>{image.summary}</span>
+                          </article>
+                        ))}
+                      </div>
+                    </section>
+                    <section>
+                      <h3>设计 Token</h3>
+                      <button type="button" class="visual-token-copy" data-copy-visual-token={entry.visualCollection.id}>
+                        复制 Collection Token
+                      </button>
+                    </section>
+                  </div>
+                </section>
+              ) : entry.kind === 'book' && entry.bookItem && entry.readHref ? (
+                <section class="book-drawer-reader-panel" aria-label={`${entry.title} 阅读器`}>
+                  <header class="book-drawer-reader-panel__intro">
+                    <div class="home-drawer-summary__media home-drawer-summary__media--book">
+                      <BookCover book={entry.bookItem} client:load />
+                    </div>
+                    <div class="book-drawer-reader-panel__copy">
+                      <span class="book-drawer-reader-panel__eyebrow">Library Record</span>
+                      <h3>{entry.title}</h3>
+                      <p>{entry.summary}</p>
+                      <div class="home-feed-card__tags">
+                        {entry.tags?.map((tag) => <span>{tag}</span>)}
+                      </div>
+                    </div>
+                  </header>
+                  <div
+                    class="book-drawer-reader-panel__mount"
+                    data-book-drawer-reader-mount={`${entry.bookItem.id}-${entry.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`}
+                  >
+                    {entry.bookItem.sourceType === 'pdf' ? (
+                      <section class="pdf-reader pdf-reader--drawer" data-book-drawer-instant>
+                        <article class="pdf-reader__instant" aria-label={`${entry.title} 阅读首屏`}>
+                          {entry.coverSrc ? (
+                            <img src={entry.coverSrc} alt={`${entry.title} 封面`} loading="eager" />
+                          ) : (
+                            <span class="book-cover-fallback">
+                              <i>无封面</i>
+                            </span>
+                          )}
+                          <div>
+                            <span>{entry.bookItem.sourceType.toUpperCase()} ARCHIVE</span>
+                            <h2>{entry.title}</h2>
+                            <p>{entry.bookItem.author}</p>
+                          </div>
+                        </article>
+                      </section>
+                    ) : null}
+                  </div>
+                </section>
+              ) : entry.kind === 'book' && entry.bookItem ? (
+                <div class="home-drawer-summary__media home-drawer-summary__media--book">
+                  <BookCover book={entry.bookItem} client:load />
+                </div>
+              ) : entry.coverSrc ? (
+                <div class:list={['home-drawer-summary__media', entry.kind === 'music' && 'home-drawer-summary__media--round']}>
+                  <img src={entry.coverSrc} alt="" loading="lazy" />
+                </div>
+              ) : (
+                <div class="home-drawer-summary__mark" style={entry.accent ? `--feed-accent:${entry.accent}` : undefined}>
+                  {entry.kind}
+                </div>
+              )}
+              <div class="home-drawer-summary__main">
+                {entry.chartVariant === 'heatmap' && (
+                  <ChartCard kicker={entry.kicker} title={entry.title} summary={entry.summary} metric="全年" compact>
+                    <GitHubHeatmap weeks={githubAnalytics.heatmapWeeks} />
+                  </ChartCard>
+                )}
+                {entry.chartVariant === 'line' && (
+                  <ChartCard kicker={entry.kicker} title={entry.title} summary={entry.summary} compact>
+                    <GitHubMonthlyLine points={githubAnalytics.monthly} />
+                  </ChartCard>
+                )}
+                {entry.chartVariant === 'language' && (
+                  <ChartCard kicker={entry.kicker} title={entry.title} summary={entry.summary} compact>
+                    <GitHubLanguageDonut languages={githubAnalytics.languages} />
+                  </ChartCard>
+                )}
+                {!entry.chartVariant && (
+                  <>
+                    {entry.details?.length ? (
+                      <dl
+                        class="home-drawer-summary__details"
+                        data-github-repo-details={entry.id.startsWith('github-repo:') ? entry.title : undefined}
+                      >
+                        {entry.details.map((detail) => (
+                          <div>
+                            <dt>{detail.label}</dt>
+                            <dd>{detail.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    ) : null}
+                    {entry.tags?.length ? (
+                      <div class="home-feed-card__tags">
+                        {entry.tags.map((tag) => <span>{tag}</span>)}
+                      </div>
+                    ) : null}
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </article>
+      );
+    })}
+  </div>
+
+  <script>
+    (() => {
+      const layer = document.querySelector('[data-article-layer]');
+      const articleDrawer = layer?.querySelector('.home-article-drawer');
+      const drawerBody = document.querySelector('[data-article-body]');
+      const titleTarget = document.querySelector('[data-article-title]');
+      const kickerTarget = document.querySelector('[data-article-kicker]');
+      const fullLink = document.querySelector('[data-article-full]');
+      const readLink = document.querySelector('[data-article-read]');
+      const shelfLink = document.querySelector('[data-article-shelf]');
+      const bookmarkButton = document.querySelector('[data-reader-bookmark]');
+      const progress = document.querySelector('[data-reading-progress]');
+      const filterButtons = [...document.querySelectorAll('[data-feed-filter]')];
+      const getCards = () => [...document.querySelectorAll('[data-feed-card]')];
+      const homeFeedGrid = document.querySelector('[data-home-feed-grid]');
+      const articleTemplates = document.querySelector('[data-article-templates]');
+      const mainScroller = document.querySelector('.home-feed-main');
+      const searchLayer = document.querySelector('[data-search-layer]');
+      const searchInput = document.querySelector('[data-search-input]');
+      const searchResults = document.querySelector('[data-search-results]');
+      const searchKinds = [...document.querySelectorAll('[data-search-kind]')];
+      const selectionToolbar = document.querySelector('[data-selection-toolbar]');
+      const sealPalette = document.querySelector('[data-seal-palette]');
+      const sealTargetTitle = document.querySelector('[data-seal-target-title]');
+      const readerSealButton = document.querySelector('[data-reader-seal]');
+      const readerGraphLink = document.querySelector('[data-reader-graph]');
+      const homeShell = document.querySelector('.home-feed-shell');
+      const sidebarCollapse = document.querySelector('[data-sidebar-collapse]');
+      const sidebarCollapseIcon = document.querySelector('[data-sidebar-collapse-icon]');
+      const sidebarHistory = document.querySelector('[data-sidebar-history]');
+      const sidebarBookmarks = document.querySelector('[data-sidebar-bookmarks]');
+      const sidebarStats = [...document.querySelectorAll('[data-sidebar-stat]')];
+      let searchDocs = JSON.parse(document.getElementById('knowledge-search-data')?.textContent || '[]');
+      const sealConfig = JSON.parse(document.getElementById('seal-definition-data')?.textContent || '{"definitions":[]}');
+      const visualKnowledgeItems = JSON.parse(document.getElementById('visual-knowledge-data')?.textContent || '[]');
+      const homeRuntimeStatic = JSON.parse(
+        document.getElementById('home-runtime-static-data')?.textContent || '{"staticActivityItems":[],"staticNodeCount":0}'
+      );
+      const storageKeys = {
+        history: 'emptyinkpot-reading-history',
+        bookmarks: 'emptyinkpot-reader-bookmarks',
+        highlights: 'emptyinkpot-reader-highlights',
+        annotations: 'emptyinkpot-reader-annotations',
+        seals: 'emptyinkpot-reader-seals',
+        stickers: 'emptyinkpot-stickers',
+        sealDefinitions: sealConfig.key || 'emptyinkpot-seal-definitions',
+        readerTheme: 'emptyinkpot-reader-theme',
+        sidebarCollapsed: 'emptyinkpot-home-sidebar-collapsed'
+      };
+      const defaultSealDefinitions = Array.isArray(sealConfig.definitions) ? sealConfig.definitions : [];
+      const loadSealDefinitions = () => {
+        let stored;
+        try {
+          stored = JSON.parse(localStorage.getItem(storageKeys.sealDefinitions) || '[]');
+        } catch {
+          stored = [];
+        }
+        const source = Array.isArray(stored) && stored.length ? stored : defaultSealDefinitions;
+        return source.reduce((map, definition) => {
+          if (definition?.id) map[definition.id] = definition;
+          return map;
+        }, {});
+      };
+      let sealDefinitions = loadSealDefinitions();
+      const drawerTransitionMs = 180;
+      const searchTransitionMs = 120;
+      let lastFocused = null;
+      let savedScrollTop = 0;
+      let currentArticle = null;
+      let activeIndex = 0;
+      let searchKind = 'all';
+      let selectedRange = null;
+      let pendingHighlightId = null;
+      let sealContext = null;
+      let drawerCloseTimer = 0;
+      let searchCloseTimer = 0;
+      let readerMemoryFrame = 0;
+
+      const setSidebarCollapsed = (collapsed) => {
+        homeShell?.classList.toggle('is-sidebar-collapsed', collapsed);
+        if (sidebarCollapse) {
+          sidebarCollapse.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+          sidebarCollapse.setAttribute('aria-label', collapsed ? '展开右侧栏' : '折叠右侧栏');
+        }
+        if (sidebarCollapseIcon) {
+          sidebarCollapseIcon.textContent = collapsed ? '‹' : '›';
+        }
+        localStorage.setItem(storageKeys.sidebarCollapsed, collapsed ? 'true' : 'false');
+      };
+
+      const initSidebar = () => {
+        setSidebarCollapsed(localStorage.getItem(storageKeys.sidebarCollapsed) === 'true');
+        sidebarCollapse?.addEventListener('click', () => {
+          setSidebarCollapsed(!homeShell?.classList.contains('is-sidebar-collapsed'));
+        });
+      };
+
+      const initHeroBanner = () => {
+        const hero = document.querySelector('[data-hero-banner]');
+        if (!hero) return;
+        const layers = {
+          bg: hero.querySelector('[data-hero-layer="bg"]'),
+          mid: hero.querySelector('[data-hero-layer="mid"]'),
+          front: hero.querySelector('[data-hero-layer="front"]')
+        };
+        const label = hero.querySelector('[data-hero-season-label]');
+        const title = hero.querySelector('[data-hero-title]');
+        const subtitle = hero.querySelector('[data-hero-subtitle]');
+        const contentSettings = window.emptyinkpotVisualSettings?.load?.().content;
+        const bannerSettings = contentSettings?.banner || {};
+        const month = new Date().getMonth();
+        const season = month < 2 || month === 11 ? 'winter' : month < 5 ? 'spring' : month < 8 ? 'summer' : 'autumn';
+        const seasonLabels = {
+          spring: bannerSettings.springLabel || 'Spring Field',
+          summer: bannerSettings.summerLabel || 'Summer Field',
+          autumn: bannerSettings.autumnLabel || 'Autumn Field',
+          winter: bannerSettings.winterLabel || 'Winter Field'
+        };
+        const heroImages = {
+          spring: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png',
+          summer: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png',
+          autumn: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png',
+          winter: bannerSettings.bgImage || '/images/home/homepage-floral-bg.png'
+        };
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        hero.dataset.season = season;
+        const setImageVar = (name, value) => {
+          if (!value) return;
+          hero.style.setProperty(name, value.startsWith('url(') ? value : `url("${value.replaceAll('"', '%22')}")`);
+        };
+        setImageVar('--hero-bg-image', heroImages[season]);
+        setImageVar('--hero-mid-image', bannerSettings.midImage);
+        setImageVar('--hero-front-image', bannerSettings.frontImage);
+        if (label) label.textContent = bannerSettings.kicker || seasonLabels[season];
+        if (title && bannerSettings.title) title.textContent = bannerSettings.title;
+        if (subtitle && bannerSettings.subtitle) subtitle.textContent = bannerSettings.subtitle;
+
+        const resetLayers = () => {
+          if (layers.bg instanceof HTMLElement) layers.bg.style.transform = 'scale(1.1)';
+          if (layers.mid instanceof HTMLElement) layers.mid.style.transform = 'scale(1.08)';
+          if (layers.front instanceof HTMLElement) layers.front.style.transform = 'scale(1.05)';
+        };
+
+        if (!reducedMotion) {
+          let targetX = 0;
+          let targetY = 0;
+          let currentX = 0;
+          let currentY = 0;
+          let hovering = false;
+
+          hero.addEventListener('mousemove', (event) => {
+            const rect = hero.getBoundingClientRect();
+            targetX = (event.clientX - rect.left) / rect.width - 0.5;
+            targetY = (event.clientY - rect.top) / rect.height - 0.5;
+            hovering = true;
+          });
+          hero.addEventListener('mouseleave', () => {
+            targetX = 0;
+            targetY = 0;
+            hovering = false;
+          });
+
+          const animate = () => {
+            currentX += (targetX - currentX) * 0.08;
+            currentY += (targetY - currentY) * 0.08;
+            if (Math.abs(currentX) > 0.001 || Math.abs(currentY) > 0.001 || hovering) {
+              if (layers.bg instanceof HTMLElement) layers.bg.style.transform = `scale(1.1) translate(${currentX * 10}px, ${currentY * 8}px)`;
+              if (layers.mid instanceof HTMLElement) layers.mid.style.transform = `scale(1.08) translate(${currentX * 20}px, ${currentY * 14}px)`;
+              if (layers.front instanceof HTMLElement) layers.front.style.transform = `scale(1.05) translate(${currentX * 34}px, ${currentY * 20}px)`;
+            } else {
+              resetLayers();
+            }
+            requestAnimationFrame(animate);
+          };
+
+          requestAnimationFrame(animate);
+        }
+      };
+
+      const readJson = (key, fallback) => {
+        try {
+          return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+        } catch {
+          return fallback;
+        }
+      };
+
+      const writeJson = (key, value) => {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch {
+          // Ignore local storage failures; reading should still work.
+        }
+      };
+
+      const runtimeState = {
+        memory: [],
+        highlights: [],
+        loaded: false
+      };
+
+      const loadRuntimeState = async () => {
+        if (runtimeState.loaded) return runtimeState;
+        runtimeState.loaded = true;
+        try {
+          const [memoryResponse, highlightResponse] = await Promise.all([
+            fetch('/api/runtime/reader/memory?limit=50', { cache: 'no-store' }),
+            fetch('/api/runtime/reader/highlights?limit=100', { cache: 'no-store' })
+          ]);
+          const [memoryData, highlightData] = await Promise.all([memoryResponse.json(), highlightResponse.json()]);
+          runtimeState.memory = Array.isArray(memoryData.items) ? memoryData.items : [];
+          runtimeState.highlights = Array.isArray(highlightData.items) ? highlightData.items : [];
+        } catch {
+          runtimeState.memory = [];
+          runtimeState.highlights = [];
+        }
+        return runtimeState;
+      };
+
+      const getRuntimeMergedHistory = () => {
+        const local = readJson(storageKeys.history, []);
+        const byId = new Map(local.map((item) => [item.id, item]));
+        runtimeState.memory
+          .filter((item) => item.objectType === 'article')
+          .forEach((item) => byId.set(item.objectId || item.id, { ...byId.get(item.objectId || item.id), ...item, id: item.objectId || item.id }));
+        return [...byId.values()].sort((a, b) => (b.lastReadAt || b.timestamp || 0) - (a.lastReadAt || a.timestamp || 0));
+      };
+
+      const getRuntimeMergedHighlights = () => {
+        const local = readJson(storageKeys.highlights, []);
+        const byId = new Map(local.map((item) => [item.id, item]));
+        runtimeState.highlights.forEach((item) => byId.set(item.id, { ...byId.get(item.id), ...item, articleId: item.articleId || item.objectId }));
+        return [...byId.values()].sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0));
+      };
+
+      const saveRuntimeMemory = (record) => {
+        fetch('/api/runtime/reader/memory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record)
+        }).catch(() => {
+          // Runtime persistence is server-side; local UI state should not block on it.
+        });
+      };
+
+      const saveRuntimeHighlight = (record) => {
+        fetch('/api/runtime/reader/highlights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(record)
+        }).catch(() => {
+          // Runtime persistence is server-side; local UI state should not block on it.
+        });
+      };
+
+      const normalizeReaderTheme = (theme) => (['light', 'sepia', 'dark'].includes(theme) ? theme : 'light');
+
+      const applyReaderTheme = (theme) => {
+        const next = normalizeReaderTheme(theme);
+        document.documentElement.dataset.readerTheme = next;
+        document.querySelectorAll('[data-reader-theme]').forEach((button) => {
+          button.classList.toggle('is-active', button.dataset.readerTheme === next);
+        });
+        try {
+          localStorage.setItem(storageKeys.readerTheme, next);
+        } catch {
+          // Ignore storage failures.
+        }
+      };
+
+      const getVisibleCards = () => getCards().filter((card) => !card.hidden);
+
+      const escapeHtml = (value) =>
+        String(value ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#39;');
+
+      const slugifyRuntimeText = (value) =>
+        String(value ?? '')
+          .trim()
+          .toLowerCase()
+          .normalize('NFKD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .replace(/-{2,}/g, '-');
+
+      const getRuntimeHeadings = (markdown) =>
+        String(markdown ?? '')
+          .split(/\r?\n/)
+          .map((line) => line.match(/^(#{1,3})\s+(.+)$/))
+          .filter(Boolean)
+          .map((match) => ({
+            depth: match[1].length,
+            slug: slugifyRuntimeText(match[2]),
+            text: match[2].trim()
+          }));
+
+      const stripRuntimeMarkdown = (text) =>
+        String(text ?? '')
+          .replace(/```[\s\S]*?```/g, ' ')
+          .replace(/`([^`]+)`/g, '$1')
+          .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+          .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+          .replace(/^>\s?/gm, '')
+          .replace(/^#+\s+/gm, '')
+          .replace(/[*_~>-]/g, ' ')
+          .replace(/\|/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+      const getRuntimeReadingTime = (text) => Math.max(1, Math.round(stripRuntimeMarkdown(text).length / 320));
+
+      const runtimeArticleHref = (article) => `/posts/${encodeURIComponent(article.slug || article.id || '')}/`;
+      const runtimeCollectionHref = (collection) =>
+        `/collections/${String(collection.id || '')
+          .replace(/^collection:/, '')
+          .trim()
+          .toLowerCase()
+          .normalize('NFKD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+          .replace(/^-+|-+$/g, '')
+          .replace(/-{2,}/g, '-')}/`;
+      const getRuntimeArticleCard = (article) => {
+        if (article?.card?.chips?.length) return article.card;
+        const eyebrow = article?.card?.eyebrow || article?.categories?.[0] || article?.kind || 'MarkdownObject';
+        return {
+          eyebrow,
+          chips: [eyebrow, ...(article?.tags || [])].filter(Boolean).slice(0, 6),
+          subtitle: article?.card?.subtitle || article?.description || article?.summary || ''
+        };
+      };
+
+      const formatRuntimeDate = (date) => {
+        const parsed = new Date(date);
+        if (Number.isNaN(parsed.getTime())) return String(date ?? '');
+        return new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(parsed);
+      };
+
+      const runtimeArticleDetailUrl = (article) =>
+        `/runtime/${article?.detailPath || `articles/${article?.id || encodeURIComponent(article?.slug || '')}.json`}?t=${Date.now()}`;
+
+      const loadRuntimeArticleDetail = async (article) => {
+        const response = await fetch(runtimeArticleDetailUrl(article), { cache: 'no-store' });
+        if (!response.ok) return article;
+        const detail = await response.json();
+        return detail?.article ? { ...article, ...detail.article } : article;
+      };
+
+      const updateRuntimeHomeMetrics = (articles) => {
+        const runtimeCount = articles.length;
+        const tagCount = new Set(articles.flatMap((article) => getRuntimeArticleCard(article).chips || [])).size;
+        const staticNodeCount = Number(homeRuntimeStatic.staticNodeCount || 0);
+        const articleCount = document.querySelector('[data-runtime-article-count]');
+        const nodeCount = document.querySelector('[data-runtime-node-count]');
+        if (articleCount) articleCount.textContent = runtimeCount.toLocaleString('zh-CN');
+        if (nodeCount) nodeCount.textContent = (staticNodeCount + runtimeCount).toLocaleString('zh-CN');
+
+        const marqueeTrack = document.querySelector('[data-home-activity-marquee] div');
+        if (!marqueeTrack) return;
+        const items = [
+          articles[0]?.title ? `最新文章：${articles[0].title}` : '',
+          ...(Array.isArray(homeRuntimeStatic.staticActivityItems) ? homeRuntimeStatic.staticActivityItems : []),
+          `Knowledge：${staticNodeCount + runtimeCount} 个入口 / ${tagCount} 个标签`
+        ].filter(Boolean);
+        marqueeTrack.replaceChildren(
+          ...[...items, ...items].map((item) => {
+            const span = document.createElement('span');
+            span.textContent = item;
+            return span;
+          })
+        );
+      };
+
+      const createRuntimeCard = (article) => {
+        const card = document.createElement('button');
+        const drawerId = `runtime:${article.id}`;
+        const articleCard = getRuntimeArticleCard(article);
+        card.type = 'button';
+        card.className = 'home-feed-card home-feed-card--post home-feed-card--compact';
+        card.dataset.feedCard = 'true';
+        card.dataset.runtimeFeedCard = `runtime-${article.id}`;
+        card.dataset.runtimeFolder = article.folder?.key || '';
+        card.dataset.feedKind = 'post';
+        card.dataset.hoverPreview = 'true';
+        card.dataset.hoverId = drawerId;
+        card.dataset.hoverTitle = article.title || 'Untitled';
+        card.dataset.hoverKicker = articleCard.eyebrow;
+        card.dataset.hoverSummary = articleCard.subtitle;
+        card.dataset.drawerId = drawerId;
+        card.dataset.sealTarget = drawerId;
+        card.dataset.sealTitle = article.title || 'Untitled';
+        card.dataset.sealKind = 'post';
+        card.innerHTML = `
+          <div class="bookmark bookmark--post"><span>post</span></div>
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+          <span class="card-paperclip" aria-hidden="true"></span>
+          <div class="home-feed-card__mark">post</div>
+          <div class="home-feed-card__body">
+            <div class="home-feed-card__meta">
+              <span>${escapeHtml(articleCard.eyebrow)}</span>
+              <small>${escapeHtml(formatRuntimeDate(article.date))} / ${article.readingMinutes || 1} min read</small>
+            </div>
+            <h2>${escapeHtml(article.title || 'Untitled')}</h2>
+            <p>${escapeHtml(articleCard.subtitle)}</p>
+            ${
+              articleCard.chips?.length
+                ? `<div class="home-feed-card__tags">${articleCard.chips.map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}</div>`
+                : ''
+            }
+          </div>
+        `;
+        return card;
+      };
+
+      const createRuntimeTemplate = (article) => {
+        const wrapper = document.createElement('div');
+        const drawerId = `runtime:${article.id}`;
+        const date = formatRuntimeDate(article.date);
+        const articleCard = getRuntimeArticleCard(article);
+        const tags = articleCard.chips || [];
+        const headings = Array.isArray(article.toc) ? article.toc : [];
+        const href = runtimeArticleHref(article);
+        wrapper.innerHTML = `
+          <article
+            class="home-article-reader"
+            data-drawer-template="${escapeHtml(drawerId)}"
+            data-article-id="${escapeHtml(drawerId)}"
+            data-runtime-folder="${escapeHtml(article.folder?.key || '')}"
+            data-kind="post"
+            data-full-href="${escapeHtml(href)}"
+            data-read-href=""
+            data-book-id=""
+            data-kicker="${escapeHtml(articleCard.eyebrow)}"
+            data-title="${escapeHtml(article.title || 'Untitled')}"
+          >
+            <header class="home-article-intro">
+              <span>${escapeHtml(articleCard.eyebrow)}</span>
+              <h1>${escapeHtml(article.title || 'Untitled')}</h1>
+              <p>${escapeHtml(articleCard.subtitle)}</p>
+              <small>${escapeHtml(date)}</small>
+            </header>
+            <div class="home-article-reader__grid">
+              <nav class="home-article-toc" aria-label="文章目录">
+                <strong>目录</strong>
+                ${
+                  headings.length
+                    ? headings.map((heading) => `<a href="#${escapeHtml(heading.slug)}" class="depth-${heading.depth}">${escapeHtml(heading.text)}</a>`).join('')
+                    : '<span>暂无标题</span>'
+                }
+              </nav>
+              <div class="home-article-content prose-shell prose-shell--plain" data-runtime-detail-body data-runtime-detail-url="${escapeHtml(runtimeArticleDetailUrl(article))}"><p>文章正文正在按需加载。</p></div>
+            </div>
+            <section class="reader-mini-graph" data-reader-mini-graph data-reader-mini-article="${escapeHtml(drawerId)}" aria-label="文章知识网络">
+              <header>
+                <span>Mini Graph</span>
+                <a href="/knowledge/" data-mini-graph-open>查看知识图谱</a>
+              </header>
+              <div class="reader-mini-graph__grid">
+                <section>
+                  <strong>当前</strong>
+                  <button type="button" data-memory-drawer="${escapeHtml(drawerId)}">${escapeHtml(article.title || 'Untitled')}</button>
+                </section>
+                <section><strong>关联</strong><p>动态内容暂无强关联</p></section>
+                <section>
+                  <strong>标签</strong>
+                  ${
+                    tags.length
+                      ? tags.map((tag) => `<button type="button" data-mini-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join('')
+                      : '<p>暂无标签</p>'
+                  }
+                </section>
+                <section><strong>标记</strong><div data-mini-highlights><p>暂无本地标记</p></div></section>
+              </div>
+            </section>
+          </article>
+        `;
+        return wrapper.firstElementChild;
+      };
+
+      const createRuntimeCollectionCard = (collection) => {
+        const card = document.createElement('button');
+        const chips = collection.card?.chips || collection.tags || [];
+        const objectTitles = (collection.objects || []).slice(0, 4);
+        const href = runtimeCollectionHref(collection);
+        card.type = 'button';
+        card.className = `home-feed-card home-feed-card--collection ${collection.basis === 'folder' ? 'home-feed-card--tall' : 'home-feed-card--standard'}`;
+        card.dataset.feedCard = 'true';
+        card.dataset.runtimeFeedCard = `collection-${collection.id}`;
+        card.dataset.feedKind = 'collection';
+        card.dataset.hoverPreview = 'true';
+        card.dataset.hoverId = collection.id;
+        card.dataset.hoverTitle = collection.title || 'Untitled Collection';
+        card.dataset.hoverKicker = collection.card?.eyebrow || 'Knowledge Collection';
+        card.dataset.hoverSummary = collection.description || collection.card?.subtitle || '';
+        card.dataset.drawerId = collection.id;
+        card.dataset.href = href;
+        card.dataset.sealTarget = collection.id;
+        card.dataset.sealTitle = collection.title || 'Untitled Collection';
+        card.dataset.sealKind = 'collection';
+        card.innerHTML = `
+          <div class="bookmark bookmark--knowledge"><span>Collection</span></div>
+          <span class="seal-trigger" role="button" tabindex="0" data-seal-trigger>盖章</span>
+          <span class="card-paperclip" aria-hidden="true"></span>
+          <div class="home-feed-card__mark">collection</div>
+          <div class="home-feed-card__body">
+            <div class="home-feed-card__meta">
+              <span>${escapeHtml(collection.card?.eyebrow || 'Knowledge Collection')}</span>
+              <small>${escapeHtml(String(collection.stats?.objectCount || 0))} objects / ${escapeHtml(collection.layout || 'feed')}</small>
+            </div>
+            <h2>${escapeHtml(collection.title || 'Untitled Collection')}</h2>
+            <p>${escapeHtml(collection.description || collection.card?.subtitle || '')}</p>
+            ${
+              objectTitles.length
+                ? `<div class="home-collection-preview">${objectTitles.map((object) => `<span>${escapeHtml(object.title || 'Untitled')}</span>`).join('')}</div>`
+                : ''
+            }
+            ${chips.length ? `<div class="home-feed-card__tags">${chips.map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}</div>` : ''}
+          </div>
+        `;
+        return card;
+      };
+
+      const createRuntimeCollectionTemplate = (collection, articleById = new Map()) => {
+        const wrapper = document.createElement('div');
+        const href = runtimeCollectionHref(collection);
+        const sessionArticles = (collection.objects || [])
+          .map((object) => ({ ...object, ...(articleById.get(object.id) || {}) }))
+          .filter((object) => object?.id)
+          .slice(0, 16);
+        const firstArticle = sessionArticles[0];
+        const firstCard = firstArticle ? getRuntimeArticleCard(firstArticle) : null;
+        const objectButtons = sessionArticles
+          .map((object, index) => `
+            <button
+              type="button"
+              class="${index === 0 ? 'is-active' : ''}"
+              data-home-collection-object="${escapeHtml(object.id)}"
+              data-home-collection-detail-url="${escapeHtml(runtimeArticleDetailUrl(object))}"
+            >
+              <small>${escapeHtml(object.kind || object.type || 'post')}${object.date ? ` / ${escapeHtml(formatRuntimeDate(object.date))}` : ''}</small>
+              <span>${escapeHtml(object.title || 'Untitled')}</span>
+            </button>
+          `)
+          .join('');
+        const readerHtml = firstArticle
+          ? `
+            <main class="home-reader-session__main">
+              <header class="home-reader-session__header">
+                <span data-home-collection-kicker>${escapeHtml(firstCard?.eyebrow || firstArticle.kind || 'MarkdownObject')}</span>
+                <h2 data-home-collection-title>${escapeHtml(firstArticle.title || 'Untitled')}</h2>
+                <p data-home-collection-summary>${escapeHtml(firstCard?.subtitle || firstArticle.description || firstArticle.summary || '')}</p>
+              </header>
+              <div
+                class="home-reader-session__body prose-shell prose-shell--plain"
+                data-home-collection-body
+              ><p>正文正在加载。</p></div>
+            </main>
+            <aside class="home-reader-session__rail" aria-label="本集合目录">
+              <div class="home-reader-session__rail-head">
+                <span>Collection</span>
+                <strong>${escapeHtml(collection.title || 'Untitled Collection')}</strong>
+              </div>
+              <div class="home-reader-session__toc">${objectButtons}</div>
+              <div class="home-reader-session__nav">
+                <button type="button" data-home-collection-prev>上一篇</button>
+                <button type="button" data-home-collection-next>下一篇</button>
+              </div>
+            </aside>
+          `
+          : '<div class="home-collection-reader__empty"><p>这个集合暂时只有对象索引，还没有可直接阅读的正文。</p></div>';
+        wrapper.innerHTML = `
+          <article
+            class="home-article-reader"
+            data-drawer-template="${escapeHtml(collection.id)}"
+            data-article-id="${escapeHtml(collection.id)}"
+            data-kind="collection"
+            data-full-href="${escapeHtml(href)}"
+            data-read-href=""
+            data-book-id=""
+            data-kicker="${escapeHtml(collection.card?.eyebrow || 'Knowledge Collection')}"
+            data-title="${escapeHtml(collection.title || 'Untitled Collection')}"
+          >
+            <section
+              class="home-reader-session home-collection-reader"
+              aria-label="${escapeHtml(collection.title || 'Collection')} reading session"
+              data-home-collection-session
+              data-collection-id="${escapeHtml(collection.id)}"
+            >
+              ${readerHtml}
+            </section>
+          </article>
+        `;
+        return wrapper.firstElementChild;
+      };
+      const syncRuntimeHomepageFeed = async () => {
+        if (!homeFeedGrid || !articleTemplates) return;
+        try {
+          const response = await fetch(`/runtime/content-index.json?t=${Date.now()}`, { cache: 'no-store' });
+          if (!response.ok) return;
+          const index = await response.json();
+          const articles = Array.isArray(index.articles) ? index.articles.filter((article) => article?.projection?.feed !== false) : [];
+          const collections = Array.isArray(index.collections)
+            ? index.collections.filter((collection) => collection?.projections?.home !== false).slice(0, 12)
+            : [];
+          const articleById = new Map(articles.map((article) => [article.id, article]));
+          document.querySelectorAll('[data-runtime-feed-card]').forEach((node) => node.remove());
+          articleTemplates.querySelectorAll('[data-drawer-template^="runtime:"]').forEach((node) => node.remove());
+          articleTemplates.querySelectorAll('[data-drawer-template^="collection:"]').forEach((node) => node.remove());
+          const collectionCards = collections.map(createRuntimeCollectionCard);
+          const articleCards = articles.slice(0, 8).map(createRuntimeCard);
+          const cards = [
+            ...collectionCards.slice(0, 3),
+            ...articleCards
+          ];
+          const templates = collections.map((collection) => createRuntimeCollectionTemplate(collection, articleById));
+          articleTemplates.prepend(...templates, ...articles.map(createRuntimeTemplate));
+          const firstNonCollectionCard = homeFeedGrid.querySelector('[data-feed-card]:not([data-feed-kind="collection"])');
+          if (firstNonCollectionCard) {
+            firstNonCollectionCard.before(...cards);
+          } else {
+            homeFeedGrid.prepend(...cards);
+          }
+          window.emptyinkpotRuntimeFolders?.apply?.();
+          searchDocs = [
+            ...searchDocs.filter((doc) => !(String(doc.id || '').startsWith('runtime:') || String(doc.drawerId || '').startsWith('runtime:'))),
+            ...articles.map((article) => ({
+              id: `runtime:${article.id}`,
+              type: 'post',
+              title: article.title,
+              content: [getRuntimeArticleCard(article).subtitle, ...(article.tags || []), ...(article.categories || [])].join('\n'),
+              tags: getRuntimeArticleCard(article).chips || [],
+              href: runtimeArticleHref(article),
+              drawerId: `runtime:${article.id}`
+            }))
+          ];
+          updateRuntimeHomeMetrics(articles);
+          renderSearch();
+          renderSeals();
+          setFilter(document.querySelector('.home-feed-tab.is-active')?.dataset.feedFilter || 'all');
+          window.dispatchEvent(new CustomEvent('emptyinkpot:runtime-home-feed-ready', { detail: { count: articles.length } }));
+        } catch {
+          // Static runtime cards remain when the runtime index is unavailable.
+        }
+      };
+
+      const setSearchKind = (kind) => {
+        searchKind = kind || 'all';
+        searchKinds.forEach((item) => item.classList.toggle('is-active', item.dataset.searchKind === searchKind));
+      };
+
+      const setActiveCard = (index) => {
+        const visibleCards = getVisibleCards();
+        if (!visibleCards.length) return;
+        getCards().forEach((card) => card.classList.remove('feed-card--active'));
+        activeIndex = Math.max(0, Math.min(index, visibleCards.length - 1));
+        const card = visibleCards[activeIndex];
+        card.classList.add('feed-card--active');
+        card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      };
+
+      const formatReaderProgress = (item) => {
+        const progress = Number(item?.progress || 0);
+        const percent = Math.round(Math.max(0, Math.min(1, progress)) * 100);
+        const when = Number(item?.lastReadAt || item?.timestamp || 0);
+        const date = when ? new Date(when).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' }) : '';
+        return [percent ? `${percent}%` : '未开始', date].filter(Boolean).join(' · ');
+      };
+
+      const renderSidebarList = (target, items, emptyText, type) => {
+        if (!target) return;
+        if (!items.length) {
+          const empty = document.createElement('li');
+          empty.textContent = emptyText;
+          target.replaceChildren(empty);
+          return;
+        }
+        target.replaceChildren(
+          ...items.slice(0, 3).map((item) => {
+            const row = document.createElement('li');
+            const button = document.createElement('button');
+            const drawerId = type === 'highlight' ? item.articleId : item.id;
+            button.type = 'button';
+            button.dataset.sidebarDrawer = drawerId || '';
+            if (type === 'highlight' && item.id) button.dataset.sidebarHighlight = item.id;
+            const label = document.createElement('span');
+            label.textContent = type === 'highlight' ? item.text || 'Untitled highlight' : item.title || 'Untitled';
+            button.append(label);
+            if (type === 'history') {
+              const meta = document.createElement('small');
+              meta.textContent = formatReaderProgress(item);
+              button.append(meta);
+            }
+            row.append(button);
+            return row;
+          })
+        );
+      };
+
+      const renderSidebarState = () => {
+        const history = getRuntimeMergedHistory();
+        const bookmarks = readJson(storageKeys.bookmarks, []);
+        const highlights = getRuntimeMergedHighlights();
+        const annotations = readJson(storageKeys.annotations, []);
+        sidebarStats.forEach((node) => {
+          const map = { history, bookmarks, highlights, annotations };
+          const key = node.dataset.sidebarStat;
+          node.textContent = String(map[key]?.length ?? 0);
+        });
+        renderSidebarList(sidebarHistory, history, '暂无记录', 'history');
+        renderSidebarList(sidebarBookmarks, bookmarks.length ? bookmarks : highlights, bookmarks.length ? '暂无收藏' : '暂无标记', bookmarks.length ? 'bookmark' : 'highlight');
+      };
+
+      const getSeals = () => readJson(storageKeys.seals, []);
+
+      const latestSealFor = (targetId) =>
+        getSeals()
+          .filter((item) => item.targetId === targetId)
+          .sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0))[0];
+
+      const createSealElement = (record, options = {}) => {
+        const definition = sealDefinitions[record.sealId || record.type] || sealDefinitions[record.type] || sealDefinitions.selected;
+        const seal = document.createElement('span');
+        const shape = record.shape || definition.shape || 'circle';
+        const texture = record.texture || definition.texture || 'clean';
+        seal.className = `knowledge-seal knowledge-seal--${shape} knowledge-seal--${texture}`;
+        if (options.animate) seal.classList.add('knowledge-seal--stamp-in');
+        seal.dataset.renderedSeal = record.id;
+        seal.style.setProperty('--seal-color', record.color || definition.color);
+        seal.style.setProperty('--seal-rotation', `${record.rotation || -7}deg`);
+        seal.style.setProperty('--seal-x', `${Math.max(4, Math.min(96, (record.x ?? 0.78) * 100))}%`);
+        seal.style.setProperty('--seal-y', `${Math.max(4, Math.min(96, (record.y ?? 0.12) * 100))}%`);
+        const inner = document.createElement('span');
+        inner.className = 'knowledge-seal__inner';
+        const label = document.createElement('strong');
+        label.textContent = record.label || definition.label;
+        inner.append(label);
+        const subLabelText = record.subLabel || definition.subLabel;
+        if (subLabelText) {
+          const subLabel = document.createElement('em');
+          subLabel.textContent = subLabelText;
+          inner.append(subLabel);
+        }
+        seal.append(inner);
+        return seal;
+      };
+
+      const renderSeals = (options = {}) => {
+        const animateId = options.animateId || '';
+        document.querySelectorAll('[data-rendered-seal]').forEach((node) => node.remove());
+        const sealSurfaces = [...document.querySelectorAll('[data-seal-surface], [data-feed-card]')];
+        sealSurfaces.forEach((card) => {
+          const targetId = card.dataset.sealTarget || card.dataset.drawerId || card.getAttribute('href');
+          if (!targetId) return;
+          const record = latestSealFor(targetId);
+          if (!record) return;
+          card.append(createSealElement(record, { animate: record.id === animateId }));
+        });
+        if (currentArticle && drawerBody) {
+          const intro = drawerBody.querySelector('.home-article-intro');
+          const record = latestSealFor(currentArticle.id);
+          if (intro && record) intro.append(createSealElement(record, { animate: record.id === animateId }));
+        }
+      };
+
+      const openSealPalette = (target, anchor) => {
+        if (!sealPalette || !target?.targetId) return;
+        sealDefinitions = loadSealDefinitions();
+        sealContext = target;
+        if (sealTargetTitle) sealTargetTitle.textContent = target.title || '选择判断';
+        sealPalette.hidden = false;
+        const rect = anchor?.getBoundingClientRect?.();
+        if (rect && sealPalette instanceof HTMLElement) {
+          sealPalette.style.setProperty('--seal-palette-x', `${Math.min(window.innerWidth - 280, Math.max(12, rect.left))}px`);
+          sealPalette.style.setProperty('--seal-palette-y', `${Math.min(window.innerHeight - 260, Math.max(12, rect.bottom + 8))}px`);
+        }
+      };
+
+      const closeSealPalette = () => {
+        if (sealPalette) sealPalette.hidden = true;
+        sealContext = null;
+      };
+
+      const saveSeal = (type) => {
+        if (!sealContext?.targetId) return;
+        sealDefinitions = loadSealDefinitions();
+        const definition = sealDefinitions[type] || sealDefinitions.selected;
+        const records = getSeals();
+        const previous = records.find((item) => item.targetId === sealContext.targetId);
+        const now = Date.now();
+        const record = {
+          id: previous?.id || `seal:${sealContext.targetId}:${now}`,
+          sealId: definition.id || type,
+          type,
+          label: definition.label,
+          subLabel: definition.subLabel,
+          color: definition.color,
+          shape: definition.shape,
+          texture: definition.texture,
+          targetId: sealContext.targetId,
+          targetType: sealContext.targetType || 'card',
+          title: sealContext.title || 'Untitled',
+          kind: sealContext.kind || 'post',
+          href: sealContext.href || '',
+          drawerId: sealContext.drawerId || '',
+          rotation: previous?.rotation ?? Math.round(Math.random() * 14 - 7),
+          x: sealContext.x ?? previous?.x ?? 0.78,
+          y: sealContext.y ?? previous?.y ?? 0.14,
+          createdAt: previous?.createdAt || now,
+          updatedAt: now
+        };
+        writeJson(storageKeys.seals, [record, ...records.filter((item) => item.id !== record.id && item.targetId !== record.targetId)]);
+        renderSeals({ animateId: record.id });
+        closeSealPalette();
+      };
+
+      const removeSeal = () => {
+        if (!sealContext?.targetId) return;
+        writeJson(storageKeys.seals, getSeals().filter((item) => item.targetId !== sealContext.targetId));
+        renderSeals();
+        closeSealPalette();
+      };
+
+      const saveHistory = (article) => {
+        if (!article?.id) return;
+        const list = getRuntimeMergedHistory();
+        const previous = list.find((item) => item.id === article.id) || {};
+        const now = Date.now();
+        const record = {
+          ...previous,
+          id: article.id,
+          objectId: article.id,
+          objectType: 'article',
+          title: article.title,
+          href: article.href,
+          timestamp: now,
+          lastReadAt: now,
+          scrollTop: previous.scrollTop || 0,
+          progress: previous.progress || 0
+        };
+        const next = [record, ...list.filter((item) => item.id !== article.id)].slice(0, 50);
+        writeJson(storageKeys.history, next);
+        saveRuntimeMemory(record);
+        renderSidebarState();
+      };
+
+      const getHistoryEntry = (id) => getRuntimeMergedHistory().find((item) => item.id === id || item.objectId === id);
+
+      const persistReadingMemory = (ratio) => {
+        if (!currentArticle || !drawerBody) return;
+        if (readerMemoryFrame) return;
+        readerMemoryFrame = requestAnimationFrame(() => {
+          readerMemoryFrame = 0;
+          const list = getRuntimeMergedHistory();
+          const previous = list.find((item) => item.id === currentArticle.id) || {};
+          const now = Date.now();
+          const record = {
+            ...previous,
+            id: currentArticle.id,
+            objectId: currentArticle.id,
+            objectType: 'article',
+            title: currentArticle.title,
+            href: currentArticle.href,
+            timestamp: previous.timestamp || now,
+            lastReadAt: now,
+            scrollTop: drawerBody.scrollTop,
+            progress: Number.isFinite(ratio) ? Math.max(0, Math.min(1, ratio)) : 0
+          };
+          writeJson(storageKeys.history, [record, ...list.filter((item) => item.id !== currentArticle.id)].slice(0, 50));
+          saveRuntimeMemory(record);
+        });
+      };
+
+      const getBookmarks = () => readJson(storageKeys.bookmarks, []);
+
+      const isBookmarked = (id) => getBookmarks().some((item) => item.id === id);
+
+      const updateBookmarkButton = () => {
+        if (!bookmarkButton || !currentArticle) return;
+        const active = isBookmarked(currentArticle.id);
+        bookmarkButton.classList.toggle('is-active', active);
+        bookmarkButton.textContent = active ? '已收藏' : '收藏';
+      };
+
+      const toggleBookmark = () => {
+        if (!currentArticle) return;
+        const list = getBookmarks();
+        const exists = list.some((item) => item.id === currentArticle.id);
+        const next = exists
+          ? list.filter((item) => item.id !== currentArticle.id)
+          : [{ id: currentArticle.id, title: currentArticle.title, href: currentArticle.href, createdAt: Date.now() }, ...list];
+        writeJson(storageKeys.bookmarks, next);
+        updateBookmarkButton();
+        renderSidebarState();
+      };
+
+      const updateReadingProgress = () => {
+        if (!drawerBody || !progress) return;
+        const max = drawerBody.scrollHeight - drawerBody.clientHeight;
+        const ratio = max > 0 ? drawerBody.scrollTop / max : 0;
+        progress.style.transform = `scaleX(${Math.max(0, Math.min(1, ratio))})`;
+        persistReadingMemory(ratio);
+      };
+
+      const updateReaderGraphLink = () => {
+        if (!(readerGraphLink instanceof HTMLAnchorElement) || !currentArticle) return;
+        readerGraphLink.href = `/knowledge/?focus=${encodeURIComponent(currentArticle.id)}`;
+      };
+
+      const escapeCssIdentifier = (value) => {
+        if (window.CSS?.escape) return window.CSS.escape(value);
+        return value.replace(/["\\]/g, '\\$&');
+      };
+
+      const normalizeAnchorText = (input) => input.replace(/\s+/g, ' ').trim();
+
+      const hashText = (input) => {
+        let hash = 0;
+        for (let index = 0; index < input.length; index += 1) {
+          hash = (hash << 5) - hash + input.charCodeAt(index);
+          hash |= 0;
+        }
+        return String(hash);
+      };
+
+      const collectTextNodes = (root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        let current = walker.nextNode();
+        while (current) {
+          nodes.push(current);
+          current = walker.nextNode();
+        }
+        return nodes;
+      };
+
+      const getNodePath = (root, target) => {
+        const path = [];
+        let node = target;
+        while (node && node !== root && node.parentNode) {
+          path.unshift([...node.parentNode.childNodes].indexOf(node));
+          node = node.parentNode;
+        }
+        return path;
+      };
+
+      const resolveNodePath = (root, path) => {
+        let node = root;
+        for (const index of path || []) {
+          node = node?.childNodes?.[index];
+          if (!node) return null;
+        }
+        return node;
+      };
+
+      const findRangeTextOffset = (root, target, offset) => {
+        let cursor = 0;
+        for (const node of collectTextNodes(root)) {
+          if (node === target) return cursor + offset;
+          cursor += node.nodeValue?.length || 0;
+        }
+        return cursor;
+      };
+
+      const createRangeFromOffsets = (root, start, end) => {
+        const nodes = collectTextNodes(root);
+        const range = document.createRange();
+        let cursor = 0;
+        let started = false;
+        for (const node of nodes) {
+          const length = node.nodeValue?.length || 0;
+          const next = cursor + length;
+          if (!started && start <= next) {
+            range.setStart(node, Math.max(0, start - cursor));
+            started = true;
+          }
+          if (started && end <= next) {
+            range.setEnd(node, Math.max(0, end - cursor));
+            return range;
+          }
+          cursor = next;
+        }
+        return null;
+      };
+
+      const createHighlightAnchor = (root, range) => {
+        const exact = range.toString();
+        const fullText = root.textContent || '';
+        const start = findRangeTextOffset(root, range.startContainer, range.startOffset);
+        const end = start + exact.length;
+        return {
+          quote: {
+            type: 'TextQuoteSelector',
+            exact,
+            prefix: fullText.slice(Math.max(0, start - 48), start),
+            suffix: fullText.slice(end, Math.min(fullText.length, end + 48))
+          },
+          position: { type: 'TextPositionSelector', start, end },
+          dom: {
+            type: 'DomPathSelector',
+            startPath: getNodePath(root, range.startContainer),
+            startOffset: range.startOffset,
+            endPath: getNodePath(root, range.endContainer),
+            endOffset: range.endOffset
+          },
+          contentHash: hashText(normalizeAnchorText(fullText))
+        };
+      };
+
+      const resolveByDomPath = (root, selector) => {
+        if (!selector?.startPath || !selector?.endPath) return null;
+        const startNode = resolveNodePath(root, selector.startPath);
+        const endNode = resolveNodePath(root, selector.endPath);
+        if (!startNode || !endNode) return null;
+        try {
+          const range = document.createRange();
+          range.setStart(startNode, selector.startOffset);
+          range.setEnd(endNode, selector.endOffset);
+          return range;
+        } catch {
+          return null;
+        }
+      };
+
+      const contextScore = (actual, expected) => {
+        if (!expected) return 0.5;
+        if (actual === expected) return 1;
+        if (actual.endsWith(expected) || expected.endsWith(actual)) return 0.72;
+        return 0;
+      };
+
+      const resolveByQuote = (root, quote, fallbackText) => {
+        const exact = quote?.exact || fallbackText || '';
+        if (!exact) return null;
+        const fullText = root.textContent || '';
+        const candidates = [];
+        let index = fullText.indexOf(exact);
+        while (index >= 0) {
+          const end = index + exact.length;
+          const prefix = fullText.slice(Math.max(0, index - (quote?.prefix?.length || 0)), index);
+          const suffix = fullText.slice(end, end + (quote?.suffix?.length || 0));
+          candidates.push({
+            start: index,
+            end,
+            score: contextScore(prefix, quote?.prefix || '') + contextScore(suffix, quote?.suffix || '')
+          });
+          index = fullText.indexOf(exact, index + 1);
+        }
+        const best = candidates.sort((a, b) => b.score - a.score)[0];
+        return best ? createRangeFromOffsets(root, best.start, best.end) : null;
+      };
+
+      const resolveHighlightRange = (root, record) => {
+        const anchor = record.anchor;
+        if (anchor?.contentHash === hashText(normalizeAnchorText(root.textContent || ''))) {
+          const byPosition = createRangeFromOffsets(root, anchor.position?.start || 0, anchor.position?.end || 0);
+          if (byPosition) return byPosition;
+        }
+        return resolveByQuote(root, anchor?.quote, record.text) || resolveByDomPath(root, anchor?.dom);
+      };
+
+      const scrollToHighlight = (highlightId) => {
+        if (!highlightId || !drawerBody) return;
+        const mark = drawerBody.querySelector(`[data-highlight-id="${escapeCssIdentifier(highlightId)}"]`);
+        if (!mark) return;
+        mark.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        mark.classList.add('reader-highlight--focus');
+        window.setTimeout(() => mark.classList.remove('reader-highlight--focus'), 1200);
+      };
+
+      const createReaderMemoryPanel = () => {
+        const panel = document.createElement('aside');
+        panel.className = 'reader-memory-panel';
+        const toggle = document.createElement('button');
+        const content = document.createElement('div');
+        toggle.type = 'button';
+        toggle.className = 'reader-memory-panel__toggle';
+        toggle.dataset.memoryToggle = 'true';
+        toggle.textContent = '阅读记忆';
+        content.className = 'reader-memory-panel__content';
+        panel.append(toggle, content);
+        const history = getRuntimeMergedHistory().slice(0, 4);
+        const bookmarks = readJson(storageKeys.bookmarks, []).slice(0, 4);
+        const highlights = getRuntimeMergedHighlights().slice(0, 4);
+        const annotations = readJson(storageKeys.annotations, []).slice(0, 4);
+        const appendSection = (title, items, type) => {
+          const section = document.createElement('section');
+          const heading = document.createElement('span');
+          heading.textContent = title;
+          section.append(heading);
+
+          if (!items.length) {
+            const empty = document.createElement('p');
+            empty.textContent = '暂无记录';
+            section.append(empty);
+            content.append(section);
+            return;
+          }
+
+          items.forEach((item) => {
+            const target = type === 'highlight' || type === 'annotation' ? item.articleId : item.id;
+            const label = type === 'highlight' ? item.text : type === 'annotation' ? item.body : item.title;
+            const button = document.createElement('button');
+            const text = document.createElement('span');
+            button.type = 'button';
+            button.dataset.memoryDrawer = target || '';
+            if (type === 'highlight' && item.id) button.dataset.memoryHighlight = item.id;
+            if (type === 'annotation' && item.highlightId) button.dataset.memoryHighlight = item.highlightId;
+            text.textContent = label || 'Untitled';
+            button.append(text);
+            if (type === 'history') {
+              const meta = document.createElement('small');
+              meta.textContent = formatReaderProgress(item);
+              button.append(meta);
+            }
+            section.append(button);
+          });
+
+          content.append(section);
+        };
+        appendSection('最近阅读', history, 'history');
+        appendSection('收藏', bookmarks, 'bookmark');
+        appendSection('标记', highlights, 'highlight');
+        appendSection('批注', annotations, 'annotation');
+        return panel;
+      };
+
+      const renderReaderMiniGraph = () => {
+        if (!drawerBody || !currentArticle) return;
+        const mini = drawerBody.querySelector('[data-reader-mini-graph]');
+        if (!mini) return;
+        const highlightsTarget = mini.querySelector('[data-mini-highlights]');
+        const graphOpen = mini.querySelector('[data-mini-graph-open]');
+        if (graphOpen instanceof HTMLAnchorElement) {
+          graphOpen.href = `/knowledge/?focus=${encodeURIComponent(currentArticle.id)}`;
+        }
+        if (!highlightsTarget) return;
+        const highlights = getRuntimeMergedHighlights()
+          .filter((item) => item.articleId === currentArticle.id)
+          .slice(0, 3);
+        const annotations = readJson(storageKeys.annotations, [])
+          .filter((item) => item.articleId === currentArticle.id)
+          .slice(0, Math.max(0, 3 - highlights.length));
+        const memoryItems = [
+          ...highlights.map((item) => ({ ...item, memoryType: 'highlight', label: item.text })),
+          ...annotations.map((item) => ({ ...item, memoryType: 'annotation', label: item.body }))
+        ].slice(0, 3);
+        if (!memoryItems.length) {
+          const empty = document.createElement('p');
+          empty.textContent = '暂无本地标记';
+          highlightsTarget.replaceChildren(empty);
+          return;
+        }
+        highlightsTarget.replaceChildren(
+          ...memoryItems.map((item) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.dataset.memoryDrawer = item.articleId;
+            button.dataset.memoryHighlight = item.id;
+            if (item.memoryType === 'annotation') button.dataset.memoryHighlight = item.highlightId || '';
+            button.textContent = item.label || 'Untitled memory';
+            return button;
+          })
+        );
+      };
+
+      const applyStoredHighlights = () => {
+        if (!drawerBody || !currentArticle) return;
+        const root = drawerBody.querySelector('.home-article-content');
+        if (!root) return;
+        const highlights = getRuntimeMergedHighlights().filter((item) => item.articleId === currentArticle.id || item.objectId === currentArticle.id);
+        const orphaned = [];
+        highlights.forEach((item) => {
+          const range = resolveHighlightRange(root, item);
+          if (!range) {
+            orphaned.push(item);
+            return;
+          }
+          const mark = document.createElement('mark');
+          mark.className = `reader-highlight reader-highlight--${item.color || 'gold'}`;
+          mark.dataset.highlightId = item.id;
+          try {
+            mark.append(range.extractContents());
+            range.insertNode(mark);
+          } catch {
+            orphaned.push(item);
+          }
+        });
+        drawerBody.querySelectorAll('.reader-orphan-highlights').forEach((node) => node.remove());
+        if (orphaned.length) {
+          const notice = document.createElement('aside');
+          notice.className = 'reader-orphan-highlights';
+          const title = document.createElement('strong');
+          const details = document.createElement('p');
+          title.textContent = `${orphaned.length} 条标记暂时无法定位`;
+          details.textContent = orphaned
+            .map((item) => item.text)
+            .slice(0, 3)
+            .join(' / ');
+          notice.append(title, details);
+          drawerBody.prepend(notice);
+        }
+        if (pendingHighlightId) {
+          requestAnimationFrame(() => {
+            scrollToHighlight(pendingHighlightId);
+            pendingHighlightId = null;
+          });
+        }
+        renderReaderMiniGraph();
+      };
+
+      const hideSelectionToolbar = () => {
+        if (selectionToolbar) selectionToolbar.hidden = true;
+        selectedRange = null;
+      };
+
+      const showSelectionToolbar = () => {
+        if (!currentArticle || !drawerBody || !selectionToolbar) return;
+        const selection = window.getSelection();
+        const text = selection?.toString().trim() || '';
+        if (text.length < 10 || text.length > 240 || !selection.rangeCount) {
+          hideSelectionToolbar();
+          return;
+        }
+        const range = selection.getRangeAt(0);
+        if (!drawerBody.contains(range.commonAncestorContainer)) {
+          hideSelectionToolbar();
+          return;
+        }
+        selectedRange = range.cloneRange();
+        const rect = range.getBoundingClientRect();
+        selectionToolbar.hidden = false;
+        const left = Math.min(window.innerWidth - selectionToolbar.offsetWidth - 12, Math.max(12, rect.left));
+        const top = Math.max(12, rect.top - selectionToolbar.offsetHeight - 10);
+        selectionToolbar.style.left = `${left}px`;
+        selectionToolbar.style.top = `${top}px`;
+      };
+
+      const saveSelectionHighlight = (color = 'gold', note = '') => {
+        if (!currentArticle || !drawerBody) return;
+        const selection = window.getSelection();
+        const range = selectedRange || (selection?.rangeCount ? selection.getRangeAt(0) : null);
+        const text = range?.toString().trim() || '';
+        if (!range || text.length < 10 || text.length > 240) return;
+        if (!drawerBody.contains(range.commonAncestorContainer)) return;
+        const root = drawerBody.querySelector('.home-article-content');
+        if (!root || !root.contains(range.commonAncestorContainer)) return;
+        const anchor = createHighlightAnchor(root, range);
+        const record = {
+          id: `${currentArticle.id}:${Date.now()}`,
+          articleId: currentArticle.id,
+          title: currentArticle.title,
+          text,
+          color,
+          anchor,
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        };
+        const mark = document.createElement('mark');
+        mark.className = `reader-highlight reader-highlight--${color}`;
+        mark.dataset.highlightId = record.id;
+        try {
+          mark.append(range.extractContents());
+          range.insertNode(mark);
+          selection?.removeAllRanges();
+        } catch {
+          return;
+        }
+        const nextHighlights = [record, ...getRuntimeMergedHighlights().filter((item) => item.id !== record.id)];
+        runtimeState.highlights = nextHighlights;
+        writeJson(storageKeys.highlights, nextHighlights);
+        saveRuntimeHighlight({ ...record, objectId: currentArticle.id, objectType: 'article' });
+        if (note.trim()) {
+          const annotation = {
+            id: `annotation:${record.id}`,
+            articleId: currentArticle.id,
+            highlightId: record.id,
+            body: note.trim(),
+            color,
+            tags: [],
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          };
+          writeJson(storageKeys.annotations, [annotation, ...readJson(storageKeys.annotations, [])]);
+        }
+        renderSidebarState();
+        renderReaderMiniGraph();
+        hideSelectionToolbar();
+      };
+
+      const search = (query) => {
+        const q = query.trim().toLowerCase();
+        if (!q) return [];
+        const storedHighlights = getRuntimeMergedHighlights().map((item) => ({
+          id: item.id,
+          type: 'highlight',
+          title: item.title,
+          content: item.text,
+          tags: ['highlight'],
+          drawerId: item.articleId,
+          highlightId: item.id
+        }));
+        const storedAnnotations = readJson(storageKeys.annotations, []).map((item) => ({
+          id: item.id,
+          type: 'annotation',
+          title: `批注 · ${item.articleId}`,
+          content: item.body,
+          tags: ['annotation', item.color, ...(item.tags || [])].filter(Boolean),
+          drawerId: item.articleId,
+          highlightId: item.highlightId
+        }));
+        const storedSeals = getSeals().map((item) => ({
+          id: item.id,
+          type: 'seal',
+          title: `${item.label} · ${item.title}`,
+          content: [item.label, item.subLabel, item.sealId || item.type, item.title, item.kind].join(' '),
+          tags: ['seal', item.sealId || item.type, item.type, item.kind].filter(Boolean),
+          drawerId: item.drawerId,
+          href: item.href
+        }));
+        const storedStickers = readJson(storageKeys.stickers, []).map((item) => ({
+          id: item.id,
+          type: 'sticker',
+          title: `贴纸 · ${item.content || item.kind}`,
+          content: [item.kind, item.content, item.note, item.targetId, item.targetType].join(' '),
+          tags: ['sticker', item.kind, item.targetType].filter(Boolean),
+          drawerId: item.targetId,
+          href: item.targetId?.startsWith('visual:') ? `/visuals/#${encodeURIComponent(item.targetId.slice('visual:'.length))}` : undefined
+        }));
+        const folderApi = window.emptyinkpotRuntimeFolders;
+        return [...searchDocs, ...storedHighlights, ...storedAnnotations, ...storedSeals, ...storedStickers]
+          .filter((doc) => {
+            if (!String(doc.id || '').startsWith('runtime:')) return true;
+            const template = document.querySelector(`[data-drawer-template="${escapeCssIdentifier(doc.drawerId || doc.id)}"]`);
+            const folderKey = template?.getAttribute('data-runtime-folder') || '';
+            return !folderApi || folderApi.isVisible(folderKey);
+          })
+          .filter((doc) => searchKind === 'all' || doc.type === searchKind)
+          .map((doc) => {
+            const content = [doc.title, doc.content, ...(doc.tags || [])].join(' ').toLowerCase();
+            const score = (doc.title?.toLowerCase().includes(q) ? 5 : 0) + (content.includes(q) ? 1 : 0);
+            return { doc, score };
+          })
+          .filter((item) => item.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .map((item) => item.doc)
+          .slice(0, 24);
+      };
+
+      const renderSearch = () => {
+        if (!searchInput || !searchResults) return;
+        const results = search(searchInput.value || '');
+        if (!results.length) {
+          searchResults.innerHTML = '<p class="knowledge-search-empty">输入关键词，搜索文章、项目、书架、音乐、GitHub 和本地标记。</p>';
+          return;
+        }
+        searchResults.replaceChildren(
+          ...results.map((doc) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'knowledge-search-result';
+            button.innerHTML = `<span>${doc.type}</span><strong></strong><small></small>`;
+            button.querySelector('strong').textContent = doc.title;
+            button.querySelector('small').textContent = String(doc.content || '').slice(0, 150);
+            button.addEventListener('click', () => {
+              if (doc.drawerId) {
+                openDrawer(doc.drawerId, button, { highlightId: doc.highlightId });
+                closeSearch();
+              } else if (doc.href) {
+                window.location.href = doc.href;
+              }
+            });
+            return button;
+          })
+        );
+      };
+
+      const openSearch = () => {
+        if (!searchLayer || !searchInput) return;
+        window.clearTimeout(searchCloseTimer);
+        searchLayer.hidden = false;
+        requestAnimationFrame(() => {
+          searchLayer.classList.add('is-open');
+          searchInput.focus({ preventScroll: true });
+        });
+        renderSearch();
+      };
+
+      const openSearchWithQuery = (query, kind = 'all') => {
+        setSearchKind(kind);
+        if (searchInput instanceof HTMLInputElement) {
+          searchInput.value = query || '';
+        }
+        openSearch();
+        renderSearch();
+      };
+
+      const closeSearch = () => {
+        if (!searchLayer) return;
+        searchLayer.classList.remove('is-open');
+        window.clearTimeout(searchCloseTimer);
+        searchCloseTimer = window.setTimeout(() => {
+          searchLayer.hidden = true;
+        }, searchTransitionMs);
+      };
+
+      const setFilter = (kind) => {
+        filterButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.feedFilter === kind));
+        getCards().forEach((card) => {
+          const visible = kind === 'all' || card.dataset.feedKind === kind;
+          card.hidden = !visible;
+        });
+        activeIndex = 0;
+      };
+
+      const closeDrawer = () => {
+        if (!layer) return;
+        hideSelectionToolbar();
+        layer.classList.remove('is-open');
+        window.clearTimeout(drawerCloseTimer);
+        drawerCloseTimer = window.setTimeout(() => {
+          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
+          layer.hidden = true;
+          articleDrawer?.classList.remove('home-article-drawer--book');
+          document.body.classList.remove('has-home-article-drawer');
+          drawerBody?.replaceChildren();
+          currentArticle = null;
+          if (mainScroller) {
+            mainScroller.scrollTop = savedScrollTop;
+          }
+          if (lastFocused instanceof HTMLElement) {
+            lastFocused.focus({ preventScroll: true });
+          }
+          if (mainScroller) {
+            requestAnimationFrame(() => {
+              mainScroller.scrollTop = savedScrollTop;
+            });
+          }
+        }, drawerTransitionMs);
+      };
+
+      const hydrateRuntimeDrawer = async (content) => {
+        const body = content.querySelector('[data-runtime-detail-body]');
+        const detailUrl = body?.dataset.runtimeDetailUrl;
+        if (!body || !detailUrl || body.dataset.runtimeDetailLoaded === 'true') return;
+        try {
+          const response = await fetch(detailUrl, { cache: 'no-store' });
+          if (!response.ok) return;
+          const detail = await response.json();
+          if (!detail?.article?.html) return;
+          body.innerHTML = detail.article.html;
+          body.dataset.runtimeDetailLoaded = 'true';
+          const toc = content.querySelector('.home-article-toc');
+          if (toc && Array.isArray(detail.article.toc) && detail.article.toc.length) {
+            toc.replaceChildren(
+              Object.assign(document.createElement('strong'), { textContent: '目录' }),
+              ...detail.article.toc.map((heading) => {
+                const link = document.createElement('a');
+                link.href = `#${heading.slug}`;
+                link.className = `depth-${heading.depth}`;
+                link.textContent = heading.text;
+                return link;
+              })
+            );
+          }
+          requestAnimationFrame(updateReadingProgress);
+          requestAnimationFrame(applyStoredHighlights);
+        } catch {
+          // Keep the lightweight placeholder if the detail payload is unavailable.
+        }
+      };
+
+      const hydrateCollectionSession = (content) => {
+        const session = content.querySelector('[data-home-collection-session]');
+        if (!session || session.dataset.collectionSessionHydrated === 'true') return;
+        session.dataset.collectionSessionHydrated = 'true';
+        const buttons = () => [...session.querySelectorAll('[data-home-collection-object]')];
+        let activeIndex = Math.max(0, buttons().findIndex((button) => button.classList.contains('is-active')));
+        const setActiveButton = (id) => {
+          buttons().forEach((button) => button.classList.toggle('is-active', button.dataset.homeCollectionObject === id));
+        };
+        const loadObject = async (button) => {
+          if (!button) return;
+          const detailUrl = button.dataset.homeCollectionDetailUrl;
+          const title = session.querySelector('[data-home-collection-title]');
+          const summary = session.querySelector('[data-home-collection-summary]');
+          const kicker = session.querySelector('[data-home-collection-kicker]');
+          const body = session.querySelector('[data-home-collection-body]');
+          setActiveButton(button.dataset.homeCollectionObject || '');
+          activeIndex = buttons().indexOf(button);
+          if (!detailUrl || !body) return;
+          const controller = new AbortController();
+          const timeout = window.setTimeout(() => controller.abort(), 20000);
+          body.dataset.loadState = 'loading';
+          body.innerHTML = '<p>正在切换文章。</p>';
+          try {
+            const response = await fetch(`${detailUrl}${detailUrl.includes('?') ? '&' : '?'}t=${Date.now()}`, {
+              cache: 'no-store',
+              signal: controller.signal
+            });
+            if (!response.ok) {
+              body.dataset.loadState = `http-${response.status}`;
+              body.innerHTML = '<p>正文加载失败，保留当前阅读会话。</p>';
+              return;
+            }
+            const text = await response.text();
+            const detail = JSON.parse(text);
+            const article = detail?.article;
+            if (!article) {
+              body.dataset.loadState = 'missing-article';
+              body.innerHTML = '<p>正文为空。</p>';
+              return;
+            }
+            if (title) title.textContent = article.title || 'Untitled';
+            if (summary) summary.textContent = article.card?.subtitle || article.description || article.summary || '';
+            if (kicker) kicker.textContent = article.card?.eyebrow || article.kind || 'MarkdownObject';
+            body.innerHTML = article.html || '<p>正文为空。</p>';
+            body.dataset.loadState = article.html ? 'loaded' : 'empty';
+            const collectionId = session.dataset.collectionId || '';
+            if (collectionId && article.id) {
+              const url = new URL(window.location.href);
+              url.searchParams.set('collection', collectionId);
+              url.searchParams.set('object', article.id);
+              history.replaceState({ collectionId, objectId: article.id }, '', url);
+            }
+            requestAnimationFrame(updateReadingProgress);
+          } catch {
+            body.dataset.loadState = 'error';
+            body.innerHTML = '<p>正文加载失败，保留当前阅读会话。</p>';
+          } finally {
+            window.clearTimeout(timeout);
+          }
+        };
+        session.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const objectButton = target.closest('[data-home-collection-object]');
+          if (objectButton instanceof HTMLElement) {
+            loadObject(objectButton).catch(() => {});
+            return;
+          }
+          if (target.closest('[data-home-collection-prev]')) {
+            const next = buttons()[Math.max(0, activeIndex - 1)];
+            loadObject(next).catch(() => {});
+          }
+          if (target.closest('[data-home-collection-next]')) {
+            const next = buttons()[Math.min(buttons().length - 1, activeIndex + 1)];
+            loadObject(next).catch(() => {});
+          }
+        });
+        loadObject(buttons()[activeIndex]).catch(() => {});
+      };
+
+      const openDrawer = (id, trigger, options = {}) => {
+        const template = [...document.querySelectorAll('[data-drawer-template]')].find(
+          (node) => node.dataset.drawerTemplate === id
+        );
+        if (!template || !drawerBody || !layer) return;
+
+        const content = template.cloneNode(true);
+        content.removeAttribute('data-drawer-template');
+        const reader = content.matches('.home-article-reader') ? content : content.querySelector('.home-article-reader');
+        const title = reader?.dataset.title ?? '';
+        const kicker = reader?.dataset.kicker ?? '';
+        const href = reader?.dataset.fullHref ?? '#';
+        const kind = reader?.dataset.kind ?? '';
+        const isBookDrawer = kind === 'book';
+        const isCollectionDrawer = kind === 'collection';
+        const readHref = reader?.dataset.readHref ?? '';
+        const bookId = reader?.dataset.bookId ?? '';
+        const articleId = reader?.dataset.articleId ?? id;
+        const storedMemory = getHistoryEntry(articleId);
+        lastFocused = trigger;
+        savedScrollTop = mainScroller?.scrollTop ?? 0;
+        currentArticle = { id: articleId, title, href };
+        pendingHighlightId = options.highlightId || null;
+
+        drawerBody.replaceChildren(createReaderMemoryPanel(), content);
+        articleDrawer?.classList.toggle('home-article-drawer--book', isBookDrawer);
+        articleDrawer?.classList.toggle('home-article-drawer--collection', isCollectionDrawer);
+        if (titleTarget) titleTarget.textContent = title;
+        if (kickerTarget) kickerTarget.textContent = kicker;
+        if (fullLink) {
+          fullLink.setAttribute('href', href);
+          fullLink.textContent = isBookDrawer ? '书籍详情' : '完整页面';
+        }
+        if (readLink) {
+          if (isBookDrawer && readHref) {
+            readLink.hidden = false;
+            readLink.setAttribute('href', readHref);
+          } else {
+            readLink.hidden = true;
+            readLink.setAttribute('href', '#');
+          }
+        }
+        if (shelfLink) {
+          shelfLink.hidden = !isBookDrawer;
+        }
+        updateReaderGraphLink();
+        window.clearTimeout(drawerCloseTimer);
+        layer.hidden = false;
+        document.body.classList.add('has-home-article-drawer');
+        requestAnimationFrame(() => {
+          layer.classList.add('is-open');
+        });
+        saveHistory(currentArticle);
+        updateBookmarkButton();
+        if (storedMemory?.scrollTop && !options.highlightId) {
+          requestAnimationFrame(() => {
+            drawerBody.scrollTop = storedMemory.scrollTop;
+            updateReadingProgress();
+          });
+        } else {
+          updateReadingProgress();
+        }
+        requestAnimationFrame(applyStoredHighlights);
+        requestAnimationFrame(() => {
+          hydrateRuntimeDrawer(content).catch(() => {});
+          hydrateCollectionSession(content);
+        });
+        requestAnimationFrame(renderReaderMiniGraph);
+        requestAnimationFrame(renderSeals);
+        if (isBookDrawer && bookId && readHref) {
+          const mount = reader?.querySelector('[data-book-drawer-reader-mount]');
+          window.__emptyinkpotPendingBookDrawerOpen = {
+            bookId,
+            mountId: mount?.dataset.bookDrawerReaderMount || ''
+          };
+          window.dispatchEvent(
+            new CustomEvent('emptyinkpot:book-drawer-open', {
+              detail: window.__emptyinkpotPendingBookDrawerOpen
+            })
+          );
+        } else {
+          window.__emptyinkpotPendingBookDrawerOpen = null;
+          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
+        }
+        layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
+      };
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => setFilter(button.dataset.feedFilter || 'all'));
+      });
+
+      document.addEventListener('click', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-drawer-id]') : null;
+        if (!trigger) return;
+        const id = trigger.dataset.drawerId;
+        if (!id) return;
+        event.preventDefault();
+        openDrawer(id, trigger);
+      });
+
+      window.addEventListener('emptyinkpot:runtime-books-ready', (event) => {
+        const docs = Array.isArray(event.detail?.docs) ? event.detail.docs : [];
+        searchDocs = [...searchDocs.filter((doc) => doc.type !== 'book'), ...docs];
+        renderSearch();
+        renderSeals();
+      });
+
+      syncRuntimeHomepageFeed();
+      let runtimeFeedEventSource = null;
+      const connectRuntimeFeedEvents = () => {
+        if (!('EventSource' in window) || runtimeFeedEventSource) return;
+        runtimeFeedEventSource = new EventSource('/runtime/events');
+        runtimeFeedEventSource.addEventListener('content-index', syncRuntimeHomepageFeed);
+        runtimeFeedEventSource.addEventListener('error', () => {
+          runtimeFeedEventSource?.close();
+          runtimeFeedEventSource = null;
+          window.setTimeout(connectRuntimeFeedEvents, 5000);
+        });
+      };
+      connectRuntimeFeedEvents();
+      window.setInterval(() => {
+        if (!runtimeFeedEventSource) syncRuntimeHomepageFeed();
+      }, 30000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') syncRuntimeHomepageFeed();
+      });
+
+      window.addEventListener('home-search-open', openSearch);
+
+      document.querySelectorAll('[data-search-close]').forEach((button) => {
+        button.addEventListener('click', closeSearch);
+      });
+
+      searchInput?.addEventListener('input', renderSearch);
+
+      searchKinds.forEach((button) => {
+        button.addEventListener('click', () => {
+          setSearchKind(button.dataset.searchKind || 'all');
+          renderSearch();
+        });
+      });
+
+      document.querySelectorAll('[data-reader-theme]').forEach((button) => {
+        button.addEventListener('click', () => applyReaderTheme(button.dataset.readerTheme));
+      });
+
+      bookmarkButton?.addEventListener('click', toggleBookmark);
+      drawerBody?.addEventListener('scroll', updateReadingProgress);
+      drawerBody?.addEventListener('mouseup', () => setTimeout(showSelectionToolbar, 0));
+      drawerBody?.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-memory-drawer]') : null;
+        if (!target) return;
+        const drawerId = target.dataset.memoryDrawer;
+        if (!drawerId) return;
+        openDrawer(drawerId, target, { highlightId: target.dataset.memoryHighlight });
+      });
+
+      drawerBody?.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-mini-tag]') : null;
+        if (!target) return;
+        openSearchWithQuery(target.dataset.miniTag || '', 'all');
+      });
+
+      drawerBody?.addEventListener('click', (event) => {
+        const toggle = event.target instanceof Element ? event.target.closest('[data-memory-toggle]') : null;
+        if (!toggle) return;
+        const panel = toggle.closest('.reader-memory-panel');
+        panel?.classList.toggle('is-open');
+      });
+
+      document.querySelector('.home-feed-rail')?.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-sidebar-drawer]') : null;
+        if (!target) return;
+        const drawerId = target.dataset.sidebarDrawer;
+        if (!drawerId) return;
+        openDrawer(drawerId, target, { highlightId: target.dataset.sidebarHighlight });
+      });
+
+      document.addEventListener('click', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-seal-trigger]') : null;
+        if (!trigger) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const card = trigger.closest('[data-seal-surface], [data-feed-card]');
+        if (!card) return;
+        const rect = card.getBoundingClientRect?.();
+        openSealPalette(
+          {
+            targetId: card.dataset.sealTarget || card.dataset.drawerId || card.getAttribute('href'),
+            drawerId: card.dataset.drawerId || '',
+            href: card.getAttribute('href') || '',
+            title: card.dataset.sealTitle || card.textContent?.trim() || 'Untitled',
+            kind: card.dataset.sealKind || card.dataset.feedKind || 'post',
+            targetType: 'card',
+            x: rect ? Math.min(0.88, Math.max(0.12, (event.clientX - rect.left) / rect.width)) : 0.78,
+            y: rect ? Math.min(0.28, Math.max(0.1, (event.clientY - rect.top) / rect.height)) : 0.14
+          },
+          trigger
+        );
+      }, true);
+
+      document.addEventListener('keydown', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-seal-trigger]') : null;
+        if (!trigger || (event.key !== 'Enter' && event.key !== ' ')) return;
+        event.preventDefault();
+        trigger.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      readerSealButton?.addEventListener('click', () => {
+        if (!currentArticle) return;
+        openSealPalette(
+          {
+            targetId: currentArticle.id,
+            drawerId: currentArticle.id,
+            href: currentArticle.href,
+            title: currentArticle.title,
+            kind: currentArticle.id.split(':')[0],
+            targetType: 'article'
+          },
+          readerSealButton
+        );
+      });
+
+      sealPalette?.querySelectorAll('[data-seal-type]').forEach((button) => {
+        button.addEventListener('click', () => saveSeal(button.dataset.sealType || 'selected'));
+      });
+
+      sealPalette?.querySelector('[data-seal-close]')?.addEventListener('click', closeSealPalette);
+      sealPalette?.querySelector('[data-seal-remove]')?.addEventListener('click', removeSeal);
+
+      document.addEventListener('click', async (event) => {
+        const colorButton = event.target instanceof Element ? event.target.closest('[data-copy-color]') : null;
+        const tokenButton = event.target instanceof Element ? event.target.closest('[data-copy-visual-token]') : null;
+        const copyValue = colorButton?.dataset.copyColor;
+        const visualId = tokenButton?.dataset.copyVisualToken;
+        if (!copyValue && !visualId) return;
+        event.preventDefault();
+        event.stopPropagation();
+        let text = copyValue || '';
+        if (visualId) {
+          const item = visualKnowledgeItems.find((visual) => visual.id === visualId);
+          if (!item) return;
+          const colors = item.palette?.colors || [];
+          text = JSON.stringify(
+            {
+              name: item.id,
+              tokens: {
+                accent: colors[0] || item.palette?.dominant,
+                accentMuted: colors[1],
+                background: colors[2],
+                text: colors[3],
+                border: colors[4],
+                mood: item.mood,
+                source: item.sourceLabel,
+                imageCount: item.images?.length ?? 0
+              }
+            },
+            null,
+            2
+          );
+        }
+        try {
+          await navigator.clipboard?.writeText(text);
+        } catch {
+          window.prompt('复制这段内容', text);
+        }
+      });
+
+      selectionToolbar?.querySelectorAll('[data-highlight-color]').forEach((button) => {
+        button.addEventListener('click', () => saveSelectionHighlight(button.dataset.highlightColor || 'gold'));
+      });
+
+      selectionToolbar?.querySelector('[data-open-annotation]')?.addEventListener('click', () => {
+        const note = window.prompt('写下这条标记的批注');
+        if (note !== null) saveSelectionHighlight('gold', note);
+      });
+
+      selectionToolbar?.querySelector('[data-copy-selection]')?.addEventListener('click', async () => {
+        const text = selectedRange?.toString().trim();
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          // Clipboard can be unavailable in some preview contexts.
+        }
+        hideSelectionToolbar();
+      });
+
+      document.querySelectorAll('[data-article-close]').forEach((button) => {
+        button.addEventListener('click', closeDrawer);
+      });
+
+      const runReaderCommand = (command, trigger = document.body) => {
+        if (!command?.type) return;
+        if (command.type === 'openArticle' && command.articleId) {
+          openDrawer(command.articleId, trigger);
+        }
+        if (command.type === 'openHighlight' && command.articleId) {
+          openDrawer(command.articleId, trigger, { highlightId: command.highlightId });
+        }
+        if (command.type === 'searchTag' && command.tag) {
+          openSearchWithQuery(command.tag, 'all');
+        }
+        if (command.type === 'focusGraphNode' && command.nodeId) {
+          window.location.href = `/knowledge/?focus=${encodeURIComponent(command.nodeId)}`;
+        }
+      };
+
+      window.addEventListener('reader-command', (event) => {
+        runReaderCommand(event.detail, event.target);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        const target = event.target;
+        const isTyping = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
+        const commandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
+        if (commandSearch) {
+          if (document.documentElement.getAttribute('data-home-command-ready') === 'true') {
+            return;
+          }
+          event.preventDefault();
+          openSearch();
+          return;
+        }
+        if (event.key === 'Escape' && !searchLayer?.hidden) {
+          closeSearch();
+          return;
+        }
+        if (event.key === 'Escape' && !layer?.hidden) {
+          closeDrawer();
+          return;
+        }
+        if (isTyping || !layer?.hidden || !searchLayer?.hidden) return;
+        if (event.key.toLowerCase() === 'j') {
+          event.preventDefault();
+          setActiveCard(activeIndex + 1);
+        }
+        if (event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          setActiveCard(activeIndex - 1);
+        }
+        if (event.key === 'Enter') {
+          const visibleCards = getVisibleCards();
+          const card = visibleCards[activeIndex];
+          const id = card?.dataset.drawerId;
+          if (id) {
+            event.preventDefault();
+            openDrawer(id, card);
+          }
+        }
+      });
+
+      applyReaderTheme(localStorage.getItem(storageKeys.readerTheme) || 'light');
+      initSidebar();
+      renderSidebarState();
+      loadRuntimeState().then(() => {
+        renderSidebarState();
+        renderReaderMiniGraph();
+      });
+      renderSeals();
+      initHeroBanner();
+      const params = new URLSearchParams(window.location.search);
+      const readerId = params.get('reader');
+      const highlightId = params.get('highlight');
+      const searchTag = params.get('searchTag');
+      if (readerId) {
+        const trigger = document.querySelector(`[data-drawer-id="${escapeCssIdentifier(readerId)}"]`) || document.body;
+        runReaderCommand(
+          highlightId ? { type: 'openHighlight', articleId: readerId, highlightId } : { type: 'openArticle', articleId: readerId },
+          trigger
+        );
+      } else if (searchTag) {
+        runReaderCommand({ type: 'searchTag', tag: searchTag }, document.body);
+      }
+    })();
+  </script>
+  <GitHubRuntimeSync />
+</BaseLayout>

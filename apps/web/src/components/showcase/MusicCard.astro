@@ -1,0 +1,28 @@
+---
+import type { MusicItem } from '../../data/music';
+import AlbumCover from './AlbumCover.astro';
+
+interface Props {
+  item: MusicItem;
+  compact?: boolean;
+  inertCard?: boolean;
+}
+
+const { item, compact = false, inertCard = false } = Astro.props;
+const href = item.href ?? '/music/';
+const Tag = inertCard ? 'article' : 'a';
+const linkProps = inertCard ? {} : { href };
+---
+
+<Tag class:list={['showcase-card', 'showcase-card--music', compact && 'showcase-card--compact']} {...linkProps}>
+  <AlbumCover title={item.title} cover={item.cover} />
+  <div>
+    <span>音乐 / {item.platform}</span>
+    <strong>{item.title}</strong>
+    <small>{item.artist}{item.album ? ` / ${item.album}` : ''}</small>
+    <p>{item.note}</p>
+    <div class="showcase-card__tags">
+      {item.mood.map((tag) => <em>{tag}</em>)}
+    </div>
+  </div>
+</Tag>

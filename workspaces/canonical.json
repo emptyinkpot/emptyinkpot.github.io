@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "workspaceType": "canonical",
+  "description": "Authoritative remote source workspace. It may edit runtime authority, PWA surface, OpenList contracts and deployment scripts.",
+  "defaultRoot": "/srv/myblog/repo",
+  "capabilities": {
+    "canBuild": true,
+    "canDeploy": true,
+    "canModifyRuntime": true,
+    "canTouchPWA": true,
+    "canModifyRuntimeSchema": true,
+    "canModifyOpenListAuthority": true
+  },
+  "deploymentAuthority": true,
+  "allowedFeatures": [
+    "frontend-ui",
+    "reader-runtime",
+    "runtime-books",
+    "openlist-authority",
+    "pinterest-shell",
+    "pwa",
+    "search-index",
+    "runtime-schema",
+    "architecture-codex",
+    "deployment"
+  ],
+  "forbiddenFeatures": []
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1008" role="img" aria-labelledby="title desc">
+  <title id="title">English vocabulary book cover</title>
+  <desc id="desc">A compact study book cover for the private bookshelf.</desc>
+  <rect width="720" height="1008" fill="#4b3f72"/>
+  <rect x="54" y="54" width="612" height="900" fill="#fff8e9"/>
+  <rect x="92" y="92" width="536" height="824" fill="none" stroke="#4b3f72" stroke-width="5"/>
+  <text x="126" y="232" fill="#4b3f72" font-family="Arial, sans-serif" font-size="68" font-weight="800">English</text>
+  <text x="126" y="312" fill="#4b3f72" font-family="Arial, sans-serif" font-size="68" font-weight="800">Vocabulary</text>
+  <text x="126" y="386" fill="#806c2f" font-family="Arial, sans-serif" font-size="28" letter-spacing="5">READING HIGH FREQUENCY</text>
+  <g fill="#4b3f72">
+    <rect x="126" y="526" width="112" height="18" rx="9"/>
+    <rect x="126" y="588" width="360" height="18" rx="9"/>
+    <rect x="126" y="650" width="260" height="18" rx="9"/>
+    <rect x="126" y="712" width="420" height="18" rx="9"/>
+  </g>
+  <g fill="none" stroke="#806c2f" stroke-width="8" stroke-linecap="round">
+    <path d="M494 520l58 58 92-118"/>
+    <path d="M494 644l58 58 92-118"/>
+  </g>
+  <text x="126" y="840" fill="#4b3f72" font-family="Arial, sans-serif" font-size="30" font-weight="700">OpenList Document Library</text>
+</svg>

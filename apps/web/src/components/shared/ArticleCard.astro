@@ -1,0 +1,30 @@
+---
+import type { RuntimeMarkdownObject } from '../../lib/runtimeContent';
+import { formatRuntimeDate, getRuntimeArticleCard, getRuntimeArticleReadingMinutes } from '../../lib/runtimeContent';
+import { toSlug } from '../../lib/content';
+import { withBase } from '../../lib/site';
+
+interface Props {
+  article: RuntimeMarkdownObject;
+}
+
+const { article } = Astro.props as Props;
+const card = getRuntimeArticleCard(article);
+---
+
+<article class="home-post-card h-full p-4 md:p-4">
+  <div class="mb-4 flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.22em] text-[color:var(--home-accent)]">
+    <a class="relative z-10 transition hover:text-stone-900" href={withBase(`/categories/${toSlug(card.eyebrow)}/`)}>
+      {card.eyebrow}
+    </a>
+    <span>{formatRuntimeDate(article.date)}</span>
+  </div>
+
+  <div class="space-y-2">
+    <h3 class="text-lg font-semibold leading-tight text-stone-900 md:text-[1.35rem]">
+      <a class="stretched-link" href={withBase(`/posts/${article.slug}/`)}>{article.title}</a>
+    </h3>
+    <p class="line-clamp-2 text-sm leading-6 text-stone-600">{card.subtitle}</p>
+    <p class="text-xs uppercase tracking-[0.16em] text-stone-500">{getRuntimeArticleReadingMinutes(article)} min read</p>
+  </div>
+</article>

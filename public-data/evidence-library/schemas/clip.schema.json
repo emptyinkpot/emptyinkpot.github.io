@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blog.tengokukk.com/evidence-library/schemas/clip.schema.json",
+  "title": "EvidenceClip",
+  "type": "object",
+  "required": [
+    "id",
+    "assetId",
+    "startMs",
+    "endMs",
+    "title",
+    "visualKinds",
+    "bestFor",
+    "loopable"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "assetId": { "type": "string" },
+    "startMs": { "type": "number", "minimum": 0 },
+    "endMs": { "type": "number", "minimum": 0 },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "visualKinds": { "type": "array", "items": { "type": "string" } },
+    "mood": { "type": "array", "items": { "type": "string" } },
+    "motion": { "type": "array", "items": { "type": "string" } },
+    "bestFor": { "type": "array", "items": { "type": "string" } },
+    "avoidFor": { "type": "array", "items": { "type": "string" } },
+    "loopable": { "type": "boolean" },
+    "entities": { "type": "array", "items": { "type": "string" } },
+    "mustNotShow": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

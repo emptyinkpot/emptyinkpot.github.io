@@ -1,0 +1,630 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getRuntimeFolders } from '../lib/runtimeContent';
+import { withBase } from '../lib/site';
+
+const glassControls = [
+  { key: 'cardTopAlpha', label: '卡片顶部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'cardBottomAlpha', label: '卡片底部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'railTopAlpha', label: '左栏顶部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'railBottomAlpha', label: '左栏底部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'toolbarTopAlpha', label: '筛选条顶部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'toolbarBottomAlpha', label: '筛选条底部不透明度', min: 0.45, max: 1, step: 0.01 },
+  { key: 'backgroundOverlayAlpha', label: '背景遮罩不透明度', min: 0.35, max: 0.95, step: 0.01 },
+  { key: 'glassBlurPx', label: '毛玻璃模糊 px', min: 0, max: 40, step: 1 },
+  { key: 'glassSaturate', label: '毛玻璃饱和度', min: 0.8, max: 1.6, step: 0.01 }
+];
+
+const typographyControls = [
+  { key: 'typography.bodySize', label: '正文字号', min: 16, max: 20, step: 1, suffix: 'px' },
+  { key: 'typography.lineHeight', label: '正文行高', min: 1.65, max: 2.05, step: 0.1 },
+  { key: 'typography.columnWidth', label: '阅读版心', min: 600, max: 760, step: 40, suffix: 'px' },
+  { key: 'typography.titleScale', label: '标题比例', min: 0.9, max: 1.2, step: 0.1 },
+  { key: 'typography.paragraphGap', label: '段落间距', min: 12, max: 24, step: 4, suffix: 'px' }
+];
+
+const bannerTextControls = [
+  { key: 'content.banner.kicker', label: 'Banner 角标', placeholder: 'Seasonal Field' },
+  { key: 'content.banner.title', label: 'Banner 标题', placeholder: 'EMPTYINKPOT' },
+  { key: 'content.banner.subtitle', label: 'Banner 副标题', placeholder: 'Content OS · Tangible Knowledge UI' },
+  { key: 'content.banner.springLabel', label: '春季角标', placeholder: 'Spring Field' },
+  { key: 'content.banner.summerLabel', label: '夏季角标', placeholder: 'Summer Field' },
+  { key: 'content.banner.autumnLabel', label: '秋季角标', placeholder: 'Autumn Field' },
+  { key: 'content.banner.winterLabel', label: '冬季角标', placeholder: 'Winter Field' }
+];
+
+const bannerImageControls = [
+  { key: 'content.banner.bgImage', label: 'Banner 背景图 URL', placeholder: '/images/home/homepage-floral-bg.png' },
+  { key: 'content.banner.midImage', label: 'Banner 中景图 URL', placeholder: '/images/hero/mid.png' },
+  { key: 'content.banner.frontImage', label: 'Banner 前景图 URL', placeholder: '/images/hero/front.png' }
+];
+
+const selectControls = [
+  {
+    key: 'typography.fontMode',
+    label: '字体模式',
+    options: [
+      ['serif', '宋体 / 书籍'],
+      ['sans', '黑体 / 屏幕'],
+      ['mixed', '混合 / UI 分离'],
+      ['system', '系统默认']
+    ]
+  },
+  {
+    key: 'knowledge.graphDensity',
+    label: 'Graph 密度',
+    options: [
+      ['low', '低：隐藏边缘节点'],
+      ['medium', '中：默认'],
+      ['high', '高：全部显示']
+    ]
+  },
+  {
+    key: 'knowledge.graphLabels',
+    label: 'Graph 标签',
+    options: [
+      ['important', '只显示重要'],
+      ['all', '全部显示'],
+      ['none', '不显示']
+    ]
+  },
+  {
+    key: 'knowledge.graphMotion',
+    label: 'Graph 动效',
+    options: [
+      ['true', '开启'],
+      ['false', '关闭']
+    ]
+  },
+  {
+    key: 'knowledge.highlightVisibility',
+    label: '高亮强度',
+    options: [
+      ['subtle', '轻'],
+      ['normal', '标准'],
+      ['strong', '强']
+    ]
+  },
+  {
+    key: 'knowledge.readerMemoryPanel',
+    label: '阅读记忆面板',
+    options: [
+      ['collapsed', '默认折叠'],
+      ['expanded', '默认展开'],
+      ['hidden', '隐藏']
+    ]
+  }
+];
+
+const runtimeFolders = getRuntimeFolders();
+---
+
+<BaseLayout title="显示设置 / emptyinkpot" description="调整 emptyinkpot 首页主题、阅读排版和知识系统显示偏好。">
+  <main class="settings-page" data-visual-settings-page>
+    <section class="settings-page__hero glass-card">
+      <div>
+        <p class="section-kicker">Display Settings</p>
+        <h1>显示与阅读系统</h1>
+        <p>这里调整的是浏览器本地显示参数。默认风格仍是 Heritage；阅读排版和知识图谱设置会即时写入 CSS token，不改仓库默认值。</p>
+      </div>
+      <a class="settings-page__home-link" href={withBase('/')}>返回首页预览</a>
+    </section>
+
+    <section class="settings-page__grid">
+      <form class="settings-page__panel glass-card" data-visual-settings-form>
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Theme</span>
+            <strong>外观主题</strong>
+          </div>
+
+          <label class="settings-control settings-control--wide">
+            <span>首页风格</span>
+            <select class="settings-control__text" name="theme" data-setting="theme" aria-label="首页风格">
+              <option value="heritage">Heritage / Cultural OS（默认）</option>
+              <option value="glass">Glass / Workbench（旧版）</option>
+            </select>
+          </label>
+
+          <label class="settings-control settings-control--wide">
+            <span>首页背景图 URL</span>
+            <input
+              class="settings-control__text"
+              type="text"
+              name="backgroundImage"
+              data-setting="backgroundImage"
+              placeholder="/images/home/homepage-floral-bg.png"
+              aria-label="首页背景图 URL"
+            />
+          </label>
+
+          <details class="settings-details">
+            <summary>Glass legacy 参数</summary>
+            <div class="settings-details__grid">
+              {glassControls.map((control) => (
+                <label class="settings-control">
+                  <span>{control.label}</span>
+                  <div class="settings-control__row">
+                    <input
+                      type="range"
+                      min={control.min}
+                      max={control.max}
+                      step={control.step}
+                      name={control.key}
+                      data-setting={control.key}
+                      aria-label={control.label}
+                    />
+                    <output data-setting-output={control.key}></output>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </details>
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Typography</span>
+            <strong>阅读排版</strong>
+          </div>
+
+          {typographyControls.map((control) => (
+            <label class="settings-control">
+              <span>{control.label}</span>
+              <div class="settings-control__row">
+                <input
+                  type="range"
+                  min={control.min}
+                  max={control.max}
+                  step={control.step}
+                  name={control.key}
+                  data-setting={control.key}
+                  data-setting-suffix={control.suffix ?? ''}
+                  aria-label={control.label}
+                />
+                <output data-setting-output={control.key}></output>
+              </div>
+            </label>
+          ))}
+
+          <label class="settings-control settings-control--wide">
+            <span>字体模式</span>
+            <select class="settings-control__text" name="typography.fontMode" data-setting="typography.fontMode" aria-label="字体模式">
+              {selectControls[0].options.map(([value, label]) => <option value={value}>{label}</option>)}
+            </select>
+          </label>
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Knowledge UI</span>
+            <strong>知识系统</strong>
+          </div>
+
+          {selectControls.slice(1).map((control) => (
+            <label class="settings-control settings-control--wide">
+              <span>{control.label}</span>
+              <select class="settings-control__text" name={control.key} data-setting={control.key} aria-label={control.label}>
+                {control.options.map(([value, label]) => <option value={value}>{label}</option>)}
+              </select>
+            </label>
+          ))}
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Interactions</span>
+            <strong>交互实验</strong>
+          </div>
+
+          <label class="settings-control settings-control--inline">
+            <input type="checkbox" name="home.feedToolbarSticky" data-setting="home.feedToolbarSticky" />
+            <span>首页 Feed 筛选栏吸顶</span>
+          </label>
+
+          <label class="settings-control settings-control--inline">
+            <input type="checkbox" name="interactions.hoverPreview" data-setting="interactions.hoverPreview" />
+            <span>启用 Hover 预览浮层</span>
+          </label>
+        </section>
+
+        <section class="settings-group" data-runtime-folder-settings>
+          <div class="settings-page__panel-head">
+            <span>Runtime Folders</span>
+            <strong>展示文件夹</strong>
+          </div>
+          <p class="settings-mode-note">
+            这里只控制当前浏览器展示哪些 Obsidian docs 文件夹；不会删除文件、不会改同步、不会改 OpenList。默认全部展示。
+          </p>
+          <div class="settings-folder-list" aria-label="Runtime 文件夹展示开关">
+            {runtimeFolders.map((folder) => (
+              <label class="settings-folder-toggle">
+                <input type="checkbox" data-runtime-folder-setting={folder.key} checked />
+                <span>
+                  <strong>{folder.label}</strong>
+                  <small>{folder.count} 篇 / {folder.path || 'docs root'}</small>
+                </span>
+              </label>
+            ))}
+          </div>
+          <div class="settings-page__actions">
+            <button type="button" data-runtime-folder-all>全部展示</button>
+            <button type="button" data-runtime-folder-none>全部隐藏</button>
+          </div>
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Content Ports</span>
+            <strong>Banner 内容</strong>
+          </div>
+          <p class="settings-mode-note">
+            当前为本地模式：这些内容端口只保存到当前浏览器的 <code>emptyinkpot-visual-settings</code>，不会写入 Markdown、JSON 数据源或 GitHub 仓库。
+          </p>
+
+          {bannerTextControls.map((control) => (
+            <label class="settings-control settings-control--wide">
+              <span>{control.label}</span>
+              <input
+                class="settings-control__text"
+                type="text"
+                name={control.key}
+                data-setting={control.key}
+                placeholder={control.placeholder}
+                aria-label={control.label}
+              />
+            </label>
+          ))}
+
+          {bannerImageControls.map((control) => (
+            <label class="settings-control settings-control--wide">
+              <span>{control.label}</span>
+              <input
+                class="settings-control__text"
+                type="text"
+                name={control.key}
+                data-setting={control.key}
+                placeholder={control.placeholder}
+                aria-label={control.label}
+              />
+            </label>
+          ))}
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Backend Connections</span>
+            <strong>后台连接状态</strong>
+          </div>
+          <p class="settings-mode-note">
+            GitHub 写入 API 已通过服务端 admin-next 接入；视觉素材上传、CMS、统一搜索后端和 OpenList 检测仍处于 Reality Pass 待接入阶段。设置页的外观与内容端口仍只负责本地偏好和本地内容覆盖。
+          </p>
+          <div class="settings-status-list" aria-label="后台连接状态">
+            <span>GitHub API：已连接</span>
+            <span>CMS：未接入</span>
+            <span>Visual Upload：未接入</span>
+            <span>OpenList：本地配置</span>
+          </div>
+        </section>
+
+        <section class="settings-group" data-book-settings-form>
+          <div class="settings-page__panel-head">
+            <span>Bookshelf System</span>
+            <strong>书架与 OpenList</strong>
+          </div>
+
+          <label class="settings-control settings-control--wide">
+            <span>OpenList Base URL</span>
+            <input
+              class="settings-control__text"
+              type="url"
+              name="openlistBaseUrl"
+              data-book-setting="openlistBaseUrl"
+              placeholder="/api/openlist"
+              aria-label="OpenList Base URL"
+            />
+          </label>
+
+          <label class="settings-control settings-control--wide">
+            <span>默认书籍目录</span>
+            <input
+              class="settings-control__text"
+              type="text"
+              name="openlistBooksPath"
+              data-book-setting="openlistBooksPath"
+              placeholder="/Obsidian/docs/books/original"
+              aria-label="默认书籍目录"
+            />
+          </label>
+
+          <label class="settings-control settings-control--wide">
+            <span>默认阅读主题</span>
+            <select class="settings-control__text" name="readerTheme" data-book-setting="readerTheme" aria-label="默认阅读主题">
+              <option value="light">白天</option>
+              <option value="sepia">护眼</option>
+              <option value="dark">夜间</option>
+            </select>
+          </label>
+
+          <label class="settings-control settings-control--inline">
+            <input type="checkbox" name="showRecent" data-book-setting="showRecent" />
+            <span>显示最近阅读</span>
+          </label>
+
+          <div class="settings-page__actions">
+            <button type="button" data-book-settings-reset>恢复书架默认</button>
+            <a href={withBase('/books/')}>打开书架</a>
+          </div>
+        </section>
+
+        <section class="settings-group">
+          <div class="settings-page__panel-head">
+            <span>Frontend Copy</span>
+            <strong>全站内容端口</strong>
+          </div>
+
+          <label class="settings-control settings-control--wide">
+            <span>文字覆盖 JSON</span>
+            <textarea
+              class="settings-control__text settings-control__textarea"
+              name="content.copy"
+              data-setting="content.copy"
+              data-setting-json
+              spellcheck="false"
+              aria-label="文字覆盖 JSON"
+            ></textarea>
+          </label>
+
+          <label class="settings-control settings-control--wide">
+            <span>图片覆盖 JSON</span>
+            <textarea
+              class="settings-control__text settings-control__textarea"
+              name="content.images"
+              data-setting="content.images"
+              data-setting-json
+              spellcheck="false"
+              aria-label="图片覆盖 JSON"
+            ></textarea>
+          </label>
+
+          <div class="settings-page__actions">
+            <button type="button" data-export-content-ports>导出本页端口</button>
+          </div>
+        </section>
+
+        <div class="settings-page__actions">
+          <button type="button" data-settings-reset>恢复默认</button>
+          <a href={withBase('/')}>打开首页</a>
+          <a href={withBase('/knowledge/')}>打开 Graph</a>
+        </div>
+      </form>
+
+      <aside class="settings-page__preview" aria-label="视觉预览">
+        <div class="settings-preview-card">
+          <span>Feed Card</span>
+          <strong>内容卡片预览</strong>
+          <p>Heritage 默认不依赖毛玻璃；Glass 模式下透明度、模糊和背景图会实时变化。</p>
+        </div>
+        <div class="settings-preview-reader">
+          <span>Reader Preview</span>
+          <h2>标题、导语与正文共享同一个版心</h2>
+          <p>这是一段正文预览，用来测试字号、行高、版心宽度和段落节奏。所有文字都应该服从同一条内容轴。</p>
+          <mark>这是当前高亮强度。</mark>
+        </div>
+        <div class="settings-preview-graph">
+          <span>Knowledge UI</span>
+          <div>
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+          <p>Graph 密度、标签和动效只改变知识界面的显示偏好，不改变内容索引。</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const api = window.emptyinkpotRuntimeFolders;
+      const form = document.querySelector('[data-runtime-folder-settings]');
+      if (!api || !form) return;
+      const inputs = [...form.querySelectorAll('[data-runtime-folder-setting]')];
+      const allButton = form.querySelector('[data-runtime-folder-all]');
+      const noneButton = form.querySelector('[data-runtime-folder-none]');
+
+      const read = () =>
+        Object.fromEntries(
+          inputs.map((input) => [input.dataset.runtimeFolderSetting, input.checked])
+        );
+
+      const paint = (settings = api.load()) => {
+        inputs.forEach((input) => {
+          const key = input.dataset.runtimeFolderSetting;
+          input.checked = settings[key] !== false;
+        });
+      };
+
+      const save = () => {
+        api.save(read());
+        paint(api.load());
+      };
+
+      paint(api.load());
+      form.addEventListener('input', save);
+      allButton?.addEventListener('click', () => {
+        api.save(Object.fromEntries(inputs.map((input) => [input.dataset.runtimeFolderSetting, true])));
+        paint(api.load());
+      });
+      noneButton?.addEventListener('click', () => {
+        api.save(Object.fromEntries(inputs.map((input) => [input.dataset.runtimeFolderSetting, false])));
+        paint(api.load());
+      });
+    })();
+
+    (() => {
+      const api = window.emptyinkpotVisualSettings;
+      if (!api) return;
+
+      const form = document.querySelector('[data-visual-settings-form]');
+      const resetButton = document.querySelector('[data-settings-reset]');
+      const exportButton = document.querySelector('[data-export-content-ports]');
+      const inputs = [...document.querySelectorAll('[data-setting]')];
+
+      const getPath = (source, path) =>
+        path.split('.').reduce((value, key) => (value && value[key] !== undefined ? value[key] : undefined), source);
+
+      const setPath = (target, path, value) => {
+        const keys = path.split('.');
+        const last = keys.pop();
+        const parent = keys.reduce((node, key) => {
+          node[key] = node[key] || {};
+          return node[key];
+        }, target);
+        parent[last] = value;
+      };
+
+      const unwrapUrl = (value) => {
+        const raw = String(value || '');
+        const match = raw.match(/^url\(["']?(.*?)["']?\)$/);
+        return match ? match[1] : raw;
+      };
+
+      const isUrlKey = (key) => key === 'backgroundImage' || key.endsWith('Image');
+
+      const formatValue = (input, value) => {
+        const suffix = input.dataset.settingSuffix || '';
+        if (!(input instanceof HTMLInputElement) || input.type !== 'range') return String(value);
+        const number = Number(value);
+        const step = Number(input.step);
+        const digits = step > 0 && step < 1 ? 2 : 0;
+        return `${number.toFixed(digits)}${suffix}`;
+      };
+
+      const readInputValue = (input) => {
+        if (input instanceof HTMLInputElement && input.type === 'checkbox') return input.checked;
+        if (input instanceof HTMLInputElement && input.type === 'range') return Number(input.value);
+        if (input.dataset.settingJson !== undefined) {
+          try {
+            return JSON.parse(input.value || '{}');
+          } catch {
+            return {};
+          }
+        }
+        if (input.dataset.setting === 'knowledge.graphMotion') return input.value === 'true';
+        return input.value;
+      };
+
+      const readForm = () => {
+        const values = {};
+        inputs.forEach((input) => {
+          const key = input.dataset.setting;
+          if (!key) return;
+          setPath(values, key, readInputValue(input));
+        });
+        return values;
+      };
+
+      const paint = (settings) => {
+        inputs.forEach((input) => {
+          const key = input.dataset.setting;
+          if (!key) return;
+          let value = getPath(settings, key);
+          if (isUrlKey(key)) value = unwrapUrl(value);
+          if (key === 'knowledge.graphMotion') value = settings.knowledge?.graphMotion ? 'true' : 'false';
+          if (input instanceof HTMLInputElement && input.type === 'checkbox') {
+            input.checked = Boolean(value);
+            return;
+          }
+          input.value = input.dataset.settingJson !== undefined ? JSON.stringify(value || {}, null, 2) : String(value ?? '');
+          const output = document.querySelector(`[data-setting-output="${key}"]`);
+          if (output) output.textContent = formatValue(input, value);
+        });
+      };
+
+      const saveFromForm = () => {
+        const settings = api.save(readForm());
+        paint(settings);
+      };
+
+      paint(api.load());
+      form?.addEventListener('input', saveFromForm);
+      resetButton?.addEventListener('click', () => paint(api.reset()));
+      exportButton?.addEventListener('click', () => {
+        const ports = api.exportContentPorts?.() || { copy: {}, images: {} };
+        api.save({ ...api.load(), content: { ...api.load().content, ...ports } });
+        paint(api.load());
+      });
+    })();
+
+    (() => {
+      const storageKey = 'emptyinkpot-book-settings';
+      const readerThemeKey = 'emptyinkpot-reader-theme';
+      const defaults = {
+        openlistBaseUrl: '/api/openlist',
+        openlistBooksPath: '/Obsidian/docs/books/original',
+        readerTheme: 'sepia',
+        showRecent: true
+      };
+      const form = document.querySelector('[data-book-settings-form]');
+      const resetButton = document.querySelector('[data-book-settings-reset]');
+      const inputs = [...document.querySelectorAll('[data-book-setting]')];
+
+      const normalize = (input = {}) => ({
+        openlistBaseUrl: ['http://127.0.0.1:5244', 'http://localhost:5244'].includes(String(input.openlistBaseUrl || '').trim())
+          ? defaults.openlistBaseUrl
+          : String(input.openlistBaseUrl || defaults.openlistBaseUrl).trim(),
+        openlistBooksPath: String(input.openlistBooksPath || defaults.openlistBooksPath).trim().replace(/\/$/, '') || '/',
+        readerTheme: ['light', 'sepia', 'dark'].includes(input.readerTheme) ? input.readerTheme : defaults.readerTheme,
+        showRecent: input.showRecent !== false
+      });
+
+      const load = () => {
+        try {
+          return normalize(JSON.parse(localStorage.getItem(storageKey) || '{}'));
+        } catch {
+          return normalize();
+        }
+      };
+
+      const paint = (settings) => {
+        inputs.forEach((input) => {
+          const key = input.dataset.bookSetting;
+          if (!key) return;
+          if (input instanceof HTMLInputElement && input.type === 'checkbox') {
+            input.checked = Boolean(settings[key]);
+            return;
+          }
+          input.value = String(settings[key] ?? '');
+        });
+      };
+
+      const read = () => {
+        const values = {};
+        inputs.forEach((input) => {
+          const key = input.dataset.bookSetting;
+          if (!key) return;
+          values[key] = input instanceof HTMLInputElement && input.type === 'checkbox' ? input.checked : input.value;
+        });
+        return normalize(values);
+      };
+
+      const save = () => {
+        const settings = read();
+        localStorage.setItem(storageKey, JSON.stringify(settings));
+        localStorage.setItem(readerThemeKey, settings.readerTheme);
+        document.documentElement.dataset.readerTheme = settings.readerTheme;
+        paint(settings);
+      };
+
+      paint(load());
+      form?.addEventListener('input', save);
+      resetButton?.addEventListener('click', () => {
+        localStorage.removeItem(storageKey);
+        localStorage.setItem(readerThemeKey, defaults.readerTheme);
+        document.documentElement.dataset.readerTheme = defaults.readerTheme;
+        paint(defaults);
+      });
+    })();
+  </script>
+</BaseLayout>
