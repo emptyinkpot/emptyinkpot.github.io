@@ -1,8 +1,0 @@
----
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import RuntimeBookReader from '../../components/books/RuntimeBookReader';
----
-
-<BaseLayout title="OpenList Reader / emptyinkpot" description="从 OpenList 实时同步的在线阅读器。" hideSiteChrome={true} appMode={true}>
-  <RuntimeBookReader client:only="react" />
-</BaseLayout>

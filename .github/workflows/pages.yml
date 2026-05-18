@@ -1,4 +1,4 @@
-name: Deploy Astro Site to Pages
+name: Deploy Quartz Site to Pages
 
 on:
   push:
@@ -19,44 +19,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: apps/web/package-lock.json
 
-      - name: Install root dependencies
-        run: npm ci
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
 
-      - name: Install site dependencies
-        run: npm ci
-        working-directory: apps/web
-
-      - name: Seed runtime content index
-        run: |
-          mkdir -p public-data/runtime apps/web/public/runtime
-          curl -fsSL https://blog.tengokukk.com/runtime/content-index.json -o public-data/runtime/content-index.json
-          cp public-data/runtime/content-index.json apps/web/public/runtime/content-index.json
-
-      - name: Validate repository governance
-        run: npm run check
-
-      - name: Build Astro site
-        run: npm run build
-        working-directory: apps/web
-        env:
-          SITE_URL: https://emptyinkpot.github.io
-          SITE_BASE: /
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: ./apps/web/dist
 

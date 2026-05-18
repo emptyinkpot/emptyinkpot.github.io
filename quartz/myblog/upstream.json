@@ -1,0 +1,8 @@
+{
+  "framework": "quartz",
+  "upstream": "https://github.com/jackyzha0/quartz.git",
+  "branch": "v4",
+  "commit": "d25a6eabf96751ffca56f8a8139272def7a65041",
+  "vendoredAs": "repository-root",
+  "integrationRule": "Quartz remains the primary framework; MyBlog behavior enters through Quartz plugins, layout, configuration, and content sync."
+}
