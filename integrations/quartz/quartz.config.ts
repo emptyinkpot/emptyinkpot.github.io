@@ -1,5 +1,5 @@
 import { QuartzConfig } from "./quartz/cfg"
-import { myblogQuartzBundle } from "./quartz/myblog"
+import { myblogQuartzPlugins } from "./quartz/myblog/plugins"
 
 /**
  * Quartz 4 Configuration
@@ -51,7 +51,7 @@ const config: QuartzConfig = {
       },
     },
   },
-  plugins: myblogQuartzBundle.plugins,
+  plugins: myblogQuartzPlugins,
 }
 
 export default config

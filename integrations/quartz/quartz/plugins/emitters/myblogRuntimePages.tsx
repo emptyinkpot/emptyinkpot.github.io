@@ -7,7 +7,7 @@ import { FullPageLayout } from "../../cfg"
 import { QuartzEmitterPlugin } from "../types"
 import { QuartzPluginData, defaultProcessedContent } from "../vfile"
 import { myblogChannels } from "../../components/myblog/shared"
-import { defaultListPageLayout, sharedPageComponents } from "../../../quartz.layout"
+import { defaultListPageLayout, sharedPageComponents } from "../../myblog/layouts"
 import { FullSlug, pathToRoot } from "../../util/path"
 import { write } from "./helpers"
 
