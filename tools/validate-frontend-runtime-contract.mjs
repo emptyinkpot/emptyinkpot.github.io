@@ -10,7 +10,9 @@ const requiredFiles = [
   'public-data/books/books-index.json',
   'apps/web/public/public-data/books/books-index.json',
   'contracts/collection-behavior-contract.json',
-  'apps/web/src/pages/index.astro'
+  'apps/web/src/pages/index.astro',
+  'apps/web/src/lib/runtime/home-runtime.ts',
+  'packages/runtime-kernel/src/plugins.ts'
 ];
 
 const errors = [];
@@ -35,6 +37,8 @@ const booksMetadataText = readText('public-data/books/books.metadata.json');
 const booksIndexText = readText('public-data/books/books-index.json');
 const collectionDetail = readText('apps/web/src/pages/collections/[slug].astro');
 const runtimeStorage = readText('packages/runtime-kernel/src/storage-keys.mjs');
+const runtimePlugins = readText('packages/runtime-kernel/src/plugins.ts');
+const homeRuntime = readText('apps/web/src/lib/runtime/home-runtime.ts');
 
 let entry = {};
 let contract = {};
@@ -193,6 +197,28 @@ if (authorityContract?.authorities?.bookMetadataLayer?.path !== 'public-data/boo
 
 if (!String(authorityContract?.authorities?.browserLocalCache?.role ?? '').includes('never runtime truth')) {
   errors.push('runtime-authority-map must downgrade browser localStorage to cache/preference/legacy migration only');
+}
+
+for (const term of [
+  'RuntimePluginManifest',
+  'RuntimePluginContribution',
+  'defineRuntimePlugin',
+  'createRuntimePluginRegistry'
+]) {
+  if (!runtimePlugins.includes(term)) {
+    errors.push(`runtime-kernel plugin protocol missing: ${term}`);
+  }
+}
+
+for (const term of [
+  'createRuntimeCommandDetail',
+  'createRuntimeOverlayDetail',
+  'createRuntimeDrawerOpenDetail',
+  'mapLegacyReaderCommandToRuntimeIntent'
+]) {
+  if (!homeRuntime.includes(term)) {
+    errors.push(`home runtime adapter missing: ${term}`);
+  }
 }
 
 for (const forbidden of [

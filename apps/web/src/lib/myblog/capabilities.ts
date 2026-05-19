@@ -1,3 +1,5 @@
+import type { RuntimePlugin } from '../../../../../packages/runtime-kernel/src/plugins';
+
 export type MyBlogCapabilityAction = 'search' | 'openlist' | 'pinterest';
 
 export type MyBlogCapabilityIcon =
@@ -65,8 +67,7 @@ export type MyBlogSidebarNavigationItem = {
   glyph: string;
 };
 
-export type MyBlogSurfacePlugin = {
-  id: string;
+export type MyBlogSurfacePlugin = RuntimePlugin & {
   capabilities?: () => MyBlogCapability[];
 };
 
@@ -224,7 +225,16 @@ export const myblogCapabilities: MyBlogCapability[] = [
 
 export const myblogSurfacePlugins: MyBlogSurfacePlugin[] = [
   {
-    id: 'myblog-core-capabilities',
+    manifest: {
+      id: 'myblog-core-capabilities',
+      name: 'MyBlog Core Capabilities',
+      version: '1.0.0',
+      scopes: ['surface', 'command', 'overlay']
+    },
+    contributes: {
+      commands: ['search.open', 'openlist.open', 'pinterest.open'],
+      overlays: ['search', 'openlist', 'pinterest']
+    },
     capabilities: () => myblogCapabilities
   }
 ];

@@ -98,6 +98,7 @@ AppFlowy 只保留 `infra/appflowy-cloud/` skeleton during stabilization and mus
 - `apps/web/src/data/architectureCodex.ts` is the public Architecture Codex source.
 - Frontend runtime changes must update the relevant Codex entry or state why the Codex is unaffected.
 - `packages/runtime-kernel` owns frontend command, keyboard, overlay, drawer, focus, navigation, and storage classification contracts.
+- `packages/runtime-kernel/src/plugins.ts` owns the small MyBlog runtime plugin protocol: manifest, scopes, contributions, and optional setup. Plugins declare capabilities/resources/intents; they must not become data truth owners.
 - `packages/design-system` owns runtime experience tokens.
 - Local storage is preference/cache/legacy migration only, not runtime truth.
 - Homepage remains the mixed object discovery surface.
