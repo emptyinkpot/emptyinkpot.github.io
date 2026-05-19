@@ -70,7 +70,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     runtime: [
       '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时考古不再维护独立 docs 文档。',
       '审计路径固定为 user behavior -> DOM -> event -> state -> render -> hydration -> network -> animation -> authority -> fallback。',
-      'BaseLayout 拥有全局 build-version reload guard、visual settings applier、OpenList iframe shell、Pinterest mirror shell 和 HoverPreviewSystem island。',
+      'BaseLayout 通过 MyBlog runtime resource registry 挂载 build-version reload guard，并继续持有 visual settings applier、OpenList iframe shell、Pinterest mirror shell 和 HoverPreviewSystem island。',
       '首页拥有大型 inline runtime：Feed filter、Drawer、Reader commands、local search、reader theme、highlights、seals、sidebar state 和 keyboard navigation。',
       'React islands 负责 Command Palette、Hover Preview、Book covers、RuntimeBookFeed、BookshelfGrid、Reader 和项目 command；它们与 inline runtime 通过 custom events 和 DOM selectors 交互。',
       'Search 当前双轨：HomeCommandPalette 是唯一显式全局检索按钮；home inline search 是 fallback；/search/ 仍由 Pagefind 提供静态全文搜索。',

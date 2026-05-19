@@ -2,6 +2,7 @@
 import SiteFooter from '../components/shared/SiteFooter.astro';
 import HoverPreviewSystem from '../components/react/HoverPreviewSystem';
 import { visualCollections } from '../data/visuals';
+import { getMyBlogRuntimeResources } from '../lib/myblog/plugins.mjs';
 import { withBase } from '../lib/site';
 import '../styles/global.css';
 
@@ -29,6 +30,7 @@ const openListEmbedUrl = withBase('/openlist/');
 const pinterestShellSeed = visualCollections.filter((collection) => collection.source === 'pinterest');
 const bodyMode = hideSiteChrome ? (appMode ? 'app-mode' : barePage ? 'bare-mode' : 'home-mode') : false;
 const useFullBleedWrap = hideSiteChrome && !barePage;
+const runtimeResources = getMyBlogRuntimeResources({ buildVersion });
 ---
 
 <html lang="zh-CN" data-theme="heritage">
@@ -58,28 +60,7 @@ const useFullBleedWrap = hideSiteChrome && !barePage;
         });
       })();
     </script>
-    <script is:inline define:vars={{ buildVersion }}>
-      (() => {
-        const versionKey = 'emptyinkpot-build-version';
-        const reloadKey = `emptyinkpot-build-reload:${buildVersion}`;
-
-        try {
-          const previousVersion = localStorage.getItem(versionKey);
-          const hasReloadedForVersion = sessionStorage.getItem(reloadKey) === '1';
-
-          if (previousVersion && previousVersion !== buildVersion && !hasReloadedForVersion) {
-            sessionStorage.setItem(reloadKey, '1');
-            localStorage.setItem(versionKey, buildVersion);
-            window.location.reload();
-            return;
-          }
-
-          localStorage.setItem(versionKey, buildVersion);
-        } catch {
-          // Ignore storage failures so page rendering stays unaffected.
-        }
-      })();
-    </script>
+    {runtimeResources.head.map((resource) => <Fragment set:html={resource.html} />)}
     <script is:inline define:vars={{ defaultHomeBackground }}>
       (() => {
         const storageKey = 'emptyinkpot-visual-settings';
