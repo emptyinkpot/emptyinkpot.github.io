@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getRuntimeFolders } from '../lib/runtimeContent';
 import { withBase } from '../lib/site';
+import { RUNTIME_STORAGE_KEYS } from '../../../../packages/runtime-kernel/src/storage';
 
 const glassControls = [
   { key: 'cardTopAlpha', label: '卡片顶部不透明度', min: 0.45, max: 1, step: 0.01 },
@@ -424,7 +425,7 @@ const runtimeFolders = getRuntimeFolders();
     </section>
   </main>
 
-  <script>
+  <script define:vars={{ runtimeStorageKeys: RUNTIME_STORAGE_KEYS }}>
     (() => {
       const api = window.emptyinkpotRuntimeFolders;
       const form = document.querySelector('[data-runtime-folder-settings]');
@@ -558,8 +559,8 @@ const runtimeFolders = getRuntimeFolders();
     })();
 
     (() => {
-      const storageKey = 'emptyinkpot-book-settings';
-      const readerThemeKey = 'emptyinkpot-reader-theme';
+      const storageKey = runtimeStorageKeys.bookSettings;
+      const readerThemeKey = runtimeStorageKeys.readerTheme;
       const defaults = {
         openlistBaseUrl: '/api/openlist',
         openlistBooksPath: '/Obsidian/docs/books/original',

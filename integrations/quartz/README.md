@@ -1,10 +1,10 @@
-# MyBlog Quartz
+# Embedded MyBlog Quartz
 
-This repository is a native Quartz v4 workspace with MyBlog behavior added through Quartz-native components, plugins, emitters, configuration, layout, runtime data, and content projection.
+This directory is an embedded Quartz v4 workspace used to study and stage MyBlog-compatible Markdown, graph, search, component, plugin, emitter, and content projection ideas.
 
-Quartz is the only primary framework. MyBlog does not wrap Quartz from a separate app shell, and the old Astro shell is not part of this repository shape.
+The production MyBlog frontend remains the root `apps/web` Astro runtime. This integration must not replace the public shell, create a second content truth, or claim deployment authority for `https://blog.tengokukk.com/`.
 
-The public experience intentionally preserves the original MyBlog workbench look and interactions: mixed object feed, reader drawer, local reading memory, bookmarks, highlights, annotations, seal stamps, command/search surface, and source/runtime navigation. Those features are implemented as Quartz-native runtime components/resources, not as an Astro or Next outer shell.
+Quartz ideas can be promoted back into `apps/web` only as MyBlog-native modules: capability registries, content projections, plugin protocols, or runtime contracts that preserve the original workbench look and interactions.
 
 ## Structure
 
@@ -16,7 +16,7 @@ The public experience intentionally preserves the original MyBlog workbench look
 - `quartz/myblog/build.mjs`: build wrapper that stages generated content outside the repo before running Quartz.
 - `content/`: optional local/manual sync output, ignored by git.
 - `docs/`: upstream Quartz documentation retained as vendored reference.
-- `apps/web/dist`: Quartz build output for existing MyBlog deploy compatibility.
+- `apps/web/dist`: compatibility output for this integration only.
 
 ## Commands
 
@@ -33,8 +33,8 @@ npm run check
 
 ## Boundary
 
-Obsidian/Vault Markdown remains writing truth. Quartz owns publishing, routing, layout, components, search, backlinks, graph, RSS, sitemap, runtime page emission, and static rendering.
+Obsidian/Vault Markdown remains writing truth. Quartz owns publishing, routing, layout, components, search, backlinks, graph, RSS, sitemap, runtime page emission, and static rendering only inside this embedded workspace.
 
-Original MyBlog information architecture is represented by Quartz runtime channels: posts, notes, collections, series, categories, tags, knowledge, books, OpenList books, music, visuals, GitHub, projects, codex, evidence library, reader, OpenList, Pinterest, settings, search, updates, about, API keys, and edit intake.
+Original MyBlog information architecture is represented in production by `apps/web`; this workspace may mirror channels for evaluation, but it is not the canonical runtime surface.
 
 DataBase/OpenList integrations remain runtime bridge concerns and must not direct-connect from Quartz content rendering.

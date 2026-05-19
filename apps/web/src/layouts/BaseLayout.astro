@@ -4,6 +4,8 @@ import HoverPreviewSystem from '../components/react/HoverPreviewSystem';
 import { visualCollections } from '../data/visuals';
 import { getMyBlogRuntimeResources } from '../lib/myblog/plugins.mjs';
 import { withBase } from '../lib/site';
+import { LEGACY_RUNTIME_BRIDGES, RUNTIME_EVENT_NAMES } from '../../../../packages/runtime-kernel/src/events';
+import { RUNTIME_STORAGE_KEYS } from '../../../../packages/runtime-kernel/src/storage';
 import '../styles/global.css';
 
 interface Props {
@@ -61,10 +63,18 @@ const runtimeResources = getMyBlogRuntimeResources({ buildVersion });
       })();
     </script>
     {runtimeResources.head.map((resource) => <Fragment set:html={resource.html} />)}
-    <script is:inline define:vars={{ defaultHomeBackground }}>
+    <script
+      is:inline
+      define:vars={{
+        defaultHomeBackground,
+        legacyRuntimeBridges: LEGACY_RUNTIME_BRIDGES,
+        runtimeEventNames: RUNTIME_EVENT_NAMES,
+        runtimeStorageKeys: RUNTIME_STORAGE_KEYS
+      }}
+    >
       (() => {
-        const storageKey = 'emptyinkpot-visual-settings';
-        const runtimeFolderStorageKey = 'emptyinkpot-runtime-folder-settings';
+        const storageKey = runtimeStorageKeys.visualSettings;
+        const runtimeFolderStorageKey = runtimeStorageKeys.runtimeFolderSettings;
         const defaults = {
           theme: 'heritage',
           cardTopAlpha: 0.92,
@@ -374,7 +384,8 @@ const runtimeResources = getMyBlogRuntimeResources({ buildVersion });
           }
 
           applyRuntimeFolderVisibility();
-          window.dispatchEvent(new CustomEvent('emptyinkpot-content-settings-applied', { detail: settings }));
+          window.dispatchEvent(new CustomEvent(runtimeEventNames.contentSettingsApplied, { detail: settings }));
+          window.dispatchEvent(new CustomEvent(legacyRuntimeBridges.contentSettingsApplied, { detail: settings }));
         };
 
         const exportContentPorts = () => ({
@@ -467,7 +478,8 @@ const runtimeResources = getMyBlogRuntimeResources({ buildVersion });
             // Folder visibility is a local preference; ignore storage failures.
           }
           applyRuntimeFolderVisibility(settings);
-          window.dispatchEvent(new CustomEvent('emptyinkpot-runtime-folders-applied', { detail: settings }));
+          window.dispatchEvent(new CustomEvent(runtimeEventNames.runtimeFoldersApplied, { detail: settings }));
+          window.dispatchEvent(new CustomEvent(legacyRuntimeBridges.runtimeFoldersApplied, { detail: settings }));
           return settings;
         };
         const isRuntimeFolderVisible = (folderKey, settings = loadRuntimeFolderSettings()) => settings[String(folderKey || '')] !== false;
@@ -677,17 +689,53 @@ const runtimeResources = getMyBlogRuntimeResources({ buildVersion });
           const trigger = event.target instanceof Element ? event.target.closest('[data-openlist-embed-open]') : null;
           if (!trigger) return;
           event.preventDefault();
-          open(trigger);
+          window.dispatchEvent(
+            new CustomEvent('runtime:overlay-open', {
+              detail: { overlay: 'openlist', source: 'inline-runtime', payload: { trigger }, issuedAt: new Date().toISOString() }
+            })
+          );
         });
 
         document.querySelectorAll('[data-openlist-close]').forEach((button) => {
-          button.addEventListener('click', close);
+          button.addEventListener('click', () => {
+            window.dispatchEvent(
+              new CustomEvent('runtime:overlay-close', {
+                detail: { overlay: 'openlist', source: 'inline-runtime', issuedAt: new Date().toISOString() }
+              })
+            );
+          });
         });
 
         frame.addEventListener('load', hideOpenListLogin);
-        window.addEventListener('openlist-embed-open', (event) => open(event.target));
+        window.addEventListener('openlist-embed-open', (event) => open(event.detail?.target ?? event.target));
+        window.addEventListener('runtime:overlay-open', (event) => {
+          if (event.detail?.overlay === 'openlist') open(event.detail?.payload?.trigger ?? event.target);
+        });
+        window.addEventListener('runtime:overlay-close', (event) => {
+          if (event.detail?.overlay === 'openlist') close();
+        });
+        window.addEventListener('runtime:command', (event) => {
+          if (event.detail?.kind === 'openlist.open') {
+            window.dispatchEvent(
+              new CustomEvent('runtime:overlay-open', {
+                detail: {
+                  overlay: 'openlist',
+                  source: event.detail?.source || 'inline-runtime',
+                  payload: event.detail?.payload || {},
+                  issuedAt: new Date().toISOString()
+                }
+              })
+            );
+          }
+        });
         window.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !layer.hidden) close();
+          if (event.key === 'Escape' && !layer.hidden) {
+            window.dispatchEvent(
+              new CustomEvent('runtime:overlay-close', {
+                detail: { overlay: 'openlist', source: 'inline-runtime', issuedAt: new Date().toISOString() }
+              })
+            );
+          }
         });
       })();
     </script>
@@ -814,16 +862,52 @@ const runtimeResources = getMyBlogRuntimeResources({ buildVersion });
           const trigger = event.target instanceof Element ? event.target.closest('[data-pinterest-embed-open]') : null;
           if (!trigger) return;
           event.preventDefault();
-          open(trigger);
+          window.dispatchEvent(
+            new CustomEvent('runtime:overlay-open', {
+              detail: { overlay: 'pinterest', source: 'inline-runtime', payload: { trigger }, issuedAt: new Date().toISOString() }
+            })
+          );
         });
 
         document.querySelectorAll('[data-pinterest-close]').forEach((button) => {
-          button.addEventListener('click', close);
+          button.addEventListener('click', () => {
+            window.dispatchEvent(
+              new CustomEvent('runtime:overlay-close', {
+                detail: { overlay: 'pinterest', source: 'inline-runtime', issuedAt: new Date().toISOString() }
+              })
+            );
+          });
         });
 
-        window.addEventListener('pinterest-embed-open', (event) => open(event.target));
+        window.addEventListener('pinterest-embed-open', (event) => open(event.detail?.target ?? event.target));
+        window.addEventListener('runtime:overlay-open', (event) => {
+          if (event.detail?.overlay === 'pinterest') open(event.detail?.payload?.trigger ?? event.target);
+        });
+        window.addEventListener('runtime:overlay-close', (event) => {
+          if (event.detail?.overlay === 'pinterest') close();
+        });
+        window.addEventListener('runtime:command', (event) => {
+          if (event.detail?.kind === 'pinterest.open') {
+            window.dispatchEvent(
+              new CustomEvent('runtime:overlay-open', {
+                detail: {
+                  overlay: 'pinterest',
+                  source: event.detail?.source || 'inline-runtime',
+                  payload: event.detail?.payload || {},
+                  issuedAt: new Date().toISOString()
+                }
+              })
+            );
+          }
+        });
         window.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !layer.hidden) close();
+          if (event.key === 'Escape' && !layer.hidden) {
+            window.dispatchEvent(
+              new CustomEvent('runtime:overlay-close', {
+                detail: { overlay: 'pinterest', source: 'inline-runtime', issuedAt: new Date().toISOString() }
+              })
+            );
+          }
         });
       })();
     </script>

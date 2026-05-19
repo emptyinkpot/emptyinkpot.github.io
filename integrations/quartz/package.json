@@ -1,6 +1,6 @@
 {
   "name": "myblog-quartz",
-  "description": "Quartz-primary MyBlog digital garden with MyBlog style and content projection plugins.",
+  "description": "Embedded Quartz workspace for MyBlog content projection and architecture experiments.",
   "private": true,
   "version": "4.5.2",
   "type": "module",

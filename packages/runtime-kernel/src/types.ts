@@ -51,6 +51,7 @@ export type RuntimeOverlayIntent<TPayload = Record<string, unknown>> = {
   overlay: RuntimeOverlayKind;
   source: RuntimeAuthority | string;
   payload?: TPayload;
+  issuedAt?: string;
 };
 
 export type RuntimeDrawerIntent<TPayload = Record<string, unknown>> = {
@@ -59,6 +60,7 @@ export type RuntimeDrawerIntent<TPayload = Record<string, unknown>> = {
   objectType: 'post' | 'book' | 'visual' | 'project' | 'knowledge-object';
   source: RuntimeAuthority | string;
   payload?: TPayload;
+  issuedAt?: string;
 };
 
 export type RuntimeKeyboardScope =

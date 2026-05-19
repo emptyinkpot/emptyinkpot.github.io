@@ -2,6 +2,8 @@ import { FloatingPortal, flip, offset, shift, useFloating } from '@floating-ui/r
 import { AnimatePresence, motion } from 'motion/react';
 import type { CSSProperties } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { LEGACY_RUNTIME_BRIDGES, RUNTIME_EVENT_NAMES } from '../../../../../packages/runtime-kernel/src/events';
+import { RUNTIME_STORAGE_KEYS } from '../../../../../packages/runtime-kernel/src/storage';
 
 type HoverPayload = {
   type: string;
@@ -22,7 +24,7 @@ type PointerPoint = {
 
 const openDelayMs = 120;
 const closeDelayMs = 180;
-const visualSettingsStorageKey = 'emptyinkpot-visual-settings';
+const visualSettingsStorageKey = RUNTIME_STORAGE_KEYS.visualSettings;
 
 function readHoverPreviewEnabled() {
   if (typeof window === 'undefined') return false;
@@ -175,11 +177,13 @@ export default function HoverPreviewSystem() {
       if (event.key === visualSettingsStorageKey) setEnabled(readHoverPreviewEnabled());
     };
 
-    window.addEventListener('emptyinkpot-content-settings-applied', onSettingsApplied);
+    window.addEventListener(RUNTIME_EVENT_NAMES.contentSettingsApplied, onSettingsApplied);
+    window.addEventListener(LEGACY_RUNTIME_BRIDGES.contentSettingsApplied, onSettingsApplied);
     window.addEventListener('storage', onStorage);
 
     return () => {
-      window.removeEventListener('emptyinkpot-content-settings-applied', onSettingsApplied);
+      window.removeEventListener(RUNTIME_EVENT_NAMES.contentSettingsApplied, onSettingsApplied);
+      window.removeEventListener(LEGACY_RUNTIME_BRIDGES.contentSettingsApplied, onSettingsApplied);
       window.removeEventListener('storage', onStorage);
     };
   }, []);

@@ -1,8 +1,10 @@
-export const BOOK_SETTINGS_STORAGE_KEY = 'emptyinkpot-book-settings';
-export const READER_THEME_STORAGE_KEY = 'emptyinkpot-reader-theme';
-export const BOOK_LOCATION_PREFIX = 'emptyinkpot-book-location';
-export const BOOK_PROGRESS_PREFIX = 'emptyinkpot-book-progress';
-export const BOOK_RECENT_STORAGE_KEY = 'emptyinkpot-book-recent';
+import { RUNTIME_STORAGE_KEYS } from '../../../../../packages/runtime-kernel/src/storage';
+
+export const BOOK_SETTINGS_STORAGE_KEY = RUNTIME_STORAGE_KEYS.bookSettings;
+export const READER_THEME_STORAGE_KEY = RUNTIME_STORAGE_KEYS.readerTheme;
+export const BOOK_LOCATION_PREFIX = RUNTIME_STORAGE_KEYS.bookLocationPrefix;
+export const BOOK_PROGRESS_PREFIX = RUNTIME_STORAGE_KEYS.bookProgressPrefix;
+export const BOOK_RECENT_STORAGE_KEY = RUNTIME_STORAGE_KEYS.bookRecent;
 
 export type BookReaderTheme = 'light' | 'sepia' | 'dark';
 

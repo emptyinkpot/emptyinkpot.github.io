@@ -5,7 +5,9 @@ export const RUNTIME_EVENT_NAMES = {
   drawerOpen: 'runtime:drawer-open',
   drawerClose: 'runtime:drawer-close',
   keyboard: 'runtime:keyboard',
-  focusRestore: 'runtime:focus-restore'
+  focusRestore: 'runtime:focus-restore',
+  contentSettingsApplied: 'runtime:content-settings-applied',
+  runtimeFoldersApplied: 'runtime:folders-applied'
 } as const;
 
 export const LEGACY_RUNTIME_BRIDGES = {
@@ -14,7 +16,9 @@ export const LEGACY_RUNTIME_BRIDGES = {
   pinterestEmbedOpen: 'pinterest-embed-open',
   readerCommand: 'reader-command',
   bookDrawerOpen: 'emptyinkpot:book-drawer-open',
-  bookDrawerClose: 'emptyinkpot:book-drawer-close'
+  bookDrawerClose: 'emptyinkpot:book-drawer-close',
+  contentSettingsApplied: 'emptyinkpot-content-settings-applied',
+  runtimeFoldersApplied: 'emptyinkpot-runtime-folders-applied'
 } as const;
 
 export type RuntimeEventName =

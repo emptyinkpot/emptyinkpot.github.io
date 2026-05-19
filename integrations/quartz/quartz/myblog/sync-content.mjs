@@ -38,7 +38,7 @@ if (!articles.some((article) => article.slug === "index")) {
     [
       "---",
       "title: MyBlog",
-      "description: Quartz-primary digital garden with MyBlog style plugins.",
+      "description: Embedded Quartz projection for MyBlog content experiments.",
       "tags:",
       "  - myblog",
       "  - quartz",
@@ -75,7 +75,7 @@ function ensureFallbackIndex() {
     [
       "---",
       "title: MyBlog",
-      "description: Quartz-primary MyBlog garden. Set MYBLOG_VAULT_ROOT to sync real content.",
+      "description: Embedded MyBlog Quartz projection. Set MYBLOG_VAULT_ROOT to sync real content.",
       "tags:",
       "  - myblog",
       "  - quartz",

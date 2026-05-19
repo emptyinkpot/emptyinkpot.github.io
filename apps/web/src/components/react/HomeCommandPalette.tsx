@@ -16,13 +16,14 @@ import {
   X
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { runRuntimeCapabilityAction, type RuntimeCapabilityAction } from '../../lib/runtime/bridge';
 
 type HomeCommand = {
   id: string;
   label: string;
   description: string;
   href?: string;
-  action?: 'search' | 'openlist' | 'pinterest';
+  action?: RuntimeCapabilityAction;
   icon: string;
 };
 
@@ -30,7 +31,6 @@ type HomeCommandPaletteProps = {
   commands: HomeCommand[];
 };
 
-const RUNTIME_COMMAND_EVENT = 'runtime:command';
 const HOME_COMMAND_READY_ATTR = 'data-home-command-ready';
 
 const iconMap = {
@@ -75,35 +75,11 @@ export default function HomeCommandPalette({ commands }: HomeCommandPaletteProps
     };
   }, []);
 
-  const dispatchRuntimeCommand = (kind: string, payload?: Record<string, unknown>) => {
-    window.dispatchEvent(
-      new CustomEvent(RUNTIME_COMMAND_EVENT, {
-        detail: {
-          kind,
-          source: 'HomeCommandPalette',
-          payload,
-          issuedAt: new Date().toISOString()
-        }
-      })
-    );
-  };
-
   const runCommand = (command: HomeCommand) => {
     setOpen(false);
 
-    if (command.action === 'search') {
-      dispatchRuntimeCommand('search.open');
-      window.dispatchEvent(new CustomEvent('home-search-open'));
-      return;
-    }
-
-    if (command.action === 'openlist') {
-      window.dispatchEvent(new CustomEvent('openlist-embed-open'));
-      return;
-    }
-
-    if (command.action === 'pinterest') {
-      window.dispatchEvent(new CustomEvent('pinterest-embed-open'));
+    if (command.action) {
+      runRuntimeCapabilityAction(command.action, { source: 'HomeCommandPalette' });
       return;
     }
 

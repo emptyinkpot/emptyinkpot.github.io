@@ -2,6 +2,7 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import { toString } from 'hast-util-to-string';
 import { visit } from 'unist-util-visit';
+import { RUNTIME_STORAGE_KEYS } from '../../../../../packages/runtime-kernel/src/storage-keys.mjs';
 
 const calloutTypes = new Set([
   'note',
@@ -77,8 +78,8 @@ function renderBuildVersionReloadScript(buildVersion) {
   return `<script>
 (() => {
   const buildVersion = ${JSON.stringify(buildVersion)};
-  const versionKey = 'emptyinkpot-build-version';
-  const reloadKey = \`emptyinkpot-build-reload:\${buildVersion}\`;
+  const versionKey = ${JSON.stringify(RUNTIME_STORAGE_KEYS.buildVersion)};
+  const reloadKey = \`${RUNTIME_STORAGE_KEYS.buildReloadPrefix}:\${buildVersion}\`;
 
   try {
     const previousVersion = localStorage.getItem(versionKey);

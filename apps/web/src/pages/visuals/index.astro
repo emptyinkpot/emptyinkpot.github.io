@@ -2,8 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { visualCollections } from '../../data/visuals';
 import { withBase } from '../../lib/site';
+import { RUNTIME_STORAGE_KEYS } from '../../../../../packages/runtime-kernel/src/storage';
 
-const visualManifestStorageKey = 'emptyinkpot-visual-collections';
+const visualManifestStorageKey = RUNTIME_STORAGE_KEYS.visualCollections;
 const externalVisualSources = new Set(['pinterest', 'pixiv']);
 const pinterestProfileUrl = 'https://www.pinterest.com/emptyinkstand/';
 const immichMediaRuntimeUrl = 'https://photos.blog.tengokukk.com/';
@@ -189,12 +190,16 @@ const createPinterestSaveHref = (item: { image?: string; sourceUrl?: string; tit
     </section>
   </main>
 
-  <script type="application/json" id="visual-manifest-seed" set:html={JSON.stringify({ key: visualManifestStorageKey, collections: visualCollections })} />
+  <script
+    type="application/json"
+    id="visual-manifest-seed"
+    set:html={JSON.stringify({ key: visualManifestStorageKey, stickersKey: RUNTIME_STORAGE_KEYS.stickers, collections: visualCollections })}
+  />
   <script>
     const seed = JSON.parse(document.getElementById('visual-manifest-seed')?.textContent || '{"collections":[]}');
     let collections = Array.isArray(seed.collections) ? seed.collections : [];
     const message = document.querySelector('[data-visual-message]');
-    const stickersKey = 'emptyinkpot-stickers';
+    const stickersKey = seed.stickersKey || 'emptyinkpot-stickers';
 
     const escapeHtml = (value) =>
       String(value || '')

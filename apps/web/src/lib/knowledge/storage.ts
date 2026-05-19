@@ -1,14 +1,14 @@
 import type { BookmarkRecord, HighlightRecord, ReadingHistoryItem } from './types';
-import { sealDefinitionStorageKey } from './seals';
+import { RUNTIME_STORAGE_KEYS } from '../../../../../packages/runtime-kernel/src/storage';
 
 export const knowledgeStorageKeys = {
-  readingHistory: 'emptyinkpot-reading-history',
-  bookmarks: 'emptyinkpot-reader-bookmarks',
-  highlights: 'emptyinkpot-reader-highlights',
-  annotations: 'emptyinkpot-reader-annotations',
-  seals: 'emptyinkpot-reader-seals',
-  sealDefinitions: sealDefinitionStorageKey,
-  readerTheme: 'emptyinkpot-reader-theme'
+  readingHistory: RUNTIME_STORAGE_KEYS.readingHistory,
+  bookmarks: RUNTIME_STORAGE_KEYS.readerBookmarks,
+  highlights: RUNTIME_STORAGE_KEYS.readerHighlights,
+  annotations: RUNTIME_STORAGE_KEYS.readerAnnotations,
+  seals: RUNTIME_STORAGE_KEYS.readerSeals,
+  sealDefinitions: RUNTIME_STORAGE_KEYS.sealDefinitions,
+  readerTheme: RUNTIME_STORAGE_KEYS.readerTheme
 } as const;
 
 export function dedupeHistory(items: ReadingHistoryItem[], limit = 50) {

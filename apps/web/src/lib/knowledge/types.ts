@@ -133,6 +133,7 @@ export type KnowledgeGraphNodeType =
   | 'book'
   | 'music'
   | 'visual'
+  | 'asset'
   | 'tag'
   | 'highlight'
   | 'annotation'

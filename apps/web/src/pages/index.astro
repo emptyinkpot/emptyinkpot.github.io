@@ -18,7 +18,8 @@ import { musicItems, type MusicItem } from '../data/music';
 import { visualCollections, type VisualCollection, type VisualItem } from '../data/visuals';
 import { getGitHubOverview } from '../lib/github';
 import { profileLinks } from '../lib/profile';
-import { getRelatedKnowledgeEntries, type KnowledgeRelationSource } from '../lib/knowledge/relations';
+import { getRelatedKnowledgeEntries } from '../lib/knowledge/relations';
+import { defineKnowledgeObject, knowledgeObjectToRelationSource, knowledgeObjectToSearchDoc } from '../lib/knowledge/objects';
 import { defaultSealDefinitions, sealDefinitionStorageKey } from '../lib/knowledge/seals';
 import {
   getRuntimeArticleCard,
@@ -29,6 +30,8 @@ import {
   type RuntimeMarkdownObject
 } from '../lib/runtimeContent';
 import { withBase } from '../lib/site';
+import { getMyBlogHomeCommands, getMyBlogSidebarNavigation } from '../lib/myblog/capabilities';
+import { RUNTIME_STORAGE_KEYS } from '../../../../packages/runtime-kernel/src/storage';
 
 type DrawerKind = 'collection' | 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'knowledge' | 'bilibili' | 'update';
 
@@ -483,25 +486,28 @@ const drawerEntries = [
   ...utilityDrawerEntries
 ];
 const drawerById = new Map(drawerEntries.map((entry) => [entry.id, entry]));
-const relationSources = drawerEntries.map((entry) => ({
-  id: entry.id,
-  kind: entry.kind,
-  title: entry.title,
-  summary: entry.summary,
-  tags: entry.tags ?? [],
-  series: entry.series,
-  href: entry.href,
-  body: entry.body
-})) satisfies KnowledgeRelationSource[];
-const knowledgeDocs = drawerEntries.map((entry) => ({
-  id: entry.id,
-  type: entry.kind,
-  title: entry.title,
-  content: [entry.summary, ...(entry.tags ?? []), ...(entry.details?.map((detail) => `${detail.label} ${detail.value}`) ?? [])].join('\n'),
-  tags: entry.tags ?? [],
-  href: entry.href,
-  drawerId: entry.id
-}));
+const knowledgeObjects = drawerEntries.map((entry) =>
+  defineKnowledgeObject({
+    id: entry.id,
+    type: drawerKindToKnowledgeType(entry.kind),
+    title: entry.title,
+    summary: entry.summary,
+    content: [entry.summary, ...(entry.tags ?? []), ...(entry.details?.map((detail) => `${detail.label} ${detail.value}`) ?? [])].join('\n'),
+    tags: entry.tags ?? [],
+    href: entry.href,
+    drawerId: entry.id,
+    sourceId: entry.id,
+    series: entry.series,
+    body: entry.body
+  })
+);
+const relationSources = knowledgeObjects.map(knowledgeObjectToRelationSource);
+const knowledgeDocs = knowledgeObjects.map(knowledgeObjectToSearchDoc);
+
+function drawerKindToKnowledgeType(kind: DrawerKind) {
+  if (kind === 'collection' || kind === 'knowledge' || kind === 'bilibili' || kind === 'update') return 'post';
+  return kind;
+}
 
 function getRelatedEntries(entry: DrawerEntry) {
   const source = relationSources.find((item) => item.id === entry.id);
@@ -546,22 +552,19 @@ const activityItems = [
   ...staticActivityItems,
   `Knowledge：${knowledgeDocs.length + runtimeArticles.length} 个入口 / ${uniqueTagCount} 个标签`
 ].filter(Boolean) as string[];
-const homeCommands = [
-  { id: 'search', label: '搜索当前 Feed', description: 'Runtime articles、项目、书架、音乐、GitHub、本地标记', action: 'search', icon: 'search' },
-  { id: 'collections', label: '知识集合', description: `${runtimeCollections.length} 个 Runtime Collection`, href: withBase('/collections/'), icon: 'knowledge' },
-  { id: 'posts', label: '文章', description: `${runtimeArticles.length} 篇 Runtime MarkdownObject`, href: withBase('/posts/'), icon: 'posts' },
-  { id: 'projects', label: '项目工坊', description: latestProject ? `${latestProject.data.title} / ${latestProject.data.progress}%` : '项目空间', href: withBase('/projects/'), icon: 'projects' },
-  { id: 'project-workbench', label: '项目工作台', description: 'GitHub Workbench / Wiki / Timeline', href: withBase('/projects/site-v2/'), icon: 'projects' },
-  { id: 'github', label: 'GitHub', description: `${github.profile.publicRepos} 个公开仓库`, href: withBase('/github/'), icon: 'github' },
-  { id: 'books', label: '书架', description: 'OpenList 实时书库', href: withBase('/books/'), icon: 'books' },
-  { id: 'music', label: '音乐', description: `${musicItems.length} 条音乐记录`, href: withBase('/music/'), icon: 'music' },
-  { id: 'visuals', label: '视觉素材', description: `${visualCollections.length} 个视觉 collection`, href: withBase('/visuals/'), icon: 'visuals' },
-  { id: 'immich', label: 'Immich 媒体库', description: 'AI 照片 / 视频管理与语义搜索', href: 'https://photos.blog.tengokukk.com/', icon: 'external' },
-  { id: 'knowledge', label: 'Knowledge Graph', description: `${knowledgeDocs.length} 个知识入口`, href: withBase('/knowledge/'), icon: 'knowledge' },
-  { id: 'openlist', label: 'OpenList', description: '嵌入查看当前文件源', action: 'openlist', icon: 'external' },
-  { id: 'pinterest', label: 'Pinterest', description: '站内嵌入视觉收藏流', action: 'pinterest', icon: 'visuals' },
-  { id: 'settings', label: '设置', description: '阅读排版、Graph、视觉偏好', href: withBase('/settings/'), icon: 'settings' }
-];
+const homeCommands = getMyBlogHomeCommands(
+  {
+    runtimeCollections: runtimeCollections.length,
+    runtimeArticles: runtimeArticles.length,
+    latestProject: latestProject ? { title: latestProject.data.title, progress: latestProject.data.progress } : undefined,
+    publicRepos: github.profile.publicRepos,
+    musicItems: musicItems.length,
+    visualCollections: visualCollections.length,
+    knowledgeDocs: knowledgeDocs.length
+  },
+  withBase
+);
+const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
 ---
 
 <BaseLayout title="emptyinkpot" description="emptyinkpot 的首页，聚合文章、书架、项目、GitHub 与视频入口。" hideSiteChrome={true}>
@@ -584,13 +587,11 @@ const homeCommands = [
 
       <nav class="home-feed-rail-card home-sidebar-section home-sidebar-nav" aria-label="站点导航">
         <span data-sidebar-label data-copy-key="home.sidebar.nav">Navigation</span>
-        <a class="home-sidebar-item" href={withBase('/projects/')} aria-label="项目工坊"><b>项</b><span data-sidebar-label>项目工坊</span></a>
-        <a class="home-sidebar-item" href={withBase('/knowledge/')} aria-label="知识图谱"><b>知</b><span data-sidebar-label>知识图谱</span></a>
-        <a class="home-sidebar-item" href={withBase('/books/')} aria-label="书架"><b>书</b><span data-sidebar-label>书架</span></a>
-        <a class="home-sidebar-item" href={withBase('/codex/')} aria-label="设计圣典"><b>典</b><span data-sidebar-label>设计圣典</span></a>
-        <a class="home-sidebar-item" href={withBase('/visuals/')} aria-label="视觉素材"><b>视</b><span data-sidebar-label>视觉素材</span></a>
-        <a class="home-sidebar-item" href={withBase('/github/')} aria-label="GitHub"><b>G</b><span data-sidebar-label>GitHub</span></a>
-        <a class="home-sidebar-item" href={withBase('/settings/')} aria-label="设置"><b>设</b><span data-sidebar-label>设置</span></a>
+        {sidebarNavigation.map((item) => (
+          <a class="home-sidebar-item" href={item.href} aria-label={item.label}>
+            <b>{item.glyph}</b><span data-sidebar-label>{item.label}</span>
+          </a>
+        ))}
       </nav>
 
       <section class="home-feed-rail-card home-feed-memory home-sidebar-section">
@@ -1286,7 +1287,7 @@ const homeCommands = [
     })}
   </div>
 
-  <script>
+  <script define:vars={{ runtimeStorageKeys: RUNTIME_STORAGE_KEYS }}>
     (() => {
       const layer = document.querySelector('[data-article-layer]');
       const articleDrawer = layer?.querySelector('.home-article-drawer');
@@ -1325,15 +1326,15 @@ const homeCommands = [
         document.getElementById('home-runtime-static-data')?.textContent || '{"staticActivityItems":[],"staticNodeCount":0}'
       );
       const storageKeys = {
-        history: 'emptyinkpot-reading-history',
-        bookmarks: 'emptyinkpot-reader-bookmarks',
-        highlights: 'emptyinkpot-reader-highlights',
-        annotations: 'emptyinkpot-reader-annotations',
-        seals: 'emptyinkpot-reader-seals',
-        stickers: 'emptyinkpot-stickers',
-        sealDefinitions: sealConfig.key || 'emptyinkpot-seal-definitions',
-        readerTheme: 'emptyinkpot-reader-theme',
-        sidebarCollapsed: 'emptyinkpot-home-sidebar-collapsed'
+        history: runtimeStorageKeys.readingHistory,
+        bookmarks: runtimeStorageKeys.readerBookmarks,
+        highlights: runtimeStorageKeys.readerHighlights,
+        annotations: runtimeStorageKeys.readerAnnotations,
+        seals: runtimeStorageKeys.readerSeals,
+        stickers: runtimeStorageKeys.stickers,
+        sealDefinitions: sealConfig.key || runtimeStorageKeys.sealDefinitions,
+        readerTheme: runtimeStorageKeys.readerTheme,
+        sidebarCollapsed: runtimeStorageKeys.homeSidebarCollapsed
       };
       const defaultSealDefinitions = Array.isArray(sealConfig.definitions) ? sealConfig.definitions : [];
       const loadSealDefinitions = () => {
@@ -2656,8 +2657,8 @@ const homeCommands = [
             button.querySelector('small').textContent = String(doc.content || '').slice(0, 150);
             button.addEventListener('click', () => {
               if (doc.drawerId) {
-                openDrawer(doc.drawerId, button, { highlightId: doc.highlightId });
-                closeSearch();
+                openArticleDrawer(doc.drawerId, button, { highlightId: doc.highlightId });
+                closeSearchOverlay();
               } else if (doc.href) {
                 window.location.href = doc.href;
               }
@@ -2696,6 +2697,57 @@ const homeCommands = [
         }, searchTransitionMs);
       };
 
+      const dispatchRuntimeOverlayIntent = (name, overlay, payload = {}) => {
+        window.dispatchEvent(
+          new CustomEvent(name, {
+            detail: {
+              overlay,
+              source: 'inline-runtime',
+              payload,
+              issuedAt: new Date().toISOString()
+            }
+          })
+        );
+      };
+
+      const openSearchOverlay = (payload = {}) => {
+        dispatchRuntimeOverlayIntent('runtime:overlay-open', 'search', payload);
+      };
+
+      const closeSearchOverlay = () => {
+        dispatchRuntimeOverlayIntent('runtime:overlay-close', 'search');
+      };
+
+      const openArticleDrawer = (objectId, trigger = document.body, payload = {}) => {
+        window.dispatchEvent(
+          new CustomEvent('runtime:drawer-open', {
+            detail: {
+              drawer: 'article',
+              objectId,
+              objectType: payload.objectType || 'knowledge-object',
+              source: 'inline-runtime',
+              payload: {
+                ...payload,
+                trigger
+              },
+              issuedAt: new Date().toISOString()
+            }
+          })
+        );
+      };
+
+      const closeArticleDrawer = () => {
+        window.dispatchEvent(
+          new CustomEvent('runtime:drawer-close', {
+            detail: {
+              drawer: 'article',
+              source: 'inline-runtime',
+              issuedAt: new Date().toISOString()
+            }
+          })
+        );
+      };
+
       const setFilter = (kind) => {
         filterButtons.forEach((button) => button.classList.toggle('is-active', button.dataset.feedFilter === kind));
         getCards().forEach((card) => {
@@ -2711,6 +2763,15 @@ const homeCommands = [
         layer.classList.remove('is-open');
         window.clearTimeout(drawerCloseTimer);
         drawerCloseTimer = window.setTimeout(() => {
+          window.dispatchEvent(
+            new CustomEvent('runtime:drawer-close', {
+              detail: {
+                drawer: 'book',
+                source: 'inline-runtime',
+                issuedAt: new Date().toISOString()
+              }
+            })
+          );
           window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
           layer.hidden = true;
           articleDrawer?.classList.remove('home-article-drawer--book');
@@ -2919,12 +2980,33 @@ const homeCommands = [
             mountId: mount?.dataset.bookDrawerReaderMount || ''
           };
           window.dispatchEvent(
+            new CustomEvent('runtime:drawer-open', {
+              detail: {
+                drawer: 'book',
+                objectId: bookId,
+                objectType: 'book',
+                source: 'inline-runtime',
+                payload: window.__emptyinkpotPendingBookDrawerOpen,
+                issuedAt: new Date().toISOString()
+              }
+            })
+          );
+          window.dispatchEvent(
             new CustomEvent('emptyinkpot:book-drawer-open', {
               detail: window.__emptyinkpotPendingBookDrawerOpen
             })
           );
         } else {
           window.__emptyinkpotPendingBookDrawerOpen = null;
+          window.dispatchEvent(
+            new CustomEvent('runtime:drawer-close', {
+              detail: {
+                drawer: 'book',
+                source: 'inline-runtime',
+                issuedAt: new Date().toISOString()
+              }
+            })
+          );
           window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
         }
         layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
@@ -2940,7 +3022,7 @@ const homeCommands = [
         const id = trigger.dataset.drawerId;
         if (!id) return;
         event.preventDefault();
-        openDrawer(id, trigger);
+        openArticleDrawer(id, trigger);
       });
 
       window.addEventListener('emptyinkpot:runtime-books-ready', (event) => {
@@ -2970,10 +3052,47 @@ const homeCommands = [
         if (document.visibilityState === 'visible') syncRuntimeHomepageFeed();
       });
 
-      window.addEventListener('home-search-open', openSearch);
+      window.addEventListener('home-search-open', (event) => {
+        openSearchOverlay({ trigger: event.detail?.target || event.target });
+      });
+      window.addEventListener('runtime:overlay-open', (event) => {
+        if (event.detail?.overlay !== 'search') return;
+        const payload = event.detail?.payload || {};
+        openSearchWithQuery(payload.query || payload.tag || '', payload.kind || 'all');
+      });
+      window.addEventListener('runtime:overlay-close', (event) => {
+        if (event.detail?.overlay === 'search') closeSearch();
+      });
+      window.addEventListener('runtime:drawer-open', (event) => {
+        if (event.detail?.drawer !== 'article' || !event.detail?.objectId) return;
+        const payload = event.detail?.payload || {};
+        openDrawer(event.detail.objectId, payload.trigger || event.target || document.body, { highlightId: payload.highlightId });
+      });
+      window.addEventListener('runtime:drawer-close', (event) => {
+        if (event.detail?.drawer === 'article') closeDrawer();
+      });
+      window.addEventListener('runtime:command', (event) => {
+        const command = event.detail || {};
+        const payload = command.payload || {};
+        if (command.kind === 'search.open') {
+          openSearchOverlay({ query: payload.query || payload.tag || '', tag: payload.tag, kind: payload.kind || 'all' });
+          return;
+        }
+        if (command.kind === 'reader.open' && payload.objectId) {
+          openArticleDrawer(payload.objectId, event.target || document.body, { highlightId: payload.highlightId });
+          return;
+        }
+        if (command.kind === 'reader.close') {
+          closeArticleDrawer();
+          return;
+        }
+        if (command.kind === 'graph.focus' && payload.nodeId) {
+          window.location.href = `/knowledge/?focus=${encodeURIComponent(payload.nodeId)}`;
+        }
+      });
 
       document.querySelectorAll('[data-search-close]').forEach((button) => {
-        button.addEventListener('click', closeSearch);
+        button.addEventListener('click', closeSearchOverlay);
       });
 
       searchInput?.addEventListener('input', renderSearch);
@@ -2997,13 +3116,13 @@ const homeCommands = [
         if (!target) return;
         const drawerId = target.dataset.memoryDrawer;
         if (!drawerId) return;
-        openDrawer(drawerId, target, { highlightId: target.dataset.memoryHighlight });
+        openArticleDrawer(drawerId, target, { highlightId: target.dataset.memoryHighlight });
       });
 
       drawerBody?.addEventListener('click', (event) => {
         const target = event.target instanceof Element ? event.target.closest('[data-mini-tag]') : null;
         if (!target) return;
-        openSearchWithQuery(target.dataset.miniTag || '', 'all');
+        openSearchOverlay({ query: target.dataset.miniTag || '', kind: 'all' });
       });
 
       drawerBody?.addEventListener('click', (event) => {
@@ -3018,7 +3137,7 @@ const homeCommands = [
         if (!target) return;
         const drawerId = target.dataset.sidebarDrawer;
         if (!drawerId) return;
-        openDrawer(drawerId, target, { highlightId: target.dataset.sidebarHighlight });
+        openArticleDrawer(drawerId, target, { highlightId: target.dataset.sidebarHighlight });
       });
 
       document.addEventListener('click', (event) => {
@@ -3132,19 +3251,19 @@ const homeCommands = [
       });
 
       document.querySelectorAll('[data-article-close]').forEach((button) => {
-        button.addEventListener('click', closeDrawer);
+        button.addEventListener('click', closeArticleDrawer);
       });
 
       const runReaderCommand = (command, trigger = document.body) => {
         if (!command?.type) return;
         if (command.type === 'openArticle' && command.articleId) {
-          openDrawer(command.articleId, trigger);
+          openArticleDrawer(command.articleId, trigger);
         }
         if (command.type === 'openHighlight' && command.articleId) {
-          openDrawer(command.articleId, trigger, { highlightId: command.highlightId });
+          openArticleDrawer(command.articleId, trigger, { highlightId: command.highlightId });
         }
         if (command.type === 'searchTag' && command.tag) {
-          openSearchWithQuery(command.tag, 'all');
+          openSearchOverlay({ query: command.tag, tag: command.tag, kind: 'all' });
         }
         if (command.type === 'focusGraphNode' && command.nodeId) {
           window.location.href = `/knowledge/?focus=${encodeURIComponent(command.nodeId)}`;
@@ -3152,7 +3271,37 @@ const homeCommands = [
       };
 
       window.addEventListener('reader-command', (event) => {
-        runReaderCommand(event.detail, event.target);
+        const command = event.detail || {};
+        const runtimePayload =
+          command.type === 'openArticle'
+            ? { objectId: command.articleId }
+            : command.type === 'openHighlight'
+              ? { objectId: command.articleId, highlightId: command.highlightId }
+              : command.type === 'searchTag'
+                ? { query: command.tag, tag: command.tag, kind: 'all' }
+                : command.type === 'focusGraphNode'
+                  ? { nodeId: command.nodeId }
+                  : null;
+        const runtimeKind =
+          command.type === 'openArticle' || command.type === 'openHighlight'
+            ? 'reader.open'
+            : command.type === 'searchTag'
+              ? 'search.open'
+              : command.type === 'focusGraphNode'
+                ? 'graph.focus'
+                : '';
+        if (runtimeKind && runtimePayload) {
+          window.dispatchEvent(
+            new CustomEvent('runtime:command', {
+              detail: {
+                kind: runtimeKind,
+                source: 'legacy-reader-command',
+                payload: runtimePayload,
+                issuedAt: new Date().toISOString()
+              }
+            })
+          );
+        }
       });
 
       document.addEventListener('keydown', (event) => {
@@ -3164,15 +3313,15 @@ const homeCommands = [
             return;
           }
           event.preventDefault();
-          openSearch();
+          openSearchOverlay();
           return;
         }
         if (event.key === 'Escape' && !searchLayer?.hidden) {
-          closeSearch();
+          closeSearchOverlay();
           return;
         }
         if (event.key === 'Escape' && !layer?.hidden) {
-          closeDrawer();
+          closeArticleDrawer();
           return;
         }
         if (isTyping || !layer?.hidden || !searchLayer?.hidden) return;
@@ -3190,7 +3339,7 @@ const homeCommands = [
           const id = card?.dataset.drawerId;
           if (id) {
             event.preventDefault();
-            openDrawer(id, card);
+            openArticleDrawer(id, card);
           }
         }
       });

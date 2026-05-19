@@ -3,10 +3,11 @@ import type { KnowledgeGraphLink, KnowledgeGraphNode } from './types';
 const clusterSectors: Record<string, [number, number]> = {
   writing: [-150, -60],
   engineering: [-40, 40],
-  reading: [60, 145],
-  media: [155, 230],
-  github: [240, 310],
-  archive: [315, 390]
+  reading: [55, 130],
+  media: [140, 205],
+  visual: [215, 275],
+  github: [285, 335],
+  archive: [345, 405]
 };
 
 export function buildRadialGraph(nodes: KnowledgeGraphNode[], links: KnowledgeGraphLink[]) {

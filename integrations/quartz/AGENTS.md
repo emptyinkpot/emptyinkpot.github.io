@@ -1,6 +1,6 @@
-# MyBlog Quartz Agent Rules
+# Embedded MyBlog Quartz Agent Rules
 
-This repository is now a Quartz-primary workspace. Treat the repository root as the Quartz root.
+This directory is an embedded Quartz workspace under the MyBlog repository. Treat `integrations/quartz` as the Quartz root only when working inside this integration; it is not the MyBlog production frontend root.
 
 ## Read Order
 
@@ -12,11 +12,11 @@ This repository is now a Quartz-primary workspace. Treat the repository root as 
 
 ## Structure
 
-- Quartz owns the framework, routing, Markdown transform, search, backlinks, graph, RSS, and static output.
-- MyBlog behavior belongs inside Quartz plugins, Quartz layout/configuration, or `quartz/myblog/*`.
-- Do not recreate `apps/web/src`, Astro pages, admin apps, package workspaces, contract folders, or parallel runtime registries unless the user explicitly asks to reintroduce that architecture.
+- Quartz owns only this integration workspace's framework, routing, Markdown transform, search, backlinks, graph, RSS, and static output.
+- MyBlog production behavior stays in the root `apps/web` frontend unless a deliberate, reviewed migration promotes a specific Quartz capability.
+- Do not recreate root `apps/web/src`, admin apps, package workspaces, contract folders, or parallel runtime registries inside this integration.
 - `content/` is a generated Quartz projection from the public Obsidian/Vault docs root.
-- `apps/web/dist` is only the Quartz build output path kept for existing MyBlog deploy compatibility.
+- `apps/web/dist` is only a compatibility output path for this integration and must not be treated as production authority.
 
 ## Verification
 

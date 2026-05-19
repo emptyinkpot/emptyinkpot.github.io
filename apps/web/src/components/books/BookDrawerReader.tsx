@@ -2,6 +2,8 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'reac
 import { createPortal } from 'react-dom';
 import { buildCachedBookRawUrl } from '../../lib/books/openlist';
 import { loadBookSettings } from '../../lib/books/storage';
+import { LEGACY_RUNTIME_BRIDGES, RUNTIME_EVENT_NAMES } from '../../../../../packages/runtime-kernel/src/events';
+import type { RuntimeDrawerIntent } from '../../../../../packages/runtime-kernel/src/types';
 import type { BookItem } from '../../lib/books/types';
 import { preloadAllBookRuntimes, preloadBookRuntime } from './readerRuntime';
 
@@ -36,8 +38,17 @@ export default function BookDrawerReader({ books }: Props) {
       setReaderPool((current) => [detail.bookId, ...current.filter((item) => item !== detail.bookId)].slice(0, readerPoolLimit));
     }
 
-    function open(event: Event) {
+    function openLegacy(event: Event) {
       openFromDetail((event as CustomEvent<BookDrawerOpenDetail>).detail);
+    }
+
+    function openRuntime(event: Event) {
+      const detail = (event as CustomEvent<RuntimeDrawerIntent<BookDrawerOpenDetail>>).detail;
+      if (detail?.drawer !== 'book') return;
+      openFromDetail({
+        bookId: detail.payload?.bookId || detail.objectId,
+        mountId: detail.payload?.mountId
+      });
     }
 
     function close() {
@@ -46,12 +57,21 @@ export default function BookDrawerReader({ books }: Props) {
       window.__emptyinkpotPendingBookDrawerOpen = null;
     }
 
-    window.addEventListener('emptyinkpot:book-drawer-open', open);
-    window.addEventListener('emptyinkpot:book-drawer-close', close);
+    function closeRuntime(event: Event) {
+      const detail = (event as CustomEvent<Partial<RuntimeDrawerIntent>>).detail;
+      if (detail?.drawer === 'book') close();
+    }
+
+    window.addEventListener(RUNTIME_EVENT_NAMES.drawerOpen, openRuntime);
+    window.addEventListener(RUNTIME_EVENT_NAMES.drawerClose, closeRuntime);
+    window.addEventListener(LEGACY_RUNTIME_BRIDGES.bookDrawerOpen, openLegacy);
+    window.addEventListener(LEGACY_RUNTIME_BRIDGES.bookDrawerClose, close);
     openFromDetail(window.__emptyinkpotPendingBookDrawerOpen);
     return () => {
-      window.removeEventListener('emptyinkpot:book-drawer-open', open);
-      window.removeEventListener('emptyinkpot:book-drawer-close', close);
+      window.removeEventListener(RUNTIME_EVENT_NAMES.drawerOpen, openRuntime);
+      window.removeEventListener(RUNTIME_EVENT_NAMES.drawerClose, closeRuntime);
+      window.removeEventListener(LEGACY_RUNTIME_BRIDGES.bookDrawerOpen, openLegacy);
+      window.removeEventListener(LEGACY_RUNTIME_BRIDGES.bookDrawerClose, close);
     };
   }, []);
 

@@ -21,7 +21,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     title: 'Content Infrastructure Reduction',
     subtitle: '不要把博客继续扩成自研 CMS 内核。',
     thesis:
-      'MyBlog 已经触碰到 content-index、RSS prerender、OpenList projection、atomic write、watcher、search 和 deploy glue 等 Content Infrastructure 问题。下一阶段的正确方向不是继续扩大自研 runtime，而是用 Quartz、Contentlayer、Meilisearch 和 Coolify 等成熟底座削减维护面。',
+      'MyBlog 已经触碰到 content-index、RSS prerender、OpenList projection、atomic write、watcher、search 和 deploy glue 等 Content Infrastructure 问题。下一阶段的正确方向不是继续扩大自研 runtime，而是在 apps/web 视觉与入口不变的前提下，吸收 Quartz、Contentlayer、Meilisearch 和 Coolify 等成熟底座来削减维护面。',
     status: 'forming',
     systems: ['Runtime MarkdownObject Index', 'Quartz', 'Contentlayer', 'Meilisearch', 'Coolify', 'Pagefind', 'OpenList Cold Layer', 'Astro Presentation Shell'],
     inspiration: ['Quartz digital garden substrate', 'Contentlayer typed content pipeline', 'Meilisearch object search', 'Coolify deployment platform', 'Astro Paper as content-layer reference'],
@@ -33,8 +33,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       '当前 active 线仍是 Runtime MarkdownObject：public-data/runtime/content-index.json 与 /srv/myblog/site/runtime/content-index.json 是公开文章投影索引，但只允许作为过渡 projection。',
-      'Quartz 是第一 substrate candidate：优先研究 jackyzha0/quartz 的 Obsidian Markdown pipeline、wikilink、backlink、graph、RSS、search、SPA/incremental 和 content index 思路。',
-      'Contentlayer 是 Astro-native candidate：如果保留 Astro UI shell，应优先评估 typed content schema、parsing、watch 和 projection 能否替换自写 build-runtime-content-index glue。',
+      'Quartz 是 embedded substrate candidate：优先研究 jackyzha0/quartz 的 Obsidian Markdown pipeline、wikilink、backlink、graph、RSS、search、SPA/incremental、component registry、plugin protocol 和 content index 思路，但不替换 apps/web 生产前端。',
+      'Contentlayer 是 Astro-native candidate：保留 Astro UI shell 时，应优先评估 typed content schema、parsing、watch 和 projection 能否替换自写 build-runtime-content-index glue。',
       'Meilisearch 是 target-not-deployed search runtime：动态对象、OpenList 文件索引、KnowledgeObject snapshot、Directus metadata 和 Immich import 不得继续塞进 giant runtime JSON；Pagefind 在上线前只叫静态 archive 搜索。',
       'Coolify 是 candidate-not-deployed deployment platform：当前仍用 npm run deploy:site；后续评估 Git deploy、env、healthcheck、rollback、cron 和 compose 接管手写 SSH / PowerShell quoting / smoke glue。',
       'OpenList 边界保持不变：/Obsidian 是 Linux hot mirror 的 public access identity，/腾讯云COS 与 /夸克网盘 是 cold/blob backend，不参与数据库、Pagefind、Astro dist、Syncthing hot mirror、node_modules 或 runtime build。'
@@ -60,7 +60,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     thesis:
       'Frontend Runtime Archaeology 要求维护者沿用户行为追踪 DOM、事件、状态、渲染、hydration、网络、动画、authority 和 fallback，避免把 MyBlog 这种 Astro islands + inline runtime + API patch + iframe shell 的系统误读成静态组件集合。',
     status: 'active',
-    systems: ['Astro SSR', 'React Islands', 'Inline Runtime Scripts', 'Command Palette', 'Drawer Runtime', 'Reader Runtime', 'OpenList Shell', 'Pinterest Shell', 'Pagefind', 'Runtime APIs'],
+    systems: ['Astro SSR', 'React Islands', 'Inline Runtime Scripts', 'MyBlog Capability Registry', 'Command Palette', 'Drawer Runtime', 'Reader Runtime', 'OpenList Shell', 'Pinterest Shell', 'Pagefind', 'Runtime APIs'],
     inspiration: ['browser runtime archaeology', 'frontend behavior audit', 'event tracing', 'hydration boundary mapping'],
     rejected: [
       '只解释文件结构或组件树，因为首页、OpenList/Pinterest shell、Graph 和项目页大量行为都在 inline script 与 delegated event 里。',
@@ -71,6 +71,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时考古不再维护独立 docs 文档。',
       '审计路径固定为 user behavior -> DOM -> event -> state -> render -> hydration -> network -> animation -> authority -> fallback。',
       'BaseLayout 通过 MyBlog runtime resource registry 挂载 build-version reload guard，并继续持有 visual settings applier、OpenList iframe shell、Pinterest mirror shell 和 HoverPreviewSystem island。',
+      'apps/web/src/lib/myblog/capabilities.ts 是 Quartz component/plugin registry 思路的 MyBlog-native 入口层：站点能力先声明 id、surface、href/action、icon 和导航顺序，再由首页 Command Palette 与侧栏消费运行时指标。',
       '首页拥有大型 inline runtime：Feed filter、Drawer、Reader commands、local search、reader theme、highlights、seals、sidebar state 和 keyboard navigation。',
       'React islands 负责 Command Palette、Hover Preview、Book covers、RuntimeBookFeed、BookshelfGrid、Reader 和项目 command；它们与 inline runtime 通过 custom events 和 DOM selectors 交互。',
       'Search 当前双轨：HomeCommandPalette 是唯一显式全局检索按钮；home inline search 是 fallback；/search/ 仍由 Pagefind 提供静态全文搜索。',
@@ -108,13 +109,18 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时收束不再维护独立 docs 文档。',
-      'P0 合同包是 packages/runtime-kernel，当前 dependency-free，只定义 command、overlay、drawer、keyboard、authority 和 storage classification，不改变生产行为。',
-      '当前没有 active runtime-migration.json、packages/runtime-overlay 或 packages/runtime-store；overlay、drawer、focus 和 Escape 的真源仍是 legacy inline runtime + React islands。',
+      'P0 合同包是 packages/runtime-kernel，当前 dependency-free，定义 command、overlay、drawer、keyboard、authority 和 storage classification；apps/web/src/lib/runtime/bridge.ts 是第一条生产适配路径，把 React islands 的 action 统一转成 runtime:command / runtime:overlay-* / runtime:drawer-*；packages/runtime-kernel/src/storage.ts 是 canonical browser storage registry。',
+      '当前没有 active runtime-migration.json、packages/runtime-overlay 或 packages/runtime-store；overlay、drawer、focus 和 Escape 的消费实现仍在 legacy inline runtime + React islands，但入口已经开始统一到 runtime intent。',
       'packages/runtime-kernel 不替代 packages/runtime-contract；前者管前端交互意图，后者管 API transport envelope。',
       'packages/runtime-kernel 不替代 packages/object-model；前者管 runtime intent，后者管 KnowledgeObject identity 和 relation。',
       '当前 active libraries 是 cmdk、motion 和 @floating-ui/react；Zustand、Radix UI primitives、Vaul、React Flow 已安装但尚未迁移任何 runtime owner。',
       'P1 已部分落地：HomeCommandPalette hydrate 后设置 html[data-home-command-ready="true"]；home inline Ctrl/Cmd+K fallback 只在该 ready 标记不存在时运行。',
-      'HomeCommandPalette 打开搜索时先派发 runtime:command kind search.open，再派发 legacy home-search-open bridge。',
+      'HomeCommandPalette 的 search/openlist/pinterest action 已改由 runtime bridge 派发 runtime:command；BaseLayout 把 OpenList/Pinterest 的按钮、Escape 和 command 消费收束到 runtime:overlay-open / runtime:overlay-close，旧 openlist-embed-open / pinterest-embed-open 只作为兼容桥保留。',
+      '首页 inline runtime 把 search.open、reader.open、reader.close、home-search-open、reader-command、快捷键、URL 参数、sidebar memory 和 search-result click 收束成 runtime:overlay-* 或 runtime:drawer-*，最终只有 search overlay 和 article drawer 的消费点调用真实 open/close 实现。',
+      'Book Drawer Reader island 已同时监听 runtime:drawer-open / runtime:drawer-close drawer=book 和 legacy emptyinkpot:book-drawer-*；首页打开 book drawer 时先派发 runtime drawer intent，再派发 legacy bridge，避免 hydrate 时序丢事件。',
+      'knowledgeStorageKeys、book storage keys、visual manifest cache 与 build-version reload keys 已开始引用 RUNTIME_STORAGE_KEYS；reading history、bookmarks、highlights、annotations、seals、stickers、book progress/location 被标记为 legacy-migration，reader theme / visual settings / book settings 是 preference，build version / book recent / visual manifest 是 cache。',
+      'BaseLayout 与 HoverPreviewSystem 已把 content-settings-applied / runtime-folders-applied 收束到 runtime event registry，同时继续广播 legacy event 兼容旧消费者。',
+      'tools/validate-frontend-runtime-contract.mjs 已加入 emptyinkpot-* literal registry guard：新 storage key 必须进入 packages/runtime-kernel/src/storage-keys.mjs，非 storage 事件必须在 allowlist 中说明。',
       'legacy bridge events 暂时允许：home-search-open、openlist-embed-open、pinterest-embed-open、reader-command、emptyinkpot:book-drawer-open、emptyinkpot:book-drawer-close。',
       '新增全局快捷键、overlay、drawer、custom event 或 localStorage key 前，必须同步更新 frontend-runtime-audit 和 frontend-runtime-convergence。'
     ],
@@ -442,8 +448,9 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       'KnowledgeObject 是统一协议：id、type、title、summary、sources、relations、tags、createdAt、updatedAt、snapshotVersion。',
+      'apps/web/src/lib/knowledge/objects.ts 是当前 MyBlog-native 对象投影层：RuntimeMarkdownObject、Astro notes/projects、OpenList books-index、music、visuals 和 GitHub repo 先转成 KnowledgeObject，再派生 KnowledgeSearchDoc、KnowledgeRelationSource 和 KnowledgeGraphNode。',
       'KnowledgeCollection 是对象进入 Surface 前的阅读上下文层：Object -> Collection -> ReadingSession -> View。首页 canonical shape 是 Runtime Surface v2：混合对象瀑布流、feed tabs、drawer peek、search、OpenList/Pinterest shell 和 runtime refresh 同时活着；Collection 只能作为 runtime lens 插入 feed，不能接管首页、不能变成 collection-only feed，也不能驱动 full route takeover。首页 Drawer 使用 .home-reader-session：当前文章正文是前景，集合标题只在 context rail 中弱化出现，TOC / 上一篇 / 下一篇是高密度导航；不得回退成 collection hero、stats、summary card、object card grid 或 .home-drawer-summary 卡片递归。/collections/ 与 /collections/[slug]/ 是备用 / permalink surface，不得替代首页 runtime surface；topic collection 只作为 metadata / search / Graph 维度；topic collections are dimensions, not static collection pages。',
-      'BookObject 连接 openlist:// EPUB/PDF/MOBI、cover asset、author、topic、reader memory、highlight 和 collection。',
+      'BookObject 连接 openlist:// EPUB/PDF/MOBI、cover asset、author、topic、reader memory、highlight 和 collection；当前书籍由 apps/web/src/lib/books/staticManifest.ts 只读加载 books-index，再通过 bookToKnowledgeObject 进入 /data/knowledge-index.json 和 /knowledge Graph。',
       'VisualObject 连接 OpenList/COS/Immich/Pinterest preview、palette、mood、source URL、related books、related posts 和 graph node。',
       'PersonObject、TimelineObject、PlaceObject 和 TopicObject 是后续扩展的实体类型，不能被临时 tag 完全替代。',
       'OpenList/COS 只保存 blob 和 path；Directus 目标上承接人工 metadata overlay；MySQL runtime 承接阅读状态、关系、注释和动态事件。',
@@ -527,7 +534,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     runtime: [
       'reader_memory 记录 objectId、objectType、location、progress、updatedAt。',
       'reader_highlights 记录文本、颜色、note、anchor_json，并关联知识对象。',
-      'Graph 当前由内容元数据和关系构建，后续要接 MySQL runtime links。',
+      'Graph 当前由 KnowledgeObject 派生的静态内容元数据和关系构建，/data/knowledge-index.json、首页 knowledgeDocs、/knowledge graph relationSources 共享 apps/web/src/lib/knowledge/objects.ts；RuntimeMarkdownObject 的 wikilinks、backlinks、assets 会经 buildExplicitKnowledgeRelations 转成 linked / references 边，asset 节点在 /knowledge 限量展示以避免图谱过载。',
+      'OpenList books-index 已进入 KnowledgeObject projection：bookToKnowledgeObject 保留 book:* drawerId、作者、分类、状态、sourceType、openlistPath 和 asset reference，让书籍同时参与搜索、Graph、Reader Drawer 和后续阅读记忆关系。',
       'localStorage 只保留设置、迁移前缓存和离线偏好，不再作为动态知识真源。'
     ],
     tradeoffs: [

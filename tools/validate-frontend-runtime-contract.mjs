@@ -34,6 +34,7 @@ const buildBooksIndex = readText('tools/build-books-index.mjs');
 const booksMetadataText = readText('public-data/books/books.metadata.json');
 const booksIndexText = readText('public-data/books/books-index.json');
 const collectionDetail = readText('apps/web/src/pages/collections/[slug].astro');
+const runtimeStorage = readText('packages/runtime-kernel/src/storage-keys.mjs');
 
 let entry = {};
 let contract = {};
@@ -297,6 +298,32 @@ if (booksIndex?.source?.metadataAuthority !== 'sidecar-json') {
 
 if (booksIndex?.source?.liveListForbidden !== true) {
   errors.push('books-index.json must forbid live-list runtime semantics');
+}
+
+const storageLiteralPattern = /['"`](emptyinkpot-[A-Za-z0-9:-]+)['"`]/g;
+const allowedNonStorageLiterals = new Set([
+  'emptyinkpot-openlist-embed-style',
+  'emptyinkpot:book-drawer-open',
+  'emptyinkpot:book-drawer-close',
+  'emptyinkpot:runtime-books-ready',
+  'emptyinkpot:runtime-home-feed-ready'
+]);
+const registryLiterals = new Set([...runtimeStorage.matchAll(storageLiteralPattern)].map((match) => match[1]));
+for (const [file, text] of [
+  ['apps/web/src/pages/index.astro', index],
+  ['apps/web/src/pages/knowledge/index.astro', readText('apps/web/src/pages/knowledge/index.astro')],
+  ['apps/web/src/pages/visuals/index.astro', readText('apps/web/src/pages/visuals/index.astro')],
+  ['apps/web/src/pages/settings.astro', readText('apps/web/src/pages/settings.astro')],
+  ['apps/web/src/layouts/BaseLayout.astro', readText('apps/web/src/layouts/BaseLayout.astro')],
+  ['apps/web/src/components/react/HoverPreviewSystem.tsx', readText('apps/web/src/components/react/HoverPreviewSystem.tsx')],
+  ['apps/web/src/components/books/BookReader.tsx', readText('apps/web/src/components/books/BookReader.tsx')],
+  ['apps/web/src/lib/myblog/plugins.mjs', readText('apps/web/src/lib/myblog/plugins.mjs')]
+]) {
+  for (const match of text.matchAll(storageLiteralPattern)) {
+    const literal = match[1];
+    if (allowedNonStorageLiterals.has(literal) || registryLiterals.has(literal)) continue;
+    errors.push(`${file} uses unregistered emptyinkpot storage/event literal: ${literal}`);
+  }
 }
 
 if (!Array.isArray(booksIndex?.books) || booksIndex.books.length < 15) {

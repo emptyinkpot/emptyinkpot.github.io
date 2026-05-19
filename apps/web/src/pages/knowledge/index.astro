@@ -4,16 +4,32 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import githubOverview from '../../data/github-overview.emptyinkpot.json';
 import { musicItems } from '../../data/music';
 import { visualItems } from '../../data/visuals';
+import { getStaticBooksIndex } from '../../lib/books/staticManifest';
 import { buildClusteredRadialGraph } from '../../lib/knowledge/graph';
-import { buildKnowledgeRelations, type KnowledgeRelationSource } from '../../lib/knowledge/relations';
+import {
+  bookToKnowledgeObject,
+  getAssetReferenceNodes,
+  githubRepoToKnowledgeObject,
+  knowledgeObjectToGraphNode,
+  knowledgeObjectToRelationSource,
+  musicToKnowledgeObject,
+  noteToKnowledgeObject,
+  projectToKnowledgeObject,
+  runtimeArticleToKnowledgeObject,
+  visualToKnowledgeObject
+} from '../../lib/knowledge/objects';
+import { buildKnowledgeRelations } from '../../lib/knowledge/relations';
 import { defaultSealDefinitions } from '../../lib/knowledge/seals';
 import type { KnowledgeGraphLink, KnowledgeGraphNode } from '../../lib/knowledge/types';
 import { getRuntimeArticles } from '../../lib/runtimeContent';
 import { withBase } from '../../lib/site';
+import { getExcerptFromBody } from '../../lib/content';
+import { RUNTIME_STORAGE_KEYS } from '../../../../../packages/runtime-kernel/src/storage';
 
 const runtimeArticles = getRuntimeArticles().slice(0, 16);
 const notes = [...(await getCollection('notes', ({ data }) => !data.draft))].slice(0, 8);
 const projects = [...(await getCollection('projects'))].slice(0, 8);
+const books = getStaticBooksIndex().books.slice(0, 24);
 
 type GraphCluster = NonNullable<KnowledgeGraphNode['cluster']>;
 
@@ -41,91 +57,24 @@ const collectionNodes: KnowledgeGraphNode[] = collectionConfig.map((item) => ({
 
 const githubRepos = githubOverview.overview.repos.slice(0, 5);
 
-const contentNodes: KnowledgeGraphNode[] = [
-  ...runtimeArticles.map((article) => ({
-    id: `runtime:${article.id}`,
-    label: article.title,
-    type: 'post' as const,
-    level: 2,
-    weight: 4,
-    cluster: 'writing' as const,
-    href: withBase(`/posts/${article.slug}/`),
-    summary: article.summary || article.description,
-    meta: [...article.categories, ...article.tags].filter(Boolean).slice(0, 4).join(' / ')
-  })),
-  ...notes.map((note) => ({
-    id: `note:${note.id}`,
-    label: note.data.title,
-    type: 'note' as const,
-    level: 2,
-    weight: 3,
-    cluster: 'writing' as const,
-    href: withBase(`/notes/${note.id}/`),
-    summary: note.data.description ?? '',
-    meta: 'note'
-  })),
-  ...projects.map((project) => ({
-    id: `project:${project.id}`,
-    label: project.data.title,
-    type: 'project' as const,
-    level: 2,
-    weight: 4,
-    cluster: 'engineering' as const,
-    href: withBase(`/projects/${project.id}/`),
-    summary: project.data.description ?? '',
-    meta: project.data.stack.slice(0, 4).join(' / ')
-  })),
-  ...musicItems.map((item) => ({
-    id: `music:${item.id}`,
-    label: item.title,
-    type: 'music' as const,
-    level: 2,
-    weight: 2,
-    cluster: 'media' as const,
-    href: item.href,
-    summary: item.note,
-    meta: [item.artist, ...item.mood].join(' / ')
-  })),
-  ...visualItems.map((item) => ({
-    id: `visual:${item.id}`,
-    label: item.title,
-    type: 'visual' as const,
-    level: 2,
-    weight: 3,
-    cluster: 'visual' as const,
-    href: withBase(`/visuals/#${item.id}`),
-    summary: item.summary,
-    meta: [item.type, ...item.tags.slice(0, 3)].join(' / ')
-  })),
-  ...githubRepos.map((repo) => ({
-    id: `github:${repo.name}`,
-    label: repo.name,
-    type: 'github' as const,
-    level: 2,
-    weight: Math.max(2, Math.min(5, Math.round(repo.size / 4000))),
-    cluster: 'github' as const,
-    href: repo.htmlUrl,
-    summary: `${repo.language || 'Repository'} repo updated ${repo.updatedAt.slice(0, 10)}.`,
-    meta: `${repo.language || 'unknown'} / ${repo.stars} stars / ${repo.issues} issues`
-  }))
+const knowledgeObjects = [
+  ...runtimeArticles.map((article) => runtimeArticleToKnowledgeObject(article, withBase)),
+  ...notes.map((note) => noteToKnowledgeObject(note, getExcerptFromBody(note.body, 1000), withBase)),
+  ...projects.map((project) => projectToKnowledgeObject(project, getExcerptFromBody(project.body, 1000), withBase)),
+  ...books.map((book) => bookToKnowledgeObject(book, withBase)),
+  ...musicItems.map((item) => musicToKnowledgeObject(item, withBase)),
+  ...visualItems.map((item) => visualToKnowledgeObject(item, withBase)),
+  ...githubRepos.map((repo) => githubRepoToKnowledgeObject(repo))
 ];
 
+const contentNodes: KnowledgeGraphNode[] = knowledgeObjects.map(knowledgeObjectToGraphNode);
+
 const tagLabels = Array.from(
-  new Set([
-    ...runtimeArticles.flatMap((article) => [...article.categories, ...article.tags]),
-    ...projects.flatMap((project) => project.data.stack),
-    ...musicItems.flatMap((item) => item.mood),
-    ...visualItems.flatMap((item) => [item.type, ...item.tags]),
-    ...githubRepos.map((repo) => repo.language || 'code')
-  ])
+  new Set(knowledgeObjects.flatMap((object) => object.tags))
 ).slice(0, 36);
 
 const tagCluster = new Map<string, GraphCluster>();
-runtimeArticles.forEach((article) => [...article.categories, ...article.tags].forEach((tag) => tagCluster.set(tag, 'writing')));
-projects.forEach((project) => project.data.stack.forEach((tag) => tagCluster.set(tag, 'engineering')));
-musicItems.forEach((item) => item.mood.forEach((tag) => tagCluster.set(tag, 'media')));
-visualItems.forEach((item) => [item.type, ...item.tags].forEach((tag) => tagCluster.set(tag, 'visual')));
-githubRepos.forEach((repo) => tagCluster.set(repo.language || 'code', 'github'));
+knowledgeObjects.forEach((object) => object.tags.forEach((tag) => tagCluster.set(tag, object.cluster)));
 
 const tagNodes: KnowledgeGraphNode[] = tagLabels.map((tag) => ({
   id: `tag:${tag}`,
@@ -139,47 +88,10 @@ const tagNodes: KnowledgeGraphNode[] = tagLabels.map((tag) => ({
   meta: 'tag'
 }));
 
-const relationSources = [
-  ...runtimeArticles.map((article) => ({
-    id: `runtime:${article.id}`,
-    kind: 'post',
-    title: article.title,
-    summary: article.summary || article.description,
-    tags: [...article.categories, ...article.tags, ...(article.series ? [article.series] : [])],
-    series: article.series,
-    href: withBase(`/posts/${article.slug}/`),
-    body: [article.description, article.summary, ...(article.categories || []), ...(article.tags || [])].filter(Boolean).join('\n')
-  })),
-  ...notes.map((note) => ({
-    id: `note:${note.id}`,
-    kind: 'note',
-    title: note.data.title,
-    summary: note.data.description ?? '',
-    tags: ['note'],
-    href: withBase(`/notes/${note.id}/`),
-    body: note.body
-  })),
-  ...projects.map((project) => ({
-    id: `project:${project.id}`,
-    kind: 'project',
-    title: project.data.title,
-    summary: project.data.description ?? '',
-    tags: project.data.stack,
-    href: withBase(`/projects/${project.id}/`),
-    body: project.body
-  })),
-  ...visualItems.map((item) => ({
-    id: `visual:${item.id}`,
-    kind: 'visual',
-    title: item.title,
-    summary: item.summary,
-    tags: [item.type, ...item.tags],
-    href: withBase(`/visuals/#${item.id}`),
-    body: item.note
-  }))
-] satisfies KnowledgeRelationSource[];
+const relationSources = knowledgeObjects.map(knowledgeObjectToRelationSource);
 
 const relationLinks = buildKnowledgeRelations(relationSources, { minScore: 4, limitPerSource: 8 });
+const assetNodes = getAssetReferenceNodes(knowledgeObjects, { limit: 24 });
 
 const sealNodes: KnowledgeGraphNode[] = defaultSealDefinitions.map((seal) => ({
   id: `seal:${seal.id}`,
@@ -197,35 +109,15 @@ const links: KnowledgeGraphLink[] = [
   ...runtimeArticles.map((article) => ({ source: 'collection:posts', target: `runtime:${article.id}`, type: 'contains' as const, weight: 1 })),
   ...notes.map((note) => ({ source: 'collection:notes', target: `note:${note.id}`, type: 'contains' as const, weight: 1 })),
   ...projects.map((project) => ({ source: 'collection:projects', target: `project:${project.id}`, type: 'contains' as const, weight: 1 })),
+  ...books.map((book) => ({ source: 'collection:books', target: `book:${book.id}`, type: 'contains' as const, weight: 1 })),
   ...musicItems.map((item) => ({ source: 'collection:music', target: `music:${item.id}`, type: 'contains' as const, weight: 1 })),
   ...visualItems.map((item) => ({ source: 'collection:visuals', target: `visual:${item.id}`, type: 'contains' as const, weight: 1 })),
   ...githubRepos.map((repo) => ({ source: 'collection:github', target: `github:${repo.name}`, type: 'contains' as const, weight: 1 })),
-  ...runtimeArticles.flatMap((article) =>
-    [...article.categories, ...article.tags]
+  ...knowledgeObjects.flatMap((object) =>
+    object.tags
       .filter((tag) => tagLabels.includes(tag))
-      .map((tag) => ({ source: `runtime:${article.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
+      .map((tag) => ({ source: object.id, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
   ),
-  ...projects.flatMap((project) =>
-    project.data.stack
-      .filter((tag) => tagLabels.includes(tag))
-      .map((tag) => ({ source: `project:${project.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
-  ),
-  ...musicItems.flatMap((item) =>
-    item.mood
-      .filter((tag) => tagLabels.includes(tag))
-      .map((tag) => ({ source: `music:${item.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
-  ),
-  ...visualItems.flatMap((item) =>
-    [item.type, ...item.tags]
-      .filter((tag) => tagLabels.includes(tag))
-      .map((tag) => ({ source: `visual:${item.id}`, target: `tag:${tag}`, type: 'tagged' as const, weight: 1 }))
-  ),
-  ...githubRepos.map((repo) => ({
-    source: `github:${repo.name}`,
-    target: `tag:${repo.language || 'code'}`,
-    type: 'tagged' as const,
-    weight: 1
-  })),
   ...relationLinks.map((link) => ({
     source: link.source,
     target: link.target,
@@ -249,6 +141,7 @@ const graph = buildClusteredRadialGraph(
     ...collectionNodes,
     ...contentNodes,
     ...tagNodes,
+    ...assetNodes,
     ...sealNodes
   ],
   links
@@ -264,6 +157,7 @@ function colorFor(type: KnowledgeGraphNode['type']) {
     book: '#9e2a2b',
     music: '#c9a227',
     visual: '#e9b6c8',
+    asset: '#8a7a68',
     tag: '#6b645c',
     highlight: '#c9a227',
     annotation: '#2f5d50',
@@ -372,7 +266,7 @@ const viewBox = '-620 -620 1240 1240';
     </section>
   </main>
 
-  <script>
+  <script define:vars={{ runtimeStorageKeys: RUNTIME_STORAGE_KEYS }}>
     (() => {
       const nodes = [...document.querySelectorAll('[data-graph-node]')];
       const links = [...document.querySelectorAll('[data-graph-link]')];
@@ -388,8 +282,10 @@ const viewBox = '-620 -620 1240 1240';
       let activeFilter = 'all';
 
       const storageKeys = {
-        seals: 'emptyinkpot-reader-seals',
-        stickers: 'emptyinkpot-stickers'
+        seals: runtimeStorageKeys.readerSeals,
+        stickers: runtimeStorageKeys.stickers,
+        highlights: runtimeStorageKeys.readerHighlights,
+        annotations: runtimeStorageKeys.readerAnnotations
       };
 
       const visibleNodeIds = () => new Set(nodes.filter((node) => !node.classList.contains('is-hidden')).map((node) => node.dataset.nodeId));
@@ -598,8 +494,8 @@ const viewBox = '-620 -620 1240 1240';
 
       const injectLocalMemoryNodes = () => {
         if (!graphSvg) return;
-        const highlights = readLocalArray('emptyinkpot-reader-highlights');
-        const annotations = readLocalArray('emptyinkpot-reader-annotations');
+        const highlights = readLocalArray(storageKeys.highlights);
+        const annotations = readLocalArray(storageKeys.annotations);
         highlights.slice(0, 12).forEach((highlight, index) => {
           const source = graphSvg.querySelector(`[data-node-id="${escapeCssIdentifier(highlight.articleId || '')}"]`);
           if (!source) return;

@@ -7,15 +7,64 @@ export type KnowledgeRelationSource = {
   series?: string;
   href?: string;
   body?: string;
+  sourceId?: string;
+  relationTargets?: {
+    wikilinks?: string[];
+    backlinks?: string[];
+    assets?: string[];
+  };
 };
 
 export type KnowledgeRelation = {
   source: string;
   target: string;
-  type: 'related' | 'linked' | 'tagged';
+  type: 'related' | 'linked' | 'tagged' | 'references';
   score: number;
   reasons: string[];
 };
+
+export function buildExplicitKnowledgeRelations(entries: KnowledgeRelationSource[]): KnowledgeRelation[] {
+  const lookup = buildRelationTargetLookup(entries);
+  const relations: KnowledgeRelation[] = [];
+
+  for (const entry of entries) {
+    for (const target of entry.relationTargets?.wikilinks ?? []) {
+      const targetEntry = resolveRelationTarget(target, lookup);
+      if (!targetEntry || targetEntry.id === entry.id) continue;
+      relations.push({
+        source: entry.id,
+        target: targetEntry.id,
+        type: 'linked',
+        score: 16,
+        reasons: [`wikilink: ${target}`]
+      });
+    }
+
+    for (const target of entry.relationTargets?.backlinks ?? []) {
+      const targetEntry = resolveRelationTarget(target, lookup);
+      if (!targetEntry || targetEntry.id === entry.id) continue;
+      relations.push({
+        source: targetEntry.id,
+        target: entry.id,
+        type: 'linked',
+        score: 16,
+        reasons: [`backlink: ${target}`]
+      });
+    }
+
+    for (const target of entry.relationTargets?.assets ?? []) {
+      relations.push({
+        source: entry.id,
+        target: `asset:${stableRelationTargetId(target)}`,
+        type: 'references',
+        score: 4,
+        reasons: [`asset: ${target}`]
+      });
+    }
+  }
+
+  return uniqueRelations(relations);
+}
 
 export function scoreKnowledgeRelation(a: KnowledgeRelationSource, b: KnowledgeRelationSource) {
   const reasons: string[] = [];
@@ -53,12 +102,12 @@ export function scoreKnowledgeRelation(a: KnowledgeRelationSource, b: KnowledgeR
 
 export function buildKnowledgeRelations(
   entries: KnowledgeRelationSource[],
-  options: { minScore?: number; limitPerSource?: number } = {}
+  options: { minScore?: number; limitPerSource?: number; includeExplicit?: boolean } = {}
 ) {
   const minScore = options.minScore ?? 4;
   const limitPerSource = options.limitPerSource ?? 8;
 
-  return entries.flatMap((entry) =>
+  const inferred = entries.flatMap((entry) =>
     getRelatedKnowledgeEntries(entry, entries, limitPerSource)
       .filter((item) => item.score >= minScore)
       .map(({ entry: related, score, reasons }) => ({
@@ -69,6 +118,9 @@ export function buildKnowledgeRelations(
         reasons
       }))
   );
+
+  if (options.includeExplicit === false) return inferred;
+  return uniqueRelations([...buildExplicitKnowledgeRelations(entries), ...inferred]);
 }
 
 export function getRelatedKnowledgeEntries<T extends KnowledgeRelationSource>(
@@ -126,3 +178,63 @@ const stopWords = new Set([
   '如何',
   '记录'
 ]);
+
+function buildRelationTargetLookup(entries: KnowledgeRelationSource[]) {
+  const lookup = new Map<string, KnowledgeRelationSource>();
+
+  for (const entry of entries) {
+    [
+      entry.id,
+      entry.sourceId,
+      entry.title,
+      entry.href,
+      entry.href?.split('/').filter(Boolean).at(-1)
+    ]
+      .filter(Boolean)
+      .forEach((value) => {
+        lookup.set(normalizeRelationKey(value), entry);
+      });
+  }
+
+  return lookup;
+}
+
+function resolveRelationTarget(target: string, lookup: Map<string, KnowledgeRelationSource>) {
+  const key = normalizeRelationKey(target);
+  return lookup.get(key) ?? lookup.get(key.replace(/\.[a-z0-9]+$/i, ''));
+}
+
+function normalizeRelationKey(value: string) {
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\\/g, '/')
+    .split('/')
+    .pop()
+    ?.replace(/\.[a-z0-9]+$/i, '')
+    .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/-{2,}/g, '-') ?? '';
+}
+
+export function stableRelationTargetId(value: string) {
+  const normalized = normalizeRelationKey(value);
+  if (normalized) return normalized;
+  let hash = 0;
+  for (const char of value) {
+    hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  }
+  return hash.toString(16);
+}
+
+function uniqueRelations(relations: KnowledgeRelation[]) {
+  const seen = new Set<string>();
+  return relations.filter((relation) => {
+    const key = `${relation.source}->${relation.target}:${relation.type}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}

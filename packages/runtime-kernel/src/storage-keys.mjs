@@ -1,0 +1,20 @@
+export const RUNTIME_STORAGE_KEYS = {
+  visualSettings: 'emptyinkpot-visual-settings',
+  runtimeFolderSettings: 'emptyinkpot-runtime-folder-settings',
+  readingHistory: 'emptyinkpot-reading-history',
+  readerBookmarks: 'emptyinkpot-reader-bookmarks',
+  readerHighlights: 'emptyinkpot-reader-highlights',
+  readerAnnotations: 'emptyinkpot-reader-annotations',
+  readerSeals: 'emptyinkpot-reader-seals',
+  sealDefinitions: 'emptyinkpot-seal-definitions',
+  stickers: 'emptyinkpot-stickers',
+  visualCollections: 'emptyinkpot-visual-collections',
+  readerTheme: 'emptyinkpot-reader-theme',
+  homeSidebarCollapsed: 'emptyinkpot-home-sidebar-collapsed',
+  bookSettings: 'emptyinkpot-book-settings',
+  bookLocationPrefix: 'emptyinkpot-book-location',
+  bookProgressPrefix: 'emptyinkpot-book-progress',
+  bookRecent: 'emptyinkpot-book-recent',
+  buildVersion: 'emptyinkpot-build-version',
+  buildReloadPrefix: 'emptyinkpot-build-reload'
+};
