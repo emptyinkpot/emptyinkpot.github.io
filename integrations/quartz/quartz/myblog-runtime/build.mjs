@@ -13,7 +13,7 @@ try {
   fs.rmSync(contentRoot, { recursive: true, force: true })
   fs.mkdirSync(contentRoot, { recursive: true })
   run(process.execPath, [
-    path.join(repoRoot, "quartz/myblog/sync-content.mjs"),
+    path.join(repoRoot, "quartz/myblog-runtime/sync-content.mjs"),
     "--out",
     contentRoot,
   ])

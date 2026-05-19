@@ -6,10 +6,11 @@ import { QuartzComponentProps } from "../../components/types"
 import { FullPageLayout } from "../../cfg"
 import { QuartzEmitterPlugin } from "../types"
 import { QuartzPluginData, defaultProcessedContent } from "../vfile"
-import { myblogChannels } from "../../myblog/registry"
-import { defaultListPageLayout, sharedPageComponents } from "../../myblog/layouts"
+import { myblogChannels } from "../../myblog-runtime/registry"
+import { defaultListPageLayout, sharedPageComponents } from "../../myblog-runtime/layouts"
 import { FullSlug, pathToRoot } from "../../util/path"
 import { write } from "./helpers"
+import { loadMyBlogDatabaseBridgeSummary } from "../../myblog-runtime/database"
 
 type MyBlogRuntimePagesOptions = Partial<FullPageLayout>
 
@@ -41,6 +42,7 @@ export const MyBlogRuntimePages: QuartzEmitterPlugin<MyBlogRuntimePagesOptions> 
     },
     async *emit(ctx, content, resources) {
       const allFiles = content.map((item) => item[1].data)
+      const database = await loadMyBlogDatabaseBridgeSummary()
       for (const channel of myblogChannels.filter((item) => item.nativeOwner !== "quartz")) {
         const slug = channel.slug as FullSlug
         const fileData: QuartzPluginData = {
@@ -74,6 +76,7 @@ export const MyBlogRuntimePages: QuartzEmitterPlugin<MyBlogRuntimePagesOptions> 
         generatedAt: new Date().toISOString(),
         framework: "quartz",
         rule: "Quartz is the only primary framework; MyBlog runtime surfaces are Quartz emitters/components/plugins.",
+        database,
         channels: myblogChannels,
         content: allFiles.map((file) => ({
           slug: file.slug,

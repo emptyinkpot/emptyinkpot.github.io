@@ -1,5 +1,5 @@
 import { QuartzConfig } from "./quartz/cfg"
-import { myblogQuartzPlugins } from "./quartz/myblog/plugins"
+import { myblogQuartzPlugins } from "./quartz/myblog-runtime/plugins"
 
 /**
  * Quartz 4 Configuration

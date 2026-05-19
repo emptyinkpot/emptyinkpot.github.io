@@ -10,7 +10,7 @@ import {
   defaultContentPageLayout,
   myblogHomePageLayout,
   sharedPageComponents,
-} from "../../myblog/layouts"
+} from "../../myblog-runtime/layouts"
 import { Content } from "../../components"
 import { styleText } from "util"
 import { write } from "./helpers"

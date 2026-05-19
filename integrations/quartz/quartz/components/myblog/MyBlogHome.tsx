@@ -5,7 +5,7 @@ import {
   tagStats,
   toMyBlogEntries,
   toMyBlogFeedItems,
-} from "../../myblog/registry"
+} from "../../myblog-runtime/registry"
 import { FullSlug, resolveRelative } from "../../util/path"
 
 const nav = [

@@ -12,8 +12,9 @@ Quartz ideas can be promoted back into `apps/web` only as MyBlog-native modules:
 - `quartz/components/myblog/`: MyBlog homepage, navigation, runtime page, and runtime data components implemented as Quartz components.
 - `quartz/plugins/emitters/myblogRuntimePages.tsx`: Quartz emitter for former MyBlog page entries and `static/myblog-runtime.json`.
 - `quartz/plugins/transformers/myblogStyle.ts`: MyBlog runtime resource plugin for component styling, command palette, reading progress, and source metadata.
-- `quartz/myblog/sync-content.mjs`: Obsidian/Vault Markdown to Quartz Markdown projection.
-- `quartz/myblog/build.mjs`: build wrapper that stages generated content outside the repo before running Quartz.
+- `quartz/myblog-runtime/sync-content.mjs`: Obsidian/Vault Markdown to Quartz Markdown projection.
+- `quartz/myblog-runtime/build.mjs`: build wrapper that stages generated content outside the repo before running Quartz.
+- `quartz/myblog-runtime/database.ts`: thin DataBase Gateway SDK bridge used to enrich the runtime snapshot with live state.
 - `content/`: optional local/manual sync output, ignored by git.
 - `apps/web/dist`: compatibility output for this integration only.
 
@@ -38,4 +39,4 @@ Obsidian/Vault Markdown remains writing truth. Quartz owns publishing, routing, 
 
 Original MyBlog information architecture is represented in production by `apps/web`; this workspace may mirror channels for evaluation, but it is not the canonical runtime surface.
 
-DataBase/OpenList integrations remain runtime bridge concerns and must not direct-connect from Quartz content rendering.
+DataBase/OpenList integrations remain runtime bridge concerns and must not direct-connect from Quartz content rendering. Quartz reads DataBase only through the shared Gateway SDK adapter, via the thin `quartz/myblog-runtime/database.ts` bridge.

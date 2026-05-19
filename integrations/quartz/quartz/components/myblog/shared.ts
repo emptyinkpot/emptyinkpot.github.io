@@ -1,1 +1,1 @@
-export * from "../../myblog/registry"
+export * from "../../myblog-runtime/registry"

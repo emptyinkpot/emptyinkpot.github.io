@@ -1,5 +1,5 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
-import { myblogChannels, primaryNavChannelIds } from "../../myblog/registry"
+import { myblogChannels, primaryNavChannelIds } from "../../myblog-runtime/registry"
 import { FullSlug, resolveRelative } from "../../util/path"
 
 const MyBlogTopNav: QuartzComponent = ({ fileData }: QuartzComponentProps) => {

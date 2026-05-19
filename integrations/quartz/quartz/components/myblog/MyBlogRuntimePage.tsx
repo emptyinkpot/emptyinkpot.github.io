@@ -1,5 +1,5 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
-import { myblogChannels, pageDescription, toMyBlogEntries } from "../../myblog/registry"
+import { myblogChannels, pageDescription, toMyBlogEntries } from "../../myblog-runtime/registry"
 import { FullSlug, resolveRelative } from "../../util/path"
 
 type Options = {

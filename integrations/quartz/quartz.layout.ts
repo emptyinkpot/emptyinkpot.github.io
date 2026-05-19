@@ -3,4 +3,4 @@ export {
   defaultListPageLayout,
   myblogHomePageLayout,
   sharedPageComponents,
-} from "./quartz/myblog/layouts"
+} from "./quartz/myblog-runtime/layouts"

@@ -13,9 +13,9 @@
   },
   "scripts": {
     "quartz": "node quartz/bootstrap-cli.mjs",
-    "myblog:sync": "node quartz/myblog/sync-content.mjs",
-    "build": "node quartz/myblog/build.mjs",
-    "dev": "node quartz/myblog/build.mjs --serve -o public",
+    "myblog:sync": "node quartz/myblog-runtime/sync-content.mjs",
+    "build": "node quartz/myblog-runtime/build.mjs",
+    "dev": "node quartz/myblog-runtime/build.mjs --serve -o public",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",
     "test": "tsx --test",
