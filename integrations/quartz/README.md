@@ -15,8 +15,9 @@ Quartz ideas can be promoted back into `apps/web` only as MyBlog-native modules:
 - `quartz/myblog/sync-content.mjs`: Obsidian/Vault Markdown to Quartz Markdown projection.
 - `quartz/myblog/build.mjs`: build wrapper that stages generated content outside the repo before running Quartz.
 - `content/`: optional local/manual sync output, ignored by git.
-- `docs/`: upstream Quartz documentation retained as vendored reference.
 - `apps/web/dist`: compatibility output for this integration only.
+
+Upstream Quartz documentation is not vendored here. Use https://quartz.jzhao.xyz/ as the canonical reference.
 
 ## Commands
 

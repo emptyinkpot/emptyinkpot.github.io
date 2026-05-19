@@ -16,7 +16,6 @@
     "myblog:sync": "node quartz/myblog/sync-content.mjs",
     "build": "node quartz/myblog/build.mjs",
     "dev": "node quartz/myblog/build.mjs --serve -o public",
-    "docs": "npm run quartz -- build --serve -d docs",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",
     "test": "tsx --test",
