@@ -31,6 +31,7 @@ import {
 } from '../lib/runtimeContent';
 import { withBase } from '../lib/site';
 import { getMyBlogHomeCommands, getMyBlogSidebarNavigation } from '../lib/myblog/capabilities';
+import { LEGACY_RUNTIME_BRIDGES, RUNTIME_EVENT_NAMES } from '../../../../packages/runtime-kernel/src/events';
 import { RUNTIME_STORAGE_KEYS } from '../../../../packages/runtime-kernel/src/storage';
 
 type DrawerKind = 'collection' | 'post' | 'note' | 'project' | 'book' | 'music' | 'github' | 'visual' | 'knowledge' | 'bilibili' | 'update';
@@ -1287,7 +1288,7 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
     })}
   </div>
 
-  <script define:vars={{ runtimeStorageKeys: RUNTIME_STORAGE_KEYS }}>
+  <script define:vars={{ runtimeEventNames: RUNTIME_EVENT_NAMES, legacyRuntimeBridges: LEGACY_RUNTIME_BRIDGES, runtimeStorageKeys: RUNTIME_STORAGE_KEYS }}>
     (() => {
       const layer = document.querySelector('[data-article-layer]');
       const articleDrawer = layer?.querySelector('.home-article-drawer');
@@ -2710,42 +2711,63 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
         );
       };
 
+      const dispatchRuntimeCommand = (kind, payload = {}, source = 'inline-runtime') => {
+        window.dispatchEvent(
+          new CustomEvent(runtimeEventNames.command, {
+            detail: {
+              kind,
+              source,
+              payload,
+              issuedAt: new Date().toISOString()
+            }
+          })
+        );
+      };
+
+      const dispatchRuntimeDrawerOpen = (drawer, objectId, objectType = 'knowledge-object', payload = {}) => {
+        window.dispatchEvent(
+          new CustomEvent(runtimeEventNames.drawerOpen, {
+            detail: {
+              drawer,
+              objectId,
+              objectType,
+              source: 'inline-runtime',
+              payload,
+              issuedAt: new Date().toISOString()
+            }
+          })
+        );
+      };
+
+      const dispatchRuntimeDrawerClose = (drawer) => {
+        window.dispatchEvent(
+          new CustomEvent(runtimeEventNames.drawerClose, {
+            detail: {
+              drawer,
+              source: 'inline-runtime',
+              issuedAt: new Date().toISOString()
+            }
+          })
+        );
+      };
+
       const openSearchOverlay = (payload = {}) => {
-        dispatchRuntimeOverlayIntent('runtime:overlay-open', 'search', payload);
+        dispatchRuntimeOverlayIntent(runtimeEventNames.overlayOpen, 'search', payload);
       };
 
       const closeSearchOverlay = () => {
-        dispatchRuntimeOverlayIntent('runtime:overlay-close', 'search');
+        dispatchRuntimeOverlayIntent(runtimeEventNames.overlayClose, 'search');
       };
 
       const openArticleDrawer = (objectId, trigger = document.body, payload = {}) => {
-        window.dispatchEvent(
-          new CustomEvent('runtime:drawer-open', {
-            detail: {
-              drawer: 'article',
-              objectId,
-              objectType: payload.objectType || 'knowledge-object',
-              source: 'inline-runtime',
-              payload: {
-                ...payload,
-                trigger
-              },
-              issuedAt: new Date().toISOString()
-            }
-          })
-        );
+        dispatchRuntimeDrawerOpen('article', objectId, payload.objectType || 'knowledge-object', {
+          ...payload,
+          trigger
+        });
       };
 
       const closeArticleDrawer = () => {
-        window.dispatchEvent(
-          new CustomEvent('runtime:drawer-close', {
-            detail: {
-              drawer: 'article',
-              source: 'inline-runtime',
-              issuedAt: new Date().toISOString()
-            }
-          })
-        );
+        dispatchRuntimeDrawerClose('article');
       };
 
       const setFilter = (kind) => {
@@ -2763,16 +2785,8 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
         layer.classList.remove('is-open');
         window.clearTimeout(drawerCloseTimer);
         drawerCloseTimer = window.setTimeout(() => {
-          window.dispatchEvent(
-            new CustomEvent('runtime:drawer-close', {
-              detail: {
-                drawer: 'book',
-                source: 'inline-runtime',
-                issuedAt: new Date().toISOString()
-              }
-            })
-          );
-          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
+          dispatchRuntimeDrawerClose('book');
+          window.dispatchEvent(new CustomEvent(legacyRuntimeBridges.bookDrawerClose));
           layer.hidden = true;
           articleDrawer?.classList.remove('home-article-drawer--book');
           document.body.classList.remove('has-home-article-drawer');
@@ -2979,35 +2993,16 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
             bookId,
             mountId: mount?.dataset.bookDrawerReaderMount || ''
           };
+          dispatchRuntimeDrawerOpen('book', bookId, 'book', window.__emptyinkpotPendingBookDrawerOpen);
           window.dispatchEvent(
-            new CustomEvent('runtime:drawer-open', {
-              detail: {
-                drawer: 'book',
-                objectId: bookId,
-                objectType: 'book',
-                source: 'inline-runtime',
-                payload: window.__emptyinkpotPendingBookDrawerOpen,
-                issuedAt: new Date().toISOString()
-              }
-            })
-          );
-          window.dispatchEvent(
-            new CustomEvent('emptyinkpot:book-drawer-open', {
+            new CustomEvent(legacyRuntimeBridges.bookDrawerOpen, {
               detail: window.__emptyinkpotPendingBookDrawerOpen
             })
           );
         } else {
           window.__emptyinkpotPendingBookDrawerOpen = null;
-          window.dispatchEvent(
-            new CustomEvent('runtime:drawer-close', {
-              detail: {
-                drawer: 'book',
-                source: 'inline-runtime',
-                issuedAt: new Date().toISOString()
-              }
-            })
-          );
-          window.dispatchEvent(new CustomEvent('emptyinkpot:book-drawer-close'));
+          dispatchRuntimeDrawerClose('book');
+          window.dispatchEvent(new CustomEvent(legacyRuntimeBridges.bookDrawerClose));
         }
         layer.querySelector('[data-article-close]')?.focus({ preventScroll: true });
       };
@@ -3052,26 +3047,26 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
         if (document.visibilityState === 'visible') syncRuntimeHomepageFeed();
       });
 
-      window.addEventListener('home-search-open', (event) => {
+      window.addEventListener(legacyRuntimeBridges.homeSearchOpen, (event) => {
         openSearchOverlay({ trigger: event.detail?.target || event.target });
       });
-      window.addEventListener('runtime:overlay-open', (event) => {
+      window.addEventListener(runtimeEventNames.overlayOpen, (event) => {
         if (event.detail?.overlay !== 'search') return;
         const payload = event.detail?.payload || {};
         openSearchWithQuery(payload.query || payload.tag || '', payload.kind || 'all');
       });
-      window.addEventListener('runtime:overlay-close', (event) => {
+      window.addEventListener(runtimeEventNames.overlayClose, (event) => {
         if (event.detail?.overlay === 'search') closeSearch();
       });
-      window.addEventListener('runtime:drawer-open', (event) => {
+      window.addEventListener(runtimeEventNames.drawerOpen, (event) => {
         if (event.detail?.drawer !== 'article' || !event.detail?.objectId) return;
         const payload = event.detail?.payload || {};
         openDrawer(event.detail.objectId, payload.trigger || event.target || document.body, { highlightId: payload.highlightId });
       });
-      window.addEventListener('runtime:drawer-close', (event) => {
+      window.addEventListener(runtimeEventNames.drawerClose, (event) => {
         if (event.detail?.drawer === 'article') closeDrawer();
       });
-      window.addEventListener('runtime:command', (event) => {
+      window.addEventListener(runtimeEventNames.command, (event) => {
         const command = event.detail || {};
         const payload = command.payload || {};
         if (command.kind === 'search.open') {
@@ -3270,7 +3265,7 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
         }
       };
 
-      window.addEventListener('reader-command', (event) => {
+      window.addEventListener(legacyRuntimeBridges.readerCommand, (event) => {
         const command = event.detail || {};
         const runtimePayload =
           command.type === 'openArticle'
@@ -3291,16 +3286,7 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
                 ? 'graph.focus'
                 : '';
         if (runtimeKind && runtimePayload) {
-          window.dispatchEvent(
-            new CustomEvent('runtime:command', {
-              detail: {
-                kind: runtimeKind,
-                source: 'legacy-reader-command',
-                payload: runtimePayload,
-                issuedAt: new Date().toISOString()
-              }
-            })
-          );
+          dispatchRuntimeCommand(runtimeKind, runtimePayload, 'legacy-reader-command');
         }
       });
 
