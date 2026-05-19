@@ -5,7 +5,7 @@ import {
   tagStats,
   toMyBlogEntries,
   toMyBlogFeedItems,
-} from "./shared"
+} from "../../myblog/registry"
 import { FullSlug, resolveRelative } from "../../util/path"
 
 const nav = [

@@ -10,7 +10,7 @@ import {
   defaultContentPageLayout,
   myblogHomePageLayout,
   sharedPageComponents,
-} from "../../../quartz.layout"
+} from "../../myblog/layouts"
 import { Content } from "../../components"
 import { styleText } from "util"
 import { write } from "./helpers"
