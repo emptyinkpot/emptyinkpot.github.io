@@ -1,6 +1,5 @@
 import { QuartzConfig } from "./quartz/cfg"
-import * as Component from "./quartz/components"
-import * as Plugin from "./quartz/plugins"
+import { myblogQuartzBundle } from "./quartz/myblog"
 
 /**
  * Quartz 4 Configuration
@@ -52,47 +51,7 @@ const config: QuartzConfig = {
       },
     },
   },
-  plugins: {
-    transformers: [
-      Plugin.FrontMatter(),
-      Plugin.CreatedModifiedDate({
-        priority: ["frontmatter", "git", "filesystem"],
-      }),
-      Plugin.SyntaxHighlighting({
-        theme: {
-          light: "github-light",
-          dark: "github-dark",
-        },
-        keepBackground: false,
-      }),
-      Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
-      Plugin.GitHubFlavoredMarkdown(),
-      Plugin.MyBlogStyle(),
-      Plugin.TableOfContents(),
-      Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
-      Plugin.Description(),
-      Plugin.Latex({ renderEngine: "katex" }),
-    ],
-    filters: [Plugin.RemoveDrafts()],
-    emitters: [
-      Plugin.AliasRedirects(),
-      Plugin.ComponentResources(),
-      Plugin.ContentPage({
-        pageBody: Component.MyBlogContent(),
-      }),
-      Plugin.MyBlogRuntimePages(),
-      Plugin.FolderPage(),
-      Plugin.TagPage(),
-      Plugin.ContentIndex({
-        enableSiteMap: true,
-        enableRSS: true,
-      }),
-      Plugin.Assets(),
-      Plugin.Static(),
-      Plugin.Favicon(),
-      Plugin.NotFoundPage(),
-    ],
-  },
+  plugins: myblogQuartzBundle.plugins,
 }
 
 export default config
