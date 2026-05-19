@@ -12,6 +12,8 @@ const requiredFiles = [
   'contracts/collection-behavior-contract.json',
   'apps/web/src/pages/index.astro',
   'apps/web/src/lib/runtime/home-runtime.ts',
+  'apps/web/src/lib/runtime/shell-runtime.ts',
+  'apps/web/src/lib/runtime/shell-overlays.ts',
   'packages/runtime-kernel/src/plugins.ts'
 ];
 
@@ -39,6 +41,8 @@ const collectionDetail = readText('apps/web/src/pages/collections/[slug].astro')
 const runtimeStorage = readText('packages/runtime-kernel/src/storage-keys.mjs');
 const runtimePlugins = readText('packages/runtime-kernel/src/plugins.ts');
 const homeRuntime = readText('apps/web/src/lib/runtime/home-runtime.ts');
+const shellRuntime = readText('apps/web/src/lib/runtime/shell-runtime.ts');
+const shellOverlays = readText('apps/web/src/lib/runtime/shell-overlays.ts');
 
 let entry = {};
 let contract = {};
@@ -218,6 +222,28 @@ for (const term of [
 ]) {
   if (!homeRuntime.includes(term)) {
     errors.push(`home runtime adapter missing: ${term}`);
+  }
+}
+
+for (const term of [
+  'createShellRuntimeOverlayDetail',
+  'createShellRuntimeOverlayCloseDetail',
+  'mapShellRuntimeCommandToOverlayIntent',
+  'shellLegacyRuntimeBridges'
+]) {
+  if (!shellRuntime.includes(term)) {
+    errors.push(`shell runtime adapter missing: ${term}`);
+  }
+}
+
+for (const term of [
+  'initOpenListShell',
+  'initPinterestShell',
+  'createShellRuntimeOverlayDetail',
+  'mapShellRuntimeCommandToOverlayIntent'
+]) {
+  if (!shellOverlays.includes(term)) {
+    errors.push(`shell overlay runtime missing: ${term}`);
   }
 }
 
