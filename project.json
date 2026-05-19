@@ -2,7 +2,7 @@
   "projectName": "MyBlog",
   "canonicalDoc": "README.md",
   "machineReadableEntry": "project.json",
-  "githubRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
+  "githubRepo": "https://github.com/emptyinkpot/blog",
   "defaultBranch": "main",
   "localSourceRoot": null,
   "remoteIde": {
@@ -95,7 +95,7 @@
     "runtimeExperienceLayer": "apps/web/src/data/architectureCodex.ts"
   },
   "sourceOfTruthMap": {
-    "gitRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
+    "gitRepo": "https://github.com/emptyinkpot/blog",
     "localActiveSourceRoot": null,
     "vaultFileTruthRoot": "Windows:E:\\Vaults\\Obsidian",
     "authoringTruthRoot": "Windows:E:\\Vaults\\Obsidian",
@@ -146,7 +146,7 @@
       "sourceRoot": "/srv/myblog/repo",
       "deploymentRoot": "/srv/myblog/site",
       "repoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
-      "gitRemote": "git@github.com:emptyinkpot/emptyinkpot.github.io.git",
+      "gitRemote": "git@github.com:emptyinkpot/blog.git",
       "sshOutageRule": "Do not promote a local checkout to canonical when SSH is unavailable; use GitHub as a delivery surface and reconcile the server source root after recovery."
     },
     "runtimeDatabase": {
@@ -209,7 +209,7 @@
     "remoteIntegrationRoot": "server-170:/home/ubuntu/workspaces/MyBlog-production-integration",
     "productionSiteRoot": "/srv/myblog/site",
     "githubProductionBackupBranch": "backup/production-myblog-source-20260510",
-    "githubProductionBackupPr": "https://github.com/emptyinkpot/emptyinkpot.github.io/pull/42"
+    "githubProductionBackupPr": "https://github.com/emptyinkpot/blog/pull/42"
   },
   "stabilizationSprint": {
     "status": "active",

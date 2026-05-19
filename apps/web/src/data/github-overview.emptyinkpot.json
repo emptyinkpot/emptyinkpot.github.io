@@ -2225,13 +2225,13 @@
     ],
     "repos": [
       {
-        "name": "emptyinkpot.github.io",
+        "name": "blog",
         "language": "Astro",
         "updatedAt": "2026-04-21T01:39:04Z",
         "stars": 0,
         "issues": 0,
         "size": 4351,
-        "htmlUrl": "https://github.com/emptyinkpot/emptyinkpot.github.io"
+        "htmlUrl": "https://github.com/emptyinkpot/blog"
       },
       {
         "name": "Lex-Universalis",

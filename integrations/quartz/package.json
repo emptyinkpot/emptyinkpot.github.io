@@ -9,7 +9,7 @@
   "homepage": "https://blog.tengokukk.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/emptyinkpot/emptyinkpot.github.io.git"
+    "url": "git+https://github.com/emptyinkpot/blog.git"
   },
   "scripts": {
     "quartz": "node quartz/bootstrap-cli.mjs",

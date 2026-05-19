@@ -5,7 +5,7 @@
   "profile": "workspaces/canonical.json",
   "root": "/srv/myblog/repo",
   "allowedRoots": [
-    "/home/runner/work/emptyinkpot.github.io/emptyinkpot.github.io",
+    "/home/runner/work/blog/blog",
     "/srv/myblog/repo",
     "E:\\My Project\\MyBlog"
   ],

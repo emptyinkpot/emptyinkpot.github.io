@@ -1,7 +1,7 @@
 {
   "projectName": "MyBlog Quartz Integration",
   "canonicalDoc": "README.md",
-  "githubRepo": "https://github.com/emptyinkpot/emptyinkpot.github.io",
+  "githubRepo": "https://github.com/emptyinkpot/blog",
   "defaultBranch": "main",
   "framework": {
     "name": "Quartz",

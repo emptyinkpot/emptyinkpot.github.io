@@ -10,7 +10,7 @@ stack:
   - Tailwind
   - MDX
   - Nginx
-repo: https://github.com/emptyinkpot/emptyinkpot.github.io
+repo: https://github.com/emptyinkpot/blog
 collaborationRuntime: github-workbench
 collaborationStatus: interim-active
 appflowyWorkspace: target:project.tengokukk.com/site-v2

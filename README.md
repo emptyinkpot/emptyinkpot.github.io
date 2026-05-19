@@ -19,7 +19,7 @@ This README is the only human documentation entrypoint for the repository. Machi
 
 ## Source And Runtime
 
-- GitHub repository: `https://github.com/emptyinkpot/emptyinkpot.github.io`.
+- GitHub repository: `https://github.com/emptyinkpot/blog`.
 - Canonical production source workspace: `/srv/myblog/repo`.
 - Production static root: `/srv/myblog/site`.
 - Local Windows checkout policy: mirror/delivery fallback only unless the user explicitly scopes work to this checkout.

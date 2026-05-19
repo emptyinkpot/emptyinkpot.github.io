@@ -6,7 +6,7 @@ const issues = [];
 
 validateMigrationStatus();
 validatePackageScripts();
-validatePagesWorkflow();
+validateGitHubPagesRetired();
 validateWorkspaceGovernance();
 validateMatureReplacementContract();
 validateContentInfrastructureReductionContract();
@@ -58,39 +58,20 @@ function validatePackageScripts() {
   });
 }
 
-function validatePagesWorkflow() {
+function validateGitHubPagesRetired() {
   const workflowPath = resolvePath('.github/workflows/pages.yml');
-  const retiredWorkflowPath = resolvePath('.github/workflows/retire-github-pages.yml');
 
   if (fs.existsSync(workflowPath)) {
     issues.push('Production GitHub Pages workflow must stay retired: .github/workflows/pages.yml must not exist');
   }
 
-  if (!fs.existsSync(retiredWorkflowPath)) {
-    issues.push('Retired GitHub Pages entry workflow is required: .github/workflows/retire-github-pages.yml');
-    return;
-  }
+  const pagesWorkflows = fs
+    .readdirSync(resolvePath('.github/workflows'), { withFileTypes: true })
+    .filter((entry) => entry.isFile() && /pages/i.test(entry.name))
+    .map((entry) => entry.name);
 
-  const workflow = readText(retiredWorkflowPath);
-
-  if (/hexo/i.test(workflow)) {
-    issues.push('Retired Pages workflow still references Hexo');
-  }
-
-  if (/\bpush\s*:/.test(workflow)) {
-    issues.push('Retired Pages workflow must not run on push');
-  }
-
-  if (workflow.includes('./apps/web/dist') || workflow.includes('npm run build')) {
-    issues.push('Retired Pages workflow must not deploy the MyBlog production build');
-  }
-
-  if (!workflow.includes('https://blog.tengokukk.com/')) {
-    issues.push('Retired Pages workflow must point users to https://blog.tengokukk.com/');
-  }
-
-  if (!workflow.includes('noindex,nofollow')) {
-    issues.push('Retired Pages workflow must mark the old entry noindex,nofollow');
+  if (pagesWorkflows.length) {
+    issues.push(`GitHub Pages workflows must be removed after repository rename to blog: ${pagesWorkflows.join(', ')}`);
   }
 }
 
