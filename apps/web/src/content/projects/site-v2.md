@@ -9,7 +9,7 @@ stack:
   - Astro
   - Tailwind
   - MDX
-  - GitHub Pages
+  - Nginx
 repo: https://github.com/emptyinkpot/emptyinkpot.github.io
 collaborationRuntime: github-workbench
 collaborationStatus: interim-active

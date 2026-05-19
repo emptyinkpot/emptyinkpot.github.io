@@ -1633,7 +1633,7 @@
     "publish without lint-check-build quality gate",
     "declare analytics or tracing as active without verification",
     "write local preview URLs as canonical public entry",
-    "deploy GitHub Pages artifact over /srv/myblog/site before production source integration",
+    "deploy retired GitHub Pages artifacts over /srv/myblog/site before production source integration",
     "treat GitHub main as production-complete without checking /srv/myblog/repo"
   ],
   "platformRoadmap": [
@@ -2425,7 +2425,7 @@
     "status": "embedded-integration",
     "root": "integrations/quartz",
     "role": "Quartz digital-garden substrate evolved under MyBlog",
-    "rule": "MyBlog apps/web Astro shell remains the primary frontend. Quartz must not own the repository root, GitHub Pages deploy, or replace MyBlog runtime shell without explicit authorization.",
+    "rule": "MyBlog apps/web Astro shell remains the primary frontend. Quartz must not own the repository root, production deploy, or replace MyBlog runtime shell without explicit authorization.",
     "commands": {
       "sync": "npm run quartz:sync",
       "build": "npm run quartz:build",

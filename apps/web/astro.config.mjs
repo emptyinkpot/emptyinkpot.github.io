@@ -7,7 +7,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import { markdownRehypePlugins } from './src/lib/markdown/pipeline';
 
-const site = process.env.SITE_URL ?? 'https://emptyinkpot.github.io';
+const site = process.env.SITE_URL ?? 'https://blog.tengokukk.com';
 const base = process.env.SITE_BASE ?? '/';
 
 // https://astro.build/config

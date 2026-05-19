@@ -23,6 +23,6 @@ export function stripBase(pathname: string) {
 }
 
 export function absoluteUrl(path: string, site?: URL | string) {
-  const origin = typeof site === 'string' ? site : site?.toString() ?? 'https://emptyinkpot.github.io';
+  const origin = typeof site === 'string' ? site : site?.toString() ?? 'https://blog.tengokukk.com';
   return new URL(withBase(path), origin).toString();
 }

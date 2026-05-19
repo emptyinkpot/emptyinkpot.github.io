@@ -15,7 +15,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: null,
     locale: "zh-CN",
-    baseUrl: "emptyinkpot.github.io",
+    baseUrl: "blog.tengokukk.com",
     ignorePatterns: ["private", "templates", ".obsidian", ".trash", "**/*.semantic.json"],
     defaultDateType: "modified",
     theme: {

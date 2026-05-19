@@ -16,7 +16,7 @@ The public experience intentionally preserves the original MyBlog workbench look
 - `quartz/myblog/build.mjs`: build wrapper that stages generated content outside the repo before running Quartz.
 - `content/`: optional local/manual sync output, ignored by git.
 - `docs/`: upstream Quartz documentation retained as vendored reference.
-- `apps/web/dist`: Quartz build output for existing Pages/deploy compatibility.
+- `apps/web/dist`: Quartz build output for existing MyBlog deploy compatibility.
 
 ## Commands
 
@@ -29,7 +29,7 @@ npm run check
 
 `MYBLOG_VAULT_ROOT` can point at the public Obsidian docs root. By default it uses `E:/Vaults/Obsidian/docs` on Windows and `/home/vault/Obsidian/docs` on Linux.
 
-`npm run build` writes generated Markdown to a transient sibling directory before invoking Quartz, so GitHub Pages can build a fallback homepage even when the private Vault is unavailable.
+`npm run build` writes generated Markdown to a transient sibling directory before invoking Quartz, so the deploy pipeline can build a fallback homepage even when the private Vault is unavailable.
 
 ## Boundary
 

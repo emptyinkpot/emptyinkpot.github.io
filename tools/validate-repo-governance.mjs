@@ -60,20 +60,37 @@ function validatePackageScripts() {
 
 function validatePagesWorkflow() {
   const workflowPath = resolvePath('.github/workflows/pages.yml');
-  const workflow = readText(workflowPath);
+  const retiredWorkflowPath = resolvePath('.github/workflows/retire-github-pages.yml');
+
+  if (fs.existsSync(workflowPath)) {
+    issues.push('Production GitHub Pages workflow must stay retired: .github/workflows/pages.yml must not exist');
+  }
+
+  if (!fs.existsSync(retiredWorkflowPath)) {
+    issues.push('Retired GitHub Pages entry workflow is required: .github/workflows/retire-github-pages.yml');
+    return;
+  }
+
+  const workflow = readText(retiredWorkflowPath);
 
   if (/hexo/i.test(workflow)) {
-    issues.push('Pages workflow still references Hexo');
+    issues.push('Retired Pages workflow still references Hexo');
   }
 
-  const normalizedWorkflow = workflow.replace(/path:\s+\.\/apps\/web\/dist/g, '');
-
-  if (normalizedWorkflow.includes('/site-v2/')) {
-    issues.push('Pages workflow still references the old /site-v2/ publish path');
+  if (/\bpush\s*:/.test(workflow)) {
+    issues.push('Retired Pages workflow must not run on push');
   }
 
-  if (!workflow.includes('path: ./apps/web/dist')) {
-    issues.push('Pages workflow is not uploading the Astro dist directory');
+  if (workflow.includes('./apps/web/dist') || workflow.includes('npm run build')) {
+    issues.push('Retired Pages workflow must not deploy the MyBlog production build');
+  }
+
+  if (!workflow.includes('https://blog.tengokukk.com/')) {
+    issues.push('Retired Pages workflow must point users to https://blog.tengokukk.com/');
+  }
+
+  if (!workflow.includes('noindex,nofollow')) {
+    issues.push('Retired Pages workflow must mark the old entry noindex,nofollow');
   }
 }
 

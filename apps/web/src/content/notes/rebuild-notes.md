@@ -11,8 +11,8 @@ draft: false
 
 - 建立 Astro 站点主体与内容集合模型
 - 补齐首页、文章页、搜索页、分类页、标签页、系列页、项目页
-- 将线上地址目标统一到 `https://emptyinkpot.github.io/`
-- 开始把根目录脚本与 GitHub Pages 发布链路切换到 Astro 单站点模式
+- 将线上地址目标统一到 `https://blog.tengokukk.com/`
+- 开始把根目录脚本与 VPS/Nginx 发布链路切换到 Astro 单站点模式
 
 接下来仍会持续优化的内容：
 
