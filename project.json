@@ -79,6 +79,74 @@
       "silent fallback when DataBase projection is enabled"
     ]
   },
+  "targetAiNativePublishing": {
+    "status": "target-not-deployed",
+    "decision": "Directus/Postgres is the target structured content source of truth; Dify is the target AI workflow orchestrator only.",
+    "currentProductionRule": "Vault/MarkdownObject projection remains production article truth until Directus readiness, migration and rollback evidence exist.",
+    "frontendRole": "MyBlog/Next.js/Astro consumes Directus APIs, snapshots or generated build artifacts as a presentation shell.",
+    "directus": {
+      "owner": "structured content truth",
+      "status": "target-not-deployed",
+      "owns": [
+        "articles",
+        "drafts",
+        "authors",
+        "tags",
+        "upload metadata",
+        "comments",
+        "SEO fields",
+        "revisions",
+        "factpacks",
+        "citations",
+        "author_contracts",
+        "critic_reports",
+        "runtime_runs"
+      ],
+      "database": "Postgres",
+      "mustNotOwn": [
+        "large file blobs that belong in OpenList/COS",
+        "AI workflow execution",
+        "model provider runtime"
+      ]
+    },
+    "dify": {
+      "owner": "AI workflow orchestration",
+      "status": "target-not-deployed",
+      "owns": [
+        "research workflow",
+        "rewrite workflow",
+        "writer workflow",
+        "critic workflow",
+        "SEO workflow",
+        "summary workflow",
+        "prompt and agent orchestration"
+      ],
+      "mustNotOwn": [
+        "CMS authority",
+        "article truth",
+        "factpack durable storage",
+        "citation durable storage",
+        "revision durable storage",
+        "runtime run ledger"
+      ],
+      "writeBack": "Dify writes durable outputs back through Directus API, for example PATCH /items/articles/:id and POST /items/factpacks."
+    },
+    "targetFlow": [
+      "User or editor creates a draft in Directus",
+      "Directus webhook invokes Dify workflow",
+      "Dify performs Research -> FactPack -> Writer -> Critic -> SEO -> Summary",
+      "Dify writes results back to Directus via HTTP API",
+      "MyBlog/Next.js/Astro renders from Directus API, snapshots or generated build output"
+    ],
+    "cutoverRequirements": [
+      "Directus schema ownership defined for articles, factpacks, citations, author_contracts, runtime_runs and critic_reports",
+      "secret boundary and service credentials documented outside Git",
+      "migration source and rollback path defined",
+      "webhook and Dify write-back idempotency defined",
+      "indexing and cache invalidation latency defined",
+      "readiness evidence proves Directus/Postgres persistence before any production authority claim"
+    ]
+  },
   "fileTruth": "Windows Vault synced to Linux hot mirror and exposed through OpenList",
   "contentRoots": [
     "apps/web/src/content/notes",

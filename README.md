@@ -71,6 +71,32 @@ MyBlog runtime DB is Tencent Cloud CynosDB MySQL through `apps/admin-next`. It o
 
 Runtime DB must not store article Markdown bodies, EPUB/PDF/image/video blobs, OpenList files, Tencent COS objects, Quark files, Astro dist, Pagefind output, or Syncthing hot mirror data.
 
+## AI-Native Publishing Target
+
+Directus + Dify is the target AI-native publishing architecture, but it is not the current deployed production path until readiness, migration, and rollback evidence exist.
+
+Target responsibilities:
+
+- Directus/Postgres owns structured content truth: articles, drafts, authors, tags, uploads metadata, comments, SEO fields, revisions, factpacks, citations, author contracts, critic reports, and workflow run records.
+- Dify owns AI workflow orchestration only: research, rewrite, writer, critic, SEO, summary, prompt, agent, and knowledge workflow execution.
+- Dify must not become the CMS, content database, article truth, citation store, factpack store, revision store, or long-lived runtime run ledger.
+- MyBlog/Next.js/Astro remains a presentation and projection shell. It consumes Directus API, static snapshots, or generated build artifacts; it does not become a custom CMS backend.
+
+Target flow:
+
+```text
+User / Editor
+-> MyBlog or Directus Admin
+-> Directus CMS / Postgres
+-> Directus webhook
+-> Dify Workflow
+-> AI services / LangGraph / model providers
+-> Directus API write-back
+-> MyBlog static or dynamic presentation
+```
+
+Current production remains Vault/MarkdownObject projection until the Directus migration is explicitly executed. Any Directus cutover must define schema ownership, secret boundaries, migration source, rollback path, sync/index latency, and proof that `article`, `factpack`, `citation`, `author_contract`, `runtime_run`, and `critic_report` collections are durable in Directus/Postgres.
+
 ## Content Infrastructure Reduction
 
 Content Infrastructure Reduction is active. MyBlog must not keep growing into a bespoke CMS/search/sync/deploy engine or a giant runtime JSON system.

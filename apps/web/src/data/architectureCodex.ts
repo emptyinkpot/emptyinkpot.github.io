@@ -54,6 +54,45 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     related: ['content-pipeline', 'runtime-architecture', 'composable-service-stack', 'runtime-federation']
   },
   {
+    slug: 'ai-native-publishing-system',
+    title: 'AI-Native Publishing System',
+    subtitle: 'Directus owns content truth; Dify runs AI workflows.',
+    thesis:
+      'MyBlog 的长期方向不是把 Dify 当数据库，也不是继续自写后台，而是用 Directus/Postgres 承担结构化内容真源，用 Dify 承担 AI workflow orchestration，再让 MyBlog/Next.js/Astro 只消费 API、snapshot 或构建产物来展示。Directus 和 Dify 正好互补：一个管 durable content system，一个管 AI runtime execution。',
+    status: 'future',
+    systems: ['Directus', 'Postgres', 'Dify', 'LangGraph', 'AI Services', 'MyBlog Presentation Shell', 'Next.js/Astro'],
+    inspiration: ['headless CMS architecture', 'AI workflow orchestration', 'database-first content modeling', 'editorial workflow systems'],
+    rejected: [
+      '把 Dify 当 CMS，因为 Dify 不应该拥有 article、draft、factpack、citation、revision 或 permissions truth。',
+      '把 Dify 当数据库，因为 workflow runtime 不适合承载 durable content source of truth。',
+      '继续自己写后台，因为 Directus 已经提供 admin panel、auth、RBAC、file upload、API、revision、dashboard、hooks 和 realtime。',
+      '让 MyBlog 前台直接拥有文章编辑 authority，因为前台应是 presentation/projection shell。',
+      '把大文件 blob 放进 Directus/Postgres，因为 EPUB、PDF、图片和视频仍应该留在 OpenList / COS。'
+    ],
+    runtime: [
+      '当前生产仍是 Vault/MarkdownObject projection；Directus + Dify 是 target-not-deployed 架构，不能写成已上线事实。',
+      '目标职责划分：Directus/Postgres 管 articles、drafts、authors、tags、uploads metadata、comments、SEO、revisions、factpacks、citations、author_contracts、critic_reports 和 runtime_runs。',
+      '目标职责划分：Dify 管 Research、FactPack、Writer、Critic、SEO、Summary、Prompt、Agent 和 Workflow orchestration，但 durable output 必须写回 Directus。',
+      '目标调用链是 User / Editor -> MyBlog or Directus Admin -> Directus CMS / Postgres -> Directus webhook -> Dify Workflow -> AI services / LangGraph / model providers -> Directus API write-back -> MyBlog static or dynamic presentation。',
+      '典型 write-back 是 Dify 通过 Directus HTTP API 调用 PATCH /items/articles/:id 或 POST /items/factpacks；Dify 不直接生成网页，不直接变成内容真源。',
+      'MyBlog/Next.js/Astro 只能消费 Directus API、static snapshot 或 generated build artifacts；它不再扩张为 bespoke CMS backend。'
+    ],
+    tradeoffs: [
+      'Directus + Dify 比全塞进 Dify 多一个系统边界，但这个边界正好防止 workflow runtime 污染 durable content truth。',
+      'Directus/Postgres 会引入 schema migration、backup、permission 和 webhook 运维成本，但换来结构化写作系统需要的 revision、permission、metadata 和 relation truth。',
+      'Dify write-back 需要 idempotency、retry 和 audit log 设计，否则 AI workflow 失败会污染草稿状态。',
+      '切到 Directus 之前继续保留 Vault/MarkdownObject projection，短期多一条迁移线，但能避免没有 rollback 的生产切换。'
+    ],
+    future: [
+      '定义 Directus schema：articles、factpacks、citations、author_contracts、runtime_runs、critic_reports。',
+      '定义 Directus webhook -> Dify workflow -> Directus write-back 的 idempotent contract。',
+      '把 Author System、Fact Compiler、Narrative Engine 和 Critic Runtime 做成 Dify/LangGraph workflow，而不是写进 MyBlog 前台。',
+      '写 Directus readiness plan：Postgres storage、backup、secrets、RBAC、webhooks、migration、rollback 和 API smoke tests。',
+      '写 Dify readiness plan：workflow inputs/outputs、model provider boundary、token usage logging、latency budget、retry and audit trail。'
+    ],
+    related: ['composable-service-stack', 'runtime-federation', 'object-layer', 'content-pipeline']
+  },
+  {
     slug: 'frontend-runtime-archaeology',
     title: 'Frontend Runtime Archaeology',
     subtitle: '前端不是组件树，而是运行时系统。',
@@ -349,11 +388,12 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'OpenList + 腾讯云 COS 当前已作为 content control plane 下的大文件 / blob 后端验证：bucket myblog-media-1410041307，region ap-shanghai，挂载点 /腾讯云COS，验证对象 _verify/openlist-cos.txt。',
       'OpenList + server storage integration 当前 active：/Obsidian 是 Local driver，root=/home/vault/Obsidian，只作为 Linux hot mirror 的 public access identity；/腾讯云COS 与 /夸克网盘 是冷层和 blob backend；root disk 维护入口是 npm run server:openlist-storage。',
       'Immich 当前是 skeleton-installed-not-started：/srv/immich、.env、docker-compose.yml、check-readiness.sh 和 Nginx vhost 已存在，但 DNS、独立存储和 root disk 空间未满足启动条件。',
-      'Directus 是 target-not-deployed metadata layer，后续管理 books、visuals、collections、knowledge_objects 的人工策展字段，不保存大文件原件；P0 书籍 metadata 暂由 public-data/books/books.metadata.json sidecar 承担。',
+      'Directus 是 target-not-deployed structured content / metadata layer：近期承接 books、visuals、collections、knowledge_objects 的人工策展字段；AI-native publishing cutover 后可承接 articles、drafts、factpacks、citations、author_contracts、critic_reports 和 runtime_runs 的 Directus/Postgres truth；它不保存大文件原件。',
       'Meilisearch 是 target-not-deployed search runtime，后续索引 KnowledgeObject snapshot、OpenList file index、Directus metadata 和 Immich import snapshot；上线前 Pagefind 继续承担静态文章搜索。',
       'infra/composable-stack 提供 Directus + Meilisearch 的可复刻 Docker Compose skeleton、.env.example 和 check-readiness.sh；服务器侧已同步到 /srv/myblog/services/composable-stack/，但 .env 未创建、容器未启动，它是部署入口，不是已运行事实。',
       'Astro/MyBlog 当前是 presentation shell：组织 Feed、Drawer、Reader、Visual Collection、Graph 和公开路由，只消费 API、snapshot、manifest 和 Astro content collection；manifest 是 projection/cache，不是人工 metadata truth。',
       'apps/admin-next 只做 gateway、import pipeline、runtime cache、OpenList proxy、MySQL runtime bridge 和服务间 glue；不得扩张成完整 CMS、媒体库或搜索引擎。',
+      'Dify 是 target-not-deployed AI workflow orchestrator，只负责 research、writer、critic、SEO、summary、prompt 和 agent workflow；Dify durable output 必须写回 Directus/Postgres，不能成为 CMS 或数据库。',
       'OpenList/COS 文件索引拥有书籍 existence authority；public-data/books/books-index.json 只保存 path / modified / size / sourceType / cover cache 输入；public-data/books/books.metadata.json 是 P0 editable metadata layer。build script 不得内联 const overlays，也不得让 manifest、localStorage 或 OpenList 决定 tags、description、status、collection。'
     ],
     tradeoffs: [
@@ -364,7 +404,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'Compose skeleton 让后续部署更可复刻，但在 root disk 只有数 GB 可用时必须保持未启动。'
     ],
     future: [
-      '部署 Directus 并建模 books、visuals、collections、knowledge_objects 的 metadata overlay。',
+      '部署 Directus 并建模 books、visuals、collections、knowledge_objects 的 metadata overlay，再按 AI-native publishing plan 迁移 articles、factpacks、citations、author_contracts、runtime_runs 和 critic_reports。',
       '部署 Meilisearch 并建立 KnowledgeObject snapshot index，逐步替代 Pagefind 对动态实体的缺口。',
       '建立 canonical file index：OpenList/COS scan -> normalized file objects -> Directus overlay -> Meilisearch index -> MyBlog snapshot。',
       '实现 Immich API importer，把 asset、album、tag、face、semantic metadata 导入 VisualCollection / KnowledgeObject snapshot。',
@@ -404,7 +444,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'Immich 是 Media Runtime 目标服务：当前 skeleton-not-started，不能写成已上线媒体库。',
       'Paperless-ngx 是 Document Object reference，核心启发是 file != document，文件只是载体，文档对象才拥有 metadata lifecycle。',
       'Mihon 和 Read You 是 Android / Feed Runtime reference，主要学习 source abstraction、cache、downloads、updates、offline feed 和 reading state。',
-      'Directus 与 Meilisearch 仍是 target-not-deployed，分别负责 metadata overlay 和 dynamic object search。',
+      'Directus、Dify 与 Meilisearch 仍是 target-not-deployed：Directus 负责 structured content / metadata truth，Dify 负责 AI workflow orchestration，Meilisearch 负责 dynamic object search。',
       'MyBlog 自己只写 Object Layer Glue、Runtime Schema、Projection Logic、Relation System、Knowledge Runtime Semantics 和 KnowledgeObject projection。',
       'workspace.manifest.json 是当前 workspace 的机器可读 authority 声明；workspaces/canonical.json、workspaces/experimental.json、workspaces/sandbox.json 是分级模板。',
       'tools/deploy-guard.mjs 在部署前检查 workspaceId、workspaceType、allowedRoots、deploymentAuthority 和 capabilities.canDeploy；.codex-runtime/worktrees/* 默认不能声明生产部署权。',
