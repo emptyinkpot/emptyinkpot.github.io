@@ -75,6 +75,16 @@ Runtime DB must not store article Markdown bodies, EPUB/PDF/image/video blobs, O
 
 Directus + Dify is the target AI-native publishing architecture, but it is not the current deployed production path until readiness, migration, and rollback evidence exist.
 
+Backend status:
+
+- Directus/Postgres deployment is owned by `infra/composable-stack`.
+- Durable Directus data lives under `/data/myblog/composable-stack`; `/data` must be a mounted ext4 data disk with at least 10GB free for the default Directus/Postgres backend before startup.
+- `https://admin.blog.tengokukk.com/server/health` is verified; Let's Encrypt certificate expires on 2026-08-22.
+- Directus schema is created for `articles`, `factpacks`, `citations`, `author_contracts`, `runtime_runs`, and `critic_reports`.
+- Dify workflow `MyBlog Article Pipeline` is created and published. Smoke run `dadeb63b-49e0-41bc-8e70-cad9150bb5fc` patched Directus article `1` and wrote `runtime_runs` row `3`.
+- Server-only service tokens live under `/data/myblog/composable-stack/secrets`; they are not committed or synced from Git.
+- Meilisearch is not part of the default blog backend startup; it remains a `search` profile service until search readiness is separately verified.
+
 Target responsibilities:
 
 - Directus/Postgres owns structured content truth: articles, drafts, authors, tags, uploads metadata, comments, SEO fields, revisions, factpacks, citations, author contracts, critic reports, and workflow run records.

@@ -70,7 +70,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '把大文件 blob 放进 Directus/Postgres，因为 EPUB、PDF、图片和视频仍应该留在 OpenList / COS。'
     ],
     runtime: [
-      '当前生产仍是 Vault/MarkdownObject projection；Directus + Dify 是 target-not-deployed 架构，不能写成已上线事实。',
+      '当前生产文章展示仍是 Vault/MarkdownObject projection；Directus + Dify 后端已完成 bootstrap 与 write-back smoke，但在迁移、rollback、权限和前台读取切换验证前，不能写成生产文章 truth。',
       '目标职责划分：Directus/Postgres 管 articles、drafts、authors、tags、uploads metadata、comments、SEO、revisions、factpacks、citations、author_contracts、critic_reports 和 runtime_runs。',
       '目标职责划分：Dify 管 Research、FactPack、Writer、Critic、SEO、Summary、Prompt、Agent 和 Workflow orchestration，但 durable output 必须写回 Directus。',
       '目标调用链是 User / Editor -> MyBlog or Directus Admin -> Directus CMS / Postgres -> Directus webhook -> Dify Workflow -> AI services / LangGraph / model providers -> Directus API write-back -> MyBlog static or dynamic presentation。',
@@ -388,12 +388,12 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'OpenList + 腾讯云 COS 当前已作为 content control plane 下的大文件 / blob 后端验证：bucket myblog-media-1410041307，region ap-shanghai，挂载点 /腾讯云COS，验证对象 _verify/openlist-cos.txt。',
       'OpenList + server storage integration 当前 active：/Obsidian 是 Local driver，root=/home/vault/Obsidian，只作为 Linux hot mirror 的 public access identity；/腾讯云COS 与 /夸克网盘 是冷层和 blob backend；root disk 维护入口是 npm run server:openlist-storage。',
       'Immich 当前是 skeleton-installed-not-started：/srv/immich、.env、docker-compose.yml、check-readiness.sh 和 Nginx vhost 已存在，但 DNS、独立存储和 root disk 空间未满足启动条件。',
-      'Directus 是 target-not-deployed structured content / metadata layer：近期承接 books、visuals、collections、knowledge_objects 的人工策展字段；AI-native publishing cutover 后可承接 articles、drafts、factpacks、citations、author_contracts、critic_reports 和 runtime_runs 的 Directus/Postgres truth；它不保存大文件原件。',
-      'Meilisearch 是 target-not-deployed search runtime，后续索引 KnowledgeObject snapshot、OpenList file index、Directus metadata 和 Immich import snapshot；上线前 Pagefind 继续承担静态文章搜索。',
-      'infra/composable-stack 提供 Directus + Meilisearch 的可复刻 Docker Compose skeleton、.env.example 和 check-readiness.sh；服务器侧已同步到 /srv/myblog/services/composable-stack/，但 .env 未创建、容器未启动，它是部署入口，不是已运行事实。',
+      'Directus/Postgres 当前已部署为 AI-native publishing backend：infra/composable-stack 是部署 owner，Postgres 与 Directus uploads 的持久数据落在 /data/myblog/composable-stack；articles、factpacks、citations、author_contracts、runtime_runs 和 critic_reports schema 已创建。',
+      'Meilisearch 是 target-not-deployed search runtime，后续索引 KnowledgeObject snapshot、OpenList file index、Directus metadata 和 Immich import snapshot；上线前 Pagefind 继续承担静态文章搜索，compose 中的 Meilisearch 只在 search profile 下启动。',
+      'infra/composable-stack 提供 Directus + Postgres 的默认 Docker Compose backend、.env.example 和 check-readiness.sh；启动前必须证明 /data 是独立挂载且默认 Directus/Postgres 后端至少 10GB 可用，服务器 .env 只存在于 /srv/myblog/services/composable-stack/，service tokens 只存在于 /data/myblog/composable-stack/secrets。',
       'Astro/MyBlog 当前是 presentation shell：组织 Feed、Drawer、Reader、Visual Collection、Graph 和公开路由，只消费 API、snapshot、manifest 和 Astro content collection；manifest 是 projection/cache，不是人工 metadata truth。',
       'apps/admin-next 只做 gateway、import pipeline、runtime cache、OpenList proxy、MySQL runtime bridge 和服务间 glue；不得扩张成完整 CMS、媒体库或搜索引擎。',
-      'Dify 是 target-not-deployed AI workflow orchestrator，只负责 research、writer、critic、SEO、summary、prompt 和 agent workflow；Dify durable output 必须写回 Directus/Postgres，不能成为 CMS 或数据库。',
+      'Dify 当前已作为独立 AI workflow runtime 运行，博客 workflow MyBlog Article Pipeline 已创建并发布；smoke run dadeb63b-49e0-41bc-8e70-cad9150bb5fc 已 PATCH Directus article 1 并创建 runtime_runs 3，Dify durable output 必须继续写回 Directus/Postgres，不能成为 CMS 或数据库。',
       'OpenList/COS 文件索引拥有书籍 existence authority；public-data/books/books-index.json 只保存 path / modified / size / sourceType / cover cache 输入；public-data/books/books.metadata.json 是 P0 editable metadata layer。build script 不得内联 const overlays，也不得让 manifest、localStorage 或 OpenList 决定 tags、description、status、collection。'
     ],
     tradeoffs: [

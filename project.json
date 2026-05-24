@@ -80,13 +80,13 @@
     ]
   },
   "targetAiNativePublishing": {
-    "status": "target-not-deployed",
+    "status": "backend-writeback-verified",
     "decision": "Directus/Postgres is the target structured content source of truth; Dify is the target AI workflow orchestrator only.",
     "currentProductionRule": "Vault/MarkdownObject projection remains production article truth until Directus readiness, migration and rollback evidence exist.",
     "frontendRole": "MyBlog/Next.js/Astro consumes Directus APIs, snapshots or generated build artifacts as a presentation shell.",
     "directus": {
       "owner": "structured content truth",
-      "status": "target-not-deployed",
+      "status": "deployed-writeback-verified",
       "owns": [
         "articles",
         "drafts",
@@ -102,16 +102,19 @@
         "critic_reports",
         "runtime_runs"
       ],
-      "database": "Postgres",
+      "database": "Postgres at /data/myblog/composable-stack/postgres",
       "mustNotOwn": [
         "large file blobs that belong in OpenList/COS",
         "AI workflow execution",
         "model provider runtime"
-      ]
+      ],
+      "publicUrl": "https://admin.blog.tengokukk.com",
+      "adminUrl": "https://admin.blog.tengokukk.com/",
+      "schemaStatus": "articles, factpacks, citations, author_contracts, runtime_runs and critic_reports created"
     },
     "dify": {
       "owner": "AI workflow orchestration",
-      "status": "target-not-deployed",
+      "status": "blog-workflow-created-and-run-verified",
       "owns": [
         "research workflow",
         "rewrite workflow",
@@ -129,7 +132,10 @@
         "revision durable storage",
         "runtime run ledger"
       ],
-      "writeBack": "Dify writes durable outputs back through Directus API, for example PATCH /items/articles/:id and POST /items/factpacks."
+      "writeBack": "Dify writes durable outputs back through Directus API, for example PATCH /items/articles/:id and POST /items/factpacks.",
+      "workflowApp": "MyBlog Article Pipeline",
+      "workflowId": "4ed68f9e-1fa9-42c9-b972-8e7137d1f860",
+      "serviceApiKeySource": "/data/myblog/composable-stack/secrets/dify-myblog-api-key.json"
     },
     "targetFlow": [
       "User or editor creates a draft in Directus",
@@ -139,13 +145,20 @@
       "MyBlog/Next.js/Astro renders from Directus API, snapshots or generated build output"
     ],
     "cutoverRequirements": [
+      "Directus/Postgres backend health verified on admin.blog.tengokukk.com",
       "Directus schema ownership defined for articles, factpacks, citations, author_contracts, runtime_runs and critic_reports",
       "secret boundary and service credentials documented outside Git",
       "migration source and rollback path defined",
       "webhook and Dify write-back idempotency defined",
       "indexing and cache invalidation latency defined",
       "readiness evidence proves Directus/Postgres persistence before any production authority claim"
-    ]
+    ],
+    "verification": {
+      "directusHealth": "https://admin.blog.tengokukk.com/server/health returned {status: ok}",
+      "writeBackSmoke": "Dify workflow run dadeb63b-49e0-41bc-8e70-cad9150bb5fc patched Directus article 1 and created runtime_runs 3",
+      "rootDisk": "/var/lib/containerd bind-mounted to /data/containerd; root filesystem reduced to 31% used",
+      "tls": "issued and deployed; expires on 2026-08-22"
+    }
   },
   "fileTruth": "Windows Vault synced to Linux hot mirror and exposed through OpenList",
   "contentRoots": [
@@ -672,7 +685,7 @@
     ]
   },
   "composableServiceStack": {
-    "status": "target architecture documented; OpenList+COS is active, Immich skeleton is installed but not started, Directus and Meilisearch are not deployed",
+    "status": "Directus/Postgres deployed and Dify write-back smoke verified; OpenList+COS active, Immich skeleton not started, Meilisearch target-not-deployed",
     "thesis": "MyBlog is the presentation shell; mature services own files, AI media management, metadata curation and search",
     "presentationShell": {
       "service": "Astro/MyBlog",
@@ -702,18 +715,24 @@
     },
     "metadataOverlay": {
       "service": "Directus",
-      "status": "target-not-deployed",
+      "status": "deployed-writeback-verified",
       "composeSkeleton": "infra/composable-stack/docker-compose.yml",
       "p0Sidecar": "public-data/books/books.metadata.json",
-      "role": "metadata layer for books, visuals, collections and knowledge_objects; P0 books metadata is a versioned sidecar until Directus or an equivalent metadata DB is deployed",
-      "filePolicy": "stores structured metadata only; large files remain in OpenList/COS"
+      "role": "structured content truth for the AI-native publishing backend; books/visuals/collections metadata can migrate after schema and rollback verification",
+      "filePolicy": "stores structured metadata only; large files remain in OpenList/COS",
+      "database": "Postgres via infra/composable-stack directus-postgres service",
+      "publicUrl": "https://admin.blog.tengokukk.com",
+      "serverDataRoot": "/data/myblog/composable-stack",
+      "schemaStatus": "AI-native publishing collections created",
+      "writeBackStatus": "Dify MyBlog Article Pipeline smoke run succeeded"
     },
     "searchRuntime": {
       "service": "Meilisearch",
       "status": "target-not-deployed",
       "composeSkeleton": "infra/composable-stack/docker-compose.yml",
       "role": "dynamic full-text and semantic search for KnowledgeObject snapshots, OpenList file index, Directus metadata and Immich imports",
-      "currentFallback": "Pagefind remains the current static search until Meilisearch is deployed"
+      "currentFallback": "Pagefind remains the current static search until Meilisearch is deployed",
+      "profile": "search profile in infra/composable-stack/docker-compose.yml; not started with the default Directus/Postgres backend"
     },
     "infraSkeleton": {
       "root": "infra/composable-stack",
@@ -721,9 +740,12 @@
       "envExample": "infra/composable-stack/.env.example",
       "readinessScript": "infra/composable-stack/check-readiness.sh",
       "serverTargetRoot": "/srv/myblog/services/composable-stack",
-      "serverSkeletonStatus": "synced to server; .env is intentionally missing and containers are not started",
-      "startupGate": "run ./check-readiness.sh and require ready before docker compose up -d",
-      "status": "source skeleton only; not deployed as running services"
+      "serverSkeletonStatus": "synced and running on server; .env and service tokens exist only under server data/secrets roots",
+      "startupGate": "/data must be mounted with at least 10GB free, then run ./check-readiness.sh before docker compose up -d",
+      "status": "active Directus/Postgres backend entrypoint; Meilisearch disabled unless search profile is explicitly started",
+      "serverDataRoot": "/data/myblog/composable-stack",
+      "dataMount": "/data",
+      "secretRoot": "/data/myblog/composable-stack/secrets"
     },
     "authorityRules": [
       "OpenList/COS owns file existence only; it does not own tags, descriptions, status or collections",
@@ -732,7 +754,9 @@
       "browser localStorage is preference/cache/legacy migration only, never runtime truth",
       "apps/admin-next is a gateway/import/cache/runtime bridge, not a full CMS, media library or search engine",
       "visitor page loads must read snapshots and caches, not run AI inference or re-index large files",
-      "do not describe Directus or Meilisearch as active before deployment and verification"
+      "do not describe Directus or Meilisearch as active before deployment and verification",
+      "Directus/Postgres deployment uses /data/myblog/composable-stack for durable Postgres data and Directus uploads",
+      "Meilisearch must not be started by default for the blog publishing backend; it remains a search-profile service until search readiness is verified"
     ],
     "targetPipeline": [
       "COS/OpenList canonical file index",

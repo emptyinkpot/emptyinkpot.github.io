@@ -1,26 +1,50 @@
 services:
+  directus-postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "${DIRECTUS_DB_USER}"
+      POSTGRES_PASSWORD: "${DIRECTUS_DB_PASSWORD}"
+      POSTGRES_DB: "${DIRECTUS_DB_DATABASE}"
+    volumes:
+      - ${STACK_DATA_ROOT:-/data/myblog/composable-stack}/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"${DIRECTUS_DB_USER}\" -d \"${DIRECTUS_DB_DATABASE}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
   directus:
     image: directus/directus:11
     restart: unless-stopped
     ports:
-      - "127.0.0.1:${DIRECTUS_PORT:-8055}:8055"
+      - "172.17.0.1:${DIRECTUS_PORT:-8055}:8055"
+    depends_on:
+      directus-postgres:
+        condition: service_healthy
     environment:
       KEY: "${DIRECTUS_KEY}"
       SECRET: "${DIRECTUS_SECRET}"
       ADMIN_EMAIL: "${DIRECTUS_ADMIN_EMAIL}"
       ADMIN_PASSWORD: "${DIRECTUS_ADMIN_PASSWORD}"
       PUBLIC_URL: "${DIRECTUS_PUBLIC_URL}"
-      DB_CLIENT: "sqlite3"
-      DB_FILENAME: "/directus/database/data.db"
+      DB_CLIENT: "pg"
+      DB_HOST: "directus-postgres"
+      DB_PORT: "5432"
+      DB_DATABASE: "${DIRECTUS_DB_DATABASE}"
+      DB_USER: "${DIRECTUS_DB_USER}"
+      DB_PASSWORD: "${DIRECTUS_DB_PASSWORD}"
       STORAGE_LOCATIONS: "local"
       STORAGE_LOCAL_DRIVER: "local"
       STORAGE_LOCAL_ROOT: "/directus/uploads"
       TELEMETRY: "false"
+      WEBSOCKETS_ENABLED: "true"
     volumes:
-      - ./directus/database:/directus/database
-      - ./directus/uploads:/directus/uploads
+      - ${STACK_DATA_ROOT:-/data/myblog/composable-stack}/directus/uploads:/directus/uploads
+      - ${STACK_DATA_ROOT:-/data/myblog/composable-stack}/directus/extensions:/directus/extensions
     healthcheck:
-      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:8055/server/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+      test: ["CMD-SHELL", "node -e \"fetch('http://172.17.0.1:8055/server/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -28,6 +52,8 @@ services:
 
   meilisearch:
     image: getmeili/meilisearch:v1.13
+    profiles:
+      - search
     restart: unless-stopped
     ports:
       - "127.0.0.1:${MEILI_PORT:-7700}:7700"
@@ -36,7 +62,7 @@ services:
       MEILI_MASTER_KEY: "${MEILI_MASTER_KEY}"
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - ./meilisearch:/meili_data
+      - ${STACK_DATA_ROOT:-/data/myblog/composable-stack}/meilisearch:/meili_data
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--spider", "http://127.0.0.1:7700/health"]
       interval: 30s
