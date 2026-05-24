@@ -555,14 +555,34 @@ function listMarkdownFiles(directory) {
 function isPrivatePath(relativePath) {
   const normalizedPath = toSlash(relativePath);
   const basename = path.basename(normalizedPath).toLowerCase();
+  const generatedSegments = new Set([
+    '_archive',
+    'archive',
+    'archives',
+    'assets',
+    'build',
+    'dist',
+    'evidence',
+    'node_modules',
+    'output',
+    'outputs',
+    'private',
+    'runtime',
+    'temp',
+    'tmp'
+  ]);
 
   if (/\.(recovered|backup|bak|tmp)\.mdx?$/i.test(basename)) {
     return true;
   }
 
+  if (/\.(paper|pandoc|raw|generated|runtime)\.mdx?$/i.test(basename)) {
+    return true;
+  }
+
   return normalizedPath
     .split('/')
-    .some((segment) => segment.startsWith('.') || segment === 'assets' || segment === 'private' || segment === 'drafts');
+    .some((segment) => segment.startsWith('.') || generatedSegments.has(segment) || segment === 'drafts');
 }
 
 function deriveKind(relativePath, data) {
