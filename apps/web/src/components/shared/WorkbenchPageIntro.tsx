@@ -1,4 +1,6 @@
 import HomeWorkbenchSectionLine from '../home/HomeWorkbenchSectionLine';
+import { MetricCard } from '../ui/MetricCard';
+import { Surface } from '../ui/Surface';
 
 type StatItem = {
   label: string;
@@ -14,7 +16,12 @@ type WorkbenchPageIntroProps = {
 
 export default function WorkbenchPageIntro({ kicker, title, summary, stats = [] }: WorkbenchPageIntroProps) {
   return (
-    <section className="workbench-page__intro home-workbench__card home-workbench__card--panel">
+    <Surface
+      as="section"
+      className="workbench-page__intro home-workbench__card home-workbench__card--panel"
+      padding="none"
+      variant="quiet"
+    >
       <HomeWorkbenchSectionLine leading={kicker} trailing="Workbench Page" tight={true} />
       <div className="workbench-page__intro-copy">
         <h1>{title}</h1>
@@ -23,13 +30,18 @@ export default function WorkbenchPageIntro({ kicker, title, summary, stats = [] 
       {stats.length > 0 ? (
         <div className="workbench-page__stats">
           {stats.map((stat) => (
-            <div className="workbench-page__stat" key={`${stat.label}:${stat.value}`}>
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
-            </div>
+            <MetricCard
+              className="workbench-page__stat"
+              key={`${stat.label}:${stat.value}`}
+              label={stat.label}
+              padding="none"
+              value={stat.value}
+              valueFirst={true}
+              variant="quiet"
+            />
           ))}
         </div>
       ) : null}
-    </section>
+    </Surface>
   );
 }

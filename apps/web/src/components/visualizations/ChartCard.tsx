@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import { Button } from '../ui/Button';
+import { Surface } from '../ui/Surface';
 
 type ChartCardProps = {
   kicker: string;
@@ -14,7 +16,7 @@ export default function ChartCard({ kicker, title, summary, metric, href, compac
   const className = ['chart-card', compact ? 'chart-card--compact' : ''].filter(Boolean).join(' ');
 
   return (
-    <article className={className}>
+    <Surface as="article" className={className} padding="none" variant="quiet">
       <header className="chart-card__header">
         <div>
           <span>{kicker}</span>
@@ -25,10 +27,10 @@ export default function ChartCard({ kicker, title, summary, metric, href, compac
       {summary ? <p>{summary}</p> : null}
       <div className="chart-card__body">{children}</div>
       {href ? (
-        <a className="chart-card__link" href={href}>
-          查看完整页
-        </a>
+        <Button asChild={true} className="chart-card__link" size="sm" variant="quiet">
+          <a href={href}>查看完整页</a>
+        </Button>
       ) : null}
-    </article>
+    </Surface>
   );
 }

@@ -8,6 +8,7 @@ export type MetricCardProps = Omit<SurfaceProps, 'children'> & {
   description?: ReactNode;
   trend?: ReactNode;
   icon?: ReactNode;
+  valueFirst?: boolean;
 };
 
 export function MetricCard({
@@ -17,20 +18,28 @@ export function MetricCard({
   description,
   trend,
   icon,
+  valueFirst = false,
   variant = 'default',
   padding = 'md',
   ...props
 }: MetricCardProps) {
+  const labelNode = (
+    <div className="flex min-w-0 items-start justify-between gap-3">
+      <span className="min-w-0 text-xs font-medium uppercase text-[var(--muted)]">{label}</span>
+      {icon ? <span className="shrink-0 text-[var(--accent)]">{icon}</span> : null}
+    </div>
+  );
+  const valueNode = (
+    <div className="flex min-w-0 items-end justify-between gap-3">
+      <strong className="min-w-0 text-2xl font-semibold leading-none tracking-normal text-[var(--text)]">{value}</strong>
+      {trend ? <span className="shrink-0 text-xs font-medium text-[var(--accent)]">{trend}</span> : null}
+    </div>
+  );
+
   return (
     <Surface as="article" className={cn('grid gap-3', className)} padding={padding} variant={variant} {...props}>
-      <div className="flex min-w-0 items-start justify-between gap-3">
-        <span className="min-w-0 text-xs font-medium uppercase text-[var(--muted)]">{label}</span>
-        {icon ? <span className="shrink-0 text-[var(--accent)]">{icon}</span> : null}
-      </div>
-      <div className="flex min-w-0 items-end justify-between gap-3">
-        <strong className="min-w-0 text-2xl font-semibold leading-none tracking-normal text-[var(--text)]">{value}</strong>
-        {trend ? <span className="shrink-0 text-xs font-medium text-[var(--accent)]">{trend}</span> : null}
-      </div>
+      {valueFirst ? valueNode : labelNode}
+      {valueFirst ? labelNode : valueNode}
       {description ? <p className="m-0 text-sm leading-6 text-[var(--muted)]">{description}</p> : null}
     </Surface>
   );

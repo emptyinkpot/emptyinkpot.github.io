@@ -201,6 +201,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '规范入口是 README.md 与本 Architecture Codex 条目；交互质感和 runtime coherence 不再维护独立 docs 文档。',
       'P0 token 包是 packages/design-system；当前只定义 motion、depth、elevation、focus 和 surface token，不是组件库。',
       'P0 React primitive 层是 apps/web/src/components/ui：Button、IconButton、StatusBadge、MetricCard、Surface、EmptyState 采用 CVA、clsx、tailwind-merge、Radix Slot/Tooltip 和 lucide-react，消费 runtime token 并提供稳定组件 API；它不是数据 truth、runtime command owner 或 packages/design-system 的替代品。',
+      '第一批生产组件消费者已经开始从手写 surface 收敛到 React primitives：ChartCard 使用 Surface 与 Button asChild 保留 chart-card 视觉合同，WorkbenchPageIntro 使用 Surface 与 MetricCard 渲染统计块，MetricCard 增加 valueFirst 以支持页面级指标的既有阅读顺序。',
       'apps/web/src/styles/global.css 暴露 --runtime-motion-*、--runtime-ease-*、--runtime-depth-*、--runtime-elevation-*、--runtime-focus-*、--runtime-surface-* 变量，后续 overlay / drawer / command / visual surface 必须复用。',
       'Storybook 是 React 体验投影面：preview 加载 apps/web global.css、admin-next globals.css 与 runtime token，并用 MSW + storybook-only fixture/mocks 隔离远端数据；当前 story inventory 包含 UI Primitives、Command、HoverPreview、BookCover、BookshelfGrid、RuntimeBookFeed、BookReader、PDF/EPUB reader、RuntimeBookDetail/Reader、EditIntakeWorkbench、shared site chrome、showcase cards、GitHub visualization 和 admin console 组件，并通过 npx vitest --project storybook run 执行交互与唯一 CssCheck 验证。',
       'P1 已部分落地：Home Command layer 和 fallback Knowledge Search layer 开始复用 runtime depth、surface、elevation 和 motion token。',
