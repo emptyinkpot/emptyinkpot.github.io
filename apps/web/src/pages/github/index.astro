@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ChartCard from '../../components/visualizations/ChartCard.astro';
-import GitHubHeatmap from '../../components/visualizations/GitHubHeatmap.astro';
-import GitHubLanguageDonut from '../../components/visualizations/GitHubLanguageDonut.astro';
-import GitHubMonthlyLine from '../../components/visualizations/GitHubMonthlyLine.astro';
-import GitHubRepoMatrix from '../../components/visualizations/GitHubRepoMatrix.astro';
-import GitHubRuntimeSync from '../../components/visualizations/GitHubRuntimeSync.astro';
-import TeamSignalGraph from '../../components/visualizations/TeamSignalGraph.astro';
+import ChartCard from '../../components/visualizations/ChartCard';
+import GitHubHeatmap from '../../components/visualizations/GitHubHeatmap';
+import GitHubLanguageDonut from '../../components/visualizations/GitHubLanguageDonut';
+import GitHubMonthlyLine from '../../components/visualizations/GitHubMonthlyLine';
+import GitHubRepoMatrix from '../../components/visualizations/GitHubRepoMatrix';
+import GitHubRuntimeSync from '../../components/visualizations/GitHubRuntimeSync';
+import TeamSignalGraph from '../../components/visualizations/TeamSignalGraph';
 import { buildGitHubAnalytics } from '../../lib/analytics';
 import { getGitHubOverview } from '../../lib/github';
 
@@ -73,5 +73,5 @@ const analytics = buildGitHubAnalytics(github);
       <GitHubRepoMatrix repos={analytics.repos} />
     </section>
   </main>
-  <GitHubRuntimeSync />
+  <GitHubRuntimeSync client:load />
 </BaseLayout>

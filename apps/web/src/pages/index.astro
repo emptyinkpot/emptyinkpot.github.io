@@ -1,12 +1,12 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ChartCard from '../components/visualizations/ChartCard.astro';
-import GitHubHeatmap from '../components/visualizations/GitHubHeatmap.astro';
-import GitHubLanguageDonut from '../components/visualizations/GitHubLanguageDonut.astro';
-import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine.astro';
-import GitHubRuntimeSync from '../components/visualizations/GitHubRuntimeSync.astro';
-import MusicCard from '../components/showcase/MusicCard.astro';
+import ChartCard from '../components/visualizations/ChartCard';
+import GitHubHeatmap from '../components/visualizations/GitHubHeatmap';
+import GitHubLanguageDonut from '../components/visualizations/GitHubLanguageDonut';
+import GitHubMonthlyLine from '../components/visualizations/GitHubMonthlyLine';
+import GitHubRuntimeSync from '../components/visualizations/GitHubRuntimeSync';
+import MusicCard from '../components/showcase/MusicCard';
 import HomeCommandPalette from '../components/react/HomeCommandPalette';
 import HomeNumberTicker from '../components/react/HomeNumberTicker';
 import BookCover from '../components/books/BookCover';
@@ -3292,5 +3292,5 @@ const sidebarNavigation = getMyBlogSidebarNavigation(withBase);
       }
     })();
   </script>
-  <GitHubRuntimeSync />
+  <GitHubRuntimeSync client:load />
 </BaseLayout>

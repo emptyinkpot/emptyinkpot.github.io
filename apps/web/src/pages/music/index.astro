@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import MusicCard from '../../components/showcase/MusicCard.astro';
+import MusicCard from '../../components/showcase/MusicCard';
 import { musicItems } from '../../data/music';
 
 const moods = [...new Set(musicItems.flatMap((item) => item.mood))];

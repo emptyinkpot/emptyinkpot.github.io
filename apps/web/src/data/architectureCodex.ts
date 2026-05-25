@@ -149,7 +149,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     runtime: [
       '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时收束不再维护独立 docs 文档。',
       'P0 合同包是 packages/runtime-kernel，当前 dependency-free，定义 command、overlay、drawer、keyboard、authority、storage classification 和 small runtime plugin protocol；apps/web/src/lib/runtime/bridge.ts 是第一条生产适配路径，把 React islands 的 action 统一转成 runtime:command / runtime:overlay-* / runtime:drawer-*；packages/runtime-kernel/src/storage.ts 是 canonical browser storage registry。',
-      'React islands 的组件投影入口是 apps/web Storybook：apps/web/.storybook 使用 @storybook/react-vite，src/stories/ReactIslands.stories.tsx 覆盖当前 14 个 .tsx React island，并用 fixture / Vite alias mock 隔离 OpenList、reader memory、reader runtime 等外部依赖；Storybook 只投影交互组件，不拥有 OpenList、MySQL、content-index 或 runtime truth。',
+      'React 组件层的投影入口是 apps/web Storybook：apps/web/.storybook 使用 @storybook/react-vite + @storybook/addon-vitest；8 个 domain-level colocated story files 覆盖 Web React islands、迁移后的展示组件、GitHub visualization、showcase、shared chrome 和 admin-next React console 组件，并用 MSW、fixture 和 Vite alias mock 隔离 OpenList、reader memory、reader runtime 等外部依赖；Storybook 只投影组件和交互，不拥有 OpenList、MySQL、content-index 或 runtime truth。',
+      'React 化当前边界是组件层：apps/web/src/components 已迁出 Astro component 文件，页面/路由/布局 shell 仍由 Astro 负责；GitHubRuntimeSync 已从 Astro inline script 改为 React client island，但首页大型 inline runtime 仍需后续按 owner 迁移。',
       '当前没有 active runtime-migration.json、packages/runtime-overlay 或 packages/runtime-store；overlay、drawer、focus 和 Escape 的消费实现仍在 legacy inline runtime + React islands，但入口已经开始统一到 runtime intent。',
       'packages/runtime-kernel 不替代 packages/runtime-contract；前者管前端交互意图，后者管 API transport envelope。',
       'packages/runtime-kernel 不替代 packages/object-model；前者管 runtime intent，后者管 KnowledgeObject identity 和 relation。',
@@ -200,7 +201,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '规范入口是 README.md 与本 Architecture Codex 条目；交互质感和 runtime coherence 不再维护独立 docs 文档。',
       'P0 token 包是 packages/design-system；当前只定义 motion、depth、elevation、focus 和 surface token，不是组件库。',
       'apps/web/src/styles/global.css 暴露 --runtime-motion-*、--runtime-ease-*、--runtime-depth-*、--runtime-elevation-*、--runtime-focus-*、--runtime-surface-* 变量，后续 overlay / drawer / command / visual surface 必须复用。',
-      'Storybook 是 React island 体验投影面：preview 加载 global.css 与 runtime token，并用 storybook-only fixture/mocks 隔离远端数据；当前 inventory 包含 Command、HoverPreview、BookCover、BookshelfGrid、RuntimeBookFeed、BookReader、PDF/EPUB reader、RuntimeBookDetail/Reader 和 EditIntakeWorkbench 等 14 个 React islands。',
+      'Storybook 是 React 体验投影面：preview 加载 apps/web global.css、admin-next globals.css 与 runtime token，并用 MSW + storybook-only fixture/mocks 隔离远端数据；当前 story inventory 包含 Command、HoverPreview、BookCover、BookshelfGrid、RuntimeBookFeed、BookReader、PDF/EPUB reader、RuntimeBookDetail/Reader、EditIntakeWorkbench、shared site chrome、showcase cards、GitHub visualization 和 admin console 组件，并通过 npx vitest --project storybook run 执行交互与唯一 CssCheck 验证。',
       'P1 已部分落地：Home Command layer 和 fallback Knowledge Search layer 开始复用 runtime depth、surface、elevation 和 motion token。',
       '当前 active libraries 是 cmdk、motion、@floating-ui/react、lucide-react。',
       'shadcn/ui 仍是 target convention 且组件目录尚未初始化；Radix UI primitives、Vaul、React Flow 已安装但尚未接管 overlay、drawer 或 graph surface；tldraw 是 future infinite canvas reference。',

@@ -762,7 +762,7 @@
     "surfaces": {
       "web": {
         "status": "active",
-        "stack": "Astro + React islands",
+        "stack": "Astro route shell + React component layer",
         "role": "current production projection shell"
       },
       "pwaTwa": {
@@ -1961,12 +1961,13 @@
       "loader": "apps/web/src/lib/github.ts",
       "analyticsLayer": "apps/web/src/lib/analytics.ts",
       "components": [
-        "apps/web/src/components/visualizations/ChartCard.astro",
-        "apps/web/src/components/visualizations/GitHubHeatmap.astro",
-        "apps/web/src/components/visualizations/GitHubMonthlyLine.astro",
-        "apps/web/src/components/visualizations/GitHubLanguageDonut.astro",
-        "apps/web/src/components/visualizations/GitHubRepoMatrix.astro",
-        "apps/web/src/components/visualizations/TeamSignalGraph.astro"
+        "apps/web/src/components/visualizations/ChartCard.tsx",
+        "apps/web/src/components/visualizations/GitHubHeatmap.tsx",
+        "apps/web/src/components/visualizations/GitHubMonthlyLine.tsx",
+        "apps/web/src/components/visualizations/GitHubLanguageDonut.tsx",
+        "apps/web/src/components/visualizations/GitHubRepoMatrix.tsx",
+        "apps/web/src/components/visualizations/TeamSignalGraph.tsx",
+        "apps/web/src/components/visualizations/GitHubRuntimeSync.tsx"
       ],
       "detailPage": "apps/web/src/pages/github/index.astro",
       "visualSurfaces": [
@@ -2029,17 +2030,17 @@
       ]
     },
     "showcaseLayer": {
-      "status": "implemented as lightweight data plus Astro showcase components",
+      "status": "implemented as lightweight data plus React showcase components under the Astro route shell",
       "dataSources": [
         "apps/web/public/public-data/books/books-index.json",
         "public-data/books/books.metadata.json",
         "apps/web/src/data/music.ts"
       ],
       "components": [
-        "apps/web/src/components/showcase/BookCover.astro",
-        "apps/web/src/components/showcase/BookshelfCard.astro",
-        "apps/web/src/components/showcase/AlbumCover.astro",
-        "apps/web/src/components/showcase/MusicCard.astro"
+        "apps/web/src/components/showcase/BookCover.tsx",
+        "apps/web/src/components/showcase/BookshelfCard.tsx",
+        "apps/web/src/components/showcase/AlbumCover.tsx",
+        "apps/web/src/components/showcase/MusicCard.tsx"
       ],
       "detailPages": [
         "apps/web/src/pages/books/index.astro",

@@ -2,6 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderMarkdownToHtml } from './markdown/pipeline';
+export {
+  formatRuntimeDate,
+  getRuntimeArticleCard,
+  getRuntimeArticleReadingMinutes,
+  getRuntimeReadingTime,
+  type RuntimeArticleCard
+} from './runtimeArticleCard';
 
 export type RuntimeMarkdownObject = {
   id: string;
@@ -82,12 +89,6 @@ export type RuntimeMarkdownObject = {
   readingMinutes?: number;
   bodyBytes?: number;
   htmlBytes?: number;
-};
-
-export type RuntimeArticleCard = {
-  eyebrow: string;
-  chips: string[];
-  subtitle: string;
 };
 
 export type KnowledgeCollection = {
@@ -208,36 +209,6 @@ export function getRuntimeFolders() {
   }
 
   return [...folders.values()].sort((a, b) => a.label.localeCompare(b.label, 'zh-CN'));
-}
-
-export function getRuntimeArticleCard(article: RuntimeMarkdownObject): RuntimeArticleCard {
-  if (article.card?.chips?.length) return article.card;
-
-  const eyebrow = article.card?.eyebrow || article.categories[0] || article.kind || 'MarkdownObject';
-  return {
-    eyebrow,
-    chips: [eyebrow, ...article.tags].filter(Boolean).slice(0, 6),
-    subtitle: article.card?.subtitle || article.description || article.summary
-  };
-}
-
-export function formatRuntimeDate(date: string) {
-  return new Intl.DateTimeFormat('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).format(new Date(date));
-}
-
-export function getRuntimeReadingTime(text: string) {
-  const clean = stripMarkdown(text);
-  return Math.max(1, Math.round(clean.length / 320));
-}
-
-export function getRuntimeArticleReadingMinutes(article: RuntimeMarkdownObject) {
-  if (article.readingMinutes) return article.readingMinutes;
-  if (article.bodyBytes) return Math.max(1, Math.round(article.bodyBytes / 960));
-  return getRuntimeReadingTime(article.body || article.summary || article.description || '');
 }
 
 export async function getRuntimeHtml(markdown: string) {
