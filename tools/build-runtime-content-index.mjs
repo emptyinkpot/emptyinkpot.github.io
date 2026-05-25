@@ -180,7 +180,9 @@ async function toRuntimeArticle(
   const folderTags = getFolderTags(relativePath);
   const folder = deriveRuntimeFolder(relativePath);
   const title = readString(data.title) || path.basename(relativePath, path.extname(relativePath));
-  const slug = slugify(readString(data.slug) || relativePath.replace(/\.[^.]+$/, ''));
+  const explicitSlug = readString(data.slug);
+  const slugSource = explicitSlug || relativePath.replace(/\.[^.]+$/, '').replace(/\./g, '-');
+  const slug = slugify(slugSource);
   const date = normalizeDate(readString(data.date), fileStat.mtime);
   const updated = normalizeDate(readString(data.updated), fileStat.mtime);
   const summary = readString(data.summary) || readString(data.description) || getExcerpt(body, 150);

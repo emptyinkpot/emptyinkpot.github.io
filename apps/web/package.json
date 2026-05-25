@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "storybook": "storybook dev -p 6008 --host 127.0.0.1",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
@@ -54,8 +56,11 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^10.4.1",
+    "@storybook/react-vite": "^10.4.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "pagefind": "^1.4.0"
+    "pagefind": "^1.4.0",
+    "storybook": "^10.4.1"
   }
 }

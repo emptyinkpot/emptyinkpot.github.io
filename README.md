@@ -20,9 +20,10 @@ This README is the only human documentation entrypoint for the repository. Machi
 ## Source And Runtime
 
 - GitHub repository: `https://github.com/emptyinkpot/blog`.
-- Canonical production source workspace: `/srv/myblog/repo`.
+- Canonical production source workspace: `E:\My Project\MyBlog`.
+- GitHub repository `main` is the delivery surface; GitHub Actions builds from source and deploys static output to the server.
 - Production static root: `/srv/myblog/site`.
-- Local Windows checkout policy: mirror/delivery fallback only unless the user explicitly scopes work to this checkout.
+- The server must not keep an editable MyBlog source checkout under `/srv/myblog/repo`.
 - Active article projection: `public-data/runtime/content-index.json`.
 - Generated production projection: `/srv/myblog/site/runtime/content-index.json`.
 - Windows Obsidian authoring truth: `E:\Vaults\Obsidian`.
@@ -131,14 +132,14 @@ AppFlowy 只保留 `infra/appflowy-cloud/` skeleton during stabilization and mus
 
 ## Deployment
 
-Deploy only from a workspace with deployment authority after guard checks:
+Deploy from the local source workspace by pushing `main` to GitHub. GitHub Actions builds `apps/web/dist` and rsyncs it to `/srv/myblog/site`.
 
 ```bash
-cd /srv/myblog/repo
+cd "E:\My Project\MyBlog"
 npm run check:workspace
 npm run check:governance
 npm run check
-npm run deploy:site
+git push origin main
 ```
 
 Acceptance commands:

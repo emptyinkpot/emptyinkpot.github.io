@@ -4,15 +4,13 @@
   "machineReadableEntry": "project.json",
   "githubRepo": "https://github.com/emptyinkpot/blog",
   "defaultBranch": "main",
-  "localSourceRoot": null,
-  "remoteIde": {
-    "status": "canonical",
+  "localSourceRoot": "E:\\My Project\\MyBlog",
+  "serverSourceCheckout": {
+    "status": "retired",
     "host": "ubuntu@124.220.233.126",
     "sourceRoot": "/srv/myblog/repo",
     "deploymentRoot": "/srv/myblog/site",
-    "repoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
-    "repoLocalSshCommandRequired": true,
-    "localCheckoutPolicy": "retired-local-mirror-only"
+    "rule": "Server keeps deploy artifacts and runtime data only; do not recreate an editable source checkout on the server."
   },
   "siteAppRoot": "apps/web",
   "adminAppRoot": "apps/admin-next",
@@ -207,15 +205,14 @@
     "objectStorageTruth": "Tencent COS bucket myblog-media-1410041307 mounted in OpenList at /腾讯云COS",
     "buildOutputRoot": "apps/web/dist",
     "serverRuntimeRoot": "/srv/myblog/site",
-    "remoteFirstSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
-    "retiredLocalSourceRoot": "E:\\My Project\\MyBlog",
-    "remoteIde": {
+    "localActiveSourceRoot": "E:\\My Project\\MyBlog",
+    "githubDeliverySurface": "https://github.com/emptyinkpot/blog main",
+    "serverSourceCheckout": {
+      "status": "retired",
       "host": "ubuntu@124.220.233.126",
       "sourceRoot": "/srv/myblog/repo",
       "deploymentRoot": "/srv/myblog/site",
-      "repoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
-      "gitRemote": "git@github.com:emptyinkpot/blog.git",
-      "sshOutageRule": "Do not promote a local checkout to canonical when SSH is unavailable; use GitHub as a delivery surface and reconcile the server source root after recovery."
+      "rule": "GitHub Actions deploys built static output to the server; server source checkout must stay absent."
     },
     "runtimeDatabase": {
       "status": "active",
@@ -273,8 +270,8 @@
       "database": "cloudbase-4glvyyq9f61b19cd",
       "warning": "Values are intentionally stored as plaintext in MySQL; do not commit real values to Git or logs."
     },
-    "productionSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
-    "remoteIntegrationRoot": "server-170:/home/ubuntu/workspaces/MyBlog-production-integration",
+    "productionSourceRoot": "E:\\My Project\\MyBlog",
+    "githubDeliverySurface": "https://github.com/emptyinkpot/blog main",
     "productionSiteRoot": "/srv/myblog/site",
     "githubProductionBackupBranch": "backup/production-myblog-source-20260510",
     "githubProductionBackupPr": "https://github.com/emptyinkpot/blog/pull/42"
@@ -382,17 +379,17 @@
     "guardScript": "tools/deploy-guard.mjs",
     "deployScript": "tools/deploy-static-site.mjs",
     "checkCommand": "npm run check:workspace",
-    "deployCommand": "npm run deploy:site",
+    "deployCommand": "git push origin main",
     "currentDeployAuthority": {
       "workspaceId": "myblog-canonical-active",
       "workspaceType": "canonical",
-      "root": "/srv/myblog/repo",
+      "root": "E:\\My Project\\MyBlog",
       "deploymentAuthority": true
     },
     "profiles": {
       "canonical": {
         "profile": "workspaces/canonical.json",
-        "defaultRoot": "/srv/myblog/repo",
+        "defaultRoot": "E:\\My Project\\MyBlog",
         "deploymentAuthority": true,
         "capabilities": [
           "build",
@@ -1702,7 +1699,7 @@
     "declare analytics or tracing as active without verification",
     "write local preview URLs as canonical public entry",
     "deploy retired GitHub Pages artifacts over /srv/myblog/site before production source integration",
-    "treat GitHub main as production-complete without checking /srv/myblog/repo"
+    "treat GitHub main as production-complete before GitHub Actions deploy evidence exists"
   ],
   "platformRoadmap": [
     "observability layer",
@@ -2428,10 +2425,10 @@
     ],
     "rule": "Quartz is an embedded digital-garden integration under integrations/quartz. MyBlog keeps its Astro presentation shell and shared prose system until a deliberate migration step promotes specific Quartz capabilities."
   },
-  "remoteFirstSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
-  "localSourceRootStatus": "retired-local-mirror",
-  "remoteIdeSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
-  "serverRepoLocalSshKey": "/home/ubuntu/.ssh/myblog_source_ed25519",
+  "activeSourceRoot": "E:\\My Project\\MyBlog",
+  "localSourceRootStatus": "canonical",
+  "githubDeliverySurface": "https://github.com/emptyinkpot/blog main",
+  "retiredServerSourceRoot": "ubuntu@124.220.233.126:/srv/myblog/repo",
   "runtimeDatabase": {
     "status": "active",
     "type": "Tencent Cloud CynosDB Serverless MySQL",
@@ -2488,7 +2485,6 @@
       "warning": "Values are intentionally stored as plaintext in MySQL; do not commit real values to Git or logs."
     }
   },
-  "remoteIntegrationRoot": "server-170:/home/ubuntu/workspaces/MyBlog-production-integration",
   "quartzIntegration": {
     "status": "embedded-integration",
     "root": "integrations/quartz",

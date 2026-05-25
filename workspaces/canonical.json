@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "workspaceType": "canonical",
-  "description": "Authoritative remote source workspace. It may edit runtime authority, PWA surface, OpenList contracts and deployment scripts.",
-  "defaultRoot": "/srv/myblog/repo",
+  "description": "Authoritative local source workspace. It may edit runtime authority, PWA surface, OpenList contracts and deployment scripts. GitHub Actions deploys built output to the server.",
+  "defaultRoot": "E:\\My Project\\MyBlog",
   "capabilities": {
     "canBuild": true,
     "canDeploy": true,

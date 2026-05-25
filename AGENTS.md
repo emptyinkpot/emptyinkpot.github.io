@@ -26,18 +26,16 @@ Before editing this repository, read:
 - Before deploying, run `npm run deploy:site` or at minimum `npm run check:workspace`; do not hand-run `scp` from an unchecked worktree.
 - The machine-readable workspace authority source is `workspace.manifest.json`.
 - Workspaces under `C:\Users\ASUS-KL\.codex-runtime\worktrees\*` are experimental by default: they may prototype UI, feed, drawer, visual and animation changes, but must not deploy, modify PWA authority, runtime schema or OpenList authority unless their manifest explicitly grants that capability and the guard passes.
-- The current deploy-authoritative workspace is `/srv/myblog/repo`; integration work may happen in `server-170:/home/ubuntu/workspaces/MyBlog-production-integration` before it is pushed to GitHub.
+- The current deploy-authoritative source workspace is `E:\My Project\MyBlog`; GitHub `main` is the delivery surface and GitHub Actions deploys static output to `/srv/myblog/site`.
 - Any change to workspace authority must update `README.md`, `project.json`, `workspace.manifest.json`, `workspaces/*.json` and the `runtime-federation` Architecture Codex entry together.
 
-## Remote IDE / Server-First Rule
+## Local Source / GitHub Delivery Rule
 
-- Default production edit root: `ubuntu@124.220.233.126:/srv/myblog/repo`.
-- Default integration/root repair workspace: `server-170:/home/ubuntu/workspaces/MyBlog-production-integration`.
+- Default production edit root: `E:\My Project\MyBlog`.
 - Default deploy target: `ubuntu@124.220.233.126:/srv/myblog/site`.
-- Repository-local GitHub SSH key on the server: `/home/ubuntu/.ssh/myblog_source_ed25519`.
-- Do not rely on server-global GitHub credentials; `/srv/myblog/repo` must own its `core.sshCommand`.
-- `E:\My Project\MyBlog` is retired. If a local checkout exists, it is a mirror or delivery fallback only, never the canonical workspace.
-- If SSH is temporarily unavailable, do not reinterpret the local checkout as source of truth. Use GitHub delivery only as an outage fallback, then reconcile `/srv/myblog/repo` and the server-170 integration workspace when SSH returns.
+- Do not edit MyBlog source on the server. The server keeps deploy artifacts, runtime data, OpenList/Vault mirrors, services and Nginx only.
+- `/srv/myblog/repo` is retired and must not be recreated as an editable source checkout.
+- Push local source to GitHub `main`; GitHub Actions is responsible for building and deploying to `/srv/myblog/site`.
 
 ## Current Codex Entries
 

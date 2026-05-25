@@ -1,0 +1,18 @@
+body {
+  min-height: 100vh;
+}
+
+.storybook-canvas {
+  min-height: 100vh;
+  padding: 32px;
+}
+
+.storybook-canvas--home {
+  background:
+    radial-gradient(circle at top left, rgba(207, 221, 226, 0.5), transparent 36%),
+    linear-gradient(180deg, #f7f4ee 0%, var(--page-bg) 100%);
+}
+
+.storybook-canvas--book {
+  background: #f5f1e8;
+}
