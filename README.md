@@ -127,6 +127,7 @@ AppFlowy 只保留 `infra/appflowy-cloud/` skeleton during stabilization and mus
 - `packages/runtime-kernel` owns frontend command, keyboard, overlay, drawer, focus, navigation, and storage classification contracts.
 - `packages/runtime-kernel/src/plugins.ts` owns the small MyBlog runtime plugin protocol: manifest, scopes, contributions, and optional setup. Plugins declare capabilities/resources/intents; they must not become data truth owners.
 - `packages/design-system` owns runtime experience tokens.
+- `apps/web/src/components/ui` owns current React UI primitives for Storybook-indexed component APIs; it consumes runtime tokens and must not become a data/runtime truth layer.
 - Local storage is preference/cache/legacy migration only, not runtime truth.
 - Homepage remains the mixed object discovery surface.
 
