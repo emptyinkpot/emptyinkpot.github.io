@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor } from 'storybook/test';
 import { StoryCanvas, StoryOpenListPath } from '../../stories/StoryCanvas';

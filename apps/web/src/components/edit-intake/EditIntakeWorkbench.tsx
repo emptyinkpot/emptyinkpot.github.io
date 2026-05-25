@@ -3,6 +3,7 @@ import '@blocknote/mantine/style.css';
 import { BlockNoteView } from '@blocknote/mantine';
 import { useCreateBlockNote } from '@blocknote/react';
 import type { PartialBlock } from '@blocknote/core';
+import React from 'react';
 import { useMemo, useState } from 'react';
 import {
   createPublicEditIntake,

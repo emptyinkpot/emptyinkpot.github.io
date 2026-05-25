@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ArrowRight, Check, Database, RefreshCw, Search, Settings, Sparkles } from 'lucide-react';
 import { expect } from 'storybook/test';

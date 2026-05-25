@@ -149,7 +149,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     runtime: [
       '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时收束不再维护独立 docs 文档。',
       'P0 合同包是 packages/runtime-kernel，当前 dependency-free，定义 command、overlay、drawer、keyboard、authority、storage classification 和 small runtime plugin protocol；apps/web/src/lib/runtime/bridge.ts 是第一条生产适配路径，把 React islands 的 action 统一转成 runtime:command / runtime:overlay-* / runtime:drawer-*；packages/runtime-kernel/src/storage.ts 是 canonical browser storage registry。',
-      'React 组件层的投影入口是 apps/web Storybook：apps/web/.storybook 使用 @storybook/react-vite + @storybook/addon-vitest；9 个 domain-level colocated story files 覆盖 Web React islands、apps/web/src/components/ui primitives、迁移后的展示组件、GitHub visualization、showcase、shared chrome 和 admin-next React console 组件，并用 MSW、fixture 和 Vite alias mock 隔离 OpenList、reader memory、reader runtime 等外部依赖；Storybook 只投影组件和交互，不拥有 OpenList、MySQL、content-index 或 runtime truth。',
+      'React 组件层的投影入口是 apps/web Storybook：apps/web/.storybook 使用 @storybook/react-vite + @storybook/addon-vitest；11 个 domain-level colocated story files 覆盖 Web React islands、apps/web/src/components/ui primitives、apps/web/src/components/shadcn registry components、迁移后的展示组件、GitHub visualization、showcase、shared chrome 和 admin-next React console 组件，并用 MSW、fixture 和 Vite alias mock 隔离 OpenList、reader memory、reader runtime 等外部依赖；Storybook 只投影组件和交互，不拥有 OpenList、MySQL、content-index 或 runtime truth。',
       'React 化当前边界是组件层：apps/web/src/components 已迁出 Astro component 文件，页面/路由/布局 shell 仍由 Astro 负责；GitHubRuntimeSync 已从 Astro inline script 改为 React client island，但首页大型 inline runtime 仍需后续按 owner 迁移。',
       '当前没有 active runtime-migration.json、packages/runtime-overlay 或 packages/runtime-store；overlay、drawer、focus 和 Escape 的消费实现仍在 legacy inline runtime + React islands，但入口已经开始统一到 runtime intent。',
       'packages/runtime-kernel 不替代 packages/runtime-contract；前者管前端交互意图，后者管 API transport envelope。',
@@ -207,7 +207,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'P1 已部分落地：Home Command layer 和 fallback Knowledge Search layer 开始复用 runtime depth、surface、elevation 和 motion token。',
       'Motion Division 的 Motion for React 是 active animation library：apps/web/src/lib/motion.ts 是项目统一导入入口，从 motion/react 转出 motion、MotionConfig、AnimatePresence、LazyMotion、m、hooks 和类型；Storybook 的 Design System/Motion Runtime probe 验证它能在 React island 中渲染，后续复杂组件必须通过这个入口接入 motion token 与 reduced-motion 规则。',
       '当前 active libraries 是 cmdk、motion、@floating-ui/react、lucide-react、class-variance-authority、clsx、tailwind-merge 与 Radix Slot/Tooltip。',
-      'shadcn/ui 是 target convention：当前 primitives 采用其 source-owned API 思路和 CVA/cn 组合方式，但没有运行 shadcn CLI 生成完整 registry；Vaul、React Flow 已安装但尚未接管 overlay、drawer 或 graph surface；tldraw 是 future infinite canvas reference。',
+      'shadcn/ui 已进入 active component substrate：apps/web/components.json 固定 new-york / neutral / lucide 配置，apps/web/src/components/shadcn/ui 存放通过 shadcn CLI source-generated 的 Button、Card、Dialog、Input、Textarea、Badge、Tabs、Table、Alert、Separator、Skeleton、Tooltip、Popover、Sheet、Command、DropdownMenu、Select、Switch 和 Checkbox；Design System/shadcn UI story 是 Storybook 组件库投影面，不替代 apps/web/src/components/ui 的 MyBlog primitives，也不拥有 runtime/data truth。',
       'Aceternity UI、Magic UI、React Bits 只作为 technique reference，不能直接导入通用发光、粒子、orb、bokeh 或营销 hero 效果。'
     ],
     tradeoffs: [

@@ -1,3 +1,4 @@
+import React from 'react';
 import { expect } from 'storybook/test';
 import ActionButton from './admin/ActionButton';
 import LogPanel from './admin/LogPanel';

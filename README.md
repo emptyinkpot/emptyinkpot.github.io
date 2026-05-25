@@ -128,6 +128,7 @@ AppFlowy 只保留 `infra/appflowy-cloud/` skeleton during stabilization and mus
 - `packages/runtime-kernel/src/plugins.ts` owns the small MyBlog runtime plugin protocol: manifest, scopes, contributions, and optional setup. Plugins declare capabilities/resources/intents; they must not become data truth owners.
 - `packages/design-system` owns runtime experience tokens.
 - `apps/web/src/components/ui` owns current React UI primitives for Storybook-indexed component APIs; it consumes runtime tokens and must not become a data/runtime truth layer.
+- `apps/web/src/components/shadcn` owns source-generated shadcn/ui React components for Storybook-indexed component composition; it is separate from MyBlog primitives and does not own runtime data truth.
 - Local storage is preference/cache/legacy migration only, not runtime truth.
 - Homepage remains the mixed object discovery surface.
 

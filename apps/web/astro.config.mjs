@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
@@ -21,7 +22,12 @@ export default defineConfig({
     rehypePlugins: markdownRehypePlugins
   },
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '~': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    }
   },
 
   integrations: [mdx(), react(), sitemap()]
