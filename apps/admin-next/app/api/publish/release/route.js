@@ -1,8 +1,7 @@
-export async function POST() {
-  return Response.json({
-    ok: true,
-    state: "success",
-    releaseId: "2026-04-25-001",
-    nextAction: "health_checking",
-  });
+import { runPublishAction } from "@/lib/publish-runtime";
+
+export async function POST(request) {
+  const body = await request.json().catch(() => ({}));
+  const result = await runPublishAction("release", body);
+  return Response.json(result, { status: result.ok ? 200 : 500 });
 }

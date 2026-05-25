@@ -82,6 +82,7 @@ Backend status:
 - `https://admin.blog.tengokukk.com/server/health` is verified; Let's Encrypt certificate expires on 2026-08-22.
 - Directus schema is created for `articles`, `factpacks`, `citations`, `author_contracts`, `runtime_runs`, and `critic_reports`.
 - Dify workflow `MyBlog Article Pipeline` is created and published. Smoke run `dadeb63b-49e0-41bc-8e70-cad9150bb5fc` patched Directus article `1` and wrote `runtime_runs` row `3`.
+- MyBlog publish API `myblog-publish-api.service` exposes `https://blog.tengokukk.com/api/publish/{health,status,build,release,rollback}` for Dify nodes. It performs publish dry-runs and release orchestration; Dify does not execute shell commands or own build artifacts.
 - Server-only service tokens live under `/data/myblog/composable-stack/secrets`; they are not committed or synced from Git.
 - Meilisearch is not part of the default blog backend startup; it remains a `search` profile service until search readiness is separately verified.
 
@@ -102,6 +103,8 @@ User / Editor
 -> Dify Workflow
 -> AI services / LangGraph / model providers
 -> Directus API write-back
+-> MyBlog publish API dry-run / release orchestration
+-> Quartz or MyBlog static build substrate
 -> MyBlog static or dynamic presentation
 ```
 

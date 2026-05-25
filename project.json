@@ -139,10 +139,10 @@
     },
     "targetFlow": [
       "User or editor creates a draft in Directus",
-      "Directus webhook invokes Dify workflow",
-      "Dify performs Research -> FactPack -> Writer -> Critic -> SEO -> Summary",
-      "Dify writes results back to Directus via HTTP API",
-      "MyBlog/Next.js/Astro renders from Directus API, snapshots or generated build output"
+      "Dify workflow writes approved AI output back to Directus",
+      "Dify calls MyBlog publish API for dry-run, build, release or rollback orchestration",
+      "MyBlog publish API coordinates Directus, Quartz/MyBlog build substrate, site switch and release records",
+      "MyBlog static or dynamic presentation serves the approved content"
     ],
     "cutoverRequirements": [
       "Directus/Postgres backend health verified on admin.blog.tengokukk.com",
@@ -157,7 +157,22 @@
       "directusHealth": "https://admin.blog.tengokukk.com/server/health returned {status: ok}",
       "writeBackSmoke": "Dify workflow run dadeb63b-49e0-41bc-8e70-cad9150bb5fc patched Directus article 1 and created runtime_runs 3",
       "rootDisk": "/var/lib/containerd bind-mounted to /data/containerd; root filesystem reduced to 31% used",
-      "tls": "issued and deployed; expires on 2026-08-22"
+      "tls": "issued and deployed; expires on 2026-08-22",
+      "publishApi": "https://blog.tengokukk.com/api/publish/release dry-run returned ok=true on 2026-05-24"
+    },
+    "publishApi": {
+      "owner": "MyBlog release orchestration",
+      "status": "dry-run verified",
+      "service": "myblog-publish-api.service",
+      "publicBaseUrl": "https://blog.tengokukk.com/api/publish",
+      "routes": [
+        "GET /health",
+        "GET /status",
+        "POST /build",
+        "POST /release",
+        "POST /rollback"
+      ],
+      "rule": "Dify calls this API as workflow nodes; Dify must not run shell commands, Quartz builds, deploys, or rollback logic directly."
     }
   },
   "fileTruth": "Windows Vault synced to Linux hot mirror and exposed through OpenList",
