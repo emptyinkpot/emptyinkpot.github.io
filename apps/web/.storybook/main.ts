@@ -15,7 +15,8 @@ const config: StorybookConfig = {
       ...(config.resolve.alias ?? {}),
       '../../lib/books/manifest': fileURLToPath(new URL('../src/stories/mocks/booksManifest.ts', import.meta.url)),
       '../../lib/runtime/reader': fileURLToPath(new URL('../src/stories/mocks/runtimeReader.ts', import.meta.url)),
-      '../../lib/books/openlist': fileURLToPath(new URL('../src/stories/mocks/booksOpenList.ts', import.meta.url))
+      '../../lib/books/openlist': fileURLToPath(new URL('../src/stories/mocks/booksOpenList.ts', import.meta.url)),
+      './readerRuntime': fileURLToPath(new URL('../src/stories/mocks/readerRuntime.tsx', import.meta.url))
     };
     return config;
   }

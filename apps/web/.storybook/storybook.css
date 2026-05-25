@@ -16,3 +16,72 @@ body {
 .storybook-canvas--book {
   background: #f5f1e8;
 }
+
+.storybook-canvas--reader {
+  background: #ede5d7;
+  min-height: 720px;
+}
+
+.storybook-canvas--wide {
+  background: #f6f1e8;
+  min-height: 100vh;
+}
+
+.storybook-inventory {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  width: min(1040px, calc(100vw - 64px));
+}
+
+.storybook-inventory article {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(35, 28, 20, 0.12);
+  border-radius: 8px;
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+}
+
+.storybook-inventory span,
+.storybook-reader-runtime span {
+  color: rgba(35, 28, 20, 0.58);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.storybook-inventory strong {
+  color: #211b15;
+  font-size: 16px;
+}
+
+.storybook-reader-runtime {
+  align-content: center;
+  background: linear-gradient(135deg, #f8f1e6, #ece1d1);
+  border: 1px solid rgba(35, 28, 20, 0.14);
+  border-radius: 8px;
+  color: #211b15;
+  display: grid;
+  gap: 8px;
+  min-height: 360px;
+  padding: 32px;
+}
+
+.storybook-reader-runtime--drawer {
+  min-height: 240px;
+}
+
+.storybook-reader-runtime h2 {
+  font-size: 28px;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.storybook-reader-runtime p {
+  margin: 0;
+}
+
+.storybook-reader-runtime code {
+  overflow-wrap: anywhere;
+}

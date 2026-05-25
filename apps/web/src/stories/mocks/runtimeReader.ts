@@ -14,3 +14,14 @@ export async function listReaderMemory() {
     }
   ];
 }
+
+export async function getReaderMemory(bookId: string) {
+  return (await listReaderMemory()).find((item) => item.objectId === bookId) ?? null;
+}
+
+export async function saveReaderMemory(record: unknown) {
+  return {
+    ok: true,
+    record
+  };
+}
