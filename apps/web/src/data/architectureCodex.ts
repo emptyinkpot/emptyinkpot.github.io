@@ -33,7 +33,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       '当前 active 线仍是 Runtime MarkdownObject：public-data/runtime/content-index.json 与 /srv/myblog/site/runtime/content-index.json 是公开文章投影索引，但只允许作为过渡 projection。',
-      'Quartz 是 embedded substrate candidate：优先研究 jackyzha0/quartz 的 Obsidian Markdown pipeline、wikilink、backlink、graph、RSS、search、SPA/incremental、component registry、plugin protocol 和 content index 思路，但不替换 apps/web 生产前端。',
+      'Quartz 是 embedded substrate candidate：优先研究 jackyzha0/quartz 的 Obsidian Markdown pipeline、wikilink、backlink、graph、RSS、search、SPA/incremental、component registry 和 content index 思路，但不替换 apps/web 生产前端。',
       'Contentlayer 是 Astro-native candidate：保留 Astro UI shell 时，应优先评估 typed content schema、parsing、watch 和 projection 能否替换自写 build-runtime-content-index glue。',
       'Meilisearch 是 target-not-deployed search runtime：动态对象、OpenList 文件索引、KnowledgeObject snapshot、Directus metadata 和 Immich import 不得继续塞进 giant runtime JSON；Pagefind 在上线前只叫静态 archive 搜索。',
       'Coolify 是 candidate-not-deployed deployment platform：当前仍用 npm run deploy:site；后续评估 Git deploy、env、healthcheck、rollback、cron 和 compose 接管手写 SSH / PowerShell quoting / smoke glue。',
@@ -148,26 +148,25 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       '规范入口是 README.md 与本 Architecture Codex 条目；前端运行时收束不再维护独立 docs 文档。',
-      'P0 合同包是 packages/runtime-kernel，当前 dependency-free，定义 command、overlay、drawer、keyboard、authority、storage classification 和 small runtime plugin protocol；apps/web/src/lib/runtime/bridge.ts 是第一条生产适配路径，把 React islands 的 action 统一转成 runtime:command / runtime:overlay-* / runtime:drawer-*；packages/runtime-kernel/src/storage.ts 是 canonical browser storage registry。',
+      'Knowledge OS Core 拓扑固定为 Vault -> Projection -> Web Runtime -> State Services；新增层必须先证明执行消费者，否则不落地。',
+      'P0 Web Runtime 包是 packages/runtime-kernel，当前 dependency-free，只定义 command、overlay、drawer 事件、runtime intent 类型和 storage key classification；apps/web/src/lib/runtime/bridge.ts 是第一条生产适配路径，把 React islands 的 action 统一转成 runtime:command / runtime:overlay-* / runtime:drawer-*；packages/runtime-kernel/src/storage.ts 是 canonical browser storage registry。',
       'React 组件层的投影入口是 apps/web Storybook：apps/web/.storybook 使用 @storybook/react-vite + @storybook/addon-vitest；11 个 domain-level colocated story files 覆盖 Web React islands、apps/web/src/components/ui primitives、apps/web/src/components/shadcn registry components、迁移后的展示组件、GitHub visualization、showcase、shared chrome 和 admin-next React console 组件，并用 MSW、fixture 和 Vite alias mock 隔离 OpenList、reader memory、reader runtime 等外部依赖；Storybook 只投影组件和交互，不拥有 OpenList、MySQL、content-index 或 runtime truth。',
       'React 化当前边界是组件层：apps/web/src/components 已迁出 Astro component 文件，页面/路由/布局 shell 仍由 Astro 负责；GitHubRuntimeSync 已从 Astro inline script 改为 React client island，但首页大型 inline runtime 仍需后续按 owner 迁移。',
       '当前没有 active runtime-migration.json、packages/runtime-overlay 或 packages/runtime-store；overlay、drawer、focus 和 Escape 的消费实现仍在 legacy inline runtime + React islands，但入口已经开始统一到 runtime intent。',
-      'packages/runtime-kernel 不替代 packages/runtime-contract；前者管前端交互意图，后者管 API transport envelope。',
-      'packages/runtime-kernel 不替代 packages/object-model；前者管 runtime intent，后者管 KnowledgeObject identity 和 relation。',
+      '已删除无当前执行消费者的独立 contracts/*、packages/runtime-contract、packages/object-model 和 packages/design-system；真实合同回到 README、project.json、validators、public-data projection 和 TypeScript owner 文件。',
       '当前 active libraries 是 cmdk、motion 和 @floating-ui/react；Zustand、Radix UI primitives、Vaul、React Flow 已安装但尚未迁移任何 runtime owner。',
       'P1 已部分落地：HomeCommandPalette hydrate 后设置 html[data-home-command-ready="true"]；home inline Ctrl/Cmd+K fallback 只在该 ready 标记不存在时运行。',
       'HomeCommandPalette 的 search/openlist/pinterest action 已改由 runtime bridge 派发 runtime:command；BaseLayout 只保留 shell DOM 与模块入口，OpenList/Pinterest 的按钮、Escape 和 command 消费由 apps/web/src/lib/runtime/shell-overlays.ts 拥有，并通过 apps/web/src/lib/runtime/shell-runtime.ts 生成 runtime:overlay-open / runtime:overlay-close detail；旧 openlist-embed-open / pinterest-embed-open 只作为兼容桥保留。',
       '首页 inline runtime 把 search.open、reader.open、reader.close、home-search-open、reader-command、快捷键、URL 参数、sidebar memory 和 search-result click 收束成 runtime:overlay-* 或 runtime:drawer-*，并从 apps/web/src/lib/runtime/home-runtime.ts 注入 RUNTIME_EVENT_NAMES、LEGACY_RUNTIME_BRIDGES 和 intent detail builders，避免首页继续散落裸 runtime 事件字符串与 detail 结构；最终只有 search overlay 和 article drawer 的消费点调用真实 open/close 实现。',
-      'MyBlog plugin protocol 取 Astro/Vite lifecycle、Quartz transformer/filter/emitter、unified plugin 和 Obsidian manifest 的最小交集：manifest + scopes + contributions + optional setup；插件只声明 commands、overlays、drawers、storage、resources 等 contribution，不拥有 Markdown、MySQL、OpenList、KnowledgeObject 或 deployment truth。',
       'Book Drawer Reader island 已同时监听 runtime:drawer-open / runtime:drawer-close drawer=book 和 legacy emptyinkpot:book-drawer-*；首页打开 book drawer 时先派发 runtime drawer intent，再派发 legacy bridge，避免 hydrate 时序丢事件。',
       'knowledgeStorageKeys、book storage keys、visual manifest cache 与 build-version reload keys 已开始引用 RUNTIME_STORAGE_KEYS；reading history、bookmarks、highlights、annotations、seals、stickers、book progress/location 被标记为 legacy-migration，reader theme / visual settings / book settings 是 preference，build version / book recent / visual manifest 是 cache。',
       'BaseLayout 与 HoverPreviewSystem 已把 content-settings-applied / runtime-folders-applied 收束到 runtime event registry，同时继续广播 legacy event 兼容旧消费者。',
       'tools/validate-frontend-runtime-contract.mjs 已加入 emptyinkpot-* literal registry guard：新 storage key 必须进入 packages/runtime-kernel/src/storage-keys.mjs，非 storage 事件必须在 allowlist 中说明。',
       'legacy bridge events 暂时允许：home-search-open、openlist-embed-open、pinterest-embed-open、reader-command、emptyinkpot:book-drawer-open、emptyinkpot:book-drawer-close。',
-      '新增全局快捷键、overlay、drawer、custom event 或 localStorage key 前，必须同步更新 frontend-runtime-audit 和 frontend-runtime-convergence。'
+      '新增全局快捷键、overlay、drawer、custom event 或 localStorage key 前，必须同步更新本条目和 packages/runtime-kernel 的真实 registry。'
     ],
     tradeoffs: [
-      '先写合同不会立刻减少源码中的 inline script，但能阻止新运行时继续散开，并给后续迁移提供验收边界。',
+      '保留小 runtime registry 不会立刻减少源码中的 inline script，但能阻止新运行时继续散开，并给后续迁移提供验收边界。',
       '逐个 owner 迁移比大爆炸慢，但能保留现有首页、Reader、OpenList、Pinterest 和 Graph 的可达行为。',
       'Runtime Kernel 增加一个治理层，但它不拥有数据 truth，因此不会和 MySQL、OpenList、Directus、Meilisearch 或 Immich 抢 authority。',
       '保留 legacy bridge events 会短期留下重复路径，但比一次性删除 custom event 更不容易破坏用户交互。'
@@ -177,7 +176,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'P2 把 OpenList shell、Pinterest shell、Article Drawer 和 Book Drawer 纳入统一 overlay stack 与 focus restore 规则。',
       '下一次真实 cutover 可以评估 Book Drawer shell -> Vaul，但必须先在代码里实现 owner 切换、浏览器证据和回滚路径；Reader memory / highlights 仍由 MySQL Runtime Truth 拥有。',
       'P3 在第一个 owner 迁移时引入 Zustand 或同级 store；优先迁移 overlay stack、command state 和 reader shell state。',
-      'Graph 只有在 KnowledgeObject contract、search authority 和 drawer navigation 稳定后才迁移到 React Flow。',
+      'Graph 只有在 Projection types、search authority 和 drawer navigation 稳定后才迁移到 React Flow。',
       '生成 machine listener inventory，按 source file、event type、selector 和 owner 输出运行时清单。'
     ],
     related: ['frontend-runtime-archaeology', 'runtime-experience-layer', 'runtime-architecture', 'reader-system', 'visual-system', 'knowledge-runtime']
@@ -199,8 +198,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
     ],
     runtime: [
       '规范入口是 README.md 与本 Architecture Codex 条目；交互质感和 runtime coherence 不再维护独立 docs 文档。',
-      'P0 token 包是 packages/design-system；当前只定义 motion、depth、elevation、focus 和 surface token，不是组件库。',
-      'P0 React primitive 层是 apps/web/src/components/ui：Button、IconButton、StatusBadge、MetricCard、Surface、EmptyState 采用 CVA、clsx、tailwind-merge、Radix Slot/Tooltip 和 lucide-react，消费 runtime token 并提供稳定组件 API；它不是数据 truth、runtime command owner 或 packages/design-system 的替代品。',
+      'Theme tokens 留在 apps/web/src/styles/global.css：spacing、radius、font、color 和 motion 是当前需要的全部设计底座，不再保留独立 packages/design-system。',
+      'P0 React primitive 层是 apps/web/src/components/ui：Button、IconButton、StatusBadge、MetricCard、Surface、EmptyState 采用 CVA、clsx、tailwind-merge、Radix Slot/Tooltip 和 lucide-react，消费 runtime token 并提供稳定组件 API；它不是数据 truth 或 runtime command owner。',
       '第一批生产组件消费者已经开始从手写 surface 收敛到 React primitives：ChartCard 使用 Surface 与 Button asChild 保留 chart-card 视觉合同，WorkbenchPageIntro 使用 Surface 与 MetricCard 渲染统计块，MetricCard 增加 valueFirst 以支持页面级指标的既有阅读顺序。',
       'apps/web/src/styles/global.css 暴露 --runtime-motion-*、--runtime-ease-*、--runtime-depth-*、--runtime-elevation-*、--runtime-focus-*、--runtime-surface-* 变量，后续 overlay / drawer / command / visual surface 必须复用。',
       'Storybook 是 React 体验投影面：preview 加载 apps/web global.css、admin-next globals.css 与 runtime token，并用 MSW + storybook-only fixture/mocks 隔离远端数据；当前 story inventory 包含 UI Primitives、Command、HoverPreview、BookCover、BookshelfGrid、RuntimeBookFeed、BookReader、PDF/EPUB reader、RuntimeBookDetail/Reader、EditIntakeWorkbench、shared site chrome、showcase cards、GitHub visualization 和 admin console 组件，并通过 npx vitest --project storybook run 执行交互与唯一 CssCheck 验证。',
@@ -221,7 +220,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'P2 将 Drawer/Search/OpenList/Pinterest 收束进统一 overlay stack，再评估 Radix/Vaul。',
       'P3 增加 Book Card -> Drawer -> Reader 的 object continuity motion。',
       'P4 研究 tldraw / React Flow / canvas runtime，把 visuals、knowledge 和 annotations 逐步推向 Infinite Semantic Canvas。',
-      '把 packages/design-system token 生成 CSS / TS 双向合同，减少 global.css 和 React island 的硬编码漂移。'
+      '只在出现第二个真实消费者时，才把 theme tokens 从 global.css 提升为共享包。'
     ],
     related: ['frontend-runtime-convergence', 'design-language', 'reader-system', 'visual-system', 'knowledge-runtime']
   },
@@ -469,8 +468,8 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       '把 Runtime Federation 加入 project.json 的 machine-readable contract，并要求新服务声明 authority、status、integration path、secret boundary 和 failure mode。',
       '为 workspace.manifest.json 增加 sync fingerprint：lastSyncedFrom、lastSyncedAt、baseCommit、syncAge 和 feature scope，部署前提示 stale workspace 风险。',
       '把 feature capability audit 接入 git diff，修改 PWA、Reader Runtime、OpenList authority 或 runtime schema 时自动检查 workspace 是否拥有对应 capability。',
-      '把 Runtime API schema 从 README 推进到 packages/runtime-contract，让 Web、PWA/TWA、Android、Search、CLI 和 AI Agent 共用同一 envelope。',
-      '为 KnowledgeObject 增加 source provenance 字段，记录对象来自 OpenList、Directus、Immich、MySQL runtime 还是 Astro content collection。',
+      'Runtime API schema 暂时留在 apps/admin-next route owner 和 TypeScript types 中；只有出现第二个真实客户端后才恢复共享 contract 包。',
+      '为 Projection types 增加 source provenance 字段，记录对象来自 OpenList、Directus、Immich、MySQL runtime 还是 Astro content collection。',
       '部署 Directus / Meilisearch 前先完成 disk readiness、secret boundary 和 rollback contract。',
       '评估 Quartz 4 的 transform / graph / backlink / hover preview 能力，优先替换自研 Markdown runtime 缺口而不是继续扩写本地 compiler。',
       '评估 Payload / Directus 在 metadata overlay 上的边界，二选一承担对象和媒体 admin，避免 MyBlog 继续扩成 full CMS。',
@@ -542,7 +541,7 @@ export const architectureCodexEntries: ArchitectureCodexEntry[] = [
       'apps/web/public/.well-known/assetlinks.json 是 TWA 信任声明；它必须匹配 apps/android-shell/twa.contract.json 的 packageId 和 SHA256 指纹，否则 Android 不能把 blog.tengokukk.com 交给可信 Web Activity。',
       'Phase 2 是 Runtime API 化：把 Feed、Books、Visuals、Search、Graph 明确成稳定 API 和 schema。',
       'Phase 3 才是 Kotlin + Compose Native Runtime Client：Compose UI、ViewModel + Flow、Ktor/Retrofit、Coil、Room、PdfRenderer / EPUB runtime、AppUpdater。',
-      'packages/runtime-contract 和 packages/object-model 是 Web、Android、Search、CLI 和 AI Agent 的共享合同入口；它们不是数据真源。',
+      '已下线 packages/runtime-contract 和 packages/object-model；Web、Android、Search、CLI 或 AI Agent 出现第二个真实消费者前，共享合同不提前创建。',
       'Native 允许拥有 local runtime cache、离线阅读、图片预加载、后台下载、系统分享和本地数据库，但缓存只能 mirror runtime，不能成为上游 truth。',
       'PWA service worker 只缓存静态页面和 build assets，不拦截 /api/*、/openlist/*、/reader/openlist、/books/openlist 或 HTTP Range 请求，避免污染 Runtime API 与 EPUB/PDF reader bytes。',
       'npm run check:pwa 校验 manifest、标准图标尺寸、service worker 边界、BaseLayout 注册和 apps/android-shell/twa.contract.json；它已接入 npm run check。',
@@ -748,11 +747,11 @@ export const architectureCodexGlossary = [
   },
   {
     term: 'Runtime Kernel',
-    definition: '前端 command、keyboard、overlay、drawer、focus、navigation 和 storage classification 的统一交互合同；当前入口是 packages/runtime-kernel。'
+    definition: '前端 command、overlay、drawer 事件和 storage classification 的小型 registry；当前入口是 packages/runtime-kernel。'
   },
   {
     term: 'Runtime Experience Layer',
-    definition: '统一 Drawer、Command、Reader、Visuals、Graph 和 runtime shells 的交互质感层；当前入口是 README.md、Architecture Codex 与 packages/design-system。'
+    definition: '统一 Drawer、Command、Reader、Visuals 和 Graph 的体验约束；当前入口是 README.md、Architecture Codex、global.css tokens 与 React primitives。'
   },
   {
     term: 'Spatial Layer',

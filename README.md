@@ -1,12 +1,13 @@
 # MyBlog
 
-MyBlog is a knowledge runtime surface and public projection shell. It presents Obsidian/Vault file truth, runtime projections, reader state, visual surfaces, and deployment authority without becoming a separate CMS, search engine, sync engine, or database owner.
+MyBlog is a Vault-backed knowledge projection machine. It turns Obsidian/Vault file truth into public runtime surfaces without becoming a CMS, search engine, sync engine, database owner, or architecture showcase.
 
-This README is the only human documentation entrypoint for the repository. Machine-readable truth stays in `project.json`, `workspace.manifest.json`, `workspaces/*.json`, `contracts/*.json`, `project.frontend-runtime-contract.json`, and the public Architecture Codex source at `apps/web/src/data/architectureCodex.ts`.
+This README is the only human documentation entrypoint for the repository. Machine-readable truth stays in `project.json`, `workspace.manifest.json`, `workspaces/*.json`, executable validators, and the public Architecture Codex source at `apps/web/src/data/architectureCodex.ts`.
 
 ## Runtime Identity
 
 - Primary model: Knowledge Runtime Surface.
+- Core topology: `Vault -> Projection -> Web Runtime -> State Services`.
 - Collection is context. Drawer is reading. Homepage is discovery.
 - Everything stays alive.
 - Do not turn collections into standalone CMS pages.
@@ -16,6 +17,22 @@ This README is the only human documentation entrypoint for the repository. Machi
 - Do not put card walls inside reader drawers.
 - topic collection 只作为 metadata / search / Graph 维度，不生成静态 topic collection 页面。
 - Static Nginx route semantics must stay explicit: `try_files $uri $uri/index.html =404`; this is not a SPA catch-all fallback.
+
+## Knowledge OS Core
+
+MyBlog has four active layers only:
+
+```text
+Vault
+-> Projection
+-> Web Runtime
+-> State Services
+```
+
+- `Vault`: `E:\Vaults\Obsidian` is the only authoring truth. Markdown, folders and assets remain human-readable and offline-capable.
+- `Projection`: build tools normalize Vault and sidecar data into `public-data/`; the website reads projection output instead of inventing content truth.
+- `Web Runtime`: `apps/web` is Astro plus React islands. Runtime concepts are limited to command, overlay, search and reader state.
+- `State Services`: `apps/admin-next` and MySQL store dynamic state only: reader memory, highlights, visual pins, preferences and sync logs.
 
 ## Source And Runtime
 
@@ -37,15 +54,14 @@ This README is the only human documentation entrypoint for the repository. Machi
 - `apps/web`: Astro public shell and frontend runtime.
 - `apps/admin-next`: runtime/admin APIs, reader memory, visual runtime, GitHub/OpenList/DataBase bridges.
 - `apps/android-shell`: TWA shell contract.
-- `packages/*`: runtime, object model, design token, and contract packages.
-- `contracts/*`: machine-readable runtime authority and behavior contracts.
+- `packages/runtime-kernel`: small runtime event and storage key registry used by `apps/web`; it is not a platform SDK.
 - `integrations/quartz`: embedded Quartz digital-garden substrate. It is an internal integration target, not the repository root and not the primary MyBlog shell.
 - `tools/*`: canonical validators, projectors, importers, and deploy guards.
 - `public-data/*`: static public data projections and editable data sidecars.
 - `infra/*`: service definitions and skeleton infrastructure.
 - `workspaces/*` plus `workspace.manifest.json`: workspace authority.
 
-Documentation markdown outside this README is intentionally avoided unless it is public content data. Long-lived facts belong in README, contracts, project JSON, or executable code.
+Documentation markdown outside this README is intentionally avoided unless it is public content data. Long-lived facts belong in README, project JSON, validators, projection output, or executable code.
 
 ## DataBase Gateway Boundary
 
@@ -124,11 +140,10 @@ AppFlowy 只保留 `infra/appflowy-cloud/` skeleton during stabilization and mus
 
 - `apps/web/src/data/architectureCodex.ts` is the public Architecture Codex source.
 - Frontend runtime changes must update the relevant Codex entry or state why the Codex is unaffected.
-- `packages/runtime-kernel` owns frontend command, keyboard, overlay, drawer, focus, navigation, and storage classification contracts.
-- `packages/runtime-kernel/src/plugins.ts` owns the small MyBlog runtime plugin protocol: manifest, scopes, contributions, and optional setup. Plugins declare capabilities/resources/intents; they must not become data truth owners.
-- `packages/design-system` owns runtime experience tokens.
+- `packages/runtime-kernel` owns frontend event names, command kinds and storage key classification only.
 - `apps/web/src/components/ui` owns current React UI primitives for Storybook-indexed component APIs; it consumes runtime tokens and must not become a data/runtime truth layer.
 - `apps/web/src/components/shadcn` owns source-generated shadcn/ui React components for Storybook-indexed component composition; it is separate from MyBlog primitives and does not own runtime data truth.
+- Theme tokens live in `apps/web/src/styles/global.css`; do not recreate a separate design-system package until there is a real second consumer.
 - Local storage is preference/cache/legacy migration only, not runtime truth.
 - Homepage remains the mixed object discovery surface.
 

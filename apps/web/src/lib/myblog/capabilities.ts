@@ -1,5 +1,3 @@
-import type { RuntimePlugin } from '../../../../../packages/runtime-kernel/src/plugins';
-
 export type MyBlogCapabilityAction = 'search' | 'openlist' | 'pinterest';
 
 export type MyBlogCapabilityIcon =
@@ -65,10 +63,6 @@ export type MyBlogSidebarNavigationItem = {
   label: string;
   href: string;
   glyph: string;
-};
-
-export type MyBlogSurfacePlugin = RuntimePlugin & {
-  capabilities?: () => MyBlogCapability[];
 };
 
 export const myblogCapabilities: MyBlogCapability[] = [
@@ -223,22 +217,6 @@ export const myblogCapabilities: MyBlogCapability[] = [
   }
 ];
 
-export const myblogSurfacePlugins: MyBlogSurfacePlugin[] = [
-  {
-    manifest: {
-      id: 'myblog-core-capabilities',
-      name: 'MyBlog Core Capabilities',
-      version: '1.0.0',
-      scopes: ['surface', 'command', 'overlay']
-    },
-    contributes: {
-      commands: ['search.open', 'openlist.open', 'pinterest.open'],
-      overlays: ['search', 'openlist', 'pinterest']
-    },
-    capabilities: () => myblogCapabilities
-  }
-];
-
 export function getMyBlogCapability(id: string) {
   return collectMyBlogCapabilities().find((capability) => capability.id === id);
 }
@@ -272,8 +250,8 @@ export function getMyBlogSidebarNavigation(resolveHref: (href: string) => string
     }));
 }
 
-export function collectMyBlogCapabilities(plugins: MyBlogSurfacePlugin[] = myblogSurfacePlugins): MyBlogCapability[] {
-  return plugins.flatMap((plugin) => plugin.capabilities?.() ?? []);
+export function collectMyBlogCapabilities(): MyBlogCapability[] {
+  return myblogCapabilities;
 }
 
 function describeCommand(capability: MyBlogCapability, metrics: MyBlogCapabilityMetrics) {

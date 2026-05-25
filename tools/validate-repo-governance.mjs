@@ -13,7 +13,7 @@ validateContentInfrastructureReductionContract();
 validateStabilizationSprint();
 validateObsidianAuthorityContract();
 validateOpenListServerStorageBoundary();
-validateRuntimeConstitution();
+validateKnowledgeOsCore();
 
 if (issues.length) {
   console.error(['Repository governance validation failed:', ...issues.map((issue) => `- ${issue}`)].join('\n'));
@@ -473,55 +473,39 @@ function validateOpenListServerStorageBoundary() {
   }
 }
 
-function validateRuntimeConstitution() {
-  const requiredFiles = [
-    'README.md',
-    'project.frontend-runtime-contract.json',
-    'contracts/frontend-runtime-contract.json',
-    'contracts/runtime-authority-map.json',
-    'contracts/object-projection-contract.json',
-    'contracts/collection-behavior-contract.json'
-  ];
-
-  requiredFiles.forEach((relativePath) => {
-    if (!fileExists(relativePath)) {
-      issues.push(`Runtime Constitution file is required: ${relativePath}`);
-    }
-  });
-
-  if (!fileExists('contracts/frontend-runtime-contract.json')) return;
-
+function validateKnowledgeOsCore() {
   const readme = readText(resolvePath('README.md'));
-  const contract = JSON.parse(readText(resolvePath('contracts/frontend-runtime-contract.json')));
-  const collectionContract = JSON.parse(readText(resolvePath('contracts/collection-behavior-contract.json')));
+  const project = JSON.parse(readText(resolvePath('project.json')));
+  const codex = readText(resolvePath('apps/web/src/data/architectureCodex.ts'));
 
   [
-    'Knowledge Runtime Surface',
-    'Everything stays alive',
-    'Do not turn collections into standalone CMS pages',
-    'Do not replace the homepage mixed-object masonry stream with collection grids',
-    'Do not make topic collections prerender into static collection pages',
-    'Collection is context. Drawer is reading. Homepage is discovery'
+    'Core topology: `Vault -> Projection -> Web Runtime -> State Services`',
+    'Vault',
+    'Projection',
+    'Web Runtime',
+    'State Services'
   ].forEach((term) => {
     if (!readme.includes(term)) {
-      issues.push(`README.md must include Runtime Constitution term: ${term}`);
+      issues.push(`README.md must include Knowledge OS Core term: ${term}`);
     }
   });
 
-  if (contract.productIdentity?.primaryModel !== 'Knowledge Runtime Surface') {
-    issues.push('contracts/frontend-runtime-contract.json must define Knowledge Runtime Surface as primary model');
+  const topology = project.knowledgeOsCore?.topology ?? [];
+  const expected = ['Vault', 'Projection', 'Web Runtime', 'State Services'];
+  if (project.knowledgeOsCore?.status !== 'active') {
+    issues.push('project.json must declare knowledgeOsCore.status active');
   }
-
-  if (contract.collectionModel?.role !== 'runtime lens and reading context') {
-    issues.push('contracts/frontend-runtime-contract.json must define collection as runtime lens and reading context');
+  if (JSON.stringify(topology) !== JSON.stringify(expected)) {
+    issues.push('project.json knowledgeOsCore.topology must be Vault -> Projection -> Web Runtime -> State Services');
   }
-
-  if (collectionContract.basisRules?.topic?.staticCollectionPage !== false) {
-    issues.push('contracts/collection-behavior-contract.json must forbid topic static collection pages');
+  if (project.knowledgeOsCore?.vault?.root !== 'Windows:E:\\Vaults\\Obsidian') {
+    issues.push('project.json knowledgeOsCore.vault.root must be Windows:E:\\Vaults\\Obsidian');
   }
-
-  if (collectionContract.basisRules?.topic?.metadataSearchGraphDimension !== true) {
-    issues.push('contracts/collection-behavior-contract.json must keep topic as metadata/search/Graph dimension');
+  if (project.knowledgeOsCore?.projection?.activeArticleProjection !== 'public-data/runtime/content-index.json') {
+    issues.push('project.json knowledgeOsCore.projection.activeArticleProjection must be public-data/runtime/content-index.json');
+  }
+  if (!codex.includes('Vault -> Projection -> Web Runtime -> State Services')) {
+    issues.push('architectureCodex.ts must include the Knowledge OS Core topology');
   }
 }
 

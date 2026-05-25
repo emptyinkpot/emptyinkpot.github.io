@@ -4,7 +4,7 @@ This directory is an embedded Quartz v4 workspace used to study and stage MyBlog
 
 The production MyBlog frontend remains the root `apps/web` Astro runtime. This integration must not replace the public shell, create a second content truth, or claim deployment authority for `https://blog.tengokukk.com/`.
 
-Quartz ideas can be promoted back into `apps/web` only as MyBlog-native modules: capability registries, content projections, plugin protocols, or runtime contracts that preserve the original workbench look and interactions.
+Quartz ideas can be promoted back into `apps/web` only as MyBlog-native projection code, components, or small runtime registries that have active consumers and preserve the original workbench look and interactions.
 
 ## Structure
 
